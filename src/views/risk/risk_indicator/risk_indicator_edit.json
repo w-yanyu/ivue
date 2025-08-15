@@ -1,0 +1,109 @@
+{
+  "module": "v-inputDataForm-btn",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "indicatorCode": {
+            "label": "指标变量代码",
+            "control": "string",
+            "span": 12
+          },
+          "sourceType": {
+            "label": "指标来源",
+            "control": "string",
+            "span": 12,
+            "dict": {
+              "dictType": "sourceType",
+              "dictKey": [],
+              "format": "value-label",
+              "doRequest": {
+                "url": "/views/risk/dictdata/sourceType.json",
+                "method": "get"
+              }
+            }
+          }
+        },
+        {
+          "indicatorName": {
+            "label": "指标变量名称",
+            "control": "text",
+            "span": 12,
+            "rules": [
+              {
+                "required": true,
+                "message": "请正确输入",
+                "max": 100
+              }
+            ]
+          },
+          "indicatorType": {
+            "label": "指标变量类型",
+            "control": "select",
+            "span": 12,
+            "dict": {
+              "dictType": "indicatorType",
+              "dictKey": [],
+              "format": "value-label",
+              "doRequest": {
+                "url": "/views/risk/dictdata/indicatorType.json",
+                "method": "get"
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "该控件必填",
+                "max": 10
+              }
+            ]
+          }
+        },
+        {
+          "dataType": {
+            "label": "指标数据类型",
+            "control": "select",
+            "span": 12,
+            "dict": {
+              "dictType": "dataType",
+              "dictKey": [],
+              "format": "value-label",
+              "doRequest": {
+                "url": "/views/risk/dictdata/dataType.json",
+                "method": "get"
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "该控件必填",
+                "max": 8
+              }
+            ]
+          }
+        },
+        {
+          "description": {
+            "label": "描述",
+            "control": "textarea",
+            "span": 24,
+            "rules": [
+              {
+                "message": "请正确输入",
+                "max": 500
+              }
+            ]
+          }
+        }
+      ],
+      "initRequest": "${{params}}",
+      "doRequest": {
+        "url": "/API/risk-management-service/risk-indicator/update",
+        "method": "post",
+        "params":{
+          "updateUser": "$g{{user_info.userCode}}"
+        }
+      }
+    }
+  }
+}

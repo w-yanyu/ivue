@@ -1,0 +1,101 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pt0501",
+          "sale_prod_cd": "${{params.sale_prod_cd}}",
+          "mould_code":"${{params.mould_code}}",
+          "version":"${{params.version}}"
+          
+        }
+      },
+      "controls": [
+        {
+          "approve_tp": {
+            "control": "select",
+            "span": 20,
+            "align": "center",
+            "width": "100px",
+            "label": "审批类型",
+            "dict": {
+              "dictType": "PT_E_APPROVE_TP",
+              "dictKey": [
+                "PT_E_APPROVE_TP"
+              ],
+              "format": "value-label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择审批类型"
+              }
+            ],
+            "events": {
+              "condition": {
+                "1": {
+                  "control": {
+                    "approve_status": {
+                      "value": "02"
+                    },
+                    "approve_link": {
+                      "value": "03"
+                    }
+                  }
+                },
+                "0": {
+                  "control": {
+                    "approve_status": {
+
+                      "value": "00"
+                    },
+                    "approve_link": {
+                      "value": "05"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "approve_comments": {
+            "control": "textarea",
+            "span": 20,
+            "align": "center",
+            "label": "审批意见",
+            "width": "100px",
+            "height":"50px",
+            "maxlength": 200,
+            "autosize": {
+                "minRows": 4
+            },
+            "showWordLimit": true,
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入审批意见"
+              }
+            ]
+          }
+        },
+        {
+          "approve_status": {
+            "control": "hidden",
+            "label": "审批状态",
+            "value": ""
+          },
+          "approve_link": {
+            "control": "hidden",
+            "label": "审批环节",
+            "width": "50%",
+            "value": ""
+          }
+        }
+      ]
+    }
+  }
+}

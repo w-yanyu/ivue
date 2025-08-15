@@ -1,0 +1,99 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "scope": "strForm",
+      "initRequest": "${{params}}",
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "icon": "",
+          "doRequest": {
+            "url": "/SUMP/call/RPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "ln3973"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "smilr_cr_card_loan_acct_num": {
+            "control": "string",
+            "label": "类信用卡贷款账号",
+            "width": "100px"
+          },
+          "ccy_code_num": {
+            "control": "select",
+            "label": "货币代号",
+            "width": "100px",
+            "dict": {
+              "dictType": "MS_CURRENCY",
+              "dictKey": [
+                "MS_CURRENCY"
+              ],
+              "format": "label"
+            }
+          }
+        },
+        {
+          "rpymt_acct_num": {
+            "control": "text",
+            "label": "还款账号",
+            "width": "100px"
+          },
+          "rpymt_sub_acct_serl_num": {
+            "control": "text",
+            "label": "还款子账户序号",
+            "width": "100px"
+          }
+        },
+        {
+          "cust_num": {
+            "control": "string",
+            "label": "客户号",
+            "width": "100px"
+          },
+          "cust_nm": {
+            "control": "string",
+            "label": "客户名称",
+            "width": "100px"
+          }
+        },
+        {
+          "min_rpymt_amt_flg": {
+            "control": "select",
+            "label": "最低还款额标志",
+            "value": "0",
+            "width": "100px",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            }
+          },
+          "rpymt_amt": {
+            "control": "currency",
+            "label": "还款金额",
+            "width": "100px",
+            "format": "label",
+            "rules": [
+              {
+                "expression": "${{form.rpymt_amt}} >=  0  ",
+                "message": "还款金额不能小于零"
+              },
+              {
+                  "required": true,
+                  "message": "请输入还款金额"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

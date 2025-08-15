@@ -1,0 +1,256 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "adv_rpymt_fine_num": {
+            "control": "text",
+            "label": "提前还款罚金编号",
+            "rules": [
+              {
+                "max": 10,
+                "message": "长度不能超过10个字符"
+              }
+            ]
+          },
+          "adv_rpymt_fine_nm": {
+            "control": "text",
+            "label": "提前还款罚金名称",
+            "rules": [
+              {
+                "max": 80,
+                "message": "长度不能超过80个字符"
+              }
+            ]
+          }
+        },
+        {
+          "eff_dt": {
+            "control": "dateTimePicker",
+            "label": "生效日期",
+            "rules": [
+              {
+                "max": 8,
+                "message": "长度不能超过8个字符"
+              }
+            ]
+          },
+          "invld_dt": {
+            "control": "dateTimePicker",
+            "label": "失效日期",
+            "rules": [
+              {
+                "max": 8,
+                "message": "长度不能超过8个字符"
+              }
+            ]
+          }
+        },
+        {
+          "fine_caln_tp": {
+            "control": "select",
+            "label": "罚金计算类型",
+            "dict": {
+              "dictType": "LN_E_FINE_CALN_TP",
+              "dictKey": [
+                "LN_E_FINE_CALN_TP"
+              ],
+              "format": "label"
+            }
+          },
+          "strt_dt_rule": {
+            "control": "select",
+            "label": "起始日期规则",
+            "dict": {
+              "dictType": "LN_E_STRT_DT_RULE",
+              "dictKey": [
+                "LN_E_STRT_DT_RULE"
+              ],
+              "format": "label"
+            }
+          }
+        },
+        {
+          "layer_val_rule": {
+            "control": "select",
+            "label": "分层取值规则",
+            "dict": {
+              "dictType": "LN_E_LAYER_VAL_RULE",
+              "dictKey": [
+                "LN_E_LAYER_VAL_RULE"
+              ],
+              "format": "label"
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/paramManage/loanAdvRpymtFine/adv_rpymt_fine_add.json"
+          },
+          "props": {
+            "title": "新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ap0000",
+          "parm_tab_nm": "klnp_adv_rpymt_fine",
+          "dtbs_oprn_flg": "3",
+          "data_pkg": "${{current}}"
+        }
+      },
+      "thead": [
+        {
+          "label": "提前还款罚金编号",
+          "prop": "adv_rpymt_fine_num",
+          "align": "center"
+        },
+        {
+          "label": "提前还款罚金名称",
+          "prop": "adv_rpymt_fine_nm",
+          "align": "center"
+        },
+        {
+          "label": "生效日期",
+          "prop": "eff_dt",
+          "align": "center"
+        },
+        {
+          "label": "失效日期",
+          "prop": "invld_dt",
+          "align": "center"
+        },
+        {
+          "label": "最大罚金金额",
+          "prop": "max_fine_amt",
+          "align": "center"
+        },
+        {
+          "label": "最小罚金金额",
+          "prop": "min_fine_amt",
+          "align": "center"
+        },
+         {
+          "label": "罚金计算类型",
+           "prop": "fine_caln_tp",
+           "align": "center",
+          "dict": {
+            "dictType": "LN_E_FINE_CALN_TP",
+            "dictKey": [
+              "LN_E_FINE_CALN_TP"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "利息天数",
+          "prop": "int_dys",
+          "align": "center"
+        },
+        {
+          "label": "起始日期规则",
+          "prop": "strt_dt_rule",
+          "align": "center",
+          "dict": {
+            "dictType": "LN_E_STRT_DT_RULE",
+            "dictKey": [
+              "LN_E_STRT_DT_RULE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "固定金额",
+          "prop": "fixd_amt",
+          "align": "center"
+        },
+        {
+          "label": "分层取值规则",
+          "prop": "layer_val_rule",
+          "align": "center",
+          "dict": {
+            "dictType": "LN_E_LAYER_VAL_RULE",
+            "dictKey": [
+              "LN_E_LAYER_VAL_RULE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "序号(int)",
+          "prop": "serl_num_long",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 300,
+          "align": "center",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/paramManage/loanAdvRpymtFine/adv_rpymt_fine_info.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "50%",
+                "title": "信息详情"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/paramManage/loanAdvRpymtFine/adv_rpymt_fine_update.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "50%",
+                "title": "信息维护"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "ap0000",
+                  "parm_tab_nm": "klnp_adv_rpymt_fine",
+                  "dtbs_oprn_flg": "2",
+                  "data_pkg": {
+                    "adv_rpymt_fine_num":"${{current.adv_rpymt_fine_num}}"
+                  }
+                }
+              },
+              "confirm": {
+                "title": "确定删除",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,99 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": "${{params}}",
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pd0362",
+          "sale_prod_cd": "${{params.sale_prod_cd}}",
+          "prod_version": "${{params.prod_version}}",
+          "busi_seq": "${{params.busi_seq}}",
+          "apply_type": "${{params.apply_type}}"
+        }
+      },
+      "controls": [
+        {
+          "template_id": {
+            "control": "lookup",
+            "label": "信邮模板",
+            "span": 12,
+            "keyField":{
+              "template_id": "template_id",
+              "template_type": "template_type"
+            },
+            "toRequest": {
+              "url": "/views/pd/prod/templatePage/prodMailSet/prodMailSet_lookup.json",
+              "method": "post"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "模板编号不得为空"
+              }
+            ]
+          },
+          "template_type": {
+            "control": "select",
+            "disabled": true,
+            "label": "发送类型",
+            "span": 12,
+            "dict": {
+              "dictType": "MS_E_TEMPLATE_TYPE",
+              "dictKey": [
+                "MS_E_TEMPLATE_TYPE"
+              ],
+              "format": "value-label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "发送类型不得为空"
+              }
+            ]
+          }
+        },
+        {
+          "mail_send_node": {
+            "control": "select",
+            "label": "发送节点",
+            "span": 12,
+            "dict": {
+              "dictType": "PD_E_PROTOCOL_NODE",
+              "dictKey": [
+                "PD_E_PROTOCOL_NODE"
+              ],
+              "format": "value-label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "发送节点不得为空"
+              }
+            ]
+          },
+          "is_effective": {
+            "control": "select",
+            "label": "是否生效",
+            "span": 12,
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "value-label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "发送类型不得为空"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

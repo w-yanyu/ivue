@@ -1,0 +1,173 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "initRequest": "${{params}}",
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "params": {
+              "apply_no": "${{params.apply_no}}"
+            },
+            "url": "/views/icms/internationalBusiness/ArbTradeContract/arb_trade_contract_add.json"
+          },
+          "props": {
+            "width": "90%",
+            "title": "贸易合同信息新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ar1318"
+        }
+      },
+      "pagination": {
+        "pageSizes": [
+          10,
+          15,
+          20,
+          50,
+          100
+        ],
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "label": "序号",
+          "type": "index",
+          "align": "center"
+        },
+        {
+          "label": "申请号",
+          "prop": "apply_no",
+          "align": "center"
+        },
+        {
+          "label": "借据号",
+          "prop": "loan_no",
+          "align": "center"
+        },
+        {
+          "label": "贸易合同号",
+          "prop": "trade_contract_no",
+          "align": "center"
+        },
+        {
+          "label": "贸易合同金额",
+          "prop": "contract_amt",
+          "align": "center",
+          "format":{
+            "thousand": ","
+          }  
+        },
+        {
+          "label": "汇率",
+          "prop": "exchange_rate",
+          "align": "center"
+        },
+        {
+          "label": "贸易合同金额（折基准币种）",
+          "prop": "contract_base_amt",
+          "align": "center",
+          "format":{
+            "thousand": ","
+          }  
+        },
+        {
+          "label": "贸易合同币种",
+          "prop": "ccy_code",
+          "dict": {
+            "dictType": "MS_CURRENCY",
+            "dictKey": "MS_CURRENCY",
+            "format": "label"
+          },
+          "align": "center"
+        },
+        {
+          "label": "基准币种",
+          "prop": "base_ccy",
+          "dict": {
+            "dictType": "MS_CURRENCY",
+            "dictKey": "MS_CURRENCY",
+            "format": "label"
+          },
+          "align": "center"
+        },
+        {
+          "label": "贸易合同签订日期",
+          "prop": "loan_contract_sign_date",
+          "align": "center"
+        },
+        {
+          "label": "贸易起始日期",
+          "prop": "start_date",
+          "align": "center"
+        },
+        {
+          "label": "贸易到期日期",
+          "prop": "matu_date",
+          "align": "center"
+        },
+        {
+          "label": "贸易合同内容",
+          "prop": "trade_contract_desc",
+          "align": "center"
+        },
+        {
+          "label": "买方(进口商)",
+          "prop": "buyer",
+          "align": "center"
+        },
+        {
+          "label": "卖方(出口商)",
+          "prop": "seller",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "target": "dialog",
+              "label": "修改",
+              "toRequest": {
+                "method": "GET",
+                "url": "/views/icms/internationalBusiness/ArbTradeContract/arb_trade_contract_edit.json"
+              },
+              "props": {
+                "width": "90%",
+                "title": "贸易合同信息编辑"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "ar1317",
+                  "apply_no": "${{current.apply_no}}",
+                  "trade_contract_no": "${{current.trade_contract_no}}"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,140 @@
+{
+    "module": "lr-tree-dynamic",
+    "layout": {
+        "tree": {
+            "title": "进件字段树",
+            "lazy": false,
+            "idField": "tree_id",
+            "pIdField": "tree_pid",
+            "labelField": "tree_title",
+            "isLeafField": "tree_is_leaf",
+            "nodeTypeField": "tree_type",
+            "initRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "deci050106"
+                }
+            },
+            "nodeTypes": {
+                "dept": {
+                    "children": [
+                        "dept"
+                    ],
+                    "contextMenu": [
+                        {
+                            "type": "add",
+                            "label": "新增",
+                            "childNodeType": "dept",
+                            "icon": "el-icon-circle-plus-outline",
+                            "toRequest": {
+                                "url": "/views/risk/risk_icms_management/icms_fields/icmsFields_add.json",
+                                "method": "get",
+                                "params": {
+                                    "tree_id": "${{current.tree_id}}",
+                                    "tree_pid": "${{current.tree_pid}}"
+                                }
+                            },
+                            "props": {
+                                "width": "80%",
+                                "title": "新增进件字段"
+                            },
+                            "eventAfter": {
+                                "callback": "renderTree"
+                            }
+                        },
+                        {
+                            "type": "divider"
+                        }
+                    ]
+                },
+                "groupType": {
+                    "children": [
+                        "groupType"
+                    ],
+                    "contextMenu": [
+                        {
+                            "type": "add",
+                            "label": "新增",
+                            "childNodeType": "groupType",
+                            "icon": "el-icon-circle-plus-outline",
+                            "toRequest": {
+                                "url": "/views/risk/risk_icms_management/icms_fields/icmsFields_add.json",
+                                "method": "get",
+                                "params": {
+                                    "tree_id": "${{current.tree_id}}",
+                                    "tree_pid": "${{current.tree_pid}}"
+                                }
+                            },
+                            "props": {
+                                "width": "80%",
+                                "title": "新增进件字段"
+                            },
+                            "eventAfter": {
+                                "callback": "renderTree"
+                            }
+                        },
+                        {
+                            "type": "divider"
+                        },
+                        {
+                            "type": "delete",
+                            "label": "删除",
+                            "childNodeType": "groupType",
+                            "icon": "el-icon-remove-outline",
+                            "doRequest": {
+                                "url": "/SUMP/call/RPCCall",
+                                "method": "DELETE",
+                                "params": {
+                                    "servicecode": "co1020",
+                                    "tran_type": "3",
+                                    "colt_type": "${{current.tree_id}}"
+                                }
+                            },
+                            "eventAfter": {
+                                "callback": "renderTree"
+                            }
+                        }
+                    ]
+                },
+                "fieldCode": {
+                    "children": [
+                        "fieldCode"
+                    ],
+                    "toRequest": {
+                        "url": "@icmsTreeIndex",
+                        "method": "get",
+                        "params": {
+                            "tree_id": "${{current.tree_id}}",
+                            "tree_pid": "${{current.tree_pid}}"
+                        }
+                    },
+                    "contextMenu": [
+                        {
+                            "type": "divider"
+                        },
+                        {
+                            "type": "delete",
+                            "label": "删除",
+                            "childNodeType": "groupType",
+                            "icon": "el-icon-remove-outline",
+                            "doRequest": {
+                                "url": "/SUMP/call/RPCCall",
+                                "method": "DELETE",
+                                "params": {
+                                    "servicecode": "deci050103",
+                                    "detail": {
+                                        "field_code": "${{current.tree_id}}"
+                                    }
+                                }
+                            },
+                            "eventAfter": {
+                                "callback": "renderTree"
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,151 @@
+{
+    "module": "v-inputDataForm-btn",
+    "layout": {
+        "form": {
+            "initRequest": "${{params}}",
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "us0818"
+                }
+            },
+            "controls": [
+                {
+                    "cust_market_no": {
+                        "control": "hidden",
+                        "label": "潜在客户序号"
+                    },
+                    "cust_no": {
+                        "control": "hidden",
+                        "label": "客户编号",
+                        "rules": [
+                            {
+                                "required": false,
+                                "message": "请输入客户编号"
+                            }
+                        ]
+                    },
+                    "cert_type": {
+                        "label": "证件类型",
+                        "control": "select",
+                        "value": "${{params.cust_no}}",
+                        "dict": {
+                            "dictType": "MS_E_CRET_TYPE",
+                            "dictKey": "MS_E_CRET_TYPE"
+                        },
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入证件号码"
+                            }
+                        ]
+                    },
+                    "cert_no": {
+                        "label": "证件号码",
+                        "control": "text",
+                        "value": "${{params.cust_no}}",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入证件号码"
+                            }
+                        ]
+                    },
+                    "cert_day": {
+                        "label": "证件签发日期",
+                        "control": "dateTimePicker",
+                        "editable": true,
+                        "format": "yyyyMMdd",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入证件签发日期"
+                            }
+                        ]
+                    },
+                    "card_end_day": {
+                        "label": "证件到期日期",
+                        "control": "dateTimePicker",
+                        "editable": true,
+                        "format": "yyyyMMdd",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入证件到期日期"
+                            }
+                        ],
+                        "disabledDate": {
+                            "startRange": "${{formData.issuing_addr}}",
+                            "endRange": "3000-01-01"
+                        }
+                    },
+                    "issuing_addr": {
+                        "label": "证件签发地",
+                        "control": "areaCascade",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入证件签发地"
+                            }
+                        ]
+                    },
+                    "culncd": {
+                        "label": "贷款卡编号",
+                        "control": "text",
+                        "rules": [
+                            {
+                                "required": false,
+                                "message": "请输入贷款卡编号"
+                            }
+                        ]
+                    },
+                    "cust_name": {
+                        "label": "客户名称",
+                        "control": "text",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入客户名称"
+                            }
+                        ]
+                    },
+                    "cust_english_name": {
+                        "label": "客户英文名称",
+                        "control": "text",
+                        "rules": [
+                            {
+                                "required": false,
+                                "message": "请输入客户英文名称"
+                            }
+                        ]
+                    },
+                    "cust_befor_name": {
+                        "label": "客户曾用名",
+                        "control": "text",
+                        "rules": [
+                            {
+                                "required": false,
+                                "message": "请输入客户曾用名"
+                            }
+                        ]
+                    },
+                    "cust_type": {
+                        "label": "客户分类",
+                        "control": "select",
+                        "dict": {
+                            "dictType": "US_E_CUST_TYPE",
+                            "dictKey": "US_E_CUST_TYPE"
+                        },
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请选择客户分类"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    }
+}

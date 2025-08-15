@@ -1,0 +1,148 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "POST",
+            "url": "/views/dh/fiveType/manual_dh_fivetypesee.json",
+            "params": {
+              "applid": "${{params.applid}}",
+              "custid": "${{params.custid}}"
+            }
+          },
+          "props": {
+            "title": "手动五级分类"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "applid": "${{params.applid}}",
+          "custid": "${{params.custid}}",
+          "servicecode": "PLMSKGSS0102"
+        }
+      },
+      "thead": [
+        {
+          "label": "借据号",
+          "align": "center",
+          "prop": "lncfno"
+        },
+        {
+          "label": "产品名称",
+          "prop": "prodna",
+          "align": "center"
+        },
+        {
+          "label": "贷款状态",
+          "prop": "clssst",
+          "align": "center",
+          "dict": {
+            "dictType": "E_CLSSST",
+            "dictKey": [
+              "E_CLSSST"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "贷款余额",
+          "align": "center",
+          "prop": "lnyue"
+        },
+        {
+          "label": "系统五级分类",
+          "align": "center",
+          "prop": "endres",
+          "dict": {
+            "dictType": "E_CLEVEL1",
+            "dictKey": [
+              "E_CLEVEL1"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "人工五级分类类型",
+          "align": "center",
+          "prop": "fltype",
+          "dict": {
+            "dictType": "E_FLTYPE",
+            "dictKey": [
+              "E_FLTYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "人工五级分类(调整前)",
+          "prop": "befrgzxgradcd",
+          "align": "center",
+          "dict": {
+            "dictType": "E_CLEVEL1",
+            "dictKey": [
+              "E_CLEVEL1"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "人工五级分类(调整后)",
+          "align": "center",
+          "prop": "rgzxgradcd",
+          "dict": {
+            "dictType": "E_CLEVEL1",
+            "dictKey": [
+              "E_CLEVEL1"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align":"center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/ac/assetClassifyManager/update_submit.json",
+                "method": "post"
+              },
+              "props": {
+                "width": "65%",
+                "title": "维护"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                  "applid": "${{params.applid}}",
+                  "servicecode": "PLMSKGSS0112"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

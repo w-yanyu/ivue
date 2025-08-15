@@ -1,0 +1,107 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "scope": "formData",
+            "initRequest": "${{params}}",
+            "controls": [
+                {
+                    "quality_task_no": {
+                        "control": "string",
+                        "disabled": true,
+                        "label": "质检任务编号",
+                        "value": "${{params.quality_task_no}}"
+                    },
+                    "quality_task_name": {
+                        "control": "string",
+                        "disabled": true,
+                        "label": "质检任务名称",
+                        "value": "${{params.quality_task_name}}"
+                    }
+                },
+                {
+                    "quality_plan_no": {
+                        "control": "string",
+                        "disabled": true,
+                        "label": "质检方案编号",
+                        "value": "${{params.quality_plan_no}}"
+                    },
+                    "quality_batch_no": {
+                        "control": "string",
+                        "disabled": true,
+                        "label": "质检任务批次号",
+                        "value": "${{params.quality_batch_no}}"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "qc1009",
+                    "appId": "qcOnl"
+                }
+            },
+            "thead": [
+                {
+                    "label": "规则类型",
+                    "prop": "quality_rule_type",
+                    "type": "string",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "CS_QUALITY_PLAN_RULE_TYPE",
+                        "dictKey": [
+                            "CS_QUALITY_PLAN_RULE_TYPE"
+                        ],
+                        "format": "value-label"
+                    }
+                },
+                {
+                    "type": "string",
+                    "label": "命中次数",
+                    "align": "center",
+                    "prop": "hit_num"
+                },
+                {
+                    "label": "操作",
+                    "width": "200%",
+                    "fixed": "right",
+                    "align": "center",
+                    "btns": [
+                        {
+                            "type": "look",
+                            "label": "命中详情",
+                            "toRequest": {
+                                "url": "/views/cs/qualityManage/qualityTask/qualityTaskBatchDetail_hit_info.json",
+                                "method": "POST",
+                                "params":{
+                                    "quality_batch_no":"${{params.quality_batch_no}}"
+                                  }
+                            },
+                            "props": {
+                                "title": "命中详情"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "查看规则配置",
+                            "toRequest": {
+                                "url": "/views/cs/qualityManage/qualityTask/qualityTaskBatchDetail_rule_info.json",
+                                "method": "POST",
+                                "params":{
+                                    "quality_task_no":"${{params.quality_task_no}}"
+                                  }
+                            },
+                            "props": {
+                                "title": "查看规则配置"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

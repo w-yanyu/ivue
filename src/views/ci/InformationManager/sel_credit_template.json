@@ -1,0 +1,84 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "scope": "form",
+            "initRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "IUMSCUTS0032",
+                    "custid": "${{params.custid}}"
+                }
+            },
+            "btns": [{
+                "type": "submit",
+                "label": "提交",
+                "icon": "",
+                "doRequest": {
+                    "url": "/SUMP/icmcall/icmRPCCall",
+                    "method": "POST",
+                    "params": {
+                        "servicecode": "IUMSCUTS5910",
+                        "custid": "${{params.custid}}",
+                        "indvfg": "${{params.indvfg}}"
+                    }
+                }
+            }],
+            "controls": [{
+                "custna": {
+                    "control": "text",
+                    "label": "客户名称",
+                    "value": "${{params.custna}}",
+                    "width": "130px",
+                    "disabled": true
+                },
+                "inccne": {
+                    "control": "hidden",
+                    "label": "行业分类",
+                    "width": "130px",
+                    "disabled": true
+                },
+                "cozine": {
+                    "control": "hidden",
+                    "label": "企业规模",
+                    "width": "130px",
+                    "disabled": true
+                },
+                "crt_temp_name": {
+                    "control": "lookup",
+                    "width": "130px",
+                    "edit": true,
+                    "rules": [{
+                        "required": true,
+                        "message": "信评模板编号不能为空"
+                    }],
+                    "label": "信评模板",
+                    "keyField": {
+                        "crt_temp_name": "temp_name",
+                        "crt_temp_id": "temp_id"
+                    },
+                    "toRequest": {
+                        "url": "/views/ci/InformationManager/credit_template.json",
+                        "method": "post",
+                        "params": {
+                            "custty": "${{params.custty}}",
+                            "inccne": "${{form.inccne}}",
+                            "cozine": "${{form.cozine}}"
+                        }
+                    },
+                    "props": {
+                        "title": "查询信评模板"
+                    },
+                    "format": "label"
+                },
+                "crt_temp_id": {
+                    "control": "hidden",
+                    "label": "评级模板编码",
+                    "width": "130px",
+                    "disabled": true
+                }
+            }]
+        }
+    }
+}

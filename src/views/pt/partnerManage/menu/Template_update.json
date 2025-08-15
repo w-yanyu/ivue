@@ -1,0 +1,97 @@
+{
+  "module": "d-steps",
+  "layout": {
+    "steps": {
+      "scope": "formObj",
+      "direction": "horizontal",
+      "alignCenter": true,
+      "finishStatus": "success",
+      "simpleType": false,
+      "nextStepType": "validate",
+      "list": [
+        {
+          "scope": "step1",
+          "title": "合作方信息",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "url": "/views/pt/partnerManage/ptPartner_update.json",
+            "method": "get",
+            "params": {
+              "part_no": "${{params.part_no}}",
+              "version": "${{params.version}}"
+            }
+          },
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "post",
+            "params":{
+              "servicecode":"pt0042",
+              "version": "${{params.version}}"
+            }
+          }
+        },
+        {
+          "scope": "step2",
+          "title": "预警规则",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "url": "/views/pt/partnerManage/ptpWarnRules/ptpWarnRules_update.json",
+            "method": "get",
+            "params": {
+              "part_no": "${{formObj.step1.part_no}}",
+              "version": "${{formObj.step1.version}}"
+            }
+          },
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "pt0188",
+              "part_no": "${{formObj.step1.part_no}}",
+              "version": "${{formObj.step1.version}}"             
+            }
+          }
+        },
+        {
+          "scope": "step3",
+          "title": "合作方结算账户",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "url": "/views/pt/partnerManage/partnerAcct_list.json",
+            "method": "get",
+            "params": {
+              "part_no": "${{formObj.step1.part_no}}",
+              "version": "${{formObj.step1.version}}"
+            }
+          }
+        },
+        {
+          "scope": "step4",
+          "title": "伙伴体系",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "url": "/views/pt/partnerManage/ptb_part_system_tmp/ptb_part_system_tmp_partstr.json",
+            "method": "get",
+            "params": {
+              "part_no": "${{formObj.step1.part_no}}",
+              "version": "${{formObj.step1.version}}"
+            }
+          }
+        },
+        {
+          "scope": "step5",
+          "title": "敞口信息",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "url": "/views/pt/partnerManage/expinfoview/ptb_part_system_tmp_expinfoview.json",
+            "method": "get",
+            "params": {
+              "part_no": "${{formObj.step1.part_no}}",
+              "version": "${{formObj.step1.version}}"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,129 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+        "wfrlid": {
+          "span": 8,
+          "control": "text",
+          "label": "审批角色编号"
+
+        },
+        "wfrlnm": {
+          "span": 8,
+          "control": "text",
+          "label": "审批角色名称"
+
+        }
+      }]
+    },
+    "toolbar": {
+      "btns": [
+        {
+        "type": "add",
+        "target": "dialog",
+        "label": "新增",
+        "toRequest": {
+          "url": "/views/dhpo/process/products/role/approval-role-add.json",
+          "method": "GET"
+        },
+        "props": {
+          "width": "65%",
+          "title": "审批角色详情新增"
+        }
+      }
+      ]
+    },
+    "datagrid": {
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "AS_PLMS_PB_SEWFRL"
+        }
+      },
+      "thead": [{
+        "type": "selection",
+        "width": "55"
+      }, {
+        "type": "index",
+        "label": "序号"
+      }, {
+        "label": "审批角色编号",
+        "prop": "wfrlid",
+        "align":"center"
+      }, {
+        "label": "审批角色名称",
+        "prop": "wfrlnm",
+        "align":"center"
+      },
+        {
+          "label": "审批角色描述",
+          "prop": "wfrlds",
+          "align":"center"
+        }
+      ,
+      {
+        "label": "角色权限",
+        "prop": "rlauth",
+        "align":"center",
+        "dict": {
+          "dictType": "E_PL_RLAUTH",
+          "dictKey": [
+            "E_PL_RLAUTH"
+          ],
+          "format": "label"
+        }
+      }
+      ,
+        {
+          "label": "备注信息",
+          "prop": "remark",
+          "align":"center"
+        },
+        {
+          "label": "操作",
+          "align":"center",
+          "width": "180",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/dhpo/process/products/role/approval-role-update.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "65%",
+                "title": "审批角色维护"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "AS_PLMS_PB_DEWFRL"
+                }
+              }
+            },
+            {
+              "type": "edit",
+              "label": "权限分配",
+              "toRequest": {
+                "url": "/views/dhpo/process/products/role/approval-role-pow.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "65%",
+                "title": "权限分配"
+              }
+            }
+          ]
+        }]
+    }
+  }
+}

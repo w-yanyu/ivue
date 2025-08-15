@@ -1,0 +1,248 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "server_range": {
+            "control": "select",
+            "label": "微服务",
+            "span": 8,
+            "dict": {
+              "dictType": "MS_APPID",
+              "dictKey": [
+                "MS_APPID"
+              ],
+              "format": "label"
+            }
+          },
+          "api_name": {
+            "control": "text",
+            "label": "API名称",
+            "span": 8
+          },
+          "api_desc": {
+            "control": "text",
+            "label": "API描述",
+            "span": 8
+          },
+          "api_status": {
+            "control": "select",
+            "label": "API状态",
+            "span": 8,
+            "dict": {
+              "dictType": "CT_E_API_STATUS",
+              "dictKey": [
+                "CT_E_API_STATUS"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId",
+              "format": "label"
+            }
+          },
+          "api_enable": {
+            "control": "select",
+            "label": "API连通性",
+            "span": 8,
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId",
+              "format": "label"
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "addlog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/ismt/ct/third/thirdAPIManage_add.json"
+          },
+          "props": {
+            "width": "60%",
+            "title": "新增API接口配置"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ct2550"
+        }
+      },
+      "thead": [
+        {
+          "type": "string",
+          "label": "API名称",
+          "prop": "api_name",
+          "align": "center",
+          "width": "200px"
+        },
+        {
+          "type": "string",
+          "label": "API描述",
+          "prop": "api_desc",
+          "align": "center",
+          "width": "200px"
+        },
+        {
+          "type": "string",
+          "label": "API状态",
+          "prop": "api_status",
+          "align": "center",
+          "width": "100px",
+          "dict": {
+            "dictType": "CT_E_API_STATUS",
+            "dictKey": [
+              "CT_E_API_STATUS"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "string",
+          "label": "是否连通",
+          "prop": "api_enable",
+          "align": "center",
+          "width": "100px",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "string",
+          "label": "请求路径",
+          "prop": "api_path",
+          "align": "center",
+          "width": "500px"
+        },
+        {
+          "type": "string",
+          "label": "请求密钥1",
+          "prop": "key1",
+          "align": "center",
+          "width": "250px"
+        },
+        {
+          "type": "string",
+          "label": "请求密钥2",
+          "prop": "key2",
+          "align": "center",
+          "width": "250px"
+        },
+        {
+          "type": "string",
+          "label": "微服务范围",
+          "prop": "server_range",
+          "align": "center",
+          "width": "500px",
+          "dict": {
+            "dictType": "MS_APPID",
+            "dictKey": [
+              "MS_APPID"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "width": "250px",
+          "fixed": "right",
+          "btns": [
+            {
+              "type": "custom",
+              "label": "启用",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "ct2552",
+                  "api_status": "0"
+                }
+              },
+              "show": {
+                "expression": "'${{current.api_status}}' == '1'"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "停止",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "ct2552",
+                  "api_status": "1"
+                }
+              },
+              "show": {
+                "expression": "'${{current.api_status}}' == '0'"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "测试",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "ct2554"
+                }
+              }
+            },
+            {
+              "type": "look",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/ismt/ct/third/thirdAPIManage_edit.json",
+                "method": "GET",
+                "params": {
+                }
+              },
+              "props": {
+                "width": "60%",
+                "title": "维护API配置信息"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "ct2553"
+                }
+              },
+              "confirm": {
+                "title": "删除",
+                "msg": "确定删除吗？",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

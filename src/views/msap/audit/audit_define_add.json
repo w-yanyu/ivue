@@ -1,0 +1,115 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "btns": [
+                {
+                    "type": "submit",
+                    "label": "提交",
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "ms0070",
+                            "appId":"${{params.appId}}"
+                        }
+                    }
+                }
+            ],
+
+            "controls": [
+                {
+                    "table_name": {
+                        "control": "lookup",
+                        "label": "数据库表名",
+                        "width": "130px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message":"请输入"
+                            }
+                        ],
+                        "keyField":{
+                            "table_name": "table_name",
+                            "table_desc": "table_desc"
+                          },
+                          "toRequest": {
+                            "url": "/views/msap/adp/project_table_lookup.json",
+                            "method": "post",
+                            "params": {
+                              "appId":"${{params.appId}}"
+                            }
+                          },
+                          "props": {
+                            "title": "项目表选择"
+                          }
+                    },
+                    "table_desc": {
+                        "control": "text",
+                        "label": "数据库表描述",
+                        "width": "130px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message":"请输入"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "is_registered_changed_log": {
+                        "control": "select",
+                        "disabled":false,
+                        "label": "登记变更日志标志",
+                        "width": "130px",
+                        "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                          "MS_E_YESORNO"
+                        ],
+                        "format": "label"
+
+                        },
+
+                        "rules": [
+                            {
+                                "required": true,
+                                "message":"请输入"
+                            },
+                            {
+                                "max":10,
+                                "message":"最多可以输入 10 个字节"
+                            }
+                        ]
+                    },
+                    "audit_type": {
+                        "control": "select",
+                        "disabled":false,
+                        "label": "审计类型",
+                        "width": "130px",
+                        "dict": {
+                        "dictType": "MS_E_TABLETYPE",
+                        "dictKey": [
+                          "MS_E_TABLETYPE"
+                        ],
+                        "format": "label"
+
+                        },
+
+                        "rules": [
+                            {
+                                "required": true,
+                                "message":"请输入"
+                            },
+                            {
+                                "max":10,
+                                "message":"最多可以输入 10 个字节"
+                            }
+                        ]
+                    }
+                }
+               
+            ]
+        }
+    }
+}

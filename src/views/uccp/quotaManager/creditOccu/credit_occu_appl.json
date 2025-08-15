@@ -1,0 +1,190 @@
+{
+    "module": "v-inputDataForm-btn",
+    "layout": {
+        "form": {
+            "btns": [
+                {
+                    "type": "submit",
+                    "label": "提交",
+                    "icon": "",
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "uccp3011",
+                            "is_revo_loan":"0",
+                            "is_multi_loan":"0",
+                            "exceed_small_limit_ident":"0"
+                        }
+                    }
+                }
+            ],
+            "controls": [{
+                "cust_no": {
+                    "control": "lookup",
+                    "edit": true,
+                    "label": "客户编号",
+                    "keyField": {
+                        "cust_no":"cust_no",
+                        "source_credit_number":"source_credit_number",
+                        "prod_credit_seq":"prod_credit_seq",
+                        "source_system":"source_system",
+                        "prod_code":"prod_code",
+                        "base_ccy_code":"base_ccy_code",
+                        "old_ccy_code":"old_ccy_code",
+                        "time_point_rate":"time_point_rate",
+                        "occup_effective_date":"effect_date",
+                        "occup_expiry_date":"expiry_date"
+                    },
+                    "toRequest": {
+                        "url": "/views/uccp/quotaManager/creditOccu/credit_prod_lookup.json",
+                        "method": "get",
+                        "params":{
+                            "cust_no": "${{params.cust_no}}"
+                        }
+                    },
+                    "props": {
+                        "title": "请选择客户编号",
+                        "width": "80%"
+                    }
+                },
+                "contract_no": {
+                    "control": "text",
+                    "label": "合同号",
+                    "align": "center",
+                    "rules": [{
+                        "required": true,
+                        "message": "请输入合同号"
+                    }]
+                },
+                "occup_appl_limit": {
+                    "control": "currency",
+                    "label": "申请占用金额",
+                    "format": {
+                        "decimal": "2"
+                    },
+                    "align": "left",
+                    "rules": [{
+                        "required": true,
+                        "message": "请输入申请占用金额"
+                    }]
+                },
+                "occup_appl_exposure_limit": {
+                    "control": "currency",
+                    "label": "申请占用敞口金额",
+                    "format": {
+                        "decimal": "2"
+                    },
+                    "align": "left",
+                    "rules": [{
+                        "required": true,
+                        "message": "请输入申请占用敞口金额"
+                    }]
+                },
+                "source_credit_number": {
+                    "control": "string",
+                    "edit": true,
+                    "label": "源系统授信额度编号",
+                    "rules": [{
+                        "required": true,
+                        "message": "请输入源系统授信额度编号"
+                    }]
+                },
+                "prod_credit_seq": {
+                    "control": "string",
+                    "edit": true,
+                    "label": "产品授信额度编号",
+                    "rules": [{
+                        "required": true,
+                        "message": "请输入产品授信额度编号"
+                    }]
+                },
+                "source_system": {
+                    "control": "string",
+                    "edit": true,
+                    "label": "来源系统",
+                    "rules": [{
+                        "required": true,
+                        "message": "请输入来源系统"
+                    }]
+                },
+                "prod_code": {
+                    "control": "string",
+                    "edit": true,
+                    "label": "产品编号",
+                    "rules": [{
+                        "required": true,
+                        "message": "请输入产品编号"
+                    }]
+                },
+                "occup_effective_date": {
+                    "disabled":"true",
+                    "control": "dateTimePicker",
+                    "label": "生效日期",
+                    "format": "yyyyMMdd",
+                    "rules": [{
+                        "required": true,
+                        "message": "请选择生效日期"
+                    }]
+                },
+                "occup_expiry_date": {
+                    "disabled":"true",
+                    "control": "dateTimePicker",
+                    "label": "失效日期",
+                    "format": "yyyyMMdd",
+                    "rules": [{
+                        "required": true,
+                        "message": "请选择失效日期"
+                    }]
+                },
+                "base_ccy_code": {
+                    "disabled":"true",
+                    "control": "select",
+                    "label": "基础币种",
+                    "align": "center",
+                    "rules": [{
+                        "required": true,
+                        "message": "请输入基础币种"
+                    }],
+                    "dict": {
+                        "dictType": "MS_CURRENCY",
+                        "dictKey": [
+                            "MS_CURRENCY"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                "old_ccy_code": {
+                    "disabled":"true",
+                    "control": "select",
+                    "label": "原始币种",
+                    "align": "center",
+                    "rules": [{
+                        "required": true,
+                        "message": "请输入原始币种"
+                    }],
+                    "dict": {
+                        "dictType": "MS_CURRENCY",
+                        "dictKey": [
+                            "MS_CURRENCY"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                "time_point_rate": {
+                    "disabled":"true",
+                    "control": "select",
+                    "label": "时点汇率",
+                    "align": "center",
+                    "rules": [{
+                        "required": true,
+                        "message": "请输入原始币种"
+                    }]
+                }
+                }
+            ]
+        }
+    }
+}

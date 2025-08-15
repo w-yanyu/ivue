@@ -1,0 +1,129 @@
+{
+  "module": "v-inputDataForm-btn",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "factCode": {
+            "label": "事实代码",
+            "control": "select",
+            "span": 12,
+            "disabled":true,
+            "dict": {
+              "dictType": "factCode",
+              "dictKey": [],
+              "format": "value",
+              "doRequest": {
+                "url": "/API/risk-management-service/combobox-select/fact-without-field",
+                "method": "post"
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请正确输入",
+                "max": 100
+              }
+            ] 
+          },
+          "factName": {
+            "label": "事实名称",
+            "control": "string",
+            "span": 12,
+            "rules": [
+              {
+                "required": true,
+                "message": "请正确输入",
+                "max": 100
+              }
+            ] 
+          }
+        },
+        {
+          "fieldCode": {
+            "label": "事实属性代码",
+            "control": "string",
+            "span": 12,
+            "rules": [
+              {
+                "required": true,
+                "pattern": "^[A-Za-z][A-Za-z\\d_]{0,59}$"
+              }
+            ]
+          },
+          "fieldName": {
+            "label": "事实属性名称",
+            "control": "text",
+            "span": 12,
+            "rules": [
+              {
+                "required": true,
+                "message": "请正确输入",
+                "max": 100
+              }
+            ]
+          }
+        },
+        {
+          "fieldType": {
+            "label": "事实属性类型",
+            "control": "select",
+            "span": 12,
+            "dict": {
+              "dictType": "dataType",
+              "dictKey": [],
+              "format": "value-label",
+              "doRequest": {
+                "url": "/views/risk/dictdata/dataType.json",
+                "method": "get"
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "该控件必填",
+                "max": 8
+              }
+            ]
+          },
+          "referenceCollectionCode": {
+            "label": "引用集合代码",
+            "control": "select",
+            "span": 12,
+            "dict": {
+              "dictType": "rule_constant",
+              "dictKey": [],
+              "format": "value-label",
+              "doRequest": {
+                "url": "/API/risk-management-service/combobox-select/rule_constant",
+                "method": "post"
+              }
+            }
+          }
+        },
+        {
+          "description": {
+            "label": "备注",
+            "control": "textarea",
+            "span": 24,
+            "rules": [
+              {
+                "message": "请正确输入",
+                "max": 500
+              }
+            ]
+          }
+        }
+      ],
+      "initRequest": "${{params}}",
+      "doRequest": {
+        "url": "/API/risk-management-service/risk-fact/update",
+        "method": "post",
+        "params":{
+          "updateUser": "$g{{user_info.userCode}}",
+          "factName":"${{params.factName}}"
+        }
+      }
+    }
+  }
+}

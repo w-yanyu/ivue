@@ -1,0 +1,138 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "initRequest": "${{params}}",
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "us0361"
+
+                }
+            },
+            "controls": [{
+                "cust_no": {
+                    "control": "hidden",
+                    "label": "客户编号",
+                    "value": "${{params.cust_no}}",
+                    "disabled": true,
+                    "width": "10px"
+                },
+                "member_cust_no": {
+                    "label": "董事会成员客户编号",
+                    "control": "hidden",
+                    "width": "10px"
+                },
+                "cust_name": {
+                    "label": "姓名",
+                    "control": "lookup",
+                    "edit": true,
+                    "width": "10px",
+                    "keyField": {
+                        "cust_name": "cust_name",
+                        "member_cust_no": "cust_no"
+                    },
+                    "toRequest": {
+                        "url": "/views/us/privateManage/customer_lookup.json",
+                        "method": "post"
+                    },
+                    "props": {
+                        "title": "查询客户名称"
+                    },
+                    "rules": [{
+                        "required": true,
+                        "message": "请选择董事会成员"
+                    }],
+                    "format": "label"
+                },
+                "is_our_cust": {
+                    "label": "是否我行客户",
+                    "control": "select",
+                    "width": "10px",
+                    "value": "1",
+                    "disabled": true,
+                    "rules": [{
+                        "required": true,
+                        "message": "请选择是否我行客户"
+                    }],
+                    "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                            "MS_E_YESORNO"
+                        ],
+                        "format": "label"
+                    }
+                },
+                "is_office": {
+                    "label": "是否在任",
+                    "control": "select",
+                    "width": "10px",
+                    "rules": [{
+                        "required": true,
+                        "message": "请选择是否在任"
+                    }],
+                    "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                            "MS_E_YESORNO"
+                        ],
+                        "format": "label"
+                    }
+                },
+                "board_job": {
+                    "label": "董事会职务",
+                    "control": "select",
+                    "width": "10px",
+                    "rules": [{
+                        "required": true,
+                        "message": "请选择董事会职务"
+                    }],
+                    "dict": {
+                        "dictType": "US_E_BOARD_JOB",
+                        "dictKey": [
+                            "US_E_BOARD_JOB"
+                        ],
+                        "format": "label"
+                    }
+                },
+                "post_start": {
+                    "control": "dateTimePicker",
+                    "label": "职务任职开始",
+                    "format": "yyyyMMdd",
+                    "width": "10px",
+                    "rules": [{
+                        "required": true,
+                        "message": "请选择职务任职开始时间"
+                    }]
+                },
+                "post_ent": {
+                    "control": "dateTimePicker",
+                    "label": "职务任职结束",
+                    "format": "yyyyMMdd",
+                    "width": "10px",
+                    "rules": [{
+                        "message": "请选择职务任职结束"
+                    }],
+                    "disabledDate": {
+                        "startRange": "${{form.post_start}}",
+                        "endRange": "3000-12-30"
+                    }
+                },
+                "remark": {
+                    "label": "备注",
+                    "control": "textarea",
+                    "width": "10px",
+                    "span": "24",
+                    "autosize": {
+                        "minRows": 4
+                    },
+                    "rules": [{
+                        "max": "100",
+                        "message": "长度不能超过100个字符"
+                    }]
+                }
+            }]
+        }
+    }
+}

@@ -1,0 +1,223 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [{
+                "cust_name": {
+                    "control": "text",
+                    "label": "客户名称",
+                    "rules": [{
+                        "max": 80,
+                        "message": "长度不能超过80个字符"
+                    }]
+                }},
+                {
+                    "reg_date": {
+                        "label": "登记日期",
+                        "control": "dateTimePicker",
+                        "editable": true,
+                        "format": "yyyyMMdd"
+                    }
+  
+                },
+                {
+                "is_reject": {
+                    "control": "select",
+                    "label": "是否被拒绝",
+                    "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                            "MS_E_YESORNO"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                "status": {
+                    "control": "select",
+                    "label": "状态",
+                    "dict": {
+                        "dictType": "US_E_STATE",
+                        "dictKey": [
+                            "US_E_STATE"
+                        ],
+                        "format": "label"
+                    }
+                }
+            }]
+        },
+        "toolbar": {
+            "btns": [{
+                "type": "add",
+                "target": "dialog",
+                "label": "新增",
+                "toRequest": {
+                    "method": "GET",
+                    "url": "/views/us/custMarket/custMarket_add.json",
+                    "params": {
+                        "cust_no": "${{params.cust_no}}",
+                        "cust_name": "${{params.cust_name}}"
+                    }
+                },
+                "props": {
+                    "title": "潜在客户登记新增",
+                    "width": "75%"
+                }
+            }]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "us0814",
+                    "cust_no":"${{params.cust_no}}"
+                }
+            },
+            "thead": [{
+                    "type": "index",
+                    "width": 50,
+                    "label": "序号"
+                },
+                {
+                    "label": "潜在客户序号",
+                    "prop": "cust_market_no",
+                    "align": "center",
+                    "type": "leaf"
+                },
+                {
+                    "label": "客户名称",
+                    "prop": "cust_name",
+                    "align": "center",
+                    "type": "leaf"
+                },
+                {
+                    "label": "性别",
+                    "prop": "sex_tp",
+                    "align": "center",
+                    "type": "leaf",
+                    "dict": {
+                        "dictType": "MS_E_GENDER",
+                        "dictKey": [
+                            "MS_E_GENDER"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "登记日期",
+                    "prop": "reg_date",
+                    "align": "center",
+                    "type": "leaf"
+                },
+                {
+                    "label": "是否被拒绝",
+                    "prop": "is_reject",
+                    "align": "center",
+                    "type": "leaf",
+                    "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                            "MS_E_YESORNO"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "状态",
+                    "prop": "status",
+                    "align": "center",
+                    "type": "leaf",
+                    "dict": {
+                        "dictType": "US_E_STATE",
+                        "dictKey": [
+                            "US_E_STATE"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "是否转正",
+                    "prop": "is_regular",
+                    "align": "center",
+                    "type": "leaf",
+                    "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                            "MS_E_YESORNO"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 200,
+                    "align": "center",
+                    "btns": [
+                        {
+                            "type": "edit",
+                            "show": {
+                                "prop": "is_regular",
+                                "is": [
+                                    "0",null,""
+                                ]
+                            },
+                            "label": "转正式客户",
+                            "toRequest": {
+                                "url": "/views/us/custMarket/custMarket_to_regular.json",
+                                "method": "GET"
+                            },
+                            "props": {
+                                "width": "75%",
+                                "title": "潜在客户转正式客户"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "详情",
+                            "toRequest": {
+                                "url": "/views/us/custMarket/custMarket_info.json",
+                                "method": "GET"
+                            },
+                            "props": {
+                                "width": "75%",
+                                "title": "潜在客户详情"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/us/custMarket/custMarket_modify.json",
+                                "method": "GET"
+                            },
+                            "props": {
+                                "width": "75%",
+                                "title": "潜在客户维护"
+                            }
+                        },
+                        {
+                            "type": "custom",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "us0817"
+                                }
+                            },
+                            "confirm": {
+                                "title": "确定删除",
+                                "confirmButtonText": "确定",
+                                "cancelButtonText": "取消"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

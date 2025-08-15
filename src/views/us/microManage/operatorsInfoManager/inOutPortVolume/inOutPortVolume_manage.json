@@ -1,0 +1,266 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "years": {
+            "control": "dateTimePicker",
+            "label": "年份",
+            "span": "8",
+            "width": "25px",
+            "type": "year",
+            "format": "yyyy"
+          }
+        },
+        {
+          "in_out_type": {
+            "control": "select",
+            "label": "进出口量类型",
+            "span": "8",
+            "value": "1",
+            "width": "25px",
+            "dict": {
+              "dictType": "E_IN_OUT_TYPE",
+              "dictKey": [
+                "E_IN_OUT_TYPE"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/us/microManage/operatorsInfoManager/inOutPortVolume/inOutPortVolume_add.json",
+            "params": {
+              "cust_no": "${{params.cust_no}}"
+            }
+          },
+          "props": {
+            "width": "40%",
+            "title": "进出口量信息新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "us0853",
+          "cust_no": "${{params.cust_no}}"
+        }
+      },
+      "thead": [
+        {
+          "type": "index",
+          "label": "序号"
+        },
+        {
+          "label": "年份",
+          "prop": "years",
+          "align": "center"
+        },
+        {
+          "label": "进出口量类型",
+          "prop": "in_out_type",
+          "align": "center",
+          "dict": {
+            "dictType": "E_IN_OUT_TYPE",
+            "dictKey": [
+              "E_IN_OUT_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "币种",
+          "prop": "ccy_code",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_CURRENCY",
+            "dictKey": [
+              "MS_CURRENCY"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "一月",
+          "prop": "january",
+          "align": "center",
+          "format":{
+            "thousand": ",",
+            "decimal": 2
+          }
+        },
+        {
+          "label": "二月",
+          "prop": "february",
+          "align": "center",
+          "format":{
+            "thousand": ",",
+            "decimal": 2
+          }
+        },
+        {
+          "label": "三月",
+          "prop": "march",
+          "align": "center",
+          "format":{
+            "thousand": ",",
+            "decimal": 2
+          }
+        },
+        {
+          "label": "四月",
+          "prop": "april",
+          "align": "center",
+          "format":{
+            "thousand": ",",
+            "decimal": 2
+          }
+        },
+        {
+          "label": "五月",
+          "prop": "may",
+          "align": "center",
+          "format":{
+            "thousand": ",",
+            "decimal": 2
+          }
+        },
+        {
+          "label": "六月",
+          "prop": "june",
+          "align": "center",
+          "format":{
+            "thousand": ",",
+            "decimal": 2
+          }
+        },
+        {
+          "label": "七月",
+          "prop": "july",
+          "align": "center",
+          "format":{
+            "thousand": ",",
+            "decimal": 2
+          }
+        },
+        {
+          "label": "八月",
+          "prop": "august",
+          "align": "center",
+          "format":{
+            "thousand": ",",
+            "decimal": 2
+          }
+        },
+        {
+          "label": "九月",
+          "prop": "september",
+          "align": "center",
+          "format":{
+            "thousand": ",",
+            "decimal": 2
+          }
+        },
+        {
+          "label": "十月",
+          "prop": "october",
+          "align": "center",
+          "format":{
+            "thousand": ",",
+            "decimal": 2
+          }
+        },
+        {
+          "label": "十一月",
+          "prop": "november",
+          "align": "center",
+          "format":{
+            "thousand": ",",
+            "decimal": 2
+          }
+        },
+        {
+          "label": "十二月",
+          "prop": "december",
+          "align": "center",
+          "format":{
+            "thousand": ",",
+            "decimal": 2
+          }
+        },
+        {
+          "label": "操作",
+          "width": "180px",
+          "fixed": "right",
+          "align": "center",
+          "btns": [
+            {
+              "type": "custom",
+              "label": "详请",
+              "toRequest": {
+                "url": "/views/us/microManage/operatorsInfoManager/inOutPortVolume/inOutPortVolume_info.json",
+                "params": {
+                  "cust_no": "${{params.cust_no}}"
+                },
+                "props": {
+                  "width": "40%",
+                  "height": "590px",
+                  "title": "进出口量信息"
+                }
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/us/microManage/operatorsInfoManager/inOutPortVolume/inOutPortVolume_modify.json",
+                "params": {
+                  "cust_no": "${{params.cust_no}}"
+                },
+                "props": {
+                  "width": "40%",
+                  "height": "590px",
+                  "title": "进出口量信息维护"
+                }
+              }
+            },
+            {
+              "type": "custom",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "us0856",
+                  "cust_no": "${{params.cust_no}}"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

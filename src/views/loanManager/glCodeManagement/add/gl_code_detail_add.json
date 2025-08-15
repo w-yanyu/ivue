@@ -1,0 +1,269 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "initRequest": "${{params}}",
+            "btns": [{
+                "type": "submit",
+                "label": "提交",
+                "icon": "",
+                "doRequest": {
+                    "url": "/SUMP/icmcall/icmRPCCall",
+                    "method": "post",
+                    "params": {
+                        "servicecode": "IGLSFATS3010",
+                        "list01": "[${{form}}]"
+                    }
+                }
+            }],
+            "controls": [{
+                    "gl_code": {
+                        "control": "text",
+                        "label": "科目号",
+                        "rules": [{
+                            "required": true,
+                            "message": "请输入科目号"
+                        }]
+                    },
+                    "gl_code_desc": {
+                        "control": "text",
+                        "label": "科目名称",
+                        "rules": [{
+                            "required": true,
+                            "message": "请输入科目名称"
+                        }]
+                    }
+                },
+                {
+                    "upper_lvl_gl_code": {
+                        "control": "text",
+                        "label": "上级科目",
+                        "rules": [{
+                            "required": true,
+                            "message": "请输入上级科目"
+                        }]
+                    },
+                    "gl_code_type": {
+                        "control": "select",
+                        "label": "科目类别",
+                        "dict": {
+                            "dictType": "E_SUBJECTTYPE",
+                            "dictKey": [
+                                "E_SUBJECTTYPE"
+                            ],
+                            "format": "value-label"
+                        },
+                        "rules": [{
+                            "required": true,
+                            "message": "请选择科目类别"
+                        }]
+                    }
+                },
+                {
+                    "gl_code_level": {
+                        "control": "select",
+                        "label": "科目级别",
+                        "dict": {
+                            "dictType": "E_GLCODELEVEL",
+                            "dictKey": [
+                                "E_GLCODELEVEL"
+                            ],
+                            "format": "value-label"
+                        },
+                        "rules": [{
+                            "required": true,
+                            "message": "请选择科目级别"
+                        }],
+                        "events": {
+                            "condition": {
+                                "2": {
+                                    "control": {
+                                        "upper_lvl_gl_code": {
+                                            "rules": [{
+                                                "required": "true",
+                                                "message": "请输入上级科目"
+                                            }]
+                                        }
+                                    }
+                                },
+                                "3": {
+                                    "control": {
+                                        "upper_lvl_gl_code": {
+                                            "rules": [{
+                                                "required": "true",
+                                                "message": "请输入上级科目"
+                                            }]
+                                        }
+                                    }
+                                },
+                                "4": {
+                                    "control": {
+                                        "upper_lvl_gl_code": {
+                                            "rules": [{
+                                                "required": "true",
+                                                "message": "请输入上级科目"
+                                            }]
+                                        }
+                                    }
+                                },
+                                "$default": {
+                                    "control": {
+                                        "upper_lvl_gl_code": {
+                                            "rules": [{
+                                                "required": false,
+                                                "message": "请输入上级科目"
+                                            }]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "end_gl_code_ind": {
+                        "control": "select",
+                        "label": "末层科目标志",
+                        "dict": {
+                            "dictType": "MS_E_YESORNO",
+                            "dictKey": [
+                                "MS_E_YESORNO"
+                            ],
+                            "format": "label"
+                        },
+                        "rules": [{
+                            "required": true,
+                            "message": "请选择末层科目标志"
+                        }]
+                    }
+                },
+                {
+                    "bal_prop": {
+                        "control": "select",
+                        "label": "余额性质",
+                        "dict": {
+                            "dictType": "E_BALPROP",
+                            "dictKey": [
+                                "E_BALPROP"
+                            ],
+                            "format": "label"
+                        },
+                        "rules": [{
+                            "required": true,
+                            "message": "请选择余额性质"
+                        }]
+                    },
+                    "on_bal_sheet_ind": {
+                        "control": "select",
+                        "label": "表内标志",
+                        "dict": {
+                            "dictType": "MS_E_YESORNO",
+                            "dictKey": [
+                                "MS_E_YESORNO"
+                            ],
+                            "format": "label"
+                        },
+                        "rules": [{
+                            "required": true,
+                            "message": "请选择表内标志"
+                        }]
+                    }
+                },
+                {
+                    "simple_list_display_ind": {
+                        "control": "select",
+                        "label": "简表展示标识",
+                        "dict": {
+                            "dictType": "MS_E_YESORNO",
+                            "dictKey": [
+                                "MS_E_YESORNO"
+                            ],
+                            "format": "label"
+                        },
+                        "rules": [{
+                            "required": true,
+                            "message": "请选择简表展示标识"
+                        }]
+                    },
+                    "bal_check_ind": {
+                        "control": "select",
+                        "label": "余额检查标志",
+                        "dict": {
+                            "dictType": "MS_E_YESORNO",
+                            "dictKey": [
+                                "MS_E_YESORNO"
+                            ],
+                            "format": "label"
+                        },
+                        "rules": [{
+                            "required": true,
+                            "message": "请选择余额检查标志"
+                        }]
+                    }
+                },
+                {
+                    "debit_manual_allow": {
+                        "control": "select",
+                        "label": "借方手工记账许可",
+                        "dict": {
+                            "dictType": "MS_E_YESORNO",
+                            "dictKey": [
+                                "MS_E_YESORNO"
+                            ],
+                            "format": "label"
+                        },
+                        "rules": [{
+                            "required": true,
+                            "message": "请选择借方手工记账许可"
+                        }]
+                    },
+                    "credit_manual_allow": {
+                        "control": "select",
+                        "label": "贷方手工记账许可",
+                        "dict": {
+                            "dictType": "MS_E_YESORNO",
+                            "dictKey": [
+                                "MS_E_YESORNO"
+                            ],
+                            "format": "label"
+                        },
+                        "rules": [{
+                            "required": true,
+                            "message": "请选择贷方手工记账许可"
+                        }]
+                    }
+                },
+                {
+                    "manual_open_acct_mode": {
+                        "control": "select",
+                        "label": "手工开户受理模式",
+                        "dict": {
+                            "dictType": "E_MANUALOPENACCTMODE",
+                            "dictKey": [
+                                "E_MANUALOPENACCTMODE"
+                            ],
+                            "format": "label"
+                        },
+                        "rules": [{
+                            "required": true,
+                            "message": "请选择手工开户受理模式"
+                        }]
+                    },
+                    "valid_ind": {
+                        "control": "select",
+                        "label": "有效标志",
+                        "dict": {
+                            "dictType": "MS_E_YESORNO",
+                            "dictKey": [
+                                "MS_E_YESORNO"
+                            ],
+                            "format": "label"
+                        },
+                        "rules": [{
+                            "required": true,
+                            "message": "请选择有效标志"
+                        }]
+                    }
+                }
+            ]
+        }
+    }
+}

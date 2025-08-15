@@ -1,0 +1,100 @@
+{
+    "module": "v_search_btn_datagrid",
+    "init": {
+        "initRequest": "${{params}}"
+    },
+    "layout": {
+        
+        "form": {
+            "doRequest": {
+                "url": "",
+                "method": "",
+                "params": {
+                   
+                }
+            },
+            "controls": [
+                {
+                    "rate_code": {
+                        "control": "text",
+                        "label": "定价方案编号",
+                        "rules": [
+                            {
+                                "max": 200,
+                                "message": "长度不能超过20个字符"
+                            }
+                        ]
+                    },
+                    "rate_name": {
+                        "control":"text",
+                        "label":"定价方案名称",
+                        "rules": [
+                            {
+                                "max":400,
+                                "message": "长度不能超过400个字符"
+                            }
+                        ] 
+
+                    }
+                }
+                
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "bringback",
+                    "label":  "选择",
+                    "multiple": true,
+                    "control":"ckeckbox" 
+                   
+                   
+                }
+            ]
+        }
+        ,
+
+        "datagrid": {
+           "saveAllSelected": true,
+            "doRequest": {
+                "url": "/SUMP/rest/auth/userManager",
+                "method": "POST", 
+                "params": {
+                    "servicecode": "queryplan"
+                    
+                }
+            },
+    
+            "thead": [
+                {
+                    "type": "selection",
+                    "align": "center"
+                  },
+                {
+                    "type": "string",
+                    "label": "定价方案编号",
+                    "prop": "rate_code",
+                    "align": "center"
+                },
+                {
+                    "type": "string",
+                    "label": "定价方案名称",
+                    "prop": "rate_name",
+                    "align": "center"
+                },   
+                {
+                    "type": "string",
+                    "label": "期数",
+                    "prop": "periods",
+                    "align": "center"
+                },
+                {
+                    "type": "string",
+                    "label": "利率",
+                    "prop": "interest_rate",
+                    "align": "center"
+                }
+            ]
+        }
+    }
+}

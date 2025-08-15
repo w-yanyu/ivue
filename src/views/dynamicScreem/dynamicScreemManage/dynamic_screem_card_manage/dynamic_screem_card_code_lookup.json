@@ -1,0 +1,89 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "service_code": {
+            "control": "text",
+            "label": "交易码",
+            "rules": [
+              {
+                "max": 50,
+                "message": "长度不能超过50个字符"
+              }
+            ]
+          },
+          "screen_card_type": {
+            "label": "卡片类型",
+            "control": "select",
+            "dict": {
+                "format": "value-label",
+                "dictKey": [
+                    "CT_E_SCREEN_CARD_TYPE"
+                ],
+                "dictType": "CT_E_SCREEN_CARD_TYPE"
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "saveAllSelected": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ct2612"
+        }
+      },
+      "thead": [
+        {
+          "label": "交易码",
+          "prop": "service_code"
+        },
+        {
+          "label": "卡片类型",
+          "prop": "screen_card_type",
+          "dict": {
+            "splitType": ",",
+            "dictType": "CT_E_SCREEN_CARD_TYPE",
+            "dictKey": [
+              "CT_E_SCREEN_CARD_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "业务类型",
+          "prop": "busi_card_type",
+          "dict": {
+            "dictType": "CT_E_BUSI_CARD_TYPE",
+            "dictKey": [
+              "CT_E_BUSI_CARD_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "业务描述",
+          "prop": "description"
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "fixed": "right",
+          "btns": [
+            {
+              "type": "bringback",
+              "label": "选择"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

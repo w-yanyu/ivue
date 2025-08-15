@@ -1,0 +1,97 @@
+{
+    "module": "v_form_btn_dynamic",
+    "layout": {
+        "form": {
+            "scope": "formData",
+            "formSetTitle": "利率调整",
+            "formResultTitle": "调整结果",
+            "controls": [
+                {
+                    "lncfno": {
+                        "span": "8",
+                        "control": "text",
+                        "label": "借据号",
+                        "###edit": true,
+                        "##keyField": {
+                            "####acctno": "inacct"
+                        },
+                        "####toRequest": {
+                            "####url": "/views/loanManager/intetestRateAdjustment/interest_rate_adjustment_loanno_inquiry.json",
+                            "####method": "post"
+                        },
+                        "###multiple": false,
+                        "###props": {
+                            "title": "请选择"
+                        },
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入借据号"
+                            }
+                        ]
+                    },
+                    "newlnrtir": {
+                        "span": "8",
+                        "control": "inputNumber",
+                        "label": "新固定利率(%)",
+                        "min": 0,
+                        "max": 100,
+                        "controls": false,
+                        "position": "left",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入新固定利率(%)"
+                            }
+                        ]
+                    },
+                    "adjres": {
+                        "span": "8",
+                        "control": "select",
+                        "label": "利率调整原因",
+                        "dict": {
+                          "dictType": "E_ADJRES",
+                          "dictKey": [
+                            "E_ADJRES"
+                          ],
+                          "format": "label"
+                        },
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请选择利率调整原因"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "submit",
+                    "label": "调整",
+                    "unplain":true,
+                    "icon": "",
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "CORELNTS2003"
+                        }
+                    },
+                    "toRequest": {
+                        "url": "/views/loanManager/intetestRateAdjustment/interest_rate_adjustment_result.json",
+                        "method": "POST"
+                    }
+                },
+                {
+                    "type": "reset",
+                    "btnStyle": "success",
+                    "icon": "",
+                    "label": "清空"
+                }
+            ]
+        }
+    }
+}

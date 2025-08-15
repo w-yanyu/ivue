@@ -1,0 +1,298 @@
+{
+  "module": "v-search-btn-datagrid",
+  "pageId": "risk_system_manage_list",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "systemName": {
+            "label": "系统名称",
+            "control": "remoteSelect",
+            "labelField": "systemName",
+            "valueField": "systemName",
+            "span": 8,
+            "width": "auto",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "post",
+              "params": {
+                "servicecode": "deci090101",
+                "start":1,
+                "length":5000,
+                "isList": true
+              }
+            },
+            "format": "label"
+          },
+          "systemId": {
+            "label": "系统编号标识",
+            "control": "text",
+            "span": 8,
+            "width": "auto"
+          },
+          "systemBranchId": {
+            "format": "label",
+            "label": "系统所属机构",
+            "control": "remoteSelect",
+            "labelField": "branch_name",
+            "valueField": "branch_id", 
+            "searchField":"branch_name",
+            "filterable":"true",
+            "span": 8,
+            "width": "auto",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "post",
+              "params": {
+                "is_authorize":"true",
+                "servicecode": "ct2191"
+              }
+            }
+          }
+        },
+        {
+          "updateTime": {
+            "control": "dateTimePicker",
+            "label": "最新维护时间",
+            "type": "daterange",
+            "span": 8,
+            "width": "auto",
+            "startPlaceholder": "开始时间",
+            "endPlaceholder": "结束时间",
+            "unlinkPanels": true
+          },
+          "status": {
+            "label": "授权状态",
+            "control": "select",
+            "span": 8,
+            "width": "auto",
+            "dict": {
+              "dictType": "RISK_E_AUTH_STATUS",
+              "dictKey": [
+                "RISK_E_AUTH_STATUS"
+              ],
+              "format": "label"
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "authId": "authorize_manage_add",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/risk/risk_authorize_manage/risk_authorize_manage_step_add.json",
+            "params": {
+              "groupNum": "${{params.groupNum}}"
+            }
+          },
+          "props": {
+            "title": "授权系统新增",
+            "width": "55%",
+            "height":"670px"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "deci090102",
+          "isList": true
+        }
+      },
+      "eventAfter": {
+        "doParentCallback": true
+      },
+      "thead": [
+        {
+          "label": "序号",
+          "type": "index"
+        },
+        {
+          "label": "系统名称",
+          "prop": "systemName"
+        },
+        {
+          "label": "系统编号标识",
+          "prop": "systemId"
+        },
+        {
+          "label": "系统所属机构",
+          "prop": "systemBranchId",
+          "dict": {
+            "dictType": "DECI_E_BRANCH_MARK2",
+            "dictKey": [
+              "DECI_E_BRANCH_MARK2"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "最新维护人",
+          "prop": "updateUser",
+          "dict": {
+            "dictType":"deciOnl",
+              "dictKey": [],
+              "format": "label",
+              "labelField": "user_name",
+              "valueField": "user_id",
+              "doRequest": {
+                  "url": "/SUMP/icmcall/icmRPCCall",
+                  "method": "POST",
+                  "params": {
+                    "length":1000,
+                    "start":1,
+                      "servicecode": "ct2503"
+                  }
+              }
+          }
+        },
+        {
+          "label": "最新维护时间",
+          "prop": "updateTime",
+          "#format": "yyyy-MM-dd HH:mm:ss"
+        },
+        {
+          "label": "授权状态",
+          "prop": "status",
+          "dict": {
+            "dictType": "RISK_E_AUTH_STATUS",
+            "dictKey": [
+              "RISK_E_AUTH_STATUS"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "备注",
+          "prop": "remark"
+        },
+        {
+          "label": "操作",
+          "width": "170px",
+          "align": "center",
+          "fixed": "right",
+          "btns": [
+            {
+              "type": "confirmIncreaseBtn",
+              "label": "生效",
+              "authId": "authorize_manage_effect",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "deci090104",
+                  "status": "1"
+                }
+              },   "eventAfter": {
+                "callback": "customCallback"
+              },
+              "confirm": {
+                "title": "提示信息",
+                "msgTemplate": "请确认是否生效对“${{current.systemName}}-${{current.systemId}}”的授权！",
+                "msg": "",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              },
+              "show": {
+                "expression": "'${{current.status}}' === '0'"
+              }
+            },
+            {
+              "type": "confirmIncreaseBtn",
+              "label": "失效",
+              "authId": "authorize_manage_invalid",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "deci090104",
+                  "status": "0"
+                }
+              }, "eventAfter": {
+                "callback": "customCallback"
+              },
+              "confirm": {
+                "title": "提示信息",
+                "msgTemplate": "请确认是否对“${{current.systemName}}-${{current.systemId}}”的授权进行失效操作！此操作可能会导致调用失败！",
+                "msg": "",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              },
+              "show": {
+                "expression": "'${{current.status}}' === '1'"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "authId": "authorize_manage_update",
+              "toRequest": {
+                "url": "/views/risk/risk_authorize_manage/risk_authorize_manage_step_update.json",
+                "method": "get",
+                "params": {}
+              },
+              "props": {
+                "title": "授权系统维护",
+                "width": "55%",
+                "height":"670px"
+              },
+              "#show": {
+                "expression": "'${{current.status}}' === '1'"
+              }
+            },
+            {
+              "type": "confirmIncreaseBtn",
+              "label": "删除",
+              "authId": "authorize_manage_delete",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "deci090105"
+                }
+              },
+              "show": {
+                "expression": "'${{current.status}}' === '0'"
+              }, "eventAfter": {
+                "callback": "customCallback"
+              },
+              "confirm": {
+                "title": "提示信息",
+                "msgTemplate":"是否删除“${{current.systemName}}-${{current.systemId}}”的授权！",
+                "msg": "",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "详情",
+              "authId": "authorize_manage_view",
+              "toRequest": {
+                "url": "/views/risk/risk_authorize_manage/risk_authorize_manage_step_view.json",
+                "method": "get",
+                "params": {
+                  "isOnlyRead": true
+                }
+              },
+              "props": {
+                "title": "授权系统详情",
+                "width": "55%"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

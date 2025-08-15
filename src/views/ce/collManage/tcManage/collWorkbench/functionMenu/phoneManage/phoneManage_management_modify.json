@@ -1,0 +1,195 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": "${{params}}",
+      "doRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ce3541",
+          "case_no": "${{params.case_no}}",
+          "contact_id": "${{params.contact_id}}"
+        }
+      },
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "icon": "el-icon-tickets"
+        },
+        {
+          "type": "close",
+          "label": "取消"
+        }
+      ],
+      "controls": [
+        {
+          "relationship": {
+            "control": "select",
+            "span": "6",
+            "clearable": false,
+            "label": "客户关系",
+            "inputWidth": "200px",
+            "dict": {
+              "dictType": "CE_E_RELATIONSHIP",
+              "dictKey": [
+                "CE_E_RELATIONSHIP"
+              ],
+              "format": "label"
+            },
+            "####": "客户关系为本人时，姓名只能为本人信息,并不可设置姓名",
+            "events": {
+              "condition": {
+                "keyVals": {
+                  "001": "'${{form.relationship}}' === '9999' && '${{form.reg_type}}' === 'M'",
+                  "002": "'${{form.relationship}}' !== '9999' && '${{form.reg_type}}' === 'M'"
+                },
+                "switch": {
+                  "001": {
+                    "control": {
+                      "linkman": {
+                        "disabled": true
+                      }
+                    },
+                    "doRequest": {
+                      "url": "/SUMP/call/RPCCall",
+                      "method": "POST",
+                      "params": {
+                        "servicecode": "ce3602",
+                        "case_no": "${{params.case_no}}"
+                      },
+                      "resultSet": {
+                        "linkman": "name"
+                      }
+                    }
+                  },
+                  "002": {
+                    "control": {
+                      "linkman": {
+                        "disabled": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "linkman": {
+            "control": "text",
+            "span": "8",
+            "label": "联系人姓名",
+            "inputWidth": "200px"
+          },
+          "tele_type": {
+            "control": "select",
+            "span": "8",
+            "label": "电话类型",
+            "inputWidth": "200px",
+            "dict": {
+              "dictType": "CE_E_TELE_TYPE",
+              "dictKey": [
+                "CE_E_TELE_TYPE"
+              ],
+              "format": "label"
+            }
+          }
+        },
+        {
+          "tel_no": {
+            "control": "text",
+            "span": "6",
+            "label": "电话号码",
+            "inputWidth": "200px",
+            "rules": [
+              {
+                "pattern": "^1(3[0-9]|5[189]|8[6789])[0-9]{8}$",
+                "message": "电话号码格式错误"
+              }
+            ]
+          },
+          "reg_type": {
+            "control": "hidden",
+            "span": "8",
+            "label": "系统类型",
+            "disabled": true,
+            "inputWidth": "200px",
+            "dict": {
+              "dictType": "CE_E_REG_TYPE",
+              "dictKey": [
+                "CE_E_REG_TYPE"
+              ],
+              "format": "label"
+            },
+            "events": {
+              "condition": {
+                "keyVals": {
+                  "001": "'${{form.relationship}}' === '9999' && '${{form.reg_type}}' === 'M'",
+                  "002": "'${{form.reg_type}}' === 'B'"
+                },
+                "switch": {
+                  "001": {
+                    "control": {
+                      "relationship": {
+                        "disabled": true
+                      }
+                    },
+                    "doRequest": {
+                      "url": "/SUMP/call/RPCCall",
+                      "method": "POST",
+                      "params": {
+                        "servicecode": "ce3602",
+                        "case_no": "${{params.case_no}}"
+                      },
+                      "resultSet": {
+                        "linkman": "name"
+                      }
+                    }
+                  },
+                  "002": {
+                    "control": {
+                      "relationship": {
+                        "disabled": true
+                      },
+                      "linkman": {
+                        "disabled": true
+                      },
+                      "tele_type": {
+                        "disabled": true
+                      },
+                      "tel_no": {
+                        "disabled": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "is_valid": {
+            "control": "select",
+            "span": "8",
+            "label": "是否有效",
+            "inputWidth": "200px",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            }
+          }
+        },
+        {
+          "remark": {
+            "control": "textarea",
+            "span": "6",
+            "rows": "12",
+            "label": "备注",
+            "inputWidth": "1000px"
+          }
+        }
+      ]
+    }
+  }
+}

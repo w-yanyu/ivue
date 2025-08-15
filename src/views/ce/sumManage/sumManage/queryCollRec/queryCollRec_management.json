@@ -1,0 +1,388 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "controls": [
+        {
+          "branch_org": {
+            "control": "remoteSelect",
+            "label": "机构",
+            "labelField": "branch_name",
+            "valueField": "branch_id",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2173"
+              }
+            },
+            "format": "label"
+          },
+          "cust_name": {
+            "control": "text",
+            "label": "客户姓名"
+          }
+        },
+        {
+          "cert_no": {
+            "control": "text",
+            "label": "证件号码"
+          },
+          "cust_no": {
+            "control": "text",
+            "label": "客户号"
+          }
+        },
+        {
+          "tel_no": {
+            "control": "text",
+            "label": "手机号码"
+          },
+          "daterange": {
+            "control": "dateTimePicker",
+            "label": "催收时间",
+            "type": "daterange",
+            "valueFormat": "yyyyMMdd",
+            "startPlaceholder": "选择开始时间",
+            "endPlaceholder": "选择结束时间",
+            "unlinkPanels": true,
+            "startField": "start_time",
+            "endField": "expir_time"
+          }
+        },
+        {
+          "collection_action": {
+              "control": "select",
+              "label": "是否接通",
+              "dict": {
+                "dictType": "CE_E_COLL_ACTION",
+                "dictKey": [
+                  "CE_E_COLL_ACTION"
+                ],
+                "format": "value-label"
+              }
+          },
+          "sys_type": {
+              "control": "select",
+              "label": "登记类型",
+              "dict": {
+                "dictType": "CE_E_REG_TYPE",
+                "dictKey": [
+                  "CE_E_REG_TYPE"
+                ],
+                "format": "value-label"
+              }
+          }
+        },
+        {
+          "queue_code": {
+            "control": "remoteSelect",
+            "label": "队列名称",
+            "labelField": "queue_name",
+            "valueField": "queue_code",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ce0402"
+              }
+            },
+            "format": "value-label"
+          },
+          "casestate_code": {
+            "control": "remoteSelect",
+            "label": "案件状态",
+            "labelField": "status_name",
+            "valueField": "casestate_code",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ce0411"
+              }
+            },
+            "format": "value-label"
+          }
+        },
+        {
+          "overdue_stage_code": {
+            "control": "remoteSelect",
+            "label": "逾期阶段",
+            "labelField": "ovd_period_name",
+            "valueField": "overdue_stage_code",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ce0412"
+              }
+            },
+            "format": "value-label"
+          }
+        },
+        {
+          "ovd_amt_total_1": {
+            "control": "inputNumber",
+            "label": "欠款金额区间开始值"
+          },
+          "ovd_amt_total_2": {
+            "control": "inputNumber",
+            "label": "欠款金额区间结束值"
+          }
+        },
+        {
+          "collect_date_1": {
+            "control": "inputNumber",
+            "label": "入催天数区间开始值"
+          },
+          "collect_date_2": {
+            "control": "inputNumber",
+            "label": "入催天数区间结束值"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "export",
+          "label": "导出",
+          "icon": "iconfont icon-daochu",
+          "doRequest": {
+            "method": "POST",
+            "url": "/SUMP/icmcall/export",
+            "params": {
+              "servicecode": "ce6628"
+            }
+          },
+          "confirm":{
+            "title":"提示信息",
+            "msg":"确认导出吗？",
+            "confirmButtonText":"确定",
+            "cancelButtonText":"取消"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ce6627"
+        }
+      },
+      "thead": [
+        {
+          "type": "selection",
+          "align": "center",
+          "width": "55",
+          "fixed": "left",
+          "show": {
+            "prop": "changkuan",
+            "is": [
+              "0"
+            ]
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "100",
+          "label": "机构",
+          "prop": "branch_org",
+          "dict": {
+            "dictKey": [
+              "branch_org"
+            ],
+            "format": "label",
+            "labelField": "branch_name",
+            "valueField": "branch_id",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2173"
+              }
+            }
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "150px",
+          "label": "案件编号",
+          "prop": "case_no"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "120px",
+          "label": "客户姓名",
+          "prop": "cust_name"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "证件类型",
+          "width": "150px",
+          "prop": "cert_type",
+          "dict": {
+            "dictType": "MS_E_CRET_TYPE",
+            "dictKey": [
+              "MS_E_CRET_TYPE"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "150px",
+          "label": "证件号码",
+          "prop": "cert_no"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "180px",
+          "label": "催收时间",
+          "prop": "coll_time"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "100px",
+          "label": "催收员",
+          "prop": "collector",
+          "dict": {
+            "dictKey": [
+              "rec_collector"
+            ],
+            "format": "label",
+            "labelField": "user_name",
+            "valueField": "user_id",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ce0403"
+              }
+            }
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "180px",
+          "label": "客户关系",
+          "prop": "relationship",
+          "dict": {
+            "dictType": "CE_E_RELATIONSHIP",
+            "dictKey": [
+              "CE_E_RELATIONSHIP"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "100px",
+          "label": "联系姓名",
+          "prop": "linkman"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "120px",
+          "label": "电话号码",
+          "prop": "tel_no"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "100px",
+          "label": "是否接通",
+          "prop": "collection_action",
+          "dict": {
+            "dictType": "CE_E_COLL_ACTION",
+            "dictKey": [
+              "CE_E_COLL_ACTION"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "催收结果",
+          "prop": "coll_result",
+          "dict": {
+            "dictKey": [
+              "queryCollRec_ccc"
+            ],
+            "format": "label",
+            "labelField": "contact_name",
+            "valueField": "contact_cd",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ce0420"
+              }
+            }
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "是否有效结果",
+          "prop": "is_validresult",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "120px",
+          "label": "登记类型",
+          "prop": "sys_type",
+          "dict": {
+            "dictType": "CE_E_REG_TYPE",
+            "dictKey": [
+              "CE_E_REG_TYPE"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "承诺金额",
+          "prop": "proms_amt"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "承诺日期",
+          "prop": "commit_date"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "180px",
+          "label": "备注",
+          "prop": "remark"
+        }
+      ]
+    }
+  }
+}

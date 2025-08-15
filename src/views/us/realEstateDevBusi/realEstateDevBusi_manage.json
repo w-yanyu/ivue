@@ -1,0 +1,240 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "busi_name": {
+            "label": "企业名称",
+            "control": "text",
+            "width": "130px"
+          },
+          "list_status": {
+            "label": "发布状态",
+            "control": "select",
+            "width": "130px",
+            "dict": {
+              "dictType": "US_E_LIST_STATUS",
+              "dictKey": [
+                "US_E_LIST_STATUS"
+              ]
+            }
+          }
+        },
+        {
+          "cust_branch": {
+            "control": "lookup",
+            "edit": false,
+            "label": "所属部门",
+            "width": "130px",
+            "keyField": {
+              "cust_branch": "branch_id",
+              "branch_name": "branch_name"
+            },
+            "toRequest": {
+              "url": "@UserBranchTreeManager",
+              "method": "post",
+              "params": {}
+            },
+            "props": {
+              "title": "机构信息查询"
+            }
+          },
+          "branch_name": {
+            "control": "text",
+            "label": "部门名称",
+            "disabled": "true",
+            "width": "130px"
+          },
+          "start_date": {
+            "control": "dateTimePicker",
+            "label": "起始日期",
+            "format": "yyyyMMdd",
+            "width": "130px"
+          },
+          "end_date": {
+            "control": "dateTimePicker",
+            "label": "终止日期",
+            "format": "yyyyMMdd",
+            "width": "130px"
+          }
+        }
+      ],
+      "foldLineNumber": 3
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "POST",
+            "url": "/views/us/realEstateDevBusi/realEstateDevBusi_add.json"
+          },
+          "props": {
+            "width": "65%",
+            "title": "房地产开发商准入名单新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "scope": "searchTable",
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "us0801",
+          "list_type": "0"
+        }
+      },
+      "thead": [
+        {
+          "label": "序号",
+          "type": "index"
+        },
+        {
+          "label": "企业名称",
+          "prop": "busi_name"
+        },
+        {
+          "label": "开发资质",
+          "prop": "cust_apte"
+        },
+        {
+          "label": "客户所属机构",
+          "prop": "cust_branch"
+        },
+        {
+          "label": "状态",
+          "prop": "list_status",
+          "dict": {
+            "dictType": "US_E_LIST_STATUS",
+            "dictKey": [
+              "US_E_LIST_STATUS"
+            ]
+          }
+        },
+        {
+          "label": "发布日期",
+          "prop": "release_date"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "发布",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "us0803",
+                  "list_status": "1"
+                }
+              },
+              "show": {
+                "prop": "list_status",
+                "expression": "'${{current.list_status}}'==='0'"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "撤销",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "us0803",
+                  "list_status": "0"
+                }
+              },
+              "show": {
+                "prop": "list_status",
+                "expression": "'${{current.list_status}}'==='1'"
+              }
+            },
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/us/realEstateDevBusi/realEstateDevBusi_info.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "70%",
+                "title": "房地产开发商详情"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/us/realEstateDevBusi/realEstateDevBusi_modify.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "70%",
+                "title": "房地产开发商准入名单修改"
+              },
+              "show": {
+                "prop": "list_status",
+                "expression": "'${{current.list_status}}'==='0'"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "us0804"
+                }
+              },
+              "confirm": {
+                "title": "确定删除",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              },
+              "show": {
+                "prop": "list_status",
+                "expression": "'${{current.list_status}}'==='0'"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "转出",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "us0803",
+                  "list_type": "1"
+                }
+              },
+              "confirm": {
+                "title": "确定转出",
+                "msg": "您确定将该企业加入黑名单吗？",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              },
+              "show": {
+                "prop": "list_status",
+                "expression": "'${{current.list_status}}'==='0'"
+              }
+            }
+          ]
+        }
+      ],
+      "pagination": {
+        "show": true
+      }
+    }
+  }
+}

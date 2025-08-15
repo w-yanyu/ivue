@@ -1,0 +1,131 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "prod_grp_code": {
+            "control": "text",
+            "label": "产品组代码",
+            "rules": [
+              {
+                "max": 30,
+                "message": "长度不能超过30个字符"
+              }
+            ]
+          },
+          "prod_grp_nm": {
+            "control": "text",
+            "label": "产品组名称",
+            "rules": [
+              {
+                "max": 100,
+                "message": "长度不能超过100个字符"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/paramManage/loanProGroup/loan_pro_group_add.json"
+          },
+          "props": {
+            "title": "新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ap0000",
+          "parm_tab_nm": "klnp_prod_grp",
+          "dtbs_oprn_flg": "3",
+          "data_pkg": "${{current}}"
+        }
+      },
+      "thead": [
+        {
+          "label": "产品组代码",
+          "prop": "prod_grp_code",
+          "align": "center"
+        },
+        {
+          "label": "产品组名称",
+          "prop": "prod_grp_nm",
+          "align": "center"
+        },
+        {
+          "label": "序号",
+          "prop": "serl_num_long",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align": "center",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/paramManage/loanProGroup/loan_pro_group_info.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "50%",
+                "title": "产品组别信息详情"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/paramManage/loanProGroup/loan_pro_group_update.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "50%",
+                "title": "产品组别信息维护"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "ap0000",
+                  "parm_tab_nm": "klnp_prod_grp",
+                  "dtbs_oprn_flg": "2",
+                  "data_pkg": {
+                    "prod_grp_code":"${{current.prod_grp_code}}"
+                  }
+                }
+              },
+              "confirm": {
+                "title": "确定删除",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

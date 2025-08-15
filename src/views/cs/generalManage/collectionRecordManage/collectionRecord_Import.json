@@ -1,0 +1,67 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode":"cb0276"
+        }
+      },
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "icon": "el-icon-tickets"
+        }
+      ],
+      "controls": [
+        {
+          "file": {
+            "doRequest": {
+                "url": "/SUMP/minioCall/upload",
+                "method": "post",
+                "params": {
+                  "org_id": "$g{{user_info.org_id}}"
+                },
+                "resultSet": {
+                  "file_path": "path",
+                  "file_name": "oldName",
+                  "file_size": "size"
+                }
+              },
+              "width": "240px",
+              "control": "file",
+    
+              "limit": 1,
+              "limitSize": 10,
+              "label": "上传文件",
+              "btnLable": "请选择文件"
+          },
+          "file_name": {
+            "control": "hidden"
+          },
+        
+          "file_path": {
+            "control": "hidden"
+          },
+          "xxx": {
+            "control": "button",
+            "text": "没有模板 ? 点击下载",
+            "type": "custom",
+            "toRequest": {
+              "url": "/views/cs/generalManage/collectionRecordManage/collectionRecord_downloads.json",
+              "method": "get"
+            },
+            "props": {
+              "width": "80%",
+              "title": "模板列表"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

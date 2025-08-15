@@ -1,0 +1,208 @@
+{
+  "module": "v-search-btn-datagrid",
+  "pageId": "risk_indicator_static",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "statisticCode": {
+            "label": "统计代码",
+            "control": "text",
+            "span": 8,
+            "rules": [
+              {
+                "message": "字段长度超限",
+                "max": 40
+              }
+            ]
+          },
+          "statisticName": {
+            "label": "统计名称",
+            "control": "text",
+            "span": 8,
+            "rules": [
+              {
+                "message": "字段长度超限",
+                "max": 100
+              }
+            ]
+          },
+          "statisticType": {
+            "label": "统计类型",
+            "control": "select",
+            "span": 8,
+            "dict": {
+              "dictType": "statisticType",
+              "dictKey": [],
+              "format": "value-label",
+              "doRequest": {
+                "url": "/views/risk/dictdata/statisticType.json",
+                "method": "get"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "authId": "indicator_statistic_add_btn",
+          "label": "新增",
+          "toRequest": {
+            "url": "/views/risk/risk_indicator_statistic/risk_indicator_statistic_add.json",
+            "method": "get",
+            "params": {}
+          },
+          "props": {
+            "width": "70%",
+            "title": "新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/API/risk-management-service/risk-indicator-statistic/page-select",
+        "method": "post"
+      },
+      "thead": [
+        {
+          "label": "统计代码",
+          "prop": "statisticCode"
+        },
+        {
+          "label": "统计名称",
+          "prop": "statisticName"
+        },
+        {
+          "label": "统计类型",
+          "prop": "statisticType",
+          "dict": {
+            "dictType": "statisticType",
+            "dictKey": [],
+            "format": "label",
+            "doRequest": {
+              "url": "/views/risk/dictdata/statisticType.json",
+              "method": "get"
+            }
+          }
+        },
+        {
+          "label": "统计来源",
+          "prop": "statisticSource",
+          "dict": {
+            "dictType": "statisticSource",
+            "dictKey": [],
+            "format": "label",
+            "doRequest": {
+              "url": "/views/risk/dictdata/statisticSource.json",
+              "method": "get"
+            }
+          }
+        },
+        {
+          "label": "统计维度",
+          "prop": "statisticDimension",
+          "dict": {
+            "dictType": "indicatorDimension",
+            "dictKey": [],
+            "format": "label",
+            "doRequest": {
+              "url": "/views/risk/dictdata/indicatorDimension.json",
+              "method": "get"
+            }
+          }
+        },
+        {
+          "label": "过滤组合规则ID",
+          "prop": "cruleId"
+        },
+        {
+          "label": "统计函数",
+          "prop": "statisticFunction",
+          "dict": {
+            "dictType": "statisticFunction",
+            "dictKey": [],
+            "format": "label",
+            "doRequest": {
+              "url": "/views/risk/dictdata/statisticFunction.json",
+              "method": "get"
+            }
+          }
+        },
+        {
+          "label": "统计周期",
+          "prop": "statisticCycle"
+        },
+        {
+          "label": "统计字段",
+          "prop": "statisticField",
+          "dict": {
+            "dictType": "statisticField",
+            "dictKey": [],
+            "labelField": "label",
+            "valueField": "value",
+            "format": "label",
+            "doRequest": {
+              "url": "/API/risk-management-service/combobox-select/fact/trans",
+              "method": "post"
+            }
+          }
+        },
+        {
+          "label": "统计数据类型",
+          "prop": "dataType",
+          "dict": {
+            "dictType": "dataType",
+            "dictKey": [],
+            "doRequest": {
+              "url": "/views/risk/dictdata/dataType.json",
+              "method": "get"
+            }
+          }
+        },
+        {
+          "label": "操作",
+          "width": "150px",
+          "btns": [
+            {
+              "type": "edit",
+              "authId": "indicator_statistic_upd_btn",
+              "label": "编缉",
+              "toRequest": {
+                "url": "/views/risk/risk_indicator_statistic/risk_indicator_statistic_edit.json",
+                "method": "get"
+              },
+              "props": {
+                "width": "70%"
+              }
+            },
+            {
+              "type": "look",
+              "label": "查看",
+              "toRequest": {
+                "url": "/views/risk/risk_indicator_statistic/risk_indicator_statistic_view.json",
+                "method": "get"
+              },
+              "props": {
+                "width": "70%"
+              }
+            },
+            {
+              "#type": "delete",
+              "authId": "indicator_statistic_del_btn",
+              "label": "删除",
+              "doRequest": {
+                "url": "/API/risk-management-service/risk-indicator-statistic/delete",
+                "method": "post"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

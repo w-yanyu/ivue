@@ -1,0 +1,107 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "btns": [
+                {
+                    "type": "submit",
+                    "label": "提交",
+                    "icon": "",
+                    "doRequest": {
+                        "url": "/SUMP/call/RPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "ce0090",
+                            "page_id": "/views/ce/paramManage/template/collTemplate/collTemplate_add.json",
+                            "coll_kind":"02"
+                        }
+                    }
+                }
+            ],
+            "controls": [
+                {
+                    "template_type": {
+                        "control": "select",
+                        "label": "模板类型",
+                        "control": "select",
+                        "width": "130px",
+                        "dict": {
+                          "dictType": "CE_TEMPLATE_TYPE_T",
+                          "dictKey": [
+                            "CE_TEMPLATE_TYPE_T"
+                          ],
+                          "format": "value-label"
+                        },
+                        "rules": [
+                          {
+                            "required": true,
+                            "message": "请选择模板类型"
+                          }
+                        ]
+                    },
+                    "template_code": {
+                        "control": "text",
+                        "label": "模板代码",
+                        "width": "130px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message":"请输入"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "template_name": {
+                        "control": "text",
+                        "label": "模板名称",
+                        "width": "130px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message":"请输入"
+                            }
+                        ]
+                    },
+                    "template_desc": {
+                        "control": "text",
+                        "label": "模板用途",
+                        "width": "130px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message":"请输入"
+                            }
+                        ]
+                    }
+                },
+                {
+                  "file_name": {
+                    "control": "hidden"
+                  }
+                },
+                {
+                  "template_content": {
+                      "control": "dynamic",
+                      "isShowChildForm": true,
+                      "span": 12,
+                      "toRequest": {
+                        "url": "@SingleUpload",
+                        "method": "get",
+                        "params": {
+                          "path":"collRec",
+                          "uploadType":"sftp",
+                          "formKey": "template_content",
+                          "formName": "file_name",
+                          "formLabel":"模板文件",
+                          "required": "true",
+                          "accept": ".xlsx,.xls",
+                          "tipText": "只能上传xls/xlsx，且不超过10MB"
+                        }
+                      }
+                  }
+                }
+            ]
+        }
+    }
+}

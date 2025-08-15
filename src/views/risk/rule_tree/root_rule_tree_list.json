@@ -1,0 +1,383 @@
+{
+  "module": "v-search-btn-datagrid",
+  "pageId": "rule_tree",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "treeCode": {
+            "label": "规则树代码",
+            "control": "text",
+            "width": "auto",
+            "span": 8,
+            "rules": [
+              {
+                "message": "字段长度超限",
+                "max": 40
+              }
+            ]
+          },
+          "treeName": {
+            "label": "规则树名称",
+            "width": "auto",
+            "control": "text",
+            "span": 8,
+            "rules": [
+              {
+                "message": "字段长度超限",
+                "max": 64
+              }
+            ]
+          },
+          "branchId": {
+            "label": "机构名称",
+              "control": "remoteSelect",
+              "labelField": "branch_name",
+              "valueField": "branch_id",
+              "searchField":"branch_name",
+              "span": 6,
+              "value": "$g{{user_info.branch_id}}",
+              "width": "auto",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "ct2191"
+                }
+            },
+            "format": "label"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "deci040102",
+          "isList": true
+        }
+      },
+      "thead": [
+        {
+          "label": "序号",
+          "type": "index"
+        },
+        {
+          "label": "规则树代码",
+          "prop": "treeCode"
+        },
+        {
+          "label": "规则树名称",
+          "prop": "treeName"
+        },
+        {
+          "label": "机构名称",
+          "prop": "branchId",
+          "dict": {
+            "dictType": "DECI_E_BRANCH_MARK",
+            "dictKey": [
+              "DECI_E_BRANCH_MARK"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "版本号",
+          "prop": "busiVersion"
+        },
+        {
+          "label": "服务对象",
+          "prop": "serviceObject"
+        },
+        {
+          "label": "备注",
+          "prop": "treeDesc"
+        },
+        {
+          "label": "最新维护人",
+          "prop": "applyUser",
+          "dict": {
+            "dictType":"deciOnl",
+              "dictKey": [],
+              "format": "label",
+              "labelField": "user_name",
+              "valueField": "user_id",
+              "doRequest": {
+                  "url": "/SUMP/icmcall/icmRPCCall",
+                  "method": "POST",
+                  "params": {
+                    "length":1000,
+                    "start":1,
+                      "servicecode": "ct2503"
+                  }
+              }
+          }
+        },
+        {
+          "label": "最新维护时间",
+          "prop": "applyTime"
+        },
+        {
+          "label": "操作",
+          "width": "200px",
+          "btns": [
+            {
+              "type": "look",
+              "label": "查看",
+              "authId": "rule_tree_vie_btn",
+              "toRequest": {
+                "##url": "/views/risk/rule_tree/root_rule_tree_view.json",
+                "url": "@rootRuleTreeView",
+                "method": "get",
+                "props": {
+                  "width": "85%"
+                }
+              },
+              "props": {
+                "width": "85%"
+              }
+            },
+            {
+              "type": "confirmIncreaseBtn",
+              "label": "变更",
+              "width": "70px",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "deci040208",
+                  "riskOperationType": "U",
+                  "approveStatus": "00"
+                }
+              },
+              "confirm": {
+                "title": "提示信息",
+                "msgTemplate":"是否对“${{current.treeCode}}”“${{current.treeName}}”发起变更？",
+                "msg": "",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              },"show": {
+                "expression": "'${{current.branchId}}' == '$g{{user_info.branch_id}}'"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "复制",
+              "toRequest": {
+                "url": "views/risk/rule_tree/root_rule_tree_copy.json",
+                "method": "get",
+                "params": {
+                  "treeCode": "${{current.treeCode}}",
+                  "treeName": "${{current.treeName}}",
+                  "treeId": "${{current.treeId}}",
+                  "currVersion": "${{current.currVersion}}"
+                }
+              },
+              "props": {
+                
+              },
+              "show": {
+                "expression": "true"
+              }
+            },
+            {
+              "type": "confirmIncreaseBtn",
+              "label": "版本切换",
+              "width": "70px",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "deci040208",
+                  "riskOperationType": "S",
+                  "approveStatus": "00"
+                }
+              },
+              "confirm": {
+                "title": "提示信息",
+                "msgTemplate":"是否对“${{current.treeCode}}”“${{current.treeName}}”发起版本切换？",
+                "msg": "",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              },"show": {
+                "expression": "'${{current.branchId}}' == '$g{{user_info.branch_id}}'"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "authId": "general_rule_del_btn",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "deci040208",
+                  "riskOperationType": "D",
+                  "approveStatus": "00"
+                }
+              },
+              "show": {
+                "expression": "'${{current.branchId}}' == '$g{{user_info.branch_id}}'"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "还原",
+              "#authId": "general_rule_cancel_btn",
+              "#icon": "el-icon-delete",
+              "doRequest": {
+                "url": "/SUMP/riskController/riskCall",
+                "method": "post",
+                "params": {
+                  "scoreCardType": "1",
+                  "servicecode": "risk-management-service/risk-decision-rule/cancel",
+                  "appId": "risk-management-service"
+                }
+              },
+              "show": {
+                "expression": "false"
+              },
+              "confirm": {
+                "title": "提示信息",
+                "msg": "确定要还原至最新生效版本吗?",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "审核",
+              "#authId": "general_rule_review_btn",
+              "#icon": "el-icon-edit",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "deci010521"
+                }
+              },
+              "show": {
+                "expression": "false"
+              },
+              "confirm": {
+                "title": "提示信息",
+                "msg": "确定提交审核吗?",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "编缉",
+              "authId": "rule_tree_edt_btn",
+              "toRequest": {
+                "url": "/views/risk/rule_tree/root_rule_tree_edit.json",
+                "method": "get"
+              },
+              "props": {
+                "width": "80%"
+              },
+              "show": {
+                "expression": "false"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "节点编辑",
+              "authId": "rule_tree_nedt_btn",
+              "toRequest": {
+                "url": "@ruleTree",
+                "method": "get",
+                "target": "navTab"
+              },
+              "props": {
+                
+              },
+              "show": {
+                "expression": "false"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "版本切换",
+              "#authId": "general_rule_back_btn",
+              "#icon": "el-icon-delete",
+              "toRequest": {
+                "url": "@ruleTreeVersionBack",
+                "method": "get"
+              },
+              "props": {
+               
+              },
+              "show": {
+                "expression": "false"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "authId": "rule_tree_del_btn",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "deci040118"
+                }
+              },
+              "show": {
+                "expression": "false"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "还原",
+              "#authId": "general_rule_cancel_btn",
+              "#icon": "el-icon-delete",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "deci040115"
+                }
+              },
+              "show": {
+                "expression": "false"
+              },
+              "confirm": {
+                "title": "提示信息",
+                "msg": "确定要还原至最新生效版本吗?",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "审核",
+              "#authId": "general_rule_review_btn",
+              "#icon": "el-icon-edit",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "deci040117"
+                }
+              },
+              "show": {
+                "expression": "false"
+              },
+              "confirm": {
+                "title": "提示信息",
+                "msg": "确定提交审核吗?",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

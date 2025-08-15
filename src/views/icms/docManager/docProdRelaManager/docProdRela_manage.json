@@ -1,0 +1,107 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "doc_check_list_no": {
+            "label": "资料检查列表编号",
+            "control": "text"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "新增",
+          "toRequest": {
+            "url": "/views/icms/docManager/docProdRelaManager/docProdRela_add.json",
+            "method": "get",
+            "params": {}
+          },
+          "props": {
+            "title": "资料产品关联新增",
+            "width": "65%"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ar0181"
+        }
+      },
+      "thead": [
+        {
+          "label": "资料检查列表编号",
+          "width": "160px",
+          "prop": "doc_check_list_no",
+          "align": "center"
+        },
+        {
+          "label": "贷款产品",
+          "width": "160px",
+          "prop": "loan_prod_cd",
+          "align": "center"
+        },
+        {
+          "label": "业务类型",
+          "align": "center",
+          "prop": "busi_type",
+          "control": "remoteSelect",
+          "labelField": "title",
+          "valueField": "id",
+          "doRequest": {
+            "url": "/SUMP/call/RPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "pd0144",
+              "grupno": "0006",
+              "pid": "KSCP"
+            }
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/icms/docManager/docProdRelaManager/docProdRela_update.json",
+                "method": "get",
+                "params": {}
+              },
+              "props": {
+                "title": "资料产品关联维护",
+                "width": "80%"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "ar0184",
+                  "trantp": "DELETE"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

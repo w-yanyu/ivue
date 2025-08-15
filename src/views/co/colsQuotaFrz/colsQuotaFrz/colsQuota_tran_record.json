@@ -1,0 +1,80 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "co4014",
+          "limit_no": "${{params.limit_no}}"
+        }
+      },
+      "thead": [
+        {
+          "label": "序号",
+          "type": "index"
+        },
+        {
+          "label": "申请编号",
+          "prop": "apply_no",
+          "align": "center"
+        },
+        {
+          "label": "交易流水",
+          "prop": "trxn_seq",
+          "align": "center"
+        },
+        {
+          "label": "交易金额",
+          "prop": "trxn_amt",
+          "align": "center"
+        },
+        {
+          "label": "额度交易类型",
+          "prop": "quota_op_type",
+          "align": "center",
+          "dict": {
+            "dictType": "CO_E_QUOTAOPTYPE",
+            "format": "label",
+            "dictKey": [
+              "CO_E_QUOTAOPTYPE"
+            ]
+          }
+        },
+        {
+          "label": "押品总价值",
+          "prop": "colt_total_val",
+          "align": "center"
+        },
+        {
+          "label": "可用额度",
+          "prop": "remain_limit",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "align": "center",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/co/colsQuotaFrz/colsQuotaFrz/colsQuota_tran_detail.json",
+                "method": "POST",
+                "params": {}
+              },
+              "props": {
+                "width": "65%",
+                "title": "详情"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

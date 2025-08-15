@@ -1,0 +1,121 @@
+{
+  "module": "v_realonlyForm_btn",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "const_code": {
+            "label": "常量代码",
+            "width":"auto",
+            "control": "string",
+            "span": 12,
+            "rules":[
+              {
+                "required":true
+              }
+            ]
+          },
+          "const_name": {
+            "label": "常量名称",
+            "width":"auto",
+            "control": "string",
+            "span": 12,
+            "rules":[
+              {
+                "required":true
+              }
+            ]
+          }
+        },
+        {
+          "data_type": {
+            "label": "数据类型",
+            "width":"auto",
+            "control": "select",
+            "span": 12,
+            "dict": {
+              "dictType": "dataType",
+              "dictKey": [],
+              "format": "value-label",
+              "doRequest": {
+                "url": "/views/risk/dictdata/dataType.json",
+                "method": "get"
+              }
+            },
+            "disabled":true,
+            "rules":[
+              {
+                "required":true
+              }
+            ]
+          }
+        },
+        {
+          "description": {
+            "label": "备注",
+            "width":"auto",
+            "control": "string",
+            "span": 24
+          }
+        },
+        {
+          "value_type": {
+            "label": "值类型",
+            "width":"auto",
+            "control": "radio",
+            "disabled": true,
+            "span": 12,
+            "options":[
+              {
+                "label":"单值",
+                "value":"S"
+              },
+              {
+                "label":"多值",
+                "value":"M"
+              }
+            ],
+            "showItem": {
+              "":[],
+              "S":["const_value"],
+              "M":["const_values"]
+            },
+            "rules":[
+              {
+                "required":true
+              }
+            ]
+          },
+          "const_value": {
+            "label": "常量值",
+            "width":"auto",
+            "initShow": false,
+            "control": "string",
+            "span": 12,
+            "rules":[
+              {
+                "required":true
+              }
+            ]
+          },
+          "const_values": {
+            "label": "常量值",
+            "initShow": false,
+            "span": 24,
+            "control": "dynamic",
+            "toRequest": {
+              "url": "/views/risk/risk_rule_constant/constant_info.json",
+              "params": {
+                "const_code": "${{params.const_code}}"
+              }
+            },
+            "props": {
+             
+            }
+          }
+        }
+      ],
+      "initRequest": "${{params}}"
+    }
+  }
+}

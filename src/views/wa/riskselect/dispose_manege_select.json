@@ -1,0 +1,257 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "controls": [
+        {
+          "cust_no": {
+            "control": "text",
+            "label": "客户号"
+          },
+          "case_cust_name": {
+            "control": "text",
+            "label": "客户姓名"
+          }
+        },
+        {
+          "cert_type": {
+            "control": "select",
+            "label": "证件类型",
+            "dict":{
+              "dictType": "E_IDTFTP",
+              "dictKey": [
+                "E_IDTFTP"
+              ],
+              "format": "value-label"
+            }
+          },
+          "risk_rate_code": {
+            "control": "select",
+            "label": "风险级别代码",
+            "dict":{
+              "dictType": "WA_E_RICEDE",
+              "dictKey": [
+                "WA_E_RICEDE"
+              ],
+              "format": "value-label"
+            }
+          }
+
+        }
+      ]
+    },
+    "toolbar": {
+
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "wa0024",
+          "risk_type": "C"
+        }
+      },
+      "thead": [
+
+        {
+          "type": "tag",
+          "label": "风险信号",
+          "width": "160px",
+          "prop": "risk_level_signal",
+          "align": "center",
+          "dict":{
+            "dictType": "E_RISKSIGNAL",
+            "dictKey": [
+              "E_RISKSIGNAL"
+            ],
+            "format": "value-label"
+          },
+          "switch":{
+            "O": "warning",
+            "Y": "warning",
+            "R": "danger",
+            "G": "success"
+          }
+        },
+        {
+          "label": "风险级别代码",
+          "width": "160px",
+          "prop": "risk_rate_code",
+          "align": "center",
+          "dict":{
+            "dictType": "WA_E_RICEDE",
+            "dictKey": [
+              "WA_E_RICEDE"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "label": "预警任务名称",
+          "align": "center",
+          "prop": "task_id"
+        },
+        {
+          "label": "预警日期",
+          "width": "160px",
+          "prop": "warn_date",
+          "align": "center"
+        },
+        {
+          "label": "客户号",
+          "width": "160px",
+          "prop": "cust_no",
+          "align": "center"
+        },
+        {
+          "label": "客户姓名",
+          "width": "160px",
+          "prop": "case_cust_name",
+          "align": "center"
+        },
+        {
+          "label": "证件类型",
+          "width": "160px",
+          "prop": "cert_type",
+          "align": "center",
+          "dict":{
+            "dictType": "E_IDTFTP",
+            "dictKey": [
+              "E_IDTFTP"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "label": "证件号码",
+          "width": "160px",
+          "prop": "cert_no",
+          "align": "center"
+        },
+        {
+          "label": "产品编号",
+          "width": "160px",
+          "prop": "prod_no",
+          "align": "center"
+        },
+        {
+          "label": "产品名称",
+          "width": "160px",
+          "prop": "prod_name",
+          "align": "center"
+        },
+        {
+          "label": "贷款金额",
+          "width": "160px",
+          "prop": "loan_amount_total",
+          "align": "center"
+        },
+        {
+          "label": "贷款余额",
+          "width": "160px",
+          "prop": "loan_balance_total",
+          "align": "center"
+        },
+        {
+          "label": "申请日期",
+          "width": "160px",
+          "prop": "appldt",
+          "align": "center"
+        },
+        {
+          "label": "放款日期",
+          "width": "160px",
+          "prop": "instdt",
+          "align": "center"
+        },
+        {
+          "label": "逾期金额",
+          "width": "160px",
+          "prop": "overdue_amount_total",
+          "align": "center"
+        },
+        {
+          "label": "到期日期",
+          "width": "160px",
+          "prop": "matu_date",
+          "align": "center"
+        },
+        {
+          "label": "逾期天数",
+          "width": "160px",
+          "prop": "overdue_day",
+          "align": "center"
+        },
+        {
+          "label": "五级分类",
+          "width": "160px",
+          "prop": "lastre",
+          "align": "center"
+        },
+        {
+          "label": "经办产品经理",
+          "width": "160px",
+          "prop": "warn_user_id",
+          "align": "center"
+        },
+        {
+          "label": "操作时间",
+          "width": "160px",
+          "prop": "last_upd_dt",
+          "align": "center"
+        },
+        {
+          "label": "操作人",
+          "width": "160px",
+          "prop": "cur_user_id",
+          "align": "center"
+        },
+        {
+          "label": "运行状态",
+          "width": "160px",
+          "prop": "cur_status",
+          "align": "center",
+          "dict":{
+            "dictType": "E_STATUS_",
+            "dictKey": [
+              "E_STATUS_"
+            ],
+            "format": "value-label"
+
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align":"center",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "@warningWorkbenchSelect",
+                "method": "GET",
+                "target": "navTab",
+                "params": {
+
+                  "proc_inst_id":"${{searchTable.proc_inst_id}}",
+                  "cust_no": "${{searchTable.cust_no}}"
+
+                }
+              },
+              "props": {
+                "title": "预警工作台",
+                "width": "80%"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

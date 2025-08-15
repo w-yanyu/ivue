@@ -1,0 +1,84 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ar1840",
+          "apply_no": "${{params.apply_no}}",
+          "cust_no": "${{params.cust_no}}",
+          "due_item_no": "${{params.due_item_no}}"
+        }
+      },
+      "thead": [
+        {
+          "type": "string",
+          "label": "项目编号",
+          "prop": "project_no",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "项目资金使用计划",
+          "prop": "project_fund_plan",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "项目资金使用计划金额",
+          "prop": "project_fund_plan_amt",
+          "decimal": "2",
+          "format": {
+            "thousand": ","
+          },
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "资金来源计划",
+          "prop": "fund_source_plan",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "资金来源计划金额",
+          "prop": "fund_source_plan_amt",
+          "decimal": "2",
+          "format": {
+            "thousand": ","
+          },
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "width": "200px",
+          "fixed":"right",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/pd/dueDiliTemplate/templatePage/ArbProjectFundPlan/ArbProjectFundPlan_info.json",
+                "method": "GET",
+                "params": {
+                  "apply_no": "${{params.apply_no}}",
+                  "cust_no": "${{params.cust_no}}",
+                  "due_item_no": "${{params.due_item_no}}"
+                }
+              },
+              "props": {
+                "width": "80%",
+                "title": "项目资金计划信息详情"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,490 @@
+{
+	"module": "v_inputDataForm_btn",
+	"layout": {
+		"form": {
+			"scope": "myForm",
+			"initRequest": {
+				"url": "/SUMP/icmcall/icmRPCCall",
+				"method": "POST",
+				"params": {
+					"servicecode": "PLMSKGTS0025",
+					"applid": "${{params.applid}}"
+				}
+			},
+			"btns": [],
+			"controlsGroup": [
+				{
+					"title": "基本信息",
+					"tooltip": "",
+					"titleIcon": "",
+					"showHint": "",
+					"accordion": false,
+					"expand": true,
+					"controls": [
+						{
+							"applid": {
+								"label": "申请编号",
+								"control": "hidden",
+								"name": "applid"
+							},
+							"acctna": {
+								"label": "客户名称",
+								"control": "text",
+								"span": 8,
+								"name": "acctna",
+								"multiple": false,
+								"disabled": true,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							},
+							"custno": {
+								"label": "客户号",
+								"control": "text",
+								"span": 8,
+								"name": "custno",
+								"multiple": false,
+								"disabled": true,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							},
+							"idtfno": {
+								"label": "证件号码",
+								"control": "text",
+								"span": 8,
+								"name": "idtfno",
+								"multiple": false,
+								"disabled": true,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							},
+							"lncfno": {
+								"label": "借据号",
+								"span": 8,
+								"name": "lncfno",
+								"control": "text",
+								"edit": "true",
+								"multiple": false,
+								"disabled": true,
+								"rules": [
+									{
+										"max": 50,
+										"message": "长度不能超过50个字符"
+									}
+								]
+							},
+							"prodna": {
+								"label": "产品名称",
+								"control": "text",
+								"span": 8,
+								"name": "prodna",
+								"multiple": false,
+								"disabled": true,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							},
+							"prodcd": {
+								"label": "产品代码",
+								"control": "text",
+								"span": 8,
+								"name": "prodcd",
+								"multiple": false,
+								"disabled": true
+							}
+						}
+					]
+				},
+				{
+					"title": "欠款信息",
+					"accordion": false,
+					"expand": true,
+					"controls": [
+						{
+							"acctno": {
+								"label": "贷款账号",
+								"span": 6,
+								"control": "text",
+								"name": "acctno",
+								"disabled": true,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							},
+							"lnream1": {
+								"label": "逾期金额",
+								"span": 6,
+								"decimal": 2,
+								"max": 21,
+								"control": "currency",
+								"compute": "${{myForm.lnream}}+${{myForm.yclixi}}",
+								"disabled": true
+							},
+							"lnream": {
+								"label": "逾期金额(接口提供)",
+								"span": 6,
+								"decimal": 2,
+								"max": 21,
+								"control": "hidden",
+								"name": "lnream",
+								"disabled": true
+							},
+							"lnrebl": {
+								"label": "贷款余额",
+								"span": 6,
+								"decimal": 2,
+								"max": 21,
+								"control": "text",
+								"thousand": ",",
+								"name": "lnrebl",
+								"disabled": true,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							},
+							"clssst": {
+								"control": "select",
+								"span": 6,
+								"label": "贷款状态",
+								"disabled": true,
+								"dict": {
+									"dictType": "E_CLSSST",
+									"dictKey": [
+										"E_CLSSST"
+									],
+									"format": "label"
+								}
+							},
+							"ovdays": {
+								"label": "逾期天数",
+								"span": 6,
+								"control": "text",
+								"name": "ovdays",
+								"disabled": true,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							},
+							"lnnpbl": {
+								"label": "正常本金",
+								"span": 6,
+								"decimal": 2,
+								"max": 21,
+								"control": "text",
+								"name": "lnnpbl",
+								"thousand": ",",
+								"disabled": true,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							},
+							"lnopbl": {
+								"label": "逾期本金",
+								"span": 6,
+								"decimal": 2,
+								"max": 21,
+								"control": "text",
+								"thousand": ",",
+								"name": "lnopbl",
+								"disabled": true,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							},
+							"lndpbl": {
+								"label": "呆滞本金",
+								"span": 6,
+								"decimal": 2,
+								"max": 21,
+								"control": "text",
+								"name": "lndpbl",
+								"disabled": true,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							},
+							"hxxxpr": {
+								"label": "核销本金",
+								"span": 6,
+								"decimal": 2,
+								"max": 21,
+								"control": "text",
+								"name": "hxxxpr",
+								"disabled": true,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							},
+							"yjlx": {
+								"label": "应计利息",
+								"span": 6,
+								"decimal": 2,
+								"max": 21,
+								"control": "currency",
+								"compute": "${{myForm.ysyjni}}+${{myForm.csyjni}}",
+								"disabled": true,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							},
+							"ysyjni": {
+								"label": "应收应计利息",
+								"span": 6,
+								"control": "hidden",
+								"name": "ysyjni",
+								"disabled": true,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							},
+							"csyjni": {
+								"label": "催收应计利息",
+								"span": 6,
+								"control": "hidden",
+								"name": "csyjni",
+								"disabled": true,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							},
+							"ysqx": {
+								"label": "应收欠息",
+								"span": 6,
+								"decimal": 2,
+								"max": 21,
+								"control": "currency",
+								"compute": "${{myForm.ysxxoi}}+${{myForm.csxxoi}}",
+								"value": "0",
+								"multiple": false,
+								"disabled": true,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							},
+							"ysxxoi": {
+								"label": "应收欠息(接口提供)",
+								"span": 6,
+								"control": "hidden",
+								"name": "ysxxoi",
+								"multiple": false,
+								"disabled": true,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							},
+							"yclixi": {
+								"label": "逾期应计利息",
+								"span": 6,
+								"control": "text",
+								"name": "yclixi",
+								"value": "0",
+								"disabled": true
+							},
+							"csxxoi": {
+								"label": "催收欠息",
+								"span": 6,
+								"control": "hidden",
+								"name": "csxxoi",
+								"multiple": false,
+								"disabled": true,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							},
+							"yjfx": {
+								"label": "应计罚息",
+								"span": 6,
+								"decimal": 2,
+								"max": 21,
+								"control": "currency",
+								"compute": "${{myForm.ysyjpi}}+${{myForm.csyjpi}}",
+								"disabled": true,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							},
+							"ysyjpi": {
+								"label": "应收应计罚息",
+								"span": 6,
+								"control": "hidden",
+								"name": "ysyjpi",
+								"disabled": true,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							},
+							"csyjpi": {
+								"label": "催收应计罚息",
+								"span": 6,
+								"control": "hidden",
+								"name": "csyjpi",
+								"disabled": true,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							},
+							"ysxxpi": {
+								"label": "应收罚息",
+								"span": 6,
+								"control": "currency",
+								"name": "ysxxpi",
+								"disabled": true,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							},
+							"csxxpi": {
+								"label": "催收罚息",
+								"span": 6,
+								"control": "hidden",
+								"name": "csxxpi",
+								"disabled": true,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							},
+							"hxlx": {
+								"label": "核销利息",
+								"span": 6,
+								"decimal": 2,
+								"max": 21,
+								"control": "currency",
+								"compute": "${{myForm.hxxxin}}+${{myForm.hxxxoi}}+${{myForm.hxprin}}",
+								"disabled": true
+							},
+							"hxxxin": {
+								"label": "核销利息1",
+								"span": 6,
+								"control": "hidden",
+								"name": "hxxxin",
+								"disabled": true
+							},
+							"hxxxoi": {
+								"label": "核销利息2",
+								"span": 6,
+								"control": "hidden",
+								"name": "hxxxoi",
+								"disabled": true
+							},
+							"hxprin": {
+								"label": "核销利息3",
+								"span": 6,
+								"control": "hidden",
+								"name": "hxprin",
+								"disabled": true
+							},
+							"ysxxfe": {
+								"label": "逾期违约金",
+								"span": 6,
+								"control": "currency",
+								"name": "ysxxfe",
+								"disabled": true,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							}
+						}
+					]
+				},
+				{
+					"title": "还款申请",
+					"accordion": false,
+					"expand": true,
+					"module": "v_search_btn_datagrid",
+					"controls": [
+						{
+							"rptype": {
+								"label": "还款类型",
+								"control": "radio",
+								"name": "rptype",
+								"span": "10",
+								"width": "125px",
+								"multiple": false,
+								"value": "1",
+								"disabled": true,
+								"dict": {
+									"dictType": "E_RPTYPE",
+									"dictKey": [
+										"E_RPTYPE"
+									],
+									"format": "label"
+								},
+								"rules": [
+									{
+										"required": false,
+										"message": "还款类型"
+									}
+								]
+							}
+						},
+						{
+							"pbacctsq": {
+								"label": "",
+								"control": "dynamic",
+								"name": "pbacctsq",
+								"isShowChildForm": true,
+								"span": 24,
+								"toRequest": {
+									"url": "@RepaymentApplication",
+									"method": "get"
+								},
+								"props": {
+									"width": "85%",
+									"title": "公账账号查询"
+								}
+							}
+						}
+					]
+				}
+			]
+		}
+	}
+}

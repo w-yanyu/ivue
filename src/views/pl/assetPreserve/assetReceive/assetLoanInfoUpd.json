@@ -1,0 +1,145 @@
+{
+  "module": "v-inputDataForm-btn",
+  "layout": {
+    "form": {
+      "scope": "form",
+      "initRequest": "${{params}}",
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pl0266",
+          "apply_no": "${{params.apply_no}}"
+        }
+      },
+      "controls": [
+        {
+          "loan_no": {
+            "control": "lookup",
+            "label": "借据号",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入借据号"
+              }
+            ],
+            "keyField": {
+              "loan_no": "loan_due_bill_num",
+              "asmt_asset_orig_prc": "due_bill_amt",
+              "cust_no": "cust_num",
+              "acctst": "prcpl_smtn",
+              "db_int": "int_smtn",
+              "ccy_code": "ccy_code_num"
+            },
+            "toRequest": {
+              "url": "/views/pl/assetAssignment/query/loan_info_add.json",
+              "method": "get",
+              "params": {
+                "cust_no": "${{params.cust_id}}"
+              }
+            },
+            "props": {
+              "title": "选择借据",
+              "width": "80%"
+            }
+          },
+          "contract_no": {
+            "control": "text",
+            "label": "合同编号",
+            "disabled":true
+          }
+        },
+        {
+          "acctst": {
+            "control": "currency",
+            "label": "抵债时贷款余额",
+            "disabled":true,
+            "format":{
+              "thousand": ",",
+              "decimal": 3
+            }
+          },
+          "paydb_prcpl": {
+            "control": "currency",
+            "label": "抵债本金",
+            "format":{
+              "thousand": ",",
+              "decimal": 3
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入抵债本金"
+              }
+            ]
+          }
+        },
+        {
+          "no_pay_prcpl": {
+            "control": "currency",
+            "disabled":true,
+            "label": "未抵偿本金",
+            "format":{
+              "thousand": ",",
+              "decimal": 3
+            },
+            "compute": "${{form.acctst}}-${{form.paydb_prcpl}}"
+          },
+          "db_int": {
+            "control": "currency",
+            "label": "欠息",
+            "disabled":true
+          }
+        },
+        {
+          "paydb_int": {
+            "control": "currency",
+            "label": "抵债利息",
+            "format":{
+              "thousand": ",",
+              "decimal": 3
+            }
+          },
+          "no_pay_int": {
+            "control": "currency",
+            "disabled":true,
+            "label": "未抵偿贷款利息",
+            "compute": "${{form.db_int}}-${{form.paydb_int}}",
+            "format":{
+              "thousand": ",",
+              "decimal": 3
+            }
+          }
+        },
+        {
+          "ccy_code": {
+            "control": "select",
+            "label": "币种",
+            "disabled": true,
+            "dict": {
+              "dictType": "MS_CURRENCY",
+              "dictKey": [
+                "MS_CURRENCY"
+              ],
+              "format": "label"
+            },
+            "value": "156",
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择币种"
+              }
+            ]
+          }
+        },
+        {
+          "remks": {
+            "control": "textarea",
+            "label": "备注",
+            "span": 24
+          }
+        }
+      ]
+    }
+  }
+}

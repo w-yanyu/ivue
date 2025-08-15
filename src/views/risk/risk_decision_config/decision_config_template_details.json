@@ -1,0 +1,256 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "deci090206",
+          "node_cd": "${{params.node_cd}}",
+          "node_name": "${{params.node_name}}",
+          "node_type": "${{params.node_type}}",
+          "is_leaf": "${{params.is_leaf}}"
+        }
+      },
+      "scope": "form",
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "deci090207",
+              "model_id": "${{params.node_cd}}"
+            }
+          }
+        }
+      ],
+      "controlsGroup": [
+        {
+          "title": "熔断设置",
+          "tooltip": "",
+          "titleIcon": "",
+          "showHint": "",
+          "accordion": false,
+          "expand": true,
+          "controls": [
+            {
+              "fuse_trigger": {
+                "control": "select",
+                "label": "熔断触发字段",
+                "value": "${{form.fuse_trigger}}",
+                "disabled":false,
+                "width": "25px",
+                "span": "7",
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请输入"
+                  }
+                ],
+                "options": [
+                  {
+                      "value": "trigger1",
+                      "label": "熔断触发字段1"
+                  },
+                  {
+                      "value": "trigger2",
+                      "label": "熔断触发字段2"
+                  },
+                  {
+                      "value": "trigger3",
+                      "label": "熔断触发字段3"
+                  }
+              ]
+              },
+              "conditions_operator": {
+                "control": "select",
+                "label": "条件符",
+                "width": "25px",
+                "span": "7",
+                "value": "${{form.conditions_operator}}",
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请输入"
+                  }
+                ],"options": [
+                  {
+                      "value": "=",
+                      "label": "="
+                  }, 
+                  {
+                    "value": ">=",
+                    "label": ">="
+                  },
+                  {
+                      "value": ">",
+                      "label": ">"
+                  },
+                  {
+                      "value": "<=",
+                      "label": "<="
+                  },
+                  {
+                      "value": "<",
+                      "label": "<"
+                  }
+              ]
+              },
+              "trigger_field_value": {
+                "control": "text",
+                "label": "字段值",
+                "span": "7",
+                "width": "25px",
+                "value": "${{form.field_value}}",
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请输入"
+                  }
+                ]
+              }
+            },
+            {
+              "fusing_time": {
+                "control": "text",
+                "label": "熔断时长（分钟）",
+                "span": "7",
+                "value": "${{form.fusing_time}}",
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请输入"
+                  }
+                ]
+              }
+            },
+              {
+              "fusing_result": { 
+                "control": "select",
+                "label": "熔断结果字段",
+                "span": "7",
+                "value": "${{form.fusing_result}}",
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请输入"
+                  }
+                ],
+                "options": [
+                  {
+                      "value": "result1",
+                      "label": "熔断结果字段1"
+                  },
+                  {
+                      "value": "result2",
+                      "label": "熔断结果字段2"
+                  },
+                  {
+                      "value": "result3",
+                      "label": "熔断结果字段3"
+                  }
+              ]
+              },
+              "result_field_value": {
+                "control": "text",
+                "label": "字段值",
+                "span": "7",
+                "value": "${{form.result_field_value}}",
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请输入"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "title": "数据配置",
+          "tooltip": "",
+          "titleIcon": "",
+          "showHint": "",
+          "accordion": false,
+          "expand": true,
+          "controls": [
+            {
+              "sandbox_environment": {
+                "control": "select",
+                "label": "沙箱环境",
+                "value": "${{form.sandbox_environment}}",
+                "disabled":false,
+                "options": [
+                  {
+                      "value": "sandbox1",
+                      "label": "沙箱环境1"
+                  },
+                  {
+                      "value": "sandbox2",
+                      "label": "沙箱环境2"
+                  },
+                  {
+                      "value": "sandbox3",
+                      "label": "沙箱环境3"
+                  }
+              ],
+                "#rules": [
+                  {
+                    "required": true,
+                    "message": "请输入"
+                  }
+                ]
+              }
+            }
+          ]
+        }, {
+          "title": "超时配置",
+          "tooltip": "",
+          "titleIcon": "",
+          "showHint": "",
+          "accordion": false,
+          "expand": true,
+          "controls": [
+            {
+              "timeout_period": {
+                "control": "text",
+                "label": "超时时间",
+                "value": "${{form.timeout_period}}",
+                "disabled":false
+              }
+            }
+          ]
+        },
+        {
+          "title": "数据源配置",
+          "tooltip": "",
+          "titleIcon": "",
+          "showHint": "",
+          "accordion": false,
+          "expand": true,
+          "controls":  [
+            {
+              "allData": {
+                "initShow": true,
+                "width": "auto",
+                "span": 24,
+                "control": "dynamic",
+                "toRequest": {
+                  "url": "/views/risk/risk_decision_config/data_source_valid_list.json",
+                  "params": {
+                    "node_cd": "${{params.node_cd}}"
+                  }
+                },
+                "props": {}
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

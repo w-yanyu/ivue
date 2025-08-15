@@ -1,0 +1,184 @@
+{
+  "module": "v-form-editableDataGrid-btn",
+  "layout": {
+    "form": {
+      "initRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode":"ce0063",
+          "coll_kind":"02"
+        }
+      },
+      "scope": "formData",
+      "controls": [
+        {
+          "allocate_proposal_no": {
+            "control": "string",
+            "disabled":true,
+            "label": "分配方案编号"
+          },
+          "scheme_name": {
+            "control": "string",
+            "label": "分配方案名称"
+          }
+        },
+        {
+          "scheme_type": {
+            "disabled":true,
+            "control": "select",
+            "label": "分配方案类型",
+            "dict": {
+              "dictType": "CE_COLL_TYPE",
+              "dictKey": [
+                "CE_COLL_TYPE"
+              ],
+              "format": "value-label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          },
+          "scheme_pattern": {
+            "disabled":true,
+            "control": "select",
+            "label": "分配方式",
+            "dict": {
+              "dictType": "CE_SCHEME_PATTERN",
+              "dictKey": [
+                "CE_SCHEME_PATTERN"
+              ],
+              "format": "value-label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          }
+        },
+        {
+          "priority": {
+            "control": "string",
+            "label": "优先级"
+          },
+          "is_valid": {
+            "control": "string",
+            "label": "是否启用",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "value-label"
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+
+      ]
+    },
+    "datagrid": {
+      "name": "scheme",
+      "doRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ce0151",
+          "org_id": "985"
+        }
+      },
+      "pagination": {
+        "show": false
+      },
+      "allData":true,
+      "thead": [
+        {
+          "type": "selection",
+          "align": "center",
+          "width": "55",
+          "fixed": "left",
+          "show": {
+            "prop": "changkuan",
+            "is": [
+              "0"
+            ]
+          }
+        },
+        {
+          "prop": "assignqueue_code",
+          "type": "remoteSelect",
+          "align":"center",
+          "label": "分配队列",
+          "format": "value-label",
+          "labelField": "queue_name",
+          "valueField": "queue_code",
+          "doRequest": {
+            "url": "/SUMP/call/RPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode":"ce0402",
+              "coll_kind":"02",
+              "is_valid":"1",
+              "collection_type": "${{formData.scheme_type}}"
+            }
+          }
+        },
+        {
+          "label": "分配组",
+          "align":"center",
+          "prop": "allocate_group",
+          "type": "inputTree",
+          "idField": "coll_group",
+          "nodeTypeField": "type",
+          "pIdField": "parent_coll_team",
+          "labelField": "coll_team_name",
+          "root": {
+            "rootNode": {
+              "name": "BYB-BRANCH",
+              "value": "9999",
+              "disabled": true
+            }
+          },
+          "doRequest": {
+            "url": "/SUMP/call/RPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode":"ce0180"
+            }
+          }
+        },
+        {
+          "prop": "allocate_obj",
+          "type": "remoteSelect",
+          "align":"center",
+          "label": "分配对象",
+          "format": "value-label",
+          "labelField": "collector_name",
+          "valueField": "collector",
+          "doRequest": {
+            "url": "/SUMP/call/RPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode":"ce0184",
+              "coll_group": "${{current.allocate_group}}"
+            }
+          }
+        },
+        {
+          "prop": "allocate_perc",
+          "type": "currency",
+          "align":"center",
+          "label": "分配比例(%)"
+        }
+      ]
+    }
+  }
+}

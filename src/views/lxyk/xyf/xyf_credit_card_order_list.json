@@ -1,0 +1,152 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "smilr_cr_card_loan_acct_num": {
+            "control": "hidden",
+            "value": "${{params.smilr_cr_card_loan_acct_num}}",
+            "label": "类信用卡贷款账号"
+          },
+          "cust_no": {
+            "control": "hidden",
+            "value": "${{params.cust_num}}",
+            "label": "客户号"
+          }
+        },
+        {
+          "order_form_num": {
+            "control": "text",
+            "label": "类信用卡订单编号"
+          },
+          "payment_dt": {
+            "type": "month",
+            "control": "dateTimePicker",
+            "format": "yyyyMM",
+            "label": "账期"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ar0057",
+          "transaction_type": "1"
+        }
+      },
+      "thead": [
+        {
+          "label": "订单编号",
+          "prop": "order_form_num",
+          "align": "center"
+        },
+        {
+          "label": "所属账期",
+          "prop": "payment_dt",
+          "align": "center"
+        },
+        {
+          "label": "贷款账号",
+          "prop": "smilr_cr_card_loan_acct_num",
+          "align": "center"
+        },
+        {
+          "label": "贷款编号",
+          "prop": "loan_no",
+          "align": "center"
+        },
+        {
+          "label": "客户编号",
+          "prop": "cust_no",
+          "align": "center"
+        },
+        {
+          "label": "客户名称",
+          "prop": "cust_name",
+          "align": "center"
+        },
+        {
+          "label": "订单金额",
+          "prop": "order_amount",
+          "format": {
+            "thousand": ","
+          },
+          "align": "center"
+        },
+        {
+          "label": "订单交易类型",
+          "prop": "transaction_type",
+          "align": "center",
+          "dict": {
+            "dictType": "E_TRANSACTION_TYPE",
+            "dictKey": [
+              "E_TRANSACTION_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "分期期数",
+          "prop": "istlmt_prds",
+          "align": "center",
+          "dict": {
+            "dictType": "E_ISTLMT_PRDS",
+            "dictKey": [
+              "E_ISTLMT_PRDS"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "消费日期",
+          "prop": "pay_date",
+          "align": "center"
+        },
+        {
+          "label": "可售产品代码",
+          "prop": "prod_no",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "align": "center",
+          "btns": [
+            {
+              "type": "look",
+              "label": "订单明细",
+              "toRequest": {
+                "url": "/views/lxyk/xyf/xyf_credit_card_order_info_list.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "70%",
+                "title": "订单明细"
+              }
+            },{
+              "type": "look",
+              "label": "申请退货",
+              "toRequest": {
+                "url": "/views/lxyk/xyf/xyf_credit_card_return_goods.json",
+                "method": "POST"
+              },
+              "show": {
+                "expression": "'${{current.transaction_type}}' === '1' || '${{current.transaction_type}}' === '7' "
+              },
+              "props": {
+                "width": "70%",
+                "title": "退货流程"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

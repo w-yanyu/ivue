@@ -1,0 +1,118 @@
+{
+    "module": "v_search_editableDataGrid",
+    "layout": {
+        "datagrid": {
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "qrfrzd",
+                    "custno":"${{params.custno}}",
+                    "crdlno":"${{params.crdlno}}",
+                    "busino":"${{params.prodcd}}"
+                }
+            },
+            "thead": [
+                {
+                    "label": "序号",
+                    "prop": "freezd",
+                    "align":"left",
+                    "type": "string",
+                    "width":"50px"
+                },
+                {
+                    "label": "客户号",
+                    "prop": "custno",
+                    "align":"left",
+                    "type": "string",
+                    "width":"140px"
+                },
+                {
+                    "label": "额度编号",
+                    "prop": "crdlno",
+                    "width":"140px",
+                    "type": "string",
+                    "align":"left"
+                },
+                {
+                    "label": "产品号",
+                    "prop": "busino",
+                    "type": "string",
+                    "align":"left"
+                },
+                {
+                    "label": "冻结额度",
+                    "prop": "amount",
+                    "type": "string",
+                    "align":"left"
+                },
+                {
+                    "label": "已解冻额度",
+                    "prop": "unfrzd",
+                    "type": "string",
+                    "align":"left"
+                },
+                {
+                    "label": "币种",
+                    "prop":"crcycd",
+                    "type": "string",
+                    "align":"left"
+                },
+                {
+                    "label": "本次解冻额度",
+                    "prop": "releam",
+                    "align": "left",
+                    "thousand": ",",
+                    "type": "currency"
+                },
+                    {
+                    "label": "生效日期",
+                    "prop":"stardt",
+                    "type": "string",
+                    "align":"left"
+                },
+                {
+                    "label": "失效日期",
+                    "prop":"effedt",
+                    "type": "string",
+                    "align":"left"
+                 },
+                 {
+                    "label": "有效状态",
+                    "type": "string",
+                    "prop":"status",
+                    "align":"left",
+                    "dict": {
+                      "dictType": "E_STATUS",
+                      "dictKey": [
+                        "E_STATUS"
+                      ],
+                    "format": "label",
+                    "labelField":"dictName",
+                    "valueField":"dictId"
+                  }
+                 },
+                 {
+                  "label": "操作",
+                  "fixed": "right",
+                  "align": "left",
+                  "btns": [
+                    {
+                      "type": "edit",
+                      "label": "解冻",
+                      "doRequest": {
+                        "url": "/SUMP/call/RPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "unfrcl"
+                        }
+                    }
+                    }
+                  ]
+                }
+              ]
+        }
+    }
+  }
+  

@@ -1,0 +1,133 @@
+{
+  "module": "lr_tree_dynamic",
+  "layout": {
+    "tree": {
+      "title": "变量分类定义",
+      "lazy": true,
+      "hideDynamicArea": false,
+      "isShowAddNode": false,
+      "idField": "super_class_code",
+      "pIdField": "variable_class_code",
+      "labelField": "title",
+      "isLeafField": "isLeaf",
+      "nodeTypeField": "type",
+      "search": {
+        "enabled": "true",
+        "displayType": "list",
+        "nameFields": [
+          "menu_name",
+          "menu_desc"
+        ]
+      },
+      "root": {
+        "rootNode": {
+          "name": "变量树",
+          "value": "%",
+          "variable_class_code": "%"
+        },
+        "contextMenu": [
+          {
+            "type": "add",
+            "label": "新增",
+            "childNodeType": "dept",
+            "icon": "el-icon-circle-plus-outline",
+            "toRequest": {
+              "url": "/views/risk/risk_variable_management/variable_class_add.json",
+              "method": "post",
+              "params": {
+                "variable_class_code": "%"
+              }
+            },
+            "props": {
+              "width": "60%",
+              "title": "新增变量分类"
+            }
+          }
+        ]
+      },
+      "rootTypes": [
+        "dept"
+      ],
+      "nodeTypes": {
+        "dept": {
+          "children": [
+            "dept"
+          ],
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "post",
+            "params": {
+              "servicecode": "deci050053",
+              "variable_class_code": "${{current.variable_class_code}}"
+            }
+          },
+          "toRequest": {
+            "url": "/views/risk/risk_variable_management/variable_rightTable.json",
+            "method": "post",
+            "params": {
+              "ishide": "'${{current.page_id}}' == ''"
+            }
+          },
+          "contextMenu": [
+            {
+              "type": "add",
+              "label": "新增",
+              "childNodeType": "dept",
+              "icon": "el-icon-circle-plus-outline",
+              "toRequest": {
+                "url": "/views/risk/risk_variable_management/variable_class_add.json",
+                "method": "post",
+                "params": {
+                  "variable_class_code": "${{current.variable_class_code}}"
+                }
+              },
+              "props": {
+                "width": "60%",
+                "title": "新增变量分类"
+              }
+            },
+            {
+              "type": "divider"
+            },
+            {
+              "type": "add",
+              "label": "维护",
+              "childNodeType": "dept",
+              "icon": "el-icon-circle-plus-outline",
+              "toRequest": {
+                "url": "/views/risk/risk_variable_management/variable_class_edit.json",
+                "method": "post",
+                "params": {
+                  "variable_class_code": "${{current.variable_class_code}}"
+                }
+              },
+              "props": {
+                "width": "60%",
+                "title": "维护变量分类"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "childNodeType": "dept",
+              "icon": "el-icon-remove-outline",
+              "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "deci050052"
+                }
+              },
+              "confirm": {
+                "title": "提示信息",
+                "msg": "确认删除吗？",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

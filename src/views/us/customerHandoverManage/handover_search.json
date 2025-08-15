@@ -1,0 +1,87 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "initRequest": "${{params}}",
+      "btns": [
+        {
+          "type": "submit",
+          "label": "保存",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "us0206",
+              "new_branch_id":"${{current.new_org_num}}",
+              "cust_no":"${{params.cust_no}}",
+              "new_user_id":"${{current.new_usr_num}}",
+              "ori_branch_id":"$g{{user_info.branch_id}}",
+              "ori_user_id":"$g{{user_info.userCode}}"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "new_usr_nm": {
+            "label": "选择移交的用户",
+            "control": "lookup",
+            "edit": true,
+            "width": "130px",
+            "span":"10",
+            "keyField": {
+              "new_usr_nm": "user_name",
+              "new_usr_num": "user_id",
+              "new_org_num": "branch_id"
+            },
+            "toRequest": {
+              "url": "/views/us/customerHandoverManage/handover_list.json",
+              "method": "post",
+              "params":{
+                "branch_id":"${{formData.branch_id}}"
+              }
+            },
+            "props": {
+              "title": "选择移交的客户经理",
+              "width": "65%"
+            },
+            "format": "label"
+
+        },
+
+          "new_org_num": {
+            "control": "text",
+            "label": "机构编号",
+            "width": "130px",
+            "disabled": true,
+            "span":"10"
+          } },
+        {
+          "new_usr_num": {
+            "control": "text",
+            "label": "新客户经理编号",
+            "width": "130px",
+            "span":"10"
+          }
+        },{
+          "branch_id": {
+            "control": "hidden",
+            "label": "当前登录者所属机构",
+            "width": "130px",
+            "span":"10"
+          }
+        },{
+          "cust_no": {
+            "control": "hidden",
+            "label": "当前登录用户",
+            "width": "130px",
+            "span":"10"
+          }
+        }
+
+      ]
+    }
+  }
+}
+

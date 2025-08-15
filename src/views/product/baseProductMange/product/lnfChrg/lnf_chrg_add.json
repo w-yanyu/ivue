@@ -1,0 +1,142 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": "${{params}}",
+      "btns": [
+        {
+          "type": "submit",
+          "label": "确定",
+          "icon": "",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "CORELNTS9032"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "prodcd": {
+            "control": "text",
+            "label": "产品代码",
+            "width": "160px",
+            "disabled": true
+          },
+          "crcycd": {
+            "disabled": true,
+            "value":"CNY",
+            "control": "select",
+            "label": "货币代号",
+            "width": "160px",
+            "dict": {
+              "dictType": "MS_CURRENCY",
+              "dictKey": [
+                "MS_CURRENCY"
+              ],
+              "format": "label"
+            },
+            "rules": [
+                {
+                    "required": true,
+                    "message": "收费事件不能为空"
+                }
+            ]
+          }
+        },
+        {
+          "chrtyp": {
+            "control": "select",
+            "label": "收费类型",
+            "width": "160px",
+            "dict": {
+              "dictType": "E_CHRTYP",
+              "dictKey": [
+                "E_CHRTYP"
+              ],
+              "format": "label"
+            }
+          },
+          "epcgcd": {
+            "control": "lookup",
+            "label": "提前还款罚金编号",
+            "width": "160px",
+            "edit": "true",
+            "name": "repysq",
+            "multiple": false,
+            "keyField": {
+              "epcgcd": "epcgcd",
+              "epcgna": "epcgna"
+            },
+            "toRequest": {
+              "url": "/views/product/baseProductMange/product/lnfChrg/lnf_chrg_hkbh.json",
+              "method": "get"
+            },
+            "rules": [
+              {
+                "max": 10,
+                "message": "长度不能超过10个字符"
+              }
+            ]
+          }
+        },
+        {
+          "epcgna": {
+            "control": "text",
+            "label": "提前还款罚金名称",
+            "width": "160px",
+            "rules": [
+              {
+                "max": 80,
+                "message": "长度不能超过80个字符"
+              }
+            ]
+          },
+          "epcgam": {
+            "control": "text",
+            "label": "提前还款附加罚金金额",
+            "width": "160px",
+            "rules": [
+              {
+                "max": 21,
+                "message": "长度不能超过21个字符"
+              }
+            ]
+          }
+        },
+        {
+          "opcgcd": {
+            "control": "lookup",
+            "label": "逾期还款罚金编号",
+            "width": "160px",
+            "edit": "true",
+            "name": "repysq",
+            "multiple": false,
+            "keyField": {
+              "opcgcd": "epcgcd",
+              "opcgna": "epcgna"
+            },
+            "toRequest": {
+              "url": "/views/product/baseProductMange/product/lnfChrg/lnf_chrg_hkbh.json",
+              "method": "get"
+            }
+          },
+          "opcgna": {
+            "control": "text",
+            "label": "逾期还款罚金名称",
+            "width": "160px"
+          }
+        },
+        {
+          "opcgam": {
+            "control": "text",
+            "label": "逾期还款附加罚金金额",
+            "width": "160px"
+          }
+        }
+      ]
+    }
+  }
+}

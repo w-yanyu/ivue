@@ -1,0 +1,94 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": "${{params}}",
+      "controls": [
+        {
+          "verify_cd": {
+            "label": "核实项代码",
+            "width": "140px",
+            "control": "string",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入核实项代码"
+              }
+            ]
+          },
+          "verify_desc": {
+            "label": "核实项描述",
+            "width": "140px",
+            "control": "text",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入核实项描述"
+              }
+            ]
+          },
+          "busi_type": {
+            "label": "业务类型",
+            "width": "140px",
+            "disabled": true,
+            "multiple": false,
+            "value": "",
+            "control": "remoteSelect",
+            "labelField": "title",
+            "valueField": "id",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "pd0144",
+                "grupno": "0006",
+                "pid": "KSCP"
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择业务类型"
+              }
+            ]
+          },
+          "verify_type_cd": {
+            "label": "核实项分类代码",
+            "width": "140px",
+            "control": "remoteSelect",
+            "labelField": "verify_type_name",
+            "valueField": "verify_type_cd",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ar1101",
+                "start": 1,
+                "length": 1000
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择核实项分类代码"
+              }
+            ]
+          }
+        }
+      ],
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "doRequest": {
+            "url": "/SUMP/call/RPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "ar1124"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

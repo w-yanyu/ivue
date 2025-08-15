@@ -1,0 +1,237 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "foldLineNumber": 3,
+      "scope": "formData",
+      "controls": [
+        {
+          "regional_center": {
+            "control": "remoteSelect",
+            "label": "区域中心",
+            "selectFirstValue":true,
+            "labelField": "brachName",
+            "valueField": "branchNo",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "RLMSPLTS1068",
+                "isCurrent":"1"
+              }
+            },
+            "format": "label"
+          },
+          "prodcd": {
+            "control": "remoteSelect",
+            "label": "产品名称",
+            "labelField": "prodna",
+            "valueField": "crdtcd",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "AS_ICMS_PD_QRPDLS",
+                "crdtcd": "",
+                "length": 100
+              }
+            },
+            "format": "label"
+          }
+        },
+        {
+          "function_cd": {
+            "control": "select",
+            "multiple":true,
+            "label": "账龄",
+            "dict": {
+              "dictType": "E_FUNCTION",
+              "dictKey": [
+                "E_FUNCTION"
+              ],
+              "format": "label",
+              "labelField": "dictName",
+              "valueField": "dictId"
+            }
+          },
+          "lncf_no": {
+            "control": "text",
+            "label": "借据号"
+          }
+        },
+        {
+          "cust_nm": {
+            "control": "text",
+            "label": "客户姓名"
+          },
+          "cert_id": {
+            "control": "text",
+            "label": "证件号码"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "export",
+          "label": "导出",
+          "target": "dialog",
+          "icon": "iconfont icon-daochu",
+          "toRequest": {
+            "method": "post",
+            "url": "@exportOaFile",
+            "params": {
+              "servicecode": "RLMSPLTS1070",
+              "regional_center":"${{formData.regional_center}}",
+              "prodcd":"${{formData.prodcd}}",
+              "function_cd":"${{formData.function_cd}}",
+              "lncf_no":"${{formData.lncf_no}}",
+              "cust_nm":"${{formData.cust_nm}}",
+              "cert_id":"${{formData.cert_id}}"
+            }
+          },
+          "props": {
+            "width": "30%",
+            "title": "导出"
+          }
+        },
+        {
+          "type": "custom",
+          "label": "分案导入",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/pl/collManage/oaManage/pendDivision/fenadaoru.json"
+          },
+          "props": {
+            "title": "分案导入"
+          }
+        },
+        {
+          "type": "export",
+          "label": "下载分案模板",
+          "doRequest": {
+            "method": "post",
+            "url": "/SUMP/icmcall/plms/exportModelDaiFan"
+          }
+        },
+        {
+          "type": "custom",
+          "icon": "el-icon-upload",
+          "label": "自动分案",
+          "doRequest": {
+            "method": "POST",
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "params": {
+              "servicecode": "autoDivision"
+            }
+          },
+          "confirm": {
+          "title": "提醒",
+          "msg": "确定自动分案？",
+          "confirmButtonText": "确定",
+          "cancelButtonText": "取消"
+          }
+        },
+        {
+          "type": "custom",
+          "target": "dialog",
+          "icon": "el-icon-download",
+          "label": "查询分案状态",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/pl/collManage/oaManage/pendDivision/caseDivisionStatus.json"
+          },
+          "props": {
+            "title": "查询分案状态"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "RLMSPLTS1050"
+        }
+      },
+      "thead": [
+        {
+          "type": "string",
+          "align": "center",
+          "label": "区域中心",
+          "prop": "region_name"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "借据号",
+          "prop": "lncf_no"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "客户姓名",
+          "prop": "cust_nm"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "产品名称",
+          "prop": "prod_name"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "逾期天数",
+          "prop": "over_due_day"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "解除逾期金额",
+          "prop": "overdueTotalAmt"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "账龄",
+          "prop": "function_cd"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "现贷余额",
+          "prop": "now_credit_balance"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "上一月委案公司",
+          "prop": "pro_oa_id"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "证件号码",
+          "prop": "cert_id"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "是否高危",
+          "prop": "is_high_risk"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "是否法诉",
+          "prop": "whether_the_litigation"
+        }
+      ]
+    }
+  }
+}
+

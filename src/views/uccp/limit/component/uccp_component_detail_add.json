@@ -1,0 +1,106 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+      "form": {
+        "initRequest": "${{params}}",
+        "doRequest": {
+          "url": "/SUMP/icmcall/icmRPCCall",
+          "method": "POST",
+          "params": {
+            "servicecode": "uccp5011"
+          }
+      },
+        "controls": [
+            {
+                "limit_component_code": {
+                    "control": "string",
+                    "label": "限额部件编号"
+                },
+                "limit_dimension_code": {
+                    "control": "lookup",
+                    "label": "限额维度编号",
+                    "align": "center",
+                    "edit": false,
+                    "keyField": {
+                        "limit_dimension_code": "limit_dimension_code",
+                        "limit_dimension_name": "limit_dimension_name"
+                    },
+                    "toRequest": {
+                        "url": "/views/uccp/limit/component/uccp_dimension_unrelate_list.json",
+                        "method": "post",
+                        "params": {
+                            "servicecode": "uccp5009",
+                            "limit_component_code":"${{params.limit_component_code}}"
+                        },
+                        "props": {
+                            "width": "80%",
+                            "title": "限额维度选择"
+                        }
+                    },
+                    "rules": [
+                        {
+                            "required": true,
+                            "message": "请选择限额维度"
+                        }
+                    ]
+                },
+                "limit_dimension_name": {
+                    "control": "string",
+                    "label": "限额维度名称",
+                    "align": "center"
+                },
+                "limit_dimension_view_sort": {
+                    "control": "text",
+                    "label": "限额维度展示序号",
+                    "align": "center",
+                    "rules": [
+                        {
+                            "required": true,
+                            "message": "请输入限额维度展示序号"
+                        }
+                    ]
+                },
+                "dimension_must_sel": {
+                    "control": "select",
+                    "label": "限额维度是否必选",
+                    "align": "center",
+                    "value": "1",
+                    "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                            "MS_E_YESORNO"
+                        ],
+                        "format": "label"
+                    },
+                    "rules": [
+                        {
+                            "required": true,
+                            "message": "请选择限额维度是否必选"
+                        }
+                    ]
+                },
+                "dimension_multi_sel": {
+                    "control": "hidden",
+                    "label": "限额维度值是否可多选",
+                    "align": "center",
+                    "value": "1",
+                    "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                            "MS_E_YESORNO"
+                        ],
+                        "format": "label"
+                    },
+                    "rules": [
+                        {
+                            "required": true,
+                            "message": "请选择限额维度值是否可多选"
+                        }
+                    ]
+                }
+            }
+        ]
+      }
+    }
+  }
+  

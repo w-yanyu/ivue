@@ -1,0 +1,92 @@
+{
+  "module": "v-form-editableDataGrid-btn",
+  "init": {
+    "initRequest": "${{params}}"
+  },
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "initRequest": "${{params}}",
+      "###initRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode":"deci050097",
+          "appId": "deciOnl",
+          "result_list_id": "${{params.result_list_id}}"
+        }
+      }
+    },
+    "datagrid": {
+      "isInitSearch": true,
+      "name": "allData",
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "deci050097",
+          "appId": "deciOnl",
+          "result_list_id": "${{params.result_list_id}}",
+          "result_list_id2": "${{cParentParams.result_list_id}}"
+        }
+      },
+      "pagination": {
+        "show": false
+      },
+      "thead": [
+        {
+          "prop": "contact_person_no",
+          "label": "字段代码",
+          "type": "text",
+          "disabled": true,
+          "value": "字段代码"
+        },
+        {
+          "prop": "contact_person_name",
+          "label": "字段名称",
+          "type": "text",
+          "disabled": true,
+          "value": "字段名称"
+        },
+        {
+          "prop": "contact_info",
+          "label": "字段类型",
+          "type": "text",
+          "disabled": true,
+          "value": "字段类型"
+        },
+        {
+          "prop": "aaa",
+          "label": "精度",
+          "type": "text",
+          "disabled": true,
+          "value": "精度"
+        },
+        {
+          "prop": "bbb",
+          "label": "描述",
+          "type": "text",
+          "disabled": true,
+          "value": "描述"
+        },
+        {
+          "prop": "ccc",
+          "label": "默认值",
+          "type": "text",
+          "disabled": "'${{params.pageType}}' === 'look'"
+        },
+        {
+          "label": "操作",
+          "width": "70px",
+          "btns": [
+            {
+              "type": "delete",
+              "label": "删除"
+            }
+          ],
+          "align": "center"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": "${{params}}",
+      "scope": "form",
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "cb0340"
+            }
+          }
+        },
+        {
+          "type": "close",
+          "label": "取消"
+        }
+      ],
+      "controls": [
+        {
+          "solution_no": {
+            "control": "text",
+            "label": "方案编码",
+            "value": "${{params.solution_no}}",
+            "disabled":true
+          },
+          "solution_name": {
+            "control": "text",
+            "label": "方案名称",
+            "value": "${{params.solution_name}}",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          }
+        },
+        {
+          "daterange": {
+            "control": "dateTimePicker",
+            "label": "生效时间",
+            "type": "daterange",
+            "unlinkPanels": true,
+            "valueFormat": "yyyyMMdd",
+            "startPlaceholder": "请选择开始时间",
+            "endPlaceholder": "请选择结束时间",
+            "startField": "start_effect_time",
+            "endField": "end_effect_time",
+            "startvalue":"${{params.start_effect_time}}",
+            "endValue":"${{params.end_effect_time}}"
+          },
+          "is_enable": {
+            "control": "select",
+            "label": "是否启用",
+            "value": "${{params.is_enable}}",
+            "dict": {
+              "dictType": "CS_E_YESORNO",
+              "dictKey": [
+                "CS_E_YESORNO"
+              ],
+              "format": "value-label"
+            }
+          }
+        },
+        {
+          "solution_desc": {
+            "control": "textarea",
+            "label": "描述",
+            "value": "${{params.solution_desc}}",
+            "align": "center",
+            "span": "24",
+            "rows": 6,
+            "placeholder": "请输入"
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,125 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "colt_no": {
+            "control": "text",
+            "label": "抵质押品编号"
+          },
+          "cust_no": {
+            "label": "客户编号",
+            "control": "lookup",
+            "edit": true,
+            "keyField": {
+              "cust_no": "cust_no",
+              "cust_name": "cust_name"
+            },
+            "toRequest": {
+              "url": "/views/us/cust_lookup.json",
+              "method": "post",
+              "params": {
+              }
+            },
+            "format": "label"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "co4011",
+          "page_id": "/views/co/colsQuotaFrz/colsQuotaFrz/colsQuota_frz.json"
+        }
+      },
+      "thead": [
+        {
+          "label": "序号",
+          "type": "index"
+        },
+        {
+          "label": "额度编号",
+          "prop": "limit_no",
+          "align": "center"
+        },
+        {
+          "label": "客户号",
+          "prop": "cust_no",
+          "align": "center"
+        },
+        {
+          "label": "抵质押品编号",
+          "prop": "colt_no",
+          "align": "center"
+        },
+        {
+          "label": "押品总价值",
+          "prop": "colt_total_val",
+          "align": "center"
+        },
+        {
+          "label": "可用额度",
+          "prop": "cletal_remain",
+          "align": "center"
+        },
+        {
+          "label": "已占用额度",
+          "prop": "cletal_occupy",
+          "align": "center"
+        },
+        {
+          "label": "已冻结额度",
+          "prop": "freeze_quota",
+          "align": "center"
+        },
+        {
+          "label": "预冻结额度",
+          "prop": "pre_freeze_quota",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align": "center",
+          "btns": [
+            {
+              "type": "look",
+              "label": "冻结|解冻",
+              "toRequest": {
+                "url": "/views/co/colsQuotaFrz/colsQuotaFrz/colsQuota_frzsubmit_start.json",
+                "method": "POST",
+                "params": {
+                  "sale_prod_cd": "${{params.sale_prod_cd}}"
+                }
+              },
+              "props": {
+                "width": "65%",
+                "title": "冻结|解冻"
+              }
+            },
+            {
+              "type": "look",
+              "label": "交易记录",
+              "toRequest": {
+                "url": "/views/co/colsQuotaFrz/colsQuotaFrz/colsQuota_tran_record.json",
+                "method": "POST",
+                "params": {}
+              },
+              "props": {
+                "width": "65%",
+                "title": "交易记录"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

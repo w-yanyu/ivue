@@ -1,0 +1,92 @@
+{
+  "module": "v-search-btn-datagrid",
+  "layout": {
+    "form": {
+      "controls": [{
+        "scoreCardId": {
+          "label": "评分卡ID",
+          "control": "text",
+          "rules": [{
+            "message": "字段长度超限",
+            "max": 8
+          }]
+        },
+        "scoreCardCode": {
+          "label": "评分卡代码",
+          "control": "text",
+          "rules": [{
+            "message": "字段长度超限",
+            "max": 40
+          }]
+        }
+      }]
+    },
+    "toolbar": {},
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/riskController/riskCall",
+        "method": "post",
+        "params":{
+          "scoreCardType": "0",
+          "scoreCardStatus": "Y",
+          "servicecode": "risk-management-service/risk-score-card/page-select",
+          "appId": "risk-management-service",
+          "isList": true
+        }
+      },
+      "pagination": {
+        "hideOnSinglePage": false,
+        "show": true,
+        "pageSizes": [
+          10,
+          15,
+          20,
+          50,
+          100
+        ],
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "label": "操作",
+          "align": "center",
+          "btns": [
+            {
+              "type": "bringback",
+              "label": "选择"
+            }
+          ]
+        },
+        {
+          "label": "评分卡ID",
+          "prop": "scoreCardId"
+        },
+        {
+          "label": "评分卡代码",
+          "prop": "scoreCardCode"
+        },
+        {
+          "label": "评分卡名称",
+          "prop": "scoreCardName"
+        },
+        {
+          "label": "评分卡状态",
+          "prop": "scoreCardStatus",
+          "dict": {
+            "dictType": "RISK_RULE_STATUS",
+            "dictKey": [
+              "RISK_RULE_STATUS"
+            ],
+            "format": "label"
+          }
+        },
+
+        {
+          "label": "备注",
+          "prop": "description"
+        }
+      ]
+    }
+  }
+}

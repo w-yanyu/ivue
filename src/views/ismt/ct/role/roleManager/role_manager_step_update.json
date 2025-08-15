@@ -1,0 +1,55 @@
+{
+    "module": "d-steps",
+    "layout": {
+        "steps": {
+            "scope": "formObj",
+            "direction": "horizontal",
+            "alignCenter": false,
+            "finishStatus": "success",
+            "simpleType": false,
+            "active":0,
+            "nextStepType": "validate",
+            "list": [
+                {
+                    "scope":"step2",
+                    "title": "角色菜单配置",
+                    "icon": "el-icon-edit",
+                    "toRequest": {
+                        "url": "/views/ismt/ct/role/menuAssignment/role_menu_assignment.json",
+                        "method": "get",
+                        "params": {
+                            "role_id": "${{params.role_id}}"
+                        }
+                    },
+                    "doRequest": {
+                        "url": "/SUMP/call/RPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "ct3108",
+                            "role_id": "${{params.role_id}}"
+                        }
+                    }
+                },
+                {
+                    "scope":"step3",
+                    "title": "角色控件配置",
+                    "icon": "el-icon-edit",
+                    "toRequest": {
+                        "url": "/views/ismt/ct/role/controlAssignment/menuTree_update.json",
+                        "method": "get",
+                        "params": {
+                            "role_id": "${{params.role_id}}"
+                        }
+                    },
+                    "doRequest": {
+                        "url": "",
+                        "method": "get",
+                        "params": {
+                          
+                        }
+                      }
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,151 @@
+{
+    "module": "v_realonlyForm_btn",
+    "layout": {
+        "form": {
+            "initRequest": "${{params}}",
+            "controls": [
+                {
+                    "announce_id": {
+                        "control": "text",
+                        "align": "center",
+                        "label": "公告ID",
+                        "disabled": true
+                    }
+                },
+                {
+                    "announce_title": {
+                        "control": "text",
+                        "disabled": true,
+                        "align": "center",
+                        "label": "公告标题",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入公告标题"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "announce_type": {
+                        "control": "select",
+                        "align": "center",
+                        "disabled": true,
+                        "label": "公告类型",
+                        "dict": {
+                        "dictType": "CT_E_ANNOUNCETYPE",
+                        "dictKey": [
+                            "CT_E_ANNOUNCETYPE"
+                        ],
+                        "format": "label"
+
+                        },
+                        "rules": [
+                            {
+                                "required": true
+                            }
+                        ]
+                    }
+                },
+                {
+                    "announce_content": {
+                        "control": "textarea",
+                        "align": "center",
+                        "label": "公告内容",
+                        "disabled": true,
+                        "rows": 10,
+                        "span": 20,
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "公告内容"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "announce_file_path": {
+                        "control": "text",
+                        "align": "center",
+                        "label": "附件地址",
+                        "disabled": true,
+                        "events": {
+                            "condition": {
+                                "": {
+                                    "control": {
+                                        "download_file": {
+                                            "disabled": true
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "download_file": {
+                        "control": "button",
+                        "type": "export",
+                        "align": "center",
+                        "text": "点击下载",
+                        "doRequest": {
+                            "url": "/SUMP/icmcall/downloadStream",
+                            "icon": "el-icon-download",
+                            "method": "POST",
+                            "params": {
+                              "fileName": "${{current.announce_file_path}}",
+                              "filePath": "${{current.announce_file_path}}"
+                            }
+                          }
+                    }
+                },
+                {
+                    "publish_status": {
+                      "control": "select",
+                      "label": "发布状态",
+                      "disabled": true,
+                      "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                            "MS_E_YESORNO"
+                        ],
+                        "format": "value-label"
+                      },
+                      "rules": [
+                          {
+                              "required": true,
+                              "message": "请输入生效日期"
+                          }
+                      ]
+                    }
+                },
+                {
+                    "effect_date": {
+                        "control": "dateTimePicker",
+                        "align": "center",
+                        "disabled": true,
+                        "label": "生效日期",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入生效日期"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "expiry_date": {
+                        "control": "dateTimePicker",
+                        "label": "失效日期",
+                        "disabled": true,
+                        "align": "center",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入失效日期"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    }
+}

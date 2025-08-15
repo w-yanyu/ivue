@@ -1,0 +1,98 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "scope": "formData",
+            "initRequest": "${{params}}",
+            "btns":[{
+                
+            }],
+            "controls": [
+                {
+                    "task_num": {
+                        "control": "string",
+                        "label": "批次号",
+                        "span": 8,
+                        "width": "130px"
+                    },
+                    "tran_flow_id": {
+                        "control": "string",
+                        "label": "流程ID",
+                        "span": 8,
+                        "width": "130px"
+                    },
+                    "current_flow_step_num": {
+                        "control": "string",
+                        "label": "当前步骤",
+                        "span": 8,
+                        "width": "130px"
+                    }
+                },
+                {
+                    "total_cost": {
+                        "control": "string",
+                        "label": "累计耗时",
+                        "span": 8,
+                        "width": "130px"
+                    },
+                    "tran_start_time": {
+                        "control": "string",
+                        "label": "开始时间",
+                        "span": 8,
+                        "width": "130px"
+                    },
+                    "tran_end_time": {
+                        "control": "string",
+                        "label": "结束时间",
+                        "span": 8,
+                        "width": "130px"
+                    }
+                },
+                {
+                    "error_stack": {
+                        "control": "textarea",
+                        "rows": 6,
+                        "span": 24,
+                        "disabled": true,
+                        "label": "错误堆栈",
+                        "width": "130px"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ap1312",
+                    "task_num": "${{params.task_num}}",
+                    "tran_date": "${{params.tran_date}}"
+                }
+            },
+            "thead": [
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width": "150px",
+                    "label": "日志序号",
+                    "prop": "log_num"
+                    
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width": "300px",
+                    "label": "开始时间",
+                    "prop": "task_exe_date"
+                },
+                {
+                    "type":"string",
+                    "label": "运行信息",
+                    "prop": "run_info"
+                }
+            ]
+        }
+    }
+}

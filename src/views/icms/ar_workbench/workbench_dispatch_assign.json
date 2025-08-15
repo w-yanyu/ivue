@@ -1,0 +1,192 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "appId": {
+                        "control": "select",
+                        "label": "业务模块",
+                        "selectFirstValue": true,
+                        "dict": {
+                            "dictType": "MS_APPID",
+                            "dictKey": [
+                                "MS_APPID"
+                            ],
+                            "format": "value-label"
+                        },
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请选择业务模块"
+                            }
+                        ]
+                    },
+                    "user_id": {
+                        "control": "lookup",
+                        "label": "用户编号",
+                        "keyField": {
+                            "user_id": "user_id"
+                        },
+                        "toRequest": {
+                            "url": "/views/ce/paramManage/assign/collTeam/user_manager_lookup.json",
+                            "method": "get"
+                        }
+                    }
+                },
+                {
+                    "appl_id": {
+                        "control": "text",
+                        "label": "申请编号",
+                        "rules": [
+                          {
+                            "max": 64,
+                            "message": "长度不能超过64个字符"
+                          }
+                        ]
+                    },
+                    "cust_name": {
+                        "control": "text",
+                        "label": "客户名称",
+                        "rules": [
+                            {
+                                "max": 18,
+                                "message": "长度不能超过18个字符"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "bpm1020",
+                    "appId": "${{form.appId}}",
+                    "target_user_id": "${{form.user_id}}"
+                }
+            },
+            "thead": [
+                {
+                    "label": "申请编号",
+                    "prop": "appl_id",
+                    "width": 200
+                },
+                {
+                    "label": "客户名称",
+                    "prop": "cust_name"
+                },
+                {
+                    "label": "手机号码",
+                    "prop": "mobile_no"
+                },
+                {
+                    "label": "证件号码",
+                    "prop": "cert_no",
+                    "width": 200
+                },
+                {
+                    "label": "产品名称",
+                    "prop": "prod_name"
+                },
+                {
+                    "label": "流程产品名称",
+                    "prop": "wf_prod_name"
+                },
+                {
+                    "label": "进件日期",
+                    "prop": "system_date"
+                },
+                {
+                    "label": "当前节点",
+                    "prop": "task_define_name"
+                },
+                
+                {
+                    "label": "处理状态",
+                    "prop": "appl_state",
+                    "dict": {
+                        "dictType": "CT_E_APPLST",
+                        "dictKey": [
+                          "CT_E_APPLST"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                  "label": "当前处理用户名称",
+                  "prop": "user_name",
+                  "value": "${{current.cur_user_id}}-${{current.user_name}}"
+                },
+                {
+                  "label": "当前处理角色名称",
+                  "prop": "role_name",
+                  "value": "${{current.cur_wfrl_id}}-${{current.role_name}}"
+                },
+                {
+                    "label": "停留时间（天）",
+                    "prop": "cost_time",
+                    "width": 150,
+                    "align": "center"
+                  },
+                  {
+                    "label": "处理截止时间",
+                    "prop": "end_time",
+                    "width": 150,
+                    "align": "center"
+                  },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 130,
+                    "align": "center",
+                    "btns": [
+                        {
+                            "type": "edit",
+                            "label": "调签",
+                            "show": {
+                                "prop": "sign_tran_flag",
+                                "is": [
+                                  "1"
+                                ]
+                            },
+                            "toRequest": {
+                                "url": "/views/msap/bpm/processManagement/design/process_transign_manager.json",
+                                "method": "GET",
+                                "params": {
+                                    "appId":"${{form.appId}}",
+                                    "wf_inst_id": "${{current.wf_inst_id}}",
+                                    "task_inst_id":"${{current.task_inst_id}}",
+                                    "sign_mode":"1"
+                                }
+                            },
+                            "props": {
+                                "title": "流程调签"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "流程跟踪",
+                            "toRequest": {
+                              "url": "@ProcessImgView",
+                              "method": "GET",
+                              "params": {
+                                "from": "backlog",
+                                "appId": "${{form.appId}}"
+                              }
+                            },
+                            "props": {
+                              "width": "1200px",
+                              "title": "流程跟踪图"
+                            }
+                          }
+                    ]
+                }
+            ]
+        }
+    }
+}

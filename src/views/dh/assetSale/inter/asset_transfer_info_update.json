@@ -1,0 +1,117 @@
+{
+    "module": "v-inputDataForm-btn",
+    "layout": {
+        "form": {
+            "btns": [{
+                "type": "submit",
+                "label": "保存",
+                "doRequest": {
+                    "url": "/SUMP/icmcall/icmRPCCall",
+                    "method": "POST",
+                    "params": {
+                        "servicecode": "PLMSKGTS1002"
+                    }
+                }
+            }],
+            "initRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "PLMSKGTS1008",
+                    "params": {
+                        "appl_id": "${{params.appl_id}}",
+                        "asset_sale_id": "${{params.asset_sale_id}}",
+                        "sale_id": "${{params.sale_id}}"
+                    }
+                }
+            },
+            "controls": [{
+                "cust_id": {
+                    "control": "hidden"
+                },
+                "appl_id": {
+                    "control": "hidden"
+                },
+                "asset_sale_id": {
+                    "control": "hidden"
+                },
+                "sale_id": {
+                    "control": "hidden"
+                },
+                "ref_no": {
+                    "control": "string",
+                    "label": "业务编号",
+                    "span": 9
+                },
+                "asset_origin_price": {
+                    "control": "string",
+                    "span": 6,
+                    "label": "转让资产原价"
+                },
+                "evl_price_type": {
+                    "control": "select",
+                    "label": "评估方式",
+                    "span": 6,
+                    "dict": {
+                        "dictType": "E_EVALUATION_WAY",
+                        "dictKey": [
+                            "E_EVALUATION_WAY"
+                        ],
+                        "format": "label"
+                    },
+                    "rules": [{
+                        "required": true,
+                        "message": "请选择评估方式"
+                    }]
+                },
+                "sale_price": {
+                    "span": 9,
+                    "control": "text",
+                    "label": "转让价格",
+                    "rules": [{
+                            "required": true,
+                            "pattern": "^[0-9]+(\\.[0-9]{2})?$",
+                            "message": "请输入两位小数或整数数字"
+                        },
+                        {
+                            "max": 21,
+                            "message": "长度不能超过21个字符"
+                        }
+                    ]
+                },
+                "recv_usr_name": {
+                    "span": 6,
+                    "control": "text",
+                    "label": "受让人",
+                    "rules": [{
+                            "required": true,
+                            "message": "请输入受让人"
+                        },
+                        {
+                            "max": 30,
+                            "message": "长度不能超过30个字符"
+                        }
+                    ]
+                },
+                "sale_dt": {
+                    "span": 6,
+                    "control": "dateTimePicker",
+                    "label": "转让日期",
+                    "rules": [{
+                        "required": true,
+                        "message": "请选择日期!"
+                    }]
+                },
+                "apply_date": {
+                    "span": 9,
+                    "control": "string",
+                    "label": "申请日期",
+                    "rules": [{
+                        "required": true,
+                        "message": "申请日期不能为空!"
+                    }]
+                }
+            }]
+        }
+    }
+}

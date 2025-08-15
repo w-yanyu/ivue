@@ -1,0 +1,82 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "doc_check_list_no": {
+            "label": "资料检查列表序列号",
+            "control": "lookup",
+            "width": "140px",
+            "edit": true,
+            "disable": "true",
+            "keyField": {
+              "doc_check_list_no": "doc_check_list_no"
+            },
+            "toRequest": {
+              "url": "/views/icms/docManager/docProdRelaManager/docChecklist_lookup.json",
+              "method": "post"
+            },
+            "props": {
+              "title": "选择贷款产品"
+            },
+            "format": "label",
+            "rules": [
+              {
+                "required": true,
+                "message": "选择贷款产品"
+              }
+            ]
+          },
+          "loan_prod_cd": {
+            "label": "贷款产品",
+            "control": "text",
+            "width": "140px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入贷款产品"
+              }
+            ]
+          },
+          "busi_type": {
+            "label": "业务类型",
+            "width": "140px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择业务类型"
+              }
+            ],
+            "control": "remoteSelect",
+            "labelField": "title",
+            "valueField": "id",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "pd0144",
+                "grupno": "0006",
+                "pid": "KSCP"
+              }
+            }
+          }
+        }
+      ],
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "ar0182",
+              "trantp": "INSERT"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

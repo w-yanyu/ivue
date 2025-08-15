@@ -1,0 +1,139 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "matrix": {
+            "label": "矩阵id",
+            "control": "text",
+            "rules": [
+              {
+                "max": "5",
+                "message": "长度不能超过5个字符"
+              }
+            ]
+          },
+          "groupi": {
+            "label": "组合id",
+            "control": "text",
+            "rules": [
+              {
+                "max": "5",
+                "message": "长度不能超过5个字符"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/ac/assetClassifyGradingMatrix/addGradingMatrix.json"
+          },
+          "props": {
+            "title": "资产分类调整规则新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "AS_PLMS_KG_MACURD",
+          "method": "queryAll"
+        }
+      },
+      "thead": [
+        {
+          "type": "index"
+        },
+        {
+          "prop": "matrix",
+          "label": "矩阵id",
+          "align": "center"
+        },
+        {
+          "prop": "groupi",
+          "label": "组合id",
+          "align": "center"
+        },
+        {
+          "prop": "matmin",
+          "label": "逾期天数下限",
+          "align": "center"
+        },
+        {
+          "prop": "matmax",
+          "label": "逾期天数上限",
+          "align": "center"
+        },
+        {
+          "prop": "codeid",
+          "label": "五级分类id",
+          "align": "center",
+          "dict": {
+            "dictType": "D_taCode",
+            "dictKey": [
+              "D_taCode"
+            ],
+            "labelField": "codesc",
+            "valueField": "codeid",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "AS_PLMS_KG_COCURD",
+                "method": "queryAll"
+              }
+            },
+            "format": "value"
+          }
+        },
+        {
+          "prop": "codesc",
+          "label": "五级分类描述",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": "200",
+          "align": "center",
+          "btns": [
+            {
+              "toRequest": {
+                "method": "POST",
+                "url": "/views/ac/assetClassifyGradingMatrix/updateGradingMatrix.json"
+              },
+              "label": "修改",
+              "type": "edit"
+            },
+            {
+              "doRequest": {
+                "method": "POST",
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "params": {
+                  "servicecode": "AS_PLMS_KG_MACURD",
+                  "method": "del"
+                }
+              },
+              "label": "删除",
+              "type": "delete"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

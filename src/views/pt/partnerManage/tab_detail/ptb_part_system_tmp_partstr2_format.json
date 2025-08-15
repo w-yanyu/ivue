@@ -1,0 +1,105 @@
+{
+  "module": "lr_tree_dynamic",
+  "layout": {
+    "##initReqeust": "${{params}}",
+    "tree": {
+      "scope": "productParam",
+      "title": "伙伴体系",
+      "lazy": false,
+      "idField": "node_no",
+      "pIdField": "parent_node_no",
+      "labelField": "node_name",
+      "isLeafField": "is_leaf",
+      "nodeTypeField": "node_level",
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "belorg":"${{params.belorg}}",
+          "part_no":"${{params.part_no}}",
+          "seqnum":"${{params.seqnum}}",
+          "servicecode": "pt0192"
+        }
+      },
+      "#root": {
+        "rootNode": {
+          "name": "伙伴体系",
+          "value": "-1",
+          "icon": "xitongguanli",
+          "disabled": true
+        }
+      },
+      "nodeTypes": {
+        "1": {
+          "icon": "el-icon-news",
+          "children": [
+            "node_no",
+            "node_name"
+          ],
+          "toRequest": {
+            "method": "get",
+            "url": "/views/pt/partnerManage/expinfoview/ptb_part_system_tmp_expinfosee_format.json",
+            "params": {
+              "operater_ind": "M",
+              "part_no":"${{params.part_no}}",
+              "prndid": "-1"
+            }
+          },
+          "props": {
+            "title": "敞口详情",
+            "width":"600px"
+          },
+          "contextMenu": [
+
+
+          ]
+        },
+        "2": {
+          "icon": "el-icon-news",
+          "children": [
+            "node_no",
+            "node_name"
+          ],
+          "toRequest": {
+            "method": "get",
+            "url": "/views/pt/partnerManage/expinfoview/ptb_part_system_tmp_expinfosee2_format.json",
+            "params": {
+              "operater_ind": "M",
+              "part_no":"${{params.part_no}}",
+              "prndid": "${{productParam.prndid}}"
+            }
+          },
+          "props": {
+            "title": "敞口详情"
+          },
+          "contextMenu": [
+
+            
+          ]
+        },
+        "3": {
+          "icon": "el-icon-news",
+          "children": [
+            "node_no",
+            "node_name"
+          ],
+          "toRequest": {
+            "method": "get",
+            "url": "/views/pt/partnerManage/expinfoview/ptb_part_system_tmp_expinfosee2_format.json",
+            "params": {
+              "operater_ind": "M",
+              "part_no":"${{params.part_no}}",
+              "prndid": "${{productParam.prndid}}"
+            }
+          },
+          "props": {
+            "title": "敞口详情"
+          },
+          "contextMenu": [
+           
+          ]
+        }
+      }
+    }
+  }
+}

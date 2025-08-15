@@ -1,0 +1,180 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "adv_rpymt_fine_num": {
+            "control": "text",
+            "label": "提前还款罚金编号",
+            "rules": [
+              {
+                "max": 10,
+                "message": "长度不能超过10个字符"
+              }
+            ]
+          },
+          "adv_rpymt_fine_base_num": {
+            "control": "select",
+            "label": "提前还款罚金基数",
+            "dict": {
+              "dictType": "LN_E_ADV_RPYMT_FINE_BASE_NUM",
+              "dictKey": [
+                "LN_E_ADV_RPYMT_FINE_BASE_NUM"
+              ],
+              "format": "label"
+            }
+          }
+        },
+        {
+          "fine_caln_meth": {
+            "control": "select",
+            "label": "罚金计算方法",
+            "dict": {
+              "dictType": "LN_E_FINE_CALN_METH",
+              "dictKey": [
+                "LN_E_FINE_CALN_METH"
+              ],
+              "format": "label"
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/paramManage/loanAdvRpymtFineLayer/loan_advrpymt_fine_layer_add.json"
+          },
+          "props": {
+            "title": "新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ap0000",
+          "parm_tab_nm": "klnp_adv_rpymt_fine_layer",
+          "dtbs_oprn_flg": "3",
+          "data_pkg": "${{current}}"
+        }
+      },
+      "thead": [
+        {
+          "label": "提前还款罚金编号",
+          "prop": "adv_rpymt_fine_num",
+          "align": "center"
+        },
+        {
+          "label": "数值序号",
+          "prop": "numrcl_val_serl_num",
+          "align": "center"
+        },
+        {
+          "label": "期限/百分比",
+          "prop": "matu_pcnt",
+          "align": "center"
+        },
+        {
+          "label": "提前还款罚金基数",
+          "prop": "adv_rpymt_fine_base_num",
+          "dict": {
+            "dictType": "LN_E_ADV_RPYMT_FINE_BASE_NUM",
+            "dictKey": [
+              "LN_E_ADV_RPYMT_FINE_BASE_NUM"
+            ],
+            "format": "label"
+          },
+          "align": "center"
+        },
+        {
+          "label": "罚金计算方法",
+          "prop": "fine_caln_meth",
+          "dict": {
+            "dictType": "LN_E_FINE_CALN_METH",
+            "dictKey": [
+              "LN_E_FINE_CALN_METH"
+            ],
+            "format": "label"
+          },
+          "align": "center"
+        },
+        {
+          "label": "罚金金额/百分比",
+          "prop": "fine_amt_pcnt",
+          "align": "center"
+        },
+        {
+          "label": "序号",
+          "prop": "serl_num_long",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 300,
+          "align": "center",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/paramManage/loanAdvRpymtFineLayer/loan_advrpymt_fine_layer_info.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "50%",
+                "title": "信息详情"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/paramManage/loanAdvRpymtFineLayer/loan_advrpymt_fine_layer_update.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "50%",
+                "title": "信息维护"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "ap0000",
+                  "parm_tab_nm": "klnp_adv_rpymt_fine_layer",
+                  "dtbs_oprn_flg": "2",
+                  "data_pkg": {
+                    "adv_rpymt_fine_num":"${{current.adv_rpymt_fine_num}}",
+                    "numrcl_val_serl_num":"${{current.numrcl_val_serl_num}}"
+                  }
+                }
+              },
+              "confirm": {
+                "title": "确定删除",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

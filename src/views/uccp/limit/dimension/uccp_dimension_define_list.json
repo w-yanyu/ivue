@@ -1,0 +1,153 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "limit_dimension_name": {
+                        "label": "限额维度名称",
+                        "control": "text"
+                    },
+                    "valid_flag": {
+                        "label": "有效标识",
+                        "control": "select",                
+                        "align": "center",
+                        "dict": {
+                            "dictType": "UCCP_E_VALID_FLAG",
+                            "dictKey": [
+                                "UCCP_E_VALID_FLAG"
+                            ],
+                            "format": "label"
+                        }
+                    }
+                }
+            ]
+          },
+        "toolbar": {
+            "btns": [{
+                "type": "add",
+                "label": "新增",
+                "target": "dialog",
+                "toRequest": {
+                    "method": "GET",
+                    "url": "/views/uccp/limit/dimension/uccp_dimension_define_add.json",
+                    "params": {
+                       
+                    }
+                },
+                "props": {
+                    "width": "80%",
+                    "title": "限额维度新增"
+                }
+            }]
+        },
+        "datagrid": {
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "uccp5001"
+
+                }
+            },
+            "thead": [
+                {
+                    "label": "限额维度编号",
+                    "prop": "limit_dimension_code",
+                    "align": "center"
+                },
+                {
+                    "label": "限额维度名称",
+                    "prop": "limit_dimension_name",
+                    "align": "center"
+                },
+                {
+                    "label": "限额维度可选值获取方法",
+                    "prop": "limit_achieve_method",
+                    "align": "center"
+                },
+                {
+                    "label": "限额维度类型",
+                    "prop": "limit_dimension_type",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "UCCP_E_LIMIT_DIMENSION_TYPE",
+                        "dictKey": [
+                            "UCCP_E_LIMIT_DIMENSION_TYPE"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "有效标识",
+                    "prop": "valid_flag",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "UCCP_E_VALID_FLAG",
+                        "dictKey": [
+                            "UCCP_E_VALID_FLAG"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 230,
+                    "align": "center",
+                    "btns": [
+                        {
+                            "type": "edit",
+                            "label": "详情",
+                            "toRequest": {
+                                "url": "/views/uccp/limit/dimension/uccp_dimension_define_detail.json",
+                                "method": "GET",
+                                "params": {
+                                    
+                                }
+                            },
+                            "props": {
+                                "width": "80%",
+                                "title": "限额维度详情"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/uccp/limit/dimension/uccp_dimension_define_upd.json",
+                                "method": "GET",
+                                "params": {
+                                    
+                                }
+                            },
+                            "props": {
+                                "width": "80%",
+                                "title": "限额维度维护"
+                            }
+                        },
+                        
+                        {
+                            "type": "custom",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/call/RPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "uccp5004"
+                                }
+                            },
+                            "confirm": {
+                                "title": "确定删除",
+                                "confirmButtonText": "确定",
+                                "cancelButtonText": "取消"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

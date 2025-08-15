@@ -1,0 +1,169 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [],
+      "btns": []
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "custom",
+          "label": "自动获取",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "bpm0004",
+              "wf_prod_no": "${{params.wf_prod_no}}",
+              "wf_prod_name": "${{params.wf_prod_name}}",
+              "wf_define_id": "${{params.wf_define_id}}",
+              "updway": "PART",
+              "appId":"${{params.appId}}"
+            }
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "bpm0009",
+          "wf_prod_no": "${{params.wf_prod_no}}",
+          "appId":"${{params.appId}}"
+        }
+      },
+      "thead": [
+        {
+          "label": "配置编号",
+          "prop": "wf_part_no"
+        },
+        {
+          "label": "配置名称",
+          "prop": "wf_part_name"
+        },
+        {
+          "label": "流程编号",
+          "prop": "wf_prod_no"
+        },
+        {
+          "label":"流程名称",
+          "prop":"wf_prod_name"
+        },
+        {
+          "label":"定义ID",
+          "prop":"task_define_id"
+        },
+        {
+          "label":"定义名称",
+          "prop":"task_define_name"
+        },{
+          "label":"处理方式",
+          "prop":"select_type",
+          "dict": {
+            "dictType": "BPM_E_SELECT_TYPE",
+            "dictKey": [
+              "BPM_E_SELECT_TYPE"
+            ],
+            "format": "label"
+          },
+          "align": "center"
+        },{
+          "label":"会签完成类型",
+          "prop":"complete_type",
+          "align": "center",
+          "dict": {
+            "dictType": "BPM_E_COMPLETE_TYPE",
+            "dictKey": [
+              "BPM_E_COMPLETE_TYPE"
+            ]
+          }
+        },
+        {
+          "label":"完成百分比",
+          "prop":"complete_precent",
+          "align": "center"
+        },
+        {
+          "label":"通过百分比",
+          "prop":"pass_precent",
+          "align": "center"
+        },
+        {
+          "label":"是否一票否决",
+          "prop":"reject_one",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ]
+          }
+        },
+        {
+          "label":"版本号",
+          "prop":"data_version"
+        },{
+          "label":"修改日期",
+          "prop":"data_update_time"
+        },{
+          "label":"修改人",
+          "prop":"data_update_user"
+        },{
+          "label":"备注",
+          "prop":"remark"
+        },{
+          "label": "操作",
+          "width": "180px",
+          "fixed": "right",
+          "align":"center",
+          "btns": [{
+            "type": "edit",
+            "label": "查看",
+            "toRequest": {
+              "url": "/views/msap/bpm/processManagement/products/participant/view-detail.json",
+              "method": "GET",
+              "params": {
+                "appId":"${{params.appId}}"
+              }
+            },
+            "props": {
+              "width": "70%",
+              "height": "60%",
+              "title": "查看参与者详情"
+            }
+          },{
+            "type": "edit",
+            "label": "维护",
+            "toRequest": {
+              "url": "/views/msap/bpm/processManagement/products/participant/view-modify.json",
+              "method": "GET",
+              "params": {
+                "appId":"${{params.appId}}"
+              }
+            },
+            "props": {
+              "width": "70%",
+              "title": "参与者维护"
+            }
+          },{
+            "type": "edit",
+            "label": "生成模板",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "bpm3013",
+                "appId":"${{params.appId}}"
+              }
+            }
+          }]
+        }
+      ]
+    }
+  }
+}

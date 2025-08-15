@@ -1,0 +1,161 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": "${{params}}",
+      "scope": "form",
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "cb0315",
+              "id_": "${{params.id_}}"
+            }
+          }
+        },
+        {
+          "type": "close",
+          "label": "取消"
+        }
+      ],
+      "controls": [
+        {
+          "indicator_no": {
+            "control": "text",
+            "label": "指标编码",
+            "value": "${{form.indicator_no}}",
+            "disabled": true
+          },
+          "indicator_alias": {
+            "control": "text",
+            "label": "指标名称",
+            "value": "${{form.indicator_alias}}",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          }
+        },
+        {
+          "frequency": {
+            "control": "select",
+            "label": "频度",
+            "value": "${{form.frequency}}",
+            "dict": {
+              "dictType": "CS_E_INDICATOR_FREQUENCY",
+              "dictKey": [
+                "CS_E_INDICATOR_FREQUENCY"
+              ],
+              "format": "value-label"
+            }
+          },
+          "indicator_range": {
+            "control": "select",
+            "label": "指标范围",
+            "value": "${{form.indicator_range}}",
+            "dict": {
+              "dictType": "CS_E_INDICATOR_RANGE",
+              "dictKey": [
+                "CS_E_INDICATOR_RANGE"
+              ],
+              "format": "value-label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          }
+        },
+        {
+          "daterange": {
+            "control": "dateTimePicker",
+            "label": "生效时间",
+            "type": "daterange",
+            "unlinkPanels": true,
+            "valueFormat": "yyyyMMdd",
+            "startPlaceholder": "请选择开始时间",
+            "endPlaceholder": "请选择结束时间",
+            "startField": "start_effect_time",
+            "endField": "end_effect_time"
+          },
+          "enable": {
+            "control": "select",
+            "label": "是否启用",
+            "value": "${{form.enable}}",
+            "dict": {
+              "dictType": "CS_E_YESORNO",
+              "dictKey": [
+                "CS_E_YESORNO"
+              ],
+              "format": "value-label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          }
+        },
+        {
+          "is_total": {
+            "control": "select",
+            "label": "是否累计",
+            "value": "${{form.is_total}}",
+            "dict": {
+              "dictType": "CS_E_YESORNO",
+              "dictKey": [
+                "CS_E_YESORNO"
+              ],
+              "format": "value-label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          }
+        },
+        {
+          "indicator_expression": {
+            "control": "textarea",
+            "label": "指标公式",
+            "value": "${{form.indicator_expression}}",
+            "span": 24,
+            "autosize": {
+              "minRows": 3,
+              "maxRows": 6
+            },
+            "rules": [
+              {
+                "required": true,
+                "max": 400,
+                "message": "必填项且长度不能超过400个字符"
+              }
+            ]
+          }
+        },
+        {
+          "detail": {
+            "control": "textarea",
+            "label": "描述",
+            "value": "${{form.detail}}",
+            "align": "center",
+            "span": "24",
+            "rows": 3,
+            "placeholder": "请输入"
+          }
+        }
+      ]
+    }
+  }
+}

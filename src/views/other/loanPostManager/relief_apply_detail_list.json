@@ -1,0 +1,135 @@
+{
+  "module":"v_search_btn_datagrid",
+  "layout":{
+    "form":{
+
+      "controls":[
+        {
+          "applid":{
+            "label":"减免申请流程号",
+            "control":"text",
+            "name":"applid",
+            "rules":[
+              {
+                "required":false
+              },
+              {
+                "max":40,
+                "message":"长度不能超过40个字符"
+              }
+            ]
+          },
+          "lncfno":{
+            "label":"贷款借据号",
+            "control":"text",
+            "name":"lncfno",
+            "rules":[
+              {
+                "required":false
+              },
+              {
+                "max":32,
+                "message":"长度不能超过32个字符"
+              }
+            ]
+          }
+        }
+
+      ]
+    },
+    "datagrid":{
+      "isInitSearch":false,
+      "scope":"searchTable",
+      "doRequest":{
+        "url":"/SUMP/icmcall/icmRPCCall",
+        "method":"POST",
+        "params":{
+          "servicecode":"PLMSKGSS0010"
+        }
+      },
+      "pagination":{
+        "show":true
+      },
+      "thead":[
+
+        {
+          "label":"申请流程号",
+          "prop":"applid"
+        },
+        {
+          "label":"贷款借据号",
+          "prop":"lncfno"
+        },
+        {
+          "label":"客户号",
+          "prop":"custno"
+        },
+        {
+          "label":"客户名",
+          "prop":"custna"
+        },
+        {
+          "label": "贷款形态",
+          "prop": "clssst",
+          "dict": {
+            "dictType": "E_CLSSST",
+            "dictKey": [
+              "E_CLSSST"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label":"逾期金额",
+          "prop":"lnream"
+        },
+        {
+          "label":"贷款余额",
+          "prop":"lnrebl"
+        },
+        {
+          "label":"减免金额",
+          "prop":"dtsfam"
+        },
+        {
+          "label": "是否获得管理层审批",
+          "prop": "urgent",
+          "dict": {
+            "dictType": "E_YES___",
+            "dictKey": [
+              "E_YES___"
+            ],
+            "format": "label"
+          }
+        },
+      
+        {
+          "label":"备注信息",
+          "prop":"remark"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "详情",
+              "toRequest": {
+                "url": "@ManualDerateApplyDetail",
+                "method": "POST",
+                "params": {
+                  "servicecode": "PLMSKGSS0011"
+                }
+              },
+              "props": {
+                "width": "80%",
+                "title": "减免申请详情"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

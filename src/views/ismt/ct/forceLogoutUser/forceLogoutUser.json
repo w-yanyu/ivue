@@ -1,0 +1,120 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                  "brch_relation_code": {
+                    "control": "select",
+                    "label": "机构关系",
+                    "value": "01",
+                    "rules": [
+                      {
+                        "required": "true",
+                        "message": "请选择机构关系"
+                      }
+                    ],
+                    "dict": {
+                      "dictType": "CT_E_BRANCH_RELATION",
+                      "dictKey": [
+                        "CT_E_BRANCH_RELATION"
+                      ],
+                      "format": "label"
+                    }
+                  },
+                    "user_id": {
+                        "control": "text",
+                        "label": {
+                            "default":"用户ID"
+                        },
+                        "rules": [
+                            {
+                                "max":32,
+                                "message":"长度不能超过32个字符"
+                            }
+                        ]
+                    },
+                    "login_status": {
+                        "control": "select",
+                        "dict": {
+                            "dictType": "CT_E_LOGSTAS",
+                            "dictKey": ["CT_E_LOGSTAS"],
+                            "format": "label"
+                        },
+                        "label": {
+                            "default":"登录状态"
+                        }
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "isInitSearch":false,
+            "doRequest": {
+                "url": "/SUMP/rest/auth/userManager",
+                "method": "POST",
+                "params": {
+                  "user_id": "$g{{user_info.userCode}}",
+                    "servicecode":"ct2002"
+                }
+            },
+            "pagination": {
+                "pageSizes": [
+                    10,
+                    15,
+                    20
+                ],
+                "pageSize": 10
+            },
+            "thead": [
+                {
+                    "type": "index"
+                },
+                {
+                    "label": "用户ID",
+                    "prop": "user_id"
+                },
+                {
+                    "label": "用户姓名",
+                    "prop": "user_name"
+                },
+                {
+                    "label": "登录状态",
+                        "prop":"login_status",
+                        "dict": {
+                            "dictType": "CT_E_LOGSTAS",
+                            "dictKey": ["CT_E_LOGSTAS"],
+                            "format": "label"
+                        }
+                },
+                {
+                    "label":  "登录IP",
+                    "prop": "ip_address"
+                },
+                {
+                    "label": "操作",
+                    "width":"100",
+                    "btns": [
+                        {
+                            "type": "delete",
+                            "label": "强制签退",
+                            "doRequest": {
+                                "url": "/SUMP/rest/auth/forceLogout",
+                                "method": "POST",
+                                "params":{
+                                    "servicecode":"ct2008"
+                                }
+                            },
+                            "show":{
+                                "prop":"login_status",
+                                "is":[
+                                    "1"
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

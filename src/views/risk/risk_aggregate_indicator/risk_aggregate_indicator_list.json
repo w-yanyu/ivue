@@ -1,0 +1,198 @@
+{
+  "module": "v-search-btn-datagrid",
+  "pageId": "risk_aggregate_indicator",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "aggregateIndicatorName": {
+            "label": "聚合指标名称",
+            "control": "text",
+            "span": 8,
+            "rules": [
+              {
+                "message": "字段长度超限",
+                "max": 100
+              }
+            ]
+          },
+          "aggregateIndicatorCode": {
+            "label": "聚合指标代码",
+            "control": "text",
+            "span": 8,
+            "rules": [
+              {
+                "message": "字段长度超限",
+                "max": 40
+              }
+            ]
+          },
+          "cruleName": {
+            "label": "过滤规则名称",
+            "control": "text",
+            "span": 8,
+            "rules": [
+              {
+                "message": "字段长度超限",
+                "max": 100
+              }
+            ]
+          }
+        },
+        {
+          "cruleId": {
+            "label": "过滤规则",
+            "control": "text",
+            "span": 8,
+            "rules": [
+              {
+                "message": "字段长度超限",
+                "max": 8
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "authId": "aggregate_add_btn",
+          "label": "新增",
+          "toRequest": {
+            "url": "/views/risk/risk_aggregate_indicator/risk_aggregate_indicator_add.json",
+            "method": "get",
+            "params": {}
+          },
+          "props": {
+            "width": "70%",
+            "title": "新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/API/risk-management-service/risk-aggregate-indicator/page-select",
+        "method": "post"
+      },
+      "thead": [
+        {
+          "label": "聚合指标名称",
+          "prop": "aggregateIndicatorName"
+        },
+        {
+          "label": "聚合指标代码",
+          "prop": "aggregateIndicatorCode"
+        },
+        {
+          "label": "聚合指标数据来源",
+          "prop": "aggregateSource",
+          "dict": {
+            "dictType": "aggregateSource",
+            "dictKey": [],
+            "format": "label",
+            "doRequest": {
+              "url": "/views/risk/dictdata/aggregateSource.json",
+              "method": "get"
+            }
+          }
+        },
+        {
+          "label": "聚合函数",
+          "prop": "aggregateFunction",
+          "dict": {
+            "dictType": "aggregateFunction",
+            "dictKey": [],
+            "format": "label",
+            "doRequest": {
+              "url": "/views/risk/dictdata/aggregateFunction.json",
+              "method": "get"
+            }
+          }
+        },
+        {
+          "label": "聚合字段代码",
+          "prop": "aggregateFieldCode"
+        },
+        {
+          "label": "聚合字段名称",
+          "prop": "aggregateFieldName"
+        },
+        {
+          "label": "指标维度",
+          "prop": "indicatorDimension",
+          "dict": {
+            "dictType": "indicatorDimension",
+            "dictKey": [],
+            "format": "label",
+            "doRequest": {
+              "url": "/views/risk/dictdata/indicatorDimension.json",
+              "method": "get"
+            }
+          }
+        },
+        {
+          "label": "指标数据类型",
+          "prop": "dataType",
+          "dict": {
+            "dictType": "dataType",
+            "dictKey": [],
+            "doRequest": {
+              "url": "/views/risk/dictdata/dataType.json",
+              "method": "get"
+            }
+          }
+        },
+        {
+          "label": "过滤规则",
+          "prop": "cruleId"
+        },
+        {
+          "label": "过滤规则名称",
+          "prop": "cruleName"
+        },
+        {
+          "label": "操作",
+          "width": "150px",
+          "btns": [
+            {
+              "type": "edit",
+              "authId": "aggregate_upd_btn",
+              "label": "编缉",
+              "toRequest": {
+                "url": "/views/risk/risk_aggregate_indicator/risk_aggregate_indicator_edit.json",
+                "method": "get"
+              },
+              "props": {
+                "width": "70%"
+              }
+            },
+            {
+              "type": "look",
+              "label": "查看",
+              "toRequest": {
+                "url": "/views/risk/risk_aggregate_indicator/risk_aggregate_indicator_view.json",
+                "method": "get"
+              },
+              "props": {
+                "width": "70%"
+              }
+            },
+            {
+              "type": "delete",
+              "authId": "aggregate_del_btn",
+              "label": "删除",
+              "doRequest": {
+                "url": "/API/risk-management-service/risk-aggregate-indicator/delete",
+                "method": "post"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

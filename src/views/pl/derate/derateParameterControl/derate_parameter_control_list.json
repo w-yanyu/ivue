@@ -1,0 +1,136 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "acct_age": {
+            "label": "账龄",
+            "control": "select",
+            "value": [],
+            "dict": {
+              "dictKey": [
+                "PL_E_REDUPARA"
+              ],
+              "dictType": "PL_E_REDUPARA",
+              "format": "label"
+            }
+          },
+          "prod_broad_heading": {
+            "label": "产品大类",
+            "control": "select",
+            "value": [],
+            "dict": {
+              "dictKey": [
+                "PL_E_PRODDP"
+              ],
+              "dictType": "PL_E_PRODDP",
+              "format": "label"
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/pl/derate/derateParameterControl/derate_parameter_control_add.json"
+          },
+          "props": {
+            "title": "减免参数控制新增",
+            "width": "1200px"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": true,
+      "scope": "searchTable",
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pl0067"
+        }
+      },
+      "pagination": {
+        "show": true
+      },
+      "thead": [
+        {
+          "label": "账龄",
+          "align": "center",
+          "prop": "acct_age",
+          "dict": {
+            "dictType": "PL_E_REDUPARA",
+            "dictKey": [
+              "PL_E_REDUPARA"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "产品大类",
+          "align": "center",
+          "prop": "prod_broad_heading",
+          "dict": {
+            "dictType": "PL_E_PRODDP",
+            "dictKey": [
+              "PL_E_PRODDP"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "减免利息上限(%)",
+          "prop": "dert_int_upr_lmt"
+        },
+        {
+          "label": "减免罚息上限(%)",
+          "prop": "dert_pnly_int_upr_lmt"
+        },
+        {
+          "label": "减免费用上限(%)",
+          "prop": "dert_cntgy_upr_lmt"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 120,
+          "align": "left",
+          "btns": [
+            {
+              "label": "维护",
+              "type": "edit",
+              "props": {
+                "title": "减免参数控制维护",
+                "width": "1200px"
+              },
+              "toRequest": {
+                "method": "GET",
+                "url": "/views/pl/derate/derateParameterControl/derate_parameter_control_edit.json"
+              }
+            },
+            {
+              "label": "删除",
+              "type": "delete",
+              "doRequest": {
+                "method": "POST",
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "params": {
+                  "servicecode": "pl0065",
+                  "paraId": "${{current.parm_id}}"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

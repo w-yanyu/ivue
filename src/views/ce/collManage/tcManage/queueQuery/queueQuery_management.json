@@ -1,0 +1,470 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "foldLineNumber": 3,
+      "scope": "formData",
+      "controls": [
+        {
+          "cust_name": {
+            "control": "text",
+            "label": "客户姓名"
+          },
+          "cert_no": {
+            "control": "text",
+            "label": "证件号码"
+          }
+        },
+        {
+          "contact_info": {
+            "control": "text",
+            "label": "手机号码"
+          },
+          "cust_no": {
+            "control": "text",
+            "label": "客户编号"
+          }
+        },
+        {
+          "loan_no": {
+            "control": "text",
+            "label": "借据号"
+          },
+          "overdue_days": {
+            "control": "inputNumber",
+            "label": "最大逾期天数"
+          }
+        },
+        {
+          "coll_count": {
+            "control": "text",
+            "label": "催记次数"
+          },
+          "case_cls_code": {
+            "control": "remoteSelect",
+            "label": "案件类型",
+            "labelField": "location_name",
+            "valueField": "case_cls_code",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ce0410"
+              }
+            },
+            "format": "label"
+          }
+        },
+        {
+          "casestate_code": {
+            "control": "remoteSelect",
+            "label": "案件状态",
+            "labelField": "status_name",
+            "valueField": "casestate_code",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ce0411"
+              }
+            },
+            "format": "label"
+          },
+          "queue_code": {
+            "control": "remoteSelect",
+            "label": "队列名称",
+            "labelField": "queue_name",
+            "valueField": "queue_code",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ce0402"
+              }
+            },
+            "format": "label"
+          }
+        },
+        {
+          "deal_state": {
+            "control": "select",
+            "label": "处理状态",
+            "dict": {
+              "dictType": "CE_E_DEALSTATUS",
+              "dictKey": [
+                "CE_E_DEALSTATUS"
+              ],
+              "format": "label"
+            }
+          },
+          "overdue_stage_code": {
+            "control": "remoteSelect",
+            "label": "逾期阶段",
+            "labelField": "ovd_period_name",
+            "valueField": "overdue_stage_code",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ce0412"
+              }
+            },
+            "format": "label"
+          }
+        },
+        {
+          "collect_date_1": {
+            "control": "inputNumber",
+            "label": "入催天数区间开始值"
+          },
+          "collect_date_2": {
+            "control": "inputNumber",
+            "label": "入催天数区间结束值"
+          }
+        },
+        {
+          "start_amt": {
+            "control": "currency",
+            "label": "欠款金额区间开始值"
+          },
+          "end_amt": {
+            "control": "currency",
+            "label": "欠款金额区间结束值"
+          }
+        },
+        {
+          "daterange": {
+            "control": "dateTimePicker",
+            "label": "统计日期",
+            "type": "daterange",
+            "unlinkPanels": true,
+            "valueFormat": "yyyyMMdd",
+            "startPlaceholder": "请选择开始时间",
+            "endPlaceholder": "请选择结束时间",
+            "startField": "start_time",
+            "endField": "end_time"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "export",
+          "icon": "iconfont icon-daochu",
+          "label": "导出",
+          "doRequest": {
+            "method": "POST",
+            "url": "/SUMP/rest/file/export",
+            "params": {
+              "servicecode": "pl3506"
+            }
+          },
+          "confirm":{
+            "title":"提示信息",
+            "msg":"确认导出吗？",
+            "confirmButtonText":"确定",
+            "cancelButtonText":"取消"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ce3501"
+        }
+      },
+      "thead": [
+        {
+          "label": "操作",
+          "align": "center",
+          "fixed": "left",
+          "width": "130px",
+          "btns": [
+            {
+              "type": "openVerify",
+              "label": "进入电催",
+              "doRequest":{
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "ce3504"
+                }
+              },
+              "toRequest": {
+                "target": "navTab",
+                "url": "/views/ce/collManage/tcManage/collWorkbench/collWorkbench.json",
+                "method": "POST",
+                "params": {
+                  "case_no": "${{current.case_no}}",
+                  "queue_code": "${{current.queue_code}}"
+                }
+              },
+              "props": {
+                "title": "电催工作台"
+              }
+            }
+          ]
+        },
+        {
+          "type": "tag",
+          "align": "center",
+          "width": "100px",
+          "label": "紧急程度",
+          "prop": "case_status",
+          "switch": {
+            "warning": "warning",
+            "danger": "danger",
+            "normal": "info"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "180px",
+          "label": "客户编号",
+          "prop": "cust_no"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "180px",
+          "label": "客户姓名",
+          "prop": "cust_name"
+        },
+        {
+          "type":"string",
+          "label": "证件类型",
+          "align":"center",
+          "width":"180px",
+          "prop": "cert_type",
+          "dict": {
+            "dictType": "MS_E_CRET_TYPE",
+            "dictKey": [
+              "MS_E_CRET_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "180px",
+          "label": "证件号码",
+          "prop": "cert_no"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "180px",
+          "label": "手机号码",
+          "prop": "contact_info"
+        },
+        {
+          "type":"string",
+          "label": "处理状态",
+          "align":"center",
+          "width":"180px",
+          "prop": "deal_state",
+          "dict": {
+            "dictType": "CE_E_DEALSTATUS",
+            "dictKey": [
+              "CE_E_DEALSTATUS"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width":"180px",
+          "label": "案件类型",
+          "prop": "case_cls_code",
+          "dict": {
+            "dictKey": [
+              "case_cls_code"
+            ],
+            "format": "label",
+            "labelField": "location_name",
+            "valueField": "case_cls_code",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ce0410"
+              }
+            }
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "180px",
+          "label": "案件状态",
+          "prop": "casestate_code",
+          "dict": {
+            "dictKey": [
+              "casestate_code"
+            ],
+            "format": "label",
+            "labelField": "status_name",
+            "valueField": "casestate_code",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ce0411"
+              }
+            }
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "180px",
+          "label": "案件队列",
+          "prop": "queue_code",
+          "dict": {
+            "dictKey": [
+              "queue_code"
+            ],
+            "format": "label",
+            "labelField": "queue_name",
+            "valueField": "queue_code",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ce0402"
+              }
+            }
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width":"180px",
+          "label": "催收组",
+          "prop": "coll_group",
+          "dict": {
+            "dictKey": [
+              "coll_group"
+            ],
+            "format": "label",
+            "labelField": "coll_team_name",
+            "valueField": "coll_group",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ce0180"
+              }
+            }
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width":"180px",
+          "label": "催收员",
+          "prop": "collector",
+          "dict": {
+            "dictKey": [
+              "collector"
+            ],
+            "format": "label",
+            "labelField": "user_name",
+            "valueField": "user_id",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ce0403"
+              }
+            }
+          }
+        },
+        {
+          "type": "currency",
+          "align": "center",
+          "width": "180px",
+          "label": "当前余额",
+          "prop": "current_bal",
+          "format": {
+            "decimal": "2"
+          }
+        },
+        {
+          "type": "currency",
+          "align": "center",
+          "width": "180px",
+          "label": "逾期金额",
+          "prop": "overdue_amt",
+          "format": {
+            "decimal": "2"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "180px",
+          "label": "逾期天数",
+          "prop": "overdue_days"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "180px",
+          "label": "到期日",
+          "prop": "executiondue_date"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "180px",
+          "label": "跟催日期",
+          "prop": "hold_date"
+        },
+        {
+          "type":"string",
+          "label": "本期五级分类",
+          "align":"center",
+          "width":"180px",
+          "prop": "classify_result",
+          "dict": {
+            "dictType": "MS_E_LEVEL5_TYPE",
+            "dictKey": [
+              "MS_E_LEVEL5_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "180px",
+          "label": "催记次数",
+          "prop": "coll_count"
+        },
+        {
+          "type":"string",
+          "label": "最近催收结果",
+          "align":"center",
+          "width":"180px",
+          "prop": "last_coll_result",
+          "dict": {
+            "dictType": "CE_E_LAST_COLL_RESULT",
+            "dictKey": [
+              "CE_E_LAST_COLL_RESULT"
+            ],
+            "format": "label"
+          }
+        }
+      ]
+    }
+  }
+}

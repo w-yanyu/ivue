@@ -1,0 +1,108 @@
+{
+  "module": "lr-tree-dynamic",
+  "layout": {
+    "tree": {
+      "title": "菜单树",
+      "lazy": true,
+      "hideDynamicArea": false,
+      "isShowAddNode": false,
+      "idField": "id",
+      "pIdField": "pid",
+      "labelField": "title",
+      "isLeafField": "isLeaf",
+      "nodeTypeField": "type",
+      "search": {
+        "enabled": "true",
+        "displayType": "list",
+        "nameFields": [
+          "menu_name",
+          "menu_desc"
+        ]
+      },
+      "root": {
+        "rootNode": {
+          "name": "菜单树",
+          "value": "%",
+          "menu_id": "%"
+        },
+        "contextMenu": [
+          {
+            "type": "add",
+            "label": "新增",
+            "childNodeType": "dept",
+            "icon": "el-icon-circle-plus-outline",
+            "toRequest": {
+              "url": "/views/ismt/ct/menu/menuTree/menuTree_add.json",
+              "method": "post",
+              "params": {
+                "menu_id": "%"
+              }
+            },
+            "props": {
+              "width": "80%",
+              "title": "新增菜单"
+            }
+          }
+        ]
+      },
+      "rootTypes": [
+        "dept"
+      ],
+      "nodeTypes": {
+        "dept": {
+          "children": [
+            "dept"
+          ],
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "post",
+            "params": {
+              "servicecode": "ct3110",
+              "menu_id": "${{current.menu_id}}"
+            }
+          },
+          "toRequest": {
+            "url": "/views/ismt/ct/menu/menuTree/menuTree_tabs.json",
+            "method": "post",
+            "params": {
+              "ishide": "'${{current.page_id}}' == ''"
+            }
+          },
+          "contextMenu": [
+            {
+              "type": "add",
+              "label": "新增",
+              "childNodeType": "dept",
+              "icon": "el-icon-circle-plus-outline",
+              "toRequest": {
+                "url": "/views/ismt/ct/menu/menuTree/menuTree_add.json",
+                "method": "post",
+                "params": {}
+              },
+              "props": {
+                "width": "80%",
+                "title": "新增菜单"
+              }
+            },
+            {
+              "type": "divider"
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "childNodeType": "dept",
+              "icon": "el-icon-remove-outline",
+              "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "ct3103"
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

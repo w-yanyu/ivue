@@ -1,0 +1,119 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "apply_no": {
+            "control": "text",
+            "label": "申请编号"
+          },
+          "lncatp": {
+            "control": "select",
+            "label": "流程类型",
+            "dict": {
+              "dictType": "E_LNCATP2",
+              "dictKey": [
+                "E_LNCATP2"
+              ],
+              "format": "label"
+            }
+          }
+        },
+        {
+          "creator": {
+            "control": "text",
+            "label": "启动操作员"
+          },
+          "brchno": {
+            "control": "text",
+            "label": "启动机构"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pl0029",
+          "usercd": "$g{{user_info.userCode}}"
+        }
+      },
+      "thead": [
+        {
+          "label": "申请编号",
+          "align":"center",
+          "prop": "apply_no",
+          "width": "200px"
+        },
+        {
+          "label": "启动人员",
+          "prop": "creator"
+        },
+        {
+          "label": "启动时间",
+          "prop": "create_time"
+        },
+        {
+          "label": "启动机构",
+          "prop": "brchno"
+        },
+        {
+          "label": "当前节点",
+          "align":"center",
+          "prop": "taskna"
+        },
+        {
+          "label": "当前处理人",
+          "align":"center",
+          "prop": "curusr"
+        },
+        {
+          "label": "流程类型",
+          "align":"center",
+          "prop": "proc_inst_name"
+        },
+        {
+          "label": "操作",
+          "align":"center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "办理",
+              "toRequest": {
+                "url": "@dhWaitToDoDeal",
+                "method": "GET",
+                "target":"navTab",
+                "params": {
+                  "framecd": "warnMan"
+                }
+              },
+              "props": {
+                "title": "待办事项办理"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "流程跟踪",
+              "toRequest": {
+                "url": "@DHProcessImgView",
+                "method": "GET",
+                "params": {
+                  "from": "backlog"
+                }
+              },
+              "props": {
+                "width": "1200px",
+                "title": "流程跟踪图"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "role_id": {
+            "control": "hidden",
+            "label": "role_id:",
+            "visible": "false",
+            "value": "${{params.role_id}}"
+          },
+          "busi_card_type": {
+            "control": "hidden",
+            "label": "busi_card_type:",
+            "visible": "false",
+            "value": "${{params.busi_card_type}}"
+          }
+        },
+        {
+          "card_name": {
+            "control": "text",
+            "label": "卡片名称",
+            "rules": [
+              {
+                "max": 64,
+                "message": "长度不能超过64个字符"
+              }
+            ]
+          },
+          "card_id": {
+            "control": "text",
+            "label": "卡片编号",
+            "rules": [
+              {
+                "max": 100,
+                "message": "长度不能超过100个字符"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+          {
+              "type": "bringback",
+              "label":  "选择",
+              "multiple": true,
+              "control":"ckeckbox" ,
+              "theme": "primary"
+             
+             
+          }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "saveAllSelected": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          
+          "servicecode": "ct2602"
+        }
+      },
+      "thead": [
+        {
+          "type": "selection",
+          "align": "center"
+        },
+        {
+          "label": "卡片编号",
+          "prop": "card_id"
+        },
+        {
+          "label": "卡片名称",
+          "prop": "card_name"
+        },
+        {
+          "type":"image",
+          "label": "卡片预览",
+          "prop": "card_img"
+        },
+        {
+          "label": "卡片权限",
+          "prop": "card_tags"
+        },
+        {
+          "label": "接口编号",
+          "prop": "card_service_code"
+        }
+      ]
+    }
+  }
+}

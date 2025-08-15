@@ -1,0 +1,207 @@
+{
+  "module": "v-search-btn-datagrid",
+  "pageId": "risk_alert_audit",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "alertId": {
+            "label": "警报信息ID",
+            "control": "text",
+            "span": 8,
+            "rules": [
+              {
+                "message": "请正确输入",
+                "max": 40
+              }
+            ]
+          },
+          "alertTrxnSeq": {
+            "label": "交易流水号",
+            "control": "text",
+            "span": 8,
+            "rules": [
+              {
+                "message": "请正确输入",
+                "max": 40
+              }
+            ]
+          },
+          "accountId": {
+            "label": "账号",
+            "control": "text",
+            "span": 8,
+            "rules": [
+              {
+                "message": "请正确输入",
+                "max": 40
+              }
+            ]
+          }
+        },
+        {
+          "cardNumber": {
+            "label": "卡号",
+            "control": "text",
+            "span": 8,
+            "rules": [
+              {
+                "message": "请正确输入",
+                "max": 19
+              }
+            ]
+          },
+          "customerId": {
+            "label": "客户号",
+            "control": "text",
+            "span": 8,
+            "rules": [
+              {
+                "message": "请正确输入",
+                "max": 40
+              }
+            ]
+          },
+          "status": {
+            "label": "审核状态",
+            "control": "select",
+            "span": 8,
+            "dict": {
+              "dictType": "alertReviewStatus",
+              "dictKey": [],
+              "format": "value-label",
+              "doRequest": {
+                "url": "/views/risk/dictdata/alertReviewStatus.json",
+                "method": "get"
+              }
+            },
+            "value": "0"
+          }
+        },
+        {
+          "applyOperator": {
+            "label": "申请人",
+            "control": "text",
+            "span": 8,
+            "rules": [
+              {
+                "message": "请正确输入",
+                "max": 40
+              }
+            ]
+          },
+          "startReviewDate": {
+            "label": "申请开始日期",
+            "control": "dateTimePicker",
+            "valueFormat": "string",
+            "format": "yyyy-MM-dd HH:mm:ss",
+            "span": 8
+          },
+          "endReviewDate": {
+            "label": "申请结束日期",
+            "control": "dateTimePicker",
+            "valueFormat": "timestamp",
+            "format": "yyyy-MM-dd HH:mm:ss",
+            "span": 8
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/API/risk-management-service/risk-alert-review/page-select",
+        "method": "post"
+      },
+      "thead": [
+        {
+          "label": "审核信息ID",
+          "prop": "reviewId",
+          "align": "center"
+        },
+        {
+          "label": "警报信息ID",
+          "prop": "alertId",
+          "align": "center"
+        },
+        {
+          "label": "警报交易流水号",
+          "prop": "alertTrxnSeq",
+          "align": "center"
+        },
+        {
+          "label": "卡号",
+          "prop": "cardNumber",
+          "align": "center"
+        },
+        {
+          "label": "账号",
+          "prop": "accountId",
+          "align": "center"
+        },
+        {
+          "label": "客户号",
+          "prop": "customerId",
+          "align": "center"
+        },
+        {
+          "label": "处理方式",
+          "prop": "processingFlag",
+          "align": "center",
+          "dict": {
+            "dictType": "processingFlagSource",
+            "dictKey": [],
+            "format": "label",
+            "doRequest": {
+              "url": "/views/risk/dictdata/processingFlag.json",
+              "method": "get"
+            }
+          }
+        },
+        {
+          "label": "申请人",
+          "prop": "applyOperator",
+          "align": "center"
+        },
+        {
+          "label": "申请时间",
+          "prop": "applyTime",
+          "type": "dateTimePicker",
+          "format": "yyyy-MM-dd HH:mm:ss",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "width": "100px",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/risk/risk_alert_assign/risk_alert_assign_tab.json",
+                "method": "get"
+              },
+              "props": {
+                "width": "70%",
+                "height": "100%"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "审核",
+              "authId": "alert_audit_btn",
+              "toRequest": {
+                "url": "/views/risk/risk_alert_audit/risk_alert_audit_tab.json",
+                "method": "get"
+              },
+              "props": {
+                "width": "70%"
+              },
+              "disabled": "'${{current.status}}'!=='0'"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

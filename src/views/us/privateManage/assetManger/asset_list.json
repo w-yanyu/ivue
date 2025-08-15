@@ -1,0 +1,118 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "toolbar": {
+            "btns": [{
+                "type": "add",
+                "target": "dialog",
+                "label": "新增",
+                "toRequest": {
+                    "method": "POST",
+                    "url": "/views/us/private-zcl/assetManger/asset_add.json",
+                    "params": {
+                        "cust_no": "1"
+                    }
+                },
+                "props": {
+                    "width": "80%",
+                    "title": "客户资产信息新增"
+                }
+            }]
+        },
+        "datagrid": {
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "us0161",
+                    "cust_no": "1"
+                }
+            },
+            "thead": [
+                {
+
+                    "type": "index",
+                    "label": "序号",
+                    "align": "center"
+                },
+                {
+                    "label": "资产类型",
+                    "prop": "asset_type1",
+                    "align": "center"
+                },
+                {
+                    "label": "资产描述",
+                    "prop": "asset_desc",
+                    "align": "center"
+                },
+                {
+                    "label": "关联金融机构",
+                    "prop": "associat_institution",
+                    "align": "center"
+                },
+                {
+                    "label": "资产评估币种",
+                    "prop": "asset_ccy",
+                    "align": "center"
+                },
+                {
+                    "label": "资产评估金额",
+                    "prop": "asset_value",
+                    "align": "center"
+                },
+                {
+                    "label": "评估日期",
+                    "prop": "valuation_date",
+                    "align": "center"
+                },
+                {
+                    "label": "此资产月收入",
+                    "prop": "month_income",
+                    "align": "center"
+                },
+                {
+                    "label": "操作",
+                    "width": "160px",
+                    "btns": [{
+                            "type": "look",
+                            "label": "详情",
+                            "toRequest": {
+                                "url": "/views/us/private-zcl/assetManger/asset_info.json",
+                                "method": "post",
+                                "props": {
+                                    "width": "80%",
+                                    "title": "客户资产详情"
+                                }
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/us/private-zcl/assetManger/asset_update.json",
+                                "method": "GET"
+                               
+                            },
+                            "props": {
+                                "width": "80%",
+                                "title": "客户资产信息维护"
+                            }
+                        },
+                        {
+                            "type": "delete",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "us0163"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

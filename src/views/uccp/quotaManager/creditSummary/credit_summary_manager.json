@@ -1,0 +1,189 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "cust_no": {
+                        "control": "text",
+                        "label": {
+                            "default": "客户编号", 
+                            "i18n": "T302.custom-number"
+                         }
+                    },
+                    "cust_name": {
+                        "control": "text",
+                        "label": "客户名称"
+                    }
+                }
+            ]
+          },
+        "toolbar": {
+            
+        },
+        "datagrid": {
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "uccp3027",
+                    "appId":"uccpOnl"
+                }
+            },
+            "thead": [
+                {
+                    "label": {
+                        "default": "客户编号", 
+                        "i18n": "T302.custom-number"
+                     },
+                    "prop": "cust_no",
+                    "align": "center"
+                },
+                {
+                    "label": "客户名称",
+                    "prop": "cust_name",
+                    "align": "center"
+                },
+                {
+                    "label": {
+                        "default": "基础币种", 
+                        "i18n": "T302.base-currency"
+                     },
+                    "prop": "base_ccy_code",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "MS_CURRENCY",
+                        "dictKey": [
+                        "MS_CURRENCY"
+                        ]
+                    }
+                },
+                {
+                    "label": {
+                        "default": "客户总额度", 
+                        "i18n": "T302.total-customer-limit"
+                     },
+                    "prop": "total_limit",
+                    "align": "center",
+                    "format": {
+                        "thousand": ","
+                      }
+                },
+                {
+                    "label": {
+                        "default": "已用客户总额度", 
+                        "i18n": "T302.used-total-customer-limit"
+                     },
+                    "prop": "total_limit_used",
+                    "align": "center",
+                    "format": {
+                        "thousand": ","
+                      },
+                      "btns": [
+                          {
+                            "type": "look",
+                            "toRequest": {
+                              "url": "/views/uccp/quotaManager/creditTree/pre_occup_main.json",
+                              "params": {
+                                  "cust_no": "${{current.cust_no}}",
+                                  "cust_name": "${{current.cust_name}}"
+                              }
+                            },
+                            "props": {
+                              "width": "75%",
+                              "title": "占用情况查看"
+                            }
+                          }
+                        ]
+                },
+                {
+                    "label": {
+                        "default": "客户总敞口额度", 
+                        "i18n": "T302.total-customer-exposure-limit"
+                     },
+                    "prop": "total_exposure_limit",
+                    "align": "center",
+                    "format": {
+                        "thousand": ","
+                      }
+                },
+                {
+                    "label": {
+                        "default": "已用总敞口额度", 
+                        "i18n": "T302.total-exposure-limit-used"
+                     },
+                    "prop": "used_exposure_limit",
+                    "align": "center",
+                    "format": {
+                        "thousand": ","
+                      }
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 280,
+                    "align": "center",
+                    "btns": [
+                        {
+                            "type": "edit",
+                            "label": {
+                                "default": "额度视图", 
+                                "i18n": "T302.quota-view"
+                             },
+                            "toRequest": {
+                                "target": "navTab",
+                                "url": "@quotaVeiw",
+                                "method": "GET",
+                                "params": {
+                                    "cust_name":"${{current.cust_no}}"
+                                }
+                            },
+                            "props": {
+                                "width": "80%",
+                                "title": "额度视图查看"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "额度详细信息",
+                            "toRequest": {
+                                "#target": "navTab",
+                                "url": "/views/uccp/quotaManager/creditTree/credit_tree_detail.json",
+                                "method": "GET",
+                                "params": {
+                                    "servicecode": "uccp3028"
+                                }
+                            },
+                            "props": {
+                                "width": "80%",
+                                "title": "额度详细信息查看"
+                            }
+                        },
+                        {
+                            "type": "custom",
+                            "label": {
+                                "default": "刷新", 
+                                "i18n": "T302.refresh"
+                             },
+                            "doRequest": {
+                              "url": "/SUMP/icmcall/icmRPCCall",
+                              "method": "POST",
+                              "loading":"true",
+                              "params": {
+                                "servicecode": "uccp4005",
+                                "appId": "uccpOnl",
+                                "cust_no": "${{current.cust_no}}"
+                              }
+                            },
+                            "confirm": {
+                              "title": "确定删除",
+                              "confirmButtonText": "确定",
+                              "cancelButtonText": "取消"
+                            }
+                            }
+                    ]
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,229 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "name": "info",
+      "btns": [],
+      "initRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "pd1513",
+          "sale_prod_cd": "${{params.sale_prod_cd}}",
+          "prod_version": "${{params.prod_version}}"
+        }
+      },
+      "controls": [
+        {
+          "servicecode": {
+            "control": "hidden",
+            "label": "保存展期属性",
+            "value": "pd1512"
+          },
+          "sale_prod_cd": {
+            "label": "可售产品编号",
+            "control": "hidden",
+            "value": "${{params.sale_prod_cd}}"
+          },
+          "prod_version": {
+            "label": "产品版本",
+            "control": "hidden",
+            "value": "${{params.prod_version}}"
+          },
+          "allow_ext_flag": {
+            "label": "是否允许展期",
+            "control": "select",
+            "span": 8,
+            "width": "140px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择是否展期"
+              }
+            ],
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ]
+            },
+            "events": {
+              "condition": {
+                "0": {
+                  "control": {
+                    "allow_ext_times": {
+                      "initShow": false,
+                      "value": ""
+                    },
+                    "min_ext_amt": {
+                      "initShow": false,
+                      "value": ""
+                    },
+                    "max_ext_amt": {
+                      "initShow": false,
+                      "value": ""
+                    },
+                    "allow_ext_repay_type_list": {
+                      "initShow": false,
+                      "value": ""
+                    },
+                    "before_matu_days": {
+                      "initShow": false,
+                      "value": ""
+                    },
+                    "ext_rule_no": {
+                      "initShow": false,
+                      "value": ""
+                    }
+                  }
+                },
+                "1": {
+                  "control": {
+
+                    "allow_ext_times": {
+                      "initShow": true,
+                      "rules": [
+                        {
+                          "required": true,
+                          "message": "请输入最大展期次数"
+                        }
+                      ]
+                    },
+                    "min_ext_amt": {
+                      "initShow": true,
+                      "rules": [
+                        {
+                          "required": true,
+                          "message": "请输入最小放款金额"
+                        }
+                      ]
+                    },
+                    "max_ext_amt": {
+                      "initShow": true,
+                      "rules": [
+                        {
+                          "required": true,
+                          "message": "请输入最大放款金额"
+                        }
+                      ]
+                    },
+                    "allow_ext_repay_type_list": {
+                      "initShow": true,
+                      "rules": [
+                        {
+                          "required": true,
+                          "message": "必填项"
+                        }
+                      ]
+                    },
+                    "before_matu_days": {
+                      "initShow": true,
+                      "rules": [
+                        {
+                          "required": true,
+                          "message": "必填项"
+                        }
+                      ]
+                    },
+                    "ext_rule_no": {
+                      "initShow": true,
+                      "rules": [
+                        {
+                          "required": true,
+                          "message": "必填项"
+                        }
+                      ]
+                    }
+                    
+                  }
+                }
+              }
+            }
+          },
+          "allow_ext_times": {
+            "label": "允许展期次数",
+            "control": "text",
+            "span": 8,
+            "width": "140px"
+          },
+          "ext_rule_no": {
+            "control": "lookup",
+            "label": "展期规则编号",
+            "placeholder": "查看展期规则",
+            "width": "140px",
+            "span": 8,
+            "edit": true,
+            "keyField": {
+                "ext_rule_no": "extd_rule_num"
+            },
+            "toRequest": {
+                "url": "/views/pd/prod/templatePage/extendattr/klnp_extd_rule_layer_info.json",
+                "method": "post",
+                "params": {
+                  "extd_rule_num": "${{currency.ext_rule_no}}"
+                }
+            },
+
+            "props": {
+              "title": "查看规则",
+              "width": "75%"
+          }
+        },
+          "min_ext_amt": {
+            "label": "最小展期金额(元)",
+            "control": "currency",
+            "align": "left",
+            "format": {
+
+              "thousand": ",",
+              "decimal": 2
+            },
+            "span": 8,
+            "width": "140px"
+          },
+          "max_ext_amt": {
+            "label": "最大展期金额(元)",
+            "control": "currency",
+            "align": "left",
+            "format": {
+
+              "thousand": ",",
+              "decimal": 2
+            },
+            "span": 8,
+            "width": "140px"
+          },
+          "before_matu_days": {
+            "label": "允许提前申请展期的天数",
+            "control": "text",
+            "span": 8,
+            "width": "140px"
+          },
+          "allow_ext_repay_type_list": {
+            "control": "select",
+            "multiple": true,
+            "span": 8,
+            "width": "140px",
+            "label": "允许展期的还款方式",
+            "dict": {
+              "dictType": "PD_E_REPAY_WAY",
+              "dictKey": [
+                "PD_E_REPAY_WAY"
+              ],
+              "exclude": [
+                "5",
+                "6",
+                "7",
+                "8",
+                "9",
+                "10"
+              ],
+              "format": "label-value"
+            }
+          }
+        }
+
+      ]
+    }
+  }
+}

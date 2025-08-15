@@ -1,0 +1,360 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "pageId":"S0703",
+    "form": {
+      "scope": "formData",
+      "controls": [
+        {
+          "batch_no": {
+            "control": "text",
+            "label": "分案批次号"
+          },
+          "case_id": {
+            "control": "text",
+            "label": "案件编号"
+          }
+        },
+        {
+          "cust_name": {
+            "control": "text",
+            "label": "客户姓名"
+          },
+          "cert_no": {
+            "control": "text",
+            "label": "证件号码"
+          }
+        },
+        {
+          "initiater_type": {
+            "control": "select",
+            "label": "发起方类型",
+            "selectFirstValue": false,
+            "dict": {
+              "dictType": "CS_INITIATER_TYPE",
+              "dictKey": [
+                "CS_INITIATER_TYPE"
+              ],
+              "format": "value-label"
+            }
+          },
+          "outsourcing_org_id": {
+            "control": "text",
+            "label": "委外公司"
+          }
+        },
+        {
+          "coll_team": {
+            "control": "text",
+            "label": "催收组"
+          },
+          "collector": {
+            "control": "text",
+            "label": "催收员"
+          }
+        },
+        {
+          "quality_conclusion": {
+            "control": "select",
+            "label": "质检结论",
+            "selectFirstValue": false,
+            "dict": {
+              "dictType": "CS_QUALITY_CONCLUSION",
+              "dictKey": [
+                "CS_QUALITY_CONCLUSION"
+              ],
+              "format": "value-label"
+            }
+          },
+          "quality_status": {
+            "control": "select",
+            "label": "质检状态",
+            "selectFirstValue": false,
+            "dict": {
+              "dictType": "CS_QUALITY_STATUS",
+              "dictKey": [
+                "CS_QUALITY_STATUS"
+              ],
+              "format": "value-label"
+            }
+          }
+        },
+        {
+          "quality_inspector": {
+            "control": "text",
+            "label": "质检员"
+          },
+          "quality_content_type": {
+            "control": "select",
+            "label": "质检内容类型",
+            "selectFirstValue": false,
+            "dict": {
+              "dictType": "CS_QUALITY_CONTENT_TYPE",
+              "dictKey": [
+                "CS_QUALITY_CONTENT_TYPE"
+              ],
+              "format": "value-label"
+            }
+          }
+        },
+        {
+          "duration": {
+            "control": "text",
+            "label": "通话时长（秒）"
+          },
+          "overdue_days": {
+            "control": "text",
+            "label": "逾期天数"
+          }
+        },
+        {
+          "case_status": {
+            "control": "select",
+            "label": "案件状态",
+            "dict": {
+              "dictType": "CS_E_STATUS_CD",
+              "dictKey": [
+                "CS_E_STATUS_CD"
+              ],
+              "format": "value-label"
+            }
+          },
+          "coll_result": {
+            "control": "select",
+            "label": "催收结果",
+            "selectFirstValue": false,
+            "dict": {
+              "dictType": "CS_E_COLL_RESULT",
+              "dictKey": [
+                "CS_E_COLL_RESULT"
+              ],
+              "format": "value-label"
+            }
+          }
+        },
+        {
+          "quality_code": {
+            "control": "select",
+            "label": "质检码",
+            "dict": {
+              "dictType": "CS_E_QUALITY_CODE",
+              "dictKey": [
+                "CS_E_QUALITY_CODE"
+              ],
+              "format": "value-label"
+            }
+          },
+          "phone_or_email": {
+            "control": "text",
+            "label": "联系人号码"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "export",
+          "authId":"S0703001",
+          "icon": "el-icon-circle-plus",
+          "target": "dialog",
+          "label": "导出",
+          
+          "doRequest": {
+            "method": "POST",
+            "url": "/SUMP/rest/file/commExport",
+            "params": {
+              "servicecode": "qc0014",
+              "exportname": "质检信息"
+            }
+          },
+          "confirm":{
+            "title":"提示信息",
+            "msg":"确认导出吗？",
+            "confirmButtonText":"确定",
+            "cancelButtonText":"取消"
+          }
+        },
+        {
+          "type": "add",
+          "authId":"S0703002",
+          "icon": "el-icon-circle-plus",
+          "target": "dialog",
+          "label": "质检派案",
+          "checkCountMin": 1,
+          "toRequest": {
+            "method": "POST",
+            "url": "@qualityDivisionCase"
+          },
+          "props": {
+            "width": "65%",
+            "title": "质检派案"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "qc0014",
+          "user_id":"$g{{user_info.userCode}}",
+          "appId": "qcOnl"
+        }
+      },
+      "thead": [
+        {
+          "width":"55",
+          "type":"selection"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "案件编号",
+          "prop": "case_id"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "分案批次号",
+          "prop": "batch_no"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "客户姓名",
+          "prop": "cust_name"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "质检内容类型",
+          "prop": "quality_content_type",
+          "dict": {
+            "dictType": "CS_QUALITY_CONTENT_TYPE",
+            "dictKey": [
+              "CS_QUALITY_CONTENT_TYPE"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "发起方类型",
+          "prop": "initiater_type",
+          "dict": {
+            "dictType": "CS_INITIATER_TYPE",
+            "dictKey": [
+              "CS_INITIATER_TYPE"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "通话时长（秒）",
+          "prop": "duration"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "催收员",
+          "prop": "collector"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "催收组",
+          "prop": "coll_team"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "委外公司",
+          "prop": "outsourcing_org_id"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "质检结论",
+          "prop": "quality_conclusion",
+          "dict": {
+            "dictType": "CS_QUALITY_CONCLUSION",
+            "dictKey": [
+              "CS_QUALITY_CONCLUSION"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "180px",
+          "label": "质检码",
+          "prop": "quality_code",
+          "dict": {
+            "dictType": "CS_E_QUALITY_CODE",
+            "dictKey": [
+              "CS_E_QUALITY_CODE"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "质检状态",
+          "prop": "quality_status",
+          "dict": {
+            "dictType": "CS_QUALITY_STATUS",
+            "dictKey": [
+              "CS_QUALITY_STATUS"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "逾期天数",
+          "prop": "overdue_days"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "质检员",
+          "prop": "quality_inspector"
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "fixed": "right",
+          "btns": [
+
+            {
+
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "@qualityCheck",
+                "method": "POST",
+                "params": {
+
+                }
+              },
+              "props": {
+                "width":"65%",
+                "title": "质检明细数据信息"
+              }
+            }
+
+          ]
+        }
+      ]
+    }
+  }
+}

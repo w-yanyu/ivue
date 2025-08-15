@@ -1,0 +1,149 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "foldLineNumber": 2,
+      "controls": [
+        {
+          "loan_due_bill_num": {
+            "span": 12,
+            "control": "text",
+            "label": "借据号",
+            "rules": [
+              {
+                "max": 32,
+                "message": "长度不能超过32个字符"
+              }
+            ]
+          },
+          "extd_ctrct_num": {
+            "control": "text",
+            "span": 12,
+            "label": "合同编号",
+            "format": "label",
+            "rules": [
+              {
+                "max": 80,
+                "message": "长度不能超过80个字符"
+              }
+            ]
+          }
+        },
+        {
+          "extd_dt": {
+            "control": "dateTimePicker",
+            "label": {
+              "default": "展期执行日期"
+            }
+          },
+          "loan_extd_ste": {
+            "control": "select",
+            "label": "状态",
+            "dict": {
+              "dictType": "LN_E_LOAN_EXTD_STE",
+              "dictKey": [
+                "LN_E_LOAN_EXTD_STE"
+              ],
+              "format": "value-label"
+            }
+          }
+
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "syln0017",
+          "outlistid": "klnbExtdQryType"
+        }
+      },
+      "thead": [
+
+
+        {
+          "align": "center",
+          "label": "借据号",
+          "prop": "loan_due_bill_num"
+        },
+        {
+          "align": "center",
+          "label": "展期序号",
+          "width": "80px",
+          "prop": "extd_serl_num"
+        },
+        {
+          "align": "center",
+          "label": "展期合同号",
+          "prop": "extd_ctrct_num"
+        },
+        {
+          "align": "center",
+          "label": "展期申请日期",
+          "prop": "mntnc_dt"
+        },
+        {
+          "align": "center",
+          "label": "展期执行日期",
+          "prop": "extd_dt"
+        },
+        {
+          "align": "center",
+          "label": "展期后贷款到期日",
+          "prop": "extd_matu_dt"
+        },
+        {
+          "align": "center",
+          "width": "140px",
+          "label": "展期申请金额(元)",
+          "prop": "extd_amt",
+          "format": {
+            "thousand": ","
+          }
+        },
+        {
+          "align": "center",
+          "width": "140px",
+          "label": "展期后执行利率",
+          "prop": "nrl_int_rate"
+        },
+        {
+          "align": "center",
+          "width": "140px",
+          "label": "状态",
+          "prop": "loan_extd_ste",
+          "dict": {
+            "dictType": "LN_E_LOAN_EXTD_STE",
+            "dictKey": [
+              "LN_E_LOAN_EXTD_STE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "align": "center",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/integrated/loanInfo/loan_ext_detail.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "80%",
+                "title": "贷款展期申请详情"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "btns": [
+        {
+          "type": "submit",
+          "icon": "el-icon-check",
+          "label": "代理申请",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "cb0143",
+              "case_id": "${{params.selectedData}}"
+            }
+          }
+        },
+        {
+          "type": "close",
+          "label": "取消"
+        }
+      ],
+      "controls": [
+        {
+          "agency_coll_team": {
+            "control": "inputTree",
+            "label": "代理催收组",
+            "span": "12",
+            "idField": "coll_team",
+            "nodeTypeField": "type",
+            "pIdField": "parent_coll_team",
+            "labelField": "coll_team_name",
+            "events": {
+              "emit": [
+                "agency_collector"
+              ]
+            },
+            "nodeTypes": {
+              "collTeam": {
+                "icon": "el-icon-news",
+                "children": [
+                  "collTeam"
+                ]
+              }
+            },
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "cb0041"
+              }
+            },
+            "format": "value-label"
+          },
+          "agency_collector": {
+            "control": "remoteSelect",
+            "label": "代理催收员",
+            "span": "12",
+            "labelField": "user_name",
+            "valueField": "user_id",
+            "lazy": true,
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "cb0084"
+              }
+            },
+            "format": "value-label"
+          }
+        },
+        {
+          "agency_end_date": {
+            "control": "dateTimePicker",
+            "placeholder": "请输入",
+            "disabledDate": "dateBefore",
+            "align": "center",
+            "span": "12",
+            "label": "代理结束日期"
+          }
+        }
+      ]
+    }
+  }
+}

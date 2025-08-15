@@ -1,0 +1,59 @@
+{
+    "module": "d-steps",
+    "layout": {
+      "steps": {
+        "scope": "formObj",
+        "direction": "horizontal",
+        "alignCenter": true,
+        "finishStatus": "success",
+        "simpleType": false,
+        "nextStepType": "submit",
+        "list": [
+          {
+            "title": "新增基础信息",
+            "scope": "step1",
+            "icon": "el-icon-document",
+            "toRequest": {
+              "url": "views/uccp/limit/limitSettBasic/limit_base_info.json",
+              "method": "get",
+              "params": {
+                "limit_component_type": "1"
+              }
+            },
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "uccp5021",
+                  "limit_status": "0"
+                },
+                "resultSet":{
+                  "norm_no":"norm_no",
+                  "norm_name":"norm_name"
+                }
+            }
+          },
+          {
+            "title": "新增详细信息",
+            "scope": "step2",
+            "forbidBack":true,
+            "icon": "el-icon-document",
+            "toRequest": {
+              "url": "@limitComOptionUpd",
+              "method": "get",
+              "params": {
+                "limit_component_type":"1",
+                "norm_no": "${{formObj.step1.norm_no}}" ,
+                "norm_name": "${{formObj.step1.norm_name}}" ,
+                "limit_component_code": "${{formObj.step1.limit_component_code}}"
+              },
+              "eventAfter": {
+                "doParentCallback": true
+              }
+            } 
+          }
+        ]
+      }
+    }
+  }
+  

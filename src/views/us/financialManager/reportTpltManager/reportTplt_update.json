@@ -1,0 +1,242 @@
+{
+    "module": "v-inputDataForm-btn",
+    "layout": {
+        "form": {
+            "initRequest": "${{params}}",
+            "btns": [{
+                "type": "submit",
+                "label": "提交",
+                "doRequest": {
+                    "url": "/SUMP/call/RPCCall",
+                    "method": "post",
+                    "params": {
+                        "servicecode": "us0912"
+                 
+                    }
+                }
+            }],
+            "controls": [{
+                    "tplt_id": {
+                        "control": "hidden",
+                        "label": "报表模板ID",
+                        "disabled": true,
+                        "rules": [{
+                                "max": 32,
+                                "message": "长度不能超过32个字符"
+                            },
+                            {
+                                "message": "报表模板ID不能为空",
+                                "required": true
+                            }
+                        ]
+                    },
+                    "tplt_name": {
+                        "control": "text",
+                        "label": "报表模板名称",
+                        "rules": [{
+                                "max": 50,
+                                "message": "长度不能超过50个字符"
+                            },
+                            {
+                                "message": "报表模板名称不能为空",
+                                "required": true
+                            }
+                        ]
+                    }
+                },
+                {
+                    "indu_type": {
+                        "control": "select",
+                        "label": "报表行业类型",
+                        "align": "center",
+                        "dict": {
+                            "dictType": "US_E_INDU_TYPE",
+                            "dictKey": [
+                                "US_E_INDU_TYPE"
+                            ],
+                            "format": "label"
+                        },
+                        "rules": [{
+                            "required": true,
+                            "message": "请选择报表行业类型"
+                        }]
+                    },
+                    "rpt_type": {
+                        "control": "select",
+                        "label": "报表类型",
+                        "align": "center",
+                        "dict": {
+                            "dictType": "US_E_RPT_TYPE",
+                            "dictKey": [
+                                "US_E_RPT_TYPE"
+                            ],
+                            "format": "label"
+                        },
+                        "rules": [{
+                            "required": true,
+                            "message": "请选择报表类型"
+                        }]
+                    }
+                },
+                {
+                    "area_code": {
+                        "control": "select",
+                        "label": "所属区域",
+                        "align": "center",
+                        "dict": {
+                            "dictType": "US_E_AREA_CODE",
+                            "dictKey": [
+                                "US_E_AREA_CODE"
+                            ],
+                            "format": "label"
+                        }
+                    },
+                    "corp_size": {
+                        "control": "select",
+                        "label": "企业规模",
+                        "align": "center",
+                        "dict": {
+                            "dictType": "US_E_CORP_SIZE",
+                            "dictKey": [
+                                "US_E_CORP_SIZE"
+                            ],
+                            "format": "label"
+                        }
+                    }
+                },
+                {
+                    "is_new_build_flag": {
+                        "control": "select",
+                        "label": "是否新建企业标志",
+                        "align": "center",
+                        "dict": {
+                            "dictType": "MS_E_YESORNO",
+                            "dictKey": [
+                                "MS_E_YESORNO"
+                            ],
+                            "format": "label"
+                        }
+                    },
+                    "is_halt_flag": {
+                        "control": "select",
+                        "label": "是否停用标志",
+                        "align": "center",
+                        "dict": {
+                            "dictType": "MS_E_YESORNO",
+                            "dictKey": [
+                                "MS_E_YESORNO"
+                            ],
+                            "format": "label"
+                        },
+                        "rules": [{
+                            "required": true,
+                            "message": "请选择是否停用标志"
+                        }]
+                    }
+                },
+                {
+                    "auto_flag": {
+                        "control": "select",
+                        "label": "自动计算标志",
+                        "align": "center",
+                        "dict": {
+                            "dictType": "MS_E_YESORNO",
+                            "dictKey": [
+                                "MS_E_YESORNO"
+                            ],
+                            "format": "label"
+                        },
+                        "rules": [{
+                            "required": true,
+                            "message": "请选择自动计算标志"
+                        }]
+                    },
+                    "rules": [{
+                        "required": true,
+                        "message": "请选择是否旧模板转新模板"
+                    }],
+                    "is_need_chge": {
+                        "control": "select",
+                        "label": "是否旧模板转新模板",
+                        "align": "center",
+                        "dict": {
+                            "dictType": "MS_E_YESORNO",
+                            "dictKey": [
+                                "MS_E_YESORNO"
+                            ],
+                            "format": "label"
+                        },
+                        "rules": [{
+                            "required": true,
+                            "message": "请选择是否停用标志"
+                        }],
+                        "showItem": {
+                            "1": [
+                                "old_tplt_id",
+                                "old_tplt_name"
+                            ]
+                        },
+                        "events": {
+                            "condition": {
+                                "1": {
+                                    "control": {
+                                        "old_tplt_name": {
+                                            "rules": [{
+                                                "required": true,
+                                                "message": "请选择旧模板"
+                                            }]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    "old_tplt_name": {
+                        "initShow": false,
+                        "label": "旧模板名称",
+                        "control": "lookup",
+                        "edit": false,
+                        "keyField": {
+                            "old_tplt_name": "tplt_name",
+                            "old_tplt_id": "tplt_id"
+                        },
+                        "toRequest": {
+                            "url": "/views/us/financialManager/reportTpltManager/reportTplt_lookup.json",
+                            "method": "post"
+                        },
+                        "props": {
+                            "title": "旧模板选择"
+                        },
+                        "format": "label"
+                    },
+                    "old_tplt_id": {
+                        "control": "text",
+                        "initShow": false,
+                        "disabled": true,
+                        "label": "旧模板ID"
+                    }
+                },
+                {
+                    "exp_excel_file": {
+                        "control": "text",
+                        "label": "导出EXCEL文件模板名称",
+                        "rules": [{
+                            "max": 100,
+                            "message": "长度不能超过100个字符"
+                        }]
+                    },
+                    "remark": {
+                        "control": "text",
+                        "label": "备注",
+                        "rules": [{
+                            "max": 100,
+                            "message": "长度不能超过100个字符"
+                        }]
+                    }
+                }
+            ]
+        }
+    }
+}

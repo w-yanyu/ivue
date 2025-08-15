@@ -1,0 +1,201 @@
+{
+  "module": "v-inputDataForm-btn",
+  "layout": {
+    "form": {
+      "scope": "permission_rule",
+      "initRequest": "${{params}}",
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "icon": "",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "ct3311"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "rule_id": {
+            "control": "hidden"
+          }
+        },
+        {
+          "rule_name": {
+            "control": "text",
+            "label": "规则名称",
+            "span": 18,
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入规则名称！"
+              },
+              {
+                "max": 25,
+                "message": "规则名称不超过25个字符！"
+              }
+            ]
+          }
+        },
+        {
+          "rule_type": {
+            "control": "select",
+            "label": "规则类型",
+            "span": 18,
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择规则类型！"
+              }
+            ],
+            "dict": {
+              "format": "label",
+              "dictKey": ["CT_RULE_TYPE"],
+              "dictType": "CT_RULE_TYPE"
+            },
+            "showItem": {
+              "CONSTANT": ["ruleType_CONSTANT"],
+              "SELF": ["ruleType_SELF"],
+              "VALUESET": ["ruleType_VALUESET"],
+              "DEPT": ["ruleType_DEPT"],
+              "CORP": ["ruleType_CORP"]
+            }
+          }
+        },
+        {
+          "rule_column": {
+            "control": "remoteSelect",
+            "label": "规则列",
+            "span": 18,
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择规则列！"
+              }
+            ],
+            "labelField": "domain_name",
+            "valueField": "domain_code",
+            "format": "[value]label",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct3302",
+                "domainName": "",
+                "domainCode": ""
+              }
+            }
+          }
+        },
+        {
+          "ruleType_CONSTANT": {
+            "initShow": false,
+            "control": "dynamic",
+            "label": "",
+            "span": 24,
+            "toRequest": {
+              "url": "/views/ismt/ct/pcmc/permissionRule/permission_rules_constant.json",
+              "method": "get",
+              "params": {
+                "column_operator": "${{params.column_operator}}",
+                "rule_value": "${{params.rule_value}}"
+              }
+            },
+            "showchildFormBtn": false
+          }
+        },
+        {
+          "ruleType_SELF": {
+            "initShow": false,
+            "control": "dynamic",
+            "label": "",
+            "span": 24,
+            "toRequest": {
+              "url": "/views/ismt/ct/pcmc/permissionRule/permission_rules_self.json",
+              "method": "get",
+              "params": {
+                "column_operator": "${{params.column_operator}}"
+              }
+            },
+            "showchildFormBtn": false
+          }
+        },
+        {
+          "ruleType_VALUESET": {
+            "initShow": false,
+            "control": "dynamic",
+            "label": "",
+            "span": 24,
+            "toRequest": {
+              "url": "/views/ismt/ct/pcmc/permissionRule/permission_rules_valueset.json",
+              "method": "get",
+              "params": {
+                "column_operator": "${{params.column_operator}}",
+                "dict_type": "${{params.dict_type}}",
+                "rule_value": "${{params.rule_value}}",
+                "rule_value_name": "${{params.rule_value_name}}"
+              }
+            },
+            "showchildFormBtn": false
+          }
+        },
+        {
+          "ruleType_DEPT": {
+            "initShow": false,
+            "control": "dynamic",
+            "label": "",
+            "span": 24,
+            "toRequest": {
+              "url": "/views/ismt/ct/pcmc/permissionRule/permission_rules_dept.json",
+              "method": "get",
+              "params": {
+                "column_operator": "${{params.column_operator}}",
+                "dict_type": "${{params.dict_type}}",
+                "related_below": "${{params.related_below}}",
+                "rule_value": "${{params.rule_value}}",
+                "rule_value_name": "${{params.rule_value_name}}"
+              }
+            },
+            "showchildFormBtn": false
+          }
+        },
+        {
+          "ruleType_CORP": {
+            "initShow": false,
+            "control": "dynamic",
+            "label": "",
+            "span": 24,
+            "toRequest": {
+              "url": "/views/ismt/ct/pcmc/permissionRule/permission_rules_corp.json",
+              "method": "get",
+              "params": {
+                "column_operator": "${{params.column_operator}}",
+                "relate_corp_type": "${{params.relate_corp_type}}",
+                "rule_value": "${{params.rule_value}}",
+                "rule_value_name": "${{params.rule_value_name}}"
+              }
+            },
+            "showchildFormBtn": false
+          }
+        },
+        {
+          "interest_rate_desc": {
+            "control": "textarea",
+            "label": "说明",
+            "span": 18,
+            "rules": [
+              { 
+                "max": 256,
+                "message": "不超过256个字符！"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

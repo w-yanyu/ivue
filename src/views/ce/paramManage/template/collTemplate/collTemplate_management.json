@@ -1,0 +1,138 @@
+{
+    "module": "v_search_btn_datagrid",
+
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "template_type": {
+                        "label": "模板类型",
+                        "control": "select",
+                        "dict": {
+                          "dictType": "CE_TEMPLATE_TYPE_T",
+                          "dictKey": [
+                            "CE_TEMPLATE_TYPE_T"
+                          ],
+                          "format": "value-label"
+                        },
+                        "rules": [
+                          {
+                            "message": "请选择模板类型"
+                          }
+                        ]
+                    },
+                    "template_name": {
+                        "control": "text",
+                        "label": "模板名称"
+                    }
+                },
+                {
+                    "template_desc": {
+                        "control": "text",
+                        "label": "模板用途"
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "icon": "el-icon-circle-plus",
+                    "target": "dialog",
+                    "label": "新增",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/ce/paramManage/template/collTemplate/collTemplate_add.json"
+                    },
+                    "props": {
+                        "width": "50%",
+                        "title": "新增导入模板"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ce0095"
+                }
+            },
+
+            "thead": [
+                {
+                    "type":"string",
+                    "label": "模板类型",
+                    "align":"center",
+                    "prop": "template_type",
+                    "dict": {
+                      "dictType": "CE_TEMPLATE_TYPE_T",
+                      "dictKey": [
+                        "CE_TEMPLATE_TYPE_T"
+                      ],
+                      "format": "value-label"
+                    }
+                },
+                {
+                    "type":"string",
+                    "label": "模板代码",
+                    "align":"center",
+                    "prop": "template_code"
+                },
+                {
+                    "type":"string",
+                    "label": "模板名称",
+                    "align":"center",
+                    "prop": "template_name"
+                },
+                {
+                    "type":"string",
+                    "label": "模板用途",
+                    "align":"center",
+                    "prop": "template_desc"
+                },
+                {
+                    "type":"string",
+                    "label": "文件名称",
+                    "align":"center",
+                    "prop": "file_name"
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "align":"center",
+                    "btns": [
+                        {
+                          "type": "export",
+                          "label": "下载",
+                          "icon": "el-icon-download",
+                          "doRequest": {
+                            "url": "/SUMP/icmcall/downloadStream",
+                            "method": "POST",
+                            "params": {
+                              "fileName": "${{current.file_name}}",
+                              "filePath": "${{current.template_content}}"
+                            }
+                          }
+                        },
+                        {
+                            "type": "delete",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/call/RPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "ce0091",
+                                    "coll_kind":"02"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,121 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [{
+                "loan_due_bill_num": {
+                    "control": "text",
+                    "label": "借据号",
+                    "rules": [{
+                        "max": 80,
+                        "message": "长度不能超过80个字符"
+                    }]
+                }
+            }]
+        },
+        "toolbar": {
+            "btns": [{
+                "type": "custom",
+                "icon": "el-icon-edit",
+                "label": "选择处置方案",
+                "toRequest": {
+                    "url": "/views/pl/assetPreserve/disposalPlan/disposalplan.json",
+                    "method": "GET",
+                    "params": {
+                        "apply_no": "${{params.apply_no}}"
+                    }
+                }
+            }]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "pl0298",
+                  "hndov_way":"1"
+                }
+              },
+            "thead": [{
+                    "type": "selection",
+                    "width": "55"
+                },
+                {
+                    "type": "index",
+                    "label": "序号"
+                },
+                {
+                    "label": "借据号",
+                    "prop": "loan_no",
+                    "align": "center"
+                },
+                {
+                    "label": "客户名称",
+                    "prop": "cust_nm",
+                    "align": "center"
+                },
+                {
+                    "label": "机构号名",
+                    "prop": "new_org_nm",
+                    "align": "center"
+                },
+                {
+                    "label": "贷款期限",
+                    "prop": "loan_matu",
+                    "align": "center"
+                },
+                {
+                    "label": "贷款形态",
+                    "prop": "loan_form",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "PL_E_CLSSST",
+                        "dictKey": [
+                            "PL_E_CLSSST"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "贷款账户状态",
+                    "prop": "loan_acct_ste",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "PL_E_ACCTST",
+                        "dictKey": [
+                            "PL_E_ACCTST"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "align": "center",
+                    "btns": [
+                      {
+                        "type": "look",
+                        "label": "详情",
+                        "toRequest": {
+                          "url": "/views/integrated/loanInfo/loan_info_tabs.json",
+                          "method": "POST",
+                          "params": {
+                            "loan_due_bill_num":"${{current.loan_no}}"
+                          }
+                        },
+                        "props": {
+                          "width": "80%",
+                          "title": "借据信息详情"
+                        }
+                      }
+                    ]
+                  }
+
+            ]
+        }
+    }
+}

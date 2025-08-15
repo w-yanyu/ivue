@@ -1,0 +1,413 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "bpm0021",
+                    "appId": "${{params.appId}}"
+                }
+            },
+            "btns": [
+                {
+                    "type": "submit",
+                    "label": "提交"
+                }
+            ],
+            "controls": [
+                {
+                    "policy_type": {
+                        "control": "select",
+                        "label": "策略类型",
+                        "dict": {
+                            "dictType": "BPM_E_CLTYPE",
+                            "dictKey": [
+                                "BPM_E_CLTYPE"
+                            ],
+                            "format": "label"
+                        },
+                        "width": "130px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请选择有效标志"
+                            }
+                        ]
+                    },
+                    "policy_id": {
+                        "label": "策略编号",
+                        "control": "text",
+                        "width": "130px",
+                        "maxlength": 7,
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入策略编号"
+                            },
+                            {
+                                "pattern": "S\\d{6}",
+                                "message": "请输入S+6位数字！"
+                            }
+                        ]
+                    },
+                    "policy_name": {
+                        "label": "策略名称",
+                        "control": "text",
+                        "width": "130px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入策略名称"
+                            }
+                        ]
+                    },
+                    "valid_flag": {
+                        "control": "select",
+                        "label": "有效标志",
+                        "dict": {
+                            "dictType": "BPM_E_ISFLAG",
+                            "dictKey": [
+                                "BPM_E_ISFLAG"
+                            ],
+                            "format": "label"
+                        },
+                        "width": "130px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请选择有效标志"
+                            }
+                        ]
+                    },
+                    "policy_desc": {
+                        "label": "策略描述",
+                        "control": "text",
+                        "width": "130px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入策略描述"
+                            }
+                        ]
+                    },
+                    "left_expr_type": {
+                        "control": "select",
+                        "label": "左边表达式",
+                        "dict": {
+                            "dictType": "BPM_E_LEFTLX",
+                            "dictKey": [
+                                "BPM_E_LEFTLX"
+                            ],
+                            "format": "label"
+                        },
+                        "width": "130px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请选择左边表达式 "
+                            }
+                        ],
+                        "showItem": {
+                            "1": [
+                                "left_field",
+                                "left_field_name"
+                            ],
+                            "2": [
+                                "left_formula"
+                            ]
+                        },
+                        "events": {
+                            "condition": {
+                                "1": {
+                                    "control": {
+                                        "left_field": {
+                                            "rules": [
+                                                {
+                                                    "required": true,
+                                                    "message": "请输入字段"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                },
+                                "2": {
+                                    "control": {
+                                        "left_formula": {
+                                            "rules": [
+                                                {
+                                                    "required": true,
+                                                    "message": "请输入公式"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "left_field_name": {
+                        "label": "左字段",
+                        "control": "lookup",
+                        "initShow": false,
+                        "edit": true,
+                        "width": "130px",
+                        "keyField": {
+                            "left_field_name": "metadata_name",
+                            "left_field": "metadata_id"
+                        },
+                        "toRequest": {
+                            "url": "/views/msap/bpm/processManagement/policyManagement/metadataManagement/metadata_management_list.json",
+                            "method": "post",
+                            "params": {
+                                "left_field": "${{form.left_field}}",
+                                "appId": "${{params.appId}}"
+                            }
+                        },
+                        "props": {
+                            "width": "85%",
+                            "title": "左字段查询"
+                        }
+                    },
+                    "left_field": {
+                        "control": "text",
+                        "label": "左字段编号",
+                        "width": "130px",
+                        "disabled": true
+                    },
+                    "left_formula": {
+                        "label": "左公式",
+                        "control": "lookup",
+                        "initShow": false,
+                        "edit": true,
+                        "width": "130px",
+                        "keyField": {
+                            
+                            "left_formula": "metadata_id"
+                        },
+                        "toRequest": {
+                            "url": "/views/msap/bpm/processManagement/policyManagement/metadataManagement/metadata_management_list.json",
+                            "method": "post",
+                            "params": {
+                                "left_formula": "${{form.left_formula}}",
+                                "appId": "${{params.appId}}"
+                            }
+                        },
+                        "props": {
+                            "width": "85%",
+                            "title": "左公式查询"
+                        }
+                    },
+                    "operation_symbol": {
+                        "control": "select",
+                        "label": "操作",
+                        "dict": {
+                            "dictType": "BPM_E_OPRATO",
+                            "dictKey": [
+                                "BPM_E_OPRATO"
+                            ],
+                            "format": "label"
+                        },
+                        "width": "130px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请选择操作"
+                            }
+                        ]
+                    },
+                    "right_expr_type": {
+                        "control": "select",
+                        "label": "右边表达式",
+                        "dict": {
+                            "dictType": "BPM_E_RGHTLX",
+                            "dictKey": [
+                                "BPM_E_RGHTLX"
+                            ],
+                            "format": "label"
+                        },
+                        "width": "130px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请选择左边表达式 "
+                            }
+                        ],
+                        "showItem": {
+                            "1": [
+                                "right_field",
+                                "right_field_name"
+                            ],
+                            "2": [
+                                "right_param_val",
+                                "right_param_type"
+                            ],
+                            "3": [
+                                "right_min",
+                                "right_max"
+                            ],
+                            "4": [
+                                "right_formula"
+                               
+                            ]
+                        },
+                        "events": {
+                            "condition": {
+                                "1": {
+                                    "control": {
+                                        "right_field": {
+                                            "rules": [
+                                                {
+                                                    "required": true,
+                                                    "message": "请输入字段"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                },
+                                "2": {
+                                    "control": {
+                                        "left_formula": {
+                                            "rules": [
+                                                {
+                                                    "required": true,
+                                                    "message": "请输入公式"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                },
+                                "3": {
+                                    "control": {
+                                        "right_min": {
+                                            "rules": [
+                                                {
+                                                    "required": true,
+                                                    "message": "请输入右范围最小值"
+                                                }
+                                            ]
+                                        },
+                                        "right_max": {
+                                            "rules": [
+                                                {
+                                                    "required": true,
+                                                    "message": "请输入右范围最大值"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                },
+                                "4": {
+                                    "control": {
+                                        "right_formula": {
+                                            "rules": [
+                                                {
+                                                    "required": true,
+                                                    "message": "右公式"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "right_field_name": {
+                        "label": "右字段",
+                        "control": "lookup",
+                        "initShow": false,
+                        "edit": true,
+                        "width": "130px",
+                        "keyField": {
+                            "right_field_name": "metadata_name",
+                            "right_field": "metadata_id"
+                        },
+                        "toRequest": {
+                            "url": "/views/msap/bpm/processManagement/policyManagement/metadataManagement/metadata_management_list.json",
+                            "method": "post",
+                            "params": {
+                                "right_field": "${{form.right_field}}",
+                                "appId": "${{params.appId}}"
+                            }
+                        },
+                        "props": {
+                            "width": "85%",
+                            "title": "右字段查询"
+                        }
+                    },
+                    "right_field": {
+                        "control": "text",
+                        "label": "右字段编号",
+                        "width": "130px",
+                        "disabled": true
+                    },
+                    "right_param_type": {
+                        "label": "右参数类型",
+                        "control": "select",
+                        "initShow": false,
+                        "width": "130px",
+                        "multiple": false,
+                        "collapseTags": true,
+                        "options": [
+                            {
+                                "label": "数值",
+                                "value": "0"
+                            },
+                            {
+                                "label": "字符串",
+                                "value": "1"
+                            },
+                            {
+                                "label": "时间",
+                                "value": "2"
+                            }
+                        ]
+                    },
+                    "right_param_val": {
+                        "label": "右参数值",
+                        "control": "text",
+                        "initShow": false,
+                        "width": "130px"
+                    },
+                    "right_min": {
+                        "label": "右范围最小值",
+                        "control": "text",
+                        "initShow": false,
+                        "width": "130px"
+                    },
+                    "right_max": {
+                        "label": "右范围最大值",
+                        "control": "text",
+                        "initShow": false,
+                        "width": "130px"
+                    },
+                  
+                    "right_formula": {
+                        "label": "右公式",
+                        "control": "lookup",
+                        "edit": true,
+                        "initShow": false,
+                        "width": "130px",
+                        "keyField": {
+                           
+                            "right_formula": "metadata_id"
+                        },
+                        "toRequest": {
+                            "url": "views/msap/bpm/processManagement/policyManagement/metadataManagement/metadata_management_list.json",
+                            "method": "post",
+                            "params": {
+                                "right_formula": "${{form.right_formula}}",
+                                "appId": "${{params.appId}}"
+                            }
+                        },
+                        "props": {
+                            "width": "85%",
+                            "title": "右公式查询"
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

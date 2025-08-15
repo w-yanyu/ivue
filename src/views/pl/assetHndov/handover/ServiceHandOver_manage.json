@@ -1,0 +1,175 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "hand_prod_code": {
+            "control": "text",
+            "label": "移交产品编码"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/pl/assetHndov/handover/ServiceHandOver_add.json"
+          },
+          "props": {
+            "width": "75%",
+            "title": "业务移交明细"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pl0013"
+        }
+      },
+      "thead": [
+        {
+          "type": "index",
+          "align": "center"
+        },
+        {
+          "label": "移交产品编号",
+          "prop": "hand_prod_code",
+          "align": "center"
+        },
+        {
+          "label": "是否移交账户",
+          "prop": "wthr_hndov_acctg",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ]
+          },
+          "format": "label"
+        },
+        {
+          "label": "是否移交客户",
+          "prop": "wthr_hndov_cust",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ]
+          },
+          "format": "label"
+        },        {
+          "label": "移交状态",
+          "prop": "hndov_ste",
+          "align": "center",
+          "dict": {
+            "dictType": "PL_E_ALTER_STATUS",
+            "dictKey": [
+              "PL_E_ALTER_STATUS"
+            ]
+          },
+          "format": "label"
+        },
+        {
+          "label": "是否跨机构移交",
+          "prop": "wthr_cross_org_hndov",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ]
+          },
+          "format": "label"
+        },
+        {
+          "label": "启动操作员",
+          "prop": "start_oprtr",
+          "align": "center"
+        },
+        {
+          "label": "启动机构",
+          "prop": "actvn_org",
+          "align": "center"
+        },
+        {
+          "label": "当前处理人",
+          "prop": "cur_agnt",
+          "align": "center"
+        },        {
+          "label": "当前处理步骤",
+          "prop": "cur_deal_step",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "align":"center",
+          "fixed": "right",
+          "btns": [
+            {
+              "type": "look",
+              "label": "查看",
+              "toRequest": {
+                "url": "/views/pl/assetHndov/handover/ServiceHandOver_details.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "75%",
+                "title": "业务移交明细"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/pl/assetHndov/handover/ServiceHandOver_modify.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "75%",
+                "title": "业务移交明细"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "pl0012"
+                }
+              }
+            },
+            {
+              "type": "edit",
+              "label":  "流程启动",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "pl0023",
+                  "hndov_code": "${{current.hndov_code}}",
+                  "hand_prod_code": "${{current.hand_prod_code}}"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

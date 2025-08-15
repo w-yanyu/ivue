@@ -1,0 +1,237 @@
+{
+  "module": "v-search-btn-datagrid",
+  "pageId": "rule_flow",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "flowCode": {
+            "label": "规则流代码",
+            "control": "text",
+            "width": "auto",
+            "span": 8
+          },
+          "flowName": {
+            "label": "规则流名称",
+            "control": "text",
+            "width": "auto",
+            "span": 8
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "新增",
+          "authId": "rule_flow_add_btn",
+          "toRequest": {
+            "url": "/views/risk/rule_flow/rule_flow/rule_flow_add.json",
+            "method": "get",
+            "params": {}
+          },
+          "props": {
+            "width": "80%",
+            "title": "新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "deci010706",
+          "approve_status":"00"
+        }
+      },
+      "thead": [
+        {
+          "type": "index",
+          "label": "序号",
+          "align": "center"
+      },
+        {
+          "label": "规则流代码",
+          "prop": "flowCode"
+        },
+        {
+          "label": "规则流名称",
+          "prop": "flowName"
+        },
+        {
+          "label": "操作类型",
+          "prop": "riskOperationType",
+          "dict": {
+            "dictType": "DECI_E_RISK_OPERATION_TYPE",
+            "dictKey": [
+              "DECI_E_RISK_OPERATION_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "规则流状态",
+          "prop": "flowStatus",
+          "dict": {
+            "dictType": "riskStatus",
+            "dictKey": [],
+            "format": "label",
+            "doRequest": {
+              "url": "/views/risk/dictdata/riskStatus.json",
+              "method": "get"
+            }
+          }
+        },
+        {
+          "label": "备注",
+          "prop": "flowDescription"
+        },
+        {
+          "label": "最后维护时间",
+          "prop": "dataUpdateTime"
+        },
+        {
+          "label": "操作",
+          "width": "200px",
+          "btns": [
+            
+            {
+              "type": "edit",
+              "label": "查看",
+              "authId": "rule_flow_edt_btn",
+              "toRequest": {
+                "url": "/views/risk/rule_flow/rule_flow/rule_flow_edit_view.json",
+                "#url": "/views/risk/rule_flow/rule_flow/rule_flow_edit_switch_view.json",
+                "method": "get"
+              },
+              "props": {
+                "width": "80%"
+              },
+              "show": {
+                "expression": "true"
+              }
+            },
+
+
+            {
+              "type": "edit",
+              "label": "维护",
+              "authId": "rule_flow_edt_btn",
+              "toRequest": {
+                "url": "/views/risk/rule_flow/rule_flow/rule_flow_edit.json",
+                "method": "get"
+              },
+              "props": {
+                "width": "70%"
+              },
+              "show": {
+                "expression": "'${{current.riskOperationType}}'!== 'S' && '${{current.riskOperationType}}' !== 'D'"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "authId": "rule_flow_edt_btn",
+              "toRequest": {
+                "#url": "/views/risk/rule_flow/rule_flow/rule_flow_edit_switch.json",
+                "url": "@ruleFlowVersionBack",
+                "method": "get"
+              },
+              "props": {
+                "width": "80%"
+              },
+              "show": {
+                "expression": "'${{current.riskOperationType}}'==='S'"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "流程查看",
+              "authId": "rule_flow_edt_btn",
+              "toRequest": {
+                "url": "@ruleFlowBpmn",
+                "method": "get",
+                "props": {
+                  "width": "85%",
+                  "height": "85%"
+                },
+                "params": {
+                  "onlyRead": true,
+                  "isCk":"1"
+                }
+              },
+              "props": {
+                "width": "85%",
+                "height": "85%"
+              },
+              "#toRequest": {
+                "#url": "/views/risk/rule_flow/rule_flow/rule_flow_edit_view.json"
+              },
+              "show": {
+                "expression": "true"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "流程编辑",
+              "authId": "rule_flow_fedt_btn",
+              "toRequest": {
+                "url": "@ruleFlowBpmn",
+                "method": "post",
+                "target": "navTab"
+              },
+              "params": {
+                 
+                "isCk":"0"
+              },
+              "props": {
+                "width": "100%",
+                "height": "100%"
+              },
+              "show": {
+                "expression": "'${{current.riskOperationType}}'!== 'S' && '${{current.riskOperationType}}' !== 'D'"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "删除",
+              "authId": "rule_tree_del_btn",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "deci010703",
+                  "flow_id": "${{current.flowId}}"
+                }
+   
+              },
+              "confirm": {
+                "title": "提示信息",
+                "msg": "请确认是否执行删除操作？",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "提交审核",
+              "authId": "rule_flow_edt_btn",
+              "toRequest": {
+                "url": "/views/risk/rule_flow/rule_flow/rule_flow_submit.json",
+                "method": "get"
+              },
+              "props": {
+                "width": "40%",
+                "flowCode":"${{current.flowCode}}"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

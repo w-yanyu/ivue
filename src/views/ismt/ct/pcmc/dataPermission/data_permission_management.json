@@ -1,0 +1,137 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "data_perm_name": {
+            "control": "text",
+            "label": "权限名称"
+          },
+          "data_perm_id": {
+            "control": "text",
+            "label": "权限ID"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/ismt/ct/pcmc/dataPermission/data_permission_add.json",
+            "params": {}
+          },
+          "props": {
+            "title": "规则新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ct3306"
+        }
+      },
+      "pagination": {
+        "show": true,
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "type": "index"
+        },
+        {
+          "label": "权限名称",
+          "prop": "data_perm_name",
+          "align": "center",
+          "width": "250px",
+          "btns": [
+            {
+              "type": "edit",
+              "toRequest": {
+                "url": "@permissionConfig",
+                "method": "get",
+                "target": "drawer",
+                "params": {
+                  "authPageId": "permission_config"
+                }
+              },
+              "props": {
+                "width": "35%",
+                "title": "配置",
+                "close": "",
+                "openType": "drawer",
+                "that": "this",
+                "position": "right"
+              }
+            }
+          ]
+        },
+        {
+          "label": "权限ID",
+          "align": "center",
+          "prop": "data_perm_id"
+        },
+        {
+          "label": "动态权限",
+          "align": "center",
+          "prop": "is_dynamic",
+          "type": "icon",
+          "switch": {
+            "0": {
+              "name": "el-icon-close"
+            },
+            "1": {
+              "name": "el-icon-check"
+            }
+          }
+        },
+        {
+          "label": "说明",
+          "align": "center",
+          "prop": "interest_rate_desc"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "align": "center",
+          "width": 150,
+          "btns": [
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/ismt/ct/pcmc/dataPermission/data_permission_edit.json",
+                "method": "POST"
+              },
+              "props": {
+                "title": "数据权限维护"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "ct3308"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

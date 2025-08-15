@@ -1,0 +1,175 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+      "toolbar": {
+        "btns": [
+          {
+            "type": "add",
+            "target": "dialog",
+            "label": "新增",
+            "toRequest": {
+              "method": "GET",
+              "url": "/views/icms/lend/lendIOU/transferAcct/transferAcct_add.json",
+              "params": {
+                "apply_no": "${{params.apply_no}}",
+                "lend_no": "${{params.lend_no}}"
+              }
+            },
+            "show": {
+             "expression": "'${{params.pageType}}' != 'info'"
+            },
+            "props": {
+              "width": "50%",
+              "title":  "新增转账账户"
+            }
+          }
+        ]
+      },
+      "datagrid": {
+        "isInitSearch":true,
+        "doRequest": {
+          "url": "/SUMP/icmcall/icmRPCCall",
+          "method": "post",
+          "params":{
+            "servicecode":"ar0573",
+            "apply_no": "${{params.apply_no}}",
+            "lend_no": "${{params.lend_no}}"
+          }
+        },
+        "thead": [
+          {
+            "label": "是否他行帐户",
+            "prop": "is_acct_other_bank",
+            "align": "center",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId"
+            }
+          },
+          {
+            "label": "申请号",
+            "prop": "apply_no",
+            "align": "center"
+          },
+          {
+            "label":"转帐金额",
+            "prop": "transfer_acct_amt",
+            "align": "center",
+            "format": {
+              "thousand": ","
+            }
+          },
+          {
+            "label": "账户",
+            "prop": "lend_acct_no",
+            "align": "center"
+          },
+
+          {
+            "label":  "开户行",
+            "prop": "open_acct_bank",
+            "align": "center"
+          },
+          {
+            "label":  "转账账户名",
+            "prop": "loan_acct_name",
+            "align": "center"
+          },
+          {
+            "label":  "开户机构",
+            "prop": "branch_org",
+            "align": "center"
+          },
+          {
+            "label":  "币种",
+            "prop": "ccy_code",
+            "align": "center",
+            "dict": {
+              "dictType": "MS_CURRENCY",
+              "dictKey": [
+                "MS_CURRENCY"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId"
+            }
+          },
+          {
+            "label":  "账号类型",
+            "prop": "acct_type",
+            "align": "center",
+            "dict": {
+              "dictType": "AR_E_ACCT_TYPE",
+              "dictKey": [
+                "AR_E_ACCT_TYPE"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId"
+            }
+          },
+          {
+            "label":  "钞汇标志",
+            "prop": "money_exchange_flag",
+            "align": "center",
+            "dict": {
+              "dictType": "AR_E_ACCT_NTTT_FLAG",
+              "dictKey": [
+                "AR_E_ACCT_NTTT_FLAG"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId"
+            }
+          },
+          {
+            "label": "操作",
+            "align": "center",
+            "width":150,
+            "btns": [
+              {
+                "type": "edit",
+                "label": "维护",
+                "toRequest": {
+                  "url": "/views/icms/lend/lendIOU/transferAcct/transferAcct_modify.json",
+                  "method": "get",
+                  "props":{
+                    "title":"维护转账账户"
+                  }
+                },
+                "show": {
+                 "expression": "'${{params.pageType}}' != 'info'"
+                }
+              },
+              {
+                "type": "edit",
+                "label": "详情",
+                "toRequest": {
+                  "url": "/views/icms/lend/lendIOU/transferAcct/transferAcct_view.json",
+                  "method": "get",
+                  "props":{
+                    "title":"转账账户详情"
+                  }
+                }
+              },
+              {
+                "type": "delete",
+                "label": "删除",
+                "doRequest": {
+                  "url": "/SUMP/icmcall/icmRPCCall",
+                  "method": "post",
+                  "params":{
+                    "servicecode":"ar0574"
+                  }
+                },
+                "show": {
+                 "expression": "'${{params.pageType}}' != 'info'"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }

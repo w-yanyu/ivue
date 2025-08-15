@@ -1,0 +1,117 @@
+{
+    "module": "v-inputDataForm-btn",
+    "layout": {
+        "form": {
+            "initRequest": "${{params}}",
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "uccp3005"
+                   
+                }
+            },
+            "controls": [{
+                "dict_org_id": {
+                    "control": "string",
+                    "label": "业务法人",
+                    "rules": [{
+                        "required": true,
+                        "message": "业务法人不能为空!"
+                    }]
+                },
+                "cust_no": {
+                    "control": "lookup",
+                    "edit": false,
+                    "label": "客户编号",
+                    "keyField": {
+                        "cust_no":"cust_no"
+                    },
+                    "toRequest": {
+                        "url": "/views/us/cust_lookup.json",
+                        "method": "get"
+                    },
+                    "props": {
+                        "title": "请选择客户编号",
+                        "width": "80%"
+                    }
+                },
+                "effect_date": {
+                    "control": "dateTimePicker",
+                    "label": "生效日期",
+                    "rules": [{
+                        "required": true,
+                        "message": "请选择生效日期"
+                    }]
+                },
+                "expiry_date": {
+                    "control": "dateTimePicker",
+                    "label": "失效日期",
+                    "rules": [{
+                        "required": true,
+                        "message": "请选择失效日期"
+                    }]
+                },
+                "base_ccy_code": {
+                    "control": "select",
+                    "label": "基础币种",
+                    "align": "center",
+                    "rules": [{
+                        "required": true,
+                        "message": "请输入基础币种"
+                    }],
+                    "dict": {
+                        "dictType": "MS_CURRENCY",
+                        "dictKey": [
+                            "MS_CURRENCY"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                "over_limit": {
+                    "control": "currency",
+                    "label": "小额可超限额度",
+                    "format": {
+                        "decimal": "2"
+                    },
+                    "align": "left",
+                    "rules": [{
+                        "required": true,
+                        "message": "请输入小额可超限额度"
+                    }]
+                },
+                "over_exposure_limit": {
+                    "control": "currency",
+                    "label": "小额可超限敞口额度",
+                    "format": {
+                        "decimal": "2"
+                    },
+                    "align": "left",
+                    "rules": [{
+                        "required": true,
+                        "message": "请输入小额可超限敞口额度"
+                    }]
+                },
+                "quota_status": {
+                    "control": "select",
+                    "label": "额度状态",
+                    "align": "center",
+                    "rules": [{
+                        "required": true,
+                        "message": "请选择额度状态"
+                    }],
+                    "dict": {
+                        "dictType": "UCCP_E_QUOTA_STATUS",
+                        "dictKey": [
+                            "UCCP_E_QUOTA_STATUS"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                }
+                }
+            ]
+        }
+    }
+}

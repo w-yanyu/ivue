@@ -1,0 +1,94 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "batch_no": {
+            "label": "批次号",
+            "control": "text",
+            "value": "${{params.batch_no}}"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增选择客户范围",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/us/authManger/authdistribute/user_select.json",
+            "params": {
+              "batch_no": "${{params.batch_no}}"
+            }
+          },
+          "props": {
+            "width": "60%",
+            "title": "选择客户范围"
+          }
+        },
+        {
+          "type": "delete",
+          "target": "dialog",
+          "label": "删除所选客户",
+          "doRequest": {
+            "url": "/SUMP/call/RPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "us1305",
+              "selectName": "authDistributeList"
+            }
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true ,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "us1306",
+          "batch_no": "${{params.batch_no}}"
+        }
+      },
+      "thead": [
+        {
+          "type": "selection"
+        },
+        {
+          "label": "客户号",
+          "prop": "cust_no",
+          "align": "center"
+        },
+        {
+          "label": "客户名称",
+          "prop": "cust_name",
+          "align": "center"
+        },
+        {
+          "label": "证件类型",
+          "prop": "cert_type",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_CRET_TYPE",
+            "dictKey": [
+              "MS_E_CRET_TYPE"
+            ],
+            "labelField": "dictName",
+            "valueField": "dictId"
+          }
+        },
+        {
+          "label": "证件号码",
+          "prop": "cert_no",
+          "align": "center"
+        }
+      ]
+    }
+  }
+}

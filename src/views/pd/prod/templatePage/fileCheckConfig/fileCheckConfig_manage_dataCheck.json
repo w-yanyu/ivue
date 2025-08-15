@@ -1,0 +1,131 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/pd/prod/templatePage/fileCheckConfig/fileCheckConfig_add.json",
+            "params": {
+              "sale_prod_cd": "${{params.sale_prod_cd}}",
+              "prod_version": "${{params.prod_version}}",
+              "apply_type": "${{params.apply_type}}",
+              "check_type": "02"
+            }
+          },
+          "props": {
+            "width": "60%",
+            "title": "检查配置新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pd1551",
+          "sale_prod_cd": "${{params.sale_prod_cd}}",
+          "prod_version": "${{params.prod_version}}",
+          "apply_type": "${{params.apply_type}}",
+          "check_type": "02"
+        }
+      },
+      "thead": [
+        {
+          "type": "string",
+          "label": "检查编号",
+          "prop": "check_no",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "检查类型",
+          "prop": "check_type",
+          "align": "center",
+          "dict": {
+            "dictType": "PD_E_LHD_CHECK_TYPE",
+            "dictKey": [
+              "PD_E_LHD_CHECK_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+
+        {
+          "type": "string",
+          "label": "批量交易编码",
+          "prop": "tran_code",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "批量交易中文名称",
+          "prop": "tran_chinese_name",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "fixed": "right",
+          "width": "200px",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/pd/prod/templatePage/fileCheckConfig/fileCheckConfig_info.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "60%",
+                "title": "检查配置详情"
+              }
+            },
+            {
+              "type": "look",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/pd/prod/templatePage/fileCheckConfig/fileCheckConfig_edit.json",
+                "method": "GET",
+                "params": {
+                  "sale_prod_cd": "${{params.sale_prod_cd}}",
+                  "prod_version": "${{params.prod_version}}",
+                  "apply_type": "${{params.apply_type}}",
+                  "check_type": "02"
+                }
+              },
+              "props": {
+                "width": "60%",
+                "title": "检查配置详情"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "pd1554"
+                }
+              },
+              "confirm": {
+                "title": "删除",
+                "msg": "确定删除吗？",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,387 @@
+{
+  "module": "v_realonlyForm_btn",
+  "layout": {
+    "form": {
+      "scope": "templateScope",
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pl0289",
+          "apply_no":"${{params.apply_no}}"
+        }
+      },
+      "controls": [
+        {
+          "asset_tp": {
+            "control": "string",
+            "label": "资产类型",
+            "placeholder": "请选择资产类型",
+            "format": "label",
+            "valueField": "colt_type",
+            "labelField": "colt_name",
+            "span": 8,
+            "lazy": true,
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "co1012",
+                "colt_type": "${{form.guar_type}}"
+              }
+            },
+            "events": {
+              "emit": ["hold_pro_tp"],
+              "condition": {
+                "$default": {
+                  "control": {
+                    "province": {
+                      "format": "${{current.name}}"
+                    }
+                  }
+                }
+              }
+            }
+
+          },
+          "hold_pro_tp": {
+            "name": "city_code",
+            "control": "string",
+            "label": "抵质押产品",
+            "isInitSearch": false,
+            "lazy": true,
+            "format": "label",
+            "placeholder": "请选择抵质押产品",
+            "valueField": "colt_prod_cd",
+            "labelField": "colt_prod_name",
+            "span": 8,
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "co1013",
+                "colt_type": "${{form.asset_tp}}"
+              }
+            }
+          },
+          "asset_status": {
+            "control": "string",
+            "label": "资产状态",
+            "span": 8
+          }
+        },
+        {
+
+          "organ": {
+            "control": "string",
+            "label": "单位",
+            "span": 8,
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入单位"
+              }
+            ]
+          },
+          "number": {
+            "control": "string",
+            "label": "数量",
+            "span": 8,
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入数量"
+              }
+            ]
+          },
+          "ass_org": {
+            "control": "string",
+            "label": "评估机构",
+            "span": 8
+          }
+        },
+        {
+
+          "paydb_way": {
+            "control": "string",
+            "label": "抵债方式",
+            "span": 8,
+            "dict": {
+              "dictType": "PL_E_PAYDB_WAY",
+              "dictKey": [
+                "PL_E_PAYDB_WAY"
+              ],
+              "format": "value-label"
+            }
+          },
+          "save_area": {
+            "control": "string",
+            "label": "存放地点",
+            "span": 8
+          },
+          "manage_org": {
+          "control": "string",
+          "span": 8,
+          "label": "抵债资产管理单位",
+          "rules": [
+            {
+              "required": true,
+              "message": "请输入抵债资产管理单位"
+            }
+          ]
+        }
+        },
+        {
+          "manager": {
+            "control": "string",
+            "span": 8,
+            "label": "管理人",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入管理人"
+              }
+            ]
+
+          },
+          "phone_no": {
+            "control": "string",
+            "span": 8,
+            "label": "联系电话",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入联系电话"
+              }
+            ]
+
+          },
+          "sign_time": {
+            "control": "string",
+            "span": 8,
+            "label": "协议签订时间"
+          }
+        },
+        {
+          "asse_way": {
+            "control": "string",
+            "span": 8,
+            "label": "估价方式"
+          },
+          "asse_part": {
+            "control": "string",
+            "span": 8,
+            "label": "估价参与者"
+          },
+          "price_negman": {
+            "control": "string",
+            "span": 8,
+            "label": "双方议价人员"
+          }
+        },
+        {
+
+
+          "asse_amt": {
+            "control": "string",
+            "span": 8,
+            "label": "抵债评估价",
+            "format":{
+              "thousand": ",",
+              "decimal": 3
+            }
+          },
+          "asse_time": {
+            "control": "string",
+            "span": 8,
+            "label": "评估时间"
+          },
+          "ccy_code": {
+            "control": "string",
+            "label": "币种",
+            "span": 8,
+            "dict": {
+              "dictType": "MS_CURRENCY",
+              "dictKey": [
+                "MS_CURRENCY"
+              ],
+              "format": "label"
+            }
+          }
+        },
+        {
+
+
+          "paydb_amt": {
+            "control": "string",
+            "span": 8,
+            "label": "抵债金额",
+            "format":{
+              "thousand": ",",
+              "decimal": 3
+            }
+          },
+          "wthr_rate": {
+            "control": "string",
+            "label": "是否完税",
+            "span": 8,
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "value-label"
+            }
+          },
+          "wthr_trans": {
+            "control": "string",
+            "span": 8,
+            "label": "是否过户",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "value-label"
+            }
+          }
+        },
+        {
+
+
+          "transfer_fee": {
+            "control": "string",
+            "label": "过户费用",
+            "span": 8,
+            "format":{
+              "thousand": ",",
+              "decimal": 3
+            }
+          },
+          "sub_fee": {
+            "control": "string",
+            "label": "需垫付费用",
+            "span": 8,
+            "format":{
+              "thousand": ",",
+              "decimal": 3
+            }
+          },
+          "oth_fee": {
+            "control": "string",
+            "span": 8,
+            "label": "其它费用",
+            "format":{
+              "thousand": ",",
+              "decimal": 3
+            }
+          }
+        },
+        {
+
+          "sum_fee": {
+            "control": "string",
+            "label": "费用合计",
+            "span": 8,
+            "format":{
+              "thousand": ",",
+              "decimal": 3
+            }
+          },
+          "rent_inc": {
+            "control": "string",
+            "label": "租金收入",
+            "span": 8,
+            "format":{
+              "thousand": ",",
+              "decimal": 3
+            }
+          },
+          "oth_inc": {
+            "control": "string",
+            "label": "其它收入",
+            "span": 8,
+            "format":{
+              "thousand": ",",
+              "decimal": 3
+            }
+          }
+        },
+        {
+          "sum_inc": {
+            "control": "string",
+            "label": "收入合计",
+            "span": 8,
+            "format":{
+              "thousand": ",",
+              "decimal": 3
+            }
+          },
+          "pre_cash_val": {
+            "control": "string",
+            "span": 8,
+            "label": "预计可变现价值",
+            "format":{
+              "thousand": ",",
+              "decimal": 3
+            }
+          },
+          "cash_loss_perc": {
+            "control": "string",
+            "min": 0,
+            "max": 100,
+            "controls": false,
+            "span": 8,
+            "label": "预计变现损失率（%）",
+            "format":{
+              "thousand": ",",
+              "decimal": 3
+            }
+          }
+        },
+        {
+
+          "wthr_insur": {
+            "control": "string",
+            "label": "是否财产保险",
+            "span": 8,
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "value-label"
+
+            },
+            "showItem": {
+              "1": [
+                "insur_start_time",
+                "insur_end_time"
+              ],
+              "0": []
+            }
+          },
+          "asset_no": {
+            "control": "string",
+            "span": 8,
+            "label": "资产编号"
+          },
+          "insur_start_time": {
+            "control": "string",
+            "span": 8,
+            "label": "保险起始日期"
+          }
+        },
+        {
+          "insur_end_time": {
+            "control": "string",
+            "span": 8,
+            "label": "保险结束日期"
+          }
+
+
+        }
+      ]
+    }
+  }
+}

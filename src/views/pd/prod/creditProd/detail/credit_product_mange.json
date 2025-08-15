@@ -1,0 +1,272 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "sale_prod_cd": {
+            "control": "text",
+            "label": "授信产品编号"
+          },
+          "sale_prod_name": {
+            "control": "text",
+            "label": "授信产品名称"
+          },
+          "prod_type": {
+            "label": "授信产品类型",
+            "span": 12,
+            "control": "remoteSelect",
+            "labelField": "title",
+            "valueField": "id",
+            "value": "CL",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "include": [
+                "CL",
+                "V"
+              ],
+              "params": {
+                "servicecode": "pd0144",
+                "grupno": "0006",
+                "pid": "KSCP"
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pd0214",
+          "cust_class_list": "${{params.cust_class_list}}"
+        }
+      },
+      "thead": [
+        {
+          "type":"string",
+          "label": "授信产品名称",
+          "prop": "sale_prod_name",
+          "align": "center"
+        },
+        {
+          "type":"string",
+          "label": "授信产品编号",
+          "prop": "sale_prod_cd",
+          "align": "center"
+        },
+        {
+          "type":"string",
+          "label": "授信产品版本",
+          "prop": "prod_version",
+          "align": "center"
+        },
+        {
+          "type":"string",
+          "label": "授信产品类型",
+          "prop": "prod_type_name",
+          "align": "center"
+        },
+        {
+          "type":"string",
+          "label": "模板编号",
+          "prop": "template_id",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "模板版本",
+          "prop": "template_version",
+          "align": "center"
+        },
+        {
+          "type":"string",
+          "label": "审批状态",
+          "prop": "appr_status",
+          "align": "center",
+          "dict": {
+            "dictType": "PD_E_APPR_STATUS",
+            "dictKey": [
+              "PD_E_APPR_STATUS"
+            ],
+            "format": "label-value"
+          }
+        },
+        {
+          "type":"string",
+          "label": "产品状态",
+          "prop": "prod_status",
+          "align": "center",
+          "dict": {
+            "dictType": "PD_E_PROD_STATUS",
+            "dictKey": [
+              "PD_E_PROD_STATUS"
+            ],
+            "format": "label-value"
+          }
+        },
+        {
+          "type": "string",
+          "label": "适用客户类型",
+          "prop": "cust_class",
+          "align": "center",
+          "dict": {
+            "dictType": "PD_E_CUST_CLASS",
+            "dictKey": [
+              "PD_E_CUST_CLASS"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "string",
+          "label": "延时上下架日期",
+          "prop": "arrive_date",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "width":"200px",
+          "btns": [
+            {
+              "type": "look",
+              "label": "审核记录",
+              "toRequest": {
+                "url": "/views/pd/prodApprovalRecord/prod_approval_record_list.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "65%",
+                "title": "审核记录"
+              }
+            },
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "@prodLayout",
+                "method": "GET",
+                "params": {
+                  "tranType": "detail",
+                  "template_id": "${{current.template_id}}",
+                  "pageTranType": "format"
+                }
+              },
+              "props": {
+                "width": "75%",
+                "title": "授信产品详情"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "变更",
+              "toRequest": {
+                "url": "/views/pd/prod/detail/sell_product_change_cl.json",
+                "method": "POST",
+                "params":{
+
+                }
+              }
+            },
+            {
+              "type": "custom",
+              "label": "上架",
+              "toRequest": {
+                "url": "@sellProductListing",
+                "method": "GET"
+              },
+              "props": {
+                "width": "40%",
+                "title": "上架"
+              },
+              "eventAfter": {
+                "callback": "customCallback"
+              },
+              "show": {
+                "expression": "'${{current.prod_status}}' !== '00'"
+              }
+            }, 
+            {
+              "type": "custom",
+              "label": "下架",
+              "toRequest": {
+                "url": "@sellProductListing",
+                "method": "GET"
+              },
+              "props": {
+                "width": "40%",
+                "title": "下架"
+              },
+              "eventAfter": {
+                "callback": "customCallback"
+              },
+              "show": {
+                "expression": "'${{current.prod_status}}' == '00'"
+              }
+            },
+            {
+              "type": "look",
+              "label": "版本切换",
+              "toRequest": {
+                "url": "/views/pd/prod/creditProd/credit_product_list.json",
+                "method": "GET",
+                "params": {
+                }
+              },
+              "props": {
+                "width": "65%",
+                "title": "授信产品版本查看"
+              }
+            },
+            {
+              "type": "look",
+              "label": "复制",
+              "toRequest": {
+                "url": "/views/pd/prod/detail/prodCopy/prodBaseAttribute.json",
+                "method": "GET",
+                "params": {
+                }
+              },
+              "props": {
+                "width": "35%",
+                "title": "产品基础属性"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "pd0209"
+                }
+              },
+              "confirm": {
+                "title": "删除产品",
+                "msg": "确定删除产品吗？",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              },
+              "show": {
+                "expression": "'${{current.prod_status}}' !== '00'"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

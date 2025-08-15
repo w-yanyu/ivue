@@ -1,0 +1,91 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+
+            "controls": [
+                {
+                    "trxn_type": {
+                      "label": "交易类别",
+                      "control": "select",
+                      "width": "140px",
+                      "format": "label",
+                      "dict":{
+                        "dictType": "WA_E_WATRANTYPE",
+                        "dictKey": [
+                          "WA_E_WATRANTYPE"
+                        ],
+                        "format": "value-label"
+                      },
+                      "rules": [{
+                        "required": true
+                      }]
+                    },
+                    "stakeholder_name": {
+                      "label": "干系人",
+                      "control": "lookup",
+                      "edit": true,
+                      "width": "140px",
+                      "span":"12",
+                      "keyField": {
+                        "stakeholder_name": "user_name",
+                        "stakeholder_id": "user_id"
+                      },
+                      "toRequest": {
+                        "url": "/views/dh/transfer/handover/custManager.json",
+                        "method": "post"
+                      },
+                      "props": {
+                        "title": "选择干系人",
+                        "width": "65%"
+                      },
+                      "rules": [{
+                        "required": true
+                      }],
+                      "format": "label"
+                    }
+
+                },
+                {
+                  "stakeholder_id": {
+                    "label": "干系人ID",
+                    "disabled": true,
+                    "width": "140px",
+                    "control": "text",
+                    "rules": [{
+                      "required": true
+                    }],
+                    "format": "label"
+                  },
+                  "is_validity": {
+                    "label": "是否有效",
+                    "width": "140px",
+                    "control": "select",
+                    "multiple": false,
+                    "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                            "MS_E_YESORNO"
+                        ],
+                        "format": "label"
+                    },
+                    "rules": [{
+                        "required": true
+                    }]
+                  }
+                }
+            ],
+            "btns": [{
+                "type": "submit",
+                "label": "提交",
+                "doRequest": {
+                    "url": "/SUMP/icmcall/icmRPCCall",
+                    "method": "POST",
+                    "params": {
+                        "servicecode": "wa0017"
+                    }
+                }
+            }]
+        }
+    }
+}

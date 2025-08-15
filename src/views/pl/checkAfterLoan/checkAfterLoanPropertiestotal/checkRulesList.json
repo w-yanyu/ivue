@@ -1,0 +1,123 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "check_rule_desc": {
+            "label": "检查规则描述",
+            "control": "text",
+            "rules": [
+              {
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/pl/checkAfterLoan/checkAfterLoanPropertiestotal/addcheckRulesList.json"
+          }
+        }
+
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pl0155"
+        }
+      },
+      "thead": [
+        {
+          "type": "index"
+        },
+        {
+          "prop": "check_rule_no",
+          "label": "检查规则编号",
+          "align": "center"
+        },
+        {
+          "prop": "check_rule_desc",
+          "label": "检查规则描述",
+          "align": "center"
+        },
+        {
+          "label": "是否需要首次检查",
+          "width": 120,
+          "align": "center",
+          "prop": "is_need_check",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "prop": "first_check_date",
+          "label": "首次检查宽限期",
+          "align": "center"
+        },
+        {
+          "prop": "check_frequency",
+          "label": "默认检查频率(月)",
+          "align": "center"
+        },
+        {
+          "prop": "check_flow",
+          "label": "检查流程",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": "200",
+          "align": "center",
+          "btns": [
+            {
+              "toRequest": {
+                "method": "POST",
+                "url": "/views/pl/checkAfterLoan/checkAfterLoanPropertiestotal/updcheckRulesList.json"
+              },
+              "label": "维护",
+              "type": "edit"
+            },
+            {
+              "doRequest": {
+                "method": "POST",
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "params": {
+                  "servicecode": "pl0157",
+                  "method": "del"
+                }
+              },
+              "label": "删除",
+              "type": "delete"
+            },
+            {
+              "toRequest": {
+                "method": "POST",
+                "url": "/views/pl/checkAfterLoan/checkAfterLoanPropertiestotal/checkAfterLoanProperties.json"
+              },
+              "label": "进入",
+              "type":"edit"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

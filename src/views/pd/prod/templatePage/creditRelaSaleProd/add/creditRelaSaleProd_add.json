@@ -1,0 +1,102 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "pd0326",
+          "busi_seq": "${{params.busi_seq}}",
+          "apply_type": "${{params.apply_type}}"
+        }
+      },
+      "controls": [
+        {
+          "servicecode": {
+            "control": "hidden",
+            "label": "新增交易码",
+            "value": "pd0326"
+          },
+          "prod_version": {
+            "control": "hidden",
+            "label": "授信产品版本",
+            "disabled": true,
+            "value": "${{params.prod_version}}"
+          },
+          "credit_prod_cd": {
+            "control": "hidden",
+            "label": "授信产品编号",
+            "disabled": true,
+            "value": "${{params.credit_prod_cd}}"
+          },
+          "sale_prod_cd": {
+            "control": "lookup",
+            "label": "可售产品编号",
+            "span": 8,
+            "keyField": {
+              "sale_prod_cd": "sale_prod_cd",
+              "prod_type": "prod_type",
+              "prod_type_name": "prod_type_name",
+              "sale_prod_name": "sale_prod_name"
+            },
+            "toRequest": {
+              "url": "/views/pd/prod/sell_product_lookup.json",
+              "method": "post",
+              "params": {
+                "prod_version": "${{params.prod_version}}",
+                "credit_prod_cd": "${{params.credit_prod_cd}}",
+                "cust_class":"${{params.cust_class}}",
+                "is_credit": "1"
+                
+              }
+            },
+            "props": {
+              "width": "87%",
+              "title": "可售产品信息选择"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          },
+          "sale_prod_name": {
+            "control": "string",
+            "label": "可售产品名称",
+            "span": 8,
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          },
+          "prod_type_name": {
+            "control": "string",
+            "label": "可售产品类型",
+            "span": 8,
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          },
+          "prod_type": {
+            "control": "hidden",
+            "label": "可售产品类型",
+            "span": 8,
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,230 @@
+{
+  "module": "v_search_btn_datagrid",
+  "pageId": "page001",
+  "layout": {
+    "form": {
+      "foldLineNumber": 3,
+      "scope": "formData",
+      "controls": [
+        {
+          "queue_code": {
+            "control": "text",
+            "label": "队列代码"
+          },
+          "queue_name": {
+            "control": "text",
+            "label": "队列名称"
+          }
+        },
+        {
+          "queue_desc": {
+            "control": "text",
+            "label": "队列描述"
+          },
+          "coll_type": {
+            "control": "select",
+            "label": "渠道类型",
+            "selectFirstValue": false,
+            "dict": {
+              "dictType": "CS_COLL_TYPE",
+              "dictKey": [
+                "CS_COLL_TYPE"
+              ],
+              "format": "value-label"
+            }
+          }
+        },
+        {
+          "queue_type": {
+            "control": "select",
+            "label": "队列类型",
+            "selectFirstValue": false,
+            "dict": {
+              "dictType": "CS_QUEUE_TYPE",
+              "dictKey": [
+                "CS_QUEUE_TYPE"
+              ],
+              "format": "value-label"
+            }
+          },
+          "org_id": {
+            "hidden": true,
+            "label": "创建法人",
+            "control": "remoteSelect",
+            "labelField": "org_name",
+            "valueField": "org_id",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2311",
+                "org_id": "$g{{user_info.org_id}}"
+              }
+            },
+            "events": {
+              "emit": [
+                "operation"
+              ]
+            },
+            "initShow": {
+              "expression": "'${{form.org_id}}' === ''"
+            },
+            "format": "value-label"
+          }
+        },
+        {
+          "branch_id": {
+            "hidden": true,
+            "label": "创建机构",
+            "control": "remoteSelect",
+            "labelField": "branch_name",
+            "valueField": "branch_id",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2142",
+                "user_id": "$g{{user_info.userCode}}",
+                "branch_id": "$g{{user_info.branch_id}}",
+                "brch_relation_code": "01"
+              }
+            },
+            "events": {
+              "emit": [
+                "operation"
+              ]
+            },
+            "initShow": {
+              "expression": "'${{form.branch_id}}' === ''"
+            },
+            "format": "value-label"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "appId": "cbOnl",
+          "servicecode": "cb0081"
+        }
+      },
+      "thead": [
+        {
+          "type": "string",
+          "align": "center",
+          "label": "队列代码",
+          "prop": "queue_code"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "队列名称",
+          "prop": "queue_name"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "队列描述",
+          "prop": "queue_desc"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "渠道类型",
+          "prop": "coll_type",
+          "dict": {
+            "dictType": "CS_COLL_TYPE",
+            "dictKey": [
+              "CS_COLL_TYPE"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "队列类型",
+          "prop": "queue_type",
+          "dict": {
+            "dictType": "CS_QUEUE_TYPE",
+            "dictKey": [
+              "CS_QUEUE_TYPE"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "创建法人",
+          "prop": "org_id",
+          "dict": {
+            "dictKey": [
+              "org_id"
+            ],
+            "labelField": "org_name",
+            "valueField": "org_id",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2311",
+                "org_id": "${{current.org_id}}"
+              }
+            },
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "创建机构",
+          "prop": "branch_id",
+          "dict": {
+            "dictKey": [
+              "branch_id"
+            ],
+            "labelField": "branch_name",
+            "valueField": "branch_id",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2142",
+                "branch_id": "${{current.branch_id}}"
+              }
+            },
+            "format": "value-label"
+          }
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "fixed": "right",
+          "width": "130px",
+          "btns": [
+            {
+              "type": "custom",
+              "label": "查看案件",
+              "toRequest": {
+                "url": "/views/cs/generalManage/queueManage/queue_case_list.json",
+                "method": "POST",
+                "params": {
+                  "queue_code": "${{current.queue_code}}"
+                }
+              },
+              "props": {
+                "width": "80%",
+                "title": "查看案件"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

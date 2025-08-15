@@ -1,0 +1,98 @@
+{
+    "module": "lr_transferTable",
+    "layout": {
+      "transfer": {
+        "height":"500px",
+        "left": {
+          "filterable":false,
+          "title": "未关联标签",
+          "placeholder": "请输入页面编号",
+          "query":["page_template_no"],
+          "btn":{
+            "label": "关联",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode":"mk0018",
+                "label_id": "${{params.label_id}}",
+                "cust_name": "${{params.label_name}}",
+                "active_id": "${{params.active_id}}"
+              }
+            }
+          },
+          "datagrid": {
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "mk0021",
+                "label_id": "${{params.label_id}}",
+                "label_name": "${{params.label_name}}",
+                "rgstn_tp": "${{params.rgstn_tp}}",
+                "active_id": "${{params.active_id}}"
+              }
+            },
+            "thead": [
+              {
+                "label": "标签编号",
+                "prop": "label_id",
+                "align": "center"
+              },
+              {
+                "label": "标签名称",
+                "prop": "label_name",
+                "align": "center"
+              }
+            ]
+          }
+        },
+
+        "right": {
+          "title":"已关联标签",
+          "filterable":false,
+          "placeholder": "请输入页面编号",
+          "query":["page_template_no"],
+          "btn":{
+            "label":"解除",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode":"mk0022",
+                "label_id": "${{params.label_id}}",
+                "label_name": "${{params.label_name}}",
+                "active_id": "${{params.active_id}}"
+              }
+            }
+          },
+          "datagrid": {
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "mk0014",
+                "label_id": "${{params.label_id}}",
+                "label_name": "${{params.label_name}}",
+                "active_id": "${{params.active_id}}"
+              }
+            },
+            "checked":"checked",
+            "thead": [
+              {
+                "label": "标签编号",
+                "prop": "label_id",
+                "align": "center"
+              },
+              {
+                "label": "标签名称",
+                "prop": "label_name",
+                "align": "center"
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+  

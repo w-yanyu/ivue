@@ -1,0 +1,577 @@
+{
+	"module": "v_inputDataForm_btn",
+	"layout": {
+		"form": {
+			"doRequest": {
+				"url": "/SUMP/icmcall/icmRPCCall",
+				"method": "POST",
+				"params": {
+					"servicecode": "PLMSKGTS0015",
+					"page_id": "/views/other/loanManagement/manual_repayment.json"
+				}
+			},
+			"btns": [
+				{
+					"type": "submit",
+					"label": "提交"
+				},
+				{
+					"type": "reset",
+					"label": "重置"
+				}
+			],
+			"btnPosition": "center",
+			"controlsGroup": [
+				{
+					"title": "基本信息",
+					"tooltip": "",
+					"titleIcon": "",
+					"showHint": "",
+					"accordion": false,
+					"expand": true,
+					"controls": [
+						{
+							"acctna": {
+								"label": "客户名称",
+								"control": "text",
+								"span": 8,
+								"name": "acctna",
+								"multiple": false,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							},
+							"custno": {
+								"label": "客户号",
+								"control": "text",
+								"span": 8,
+								"name": "custno",
+								"multiple": false,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							},
+							"idtfno": {
+								"label": "证件号码",
+								"control": "text",
+								"span": 8,
+								"name": "idtfno",
+								"multiple": false,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							},
+							"lncfno": {
+								"label": "借据号",
+								"span": 8,
+								"name": "lncfno",
+								"control": "lookup",
+								"edit": "true",
+								"multiple": false,
+								"rules": [
+									{
+										"required": true,
+										"message": "请选择借据号"
+									},
+									{
+										"max": 50,
+										"message": "长度不能超过50个字符"
+									}
+								],
+								"keyField": {
+									"lncfno": "lncfno"
+								},
+								"toRequest": {
+									"url": "/views/other/loanPostManager/ln_list_select.json",
+									"method": "get",
+									"params": {
+										"lncfno": "${{form.lncfno}}"
+									}
+								},
+								"events": {
+									"doRequest": {
+										"url": "/SUMP/icmcall/icmRPCCall/",
+										"method": "POST",
+										"params": {
+											"servicecode": "PLMSKGSS0003",
+											"lncfno": "${{form.lncfno}}"
+										},
+										"resultSet": {
+											"ysyjni1": "ysyjni",
+											"csyjni1": "csyjni",
+											"ysxxoi1": "ysxxoi",
+											"csxxoi1": "csxxoi",
+											"ysyjpi1": "ysyjpi",
+											"csyjpi1": "csyjpi",
+											"ysxxpi1": "ysxxpi",
+											"csxxpi1": "csxxpi",
+											"ysxxfe1": "ysxxfe",
+											"ysxxpe1": "ysxxpe",
+											"custno": "custno",
+											"acctna": "acctna",
+											"idtfno": "idtfno",
+											"prodna": "prodna",
+											"acctno": "acctno",
+											"lnnpbl": "lnnpbl",
+											"lnopbl": "lnopbl",
+											"lndpbl": "lndpbl",
+											"lnbpbl": "lnbpbl",
+											"clssst": "clssst",
+											"prodcd": "prodcd"
+										}
+									}
+								}
+							},
+							"prodna": {
+								"label": "产品名称",
+								"control": "text",
+								"span": 8,
+								"name": "prodna",
+								"multiple": false,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							},
+							"prodcd": {
+								"label": "产品代码",
+								"control": "text",
+								"span": 8,
+								"name": "prodcd",
+								"multiple": false,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							}
+							
+						}
+					]
+				},
+				{
+					"title": "欠款信息",
+					"accordion": false,
+					"expand": true,
+					"controls": [
+						{
+							"acctno": {
+								"label": "贷款账号",
+								"span": 6 ,
+								"control": "text",
+								"name": "acctno",
+								"multiple": false,
+								"disabled": true,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							},
+							"lnnpbl": {
+								"label": "正常本金",
+								"span": 6 ,
+								"control": "text",
+								"name": "lnnpbl",
+								"multiple": false,
+								"disabled": true,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							},
+							"lnopbl": {
+								"label": "逾期本金",
+								"span": 6 ,
+								"control": "text",
+								"name": "lnopbl",
+								"multiple": false,
+								"disabled": true,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							},
+							"lndpbl": {
+								"label": "呆滞本金",
+								"span": 6 ,
+								"control": "text",
+								"name": "lndpbl",
+								"multiple": false,
+								"disabled": true,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							},
+							"lnbpbl": {
+								"label": "呆账本金",
+								"span": 6 ,
+								"control": "text",
+								"name": "lnbpbl",
+								"multiple": false,
+								"disabled": true,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							},
+							"ysyjni1": {
+								"label": "应收应计利息",
+								"span": 6 ,
+								"control": "text",
+								"name": "ysyjni1",
+								"multiple": false,
+								"disabled": true,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							},
+							"csyjni1": {
+								"label": "催收应计利息",
+								"span": 6 ,
+								"control": "text",
+								"name": "csyjni1",
+								"multiple": false,
+								"disabled": true,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							},
+							"ysxxoi1": {
+								"label": "应收欠息",
+								"span": 6 ,
+								"control": "text",
+								"name": "ysxxoi1",
+								"multiple": false,
+								"disabled": true,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							},
+							"csxxoi1": {
+								"label": "催收欠息",
+								"span": 6 ,
+								"control": "text",
+								"name": "csxxoi1",
+								"multiple": false,
+								"disabled": true,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							},
+							"ysyjpi1": {
+								"label": "应收应计罚息",
+								"span": 6 ,
+								"control": "text",
+								"name": "ysyjpi1",
+								"multiple": false,
+								"disabled": true,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							},
+							"csyjpi1": {
+								"label": "催收应计罚息",
+								"span": 6 ,
+								"control": "text",
+								"name": "csyjpi1",
+								"multiple": false,
+								"disabled": true,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							},
+							"ysxxpi1": {
+								"label": "应收罚息",
+								"span": 6 ,
+								"control": "text",
+								"name": "ysxxpi1",
+								"multiple": false,
+								"disabled": true,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							},
+							"csxxpi1": {
+								"label": "催收罚息",
+								"span": 6 ,
+								"control": "text",
+								"name": "csxxpi1",
+								"multiple": false,
+								"disabled": true,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							},
+							"ysxxfe1": {
+								"label": "应收费用",
+								"span": 6 ,
+								"control": "text",
+								"name": "ysxxfe1",
+								"multiple": false,
+								"disabled": true,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							},
+							"ysxxpe1": {
+								"label": "应收罚金",
+								"span": 6 ,
+								"control": "text",
+								"name": "ysxxpe1",
+								"multiple": false,
+								"disabled": true,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							},
+							"clssst": {
+								"label": "贷款状态",
+								"span": 6 ,
+								"control": "text",
+								"name": "clssst",
+								"multiple": false,
+								"disabled": true,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							}
+						}
+					]
+				},
+				{
+					"title": "预约还款申请",
+					"accordion": false,
+					"expand": true,
+					"module": "v_search_btn_datagrid",
+					"controls": [
+						
+						{
+							"rptype": {
+								"label": "还款类型",
+								"control": "radio",
+								"name": "rptype",
+								"span":"24",
+								"width":"185px",
+								"multiple": false,
+								"value": "1",
+								"disabled": true,
+								"dict": {
+									"dictType": "E_RPTYPE",
+									"dictKey": [
+										"E_RPTYPE"
+									],
+									"format": "label"
+								},
+								"rules": [
+									{
+										"required": true,
+										"message": "还款类型"
+									}
+								]
+								
+							}
+						},
+						
+						{
+							"pbacctsq": {
+								"label": "选择公账账号",
+								"control": "dynamic",
+								"name":"pbacctsq",
+								"isShowChildForm": true,
+								"span": 24,
+								"toRequest": {
+									"url": "@ChooseAccountDynamic",
+									"method": "get"
+								},
+								
+								"props": {
+									"width": "85%",
+									"title": "公账账号查询"
+								}
+							}
+						},
+						{
+							"adrpdt": {
+								"label": "预约还款日期",
+								"name": "adrpdt",
+								"span": 8,
+								"rules": [
+									{
+										"required": true
+									}
+								],
+								"control": "dateTimePicker"
+							},
+							"rpamount": {
+								"label": "还款金额",
+								"control": "text",
+								"name": "rpamount",
+								"span": 8,
+								"multiple": false,
+								"value": "",
+								"decimal": 2,
+								"thousand": ",",
+								"max": 21,
+								"disabled": false
+								
+								 
+							},
+							"sfzxqx": {
+								"label": "指向清晰",
+								"control": "select",
+								"name": "sfzxqx",
+								"span": 8,
+								"multiple": false,
+								
+								"dict": {
+									"dictType": "E_YES___",
+									"dictKey": [
+										"E_YES___"
+									],
+									"format": "label"
+								},
+								"rules": [
+									{
+										"required": true,
+										"message": "请选择是否指向清晰"
+									}
+								]
+							}
+							
+						},
+						
+						
+						{
+							
+							"adjrs": {
+								"label": "申请调整原因",
+								"control": "select",
+								"name": "adjrs",
+								"span": 8,
+								"multiple": false,
+								
+								"dict": {
+									"dictType": "E_ADJRS",
+									"dictKey": [
+										"E_ADJRS"
+									],
+									"format": "label"
+								},
+								"rules": [
+									{
+										"required": true,
+										"message": "请选择申请调整原因"
+									}
+								]
+							},
+							
+							"remark": {
+								"control": "text",
+								"label": "备注",
+								"span": 8,
+								"name": "remark",
+								"rules": [
+									{
+										"max": 200,
+										"message": "长度不能超过200个字符"
+									}
+								]
+							}
+						},
+						{
+							"idatt": {
+								"control": "dynamic",
+								"isShowChildForm": true,
+								"span": 6,
+								"width":"100px",
+								"toRequest": {
+									"url": "@SingleUpload",
+									"method": "get",
+									"params": {
+										"formKey": "idatt",
+										"formLabel":"身份证附件"
+									}
+								}
+							},
+							"applyatt": {
+								"control": "dynamic",
+								"isShowChildForm": true,
+								"span": 6,
+								"toRequest": {
+									"url": "@SingleUpload",
+									"method": "get",
+									"params": {
+										"formKey": "applyatt",
+										"formLabel":"申请书附件"
+									}
+								}
+							},
+							"crdtatt": {
+								"control": "dynamic",
+								"isShowChildForm": true,
+								"span": 6,
+								"toRequest": {
+									"url": "@SingleUpload",
+									"method": "get",
+									"params": {
+										"formKey": "crdtatt",
+										"formLabel":"征信报告附件"
+									}
+								}
+							},
+							"othatt": {
+								"control": "dynamic",
+								"isShowChildForm": true,
+								"span": 6,
+								"toRequest": {
+									"url": "@SingleUpload",
+									"method": "get",
+									"params": {
+										"formKey": "othatt",
+										"formLabel":"其他证据附件"
+									}
+								}
+							}
+						}
+						
+					]
+				}
+			]
+		}
+	}
+}

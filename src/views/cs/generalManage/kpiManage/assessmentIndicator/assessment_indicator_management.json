@@ -1,0 +1,285 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "controls": [
+        {
+          "indicator_no": {
+            "control": "text",
+            "label": "指标编码"
+          },
+          "indicator_alias": {
+            "control": "text",
+            "label": "指标名称"
+          }
+        },
+        {
+          "frequency": {
+            "control": "select",
+            "label": "频度",
+            "dict": {
+              "dictType": "CS_E_INDICATOR_FREQUENCY",
+              "dictKey": [
+                "CS_E_INDICATOR_FREQUENCY"
+              ],
+              "format": "value-label"
+            }
+          },
+          "indicator_range": {
+            "control": "select",
+            "label": "指标范围",
+            "dict": {
+              "dictType": "CS_E_INDICATOR_RANGE",
+              "dictKey": [
+                "CS_E_INDICATOR_RANGE"
+              ],
+              "format": "value-label"
+            }
+          }
+        },
+        {
+          "daterange": {
+            "control": "dateTimePicker",
+            "label": "生效时间",
+            "type": "daterange",
+            "unlinkPanels": true,
+            "valueFormat": "yyyyMMdd",
+            "startPlaceholder": "请选择开始时间",
+            "endPlaceholder": "请选择结束时间",
+            "startField": "start_effect_time",
+            "endField": "end_effect_time"
+          },
+          "enable": {
+            "control": "select",
+            "label": "是否启用",
+            "dict": {
+              "dictType": "CS_E_YESORNO",
+              "dictKey": [
+                "CS_E_YESORNO"
+              ],
+              "format": "value-label"
+            }
+          }
+        },
+        {
+          "org_id": {
+            "label": "创建法人",
+            "control": "remoteSelect",
+            "labelField": "org_name",
+            "valueField": "org_id",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2311"
+              }
+            },
+            "format": "value-label"
+          },
+          "branch_id": {
+            "label": "创建机构",
+            "control": "remoteSelect",
+            "labelField": "branch_name",
+            "valueField": "branch_id",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2142",
+                "user_id": "$g{{user_info.userCode}}",
+                "branch_id": "$g{{user_info.branch_id}}",
+                "brch_relation_code": "01"
+              }
+            },
+            "format": "value-label"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "icon": "el-icon-circle-plus",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/cs/generalManage/kpiManage/assessmentIndicator/assessment_indicator_add.json"
+          },
+          "props": {
+            "width": "60%",
+            "title": "新增考核指标"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "cb0313"
+        }
+      },
+      "thead": [
+        {
+          "type": "string",
+          "label": "指标编码",
+          "align": "center",
+          "prop": "indicator_no"
+        },
+        {
+          "type": "string",
+          "label": "指标名称",
+          "align": "center",
+          "prop": "indicator_alias"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "频度",
+          "prop": "frequency",
+          "dict": {
+            "dictType": "CS_E_INDICATOR_FREQUENCY",
+            "dictKey": [
+              "CS_E_INDICATOR_FREQUENCY"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "指标范围",
+          "prop": "indicator_range",
+          "dict": {
+            "dictType": "CS_E_INDICATOR_RANGE",
+            "dictKey": [
+              "CS_E_INDICATOR_RANGE"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "指标公式",
+          "prop": "indicator_expression"
+        },
+        {
+          "type": "string",
+          "label": "生效开始时间",
+          "align": "center",
+          "prop": "start_effect_time"
+        },
+        {
+          "type": "string",
+          "label": "生效结束时间",
+          "align": "center",
+          "prop": "end_effect_time"
+        },
+        {
+          "type": "string",
+          "label": "是否启用",
+          "align": "center",
+          "prop": "enable",
+          "dict": {
+            "dictType": "CS_E_YESORNO",
+            "dictKey": [
+              "CS_E_YESORNO"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "label": "是否累计",
+          "align": "center",
+          "prop": "is_total",
+          "dict": {
+            "dictType": "CS_E_YESORNO",
+            "dictKey": [
+              "CS_E_YESORNO"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "label": "描述",
+          "align": "center",
+          "prop": "detail"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "创建法人",
+          "dict": {
+            "dictKey": [
+              "org_id"
+            ],
+            "labelField": "org_name",
+            "valueField": "org_id",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2311",
+                "org_id": "${{current.org_id}}"
+              }
+            },
+            "format": "value-label"
+          },
+          "prop": "org_id"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "创建机构",
+          "dict": {
+            "dictKey": [
+              "branch_id"
+            ],
+            "labelField": "branch_name",
+            "valueField": "branch_id",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2142",
+                "branch_id": "${{current.branch_id}}"
+              }
+            },
+            "format": "value-label"
+          },
+          "prop": "branch_id"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/cs/generalManage/kpiManage/assessmentIndicator/assessment_indicator_modify.json",
+                "method": "POST",
+                "params": {
+                  "id_": "${{current.id_}}"
+                }
+              },
+              "props": {
+                "width": "60%",
+                "title": "考核指标维护"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

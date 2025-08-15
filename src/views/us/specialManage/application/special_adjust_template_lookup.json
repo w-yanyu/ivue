@@ -1,0 +1,122 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [{
+                "temp_no": {
+                    "control": "text",
+                    "label": "组合编号",
+                    "rules": [{
+                        "max": 80,
+                        "message": "长度不能超过80个字符"
+                    }]
+                },"temp_name": {
+                    "control": "text",
+                    "label": "组合名称",
+                    "rules": [{
+                        "max": 80,
+                        "message": "长度不能超过80个字符"
+                    }]
+                },
+                "apply_cust_type": {
+                    "control": "select",
+                    "label": "适用客户类型",
+                    "dict": {
+                        "dictType": "US_E_APPL_CUST_TYPE",
+                        "dictKey": [
+                            "US_E_APPL_CUST_TYPE"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                "cert_no": {
+                    "control": "text",
+                    "label": "证件号码"
+
+                }
+            }]
+        },
+        "toolbar": {
+            "btns": []
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "us0433"
+                }
+            },
+            "thead": [{
+                    "type": "index",
+                    "label": "序号"
+                },
+                {
+                    "label": "组合编号",
+                    "prop": "temp_no",
+                    "align": "center"
+                },
+                {
+                    "label": "组合名称",
+                    "prop": "temp_name",
+                    "align": "center"
+                },
+                {
+                    "label": "调整类型",
+                    "prop": "adj_type",
+                    "align": "center",
+                    "dict": {
+                        "format": "label",
+                        "dictKey": [
+                            "US_E_ADJ_TYPE"
+                        ],
+                        "dictType": "US_E_ADJ_TYPE"
+                    }
+                },
+                {
+                    "label": "适用客户类型",
+                    "prop": "apply_cust_type",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "US_E_APPL_CUST_TYPE",
+                        "dictKey": [
+                            "US_E_APPL_CUST_TYPE"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "审批权限",
+                    "prop": "appr_auth",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "US_E_APPR_AUTH",
+                        "dictKey": [
+                            "US_E_APPR_AUTH"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "表名",
+                    "prop": "table_name",
+                    "align": "center"
+                },
+                {
+                    "label": "操作",
+                    "align": "center",
+                    "fixed": "right",
+                    "btns": [{
+                        "type": "bringback",
+                        "label": "选择"
+                    }]
+                }
+            ]
+        }
+    }
+}

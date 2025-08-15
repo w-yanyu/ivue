@@ -1,0 +1,106 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest":"${{params}}",
+      "scope": "formData",
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "icon": "",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "bpm0066",
+              "appId":"${{params.appId}}"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "route_deal_no": {
+            "control": "string",
+            "label": "路线处理编号",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入路线处理编号"
+              }
+            ]
+          },
+          "wf_prod_no": {
+            "control": "string",
+            "label": "流程产品编号",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入流程产品编号"
+              }
+            ]
+          },
+          "route_id": {
+            "control": "string",
+            "label": "路线编号",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入路线编号"
+              }
+            ]
+          },
+          "busi_id":{
+            "control": "lookup",
+            "label": "业务编号",
+            "width": "130px",
+            "edit": false,
+            "keyField": {
+                "busi_id": "busi_id",
+                "service_name":"service_name"
+            },
+            "toRequest": {
+                "url": "/views/msap/bpm/processManagement/business/businessServiceComposition_lookup.json",
+                "method": "post",
+                "params":{
+                  "servicecode": "bpm0065",
+                  "appId":"${{params.appId}}"
+                },
+                "props": {
+                  "width": "80%",
+                  "title": "路线处理新增"
+                }
+                
+            }
+          },
+          "service_name": {
+            "control": "string",
+            "label": "业务名称",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入业务名称"
+              }
+            ]
+          },
+          "sort_no": {
+            "control": "text",
+            "label": "参数序号",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入参数序号"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

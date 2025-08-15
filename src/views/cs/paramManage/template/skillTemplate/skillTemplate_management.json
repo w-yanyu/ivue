@@ -1,0 +1,145 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "scope": "formData",
+            "controls": [
+                {
+                    "call_reference_id": {
+                        "control": "text",
+                        "label": "话术代码"
+                    },
+                    "call_reference_name": {
+                        "control": "text",
+                        "label": "话术名称"
+                    }
+                },
+                {
+                    "call_reference_desc": {
+                        "control": "text",
+                        "label": "话术描述"
+                    }
+                }
+            ]
+        },
+
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "icon": "el-icon-circle-plus",
+                    "target": "dialog",
+                    "label": "新增",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/cs/paramManage/template/skillTemplate/skillTemplate_add.json"
+                    },
+                    "props": {
+                        "width": "65%",
+                        "title": "新增话术模板定义"
+                    }
+                }
+            ]
+        },
+
+        "datagrid": {
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "cb0069",
+                    "appId": "cbOnl",
+                    "coll_kind": "02"
+                }
+            },
+
+            "thead": [
+                {
+                    "type":"string",
+                    "label": "话术代码",
+                    "align":"center",
+                    "prop": "call_reference_id",
+                    "width": "150px"
+                },
+                {
+                    "type":"string",
+                    "label": "话术名称",
+                    "align":"center",
+                    "prop": "call_reference_name",
+                    "width": "180px"
+                },
+                {
+                    "type":"string",
+                    "label": "话术描述",
+                    "align":"center",
+                    "prop": "call_reference_desc"
+                },
+                {
+                    "type":"string",
+                    "label": "话术排序",
+                    "align":"center",
+                    "prop": "call_reference_order",
+                    "width": "120px"
+                },
+                {
+                    "type":"string",
+                    "label": "是否启用",
+                    "align":"center",
+                    "prop": "is_valid",
+                    "width": "130px",
+                    "dict": {
+                        "dictType": "CS_E_YESORNO",
+                        "dictKey": [
+                            "CS_E_YESORNO"
+                        ],
+                        "format": "value-label"
+                    }
+                },
+                {
+                    "label": "操作",
+                    "width": "200%",
+                    "fixed": "right",
+                    "align":"center",
+                    "btns": [
+                        {
+                            "type":"look",
+                            "label":"详情",
+                            "toRequest":{
+                                "url":"/views/cs/paramManage/template/skillTemplate/skillTemplate_info.json",
+                                "method":"POST"
+                            },
+                            "props":{
+                                "title":"话术模板定义详情"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/cs/paramManage/template/skillTemplate/skillTemplate_modify.json",
+                                "method": "POST"
+                            },
+                            "props": {
+                                "title": "话术模板定义维护"
+                            }
+                        },
+                        {
+                            "type": "delete",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "cb0067",
+                                    "appId": "cbOnl",
+                                    "coll_kind": "02"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

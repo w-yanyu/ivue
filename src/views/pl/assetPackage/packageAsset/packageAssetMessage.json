@@ -1,0 +1,123 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [],
+      "btns": []
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/pl/assetPackage/packageAsset/addpackageAssetMessage.json",
+            "params":{
+              "package_no": "${{params.package_no}}",
+              "package_name": "${{params.package_name}}"
+            }
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pl0734",
+          "package_no": "${{params.package_no}}"
+        }
+      },
+      "pagination": {
+        "pageSizes": [
+          5,
+          10,
+          15,
+          20
+        ],
+        "pageSize": 5,
+        "show": false
+      },
+      "thead": [
+        {
+          "type": "index"
+        },
+        {
+          "prop": "package_no",
+          "label": "资产包编号",
+          "align": "center"
+        },
+        {
+          "prop": "package_name",
+          "label": "资产包名称",
+          "align": "center"
+        },
+        {
+          "label": "打包日期",
+          "align": "center",
+          "prop": "package_dt"
+        },
+        {
+          "prop": "channel_id",
+          "label": "渠道",
+          "align": "center",
+          "dict": {
+            "dictType": "PL_E_FUND_CHANNEL",
+            "dictKey": [
+              "PL_E_FUND_CHANNEL"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "prop": "template_id",
+          "label": "模板编号",
+          "align": "center"
+        },
+        {
+          "prop": "template_name",
+          "label": "模板名称",
+          "align": "center"
+        },
+        {
+          "prop": "deal_status",
+          "label": "处理状态",
+          "align": "center",
+          "dict":{
+            "dictType": "PL_E_DEAL_STATUS",
+            "dictKey": [
+              "PL_E_DEAL_STATUS"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": "200",
+          "align": "center",
+          "btns": [
+            {
+              "toRequest": {
+                "method": "POST",
+                "url": "/views/pl/assetPackage/packageAsset/packageAssetMessageDetail.json"
+              },
+              "label": "详情",
+              "type": "edit",
+              "props": {
+                "width": "80%",
+                "height": "80%",
+                "title": "短信公告详情"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

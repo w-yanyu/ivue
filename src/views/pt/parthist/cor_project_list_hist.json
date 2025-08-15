@@ -1,0 +1,70 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+
+    "datagrid": {
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "part_project_no": "${{params.part_project_no}}",
+          "servicecode": "pt2000"
+        }
+      },
+      "thead": [
+        {
+          "label": "合作项目编号",
+          "prop": "part_project_no"
+        },
+        {
+          "label": "合作项目名称",
+          "prop": "part_project_name"
+        },
+        {
+          "label":  "合作项目描述",
+          "prop": "part_project_describe"
+        },
+        {
+          "label": "合作项目类型",
+          "prop": "part_project_type",
+          "dict": {
+            "dictType": "PT_E_PART_PROJECT_TYPE",
+            "dictKey": ["PT_E_PART_PROJECT_TYPE"],
+            "format": "label"
+          }
+
+        },
+        {
+          "label": "项目版本",
+          "prop": "version"
+        },
+        {
+          "label": "操作",
+          "width": "100px",
+          "fixed": "right",
+          "btns": [
+
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "@projectAddLayout",
+                "method": "GET",
+                "params": {
+                  "tranType": "detail",
+                  "part_project_no": "${{current.part_project_no}}",
+                  "project_template_no":"${{current.project_template_no}}",
+                  "version": "${{current.version}}"
+                }
+              },
+              "props": {
+                "width": "65%",
+                "title":  "查看详情"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

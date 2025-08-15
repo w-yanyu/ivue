@@ -1,0 +1,146 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "POST",
+            "url": "/views/us/privateManage/assetStatus/homeAssets/homeAssets_add.json",
+            "params": {
+              "cust_no": "${{params.cust_no}}"
+            }
+          },
+          "show": {
+            "expression": "'${{params.show_flash}}' == '1'"
+          },
+          "props": {
+            "width": "75%",
+            "title": "家庭资产信息新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "scope": "searchTable",
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "us0138",
+          "cust_no": "${{params.cust_no}}"
+        }
+      },
+      "thead": [
+        {
+          "label": "资产名称",
+          "align": "center",
+          "prop": "asset_name"
+        },
+        {
+          "label": "资产种类",
+          "prop": "asset_type",
+          "align": "center",
+          "dict": {
+            "dictType": "US_E_ASSET_TYPE",
+            "dictKey": [
+              "US_E_ASSET_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type":"currency",
+          "label": "资产评估金额",
+          "align": "center",
+          "prop": "asset_value",
+          "format": {
+            "thousand": ",",
+            "decimal": "2",
+            "type": "currency"
+        }
+        },
+        {
+          "label": "资产评估币种",
+          "prop": "asset_ccy",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_CURRENCY",
+            "dictKey": [
+              "MS_CURRENCY"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "资产描述",
+          "align": "center",
+          "prop": "asset_desc"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 160,
+          "align": "center",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/us/privateManage/assetStatus/homeAssets/homeAssets_info.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "75%",
+                "title": "家庭资产信息详情"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/us/privateManage/assetStatus/homeAssets/homeAssets_modify.json",
+                "method": "post"
+              },
+              "show": {
+                "expression": "'${{params.show_flash}}' == '1'"
+              },
+              "props": {
+                "width": "75%",
+                "title": "家庭资产信息维护"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "us0141"
+                }
+              },
+              "show": {
+                "expression": "'${{params.show_flash}}' == '1'"
+              },
+              "confirm": {
+                "title": "确定删除",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            }
+          ]
+        }
+      ],
+      "pagination": {
+        "show": true
+      }
+    }
+  }
+}
+

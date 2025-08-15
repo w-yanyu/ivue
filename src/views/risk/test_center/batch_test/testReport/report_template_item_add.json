@@ -1,0 +1,95 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "pd1101",
+          "due_dili_template_no": "${{params.node_cd}}",
+          "due_dili_template_name": "${{params.node_name}}"
+        }
+      },
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "pd1102",
+          "node_type": "${{params.node_type}}"
+        }
+      },
+      "controls": [
+        {
+          "due_dili_template_no": {
+            "width": "25px",
+            "span": "8",
+            "control": "text",
+            "disabled": true,
+            "label": "配置项编号"
+          },
+          "due_dili_template_name": {
+            "width": "25px",
+            "control": "text",
+            "span": "8",
+            "label": "配置项名称",
+            "rules": [
+              {
+                "required": true,
+                "message": "必填项"
+              }
+            ]
+          },
+          "is_effective": {
+            "width": "25px",
+            "control": "select",
+            "span": "8",
+            "label": "是否生效",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "必填项"
+              }
+            ]
+          }
+        },
+        {
+          "modify_path": {
+            "width": "25px",
+            "span": "24",
+            "control": "text",
+            "label": "信息采集页面",
+            "show":{
+              "expression":"'${{params.is_leaf}}' === '1'"
+            }
+          },
+          "detail_path": {
+            "width": "25px",
+            "span": "24",
+            "control": "text",
+            "label": "信息详细页面",
+            "show":{
+              "expression":"'${{params.is_leaf}}' === '1'"
+            }
+          },
+          "report_path": {
+            "width": "25px",
+            "span": "24",
+            "control": "text",
+            "label": "模板打印页面",
+            "show":{
+              "expression":"'${{params.is_leaf}}' === '1'"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,106 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "trxn_teller": {
+                        "control": "text",
+                        "label": "交易用户",
+                        "rules": [
+                            {
+                                "max": 32,
+                                "message": "长度不能超过32个字符"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "date_range": {
+                        "control": "dateTimePicker",
+                        "label": "日期区间",
+                        "type": "daterange",
+                        "startPlaceholder": "起始日期",
+                        "endPlaceholder": "截止日期",
+                        "startField": "start_date",
+                        "endField": "end_date",
+                        "width": 150,
+                        "span": "24",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请选择日期区间"
+                            }
+                        ],
+                        "valueFormat": "yyyyMMdd",
+                        "unlinkPanels": true
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ct2088"
+                }
+            },
+            "pagination": {
+                "show": true,
+                "pageSize": 10
+            },
+            "thead": [
+                {
+                    "type": "index"
+                },
+                {
+                    "label": "数据创建用户",
+                    "prop": "data_create_user"
+                },
+                {
+                    "label": "交易日期",
+                    "prop": "trxn_date",
+                    "type": "dateTimePicker"
+                },
+                {
+                    "label": "数据操作类型",
+                    "prop": "data_operate_type",
+                    "dict": {
+                        "dictType": "E_DATAOPERATE",
+                        "dictKey": [
+                            "E_DATAOPERATE"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "交易描述",
+                    "prop": "trxn_desc"
+                },
+                {
+                    "label": "被操作的用户",
+                    "prop": "pm_key_value"
+                },
+                {
+                    "label": "字段描述",
+                    "prop": "field_desc"
+                },
+                {
+                    "label": "前映像",
+                    "prop": "before_value"
+                },
+                {
+                    "label": "后映象",
+                    "prop": "after_value"
+                },
+                {
+                    "label": "数据序号",
+                    "prop": "data_sort"
+                }
+            ]
+        }
+    }
+}

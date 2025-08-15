@@ -1,0 +1,50 @@
+{
+  "module": "v-charts",
+  "layout": {
+      "rows":[
+        [
+          {
+            "span": 24,
+            "type": "ve-histogram",
+            "props": {
+              "settings" : {
+                "#axisSite": { "right": ["OrderRate"] },
+                "#yAxisType": ["KMB", "percent"],
+                "yAxisName": ["数量（单位：笔数）"],
+                "labelMap": {
+                  "to_do_count": "待处理数量",
+                  "done_count": "已处理数量"
+                }
+              },
+              "extend":{
+                "xAxis.0.axisLabel.rotate": 45,
+                "series": {
+                  "label": {
+                    "normal": {
+                      "show": true
+                    }
+                  }
+                }
+              },
+              "data": {
+                "columns": ["system_date", "to_do_count", "done_count"],
+                "rows": {
+                  "initRequest":{
+                    "url": "/SUMP/icmcall/icmRPCCall",
+                    "method": "post",
+                    "params": {
+                        "servicecode": "bpm1023",
+                        "busi_type": "PL",
+                        "date_from":"19770101",
+                        "date_end":"",
+                        "appId":"plOnl"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      ]
+  }
+}

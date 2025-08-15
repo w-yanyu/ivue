@@ -1,0 +1,363 @@
+{
+  "module": "v-inputDataForm-btn",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "handlerCode": {
+            "label": "处置措施代码",
+            "control": "text",
+            "span": 12,
+            "rules": [
+              {
+                "required": true,
+                "pattern": "^[A-Za-z][A-Za-z\\d_]{0,19}$",
+                "message": "请正确输入"
+              }
+            ]
+          },
+          "handlerName": {
+            "label": "处置措施名称",
+            "control": "text",
+            "span": 12,
+            "rules": [
+              {
+                "required": true,
+                "message": "请正确输入",
+                "max": 100
+              }
+            ]
+          }
+        },
+        {
+          "handlerType": {
+            "label": "处置措施类型",
+            "control": "select",
+            "span": 12,
+            "dict": {
+              "dictType": "handlerType",
+              "dictKey": [],
+              "format": "value-label",
+              "doRequest": {
+                "url": "/views/risk/dictdata/handlerType.json",
+                "method": "get"
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "该控件必填",
+                "max": 20
+              }
+            ]
+          },
+          "controlDimension": {
+            "label": "管控维度",
+            "control": "select",
+            "span": 12,
+            "dict": {
+              "dictType": "indicatorDimension",
+              "dictKey": [],
+              "format": "value-label",
+              "doRequest": {
+                "url": "/views/risk/dictdata/indicatorDimension.json",
+                "method": "get"
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "该控件必填"
+              }
+            ]
+          }
+        },
+        {
+          "indicatorCode": {
+            "label": "管控指标代码",
+            "control": "select",
+            "span": 24,
+            "dict": {
+              "dictType": "collection_indicator_code_list",
+              "dictKey": [],
+              "format": "value-label",
+              "doRequest": {
+                "url": "/API/risk-management-service/combobox-select/collection_indicator_code_list",
+                "method": "post",
+                "params": {
+                  "collectionSource": "List"
+                }
+              }
+            },
+            "events": {
+              "condition": {
+                "switch": {
+                  "": {
+                    "control": {
+                      "controlUnit": {
+                        "disabled": true,
+                        "value":""
+                      },
+                      "controlNumber": {
+                        "disabled": true,
+                        "value":""
+                      }
+                    }
+                  },
+                  "$default": {
+                    "control": {
+                      "controlUnit": {
+                        "disabled": false
+                      },
+                      "controlNumber": {
+                        "disabled": false
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "rules": [
+              {
+                "message": "请正确输入",
+                "max": 40
+              }
+            ]
+          }
+        },
+        {
+          "controlUnit": {
+            "label": "管控时间单位",
+            "control": "select",
+            "span": 12,
+            "dict": {
+              "dictType": "controlUnit",
+              "dictKey": [],
+              "format": "value-label",
+              "doRequest": {
+                "url": "/views/risk/dictdata/controlUnit.json",
+                "method": "get"
+              }
+            },
+            "events": {
+              "condition": {
+                "switch": {
+                  "": {
+                    "control": {
+                      "controlNumber": {
+                        "disabled": true,
+                        "value":"",
+                        "rules": [{
+                          "type":"string"
+                        }]
+                      }
+                    }
+                  },
+                  "$default": {
+                    "control": {
+                      "controlNumber": {
+                        "disabled": false,
+                        "rules": [{
+                          "message": "请输入大于0的整数",
+                          "type":"integer",
+                          "min": 1
+                        }]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "controlNumber": {
+            "label": "管控时间数值",
+            "control": "inputNumber",
+            "span": 12
+          }
+        },
+        {
+          "alertMessageFlag": {
+            "label": "是否生成警报",
+            "control": "radio",
+            "span": 12,
+            "options":[
+              {
+                "label":"是",
+                "value":"Y"
+              },
+              {
+                "label":"否",
+                "value":"N"
+              }
+            ],
+            "rules": [
+              {
+                "required": true,
+                "message": "该控件必填"
+              }
+            ],
+            "events": {
+              "condition": {
+                "switch": {
+                  "Y": {
+                    "control": {
+                      "alertRiskLevel": {
+                        "disabled": false,
+                        "rules": [
+                          {
+                            "required": true,
+                            "message": "该控件必填"
+                          }
+                        ]
+                      },
+                      "alertQueueId": {
+                        "disabled": false,
+                        "rules": [
+                          {
+                            "required": true,
+                            "message": "该控件必填"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "N": {
+                    "control": {
+                      "alertRiskLevel": {
+                        "disabled": true,
+                        "value":"",
+                        "rules": [
+                          {
+                            "required": false
+                          }
+                        ]
+                      },
+                      "alertQueueId": {
+                        "disabled": true,
+                        "value": "",
+                        "rules": [
+                          {
+                            "required": false
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "alertRiskLevel": {
+            "label": "警报风险级别",
+            "control": "select",
+            "disabled": true,
+            "span": 12,
+            "dict": {
+              "dictType": "alertRiskLevel",
+              "dictKey": [],
+              "format": "value-label",
+              "doRequest": {
+                "url": "/views/risk/dictdata/alertRiskLevel.json",
+                "method": "get"
+              }
+            }
+          }
+        },
+        {
+          "priority": {
+            "label": "优先级",
+            "control": "inputNumber",
+            "span": 12,
+            "rules": [{
+              "required": true,
+              "message": "请输入大于0的整数",
+              "type":"integer",
+              "min": 1
+            }]
+          },
+          "returnCode": {
+            "label": "返回码",
+            "control": "text",
+            "span": 12,
+            "rules": [
+              {
+                "required": true,
+                "message": "请正确输入",
+                "max": 8
+              }
+            ]
+          }
+        },
+        {
+          "returnMessage": {
+            "label": "返回信息",
+            "control": "text",
+            "span": 12,
+            "rules": [
+              {
+                "required": true,
+                "message": "请正确输入",
+                "max": 60
+              }
+            ]
+          },
+          "smsTemplateCode": {
+            "label": "短信模板代码",
+            "control": "text",
+            "span": 12,
+            "rules": [
+              {
+                "message": "请正确输入",
+                "max": 10
+              }
+            ]
+          }
+        },
+        {
+          "alertQueueId": {
+            "label": "警报队列",
+            "control": "select",
+            "span": 12,
+            "dict": {
+              "dictType": "risk-alert-queue",
+              "dictKey": [],
+              "format": "value-label",
+              "doRequest": {
+                "url": "/API/risk-management-service/combobox-select/risk-alert-queue",
+                "params": {},
+                "method": "POST"
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "该控件必填"
+              }
+            ]
+          }
+        },
+        {
+          "description": {
+            "label": "备注",
+            "control": "textarea",
+            "span": 24,
+            "rules": [
+              {
+                "message": "请正确输入",
+                "max": 500
+              }
+            ]
+          }
+        }
+      ],
+      "doRequest": {
+        "url": "/API/risk-management-service/risk-rule-handler/add",
+        "method": "post",
+        "params":{
+          "createUser": "$g{{user_info.userCode}}",
+          "updateUser": "$g{{user_info.userCode}}"
+        }
+      }
+    }
+  }
+}

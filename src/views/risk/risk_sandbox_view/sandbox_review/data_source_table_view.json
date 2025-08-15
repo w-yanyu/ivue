@@ -1,0 +1,89 @@
+{
+  "module": "v-inputDataForm-btn",
+  "layout": {
+    "form": {
+      "scope":"formData",
+      "initRequest": "${{params}}",
+      "controls": [
+        {
+          "source_name": {
+            "label": "数据源名称",
+            "width": "auto",
+            "control": "select",
+            "disabled": true,
+            "dict": {
+              "format": "label",
+              "dictKey": [
+                "DECI_E_DATA_SOURCE_NAME"
+              ],
+              "dictType": "DECI_E_DATA_SOURCE_NAME"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择数据源"
+              }
+            ]
+          },
+          "result_code": {
+            "label": "数据源结果清单代码",
+            "control": "text",
+            "disabled": true,
+            "width": "auto",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入数据源结果清单代码"
+              },
+              {
+                "max": 32,
+                "message": "长度不能超过32个字符"
+              }
+            ]
+          }
+        },
+        {
+          "result_name": {
+            "label": "数据源结果清单名称",
+            "control": "text",
+            "disabled": true,
+            "width": "auto",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入数据源结果清单名称"
+              },
+              {
+                "max": 100,
+                "message": "长度不能超过100个字符"
+              }
+            ]
+          }
+        },
+        {
+          "allData": {
+            "label": "返回结果字段",
+            "initShow": true,
+            "span": 24,
+            "width": "auto",
+            "control": "dynamic",
+            "toRequest": {
+              "url": "/views/risk/risk_sandbox_view/sandbox_review/data_source_table_edit_table.json",
+              "params": {
+                "pageType":"look"
+              }
+            },
+            "props": {}
+          }
+        }
+      ],
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": ""
+        }
+      }
+    }
+  }
+}

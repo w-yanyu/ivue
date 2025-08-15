@@ -1,0 +1,65 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "scope": "strForm",
+      "btns": [{
+        "type": "submit",
+        "label": "提交",
+        "icon": "",
+        "doRequest": {
+          "url": "/SUMP/call/RPCCall",
+          "method": "POST",
+          "params": {
+            "servicecode": "ct2186"
+          }
+        }
+      }],
+      "controls": [
+        {
+          "branch_id": {
+            "control": "hidden",
+            "label": "机构号",
+            "width": "130px",
+            "value": "${{params.branch_id}}",
+            "disabled": false
+          },
+          "role_id": {
+            "control": "text",
+            "label": "管理员角色",
+            "width": "130px",
+            "value": "${{params.role_id}}",
+            "disabled": true
+          },
+          "related_branch_id": {
+            "control": "lookup",
+            "label": "关联机构",
+            "width": "120px",
+            "prop": "branch_id",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入机构号"
+              },
+              {
+                "max": 64,
+                "message": "长度不能超过64个字符"
+              }
+            ],
+            "keyField": {
+              "related_branch_id": "branch_id"
+            },
+            "toRequest": {
+              "url": "/views/ismt/ct/user/user-information-update/branch-info-manager_lookup.json",
+              "method": "post"
+            },
+            "props": {
+              "title": "机构信息查询"
+            }
+          }
+        }
+
+      ]
+    }
+  }
+}

@@ -1,0 +1,133 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "scope": "formData",
+            "controls": [
+                {
+                    "idtfno": {
+                        "control": "text",
+                        "label": "客户证件号码",
+                        "name": "idtfno"
+                    },
+                    "ordsta": {
+                        "control": "select",
+                        "label": "异常订单状态",
+                        "name": "ordsta",
+                        "dict": {
+                            "dictType": "E_ORDSTA",
+                            "dictKey": [
+                                "E_ORDSTA"
+                            ],
+                            "format": "label"
+                        }
+                    }
+                },
+                {
+                    "pdtype": {
+                        "control": "hidden",
+                        "label": "产品类型",
+                        "name": "pdtype",
+                        "dict": {
+                            "dictType": "E_PDTYPE",
+                            "dictKey": [
+                                "E_PDTYPE"
+                            ],
+                            "format": "label"
+                        }
+                    },
+                    "applid": {
+                        "control": "hidden",
+                        "label": "放款申请号",
+                        "name": "applid"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "AS_ICMS_PB_QRLNEX"
+                }
+            },
+            "pagination": {
+                "show": true
+            },
+            "thead": [
+                {
+                    "label": "授信产品编号",
+                    "prop": "prodcd",
+                    "align": "center"
+                },
+                {
+                    "label": "授信产品名称",
+                    "prop": "prodna",
+                    "align": "center"
+                },
+                {
+                    "label": "客户名称",
+                    "prop": "custna",
+                    "align": "center"
+                },
+                {
+                    "label": "证件号码",
+                    "prop": "idtfno",
+                    "align": "center"
+                },
+                {
+                    "label": "订单编号",
+                    "prop": "ordrid",
+                    "align": "center"
+                },
+                {
+                    "label": "订单状态",
+                    "prop": "ordsta",
+                    "align": "center"
+                },
+                {
+                    "label": "账号信息",
+                    "align": "center",
+                    "btns": [
+                        {
+                            "type": "look",
+                            "label": "查看",
+                            "toRequest": {
+                                "url": "/views/other/exceptionManager/loanDrawDown/loan_draw_down_acct_info.json",
+                                "method": "POST"
+                            },
+                            "props": {
+                                "title": "放款账号信息",
+                                "row":"2"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "width":"150px",
+                    "label": "操作",
+                    "align": "center",
+                    "btns": [
+                        {
+                            "type": "look",
+                            "label": "查询实时订单状态",
+                            "toRequest": {
+                                "url": "/views/other/exceptionManager/loanDrawDown/in_time_order_status_query.json",
+                                "method": "POST",
+                                "params":{
+                                    "remosq":"${{params.remosq}}",
+                                    "gmt_create":"${{params.gmt_create}}"
+                                }
+                            },
+                            "props": {
+                                "title": "查询实时订单状态"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

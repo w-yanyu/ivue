@@ -1,0 +1,140 @@
+{
+  "module": "v_realonlyForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "cl0038",
+          "limit_no": "${{params.reserve1}}"
+        }
+      },
+      "controlsGroup": [
+        {
+          "title": "授信信息",
+          "tooltip": "授信信息",
+          "titleIcon": "el-icon-info",
+          "expand": true,
+          "accordion": false,
+          "controls": [
+            {
+              "limit_no": {
+                "control": "text",
+                "label": "额度编号",
+                "disabled": true,
+                "span": 8
+              },
+              "effect_date": {
+                "control": "dateTimePicker",
+                "format": "yyyyMMdd",
+                "label": "生效日期",
+                "disabled": true,
+                "span": 8
+              },
+              "expiry_date": {
+                "control": "dateTimePicker",
+                "format": "yyyyMMdd",
+                "label": "失效日期",
+                "disabled": true,
+                "span": 8
+              }
+            },
+            {
+              "ccy_code": {
+                "control": "select",
+                "disabled": true,
+                "label": "币种",
+                "dict": {
+                  "dictType": "MS_CURRENCY",
+                  "dictKey": [
+                    "MS_CURRENCY"
+                  ],
+                  "format": "label"
+                },
+                "span": 8
+              },
+              "cl_amt": {
+                "control": "currency",
+                "disabled": true,
+                "decimal": "2",
+                "label": "授信金额(元)",
+                "span": 8,
+                "align": "left",
+                "format":{
+                  "thousand": ","
+                }  
+              },
+              "avail_amt": {
+                "control": "currency",
+                "disabled": true,
+                "decimal": "2",
+                "label": "授信可用金额(元)",
+                "span": 8,
+                "align": "left",
+                "format":{
+                  "thousand": ","
+                }  
+              }
+            },
+            {
+              "credit_period": {
+                "control": "text",
+                "label": "授信期限(月)",
+                "disabled": true,
+                "span": 8
+              },
+              "cycle_flag": {
+                "control": "select",
+                "disabled": true,
+                "label": "是否循环授信",
+                "dict": {
+                  "dictType": "MS_E_YESORNO",
+                  "dictKey": [
+                    "MS_E_YESORNO"
+                  ],
+                  "format": "label"
+                },
+                "span": 8
+              },
+              "status": {
+                "control": "select",
+                "disabled": true,
+                "label": "有效状态",
+                "dict": {
+                  "dictType": "CL_E_STATUS",
+                  "dictKey": [
+                    "CL_E_STATUS"
+                  ],
+                  "format": "label"
+                },
+                "span": 8
+              }
+            }
+          ]
+        },
+        {
+          "title": "贴现申请信息",
+          "tooltip": "step2",
+          "expand": true,
+          "controls": [
+            {
+              "id2": {
+                "control": "dynamic",
+                "span": 24,
+                "toRequest": {
+                  "url": "/views/icms/discount/araDiscountApply/view/discount_contract_view.json",
+                  "method": "get",
+                  "params": {
+                    "apply_no":"${{params.apply_no}}",
+                    "credit_prod_cd":"${{params.prod_cd}}"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

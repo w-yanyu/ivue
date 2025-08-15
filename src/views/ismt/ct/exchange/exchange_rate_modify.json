@@ -1,0 +1,121 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "initRequest": "${{params}}",
+            "btns": [
+                {
+                    "type": "submit",
+                    "label": "提交",
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "ct2303"
+                        }
+                    }
+                }
+            ],
+
+            "controls": [
+                {
+                    "ccy_code": {
+                        "control": "select",
+                        "disabled":true,
+                        "label": "主币种",
+                        "width": "130px",
+                        "dict": {
+                        "dictType": "MS_CURRENCY",
+                        "dictKey": [
+                            "MS_CURRENCY"
+                        ],
+                        "format": "label"
+
+                        },
+                        "rules": [
+                            {
+                                "required": true
+                            }
+                        ]
+                    },
+                    "exchange_ccy_code": {
+                        "control": "select",
+                        "label": "折算币种",
+                        "disabled":true,
+                        "width": "130px",
+                        "dict": {
+                        "dictType": "MS_CURRENCY",
+                        "dictKey": [
+                          "MS_CURRENCY"
+                        ],
+                        "format": "label"
+
+                        },
+                        "rules": [
+                            {
+                                "required": true
+                            }
+                        ]
+                    }
+                },
+                {
+                    "exchange_rate_1": {
+                        "control": "currency",
+                        "label": "汇率（1）",
+                        "width": "130px",
+                        "align": "left",
+                        "format": {
+                            "decimal": "4"
+                        },
+                        "disabled":true
+                    },
+                    "exchange_rate_100": {
+                        "control": "currency",
+                        "label": "汇率（100）",
+                        "width": "130px",
+                        "align": "left",
+                        "disabled":true,
+                        "format": {
+                          "decimal": "2"
+                        }
+                    }
+                },{
+                    "timestamp": {
+                        "control": "text",
+                        "label": "发布时间",
+                        "width": "130px",
+                        "disabled":true,
+                        "rules": [
+                            {
+                                "required": true,
+                                "message":"请输入"
+                            },
+                            {
+                                "max":30,
+                                "message":"最多可以输入 30 个字节"
+                            }
+                        ]
+                    },
+                    "valid_state": {
+                        "disabled": "'${{params.valid_state}}'=== '0'",
+                        "control": "select",
+                        "label": "是否生效标志",
+                        "width": "130px",
+                        "dict": {
+                            "dictType": "MS_E_YESORNO",
+                            "dictKey": [
+                                "MS_E_YESORNO"
+                            ],
+                            "format": "value-label"
+                        },
+                        "rules": [
+                            {
+                                "required": true
+                            }
+                        ]
+                    }
+                }               
+            ]
+        }
+    }
+}

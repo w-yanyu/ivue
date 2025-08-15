@@ -1,0 +1,83 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "doRequest": {
+        "url": "",
+        "method": "POST",
+        "params": {}
+      },
+      "controls": [
+        {
+          "role_type": {
+            "control": "select",
+            "dict": {
+              "dictType": "CT_E_ROLE_TYPE",
+              "dictKey": [
+                "CT_E_ROLE_TYPE"
+              ],
+              "format": "label"
+            },
+            "label": "角色类型"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [{
+        "type": "bringback",
+        "label": "选择"
+      }]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/rest/auth/userManager",
+        "method": "POST",
+        "params": {
+          "user_id": "$g{{user_info.userCode}}",
+          "servicecode": "ct2050"
+        }
+      },
+      "pagination": {
+        "show": true,
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "type": "selection"
+        },
+        {
+          "type": "index"
+        },
+        {
+          "label": "角色ID",
+          "prop": "role_id"
+        },
+        {
+          "label": "角色名称",
+          "prop": "role_name"
+        },
+        {
+          "label": "角色类型",
+          "prop": "role_type",
+          "dict": {
+            "dictType": "CT_E_ROLE_TYPE",
+            "dictKey": [
+              "CT_E_ROLE_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        
+        {
+          "label": "所属法人",
+          "prop": "org_id"
+          
+          
+        }
+      ]
+    }
+  }
+}

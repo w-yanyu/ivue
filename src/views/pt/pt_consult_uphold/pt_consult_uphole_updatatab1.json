@@ -1,0 +1,203 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+
+      "initDataOnce":true,
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pt0001",
+          "part_protocol_no": "${{params.part_protocol_no}}"
+        }
+      },
+      "btns": [
+        {
+          "type": "submit",
+          "label": "保存",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "pt0003",
+              "part_protocol_no": "${{params.part_protocol_no}}"
+            }
+          }
+        }
+      ],
+      "controls": [
+
+          {
+            "partner_name": {
+                "control": "lookup",
+                "edit": true,
+                "label": "合作方名称",
+                "width": "50%",
+                "keyField": {
+                    "partner_name": "cust_name",
+                    "part_no": "cust_no",
+                    "cert_no": "cert_no",
+                    "cert_type": "cert_type",
+                    "cust_type": "cust_type",
+                    "corp_size": "corp_size",
+                    "ind_credit": "ind_credit"
+                },
+                "events": {
+                    "set": {
+                        "temp_name": ""
+                    }
+                },
+                "toRequest": {
+                    "url": "/views/us/entManager/ent_cust_lookup.json",
+                    "method": "GET",
+                    "params": {
+                        "indvfg": "N",
+                        "statss": "Y"
+                    }
+                },
+                "props": {
+                    "width": "80%",
+                    "title": "查询关联客户名称"
+                },
+                "format": "label",
+                "rules": [{
+                    "required": true,
+                    "message": "请选择"
+                }]
+            },
+            "part_method": {
+              "control": "select",
+              "label": "合作方式",
+              "width": "50%",
+              "dict": {
+                "dictType": "PT_E_PART_METHOD",
+                "dictKey": [
+                  "PT_E_PART_METHOD"
+                ],
+                "format": "label"
+              }
+            }
+          },
+          {
+            "part_no": {
+              "disabled": false,
+              "control": "hidden",
+              "label": "合作方编号",
+              "width": "50%"
+            },
+            "protocol_name": {
+              "disabled": false,
+              "control": "text",
+              "label": "协议名称",
+              "value": "${{params.protocol_name}}",
+              "width": "50%"
+            },
+            "protocol_status": {
+              "control": "select",
+              "label": "协议有效状态",
+              "width": "50%",
+              "value": "${{params.protocol_status}}",
+              "dict": {
+                "dictType": "MS_E_YESORNO",
+                "dictKey": [
+                  "MS_E_YESORNO"
+                ],
+                "format": "label"
+              }
+            }
+          },
+          {
+            "effect_date": {
+              "control": "dateTimePicker",
+              "label": "生效日期",
+              "width": "50%"
+            },
+            "expiry_date": {
+              "control": "dateTimePicker",
+              "label": "失效日期",
+              "width": "50%"
+            }
+          },
+          {
+            "continued_day_advan": {
+              "control": "text",
+              "label": "续签提示提前天数",
+              "width": "50%",
+              "disabled": false
+            },
+            "original_protocol_no": {
+              "control": "text",
+              "label": "原协议编号",
+              "width": "50%",
+              "disabled": false
+            }
+          },
+          {
+            "is_exposure_control": {
+              "control": "select",
+              "label": "是否敞口管控",
+              "width": "50%",
+              "dict": {
+                "dictType": "MS_E_YESORNO",
+                "dictKey": [
+                  "MS_E_YESORNO"
+                ],
+                "format": "label"
+              }
+            },
+            "is_margin": {
+              "control": "select",
+              "label": "是否有保证金",
+              "width": "50%",
+              "dict": {
+                "dictType": "MS_E_YESORNO",
+                "dictKey": [
+                  "MS_E_YESORNO"
+                ],
+                "format": "label"
+              }
+            }
+          },
+
+          {
+
+            "is_commission": {
+              "control": "select",
+              "label": "是否分佣分润",
+              "width": "50%",
+              "value": "${{params.procor}}",
+              "dict": {
+                "dictType": "MS_E_YESORNO",
+                "dictKey": [
+                  "MS_E_YESORNO"
+                ],
+                "format": "label"
+              }
+            },
+
+            "protocol_addr1": {
+              "control": "text",
+              "label": "协议地址1",
+              "width": "50%",
+              "disabled": false
+            }
+          },
+          {
+            "protocol_addr2": {
+              "control": "text",
+              "label": "协议地址2",
+              "width": "50%",
+              "disabled": false
+            },
+            "protocol_addr3": {
+              "control": "text",
+              "label": "协议地址3",
+              "width": "50%",
+              "disabled": false
+            }
+          }
+        ]
+      }
+  }
+}

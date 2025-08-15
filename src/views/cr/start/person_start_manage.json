@@ -1,0 +1,187 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "scope": "formData",
+            "btns": [{
+                    "type": "submit",
+                    "icon": "el-icon-check",
+                    "label": "启动",
+                    "doRequest": {
+                        "method": "POST",
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "params": {
+                            "servicecode": "cr0001"
+                        }
+                    },
+                    "toRequest": {
+                        "method": "POST",
+                        "url": "@crWaitToDoDeal"
+                    }
+                },
+                {
+                    "type": "reset",
+                    "icon": "el-icon-close",
+                    "label": "重置"
+                }
+            ],
+            "controls": [{
+                    "cust_no": {
+                        "control": "hidden",
+                        "label": "客户id"
+                    }
+                },
+                {
+                    "temp_id": {
+                        "control": "hidden",
+                        "label": "temp_id"
+                    },
+                    "cust_type": {
+                        "control": "hidden",
+                        "label": "客户类型"
+                    },
+                    "sex_tp": {
+                        "control": "hidden",
+                        "label": "性别"
+                    },
+                    "education": {
+                        "control": "hidden",
+                        "label": "教育程度"
+                    },
+                    "marr_state": {
+                        "control": "hidden",
+                        "label": "婚姻状态"
+                    }
+                },
+                {
+                    "cust_name": {
+                        "control": "lookup",
+                        "edit": true,
+                        "label": "关联客户名称",
+                        "span": 10,
+                        "keyField": {
+                            "cust_name": "cust_name",
+                            "cust_no": "cust_no",
+                            "cert_no": "cert_no",
+                            "cert_type": "cert_type",
+                            "sex_tp": "sex_tp",
+                            "education": "education",
+                            "marr_state": "marr_state",
+                            "corp_size": "corp_size",
+                            "is_listed_company": "is_listed_company",
+                            "is_group_company": "is_group_company",
+                            "cust_type": "cust_type"
+                        },
+                        "toRequest": {
+                            "url": "/views/us/privateManage/customer_lookup.json",
+                            "method": "GET",
+                            "params": {
+                                "indvfg": "Y",
+                                "statss": "Y"
+                            }
+                        },
+                        "events": {
+                            "set": {
+                                "temp_name": ""
+                            }
+                        },
+                        "props": {
+                            "width": "80%",
+                            "title": "查询关联客户名称"
+                        },
+                        "format": "label",
+                        "rules": [{
+                            "required": false,
+                            "message": "请选择"
+                        }]
+                    },
+                    "cert_type": {
+                        "control": "select",
+                        "span": 10,
+                        "disabled": true,
+                        "label": "证件类型",
+                        "dict": {
+                            "dictType": "MS_E_CRET_TYPE",
+                            "dictKey": [
+                                "MS_E_CRET_TYPE"
+                            ],
+                            "format": "label"
+                        }
+                    }
+                },
+                {
+                    "cert_no": {
+                        "control": "text",
+                        "span": 10,
+                        "disabled":true,
+                        "label": "证件号码"
+                    },
+                    "temp_type": {
+                        "control": "string",
+                        "label": "评级类型",
+                        "value": "1",
+                        "span": 10,
+                        "placeholder": "请选择",
+                        "dict": {
+                            "dictType": "CR_E_TEMP_TYPE",
+                            "dictKey": [
+                                "CR_E_TEMP_TYPE"
+                            ],
+                            "format": "label"
+                        }
+                    }
+                },
+                {
+                    "temp_name": {
+                        "control": "lookup",
+                        "span": 10,
+                        "edit": true,
+                        "rules": [{
+                            "required": true,
+                            "message": "请选择评级模板"
+                        }],
+                        "label": "评级模板",
+                        "keyField": {
+                            "temp_id": "temp_id",
+                            "temp_name": "temp_name"
+                        },
+                        "toRequest": {
+                            "url": "/views/cr/start/customer_template_lookup.json",
+                            "method": "post",
+                            "params": {
+                                "cust_type": "${{formData.cust_type}}",
+                                "sex_tp": "${{formData.sex_tp}}",
+                                "education": "${{formData.education}}",
+                                "marr_state": "${{formData.marr_state}}",
+                                "temp_type": "1"
+                            }
+                        },
+                        "props": {
+                            "width": "80%",
+                            "title": "查询评级模板"
+                        },
+                        "format": "label"
+                    },
+                    "eval_dt": {
+                        "control": "dateTimePicker",
+                        "span": 10,
+                        "label": "评级日期",
+                        "value": "today",
+                        "placeholder": "请选择",
+                        "format": "yyyyMMdd",
+                        "disabled":true
+                    }
+                },
+                {
+                    "remark": {
+                        "control": "textarea",
+                        "label": "备注",
+                        "placeholder": "请输入",
+                        "rows": 2,
+                        "span": 20
+                    }
+                }
+            ]
+        }
+    }
+}

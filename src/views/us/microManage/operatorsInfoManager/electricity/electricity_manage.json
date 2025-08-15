@@ -1,0 +1,186 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "years": {
+            "control": "dateTimePicker",
+            "label": "年份",
+            "span": "8",
+            "width": "25px",
+            "type": "year",
+            "format": "yyyy"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/us/microManage/operatorsInfoManager/electricity/electricity_add.json",
+            "params": {
+              "cust_no": "${{params.cust_no}}"
+            }
+          },
+          "props": {
+            "width": "40%",
+            "title": "用电量信息新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "us0840",
+          "cust_no": "${{params.cust_no}}",
+          "hydropower_type": "2"
+        }
+      },
+      "thead": [
+        {
+          "type": "index",
+          "label": "序号"
+        },
+        {
+          "label": "年份",
+          "prop": "years",
+          "align": "center"
+        },
+        {
+          "label": "单位",
+          "prop": "unit",
+          "align": "center",
+          "dict": {
+            "dictType": "E_HYDROPOWER_UNIT_TYPE",
+            "dictKey": [
+              "E_HYDROPOWER_UNIT_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "一月",
+          "prop": "january",
+          "align": "center"
+        },
+        {
+          "label": "二月",
+          "prop": "february",
+          "align": "center"
+        },
+        {
+          "label": "三月",
+          "prop": "march",
+          "align": "center"
+        },
+        {
+          "label": "四月",
+          "prop": "april",
+          "align": "center"
+        },
+        {
+          "label": "五月",
+          "prop": "may",
+          "align": "center"
+        },
+        {
+          "label": "六月",
+          "prop": "june",
+          "align": "center"
+        },
+        {
+          "label": "七月",
+          "prop": "july",
+          "align": "center"
+        },
+        {
+          "label": "八月",
+          "prop": "august",
+          "align": "center"
+        },
+        {
+          "label": "九月",
+          "prop": "september",
+          "align": "center"
+        },
+        {
+          "label": "十月",
+          "prop": "october",
+          "align": "center"
+        },
+        {
+          "label": "十一月",
+          "prop": "november",
+          "align": "center"
+        },
+        {
+          "label": "十二月",
+          "prop": "december",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "width": "180px",
+          "fixed": "right",
+          "align": "center",
+          "btns": [
+            {
+              "type": "custom",
+              "label": "详请",
+              "toRequest": {
+                "url": "/views/us/microManage/operatorsInfoManager/electricity/electricity_info.json",
+                "params": {
+                  "cust_no": "${{params.cust_no}}"
+                },
+                "props": {
+                  "width": "40%",
+                  "height": "590px",
+                  "title": "用电量信息"
+                }
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/us/microManage/operatorsInfoManager/electricity/electricity_modify.json",
+                "params": {
+                  "cust_no": "${{params.cust_no}}"
+                },
+                "props": {
+                  "width": "40%",
+                  "height": "590px",
+                  "title": "用电量信息维护"
+                }
+              }
+            },
+            {
+              "type": "custom",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "us0842",
+                  "cust_no": "${{params.cust_no}}",
+                  "hydropower_type": "2"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

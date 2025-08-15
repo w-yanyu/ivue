@@ -1,0 +1,178 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "initRequest": "${{params}}",
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "py0003",
+          "appId": "pyOnl",
+          "strategy_type": "OT"
+        }
+      },
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "icon": "el-icon-tickets"
+        }
+      ],
+      "controls": [
+        {
+          "strategy_code": {
+            "control": "string",
+            "disabled": true,
+            "label": "策略代码",
+            "width": "130px"
+          },
+          "strategy_name": {
+            "control": "string",
+            "disabled": true,
+            "label": "策略名称",
+            "width": "130px"
+          }
+        },
+        {
+          "strategy_desc": {
+            "control": "text",
+            "label": "策略描述",
+            "width": "130px",
+            "rules": [
+              {
+                "max": 128,
+                "message": "最多可以输入 128 个字节"
+              }
+            ]
+          },
+          "priority": {
+            "control": "inputNumber",
+            "label": "优先级",
+            "width": "130px",
+            "min": 1,
+            "max": 10,
+            "rules": [
+              {
+                "required": true,
+                "pattern": "^[0-9]",
+                "message": "请输入 0 到 11 之间的数字"
+              },
+              {
+                "expression": "'${{form.priority}}'.length < 3",
+                "message": "最多可以输入 3 个字节"
+              }
+            ]
+          }
+        },
+        {
+          "start_time": {
+            "label": "起始时间",
+            "control": "dateTimePicker",
+            "type": "dateTimePicker",
+            "span": 12,
+            "width": "130px",
+            "format": "yyyy-MM-dd HH:mm:ss",
+            "disabledDate": {
+              "endRange": "today"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "起始时间不能为空"
+              }
+            ]
+          },
+          "end_time": {
+            "label": "结束时间",
+            "control": "dateTimePicker",
+            "type": "dateTimePicker",
+            "span": 12,
+            "width": "130px",
+            "format": "yyyy-MM-dd HH:mm:ss",
+            "disabledDate": {
+              "endRange": "today"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "结束时间不能为空"
+              }
+            ]
+          }
+        },
+        {
+          "is_valid": {
+            "control": "select",
+            "label": "是否启用",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ],
+            "dict": {
+              "dictType": "CS_E_YESORNO",
+              "dictKey": [
+                "CS_E_YESORNO"
+              ],
+              "format": "value-label"
+            }
+          },
+          "org_id": {
+            "hidden": true,
+            "label": "创建法人",
+            "disabled": true,
+            "width": "130px",
+            "control": "remoteSelect",
+            "labelField": "org_name",
+            "valueField": "org_id",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2311",
+                "org_id": "$g{{user_info.org_id}}"
+              }
+            },
+            "events": {
+              "emit": [
+                "operation"
+              ]
+            },
+            "format": "value-label"
+          }
+        },
+        {
+          "branch_id": {
+            "hidden": true,
+            "disabled": true,
+            "label": "创建机构",
+            "width": "130px",
+            "control": "remoteSelect",
+            "labelField": "branch_name",
+            "valueField": "branch_id",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2142",
+                "user_id": "$g{{user_info.userCode}}",
+                "branch_id": "$g{{user_info.branch_id}}",
+                "brch_relation_code": "01"
+              }
+            },
+            "events": {
+              "emit": [
+                "operation"
+              ]
+            },
+            "format": "value-label"
+          }
+        }
+      ]
+    }
+  }
+}

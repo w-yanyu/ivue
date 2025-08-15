@@ -1,0 +1,179 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "toolbar": {
+            "btns": [{
+                "type": "add",
+                "target": "dialog",
+                "label": "新增",
+                "toRequest": {
+                    "method": "GET",
+                    "url": "/views/cr/params/template/resultRule/resultRule_add.json",
+                    "params": {
+                        "temp_id": "${{params.temp_id}}"
+                    }
+                },
+                "show": {
+                    "expression": "'${{params.is_valid}}' == '0'"
+                },
+                "props": {
+                    "width": "65%",
+                    "title": "结果调整规则新增"
+                }
+            }]
+        },
+        "datagrid": {
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "cr0051",
+                    "temp_id": "${{params.temp_id}}"
+                }
+            },
+            "pagination": {
+                "pageSizes": [
+                    10,
+                    15,
+                    20,
+                    50,
+                    100
+                ],
+                "pageSize": 10
+            },
+            "thead": [{
+                    "type": "selection",
+                    "align": "center",
+                    "width": "55"
+                },
+                {
+                    "type": "index",
+                    "align": "center",
+                    "label": "序号"
+                },
+                {
+                    "label": "规则名称",
+                    "align": "center",
+                    "width":400,
+                    "prop": "adj_name"
+                },
+                {
+                    "label": "是否硬性要求",
+                    "align": "center",
+                    "prop": "req_flag",
+                    "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                            "MS_E_YESORNO"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "调整种类",
+                    "align": "center",
+                    "prop": "adj_type",
+                    "dict": {
+                        "dictType": "CR_E_ADJ_TYPE",
+                        "dictKey": [
+                            "CR_E_ADJ_TYPE"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "调整级别",
+                    "align": "center",
+                    "prop": "adj_level",
+                    "dict": {
+                        "dictType": "CR_E_ADJ_LEVEL",
+                        "dictKey": [
+                            "CR_E_ADJ_LEVEL"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "方法路径",
+                    "align": "center",
+                    "prop": "adj_path"
+                },
+                {
+                    "label": "可调整最大级别",
+                    "align": "center",
+                    "prop": "adj_max",
+                    "dict": {
+                        "dictType": "CR_E_ADJ_LEVEL",
+                        "dictKey": [
+                            "CR_E_ADJ_LEVEL"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "可调整最小级别",
+                    "align": "center",
+                    "prop": "adj_min",
+                    "dict": {
+                        "dictType": "CR_E_ADJ_LEVEL",
+                        "dictKey": [
+                            "CR_E_ADJ_LEVEL"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "操作",
+                    "width": "260px",
+                    "align": "center",
+                    "btns": [{
+                            "type": "edit",
+                            "label": "详情",
+                            "icon": "el-icon-view",
+                            "toRequest": {
+                                "url": "/views/cr/params/template/resultRule/resultRule_detail.json",
+                                "method": "GET"
+                            },
+                            "props": {
+                                "width": "65%",
+                                "title": "结果调整规则详情"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "icon": "el-icon-edit",
+                            "toRequest": {
+                                "url": "/views/cr/params/template/resultRule/resultRule_modify.json",
+                                "method": "GET"
+                            },
+                            "show": {
+                                "expression": "'${{params.is_valid}}' == '0'"
+                            },
+                            "props": {
+                                "width": "65%",
+                                "title": "结果调整规则维护"
+                            }
+                        },
+                        {
+                            "type": "delete",
+                            "label": "删除",
+                            "icon": "el-icon-close",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "delete",
+                                "params": {
+                                    "servicecode": "cr0054",
+                                    "level_rule_id": "${{current.level_rule_id}}"
+                                }
+                            },
+                            "show": {
+                                "expression": "'${{params.is_valid}}' == '0'"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

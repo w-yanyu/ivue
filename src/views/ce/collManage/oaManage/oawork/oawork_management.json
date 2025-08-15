@@ -1,0 +1,554 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "foldLineNumber": 3,
+      "scope": "formData",
+      "controls": [
+        {
+          "branch_org": {
+            "control": "remoteSelect",
+            "label": "机构",
+            "labelField": "branch_name",
+            "valueField": "branch_id",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2173"
+              }
+            },
+            "format": "label"
+          },
+          "cust_name": {
+            "control": "text",
+            "label": "客户姓名"
+          }
+        },
+        {
+          "cert_no": {
+            "control": "text",
+            "label": "证件号码"
+          },
+          "cust_no": {
+            "control": "text",
+            "label": "客户编号"
+          }
+        },
+        {
+          "loan_no": {
+            "control": "text",
+            "label": "借据号"
+          },
+          "hands": {
+            "control": "inputNumber",
+            "label": "手別"
+          }
+        },
+        {
+          "daterange": {
+            "control": "dateTimePicker",
+            "label": "委外日期",
+            "type": "daterange",
+            "unlinkPanels": true,
+            "valueFormat": "yyyyMMdd",
+            "startPlaceholder": "选择开始时间",
+            "endPlaceholder": "选择结束时间",
+            "startField": "outsourcing_start_date",
+            "endField": "outsourcing_end_date"
+          },
+          "oa_org_code": {
+            "control": "remoteSelect",
+            "label": "委外公司",
+            "labelField": "coll_org_name",
+            "valueField": "coll_org_no",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ce0416",
+                "coll_kind":"02",
+                "coll_org_type": "OA01",
+                "is_valid": "1"
+              }
+            },
+            "format": "label"
+          }
+        },
+        {
+          "start_day": {
+            "control": "inputNumber",
+            "label": "逾期天数开始值"
+          },
+          "end_day": {
+            "control": "inputNumber",
+            "label": "逾期天数结束值"
+          }
+        },
+        {
+          "outsourcing_status": {
+            "control": "select",
+            "label": "委外状态",
+            "dict": {
+              "dictType": "CE_E_OA_STATUS",
+              "dictKey": [
+                "CE_E_OA_STATUS"
+              ],
+              "format": "label"
+            }
+          },
+          "queue_code": {
+            "control": "remoteSelect",
+            "label": "队列名称",
+            "labelField": "queue_name",
+            "valueField": "queue_code",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ce0402"
+              }
+            },
+            "format": "label"
+          }
+        },
+        {
+          "case_cls_code": {
+            "control": "remoteSelect",
+            "label": "案件类型",
+            "labelField": "location_name",
+            "valueField": "case_cls_code",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ce0410"
+              }
+            },
+            "format": "label"
+          },
+          "casestate_code": {
+            "control": "remoteSelect",
+            "label": "案件状态",
+            "labelField": "status_name",
+            "valueField": "casestate_code",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ce0411"
+              }
+            },
+            "format": "label"
+          }
+        },
+        {
+          "ovd_amt_total_1": {
+            "control": "inputNumber",
+            "label": "欠款金额区间开始值"
+          },
+          "ovd_amt_total_2": {
+            "control": "inputNumber",
+            "label": "欠款金额区间结束值"
+          }
+        },
+        {
+          "collect_date_1": {
+            "control": "inputNumber",
+            "label": "入催天数区间开始值"
+          },
+          "collect_date_2": {
+            "control": "inputNumber",
+            "label": "入催天数区间结束值"
+          }
+        },
+        {
+          "overdue_stage_code": {
+            "control": "remoteSelect",
+            "label": "逾期阶段",
+            "labelField": "ovd_period_name",
+            "valueField": "overdue_stage_code",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ce0412"
+              }
+            },
+            "format": "label"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "custom",
+          "icon": "el-icon-date",
+          "target": "dialog",
+          "checkCountMin": 1,
+          "label": "展期",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/ce/collManage/oaManage/oawork/oawork_extension.json"
+          }
+        },
+        {
+          "type": "custom",
+          "icon": "el-icon-back",
+          "target": "dialog",
+          "checkCountMin": 1,
+          "label": "退件",
+          "confirm": {
+            "title": "提示信息",
+            "msg": "确定退件吗？",
+            "confirmButtonText": "确定",
+            "cancelButtonText": "取消"
+          },
+          "doRequest": {
+            "method": "POST",
+            "url": "/SUMP/call/RPCCall",
+            "params": {
+              "servicecode": "ce4567"
+            }
+          }
+        },
+        {
+          "type": "custom",
+          "icon": "el-icon-picture",
+          "target": "dialog",
+          "checkCountMin": 1,
+          "checkCountMax": 1,
+          "label": "影像资料",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/ce/collManage/oaManage/oawork/oawork_plVideo.json"
+          }
+        },
+        {
+          "type": "custom",
+          "target": "dialog",
+          "icon": "el-icon-upload",
+          "label": "导入催记",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/pl/collManage/oaManage/oawork/oawork_Import.json"
+          },
+          "props": {
+            "width": "50%",
+            "title": "导入催记"
+          }
+        },
+        {
+          "type": "export",
+          "target": "dialog",
+          "icon": "el-icon-download",
+          "label": "委外报表下载",
+          "doRequest": {
+            "method": "POST",
+            "url": "/SUMP/icmcall/export",
+            "params": {
+              "servicecode": "pl4592"
+            }
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ce4565"
+        }
+      },
+      "thead": [
+        {
+          "type": "selection",
+          "align": "center",
+          "width": "55",
+          "fixed": "left"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "100",
+          "label": "机构",
+          "prop": "branch_org",
+          "dict": {
+            "dictKey": [
+              "branch_org"
+            ],
+            "format": "label",
+            "labelField": "branch_name",
+            "valueField": "branch_id",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2173"
+              }
+            }
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "180",
+          "label": "案件编号",
+          "prop": "case_no"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "180",
+          "label": "客户编号",
+          "prop": "case_no"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "150",
+          "label": "客户姓名",
+          "prop": "cust_name"
+        },
+        {
+          "label": "证件类型",
+          "prop": "cert_type",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_CRET_TYPE",
+            "dictKey": [
+              "MS_E_CRET_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "180",
+          "label": "证件号码",
+          "prop": "cert_no"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "100",
+          "label": "逾期金额",
+          "prop": "overdue_amt"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "100",
+          "label": "逾期天数",
+          "prop": "over_due_day"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "100",
+          "label": "余额",
+          "prop": "current_bal"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "150",
+          "label": "入催日期",
+          "prop": "reminder_date"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "150",
+          "label": "手别",
+          "prop": "hands"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "100",
+          "label": "上次委外公司",
+          "prop": "last_oa_org_code"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "150",
+          "label": "委外公司",
+          "prop": "oa_org_code",
+          "dict": {
+            "dictKey": [
+              "oa_org_code"
+            ],
+            "format": "label",
+            "labelField": "coll_org_name",
+            "valueField": "coll_org_no",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ce0416"
+              }
+            }
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "150",
+          "label": "委外开始日期",
+          "prop": "outsourcing_start_date"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "150",
+          "label": "委外结束日期",
+          "prop": "outsourcing_end_date"
+        },
+        {
+          "label": "委外状态",
+          "prop": "outsourcing_status",
+          "align": "center",
+          "dict": {
+            "dictType": "CE_E_OA_STATUS",
+            "dictKey": [
+              "CE_E_OA_STATUS"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "150",
+          "label": "风险级别",
+          "prop": "risklevel_code",
+          "dict": {
+            "dictKey": [
+              "risklevel_code"
+            ],
+            "format": "label",
+            "labelField": "risklevel_name",
+            "valueField": "risklevel_code",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ce0413"
+              }
+            }
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "180px",
+          "label": "案件状态",
+          "prop": "casestate_code",
+          "dict": {
+            "dictKey": [
+              "casestate_code"
+            ],
+            "format": "label",
+            "labelField": "status_name",
+            "valueField": "casestate_code",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ce0411"
+              }
+            }
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width":"180px",
+          "label": "案件类型",
+          "prop": "case_cls_code",
+          "dict": {
+            "dictKey": [
+              "case_cls_code"
+            ],
+            "format": "label",
+            "labelField": "location_name",
+            "valueField": "case_cls_code",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ce0410"
+              }
+            }
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "100",
+          "label": "逾期阶段",
+          "prop": "overdue_stage_code",
+          "dict": {
+            "dictKey": [
+              "overdue_stage_code"
+            ],
+            "format": "label",
+            "labelField": "ovd_period_name",
+            "valueField": "overdue_stage_code",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ce0412"
+              }
+            }
+          }
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "fixed": "right",
+          "width": "180%",
+          "btns": [
+            {
+              "type": "look",
+              "label": "案件详情",
+              "toRequest": {
+                "url": "/views/ce/assistManage/caseDetail/caseDetail_2/case_detail_main.json",
+                "method": "POST",
+                "params": {
+                  "case_no": "${{current.case_no}}"
+                }
+              },
+              "props": {
+                "width": "80%",
+                "title": "案件详情"
+              }
+            },
+            {
+              "type": "look",
+              "label": "派单记录",
+              "toRequest": {
+                "url": "/views/ce/collManage/oaManage/oawork/orders_record.json",
+                "method": "POST",
+                "params": {
+                  "current": "${{current}}"
+                }
+              },
+              "props": {
+                "width": "80%",
+                "title": "派单记录"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

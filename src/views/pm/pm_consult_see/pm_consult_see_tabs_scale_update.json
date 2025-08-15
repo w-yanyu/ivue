@@ -1,0 +1,128 @@
+{
+  "module": "v-inputDataForm-btn",
+  "layout": {
+    "form": {
+      "scope": "templateScope",
+      "initDataOnce":true,
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "qrcosz",
+          "seqnum": "${{params.seqnum}}"
+        }
+      },
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "upcosc",
+          "ofpacd": "${{params.ofpacd}}",
+          "seqnum": "${{params.seqnum}}"
+        }
+      },
+      "btns":[
+        {
+          "type": "submit",
+          "label": "保存"
+        }
+      ],
+      "controls": [
+        {
+          "partsz": {
+            "control": "currency",
+            "label": "合作方规模金额(元):",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          },
+          "guartp": {
+            "control": "select",
+            "label": "担保类型:",
+            "disabled": true,
+            "dict": {
+              "dictType": "E_GUARTY",
+              "dictKey": [
+                "E_GUARTY"
+              ],
+              "format": "label-value"
+            }
+          }
+        },
+        {
+          "guarpr": {
+            "control": "currency",
+            "label": "担保比例(%):"
+          },
+          "islimt": {
+            "control": "select",
+            "label": "是否允许超额",
+            "disabled": true,
+            "dict": {
+              "dictType": "E_SHIFOUBZ",
+              "dictKey": [
+                "E_SHIFOUBZ"
+              ],
+              "format": "label"
+            }
+          }
+        },
+        {
+          "exprop": {
+            "control": "currency",
+            "label": "超额比例:",
+            "disabled": true,
+            "value": 0
+          },
+          "datmax": {
+            "control": "currency",
+            "label": "当日最大放款金额:",
+            "rules": [
+              {
+                "pattern": "^\\d+(\\.{0,1}[\\d]{2}){0,1}$",
+                "message": "请输入大于或等于零的数值"
+              }
+            ]
+          }
+        },
+        {
+          "maxnum": {
+            "control": "currency",
+            "label": "当日最大放款笔数:",
+            "rules": [
+              {
+                "pattern": "^\\d+(\\.{0,1}[\\d]{2}){0,1}$",
+                "message": "请输入大于或等于零的数值"
+              }
+            ]
+          },
+          "sinmax": {
+            "control": "currency",
+            "label": "单笔最大放款金额:",
+            "rules": [
+              {
+                "pattern": "^\\d+(\\.{0,1}[\\d]{2}){0,1}$",
+                "message": "请输入大于或等于零的数值"
+              }
+            ]
+          }
+        },
+        {
+          "sinmin": {
+            "control": "text",
+            "label": "单笔最小放款金额:",
+            "rules": [
+              {
+                "pattern": "^\\d+(\\.{0,1}[\\d]{2}){0,1}$",
+                "message": "请输入大于或等于零的数值"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

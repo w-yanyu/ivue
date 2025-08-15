@@ -1,0 +1,111 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "toolbar": {
+      "btns": [
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "us0151",
+          "cust_no": "${{params.cust_no}}"
+        }
+      },
+      "thead": [
+        {
+          "type": "index",
+          "width": 50,
+          "label": "序号"
+        },
+        {
+          "label": "经营单位名称",
+          "prop": "busi_unit_name",
+          "align": "center"
+        },
+        {
+          "label": "经营单位类型",
+          "prop": "busi_unit_type",
+          "align": "center",
+          "dict": {
+            "dictType": "US_E_BUSI_UNIT_TYPE",
+            "dictKey": [
+              "US_E_BUSI_UNIT_TYPE"
+            ],
+            "labelField": "dictName",
+            "valueField": "dictId"
+          }
+        },
+        {
+          "label": "经营单位所属行业",
+          "prop": "busi_unit_industry",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_WORKTP",
+            "dictKey": [
+              "MS_E_WORKTP"
+            ],
+            "labelField": "dictName",
+            "valueField": "dictId"
+          }
+        },
+        {
+          "type":"currency",
+          "label": "月营业额（元）",
+          "align": "center",
+          "prop": "busi_monthtur",
+          "format": {
+            "thousand": ",",
+            "decimal": "2",
+            "type": "currency"
+          }
+        },
+        {
+          "type":"currency",
+          "label": "月营业利润（元）",
+          "align": "center",
+          "prop": "busi_monthpro",
+          "format": {
+            "thousand": ",",
+            "decimal": "2",
+            "type": "currency"
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 160,
+          "align": "center",
+          "btns": [
+            {
+              "type": "custom",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/us/privateManage/assetStatus/manageInfo/manageInfo_info.json",
+                "props": {
+                  "width": "75%",
+                  "title": "个人经营情况信息详情"
+                },
+                "params": {
+                  "cust_no": "${{current.cust_no}}"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "footer": {
+      "btns": [
+        {
+          "type": "close",
+          "label": "关闭"
+      }
+      ]
+    }
+  }
+}

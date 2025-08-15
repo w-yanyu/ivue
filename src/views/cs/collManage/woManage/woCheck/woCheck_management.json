@@ -1,0 +1,412 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "controls": [
+        {
+          "branch_id": {
+            "control": "inputTree",
+            "label": "机构",
+            "idField": "coll_team",
+            "nodeTypeField": "type",
+            "pIdField": "parent_coll_team",
+            "labelField": "coll_team_name",
+            "nodeTypes": {
+              "branchTeam": {
+                "icon": "el-icon-news",
+                "children": [
+                  "branchTeam"
+                ]
+              }
+            },
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "cb0041",
+                "query_type": "branchTeam"
+              }
+            },
+            "format": "value-label"
+          },
+          "cust_name": {
+            "control": "text",
+            "label": "客户姓名"
+          }
+        },
+        {
+          "cert_no": {
+            "control": "text",
+            "label": "证件号码"
+          },
+          "cust_id": {
+            "control": "text",
+            "label": "客户编号"
+          }
+        },
+        {
+          "approval_status": {
+            "control": "select",
+            "label": "审核状态",
+            "default": "NC",
+            "dict": {
+              "dictType": "CS_E_CHECK_STATUS",
+              "dictKey": [
+                "CS_E_CHECK_STATUS"
+              ],
+              "format": "value-label"
+            }
+          },
+          "daterange": {
+            "control": "dateTimePicker",
+            "label": "申请时间",
+            "type": "daterange",
+            "unlinkPanels": true,
+            "valueFormat": "yyyyMMdd",
+            "startPlaceholder": "请选择开始时间",
+            "endPlaceholder": "请选择结束时间",
+            "startField": "start_date",
+            "endField": "end_date"
+          },
+          "phone_no": {
+            "control": "text",
+            "label": "手机号码"
+          },
+          "queue_code": {
+            "control": "select",
+            "label": "队列名称",
+            "options": [
+              {
+                "value": "HX_QE_DL",
+                "label": "核销队列"
+              }
+            ]
+          },
+          "location_cd": {
+            "control": "select",
+            "label": "案件类型",
+            "dict": {
+              "dictType": "CS_E_LOCATION_CD",
+              "dictKey": [
+                "CS_E_LOCATION_CD"
+              ],
+              "format": "value-label"
+            }
+          },
+          "case_status": {
+            "control": "select",
+            "label": "案件状态",
+            "dict": {
+              "dictType": "CS_E_STATUS_CD",
+              "dictKey": [
+                "CS_E_STATUS_CD"
+              ],
+              "format": "value-label"
+            }
+          },
+          "stage_code": {
+            "control": "remoteSelect",
+            "label": "逾期阶段",
+            "labelField": "stage_name",
+            "valueField": "stage_code",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "cb0083"
+              }
+            },
+            "format": "value-label"
+          },
+          "ovd_amt_total_1": {
+            "control": "currency",
+            "label": "欠款金额区间开始值"
+          },
+          "ovd_amt_total_2": {
+            "control": "currency",
+            "label": "欠款金额区间结束值"
+          },
+          "collect_date_1": {
+            "control": "inputNumber",
+            "label": "入催天数区间开始值"
+          },
+          "collect_date_2": {
+            "control": "inputNumber",
+            "label": "入催天数区间结束值"
+          },
+          "wo_type": {
+            "control": "select",
+            "label": "核销类型",
+            "dict": {
+              "dictType": "CB_E_WO_TYPE",
+              "dictKey": [
+                "CB_E_WO_TYPE"
+              ]
+            },
+            "format": "value-label"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "custom",
+          "icon": "el-icon-edit",
+          "target": "dialog",
+          "checkCountMin": 1,
+          "label": "批量审核",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/cs/collManage/woManage/woCheck/woCheck_reason.json"
+          }
+        },
+        {
+          "type": "custom",
+          "icon": "el-icon-circle-check",
+          "label": "全部核准",
+          "disabled": "'${{formData.approval_status}}' === 'P' || '${{formData.approval_status}}' === 'R' || '${{formData.approval_status}}' === ''",
+          "doRequest": {
+            "method": "POST",
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "params": {
+              "servicecode": "cb0234",
+              "check_desc": "批量审核-同意",
+              "approval_status": "P",
+              "branch_id": "${{formData.branch_id}}",
+              "cust_name": "${{formData.cust_name}}",
+              "cert_no": "${{formData.cert_no}}",
+              "cust_id": "${{formData.cust_id}}",
+              "loan_no": "${{formData.loan_no}}",
+              "daterange": "${{formData.daterange}}",
+              "queue_code": "${{formData.queue_code}}",
+              "case_status": "${{formData.case_status}}",
+              "stage_code": "${{formData.stage_code}}",
+              "ovd_amt_total_1": "${{formData.ovd_amt_total_1}}",
+              "ovd_amt_total_2": "${{formData.ovd_amt_total_2}}",
+              "collect_date_1": "${{formData.collect_date_1}}",
+              "collect_date_2": "${{formData.collect_date_2}}"
+            }
+          }
+        },
+        {
+          "type": "custom",
+          "icon": "el-icon-circle-close",
+          "label": "全部拒绝",
+          "disabled": "'${{formData.approval_status}}' === 'P' || '${{formData.approval_status}}' === 'R' || '${{formData.approval_status}}' === ''",
+          "doRequest": {
+            "method": "POST",
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "params": {
+              "servicecode": "cb0235",
+              "check_desc": "批量审核-拒绝",
+              "approval_status": "R",
+              "branch_id": "${{formData.branch_id}}",
+              "cust_name": "${{formData.cust_name}}",
+              "cert_no": "${{formData.cert_no}}",
+              "cust_id": "${{formData.cust_id}}",
+              "loan_no": "${{formData.loan_no}}",
+              "daterange": "${{formData.daterange}}",
+              "queue_code": "${{formData.queue_code}}",
+              "case_status": "${{formData.case_status}}",
+              "stage_code": "${{formData.stage_code}}",
+              "ovd_amt_total_1": "${{formData.ovd_amt_total_1}}",
+              "ovd_amt_total_2": "${{formData.ovd_amt_total_2}}",
+              "collect_date_1": "${{formData.collect_date_1}}",
+              "collect_date_2": "${{formData.collect_date_2}}"
+            }
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "appId": "cbOnl",
+          "servicecode": "cb0232",
+          "pageId": "/views/cs/collManage/woManage/woCheck/woCheck_management.json"
+        }
+      },
+      "thead": [
+        {
+          "type": "selection",
+          "align": "center",
+          "width": "55",
+          "fixed": "left",
+          "show": {
+            "expression": "'${{approval_status}}' === 'NC'"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "机构",
+          "prop": "branch_id"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "案件编号",
+          "prop": "case_id"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "客户编号",
+          "prop": "cust_id"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "客户姓名",
+          "prop": "cust_name"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "证件类型",
+          "prop": "cert_type",
+          "dict": {
+            "dictType": "CS_E_CERT_TYPE",
+            "dictKey": [
+              "CS_E_CERT_TYPE"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "证件号码",
+          "prop": "cert_no"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "申请人",
+          "prop": "apply_user",
+          "dict": {
+            "dictKey": [
+              "apply_user"
+            ],
+            "format": "value-label",
+            "labelField": "user_name",
+            "valueField": "user_id",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "cb0084",
+                "appId": "cbOnl"
+              }
+            }
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "申请时间",
+          "prop": "apply_time"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "申请说明",
+          "prop": "apply_desc"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "100px",
+          "label": "审核状态",
+          "prop": "approval_status",
+          "dict": {
+            "dictType": "CS_E_CHECK_STATUS",
+            "dictKey": [
+              "CS_E_CHECK_STATUS"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "核销类型",
+          "prop": "wo_type",
+          "dict": {
+            "dictType": "CB_E_WO_TYPE",
+            "dictKey": [
+              "CB_E_WO_TYPE"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "审核人",
+          "prop": "approval_user",
+          "dict": {
+            "dictKey": [
+              "approval_user"
+            ],
+            "format": "value-label",
+            "labelField": "user_name",
+            "valueField": "user_id",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "cb0084",
+                "appId": "cbOnl"
+              }
+            }
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "审核日期",
+          "prop": "approval_time"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "审核说明",
+          "prop": "approval_desc"
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "fixed": "right",
+          "width": "130px",
+          "btns": [
+            {
+              "type": "custom",
+              "label": "案件详情",
+              "toRequest": {
+                "url": "/views/cs/assistManage/caseDetail/caseDetail_2/case_detail_main.json",
+                "method": "POST",
+                "params": {
+                  "case_id": "${{current.case_id}}",
+                  "case_no": "${{current.case_no}}",
+                  "cust_id": "${{current.cust_id}}",
+                  "org_id": "${{current.org_id}}",
+                  "oa_org_id": "${{current.oa_org_id}}"
+                }
+              },
+              "props": {
+                "width": "80%",
+                "title": "案件详情"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

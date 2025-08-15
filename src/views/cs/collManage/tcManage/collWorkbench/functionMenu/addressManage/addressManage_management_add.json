@@ -1,0 +1,204 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "icon": "el-icon-tickets",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "cb0093",
+              "case_id": "${{params.case_id}}",
+              "case_no": "${{params.case_no}}",
+              "cust_id": "${{params.cust_id}}",
+              "org_id": "${{params.org_id}}",
+              "oa_org_id": "${{params.oa_org_id}}"
+            }
+          }
+        },
+        {
+          "type": "close",
+          "label": "取消"
+        }
+      ],
+      "controls": [
+        {
+          "relationship": {
+            "control": "select",
+            "span": "6",
+            "inputWidth": "200px",
+            "label": "客户关系",
+            "dict": {
+              "dictType": "CS_E_RELATIONSHIP",
+              "dictKey": [
+                "CS_E_RELATIONSHIP"
+              ],
+              "format": "value-label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ],
+            "events": {
+              "condition": {
+                "9999": {
+                  "doRequest": {
+                    "url": "/SUMP/icmcall/icmRPCCall",
+                    "method": "POST",
+                    "params": {
+                      "servicecode": "cb0090",
+                      "case_id": "${{params.case_id}}",
+                      "case_no": "${{params.case_no}}",
+                      "cust_id": "${{params.cust_id}}",
+                      "org_id": "${{params.org_id}}",
+                      "oa_org_id": "${{params.oa_org_id}}"
+                    },
+                    "resultSet": {
+                      "relation_cust_name": "cust_name"
+                    }
+                  },
+                  "control": {
+                    "relation_cust_name": {
+                      "disabled": true
+                    }
+                  }
+                },
+                "$default": {
+                  "control": {
+                    "relation_cust_name": {
+                      "value": "",
+                      "disabled": false
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "relation_cust_name": {
+            "control": "text",
+            "span": "8",
+            "inputWidth": "200px",
+            "label": "联系人姓名",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          },
+          "is_valid": {
+            "control": "select",
+            "span": "8",
+            "inputWidth": "200px",
+            "label": "是否有效",
+            "default": "Y",
+            "dict": {
+              "dictType": "CS_E_YESORNO",
+              "dictKey": [
+                "CS_E_YESORNO"
+              ],
+              "format": "value-label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          }
+        },
+        {
+          "address_type": {
+            "control": "select",
+            "span": "6",
+            "inputWidth": "200px",
+            "default": "",
+            "label": "地址类型",
+            "dict": {
+              "dictType": "CS_E_ADDRESS_TYPE",
+              "dictKey": [
+                "CS_E_ADDRESS_TYPE"
+              ],
+              "format": "value-label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ],
+            "showItem": {
+              "B": [
+                "city-picker3"
+              ],
+              "F": [
+                "city-picker3"
+              ],
+              "H": [
+                "city-picker3"
+              ],
+              "W": [
+                "city-picker3"
+              ]
+            }
+          },
+          "postal_code": {
+            "control": "text",
+            "span": "8",
+            "inputWidth": "200px",
+            "label": "邮编",
+            "#rules": [
+              {
+                "pattern": "^[1-9]\\d{4}$",
+                "message": "请输入正确的5位邮编！"
+              }
+            ]
+          }
+        },
+        {
+          "city-picker3": {
+            "####": "省市区和详细地址存一个字段",
+            "control": "hidden",
+            "span": "6",
+            "inputWidth": "1000px",
+            "label": "省/市/区",
+            "doRequest": {
+              "url": "/views/cs/collManage/tcManage/collWorkbench/functionMenu/addressManage/cascader-format.json",
+              "method": "get",
+              "params": {}
+            }
+          }
+        },
+        {
+          "address": {
+            "control": "text",
+            "span": "6",
+            "inputWidth": "1000px",
+            "label": "地址",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          }
+        },
+        {
+          "remark": {
+            "control": "textarea",
+            "span": "6",
+            "inputWidth": "1000px",
+            "rows": "12",
+            "label": "备注"
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,176 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "cust_group_name": {
+                        "control": "text",
+                        "label": "客户组名称"
+                    },
+                    
+                    "cust_group_type": {
+                        "control": "select",
+                        "label": "客户组类型",
+                        "align": "center",
+                        "dict": {
+                            "dictType": "UCCP_E_CUST_GROUP_TYPE",
+                            "dictKey": [
+                                "UCCP_E_CUST_GROUP_TYPE"
+                            ],
+                            "format": "label"
+                        }
+                    }
+                }
+            ]
+          },
+        "toolbar": {
+            "btns": [{
+                "type": "add",
+                "label": "新增",
+                "target": "dialog",
+                "toRequest": {
+                    "method": "GET",
+                    "url": "/views/uccp/uccpCust/uccp_cust_group_add.json",
+                    "params": {
+                        
+                    }
+                },
+                "props": {
+                    "width": "80%",
+                    "title": "新增客户组"
+                }
+            }]
+        },
+        "datagrid": {
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "uccp1005"
+                }
+            },
+            "thead": [
+                {
+                    "label": "客户组编号",
+                    "prop": "cust_group_seq",
+                    "align": "center",
+                    "btns": [{
+                        "type": "look",
+                        "toRequest":{
+                            "url":"@CustomerGroup"
+                        },
+                        "props": {
+                            "width": "75%",
+                            "title": "客户组"
+                        }
+                    }]
+                },
+                {
+                    "label": "客户组名称",
+                    "prop": "cust_group_name",
+                    "align": "center"
+
+                },             
+                {
+                    "label": "客户组类型",
+                    "prop": "cust_group_type",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "UCCP_E_CUST_GROUP_TYPE",
+                        "dictKey": [
+                            "UCCP_E_CUST_GROUP_TYPE"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "有效标识",
+                    "prop": "valid_flag",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "UCCP_E_VALID_FLAG",
+                        "dictKey": [
+                            "UCCP_E_VALID_FLAG"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 230,
+                    "align": "center",
+                    "btns": [
+                        {
+                            "type": "edit",
+                            "label": "详情",
+                            "toRequest": {
+                                "url": "/views/uccp/uccpCust/uccp_cust_group_detail.json",
+                                "method": "GET",
+                                "params": {
+                                    
+                                }
+                            },
+
+                            "props": {
+                                "width": "80%",
+                                "title": "客户组信息查看"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/uccp/uccpCust/uccp_cust_group_update.json",
+                                "method": "GET",
+                                "params": {
+                                    
+                                }
+                            },
+
+                            "props": {
+                                "width": "80%",
+                                "title": "客户组信息维护"
+                            }
+                        },
+                        {
+                            "type": "custom",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/call/RPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "uccp1002"
+                                }
+                            },
+                            "confirm": {
+                                "title": "确定删除",
+                                "confirmButtonText": "确定",
+                                "cancelButtonText": "取消"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "组内客户维护",
+                            "toRequest": {
+                                "url": "/views/uccp/uccpCust/uccp_cust_group_sett_list.json",
+                                "method": "GET",
+                                "params": {
+                                    
+                                }
+                            },
+                            "props": {
+                                "width": "80%",
+                                "title": "组内客户维护"
+                            }
+                        }
+
+                    ]
+                }
+            ]
+        }
+    }
+}

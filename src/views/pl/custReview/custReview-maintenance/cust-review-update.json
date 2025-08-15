@@ -1,0 +1,48 @@
+{
+    "module": "dynamicTabs",
+    "layout": {
+        "tabs": {
+            "submitBtnPlace": "right",
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "pl0402",
+                    "author_type": "F"
+                }
+            },
+            "scope": "templateScope",
+            "initDataOnce": true,
+            "tabHeader": [{
+                    "id": "baseInfo",
+                    "label": "回访基本信息",
+                    "scope": "baseInfo",
+                    "closable": false,
+                    "disabled": false,
+                    "icon": "el-icon-date",
+                    "toRequest": {
+                        "url": "/views/pl/custReview/custReview-maintenance/cust-review-update-Base.json",
+                        "method": "post"
+                    }
+                },
+                {
+                    "id": "attachDetatil",
+                    "label": "回访附件信息",
+                    "icon": "el-icon-date",
+                    "closable": false,
+                    "disabled": false,
+                    "toRequest": {
+                        "url": "/views/pl/custReview/custReview-add/cust-review-add-detail.json",
+                        "method": "post",
+                        "params": {
+                            "auth_id": "${{templateScope.baseInfo.task_no}}"
+                        }
+                    }
+                }
+            ],
+            "defaultActiveKey": "baseInfo",
+            "position": "top",
+            "styleClass": "card"
+        }
+    }
+}

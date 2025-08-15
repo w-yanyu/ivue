@@ -1,0 +1,72 @@
+{
+    "module": "d-steps",
+    "layout": {
+        "steps": {
+            "scope":"formObj",
+            "direction": "horizontal",
+            "alignCenter": true,
+            "finishStatus": "success",
+            "simpleType": false,
+            "nextStepType": "validate",
+            "condition":{
+                "conditionField":"code",
+                "switch":{
+                    "200":3,
+                    "1":2
+                }
+            },
+            "list": [
+                {
+                    "scope":"step1",
+                    "title": "新增智能业务数据导出管理信息",
+                    "icon": "el-icon-edit",
+                    "toRequest": { 
+                        "method": "GET",
+                        "url": "/views/ismt/ct/export/export_xiangqing.json",
+                        "params":{
+                            "record_no": "${{params.record_no}}",
+                            "page_id": "${{params.page_id}}",
+                            "tran_code": "${{params.tran_code}}",
+                            "exp_format": "${{params.exp_format}}",
+                            "page_num": "${{params.page_num}}",
+                            "del_auth": "${{params.del_auth}}",
+                            "auth_status": "${{params.auth_status}}",
+                            "up_limit": "${{params.up_limit}}",
+                            "flag": "${{params.flag}}"
+                        }
+                    }
+                },
+                {
+                    "scope":"step2",
+                    "forbidBack": true,
+                    "title": "智能业务数据字段库定义信息配置",
+                    "icon": "el-icon-edit",
+                    "toRequest": { 
+                        "url": "/views/ismt/ct/export/export_fieldDefine_manage.json",
+                        "params": {
+                            "record_no":"${{formObj.step1.record_no}}",
+                            "pageType":"detail"
+                        },
+                        "method": "get",
+                        "resultSet": {
+                            "record_no": "record_no"
+                        }
+                    }
+                },
+                {
+                    "scope":"step3",
+                    "title": "智能业务数据导出范围配置信息配置",
+                    "icon": "el-icon-edit",
+                    "toRequest": {
+                        "url": "/views/ismt/ct/export/export_fieldRange_manage.json",
+                        "params": {
+                            "record_no":"${{formObj.step2.record_no}}",
+                            "pageType":"detail"
+                        },
+                        "method": "get"
+                    }
+                }
+            ]
+        }
+    }
+}

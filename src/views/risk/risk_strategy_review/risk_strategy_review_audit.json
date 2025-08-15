@@ -1,0 +1,110 @@
+{
+  "module": "v-inputDataForm-btn",
+  "layout": {
+    "form": {
+      "initRequest": {
+        "url": "/API/risk-management-service/risk_strategy_review/query",
+        "method": "post"
+      },
+      "controls": [
+        {
+          "reviewId": {
+            "label": "审核ID",
+            "control": "string",
+            "span": 12
+          },
+          "strategyId": {
+            "label": "策略ID",
+            "control": "string",
+            "span": 12
+          }
+        },
+        {
+          "reviewType": {
+            "label": "审核类型",
+            "control": "string",
+            "span": 12,
+            "dict": {
+              "dictType": "reviewType",
+              "dictKey": [],
+              "format": "value-label",
+              "doRequest": {
+                "url": "/views/risk/dictdata/reviewType.json",
+                "method": "get"
+              }
+            }
+          },
+          "reviewStatus": {
+            "label": "审核状态",
+            "control": "string",
+            "span": 12,
+            "dict": {
+              "dictType": "reviewStatus",
+              "dictKey": [],
+              "format": "value-label",
+              "doRequest": {
+                "url": "/views/risk/dictdata/reviewStatus.json",
+                "method": "get"
+              }
+            }
+          }
+        },
+        {
+          "reviewInfo": {
+            "span": 24,
+            "control": "dynamic",
+            "toRequest": {
+              "url": "/views/risk/risk_strategy_review/risk_strategy_review_info.json",
+              "params":{
+                "isUpdate": true,
+                "isShow": true,
+                "isShowList": false
+              }
+            },
+            "props": {
+             
+            }
+          }
+        },
+        {
+          "reviewRemark": {
+            "label": "审核意见",
+            "control": "textarea",
+            "span": 24,
+            "rules": [
+              {
+                "required": true,
+                "message": "请正确输入",
+                "max": 500
+              }
+            ]
+          }
+        }
+      ],
+      "btns": [
+        {
+          "type": "submit",
+          "label": "审核通过",
+          "doRequest": {
+            "url": "/API/risk-management-service/risk_strategy_review/auditSuccess",
+            "method": "post",
+            "params": {
+              "reviewUser": "$g{{user_info.userCode}}"
+            }
+          }
+        },
+        {
+          "type": "submit",
+          "label": "审核拒绝",
+          "doRequest": {
+            "url": "/API/risk-management-service/risk_strategy_review/auditFailed",
+            "method": "post",
+            "params": {
+              "reviewUser": "$g{{user_info.userCode}}"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

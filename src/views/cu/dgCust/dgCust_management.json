@@ -1,0 +1,204 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [{
+                    "custna": {
+                        "control": "text",
+                        "label": "客户名称",
+                        "span": 8
+                    },
+                    "custty": {
+                        "span": 8,
+                        "label": "对公客户类别",
+                        "control": "select",
+                        "options": [{
+                                "label": "个人借款客户",
+                                "value": "1"
+                            },
+                            {
+                                "label": "对公借款客户",
+                                "value": "2"
+                            },
+                            {
+                                "label": "对公担保客户",
+                                "value": "3"
+                            },
+                            {
+                                "label": "个人担保客户",
+                                "value": "4"
+                            },
+                            {
+                                "label": "集团客户",
+                                "value": "5"
+                            },
+                            {
+                                "label": "个人股东客户",
+                                "value": "7"
+                            },
+                            {
+                                "label": "对公其他客户",
+                                "value": "8"
+                            },
+                            {
+                                "label": "法人关联客户",
+                                "value": "9"
+                            },
+                            {
+                                "label": "同业客户",
+                                "value": "11"
+                            }
+                        ]
+                    },
+                    "brchcd": {
+                        "span": 8,
+                        "control": "text",
+                        "label": "客户经理所属部门"
+                    }
+                },
+                {
+                    "corgcd": {
+                        "span": 8,
+                        "control": "text",
+                        "label": "组织机构号"
+                    },
+                    "culncd": {
+                        "span": 8,
+                        "control": "text",
+                        "label": "贷款卡编号"
+                    },
+                    "cuprop": {
+                        "span": 8,
+                        "control": "select",
+                        "label": "客户性质",
+                        "options": [{
+                                "label": "企业法人",
+                                "value": "01"
+                            },
+                            {
+                                "label": "企业非法人",
+                                "value": "02"
+                            },
+                            {
+                                "label": "个体工商户",
+                                "value": "03"
+                            },
+                            {
+                                "label": "事业单位",
+                                "value": "04"
+                            },
+                            {
+                                "label": "其他组织机构",
+                                "value": "99"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "corpsz": {
+                        "span": 8,
+                        "control": "text",
+                        "label": "企业规模"
+                    },
+                    "busnum": {
+                        "span": 8,
+                        "control": "text",
+                        "label": "营业号执照"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "IUMSCUTS0008"
+                }
+            },
+            "pagination": {
+                "pageSizes": [10, 15, 20, 50, 100],
+                "pageSize": 10
+            },
+            "thead": [{
+                    "type": "string",
+                    "label": "信贷客户编号",
+                    "prop": "custno"
+                },
+                {
+                    "type": "string",
+                    "label": "客户名称",
+                    "prop": "custna"
+                },
+                {
+                    "type": "string",
+                    "label": "组织机构代码",
+                    "prop": "corgcd"
+                },
+                {
+                    "type": "string",
+                    "label": "贷款卡编码",
+                    "prop": "culncd"
+                },
+                {
+                    "type": "string",
+                    "label": "客户性质",
+                    "prop": "cuprop"
+                },
+                {
+                    "type": "string",
+                    "label": "主客户经理名称",
+                    "prop": "manname"
+                },
+                {
+                    "type": "string",
+                    "label": "客户所属支行",
+                    "prop": "cifodt"
+                },
+                {
+                    "type": "string",
+                    "label": "状态",
+                    "prop": "statss"
+                },
+                {
+                    "label": "操作",
+                    "align": "center",
+                    "fixed": "right",
+                    "btns": [{
+                            "type": "look",
+                            "label": "详情",
+                            "toRequest": {
+                                "url": "/views/cu/dgCust/dgCust_detail.json",
+                                "method": "GET",
+                                "params": {
+                                    "props": "${{current}}"
+                                }
+                            },
+                            "props": {
+                                "width": "85%",
+                                "title": "对公客户详情"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "状态审核",
+                            "toRequest": {
+                                "url": "/views/cu/dgCust/dgCust_detail.json",
+                                "method": "GET",
+                                "params": {
+                                    "props": "${{current}}"
+                                }
+                            },
+                            "props": {
+                                "width": "85%",
+                                "title": "状态审核"
+                            }
+                        }
+                    ]
+                }
+
+            ]
+        }
+    }
+}

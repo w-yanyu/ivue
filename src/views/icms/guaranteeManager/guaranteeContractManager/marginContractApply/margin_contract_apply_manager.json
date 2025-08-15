@@ -1,0 +1,171 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "target": "dialog",
+                    "label": "新增",
+                    "toRequest": {
+                        "url": "@marginContractApplyAdd",
+                        "method": "GET",
+                        "params": {
+                            "apply_no": "${{params.apply_no}}",
+                            "cust_no": "${{params.cust_id}}",
+                            "cust_name": "${{params.cust_name}}"
+                        }
+                    },
+                    "props": {
+                        "width": "75%",
+                        "title": "新增保证金合同信息"
+                    },
+                    "show": {
+                        "expression": "'${{params.pageType}}' != 'detail'"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "ar0424",
+                    "apply_no": "${{params.apply_no}}"
+                }
+            },
+            "pagination": {
+                "pageSizes": [
+                    10,
+                    15,
+                    20,
+                    50,
+                    100
+                ],
+                "pageSize": 10
+            },
+            "thead": [
+                {
+                    "type": "index",
+                    "label": "序号",
+                    "align": "center"
+                },
+                {
+                    "label": {
+                        "default": "合同申请号", 
+                         "i18n": "K0001.Contract-application-number"
+                                        },
+                    "prop": "margin_contract_no",
+                    "align": "center"
+                },
+                {
+                    "label": {
+                        "default": "担保规则", 
+                         "i18n": "K0001.Guarantee-rules"
+                                        },
+                    "prop": "guar_rule",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "AR_E_GUAR_RULE",
+                        "dictKey": [
+                            "AR_E_GUAR_RULE"
+                        ]
+                    }
+                },
+                {
+                    "label": "起始日期",
+                    "prop": "guar_start_date",
+                    "align": "center"
+                },
+                {
+                    "label": "到期日期",
+                    "prop": "guar_end_date",
+                    "align": "center"
+                },
+                {
+                    "label": "币种",
+                    "prop": "ccy_code",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "MS_CURRENCY",
+                        "dictKey": [
+                            "MS_CURRENCY"
+                        ]
+                    }
+                },
+                {
+                    "label": {
+                        "default": "合同金额", 
+                         "i18n": "K0001.Contract-amount"
+                                        },
+                    "prop": "contract_amt",
+                    "align": "center",
+                    "format": {
+                        "thousand": ","
+                    }
+                },
+                {
+                    "label": "操作",
+                    "width": "160px",
+                    "align": "center",
+                    "btns": [
+                        {
+                            "type": "edit",
+                            "label": "详情",
+                            "toRequest": {
+                                "url": "/views/icms/guaranteeManager/guaranteeContractManager/marginContractApply/marginContractApplyDetail/margin_contract_apply_detail.json",
+                                "method": "GET",
+                                "params": {
+                                    "cust_name": "${{params.cust_name}}"
+                                }
+                            },
+                            "props": {
+                                "width": "75%",
+                                "title": "保证金合同信息详情"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "@marginContractApplyEdit",
+                                "method": "get",
+                                "params": {
+                                    "cust_name": "${{params.cust_name}}"
+                                }
+                            },
+                            "props": {
+                                "width": "75%",
+                                "title": "维护保证金合同信息"
+                            },
+                            "show": {
+                                "expression": "'${{params.pageType}}' != 'detail'"
+                            }
+                        },
+                        {
+                            "old_data_flag": {
+                                "control": "hidden",
+                                "label": ""
+                            },
+                            "type": "delete",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "post",
+                                "params": {
+                                    "servicecode": "ar0423"
+                                }
+                            },
+                            "show": {
+                                "expression": " '${{params.pageType}}' != 'detail' && '${{current.old_data_flag}}' !='1' "
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

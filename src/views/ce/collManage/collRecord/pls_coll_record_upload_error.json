@@ -1,0 +1,78 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "initReqeust": "${{params}}",
+    "form": {
+      "controls": [
+        {
+          "record_id": {
+            "span":"8",
+            "control": "string",
+            "label": "导入批次号",
+            "value": "${{params.record_id}}"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "export",
+          "label": "导出",
+          "target": "dialog",
+          "icon": "iconfont icon-daochu",
+          "toRequest": {
+            "method": "post",
+            "url": "@downErrorExcel",
+            "params": {
+              "servicecode": "RLMSPLTS1307_pl1307",
+              "record_id": "${{params.record_id}}"
+            }
+          },
+          "props": {
+            "width": "30%",
+            "title": "导出"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "RLMSPLTS1306_pl1306"
+        }
+      },
+      "thead": [
+        {
+          "label": "导入批次号",
+          "prop": "record_id"
+        },
+
+        {
+          "label": "借据号",
+          "prop": "lncfno"
+        },
+        {
+          "label": "失败原因",
+          "prop": "error_reason"
+        },
+        {
+          "label": "客户姓名",
+          "prop": "custna"
+        },
+        {
+          "label": "催收机构",
+          "prop": "oa_org_name"
+        },
+        {
+          "label": "催收记录",
+          "prop": "remake"
+        }
+      ]
+    }
+  }
+}

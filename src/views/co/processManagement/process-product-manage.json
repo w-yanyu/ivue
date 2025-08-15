@@ -1,0 +1,191 @@
+
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "appId": {
+              "control": "select",
+              "label": "业务模块",
+              "selectFirstValue":true,
+              "dict": {
+                  "dictType": "MS_APPID",
+                  "dictKey": [
+                      "MS_APPID"
+                  ],
+                  "format": "value-label"
+              },
+            "value": "coOnl",
+            "disabled": true,
+              "rules": [
+                  {
+                      "required": true,
+                      "message": "请选择业务模块"
+                  }]
+          }
+        },
+        {
+          "prod_desc": {
+            "control": "text",
+            "label": "流程产品名称",
+            "rules": [
+              {
+                "max": 50,
+                "message": "长度不能超过10个字符"
+              }
+            ]
+          },
+          "prod_cd": {
+            "control": "text",
+            "label": "流程产品编号",
+            "width": 100,
+            "rules": [
+              {
+                "max": 100,
+                "message": "长度不能超过100个字符"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增流程",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/msap/bpm/processManagement/products/product-manage-add.json",
+            "params":{
+              "appId":"${{form.appId}}"
+            }
+          },
+          "props": {
+            "title": "新增流程"
+          }
+        },
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "复制流程",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/msap/bpm/processManagement/products/process-product-select.json",
+            "params":{
+              "appId":"${{form.appId}}"
+            }
+          },
+          "props": {
+            "title": "复制流程"
+          }
+        }
+
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "bpm0061",
+          "appId":"${{form.appId}}"
+        }
+      },
+      "thead": [
+        {
+          "label": "流程产品编号",
+          "prop": "wf_prod_no"
+        },
+        {
+          "label": "流程产品名称",
+          "prop": "wf_prod_name"
+        },
+        {
+          "label": "流程定义名称",
+          "prop": "wf_define_name"
+        },
+        {
+          "label": "流程产品类型",
+          "width": 120,
+          "prop": "wf_prod_tp",
+          "dict": {
+            "dictType": "BPM_E_WFPDTP",
+            "dictKey": [
+              "BPM_E_WFPDTP"
+            ],
+            "format": "value-label"
+          }
+        },
+
+        {
+          "label":"版本号",
+          "prop":"data_version",
+          "width": 80
+        },
+        {
+          "label":"修改日期",
+          "prop":"data_update_time"
+        },
+        {
+          "label":"修改人",
+          "prop":"data_update_user"
+        },
+        {
+          "label": "操作",
+          "width": "300px",
+          "align":"center",
+          "btns": [{
+            "type": "edit",
+            "label": "路线管理",
+            "toRequest": {
+              "url": "/views/msap/bpm/processManagement/products/route/route-manage.json",
+              "method": "GET",
+              "target": "navTab",
+              "params": {
+                "appId":"${{form.appId}}"
+              }
+            },
+            "props": {
+              "title": "流程路线管理"
+            }
+          }, {
+            "type": "edit",
+            "label": "节点管理",
+            "toRequest": {
+              "url": "/views/msap/bpm/processManagement/products/node/node-manage.json",
+              "method": "GET",
+              "target": "navTab",
+              "params": {
+                "appId":"${{form.appId}}"
+              }
+            },
+            "props": {
+              "title": "流程节点管理"
+            }
+          }, {
+            "type": "edit",
+            "label": "参与者管理",
+
+            "toRequest": {
+              "url": "/views/msap/bpm/processManagement/products/participant/participant-manage.json",
+              "method": "GET",
+              "target": "navTab",
+              "params": {
+                "appId":"${{form.appId}}"
+              }
+            },
+            "props": {
+              "title": "参与者管理"
+            }
+          }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,140 @@
+{
+    "module": "v_search_editableDataGrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "brch_relation_code": {
+                        "control": "remoteSelect",
+                        "label": "机构关系代码",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入机构关系代码"
+                            }
+                        ],
+                        "labelField": "drop_list_desc",
+                        "valueField": "drop_list_value",
+                        "doRequest": {
+                            "url": "/SUMP/call/RPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "ms9999",
+                                "dynamic_drop_list_type": "AP001"
+                            }
+                        },
+                        "format": "label"
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "label": "新增",
+                    "icon": "el-icon-plus"
+                },
+                {
+                    "type": "save",
+                    "label": "提交",
+                    "icon": "el-icon-tickets",
+                    "doRequest": {
+                        "url": "/SUMP/call/RPCCallOfTable",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "ct2144",
+                            "brch_relation_code": "${{form.brch_relation_code}}"
+                        }
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ct2143"
+                }
+            },
+            "allData": false,
+            "showSummary": false,
+            "thead": [
+                {
+                    "type": "index"
+                },
+                {
+                    "prop": "branch_id",
+                    "type": "remoteSelect",
+                    "editable": false,
+                    "label": "机构号",
+                    "validate": "required",
+                    "labelField": "drop_list_desc",
+                    "valueField": "drop_list_value",
+                    "rules": [
+                        {
+                            "max": 10,
+                            "message": "长度不能超过10个字符"
+                        }
+                    ],
+                    "doRequest": {
+                        "url": "/SUMP/call/RPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "ms9999",
+                            "dynamic_drop_list_type": "AP0004"
+                        }
+                    }
+                },
+                {
+                    "type": "text",
+                    "label": "机构名称",
+                    "validate": "required",
+                    "prop": "branch_name"
+                },
+                {
+                    "prop": "parent_brch_id",
+                    "type": "select",
+                    "validate": "required",
+                    "label": "上级机构",
+                    "dict": {
+                        "dictType": "D_parent_brch_id",
+                        "dictKey": [
+                            "D_parent_brch_id"
+                        ],
+                        "labelField": "drop_list_desc",
+                        "valueField": "drop_list_value",
+                        "doRequest": {
+                            "url": "/SUMP/call/RPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "ms9999",
+                                "dynamic_drop_list_type": "AP0004"
+                            }
+                        },
+                        "format": "label"
+                    }
+                },
+                {
+                    "type": "text",
+                    "editable": false,
+                    "label": "法人代码",
+                    "validate": "required",
+                    "prop": "org_id"
+                },
+                {
+                    "label": "操作",
+                    "btns": [
+                        {
+                            "type": "delete",
+                            "label": "删除",
+                            "icon": "el-icon-close"
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

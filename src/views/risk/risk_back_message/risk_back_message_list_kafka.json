@@ -1,0 +1,53 @@
+{
+  "module": "v-inputDataForm-btn",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "indicatorCode": {
+            "label": "回溯指标",
+            "control": "select",
+            "span": 8,
+            "dict": {
+              "dictType": "indicatorBackMessage",
+              "dictKey": [],
+              "format": "value-label",
+              "doRequest": {
+                "url": "/API/risk-management-service/combobox-select/indicator-code-back-message",
+                "method": "post"
+              }
+            }
+          },
+          "dateTime":{
+            "label": "回溯时间",
+            "control": "dateTimePicker",
+            "type": "datetimerange",
+            "valueFormat": "timestamp",
+            "format": "yyyy-MM-dd HH:mm:ss",
+            "#disabledDate": {
+              "startRange": "$g{{user_info.tradeDate}}",
+              "endRange": "2099-01-01 00:00:00"
+            },
+            "startField":"fetchStartTime",
+            "endField":"fetchEndTime",
+            "span": 12
+          }
+        }
+      ],
+      "btnPlace": "right",
+      "btns": [
+        {
+          "type": "submit",
+          "label": "执行回溯",
+          "doRequest": {
+            "url": "/indicator/risk-indicator-service/kafka/backIndicator",
+            "method": "post",
+            "params": {
+              "operator": "$g{{user_info.userCode}}"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

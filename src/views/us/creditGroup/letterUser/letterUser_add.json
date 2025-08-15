@@ -1,0 +1,120 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "us1213",
+          "area_type": "3"
+        }
+      },
+      "controls": [
+        {
+          "famliy_cd": {
+            "control": "text",
+            "width": "20px",
+            "span": 8,
+            "label": "户口号",
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择户口号"
+              }
+            ]
+          },
+          "cust_no": {
+            "control": "lookup",
+            "width": "20px",
+            "span": 8,
+            "label": "客户号",
+            "keyField": {
+              "cust_no": "cust_no",
+              "cust_name": "cust_name"
+            },
+            "format": "label",
+            "toRequest": {
+              "url": "/views/us/creditGroup/letterUser/lookup/private_customer_lookup.json",
+              "method": "get"
+            },
+            "props": {
+              "title": "查询客户"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择客户"
+              }
+            ]
+          },
+          "cust_name": {
+            "control": "text",
+            "width": "20px",
+            "span": 8,
+            "disabled": true,
+            "label": "客户名称"
+          },
+          "is_head_of_famliy": {
+            "control": "select",
+            "width": "20px",
+            "span": 8,
+            "label": "是否户主",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择"
+              }
+            ]
+          },
+          "area_name": {
+            "control": "lookup",
+            "span": 8,
+            "width": "20px",
+            "label": "所属村/小区",
+            "keyField": {
+              "area_no": "node_cd",
+              "area_name": "node_name"
+            },
+            "format": "label",
+            "toRequest": {
+              "url": "@creditGroupTree",
+              "method": "get",
+              "params": {
+                "inputName": "area_no",
+                "treeTitle": "信用群体",
+                "node_group": "0001",
+                "is_leaf": true
+              }
+            },
+            "props": {
+              "title": "所属村查询"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择所属村"
+              }
+            ]
+          },
+          "area_no": {
+            "control": "text",
+            "width": "20px",
+            "span": 8,
+            "disabled": true,
+            "label": "区域编号"
+          }
+        }
+      ]
+    }
+  }
+}
+

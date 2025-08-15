@@ -1,0 +1,173 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+              {
+                "seq_no": {
+                  "control": "text",
+                  "label": "流水号"
+      
+                },
+                "part_no": {
+                  "control": "text",
+                  "label": "合作方编号"
+                }
+              }
+      
+            ]
+          },
+        "toolbar": {
+            "btns": [{
+                "type": "add",
+                "target": "dialog",
+                "label": "新增",
+                "toRequest": {
+                    "method": "GET",
+                    "url": "/views/pt/partnerManage/ptbWarnInfo/PtbWarnInfoLog_add.json",
+                    "params": {
+
+                    }
+                },
+                "show": {
+                    
+                },
+                "props": {
+                    "title": "新增预警流水",
+                    "width": "75%"
+                }
+            }]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "pt0183",
+                    "seq_no": "${{params.seq_no}}"
+                }
+            },
+            "thead": [{
+                    "type": "index",
+                    "width": 50,
+                    "label": "序号"
+                },
+                {
+                    "label": "流水号",
+                    "prop": "seq_no",
+                    "align": "center",  
+                    "disabled": true
+                },
+                {
+                    "label": "预警业务类型",
+                    "prop": "warn_busi_type",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "PT_E_WARN_BUSI_TYPE",
+                        "dictKey": [
+                            "PT_E_WARN_BUSI_TYPE"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "预警码",
+                    "prop": "warn_code",
+                    "align": "center"
+                },
+                {
+                    "label": "预警描述",
+                    "prop": "warn_describe",
+                    "align": "center"
+                },
+                {
+                    "label": "预警检查服务",
+                    "prop": "warn_check_serv",
+                    "align": "center"
+                },
+                {
+                    "label": "合作项目编号",
+                    "prop": "part_project_no",
+                    "align": "center"
+                },
+                {
+                    "label": "合作方协议编号",
+                    "prop": "part_protocol_no",
+                    "align": "center"
+                },
+                {
+                    "label": "合作方编号",
+                    "prop": "part_no",
+                    "align": "center"
+                },
+                {
+                    "label": "预警时间",
+                    "prop": "warn_time",
+                    "align": "center"
+                },
+                {
+                    "label": "预警动作",
+                    "prop": "warn_action",
+                    "align": "center"
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 160,
+                    "align": "center",
+                    "btns": [{
+                            "type": "look",
+                            "label": "详情",
+                            "toRequest": {
+                                "url": "/views/pt/partnerManage/ptbWarnInfo/PtbWarnInfoLog_info.json",
+                                "method": "POST"
+                            },
+                            "props": {
+                                "width": "75%",
+                                "title": "预警流水详情"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/pt/partnerManage/ptbWarnInfo/PtbWarnInfoLog_update.json",
+                                "method": "GET"
+                            },
+                            "show": {
+                              
+                            },
+                            "props": {
+                                "width": "75%",
+                                "title": "预警流水维护"
+                            }
+                        },
+                        {
+                            "type": "custom",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "pt0186"
+
+                                }
+                            },
+                            "confirm": {
+                                "title": "确定删除",
+                                "confirmButtonText": "确定",
+                                "cancelButtonText": "取消"
+                            },
+                            "show": {
+                               
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,87 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "syln0002",
+          "outlistid":"lnCpstnQryType",
+          "cust_num":"${{params.cust_id}}"
+
+        }
+      },
+      "thead": [
+        {
+          "type": "index"
+        },
+        {
+          "prop": "ctrct_num",
+          "label": "合同号",
+          "align": "center"
+        },
+        {
+          "prop": "ctrct_amt",
+          "label": "合同金额",
+          "align": "center"
+        },
+        {
+          "prop": "strt_int_caln_dt",
+          "label": "起始日期",
+          "align": "center"
+        },
+        {
+          "prop": "matu_dt",
+          "label": "到期日期",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": "200",
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "信贷资金用途",
+              "toRequest": {
+                  "url": "/views/pl/checkAfterLoan/informationList/useOfCreditFundsTO.json",
+                  "method": "GET"
+              },
+              "props": {
+                  "width": "75%",
+                  "title": "信贷资金用途"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "贷后信息",
+              "toRequest": {
+                  "url": "/views/pl/checkAfterLoan/informationList/loanInformationPublicTO.json",
+                  "params": {
+                      "contract_no":"${{params.ctrct_num}}",
+                      "cust_nm": "${{current.cust_nm}}",
+                      "ctrct_num": "${{current.ctrct_num}}",
+                      "ctrct_amt": "${{current.ctrct_amt}}",
+                      "due_bill_charic": "${{current.due_bill_charic}}",
+                      "loan_purp": "${{current.loan_purp}}",
+                      "open_acct_dt": "${{current.open_acct_dt}}",
+                      "matu_dt": "${{current.matu_dt}}"
+                  },
+                  "method": "GET"
+              },
+              "props": {
+                  "width": "75%",
+                  "title": "贷后信息"
+              }
+            }
+          ]
+        }
+
+      ]
+    }
+  }
+}

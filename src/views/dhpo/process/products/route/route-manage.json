@@ -1,0 +1,132 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [],
+      "btns": []
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "custom",
+          "label": "自动获取",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "plms_upwfins",
+              "updway": "ROUT",
+              "wfprcd": "${{params.wfprod_cd}}"
+            }
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "plms_qrwfrus",
+          "wfprcd": "${{params.wfprod_cd}}"
+        }
+      },
+      "thead": [
+        {
+          "label": "路线id",
+          "prop": "route_id"
+        },
+        {
+          "label": "路线编码",
+          "prop": "route_cd"
+        },
+        {
+          "label": "路线名称",
+          "prop": "route_name"
+        },
+        {
+          "label": "路线类型",
+          "prop": "route_type",
+          "dict": {
+            "dictType": "BPM_E_ROUTE_TYPE",
+            "dictKey": [
+              "BPM_E_ROUTE_TYPE"
+            ],
+            "format": "label"
+          },
+          "align": "center"
+        },
+        {
+          "label": "流程编号",
+          "prop": "wfprod_cd"
+        },
+        {
+          "label": "流程名称",
+          "prop": "wfprod_name"
+        },
+        {
+          "label": "活动号",
+          "prop": "task_def_id"
+        },
+        {
+          "label": "活动名称",
+          "prop": "task_def_name"
+        },
+        {
+          "label": "下一活动号",
+          "prop": "next_task_def_id"
+        },
+        {
+          "label": "下一活动名称",
+          "prop": "next_task_def_name"
+        },
+        {
+          "label": "版本号",
+          "prop": "ver"
+        },
+        {
+          "label": "修改日期",
+          "prop": "last_upd_dt"
+        },
+        {
+          "label": "修改人",
+          "prop": "last_upd_usr"
+        },
+        {
+          "label": "操作",
+          "width": "130px",
+          "fixed": "right",
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/dhpo/process/products/route/view-route-detail.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "70%",
+                "title": "流程路线详情"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "修改",
+              "toRequest": {
+                "url": "/views/dhpo/process/products/route/route-modify.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "70%",
+                "title": "流程路线修改"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

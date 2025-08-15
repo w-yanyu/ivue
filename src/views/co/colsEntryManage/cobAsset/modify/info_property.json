@@ -1,0 +1,158 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "btns": [],
+            "initRequest": "${{parentInitData}}",
+            "name": "list03",
+            "controls": [{
+                "cust_no": {
+                    "label": "客户号",
+                    "control": "hidden"
+                },
+                "asset_list_id": {
+                    "label": "资产清单序号",
+                    "control": "hidden"
+                },
+                "colt_type": {
+                    "label": "资产类型",
+                    "control": "remoteSelect",
+                    "disabled": true,
+                    "valueField": "colt_type",
+                    "labelField": "colt_name",
+                    "doRequest": {
+                        "url": "/SUMP/call/RPCCall",
+                        "method": "post",
+                        "params": {
+                            "servicecode": "co1012",
+                            "guar_type": "${{params.guar_type}}"
+                        }
+                    }
+                },
+                "colt_prod_cd": {
+                    "label": "抵质押品产品",
+                    "control": "remoteSelect",
+                    "disabled": true,
+                    "valueField": "colt_prod_cd",
+                    "labelField": "colt_prod_name",
+                    "doRequest": {
+                        "url": "/SUMP/call/RPCCall",
+                        "method": "post",
+                        "params": {
+                            "servicecode": "co1013",
+                            "colt_type": "${{params.colt_type}}"
+                        }
+                    }
+                },
+                "asset_type": {
+                    "label": "资产分类",
+                    "disabled":true,
+                    "control": "select",
+                    "dict": {
+                        "dictType": "CO_E_ASSETTYPE",
+                        "dictKey": [
+                            "CO_E_ASSETTYPE"
+                        ]
+                    }
+                },
+                "owner_cust_id": {
+                    "label": "所有权人ID",
+                    "control": "hidden"
+                },
+                "owner": {
+                    "label": "所有权人",
+                    "control": "text",
+                    "disabled":true               
+                },
+                "cert_no": {
+                    "label": "证件号码",
+                    "control": "string",
+                    "rules": [{
+                        "required": true,
+                        "message": "请输入证件号码"
+                    }]
+                },
+                "owner_cust_type": {
+                    "label": "所有权人客户类型",
+                    "control": "select",
+                    "disabled":true,
+                    "dict": {
+                        "dictType": "US_E_CUST_TYPE",
+                        "dictKey": [
+                            "US_E_CUST_TYPE"
+                        ],
+                      "labelField": "dictName",
+                      "valueField": "dictId"
+                    }
+                },
+                "cert_type": {
+                    "label": "证件类型",
+                    "control": "select",
+                    "disabled":true,
+                    "dict": {
+                        "dictType": "MS_E_CRET_TYPE",
+                        "dictKey": [
+                            "MS_E_CRET_TYPE"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                "owner_adrr": {
+                    "label": "所有权人地址",
+                    "control": "textarea",
+                    "autosize": {
+                      "minRows": 3,
+                      "maxRows": 5
+                    },
+                    "disabled": true,
+                    "maxlength": 40,
+                    "showWordLimit": true,
+                    "span":24,
+                    "rules": [{
+                        "required": true,
+                        "message": "请输入所有权人地址"
+                    }]
+                },
+                "pur_ccy": {
+                    "label": "资产购置价币种",
+                    "control": "select",
+                    "dict": {
+                        "dictType": "MS_CURRENCY",
+                        "dictKey": [
+                            "MS_CURRENCY"
+                        ]
+                    }
+                },
+                "pur_price": {
+                    "label": "资产购置价(元)",
+                    "control": "string"
+                },
+                "asset_valid_date": {
+                    "label": "购买日期",
+                    "control": "dateTimePicker",
+                    "format": "yyyyMMdd"
+                },
+                "asset_valid_dt": {
+                    "label": "有效日期",
+                    "control": "dateTimePicker",
+                    "format": "yyyyMMdd"
+                }
+            },
+            {
+                "comm_person_info": {
+                "control":"dynamic",
+                "span":24,
+                "toRequest":{
+                    "url":"@commPersonInfo",
+                    "method": "post",
+                    "params": {
+                        "showFlag":true,
+                        "initFlag":true
+                    }
+                }
+                }
+            }]
+        }
+    }
+}

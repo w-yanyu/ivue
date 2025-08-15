@@ -1,0 +1,167 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+      "form": {
+        "controls": [
+          {
+            "tool_id": {
+              "control": "text",
+              "label": "工具编号"
+            },
+            "tool_name": {
+              "control": "text",
+              "label": "工具名称"
+            }
+          },
+          {
+            "tool_type": {
+                "label": "工具类型",
+                "#width": "130px",
+                "control": "select",
+                "dict": {
+                    "format": "label",
+                    "dictKey": [
+                        "E_TOOLTYPE"
+                    ],
+                    "dictType": "E_TOOLTYPE"
+                }
+            },
+            "tool_state": {
+              "label": "工具状态",
+              "#width": "130px",
+              "control": "select",
+              "dict": {
+                  "format": "label",
+                  "dictKey": [
+                      "E_TOOLSTATE"
+                  ],
+                  "dictType": "E_TOOLSTATE"
+              }
+          }
+          }
+        ]
+      },
+
+      "toolbar": {
+        "btns": [
+          {
+            "type": "add",
+            "target": "addlog",
+            "label": "新增",
+            "toRequest": {
+              "method": "GET",
+              "url": "/views/mk/mkTool/mk_tool_add.json"
+            },
+            "props": {
+              "width": "60%",
+              "title": "新增营销工具"
+            }
+          }
+        ]
+      },
+
+      "datagrid": {
+        "scope": "searchTable",
+        "isInitSearch": false,
+        "doRequest": {
+          "url": "/SUMP/icmcall/icmRPCCall",
+          "method": "POST",
+          "params": {
+            "servicecode": "mk0009",
+            "#appr_status":"01"
+          }
+        },
+        "thead": [
+          {
+            "type":"string",
+            "label": "工具编号",
+            "prop": "tool_id",
+            "align": "center"
+          },
+          {
+            "type":"string",
+            "label": "工具名称",
+            "prop": "tool_name",
+            "align": "center"
+          },
+  
+          {
+            "type":"string",
+            "label": "工具类型",
+            "prop": "tool_type",
+            "align": "center",
+            "dict": {
+              "dictType": "E_TOOLTYPE",
+              "dictKey": [
+                "E_TOOLTYPE"
+              ],
+              "format": "label"
+            }
+          },
+
+          {
+            "type":"string",
+            "label": "工具简介",
+            "prop": "tool_comment",
+            "align": "center"
+          },
+
+          {
+            "type":"string",
+            "label": "工具状态",
+            "prop": "tool_state",
+            "align": "center",
+            "dict": {
+              "dictType": "E_TOOLSTATE",
+              "dictKey": [
+                "E_TOOLSTATE"
+              ],
+              "format": "label"
+            }
+          },
+  
+          {
+            "type":"string",
+            "label": "工具图标",
+            "prop": "tool_flg",
+            "align": "center"
+          },
+
+          {
+            "label": "操作",
+            "fixed": "right",
+            "width":"100px",
+            "align": "center",
+            "btns": [
+                {
+                    "type":"look",
+                    "label":"详情",
+                    "toRequest":{
+                      "url":"/views/mk/mkTool/mk_tool_look.json",
+                      "method":"POST"
+                    },
+                    "props":{
+                      "width": "70%",
+                      "title":"营销工具详情"
+                    }
+                },
+              {
+                "type": "edit",
+                "label": "维护",
+                "toRequest": {
+                    "url": "/views/mk/mkTool/mk_tool_edit.json",
+                    "method": "POST"
+                },
+                "props": {
+                    "width": "60%",
+                    "title": "修改营销工具"
+                }
+              }
+
+            ]
+          }
+        ]
+      }
+    }
+  }
+  

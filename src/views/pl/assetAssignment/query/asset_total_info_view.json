@@ -1,0 +1,91 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [{
+        "acctg_org": {
+          "span": 8,
+          "control": "text",
+          "label": "账务机构"
+        },
+        "dept_acct_nm": {
+          "span": 8,
+          "control": "text",
+          "label": "存款户名"
+        }
+      }]
+    },
+    "toolbar": {
+      "btns": []
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pl0036",
+          "apply_no":"${{params.apply_no}}"
+         
+        }
+      },
+      "thead": [{
+          "type": "index",
+          "label": "序号",
+          "width": "55"
+        },
+        {
+          "label": "账务机构",
+          "prop": "acctg_org"
+        },
+        {
+          "label": "出售金额(元)",
+          "prop": "sell_amt",
+          "format":{
+						"decimal":2,
+						"decimalPoint":".",
+						"thousandsPoint":","
+					}
+        },
+        {
+          "label": "存款账号",
+          "prop": "amt_acct_num"
+        },
+        {
+          "label": "存款户名",
+          "prop": "dept_acct_nm"
+        },
+        {
+          "label": "开户银行",
+          "prop": "open_acct_bank"
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "width": "260px",
+          "btns": [
+            
+            {
+              "type": "look",
+              "label": "查看",
+              "toRequest": {
+                "url": "/views/pl/assetAssignment/query/asset_total_info_details.json",
+                "method": "GET",
+                "params": {
+                  "apply_no": "${{current.apply_no}}",
+                  "asmt_code": "${{current.asmt_code}}",
+                  "asmt_asmt_code": "${{current.asmt_asmt_code}}"
+                }
+              },
+              "props": {
+                "width": "65%",
+                "title": "资产转让汇总申请信息"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

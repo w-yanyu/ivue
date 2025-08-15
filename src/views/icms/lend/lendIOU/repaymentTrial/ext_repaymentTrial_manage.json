@@ -1,0 +1,134 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "apply_no": "${{params.apply_no}}",
+          "servicecode": "ar0542"
+        }
+      },
+      "btns": [],
+      "controls": [
+        {
+          "loan_amt": {
+            "control": "hidden",
+            "label": "放款金额",
+            "value": "${{formData.ext_amt}}"
+          },
+          "nrl_int_rate": {
+            "control": "hidden",
+            "label": "执行年利率",
+            "value": "${{formData.loan_inst_rate}}"
+          },
+          "strt_int_caln_dt": {
+            "control": "hidden",
+            "label": "起息日",
+            "value": "${{formData.extd_dt}}"
+          },
+          "matu_dt": {
+            "control": "hidden",
+            "label": "到期日期",
+            "value": "${{formData.end_date}}"
+          },
+          "rpymt_prd": {
+            "control": "hidden",
+            "label": "还款周期",
+            "value": "${{formData.repay_interval}}"
+          },
+          "rpymt_way": {
+            "control": "hidden",
+            "label": "还款方式",
+            "value": "${{formData.repay_type}}"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ln3110",
+          "outlistid": "lnAcctRpymtType",
+          "int_caln_rule": "10",
+          "actl_anul_moly_int_rate": "Y",
+          "eqvlt_deal_rule": "2",
+          "first_rpymt_dt_mode": "2",
+          "final_prd_rpymt_way": "1",
+          "prcpl_in_sects_flg": "0"
+        }
+      },
+      "thead": [
+        {
+          "label": "本期期数",
+          "align": "center",
+          "type": "text",
+          "prop": "this_prd_prds"
+        },
+        {
+          "label": "起息日期",
+          "align": "center",
+          "type": "dateTimePicker",
+          "format": "yyyyMMdd",
+          "prop": "strt_int_caln_dt"
+        },
+        {
+          "label": "还款日期",
+          "align": "center",
+          "type": "dateTimePicker",
+          "format": "yyyyMMdd",
+          "prop": "rpymt_dt"
+        },
+        {
+          "label": "宽限期到期日",
+          "align": "center",
+          "type": "dateTimePicker",
+          "format": "yyyyMMdd",
+          "prop": "grace_prd_matu_dt"
+        },
+        {
+          "label": "计息本金",
+          "align": "center",
+          "type": "text",
+          "prop": "int_caln_prcpl",
+          "format":{
+            "thousand":","
+          }
+        },
+        {
+          "label": "累计产生利息",
+          "align": "center",
+          "type": "text",
+          "prop": "acmld_gen_int",
+          "format":{
+            "thousand":","
+          }
+        },
+        {
+          "label": "每期还款总额",
+          "align": "center",
+          "type": "text",
+          "prop": "evry_term_rpymt_totl_amt",
+          "format":{
+            "thousand":","
+          }
+        },
+        {
+          "label": "账户余额",
+          "align": "center",
+          "type": "text",
+          "prop": "acct_bal",
+          "format":{
+            "thousand":","
+          }
+        }
+      ]
+    }
+  }
+}

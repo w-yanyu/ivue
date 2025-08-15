@@ -1,0 +1,59 @@
+{
+  "module": "lr-tree-dynamic",
+  "layout": {
+    "tree": {
+      "title": "授权树",
+      "lazy": true,
+      "hideDynamicArea": false,
+      "isShowAddNode": false,
+      "idField": "id",
+      "pIdField": "pid",
+      "labelField": "title",
+      "isLeafField": "isLeaf",
+      "nodeTypeField": "type", 
+      "width": "200%",           
+      "root": {
+        "rootNode": {
+          "name": "${{params.authp_system_name}}",
+          "value": "${{params.authp_system_code}}",
+          "authp_system_code": "${{params.authp_system_code}}",
+          "auth_version": "${{params.auth_version}}",
+          "disabled": true
+        }
+      },
+      "rootTypes": [
+        "dept"
+        
+      ],
+      "nodeTypes": {
+        "dept": {
+          "children": [
+            "dept"
+          ],
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "post",
+            "params": {
+              "servicecode": "ct2438",
+              "appId":"${{params.appId}}",              
+              "authp_system_code": "${{params.authp_system_code}}",
+              "auth_version": "${{params.auth_version}}",
+              "role_id": "${{current.role_id}}"
+            }
+          },
+        
+          "toRequest": {
+            "url": "/views/ismt/ct/busiAuth/authp_system/authp_rule_conf.json",
+            "method": "post",
+            "params": {
+              "appId":"${{params.appId}}",              
+              "authp_system_code": "${{params.authp_system_code}}",
+              "auth_version": "${{params.auth_version}}",
+              "role_id": "${{current.role_id}}"
+            }
+          } 
+        }
+      }
+    }
+  }
+}

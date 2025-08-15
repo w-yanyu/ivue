@@ -1,0 +1,79 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "datagrid": {
+      "scope": "searchTable",
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "cr1024",
+          "appl_id":"${{params.appl_id}}"
+        }
+      },
+      "pagination":{
+        "show":false
+      },
+      "thead": [
+        {
+          "label": "客户名称",
+          "align": "center",
+          "prop": "cust_name"
+        },
+        {
+          "label": "证件类型",
+          "align": "center",
+          "prop": "cert_type",
+          "dict": {
+            "dictType": "MS_E_CRET_TYPE",
+            "dictKey": [
+              "MS_E_CRET_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "证件号码",
+          "align": "center",
+          "prop": "cert_no"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 130,
+          "align": "center",
+          "btns": [
+            {
+              "type": "custom",
+              "label": "详情",
+              "toRequest": {
+                "url": "@CustInfo",
+                "params": {
+                  "cust_no": "${{params.cust_id}}",
+                  "cust_type":"${{current.cust_type}}"
+                },
+                "method": "get",
+                "props": {
+                  "width": "95%",
+                  "height": "590px"
+
+                }
+              },
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "us0203",
+                  "cust_no":"${{params.cust_id}}"
+                }
+              },
+              "props": {
+                "title": "客户详细资料详情"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

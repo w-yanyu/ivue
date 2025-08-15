@@ -1,0 +1,140 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+      "form": {
+          "scope": "formData",
+          "initRequest": "${{params}}",
+          "controls": [
+              {
+                  "collector": {
+                      "control": "text",
+                      "label": "催收员编码"
+                  },
+                  "collector_name": {
+                      "control": "text",
+                      "label": "催收员姓名"
+                  }
+              }
+          ]
+      },
+      "toolbar": {
+          "btns": [
+              {
+                  "type": "add",
+                  "target": "dialog",
+                  "label": "新增",
+                  "toRequest": {
+                      "url": "/views/ce/paramManage/assign/collTeam/collUser_add.json",
+                      "method": "GET",
+                      "params": {
+                          "props": "${{params}}"
+                      }
+                  },
+                  "props": {
+                    "title": "新增催收员"
+                  }
+              }
+          ]
+      },
+      "datagrid": {
+          "isInitSearch": true,
+          "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                  "servicecode": "ce0184",
+                  "coll_group": "${{params.coll_group}}"
+              }
+          },
+          "thead": [
+              {
+                  "type": "selection",
+                  "align":"center",
+                  "width": "55",
+                  "fixed": "left"
+              },
+              {
+                  "type":"string",
+                  "align":"center",
+                  "label": "催收员编码",
+                  "prop": "collector"
+              },
+              {
+                  "type":"string",
+                  "align":"center",
+                  "label": "催收员姓名",
+                  "prop": "collector_name"
+
+              },
+              {
+                  "type":"string",
+                  "align":"center",
+                  "label": "催收岗位",
+                  "prop": "coll_post",
+                  "dict": {
+                    "dictType": "CE_COLL_POST",
+                    "dictKey": [
+                        "CE_COLL_POST"
+                    ],
+                    "format": "value-label"
+                  }
+              },
+              {
+                  "type":"string",
+                  "align":"center",
+                  "label": "催收组",
+                  "prop": "coll_group"
+              },
+              {
+                  "type":"string",
+                  "align":"center",
+                  "label": "坐席工号",
+                  "prop": "work_no"
+              },
+              {
+                  "type":"string",
+                  "align":"center",
+                  "label": "坐席密码",
+                  "prop": "work_pass"
+              },
+              {
+                  "type":"string",
+                  "align":"center",
+                  "label": "分机号",
+                  "prop": "extens_num"
+
+              },
+              {
+                  "label": "操作",
+                  "align":"center",
+                  "fixed": "right",
+                  "width": "150%",
+                  "btns": [
+                      {
+                          "type":"look",
+                          "label":"维护",
+                          "toRequest":{
+                              "url":"/views/ce/paramManage/assign/collTeam/collUser_modify.json",
+                              "method":"POST"
+                          },
+                          "props":{
+                              "title":"催收员维护"
+                          }
+                      },
+                      {
+                          "type": "delete",
+                          "label": "删除",
+                          "doRequest": {
+                              "url": "/SUMP/call/RPCCall",
+                              "method": "POST",
+                              "params": {
+                                  "servicecode": "ce0186"
+                              }
+                          }
+                      }
+                  ]
+              }
+          ]
+      }
+  }
+}

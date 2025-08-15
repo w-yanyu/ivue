@@ -1,0 +1,104 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "label": "新增授权体系规则",
+                    "toRequest": {                       
+                        "method": "GET",
+                        "url": "@TestFormGen",
+                        "params": {
+                            "authp_system_code": "${{params.authp_system_code}}",
+                            "auth_version": "${{params.auth_version}}",
+                            "role_id": "${{params.role_id}}",
+                            "appId":"${{params.appId}}"
+                        }
+                        
+                    },
+                    "props": {
+                        "title": "新增授权体系规则"
+                    }
+                }
+                
+            ]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ct2412",
+                    "authp_system_code": "${{params.authp_system_code}}",
+                    "auth_version": "${{params.auth_version}}",
+                    "role_id": "${{params.role_id}}",
+                    "appId":"${{params.appId}}"
+                }
+            },
+            "pagination": {
+                "show": true,
+                "pageSize": 10
+            },
+            "thead": [
+                {
+                    "type": "index"
+                },
+                {
+                    "label": "规则编号",
+                    "prop": "authp_rule_code",
+                    "width": 150
+
+                },
+                {
+                    "label": "规则描述", 
+                    "prop": "remark"
+                },
+                {
+                    "label": "操作",
+                    "width": 150,
+                    "align":"center",
+                    "fixed": "right",
+                    "btns": [
+                        {
+                            "type": "edit",
+                            "label": "删除",
+                            "toRequest": {
+                                "url": "/views/ismt/ct/busiAuth/authp_rule/authp_rule_del.json",
+                                "method": "GET",
+                                "params": {
+                                    "appId":"${{params.appId}}",
+                                    "auth_version": "${{params.auth_version}}"
+                                }
+                            },
+                            "props": {
+                                "title": "授权体系规则信息删除"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "编辑",
+                            "toRequest": {                               
+                                "method": "GET",
+                                "url": "@TestFormGen",
+                                "params": {
+                                    "authp_system_code": "${{params.authp_system_code}}",
+                                    "role_id": "${{params.role_id}}",
+                                    "auth_version": "${{params.auth_version}}",
+                                    "appId":"${{params.appId}}"
+                                }
+                            },
+                            "props": {
+                                "title": "授权体系规则编辑",
+                                "width":"60%"
+                            }
+                        }
+                    ]
+                }
+            ]
+            
+        }
+    }
+  }

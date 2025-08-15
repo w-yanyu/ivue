@@ -1,0 +1,115 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "initRequest": "${{params}}",
+            "bringBack": true,
+            "btns": [
+                {
+                    "type": "submit",
+                    "label": "提交",
+                    "icon": "",
+                    "doRequest": {
+                        "url": "",
+                        "method": "",
+                        "params": {}
+                    }
+                }
+            ],
+            "controls": [
+                {
+                    "role_id": {
+                        "control": "lookup",
+                        "label": "角色ID",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入角色ID"
+                            },
+                            {
+                                "max": 64,
+                                "message": "长度不能超过64个字符"
+                            }
+                        ],
+                        "keyField": {
+                            "role_id": "role_id"
+                        },
+                        "toRequest": {
+                            "url": "/views/ismt/ct/roleManager/role-manager_lookup.json",
+                            "method": "post",
+                            "params": "${{form.role_id}}"
+                        },
+                        "props": {
+                            "title": "角色ID查询"
+                        },
+                        "format": "label"
+                    },
+                    "auth_id": {
+                        "control": "text",
+                        "disabled": true,
+                        "rules": [
+                            {
+                                "max": 32,
+                                "message": "长度不能超过32个字符"
+                            }
+                        ],
+                        "label": "授权ID"
+                    }
+                },
+                {
+                    "auth_ccy": {
+                        "control": "select",
+                        "label": "折算币种",
+                        "dict": {
+                            "format": "label",
+                            "dictKey": [
+                                "MS_CURRENCY"
+                            ],
+                            "dictType": "MS_CURRENCY"
+                        }
+                    },
+                    "cash_max_limit_amt": {
+                        "control": "currency",
+                        "label": "现金最大授权金额",
+                        "value": "0",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入现金最大授权金额"
+                            },
+                            {
+                                "expression":"'${{formData.cash_max_limit_amt}}'.length < 19",
+                                "message": "长度不能超过19个字符"
+                            },
+                            {
+                                "pattern": "^\\d+(\\.{0,1}[\\d]{2}){0,1}$",
+                                "message": "请输入大于或等于零的数值"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "trxn_max_limit_amt": {
+                        "control": "currency",
+                        "label": "转账最大授权金额",
+                        "value": "0",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入转账最大授权金额"
+                            },
+                            {
+                                "expression":"'${{formData.trxn_max_limit_amt}}'.length < 19",
+                                "message": "长度不能超过19个字符"
+                            },
+                            {
+                                "pattern": "^\\d+(\\.{0,1}[\\d]{2}){0,1}$",
+                                "message": "请输入大于或等于零的数值"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    }
+}

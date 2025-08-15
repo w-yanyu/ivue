@@ -1,0 +1,179 @@
+{
+  "module": "v-inputDataForm-btn",
+  "layout": {
+      "form": {
+          "scope": "formData",
+          "btns": [],
+          "controls": [
+              {
+                  "cust_name": {
+                      "control": "lookup",
+                      "label": "客户姓名",
+                      "span": 10,
+                      "width": "140px",
+                      "edit": false,
+                      "events": {
+                          "set": {
+                            "sale_prod_name": "",
+                            "limit_no":""
+                          }
+                        },
+                      "rules": [
+                          {
+                              "required": true,
+                              "message": "客户名称不能为空!"
+                          }
+                      ],
+                      "keyField": {
+                          "cust_name": "cust_name",
+                          "cert_type": "cert_type",
+                          "cert_no": "cert_no",
+                          "cust_no": "cust_no"
+                      },
+                      "toRequest": {
+                          "url": "/views/us/entManager/ent_cust_lookup.json",
+                          "method": "get"
+                      },
+                      "props": {
+                          "title": "选择客户",
+                          "width": "75%"
+                      }
+                  },
+                  "cust_no": {
+                      "control": "string",
+                      "label": "客户编号",
+                      "width": "140px",
+                      "span": 10,
+                      "rules": [
+                          {
+                              "required": true,
+                              "message": "客户编号不能为空!"
+                          }
+                      ]
+                  },
+                  "cust_type": {
+                      "control": "hidden",
+                      "value":"20"
+                  },
+                  "busi_type": {
+                      "control": "hidden",
+                      "value":"INTR"
+                  },
+                  "apply_type": {
+                      "control": "hidden",
+                      "value":"C"
+                  }
+              },
+              {
+                  "cert_type": {
+                      "control": "select",
+                      "label": "证件类型",
+                      "width": "140px",
+                      "disabled": true,
+                      "span": 10,
+                      "rules": [
+                          {
+                              "required": true,
+                              "message": "证件类型不能为空!"
+                          }
+                      ],
+                      "dict": {
+                          "dictType": "MS_E_CRET_TYPE",
+                          "dictKey": [
+                              "MS_E_CRET_TYPE"
+                          ],
+                          "format": "label"
+                      }
+                  },
+                  "cert_no": {
+                      "control": "text",
+                      "label": "证件号码",
+                      "disabled": true,
+                      "width": "140px",
+                      "span": 10,
+                      "rules": [
+                          {
+                              "required": true,
+                              "message": "证件号码不能为空!"
+                          }
+                      ]
+                  }
+              },
+              {
+                  "sale_prod_name": {
+                      "control": "lookup",
+                      "label": "额度产品",
+                      "width": "140px",
+                      "span": 10,
+                      "edit": false,
+                      "rules": [
+                          {
+                              "required": true,
+                              "message": "额度产品不能为空!"
+                          }
+                      ],
+                      "keyField": {
+                          "sale_prod_name": "cl_type_name",
+                          "limit_no":"limit_no",
+                          "sale_prod_cd":"cl_type_cd"
+                      },
+                      "toRequest": {
+                          "url": "/views/icms/flowStart/lend/creditBusinessStart/credit_limit_lookup.json",
+                          "method": "get",
+                          "params": {
+                              "cust_no": "${{formData.cust_no}}",
+                              "cl_level":"P",
+                              "status": "Y"
+                            }
+                      }
+                  },
+                  "limit_no": {
+                      "control": "text",
+                      "label": "额度编号",
+                      "disabled": true,
+                      "width": "140px",
+                      "span": 10,
+                      "rules": [
+                          {
+                              "required": true,
+                              "message": "额度编号不能为空!"
+                          }
+                      ]
+                  },
+                  "sale_prod_cd": {
+                      "control": "hidden"
+                  }
+              },
+              {
+                  "remark": {
+                      "control": "textarea",
+                      "label": "备注",
+                      "width": "140px",
+                      "span": 10,
+                      "edit": true
+                  }
+              },
+              {
+                  "toDbsx": {
+                      "span": 24,
+                      "unFieldList": [
+                          "apply_type"
+                      ],
+                      "control": "dynamic",
+                      "#isShowChildrenForm": false,
+                      "toRequest": {
+                          "method": "GET",
+                          "url": "@FlowSubmitBtn",
+                          "params": {
+                              "appId": "icmsOnl",
+                              "servicecode": "ar0012",
+                              "finalUrl": "@CommWaitToDoDeal",
+                              "trans_type": "ADD"
+                          }
+                      }
+                  }
+              }
+          ]
+      }
+  }
+}

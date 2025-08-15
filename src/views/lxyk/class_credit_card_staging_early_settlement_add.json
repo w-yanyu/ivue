@@ -1,0 +1,150 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ln3100",
+          "loan_due_bill_num": "${{params.loan_due_bill_num}}",
+          "outlistid": "lstksccb"
+        }
+      },
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "icon": "",
+          "doRequest": {
+            "url": "/SUMP/call/RPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "ln3974"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "smilr_cr_card_loan_acct_num": {
+            "control": "string",
+            "label": "类信用卡贷款账号",
+            "value": "${{params.smilr_cr_card_loan_acct_num}}",
+            "width": "100px",
+            "events": {
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "ln3102",
+                  "loan_due_bill_num": "${{params.loan_due_bill_num}}"
+                },
+                "resultSet": {
+                  "acmld_gen_prcpl": "acmld_gen_prcpl",
+                  "acmld_gen_int": "acmld_gen_int"
+                }
+              }
+            }
+          },
+          "loan_due_bill_num": {
+            "control": "string",
+            "label": "贷款借据号",
+            "width": "100px"
+          }
+        },
+        {
+          "due_bill_tp": {
+            "control": "select",
+            "label": "借据类型",
+            "width": "100px",
+            "value": "${{params.due_bill_tp}}",
+            "disabled": true,
+            "dict": {
+              "dictType": "E_DUE_BILL_TP",
+              "dictKey": [
+                "E_DUE_BILL_TP"
+              ],
+              "format": "label"
+            }
+          },
+          "cust_num": {
+            "control": "string",
+            "label": "客户号",
+            "width": "100px"
+          }
+        },
+        {
+          "cust_nm": {
+            "control": "string",
+            "label": "客户名称",
+            "width": "100px"
+          },
+          "ccy_code_num": {
+            "label": "货币代号",
+            "control": "select",
+            "width": "100px",
+            "disabled": true,
+            "dict": {
+              "dictType": "MS_CURRENCY",
+              "dictKey": [
+                "MS_CURRENCY"
+              ],
+              "format": "label"
+            }
+          }
+        },
+        {
+          "acmld_gen_prcpl": {
+            "control": "currency",
+            "label": "累计产生本金",
+            "disabled": true,
+            "width": "100px"
+          },
+          "acmld_gen_int": {
+            "control": "currency",
+            "label": "累计产生利息",
+            "disabled": true,
+            "width": "100px"
+          },
+          "rpymt_amt": {
+            "control": "currency",
+            "label": "还款金额",
+            "width": "100px",
+            "format": "label",
+            "compute": "${{form.acmld_gen_prcpl}}+${{form.acmld_gen_int}}",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入还款金额"
+              }
+            ]
+          },
+          "rpymt_acct_num": {
+            "control": "text",
+            "label": "还款账号",
+            "width": "100px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入还款账号"
+              }
+            ]
+          }
+        },
+        {
+          "rpymt_sub_acct_serl_num": {
+            "control": "text",
+            "label": "还款子账户序号",
+            "width": "100px"
+          },
+          "rpymt_acct_nm": {
+            "control": "text",
+            "label": "还款账户名称",
+            "width": "100px"
+          }
+        }
+      ]
+    }
+  }
+}

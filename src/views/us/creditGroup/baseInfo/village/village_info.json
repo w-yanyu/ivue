@@ -1,0 +1,151 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POSt",
+        "params": {
+          "servicecode": "us1200",
+          "area_no": "${{params.area_no}}",
+          "area_name": "${{params.area_name}}"
+        }
+      },
+      "btns": [],
+      "controls": [
+        {
+          "area_no": {
+            "width": "20px",
+            "control": "text",
+            "span": 8,
+            "disabled": true,
+            "label": "区域编号"
+          },
+          "area_name": {
+            "width": "20px",
+            "control": "text",
+            "span": 8,
+            "disabled": true,
+            "label": "村名"
+          },
+          "total_households": {
+            "width": "20px",
+            "control": "text",
+            "span": 8,
+            "label": "总户数",
+            "disabled": true
+          },
+          "total_number": {
+            "width": "20px",
+            "control": "text",
+            "span": 8,
+            "label": "总人数",
+            "disabled": true
+          },
+          "land_area": {
+            "width": "20px",
+            "control": "text",
+            "span": 8,
+            "disabled": true,
+            "label": "在册土地面积（亩）"
+          },
+          "on_file_households": {
+            "width": "20px",
+            "control": "text",
+            "span": 8,
+            "disabled": true,
+            "label": "建档户数"
+          },
+          "on_file_rate": {
+            "width": "20px",
+            "control": "currency",
+            "span": 8,
+            "disabled": true,
+            "label": "建档率",
+            "compute": "${{formData.on_file_households}}/${{formData.total_households}}"
+          },
+          "prov_code": {
+            "control": "remoteSelect",
+            "label": "省/直辖市",
+            "placeholder": "请选择省/直辖市",
+            "disabled": true,
+            "valueField": "code",
+            "labelField": "name",
+            "width": "20px",
+            "span": 8,
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2200",
+                "parent_code": "0"
+              }
+            },
+            "events": {
+              "emit": [
+                "city_code"
+              ]
+            }
+          },
+          "city_code": {
+            "control": "remoteSelect",
+            "label": "市/区",
+            "placeholder": "请选择市/区",
+            "valueField": "code",
+            "labelField": "name",
+            "disabled": true,
+            "width": "20px",
+            "span": 8,
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2200",
+                "parent_code": "${{formData.prov_code}}"
+              }
+            },
+            "events": {
+              "emit": [
+                "county_code"
+              ]
+            }
+          },
+          "county_code": {
+            "control": "remoteSelect",
+            "label": "县",
+            "placeholder": "请选择县",
+            "valueField": "code",
+            "labelField": "name",
+            "disabled": true,
+            "width": "20px",
+            "span": 8,
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2200",
+                "parent_code": "${{formData.city_code}}"
+              }
+            }
+          },
+          "address": {
+            "width": "20px",
+            "control": "text",
+            "disabled": true,
+            "span": 8,
+            "label": "地址信息"
+          },
+          "other_remark": {
+            "width": "20px",
+            "control": "textarea",
+            "disabled": true,
+            "span": "24",
+            "rows": "4",
+            "label": "其他情况说明"
+          }
+        }
+      ]
+    }
+  }
+}

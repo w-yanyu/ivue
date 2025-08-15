@@ -1,0 +1,155 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "controls": [
+        {
+          "announce_title": {
+            "control": "text",
+            "label": "公告标题"
+          },
+          "data_create_user": {
+            "control": "text",
+            "label": "发布人编号"
+          },
+          "announce_type": {
+            "control": "select",
+            "label": "公告类型",
+            "dict": {
+              "dictType": "CT_E_ANNOUNCETYPE",
+              "dictKey": [
+                  "CT_E_ANNOUNCETYPE"
+              ],
+              "format": "value-label"
+            }
+          },
+          "effect_date": {
+              "control": "dateTimePicker",
+              "label": "生效日期",
+              "align": "center",
+              "rules": [
+                  {
+                      "message": "请输入"
+                  }
+              ]
+          },
+          "expiry_date": {
+              "control": "dateTimePicker",
+              "label": "失效日期",
+              "align": "center",
+              "rules": [
+                  {
+                      "message": "请输入"
+                  }
+              ]
+          }
+        }
+      ]
+    },
+
+
+    "datagrid": {
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "ct2335"
+        }
+      },
+      "thead": [
+        {
+          "type":"string",
+          "label": "公告ID",
+          "align":"center",
+          "prop": "announce_id"
+        },
+        {
+          "type":"string",
+          "label": "公告标题",
+          "align":"center",
+          "prop": "announce_title"
+        },
+        {
+          "type":"string",
+          "label": "公告内容",
+          "align":"center",
+          "prop": "announce_content"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "附件地址",
+          "prop": "announce_file_path"
+        },
+        {
+          "type":"string",
+          "label": "公告类型",
+          "align":"center",
+          "width":"100%",
+          "prop": "announce_type",
+          "dict":{
+            "dictType": "CT_E_ANNOUNCETYPE",
+            "dictKey": [
+              "CT_E_ANNOUNCETYPE"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type":"string",
+          "label": "是否发布",
+          "align":"center",
+          "width":"100%",
+          "prop": "publish_status",
+          "dict":{
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "value-label"
+
+          }
+        },
+        {
+          "type":"string",
+          "label": "生效日期",
+          "align":"center",
+          "prop": "effect_date"
+        },
+        {
+          "type":"string",
+          "label": "失效日期",
+          "align":"center",
+          "prop": "expiry_date"
+        },
+        {
+          "type":"string",
+          "label": "发布人",
+          "align":"center",
+          "prop": "publisher"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width":"100%",
+          "align":"center",
+          "btns": [
+            {
+              "type": "look",
+              "label": "查看详情",
+              "toRequest": {
+                "url": "/views/ismt/ct/announceManage/user_announce_detail.json",
+                "method": "POST"
+              },
+              "props": {
+                "title": "公告信息详情"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

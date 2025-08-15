@@ -1,0 +1,127 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [],
+      "btns": []
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "custom",
+          "label": "自动获取",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "bpm0004",
+              "wf_prod_no": "${{params.wf_prod_no}}",
+              "wf_prod_name": "${{params.wf_prod_name}}",
+              "wf_define_id": "${{params.wf_define_id}}",
+              "updway": "TASK",
+              "appId":"plOnl"
+            }
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "bpm0005",
+          "wf_prod_no": "${{params.wf_prod_no}}",
+          "appId":"plOnl"
+        }
+      },
+      "thead": [
+        {
+          "label": "任务编号",
+          "prop": "wf_task_no"
+        },
+        {
+          "label": "流程编号",
+          "prop": "wf_prod_no"
+        },
+        {
+          "label": "流程名称",
+          "prop": "wf_prod_name"
+        },
+        {
+          "label":"活动定义id",
+          "prop":"task_define_id",
+          "align": "center"
+        },
+        {
+          "label":"活动定义名称",
+          "prop":"task_define_name"
+        },
+        {
+          "label":"任务类型",
+          "prop":"task_type"
+        },{
+          "label":"版本号",
+          "prop":"data_version"
+        },{
+          "label":"修改时间",
+          "prop":"data_update_time"
+        },{
+          "label":"修改人",
+          "prop":"data_update_user"
+        },{
+          "label": "操作",
+          "width": "180px",
+          "fixed": "right",
+          "align":"center",
+          "btns": [{
+            "type": "edit",
+            "label": "查看",
+            "toRequest": {
+              "url": "/views/pl/flowManagement/products/node/node-view.json",
+              "method": "GET",
+              "params": {
+                "appId":"plOnl"
+              }
+            },
+            "props": {
+              "width": "70%",
+              "title": "查看节点详情"
+            }
+          },{
+            "type": "edit",
+            "label": "修改",
+            "toRequest": {
+              "url": "/views/pl/flowManagement/products/node/node-modify.json",
+              "method": "GET",
+              "params": {
+                "appId":"plOnl"
+              }
+            },
+            "props": {
+              "width": "70%",
+              "title": "流程节点修改"
+            }
+          },{
+            "type": "edit",
+            "label": "配置策略",
+            "toRequest": {
+              "url": "/views/pl/flowManagement/products/node/node-config.json",
+              "method": "GET",
+              "params": {
+                "appId":"plOnl"
+              }
+            },
+            "props": {
+              "width": "75%",
+              "title": "策略管理"
+            }
+          }
+          ]
+        }
+      ]
+    }
+  }
+}

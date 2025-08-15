@@ -1,0 +1,152 @@
+{
+  "module": "v-search-btn-datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "scoreCardCode": {
+            "label": "评分卡代码",
+            "control": "text",
+            "span": 8,
+            "rules": [
+              {
+                "message": "字段长度超限",
+                "max": 40
+              }
+            ]
+          },
+          "reviewStatus": {
+            "label": "审核状态",
+            "control": "select",
+            "span": 8,
+            "dict": {
+              "dictType": "scoreCardReviewStatus",
+              "dictKey": [],
+              "format": "value-label",
+              "doRequest": {
+                "url": "/views/risk/dictdata/scoreCardReviewStatus.json",
+                "method": "get"
+              }
+            }
+          },
+          "operationType": {
+            "label": "操作类型",
+            "control": "select",
+            "span": 8,
+            "dict": {
+              "dictType": "reviewOperationType",
+              "dictKey": [],
+              "format": "value-label",
+              "doRequest": {
+                "url": "/views/risk/dictdata/reviewOperationType.json",
+                "method": "get"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": []
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "deci020121",
+          "scoreCardType": "1",
+          "isList": true
+        }
+      },
+      "pagination": {
+        "hideOnSinglePage": false,
+        "show": true,
+        "pageSizes": [10, 15, 20, 50, 100],
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "label": "审核ID",
+          "prop": "reviewId"
+        },
+        {
+          "label": "评分卡代码",
+          "prop": "scoreCardCode"
+        },
+        {
+          "label": "操作类型",
+          "prop": "operationType",
+          "dict": {
+            "dictType": "reviewOperationType",
+            "dictKey": [],
+            "format": "label",
+            "doRequest": {
+              "url": "/views/risk/dictdata/reviewOperationType.json",
+              "method": "get"
+            }
+          }
+        },
+        {
+          "label": "审核状态",
+          "prop": "reviewStatus",
+          "dict": {
+            "dictType": "scoreCardReviewStatus",
+            "dictKey": [],
+            "format": "label",
+            "doRequest": {
+              "url": "/views/risk/dictdata/scoreCardReviewStatus.json",
+              "method": "get"
+            }
+          }
+        },
+        {
+          "label": "申请人",
+          "prop": "applyUser"
+        },
+        {
+          "label": "申请时间",
+          "prop": "applyTime"
+        },
+        {
+          "label": "操作",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "审核",
+              "authId": "",
+              "toRequest": {
+                "url": "@scoreCardReview",
+                "method": "get",
+                "params":{
+                  "scoreCardType":"${{current.scoreCardType}}"
+                }
+              },
+              "props": {
+                "width": "90%",
+                "height": "85%"
+              },
+              "show": {
+                "expression": "'${{current.reviewStatus}}'=== 'C'"
+              }
+            },
+            {
+              "type": "look",
+              "label": "查看",
+              "authId": "",
+              "toRequest": {
+                "url": "@scoreCardReviewView",
+                "method": "get"
+              },
+              "props": {
+                "width": "90%",
+                "top": "4vh"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

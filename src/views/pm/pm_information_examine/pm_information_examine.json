@@ -1,0 +1,133 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "ofpana": {
+            "control": "text",
+            "label": "合作方名称",
+            "rules": [
+              {
+                "max": 80,
+                "message": "长度不能超过80个字符"
+              }
+            ]
+          },
+          "cmcrno": {
+            "control": "text",
+            "label": "合作方证件号码",
+            "rules": [
+              {
+                "max": 20,
+                "message": "长度不能超过20个字符"
+              }
+            ]
+          },
+          "ofpacd": {
+            "control": "text",
+            "label": "合作方编号",
+            "rules": [
+              {
+                "max": 30,
+                "message": "长度不能超过30个字符"
+              }
+            ]
+          }
+        }
+
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "qrbsap",
+          "page_id": "/views/pm/pm_information_examine/pm_information_examine.json"
+        }
+      },
+      "thead": [
+        {
+          "type": "index",
+          "align":"center"
+        },
+        {
+          "label": "合作方名称",
+          "prop": "ofpana",
+          "align":"center"
+        },
+        {
+          "label": "合作方编号",
+          "prop": "ofpacd",
+          "align":"center"
+        },
+        {
+          "label": "合作方证件类型",
+          "prop": "opcred",
+          "align":"center",
+          "dict": {
+            "dictType": "E_IDTFTP",
+            "dictKey": [
+              "E_IDTFTP"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "合作方证件号码",
+          "prop": "cmcrno",
+          "align":"center"
+        },
+        {
+          "label": "所属机构",
+          "prop": "belorg",
+          "align":"center"
+        },
+        {
+          "label": "创建操作员",
+          "prop": "crtusr",
+          "align":"center"
+        },
+        {
+          "label": "创建日期",
+          "prop": "cretdt",
+          "align":"center"
+        },
+        {
+          "label": "审核记录",
+          "fixed": "right",
+          "width": 200,
+          "align":"center",
+          "btns": [
+            {
+              "type": "look",
+              "label": "审核记录",
+              "toRequest": {
+                "url": "/views/pm/pm_information_examine/pm_information_examine_audit_records.json",
+                "method": "POST"
+              },
+              "props": {
+                "title": "审核记录"
+              }
+            },
+            {
+              "type": "look",
+              "label": "进入审核",
+              "toRequest": {
+                "url": "/views/pm/pm_information_examine/pm_information_examine_audit.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "75%",
+                "title": "合作方基础信息审核"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

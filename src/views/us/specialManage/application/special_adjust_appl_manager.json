@@ -1,0 +1,235 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "appl_no": {
+            "label": "调整申请号",
+            "control": "text",
+            "rules": [
+              {
+                "required": false,
+                "message": "请输入调整申请号"
+              }
+            ]
+          },
+          "cust_no": {
+            "label": "客户编号",
+            "control": "text",
+            "rules": [
+              {
+                "required": false,
+                "message": "请输入客户编号"
+              }
+            ]
+          },
+          "cust_name": {
+            "label": "客户名称",
+            "control": "text",
+            "rules": [
+              {
+                "required": false,
+                "message": "请输入客户名称"
+              }
+            ]
+          },
+          "appt": {
+            "label": "申请人",
+            "control": "text",
+            "rules": [
+              {
+                "required": false,
+                "message": "请输入申请人"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增申请",
+          "toRequest": {
+            "method": "GET",
+            "url": "@specialAdjustAppl",
+            "params": {
+            }
+          },
+          "props": {
+            "title": "特殊项调整申请",
+            "width": "75%"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "us0422"
+        }
+      },
+      "thead": [
+        {
+          "type": "index",
+          "width": 50,
+          "label": "序号"
+        },
+        {
+          "label": "调整申请号",
+          "prop": "appl_no",
+          "align": "center",
+          "type": "leaf"
+        },
+        {
+          "label": "申请人",
+          "prop": "appt",
+          "align": "center",
+          "type": "leaf"
+        },
+        {
+          "label": "调整状态",
+          "prop": "adjust_status",
+          "align": "center",
+          "type": "leaf",
+          "dict": {
+            "dictType": "US_E_ADJUST_STATUS",
+            "dictKey": [
+              "US_E_ADJUST_STATUS"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "label": "客户编号",
+          "prop": "cust_no",
+          "align": "center",
+          "type": "leaf"
+        },
+        {
+          "label": "客户名称",
+          "prop": "cust_name",
+          "align": "center",
+          "type": "leaf"
+        },
+        {
+          "label": "调整类型",
+          "prop": "adj_type",
+          "align": "center",
+          "type": "leaf",
+          "dict": {
+            "dictType": "US_E_ADJ_TYPE",
+            "dictKey": [
+              "US_E_ADJ_TYPE"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "label": "组合编号",
+          "prop": "temp_no",
+          "align": "center",
+          "type": "leaf"
+        },
+        {
+          "label": "组合名称",
+          "prop": "temp_name",
+          "align": "center",
+          "type": "leaf"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "详情",
+              "toRequest": {
+                "url": "@specialAdjustQuery",
+                "method": "GET"
+              },
+              "props": {
+                "width": "75%",
+                "title": "特殊项调整申请信息详情"
+              }
+            },
+            {
+              "type": "edit",
+              "show": {
+                "prop": "adjust_status",
+                "is": [
+                  "1",
+                  "3"
+                ]
+              },
+              "label": "维护",
+              "toRequest": {
+                "url": "@specialAdjustApplModify",
+                "method": "GET",
+                "params": {
+                  "cust_no": "${{current.appl_no}}"
+                }
+              },
+              "props": {
+                "width": "75%",
+                "title": "特殊项调整申请信息维护"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "提交审批",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "us0427",
+                  "adjust_status": "2"
+                }
+              },
+              "show": {
+                "prop": "adjust_status",
+                "is": [
+                  "1",
+                  "3"
+                ]
+              }
+            },
+            {
+              "type": "custom",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "us0421"
+                }
+              },
+              "confirm": {
+                "title": "确定删除",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              },
+              "show": {
+                "prop": "adjust_status",
+                "is": [
+                  "1",
+                  "3",
+                  "4"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

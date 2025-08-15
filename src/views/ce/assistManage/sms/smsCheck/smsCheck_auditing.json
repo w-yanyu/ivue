@@ -1,0 +1,55 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "initRequest": "${{params}}",
+            "btns": [
+                {
+                    "type": "submit",
+                    "label": "核准",
+                    "doRequest": {
+                        "method": "POST",
+                        "url": "/SUMP/call/RPCCall",
+                        "params": {
+                            "servicecode":"ce1501",
+                            "apply_journal_no":"${{params.selectedData}}",
+                            "appr_state": "P"
+                        }
+                    }
+                },
+                {
+                    "type": "submit",
+                    "label": "拒绝",
+                    "doRequest": {
+                        "method": "POST",
+                        "url": "/SUMP/call/RPCCall",
+                        "params": {
+                            "servicecode":"ce1501",
+                            "apply_journal_no":"${{params.selectedData}}",
+                            "appr_state": "R"
+                        }
+                    }
+                }
+            ],
+            "controls": [
+                {
+                    "appr_comment": {
+                        "control": "textarea",
+                        "label": "审核说明",
+                        "width": "180px",
+                        "align": "center",
+                        "span": "20",
+                        "rows": 6,
+                        "placeholder":"请输入",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message":"请输入"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    }
+}

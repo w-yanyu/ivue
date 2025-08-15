@@ -1,0 +1,82 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                
+            ],
+            "btns": []
+          },
+        "toolbar": {
+            "btns": [{
+                "type": "add",
+                "label": "新增",
+                "target": "dialog",
+                "toRequest": {
+                    "method": "GET",
+                    "url": "/views/uccp/prodManager/uccpProdGroup/uccp_prod_relation_add.json",
+                    "params": {
+                        "prod_group_code":"${{params.prod_group_code}}"
+                    }
+                },
+                "props": {
+                    "width": "80%",
+                    "title": "管控产品关联信息新增"
+                }
+            }]
+        },
+        "datagrid": {
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "uccp0011",
+                    "prod_group_code":"${{params.prod_group_code}}"
+
+                }
+            },
+            "thead": [
+                {
+                    "label": "产品组编号",
+                    "prop": "prod_group_code",
+                    "align": "center"
+                },
+                {
+                    "label": "产品编号",
+                    "prop": "prod_code",
+                    "align": "center"
+                },
+                {
+                    "label": "产品名称",
+                    "prop": "prod_name",
+                    "align": "center"
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 230,
+                    "align": "center",
+                    "btns": [
+                        {
+                            "type": "custom",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/call/RPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "uccp0010",
+                                    "prod_group_code": ""
+                                }
+                            },
+                            "confirm": {
+                                "title": "确定删除",
+                                "confirmButtonText": "确定",
+                                "cancelButtonText": "取消"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

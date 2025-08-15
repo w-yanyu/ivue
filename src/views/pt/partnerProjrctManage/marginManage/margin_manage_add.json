@@ -1,0 +1,196 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "pt0332"
+        }
+      },
+      "controls": [
+        {
+          "part_project_no": {
+            "control": "lookup",
+            "label": "合作项目编号",
+            "width": "150px",
+            "span": 8,
+            "keyField":{
+              "part_project_no": "part_project_no",
+              "part_project_name": "part_project_name",
+              "project_version": "version"
+            },
+            "toRequest": {
+              "url": "/views/pt/partnerProjrctManage/marginManage/cor_project_list_look.json",
+              "method": "GET"
+            },
+            "props": {
+              "width": "65%",
+              "title":  "选择合作项目"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必输"
+              }
+            ]
+          },
+          "part_project_name": {
+            "control": "string",
+            "label": "合作项目名称",
+            "width": "150px",
+            "span": 8
+          },
+          "project_version": {
+            "control": "string",
+            "label": "合作项目版本",
+            "width": "150px",
+            "span": 8
+          },
+          "sale_prod_cd": {
+            "control": "lookup",
+            "label": "可售产品编号",
+            "width": "150px",
+            "span": 8,
+            "keyField":{
+              "sale_prod_cd": "sale_prod_cd",
+              "sale_prod_name": "sale_prod_name"
+            },
+            "toRequest": {
+              "url": "/views/pt/partnerProjrctManage/marginManage/sell_prod_part_look.json",
+              "method": "GET",
+              "params": {
+                "part_project_no": "${{formData.part_project_no}}",
+                "version": "${{formData.project_version}}"
+              }
+            },
+            "props": {
+              "width": "65%",
+              "title":  "选择可售产品"
+            }
+          },
+          "sale_prod_name": {
+            "control": "string",
+            "label": "可售产品名称",
+            "width": "150px",
+            "span": 8
+          },
+          "part_no": {
+            "control": "lookup",
+            "label": "合作方编号",
+            "width": "150px",
+            "span": 8,
+            "keyField":{
+              "part_no": "part_no",
+              "center_name": "center_name",
+              "margin_protocol_no": "margin_protocol_no",
+              "guaranty_no": "guaranty_no"
+            },
+            "toRequest": {
+              "url": "/views/pt/partnerProjrctManage/marginManage/ptPartner_look.json",
+              "method": "GET",
+              "params": {
+                "part_project_no": "${{formData.part_project_no}}",
+                "version": "${{formData.project_version}}"
+              }
+            },
+            "props": {
+              "width": "65%",
+              "title":  "选择合作方"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必输"
+              }
+            ]
+          },
+          "center_name": {
+            "control": "string",
+            "label": "合作方名称",
+            "width": "150px",
+            "span": 8
+          },
+          "margin_protocol_no": {
+            "control": "string",
+            "label": "保证金协议编号",
+            "width": "150px",
+            "span": 8
+          },
+          "guaranty_no": {
+            "control": "string",
+            "label": "保证金账号",
+            "width": "150px",
+            "span": 8
+          },
+          "margin_acct_balance": {
+            "control": "currency",
+            "label": "保证金账户余额",
+            "width": "150px",
+            "span": 8,
+            "format": {
+              "thousand": ",",
+              "decimal": 2
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必输"
+              }
+            ]
+          },
+          "ccy_code": {
+            "control": "select",
+            "label": "币种",
+            "width": "150px",
+            "span": 8,
+            "dict": {
+              "dictType": "MS_CURRENCY",
+              "dictKey": [
+                "MS_CURRENCY"
+              ]
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必输"
+              }
+            ]
+          },
+          "margin_status": {
+            "control": "select",
+            "label": "保证金状态",
+            "width": "150px",
+            "span": 8,
+            "dict": {
+              "dictType": "PT_E_MARGIN_STATUS",
+              "dictKey": [
+                "PT_E_MARGIN_STATUS"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必输"
+              }
+            ]
+          },
+          "remark": {
+            "control": "textarea",
+            "label": "备注",
+            "width": "150px",
+            "span": 24,
+            "autosize": {
+              "minRows": 3,
+              "maxRows": 5
+            },
+            "maxlength": 500
+          }
+        }
+      ]
+    }
+  }
+}

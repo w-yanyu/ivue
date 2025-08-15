@@ -1,0 +1,205 @@
+{
+  "module": "v-realonlyForm-btn",
+  "layout": {
+    "form": {
+      "btns": [],
+      "initRequest": "${{parentInitData}}",
+      "name": "list03",
+      "controls": [
+        {
+          "cust_no": {
+            "label": "cust_no",
+            "control": "hidden"
+          },
+          "colt_type": {
+            "label": {
+              "default": "资产类型",
+              "i18n": "I10.asset-type"
+                      },
+            "control": "remoteSelect",
+            "disabled": true,
+            "valueField": "colt_type",
+            "labelField": "colt_name",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "post",
+              "params": {
+                "servicecode": "co1012",
+                "guar_type": "${{params.guar_type}}"
+              }
+            }
+          },
+          "colt_prod_cd": {
+            "label": {
+              "default": "抵质押品产品",
+              "i18n": "I10.collateral-products"
+                      },
+            "control": "remoteSelect",
+            "disabled": true,
+            "valueField": "colt_prod_cd",
+            "labelField": "colt_prod_name",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "post",
+              "params": {
+                "servicecode": "co1013",
+                "colt_type": "${{params.colt_type}}"
+              }
+            }
+          },
+          "asset_type": {
+            "label": {
+              "default": "资产分类",
+              "i18n": "I10.Asset-classification"
+                      },
+            "disabled":true,
+            "control": "select",
+            "dict": {
+              "dictType": "CO_E_ASSETTYPE",
+              "dictKey": [
+                "CO_E_ASSETTYPE"
+              ]
+            }
+          },
+          "owner_cust_id": {
+            "label": "所有权人ID",
+            "control": "hidden",
+            "disabled": true
+          },
+          "owner": {
+            "label": "所有权人",
+            "control": "lookup",
+            "disabled": true,
+            "edit": false,
+            "keyField": {
+              "owner": "cust_name",
+              "owner_cust_id":"cust_no",
+              "cert_no": "cert_no",
+              "cert_type": "cert_type",
+              "owner_cust_type": "cert_type"
+            },
+            "toRequest": {
+              "url": "/views/us/cust_lookup.json",
+              "method": "get"
+            },
+            "props": {
+              "title": "查询关联客户名称"
+            },
+            "format": "label",
+            "rules": [{
+              "required": true,
+              "message": "请选择"
+            }]
+          },
+          "cert_no": {
+            "label": "证件号码",
+            "control": "string",
+            "disabled": true,
+            "rules": [{
+              "required": true,
+              "message": "请输入证件号码"
+            }]
+          },
+          "owner_cust_type": {
+            "label": {
+              "default": "所有权人客户类型",
+              "i18n": "I10.Owner-Customer-Type"
+                      },
+            "control": "select",
+            "disabled":true,
+            "dict": {
+              "dictType": "US_E_CUST_TYPE",
+              "dictKey": [
+                "US_E_CUST_TYPE"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId"
+            }
+          },
+          "cert_type": {
+            "label": "证件类型",
+            "control": "select",
+            "disabled":true,
+            "dict": {
+              "dictType": "MS_E_CRET_TYPE",
+              "dictKey": [
+                "MS_E_CRET_TYPE"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId"
+            }
+          },
+          "owner_adrr": {
+            "label": "所有权人地址",
+            "control": "textarea",
+            "autosize": {
+              "minRows": 3,
+              "maxRows": 5
+            },
+            "disabled": true,
+            "maxlength": 40,
+            "showWordLimit": true,
+            "span":24,
+            "rules": [{
+              "required": true,
+              "message": "请输入所有权人地址"
+            }]
+          },
+          "pur_ccy": {
+            "label": {
+              "default": "资产购置价币种",
+              "i18n": "I10.Currency-of-asset-purchase-price"
+                      },
+            "control": "select",
+            "disabled": true,
+            "dict": {
+              "dictType": "MS_CURRENCY",
+              "dictKey": [
+                "MS_CURRENCY"
+              ]
+            }
+          },
+          "pur_price": {
+            "label": {
+              "default": "资产购置价（元）",
+              "i18n": "I10.Asset-purchase-price"
+                      },
+            "control": "string",
+            "disabled": true
+          },
+          "asset_valid_date": {
+            "label": {
+              "default": "购买日期",
+              "i18n": "I10.purchasing-date"
+                      },
+            "control": "dateTimePicker",
+            "disabled": true,
+            "format": "yyyyMMdd"
+          },
+          "asset_valid_dt": {
+            "label": {
+              "default": "有效日期",
+              "i18n": "I10.effective-date"
+                      },
+            "control": "dateTimePicker",
+            "disabled": true,
+            "format": "yyyyMMdd"
+          }
+        },
+        {
+            "comm_person_info": {
+            "control":"dynamic",
+            "span":24,
+            "toRequest":{
+                "url":"@commPersonInfo",
+                "method": "post",
+                "params": {
+                    "showFlag":false,
+                    "initFlag":true
+                }
+            }
+            }
+        }]
+    }
+  }
+}

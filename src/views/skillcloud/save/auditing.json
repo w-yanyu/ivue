@@ -1,0 +1,261 @@
+{
+  "module": "lr_tree_dynamic",
+  "layout": {
+    "##initReqeust": "${{params}}",
+    "tree": {
+      "scope": "productParam",
+      "title": "敞口树形展示",
+      "lazy": false,
+      "idField": "prod_cd",
+      "pIdField": "parent_prod",
+      "labelField": "prod_name",
+      "nodeTypeField": "prod_level",
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "parent_prod":"${{params.parent_prod}}",
+          "prod_cd":"${{params.prod_cd}}",
+          "audit_status":"${{params.audit_status}}",
+          "servicecode": "FindTree"
+        }
+      },
+      "root": {
+        "rootNode": {
+          "name": "产品谱系敞口树形展示",
+          "value": "1",
+          "icon": "xitongguanli",
+          "disabled": true
+        }
+      },
+      "nodeTypes": {
+        "1": {
+          "icon": "el-icon-news",
+          "children": [
+            "prod_cd",
+            "prod_name"
+          ],
+          "doRequest": {
+            "method": "get",
+            "url": "/views/skillcloud/add/tree_add.json",
+            "params": {
+
+            }
+          },
+          "props": {
+            "title": "敞口信息详情"
+          },
+          "contextMenu": [
+            {
+              "type": "add",
+              "label": "下级节点新增",
+              "childNodeType": "2",
+              "icon": "el-icon-circle-plus-outline",
+              "toRequest": {
+                "url": "/views/skillcloud/add/addskill.json",
+                "target": "dialog",
+                "props": {
+                  "title": "下级节点新增"
+                }
+              }
+            },
+            {
+              "type": "edit",
+              "label": "修改节点信息",
+              "childNodeType": "1",
+              "icon": "el-icon-circle-plus-outline",
+              "toRequest": {
+                "url": "/views/skillcloud/add/addupdate.json",
+                "props": {
+                  "title": "修改节点信息"
+                }
+              }
+            }
+          ]
+        },
+        "2": {
+          "icon": "el-icon-news",
+          "children": [
+            "prod_cd",
+            "prod_name"
+          ],
+          "toRequest": {
+            "method": "get",
+            "url": "/views/skillcloud/save/tree_add.json",
+            "params": {
+              "operater_ind": "M",
+              "prod_cd": "${{productParam.prod_cd}}",
+              "parent_prod": "${{productParam.parent_prod}}"
+            }
+          },
+          "props": {
+            "title": "敞口信息详情"
+          },
+          "contextMenu": [
+            {
+              "type": "delete",
+              "label": "删除当前节点",
+              "childNodeType": "2",
+              "icon": "el-icon-remove-outline",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "DEL_SKILL"
+                }
+              },
+              "confirm": {
+                "title": "提示信息",
+                "msg": "确定删除该目录吗?",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            },
+            {
+              "type": "add",
+              "label": "下级节点新增",
+              "childNodeType": "3",
+              "icon": "el-icon-circle-plus-outline",
+              "toRequest": {
+                "url": "/views/skillcloud/add/addskill.json",
+                "target": "dialog",
+                "props": {
+                  "title": "下级节点新增"
+                }
+              }
+            },
+            {
+              "type": "edit",
+              "label": "修改节点信息",
+              "childNodeType": "2",
+              "icon": "el-icon-circle-plus-outline",
+              "toRequest": {
+                "url": "/views/skillcloud/add/addupdate.json",
+                "props": {
+                  "title": "修改节点信息"
+                }
+              }
+            }
+          ]
+        },
+        "3": {
+          "icon": "el-icon-news",
+          "children": [
+            "prod_cd",
+            "prod_name"
+          ],
+          "toRequest": {
+            "method": "get",
+            "url": "/views/skillcloud/save/tree_add.json",
+            "params": {
+              "operater_ind": "M",
+              "prod_cd": "${{productParam.prod_cd}}",
+              "parent_prod": "${{productParam.parent_prod}}"
+            }
+          },
+          "props": {
+            "title": "敞口信息详情"
+          },
+          "contextMenu": [
+            {
+              "type": "delete",
+              "label": "删除当前节点",
+              "childNodeType": "3",
+              "icon": "el-icon-remove-outline",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "DEL_SKILL"
+                }
+              },
+              "confirm": {
+                "title": "提示信息",
+                "msg": "确定删除该目录吗?",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            },
+            {
+              "type": "add",
+              "label": "下级节点新增",
+              "childNodeType": "4",
+              "icon": "el-icon-circle-plus-outline",
+              "toRequest": {
+                "url": "/views/skillcloud/add/addskill.json",
+                "target": "dialog",
+                "props": {
+                  "title": "下级节点新增"
+                }
+              }
+            },
+            {
+              "type": "edit",
+              "label": "修改节点信息",
+              "childNodeType": "3",
+              "icon": "el-icon-circle-plus-outline",
+              "toRequest": {
+                "url": "/views/skillcloud/add/addupdate.json",
+                "props": {
+                  "title": "修改节点信息"
+                }
+              }
+            }
+          ]
+        },
+        "4": {
+          "icon": "el-icon-news",
+          "children": [
+            "prod_cd",
+            "prod_name"
+          ],
+          "toRequest": {
+            "method": "get",
+            "url": "/views/skillcloud/save/tree_add.json",
+            "params": {
+              "operater_ind": "M",
+              "prod_cd": "${{productParam.prod_cd}}",
+              "parent_prod": "${{productParam.parent_prod}}"
+            }
+          },
+          "props": {
+            "title": "敞口信息详情"
+          },
+          "contextMenu": [
+            {
+              "type": "delete",
+              "label": "删除当前节点",
+              "childNodeType": "4",
+              "icon": "el-icon-remove-outline",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "DEL_SKILL"
+                }
+              },
+              "confirm": {
+                "title": "提示信息",
+                "msg": "确定删除该目录吗?",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "修改节点信息",
+              "childNodeType": "4",
+              "icon": "el-icon-circle-plus-outline",
+              "toRequest": {
+                "url": "/views/skillcloud/add/addupdate.json",
+                "props": {
+                  "title": "修改节点信息"
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,147 @@
+{
+  "module": "v-search-btn-datagrid",
+  "pageId": "risk_rule_constant",
+  "layout": {
+    "form": {
+      "controls": [{
+        "scene_type": {
+          "label": "场景",
+          "control": "select",
+          "span": 8,
+          "dict": {
+            "format": "label",
+            "dictKey": [
+              "DECI_E_SCENE_TYPE"
+            ],
+            "dictType": "DECI_E_SCENE_TYPE"
+          }
+        },
+        "prod_no": {
+          "label": "产品号",
+          "control": "text",
+          "span": 8,
+          "rules": [{
+            "message": "长度不能超过100个字符",
+            "max": 100
+          }]
+        }
+      }]
+    },
+    "toolbar": {
+      "btns": [{
+        "type": "add",
+        "label": "新增",
+        "toRequest": {
+          "url": "/views/risk/risk_data_source/data_source_configuration/data_source_validity_add.json",
+          "method": "get"
+        },
+        "props": {
+          "width": "70%",
+          "height": "70%",
+          "title": "新增"
+        }
+      }]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+            "servicecode": "deci050027",
+            "data_source_code": "${{params.data_source_code}}"
+        }
+      },
+      "thead": [
+        {
+        "label": "序号",
+        "type": "index"
+        },
+        {
+          "label": "场景",
+          "prop": "scene_type",
+          "dict": {
+            "format": "label",
+            "dictKey": [
+              "DECI_E_SCENE_TYPE"
+            ],
+            "dictType": "DECI_E_SCENE_TYPE"
+          }
+        },
+        {
+          "label": "产品",
+          "prop": "prod_no"
+        },
+        {
+          "label": "有效期（天）",
+          "prop": "valid_period"
+        },
+        {
+          "label": "数据创建时间",
+          "prop": "data_create_time"
+        },
+        {
+          "label": "数据更新时间",
+          "prop": "data_update_time"
+        },
+        {
+          "label": "数据创建柜员",
+          "prop": "data_create_user"
+        },
+        {
+          "label": "数据更新柜员",
+          "prop": "data_update_user"
+        },
+        {
+          "label": "数据版本号",
+          "prop": "data_version"
+        },
+        {
+          "label": "操作",
+          "width": "200px",
+          "btns": [{
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/risk/risk_data_source/data_source_configuration/data_source_validity_edit.json",
+                "method": "get"
+              },
+              "props": {
+                "width": "70%"
+              }
+            },
+            {
+              "type": "look",
+              "label": "查看",
+              "toRequest": {
+                "url": "/views/risk/risk_data_source/data_source_configuration/data_source_validity_view.json",
+                "method": "get"
+              },
+              "props": {
+                "width": "70%"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "deci050030",
+                  "valid_period_id": "${{current.valid_period_id}}"
+                }
+              },
+              "confirm": {
+                  "title": "提示信息",
+                  "msg": "确认删除当前数据？",
+                  "confirmButtonText": "确定",
+                  "cancelButtonText": "取消"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

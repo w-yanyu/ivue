@@ -1,0 +1,139 @@
+{
+  "module": "v-form-editableDataGrid-btn",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "collectionCode": {
+            "label": "集合代码",
+            "control": "text",
+            "span": 12,
+            "rules": [
+              {
+                "required": true,
+                "pattern": "^[A-Za-z][A-Za-z\\d_]{0,39}$",
+                "message": "请正确输入"
+              }
+            ]
+          },
+          "collectionName": {
+            "label": "集合中文名称",
+            "control": "text",
+            "span": 12,
+            "rules": [
+              {
+                "required": true,
+                "message": "请正确输入",
+                "max": 100
+              }
+            ]
+          },
+          "dataType": {
+            "label": "元素数据类型",
+            "control": "select",
+            "span": 12,
+            "disabledOptions": ["Boolean"],
+            "dict": {
+              "dictType": "dataType",
+              "dictKey": [],
+              "format": "value-label",
+              "doRequest": {
+                "url": "/views/risk/dictdata/dataType.json",
+                "method": "get"
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "该控件必填",
+                "max": 8
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "新增",
+          "icon": "el-icon-plus",
+          "props": {
+            "width": "65%",
+            "title": "标题"
+          }
+        },
+        {
+          "type": "batchDelete",
+          "label": "批量删除",
+          "icon": "el-icon-close"
+        },
+        {
+          "type": "submit",
+          "label": "保存",
+          "icon": "el-icon-tickets",
+          "doRequest": {
+            "url": "/API/risk-management-service/risk-collection/add",
+            "method": "post",
+            "params":{
+              "createUser": "$g{{user_info.userCode}}",
+              "updateUser": "$g{{user_info.userCode}}"
+            }
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "pagination": {
+        "show": false
+      },
+      "allData": true,
+      "thead": [
+        {
+          "type": "selection",
+          "width": "50",
+          "prop": {
+            "matchKey": "string",
+            "selectVal": "2a"
+          }
+        },
+        {
+          "prop": "elementValue",
+          "label": "元素值",
+          "type": "text",
+          "rules": [
+            {
+              "required": true,
+              "message": "请正确输入",
+              "max": 40
+            }
+          ]
+        },
+        {
+          "label": "元素名称",
+          "prop": "elementName",
+          "type": "text",
+          "rules": [
+            {
+              "required": true,
+              "message": "请正确输入",
+              "max": 100
+            }
+          ]
+        },
+        {
+          "label": "备注",
+          "prop": "description",
+          "type": "text",
+          "rules": [
+            {
+              "message": "请正确输入",
+              "max": 500
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

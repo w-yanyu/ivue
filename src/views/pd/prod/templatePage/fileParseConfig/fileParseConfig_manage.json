@@ -1,0 +1,151 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/pd/prod/templatePage/fileParseConfig/fileDownloadConfig_select_manage.json",
+            "params": {
+              "sale_prod_cd": "${{params.sale_prod_cd}}",
+              "prod_version": "${{params.prod_version}}",
+              "apply_type": "${{params.apply_type}}"
+            }
+          },
+          "props": {
+            "width": "60%",
+            "title": "文件解析配置新增"
+          }
+        },
+        {
+          "type": "custom",
+          "label": "刷新",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "pd1561",
+              "sale_prod_cd": "${{params.sale_prod_cd}}",
+              "prod_version": "${{params.prod_version}}",
+              "apply_type": "${{params.apply_type}}"
+            }
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "allData": true,
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pd1561",
+          "sale_prod_cd": "${{params.sale_prod_cd}}",
+          "prod_version": "${{params.prod_version}}",
+          "apply_type": "${{params.apply_type}}"
+        }
+      },
+      "thead": [
+        {
+          "type": "string",
+          "label": "解析编号",
+          "prop": "parse_no",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "贴源文件名",
+          "prop": "source_file_name",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "贴源文件描述",
+          "prop": "post_source_file_desc",
+          "align": "center"
+        },
+        {
+          "type": "select",
+          "label": "贴源文件解析方式",
+          "prop": "source_file_parse_way",
+          "align": "center",
+          "dict": {
+            "dictType": "PD_E_SOURCE_FILE_PASE_WAY",
+            "dictKey": [
+              "PD_E_SOURCE_FILE_PASE_WAY"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "text",
+          "label": "贴源文件解析方式内容",
+          "prop": "source_file_parse_content",
+          "align": "center"
+        },
+        {
+          "type": "text",
+          "label": "贴源文件模板",
+          "prop": "source_file_template",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "贴源本地存放路径",
+          "prop": "source_file_local_path",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "fixed": "right",
+          "width": "200px",
+          "btns": [
+            {
+              "type": "look",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/pd/prod/templatePage/fileParseConfig/fileParseConfig_edit.json",
+                "method": "GET",
+                "params": {
+                  "sale_prod_cd": "${{params.sale_prod_cd}}",
+                  "prod_version": "${{params.prod_version}}",
+                  "apply_type": "${{params.apply_type}}"
+                }
+              },
+              "props": {
+                "width": "60%",
+                "title": "文件解析配置维护"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "pd1564"
+                }
+              },
+              "confirm": {
+                "title": "删除",
+                "msg": "确定删除吗？",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              },
+              "eventAfter": {
+                "deleteCallback": true
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

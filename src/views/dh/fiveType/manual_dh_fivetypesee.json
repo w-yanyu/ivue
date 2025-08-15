@@ -1,0 +1,115 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+
+    "toolbar": {
+      "btns": [
+        {
+          "type": "custom",
+          "target": "dialog",
+          "label": "调整五级分类",
+          "#checkCountMin": 1,
+          "eventAfter": {
+            "doParentCallback": true
+          },
+          "toRequest": {
+            "method": "POST",
+            "url": "@ManualSubmit",
+            "params": {
+              "applid": "${{params.applid}}",
+              "custid": "${{params.custid}}"
+            }
+          },
+          "props": {
+            "title": "手动五级分类"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "custid": "${{params.custid}}",
+          "servicecode": "PLMSKGTS0002"
+        }
+      },
+      "thead": [
+        {
+          "type" :  "selection",
+          "width": "55"
+        },
+        {
+          "label": "借据号",
+          "align": "center",
+          "prop": "lncfno"
+        },
+        {
+          "label": "产品名称",
+          "prop": "prodna",
+          "align": "center"
+        },
+        {
+          "label": "贷款余额",
+          "align": "center",
+          "prop": "lnyue"
+        },
+        {
+          "label": "逾期天数",
+          "align": "center",
+          "prop": "modsdy"
+        },
+        {
+          "label": "贷款状态",
+          "align": "center",
+          "prop": "clssst",
+          "dict": {
+            "dictType": "E_CLSSST",
+            "dictKey": [
+              "E_CLSSST"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "系统五级分类",
+          "align": "center",
+          "prop": "endres",
+          "dict": {
+            "dictType": "E_CLEVEL1",
+            "dictKey": [
+              "E_CLEVEL1"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "人工五级分类(影响征信)",
+          "align": "center",
+          "prop": "rgzxgradcd",
+          "dict": {
+            "dictType": "E_CLEVEL1",
+            "dictKey": [
+              "E_CLEVEL1"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "人工五级分类(不影响征信)",
+          "align": "center",
+          "prop": "rggradcd",
+          "dict": {
+            "dictType": "E_CLEVEL1",
+            "dictKey": [
+              "E_CLEVEL1"
+            ],
+            "format": "label"
+          }
+        }
+      ]
+    }
+  }
+}

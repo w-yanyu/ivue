@@ -1,0 +1,118 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+      "form": {
+        "controls": [
+          {
+            "cds_belong_month":{
+              "control": "dateTimePicker",
+              "label": "CDS归属月",
+              "type":"month",
+              "format": "yyyyMM"
+            }
+          }
+        ]
+      },
+      "toolbar": {
+        "btns": [
+          {
+            "type": "add",
+            "target": "dialog",
+            "label": "新增",
+            "toRequest": {
+              "method": "GET",
+              "url": "/views/us/peersManage/CDSInfo/cds_add.json",
+              "params": {
+                "cust_no": "${{params.cust_no}}"
+              }
+            },
+            "props": {
+              "width": "80%",
+              "title": "CDS信息新增"
+            }
+          }
+        ]
+      },
+      "datagrid": {
+        "scope": "searchTable",
+        "isInitSearch": true,
+        "doRequest": {
+          "url": "/SUMP/icmcall/icmRPCCall",
+          "method": "POST",
+          "params": {
+            "servicecode": "us1009",
+            "cust_no": "${{params.cust_no}}"
+          }
+        },
+        "thead": [
+          {
+            "label": "CDS序号",
+            "prop": "cds_no",
+            "isShow":false,
+            "align": "center"
+          },
+          {
+            "label": "CDS归属月",
+            "prop": "cds_belong_month",
+            "align": "center"
+          },{
+            "label": "CDS值(万元)",
+            "prop": "cds_value",
+            "align": "center"
+          },{
+            "label": "较上月变化值(万元)",
+            "prop": "cds_compare_value",
+            "align": "center"
+          },
+          {
+            "label": "录入日期",
+            "prop": "input_date",
+            "align": "center"
+          },{
+            "label": "录入人",
+            "prop": "input_person",
+            "align": "center"
+          },
+          {
+            "label": "录入机构",
+            "prop": "input_org",
+            "align": "center"
+          },
+          {
+            "label": "操作",
+            "width": "180px",
+            "align": "center",
+            "btns": [
+              {
+                "type": "custom",
+                "label": "维护",
+                "toRequest": {
+                  "url": "/views/us/peersManage/CDSInfo/cds_update.json",
+                  "params": {
+                    "cds_no":"${{current.cds_no}}"
+                  },
+                  "props": {
+                    "width": "80%",
+                    "title": "CDS信息维护"
+                  }
+                }
+              },
+              {
+                "type": "custom",
+                "label": "删除",
+                "doRequest": {
+                  "url": "/SUMP/icmcall/icmRPCCall",
+                  "method": "POST",
+                  "params": {
+                    "servicecode": "us1007",
+                    "cust_no": "${{params.cust_no}}"
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+  

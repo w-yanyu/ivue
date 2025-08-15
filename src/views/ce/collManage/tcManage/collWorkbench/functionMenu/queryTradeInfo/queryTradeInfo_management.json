@@ -1,0 +1,176 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "loan_no": {
+                        "control": "remoteSelect",
+                        "label": "借据号",
+                        "valueField": "loan_no",
+                        "doRequest": {
+                            "url": "/SUMP/call/RPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "ce3605",
+                                "case_no": "${{params.case_no}}"
+                            }
+                        },
+                        "format": "value"
+                    },
+                    "daterange": {
+                        "control": "dateTimePicker",
+                        "width":"130px",
+                        "label": "申请时间",
+                        "type": "daterange",
+                        "unlinkPanels": true,
+                        "valueFormat": "yyyyMMdd",
+                        "startPlaceholder": "选择开始时间",
+                        "endPlaceholder": "选择结束时间",
+                        "startField":"begin_date",
+                        "endField":"end_date"
+                    }
+                }
+            ]
+        },
+
+        "toolbar": {
+            "###btns": [
+                {
+                    "type": "custom",
+                    "target": "dialog",
+                    "label": "实时查询",
+                    "doRequest": {
+                        "url": "/SUMP/call/RPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "ce3513",
+                            "begin_date":"${{form.begin_date}}",
+                            "end_date":"${{form.end_date}}",
+                            "loan_no":"",
+                            "case_no":"${{params.case_no}}"
+                        }
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ce3510",
+                    "case_no":"${{params.case_no}}"
+                }
+            },
+            "thead": [
+                {
+                    "type":"string",
+                    "label": "明细编号",
+                    "align":"center",
+                    "width":"180px",
+                    "prop": "detail_no"
+                },
+                {
+                    "type":"string",
+                    "label": "借据号",
+                    "align":"center",
+                    "width":"180px",
+                    "prop": "loan_no"
+                },
+                {
+                    "type":"string",
+                    "label": "币种",
+                    "align":"center",
+                    "width":"180px",
+                    "prop": "ccy_code",
+                    "dict": {
+                      "dictType": "MS_CURRENCY",
+                      "dictKey": [
+                        "MS_CURRENCY"
+                      ],
+                      "format": "label"
+                    }
+                },
+                {
+                    "type":"string",
+                    "label": "交易日期",
+                    "align":"center",
+                    "width":"180px",
+                    "prop": "trxn_date"
+                },
+                {
+                    "type":"string",
+                    "label": "正常本金",
+                    "align":"center",
+                    "width":"180px",
+                    "prop": "normal_princi"
+                },
+                {
+                    "type":"string",
+                    "label": "还款账号",
+                    "align":"center",
+                    "width":"180px",
+                    "prop": "repay_acct"
+                },
+                {
+                    "type":"string",
+                    "label": "还款总额",
+                    "align":"center",
+                    "width":"180px",
+                    "prop": "repay_total_amt"
+                },
+                {
+                    "type":"string",
+                    "label": "还款状态",
+                    "align":"center",
+                    "width":"180px",
+                    "prop": "repay_state"
+                },
+                {
+                    "type":"string",
+                    "label": "归还本金",
+                    "align":"center",
+                    "width":"180px",
+                    "prop": "repay_princi"
+                },
+                {
+                    "type":"string",
+                    "label": "归还应收应计利息",
+                    "align":"center",
+                    "width":"180px",
+                    "prop": "repay_inst"
+                },
+                {
+                    "type":"string",
+                    "label": "归还应收欠息",
+                    "align":"center",
+                    "width":"180px",
+                    "prop": "repay_due_inst"
+                },
+                {
+                    "type":"string",
+                    "label": "归还应收罚息",
+                    "align":"center",
+                    "width":"180px",
+                    "prop": "penalty_interest"
+                },
+                {
+                    "type":"string",
+                    "label": "归还复息",
+                    "align":"center",
+                    "width":"180px",
+                    "prop": "return_comp"
+                },
+                {
+                    "type":"string",
+                    "label": "归还费用",
+                    "align":"center",
+                    "width":"180px",
+                    "prop": "return_fee"
+                }
+            ]
+        }
+    }
+}

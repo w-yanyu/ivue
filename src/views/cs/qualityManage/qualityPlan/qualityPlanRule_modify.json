@@ -1,0 +1,154 @@
+{
+    "module": "v-form-editableDataGrid-btn",
+    "layout": {
+      "form": {
+        "scope": "formData",
+        "initRequest": "${{params}}",
+        "controls": [
+            {
+              "serial_no": {
+                "control": "hidden",
+                "disabled":true,
+                "label": "流水号"
+              },
+                "quality_plan_no": {
+                    "control": "text",
+                    "disabled":true,
+                    "label": "质检方案编号"
+                  },
+                "quality_plan_type": {
+                  "control": "text",
+                  "disabled":true,
+                  "label": "方案类型"
+                },
+                "quality_plan_name": {
+                  "control": "text",
+                  "disabled":true,
+                  "label": "方案名称"
+                }
+              }
+        ]
+      },
+      "toolbar": {
+        "btns": [
+          {
+            "type": "add",
+            "icon": "el-icon-circle-plus",
+            "target": "dialog",
+            "label": "新增",
+            "toRequest": {
+              "method": "POST",
+              "url": "/views/cs/qualityManage/qualityPlan/quality_plan_rule_config_add.json",
+              "params": {
+                "quality_plan_no": "${{params.quality_plan_no}}"
+              }
+            },
+            "props": {
+              "width": "65%",
+              "title": "新增方案规则"
+            }
+          },
+          {
+            "type": "edit",
+            "label": "删除",
+            "icon": "el-icon-delete",
+            "confirm": {
+              "title": "提醒",
+              "msg": "确定删除？",
+              "confirmButtonText": "确定",
+              "cancelButtonText": "取消"
+            },
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "qc0011"
+                }
+            }
+          }
+          
+        ]
+      },
+      "datagrid": {
+        "isInitSearch": false,
+        "doRequest": {
+          "url": "/SUMP/icmcall/icmRPCCall",
+          "method": "POST",
+          "params": {
+            "servicecode": "qc0006",
+            "appId": "qcOnl"
+          }
+        },
+        "pagination": {
+          "show": false
+        },
+        "allData":true,
+        "thead": [
+          {
+            "type": "selection",
+            "align": "center",
+            "width": "55",
+            "fixed": "left",
+            "show": {
+              "prop": "changkuan",
+              "is": [
+                "0"
+              ]
+            }
+          },
+          {
+            "label": "规则类型",
+            "prop": "quality_rule_type",
+            "type": "string",
+            "dict": {
+              "dictType": "CS_QUALITY_PLAN_RULE_TYPE",
+              "dictKey": [
+                "CS_QUALITY_PLAN_RULE_TYPE"
+              ],
+              "format": "value-label"
+            }
+          },
+          {
+            "label": "操作",
+            "width": "280px",
+            "btns": [
+              
+              {
+                "type": "edit",
+                "label": "配置规则",
+                "toRequest": {
+                  "url": "/views/cs/qualityManage/qualityPlan/quality_plan_rule_config.json",
+                  "method": "POST",
+                  "param":{
+                    "serial_no":"${{params.serial_no}}"
+                  }
+                },
+                "props": {
+                  "width": "60%",
+                  "title": "配置规则"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "footer": {
+        "btns": [
+          {
+            "type": "submit",
+            "label": "保存",
+            "icon": "el-icon-tickets",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "py0003",
+                "appId": "pyOnl"
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+  

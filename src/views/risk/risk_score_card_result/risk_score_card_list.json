@@ -1,0 +1,225 @@
+{
+  "module": "v-search-btn-datagrid",
+  "layout": {
+    "form": {
+      "foldLineNumber": 3,
+      "controls": [
+        {
+          "application_id": {
+            "label": "申请编号",
+            "control": "text",
+            "width": "auto",
+            "span": 8
+          },
+          "system_number_identification": {
+            "label": "系统编号标识",
+            "control": "text",
+            "width": "auto",
+            "span": 8
+          },
+          "system_name": {
+            "label": "系统名称",
+            "control": "text",
+            "width": "auto",
+            "span": 8
+          },
+          "score_card_code": {
+            "label": "评分卡代码",
+            "control": "lookup",
+            "span": 8,
+            "width": "auto",
+            "keyField": {
+              "score_card_code": "scoreCardCode",
+              "score_card_name": "scoreCardName"
+          },
+          "toRequest": {
+              "url": "/views/risk/risk_score_card_result/lookup.json",
+              "method": "get"
+          },
+          "props": {
+            "title": "评分卡选择",
+            "width": "80%"
+          }
+          },
+          "score_card_name": {
+            "label": "评分卡名称",
+            "control": "text",
+            "width": "auto",
+            "span": 8
+          },
+          "status": {
+            "label": "状态",
+            "control": "select",
+            "width": "auto",
+            "span": 8,
+            "dict": {
+              "dictType": "DECI_E_ABNORMAL_CAUSE",
+              "dictKey": [
+                "DECI_E_ABNORMAL_CAUSE"
+              ],
+              "format": "label"
+            }
+          },
+          "update_time": {
+            "control": "dateTimePicker",
+            "label": "交易日期",
+            "type": "daterange",
+            "span": 8,
+            "width": "auto",
+            "startPlaceholder": "开始时间",
+            "endPlaceholder": "结束时间",
+            "value": ["today-6","today"],
+            "unlinkPanels": true,
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择交易日期"
+              }
+            ]
+          },
+          "branch_id": {
+            "label": "机构名称",
+            "control": "remoteSelect",
+            "labelField": "branch_name",
+            "valueField": "branch_id",
+            "searchField":"branch_name",
+            "span": 8,
+            "value": "$g{{user_info.branch_id}}",
+            "width": "auto",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "post",
+              "params": {
+                "servicecode": "ct2191"
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入机构名称",
+                "max": 125
+              }
+            ],
+            "format": "label"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "deci060101",
+          "isList": true
+        }
+      },
+      "pagination": {
+        "hideOnSinglePage": false,
+        "show": true,
+        "pageSizes": [10, 15, 20],
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "label": "序号",
+          "type": "index"
+        },
+        {
+          "label": "申请编号",
+          "prop": "application_id"
+        },
+        {
+          "label": "系统编号标识",
+          "prop": "system_number_identification"
+        },
+        {
+          "label": "系统名称",
+          "prop": "system_name"
+        },
+        {
+          "label": "评分卡代码",
+          "prop": "score_card_code"
+        },
+        {
+          "label": "评分卡名称",
+          "prop": "score_card_name"
+        },
+        {
+          "label": "总得分",
+          "prop": "total_score"
+        },
+        {
+          "label": "交易时间",
+          "prop": "transaction_start_time",
+          "valueFormat": "yyyy-MM-dd HHmmss",
+          "format": "yyyy-MM-dd HH:mm:ss"
+        },
+        {
+          "label": "结束时间",
+          "prop": "transaction_end_time",
+          "format": "yyyy-MM-dd HH:mm:ss"
+        },
+        {
+          "label": "状态",
+          "prop": "status",
+          "dict": {
+            "dictType": "DECI_E_ABNORMAL_CAUSE",
+            "dictKey": [
+              "DECI_E_ABNORMAL_CAUSE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "异常原因",
+          "prop": "abnormal_cause"
+        },
+        {
+          "label": "机构名称",
+          "prop": "branch_id",
+          "dict": {
+            "dictType": "DECI_E_BRANCH_MARK",
+            "dictKey": [
+              "DECI_E_BRANCH_MARK"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作",
+          "width": "150px",
+          "align": "center",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "@riskScoreCardResulrView",
+                "method": "get"
+              },
+              "props": {
+                "width": "80%"
+              }
+            },
+            {
+              "type": "look",
+              "label": "报文明细",
+              "toRequest": {
+                "#url": "/views/risk/rule_flow/tran_result/rule_flow_result_tabs.json",
+                "url":"@riskScoreDetail",
+                "method": "get"
+              },
+              "props": {
+                "width": "50%"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

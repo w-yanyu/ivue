@@ -1,0 +1,48 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ct2305"
+        }
+      },
+      "btns":[
+        {
+          "type":"submit",
+          "label":"提交"
+        }
+      ],
+      "controls": [
+        {
+          "appId": {
+            "label": "业务模块",
+            "control": "hidden",
+            "value":"${{params.appId}}"
+          }
+        },{
+          "file_path": {
+            "control": "dynamic",
+            "isShowChildForm": true,
+            "span": 12,
+            "toRequest": {
+              "url": "@SingleUpload",
+              "method": "get",
+              "params": {
+                "path": "exchange",
+                "uploadType": "sftp",
+                "formKey": "file_path",
+                "formLabel": "选择汇率文件",
+                "accept": ".xlsx,.xls,.xml,.txt",
+                "required": "true",
+                "tipText": "只能上传xls/xlsx，且不超过10MB"
+                }
+          }
+        }
+        }
+      ]
+    }
+  }
+}

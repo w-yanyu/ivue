@@ -1,0 +1,150 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "btns": [
+                {
+                    "type": "export",
+                    "label": "查看评估报告",
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/downloadStream",
+                        "method": "POST",
+                        "params": {
+                            "filePath": "${{current.atta_url}}",
+                            "fileName": "押品外部评估附件"
+                        }
+                    },
+                    "eventAfter": {
+                        "doParentCallback": true
+                    }
+                }
+            ],
+            "initRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "co4004",
+                    "appl_id": "${{params.applid}}"
+                }
+            },
+            "controlsGroup": [
+                {
+                    "title": "估值信息",
+                    "tooltip": "",
+                    "titleIcon": "",
+                    "showHint": "",
+                    "accordion": false,
+                    "expand": true,
+                    "controls": [
+                    {
+                    "oevaty": {
+                        "control": "select",
+                        "label": "评估类型",
+                        "span": 12,
+                        "aligin": "center",
+                        "disabled": true,
+                        "dict": {
+                            "dictType": "CO_E_EVALTP",
+                            "dictKey": [
+                                "CO_E_EVALTP"
+                            ],
+                            "format": "label"
+                        }
+                    },
+                    "oevava": {
+                        "control": "text",
+                        "label": "评估价值",
+                        "disabled": true,
+                        "span": 12
+                    },
+                    "oevacu": {
+                        "control": "select",
+                        "label": "评估币种",
+                        "disabled": true,
+                        "span": 12,
+                        "dict": {
+                            "dictType": "MS_CURRENCY",
+                            "dictKey": [
+                                "MS_CURRENCY"
+                            ],
+                            "format": "label"
+                        }
+                    }
+                },
+                {
+                    "askbas": {
+                        "control": "textarea",
+                        "disabled": true,
+                        "label": "评估依据",
+                        "span": 24
+                    }
+                },
+                {
+                    "oevada": {
+                        "control": "text",
+                        "disabled": true,
+                        "label": "评估时间",
+                        "span": 12
+                    },
+                    "oestda": {
+                        "control": "text",
+                        "disabled": true,
+                        "label": "评估开始时间",
+                        "span": 12
+                    }
+                },
+                {
+                    "oeexda": {
+                        "control": "text",
+                        "disabled": true,
+                        "label": "评估结束时间",
+                        "span": 12
+                    },
+                    "atta_url": {
+                        "control": "hidden",
+                        "disabled": true,
+                        "label": "附件",
+                        "span": 12
+                    },
+                    "organize_no": {
+                        "control": "text",
+                        "disabled": true,
+                        "label": "外部评估机构编号",
+                        "span": 12
+                    },
+                    "colt_no": {
+                        "control": "hidden",
+                        "disabled": true,
+                        "span": 12
+                    }
+                }
+            ]
+        },
+        {
+            "title": "押品信息",
+            "tooltip": "",
+            "titleIcon": "",
+            "showHint": "",
+            "accordion": false,
+            "expand": true,
+            "controls": [
+                {
+                    "id2": {
+                        "control": "dynamic",
+                        "isShowChildForm": false,
+                        "span": 24,
+                        "toRequest": {
+                            "url": "/views/cols/colsAppraisement/cobColt.json",
+                            "method": "get",
+                            "params": {
+                                "colt_no": "${{form.colt_no}}"
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}
+}
+}

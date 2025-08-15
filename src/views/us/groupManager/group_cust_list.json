@@ -1,0 +1,141 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "group_name": {
+            "control": "text",
+            "label": "集团客户名称",
+            "rules": [
+              {
+                "max": 30,
+                "message": "长度不能超过30个字符"
+              }
+            ]
+          },
+          "group_no": {
+            "control": "text",
+            "label": "集团客户编号",
+            "rules": [
+              {
+                "max": 32,
+                "message": "长度不能超过32个字符"
+              }
+            ]
+            
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/us/groupManager/group_cust_add.json"
+          },
+          "props": {
+            "width": "80%",
+            "title": "集团客户信息新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "us0600"
+        }
+      },
+      "thead": [
+        {
+          "type": "index",
+          "label": "序号"
+        },
+        {
+          "label": "集团客户号",
+          "prop": "group_no",
+          "align": "center"
+        },
+        {
+          "label": "集团客户名称",
+          "prop": "group_name",
+          "align": "center"
+        },
+        {
+          "label": "客户号",
+          "prop": "cust_no",
+          "align": "center"
+        },{
+          "label": "是否虚拟集团",
+          "prop": "is_virtual",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "labelField": "dictName",
+            "valueField": "dictId"
+          }
+        },
+        {
+          "label": "所属法人",
+          "prop": "org_id",
+          "align": "center"
+        },        
+        {
+          "label": "操作",
+          "align": "center",
+          "btns": [
+            {
+              "type": "custom",
+              "label": "详细信息",
+              "show":{
+                "expression":" '${{current.is_virtual}}' === '0' "
+              },
+              "toRequest": {
+                "url": "/views/us/groupManager/group_cust_tree.json",
+                "params": {
+                  "show_flash": "0",
+                  "grupno": "0011"
+                }
+              },
+              "props": {
+                "width": "95%",
+                "height": "90%",
+                "title": "详情"
+              }
+            },{
+              "type": "custom",
+              "label": "详细信息",
+              "show":{
+                "expression":" '${{current.is_virtual}}' === '1' "
+              },
+              "toRequest": {
+                "url": "/views/us/groupManager/group_cust_tree.json",
+                "params": {
+                  "show_flash": "0",
+                  "grupno": "0012"
+                }
+              },
+              "props": {
+                "width": "95%",
+                "height": "90%",
+                "title": "详情"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

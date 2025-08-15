@@ -1,0 +1,80 @@
+{
+    "module": "d-steps",
+    "layout": {
+        "steps": {
+            "scope": "formObj",
+            "direction": "horizontal",
+            "alignCenter": true,
+            "finishStatus": "success",
+            "simpleType": false,
+            "nextStepType": "validate",
+            "list": [
+                {
+                    "scope": "step1",
+                    "title": "新增分配权限批次",
+                    "icon": "el-icon-edit",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/us/authManger/authdistributebatch/auth_distribute_batch_add.json",
+                        "params": {
+                            "batch_no": "${{formObj.step1.batch_no}}"
+                        }
+                    },
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "us1301",
+                            "operater_ind": "A"
+
+                        }
+                    }
+                },
+                {
+                    "scope": "step2",
+                    "title": "选择关联客户",
+                    "icon": "el-icon-edit",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/us/authManger/authdistribute/user_rela.json",
+                        "params": {
+                            "batch_no": "${{formObj.step1.batch_no}}"
+                        }
+                    }
+                },
+                {
+                    "scope": "step3",
+                    "title": "选择用户",
+                    "icon": "el-icon-edit",
+                    "toRequest": {
+                        "url": "/views/us/authManger/batchtellerrela/batch_teller_rela_manage.json",
+                        "params": {
+                            "batch_no": "${{formObj.step1.batch_no}}"
+                        },
+                        "method": "get"
+                    }
+                },
+                {
+                    "scope": "step4",
+                    "title": "分配权限",
+                    "icon": "el-icon-edit",
+                    "toRequest": {
+                        "url": "/views/us/authManger/batchauthrela/batch_auth_rela_info.json",
+                        "params": {
+                            "batch_no": "${{formObj.step1.batch_no}}"
+                        },
+                        "method": "get"
+                    },
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "us1307",
+                            "batch_no": "${{formObj.step1.batch_no}}"
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

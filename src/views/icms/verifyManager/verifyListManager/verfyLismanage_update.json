@@ -1,0 +1,57 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "verify_list_cd": {
+            "label": "核实项检查列表序列号",
+            "control": "text",
+            "disabled": true,
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入核实项检查列表序列号"
+              }
+            ]
+          },
+          "cust_class": {
+            "label": "适用客户类型",
+            "control": "select",
+            "dict": {
+              "dictType": "AR_E_CUST_CLASS",
+              "dictKey": [
+                "AR_E_CUST_CLASS"
+              ]
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择适用客户类型"
+              }
+            ]
+          },
+          "verify_list_desc": {
+            "label": "描述",
+            "control": "text"
+          }
+        }
+      ],
+      "initRequest": "${{params}}",
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "doRequest": {
+            "url": "/SUMP/call/RPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "ar1144",
+              "verify_list_cd": "${{params.verify_list_cd}}"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

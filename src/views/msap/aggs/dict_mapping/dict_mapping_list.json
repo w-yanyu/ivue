@@ -1,0 +1,153 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/msap/aggs/dict_mapping/dict_mapping_add.json",
+            "params": {
+              "appId": "aggsOnl"
+            }
+          },
+          "props": {
+            "title": "新增业务字典映射",
+            "width": "80%"
+          }
+        }
+      ]
+    },
+    "form": {
+      "foldLineNumber": 3,
+      "controls": [
+        {
+          "dict_type": {
+            "control": "text",
+            "label": "业务字典编号"
+          },
+          "dict_type_name": {
+            "control": "text",
+            "label": "业务字典名称"
+          }
+        },
+        {
+          "dict_id": {
+            "control": "text",
+            "label": "业务字典值编号"
+          },
+          "dict_name": {
+            "control": "text",
+            "label": "业务字典值名称"
+          }
+        },
+        {
+          "mapp_dict_id": {
+            "control": "text",
+            "label": "映射业务字典值编号"
+          },
+          "mapp_dict_name": {
+            "control": "text",
+            "label":   "映射业务字典值名称"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "aggs0101",         
+          "appId": "aggsOnl"
+        }
+      },
+      "thead": [
+        {
+          "label": "业务字典类型编号",
+          "prop": "dict_type",
+          "align": "center"
+        },
+        {
+          "label": "业务字典类型名称",
+          "prop": "dict_type_name"
+        },
+        {
+          "label": "业务字典值编号",
+          "prop": "dict_id",
+          "align": "center"
+        },
+        {
+          "label": "业务字典值名称",
+          "prop": "dict_name",
+          "align": "center"
+        },
+        {
+          "label": "排序",
+          "prop": "sort_no",
+          "align": "center"
+        },
+        {
+          "label": "映射业务字典值编号",
+          "prop": "mapp_dict_id",
+          "align": "center"
+        },
+        {
+          "label": "映射业务字典值编号",
+          "prop": "mapp_dict_name",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/msap/aggs/dict_mapping/dict_mapping_upd.json",
+                "method": "GET",
+                "target": "dialog",
+                "noRefreshTab": true,
+                "params": {
+                 
+                }
+              },
+              "props": {
+                "title": "修改业务字典",
+                "width": "80%"
+              }
+            },
+           
+            {
+              "type": "edit",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "aggs0104",
+                  "appId": "aggsOnl",
+                  "dict_type": "${{current.dict_type}}",
+                  "dict_id": "${{current.dict_id}}"
+                }
+              },
+              "confirm": {
+                "title": "提示信息",
+                "msg": "确认要取消签收吗？",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

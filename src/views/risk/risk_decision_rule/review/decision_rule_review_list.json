@@ -1,0 +1,180 @@
+{
+  "module": "v-search-btn-datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "rule_code": {
+            "label": "规则代码",
+            "control": "text",
+            "width":"auto",
+            "span": 8,
+            "rules": [
+              {
+                "message": "字段长度超限",
+                "max": 40
+              }
+            ]
+          },
+          "rule_name_after": {
+            "label": "规则名称",
+            "control": "text",
+            "width":"auto",
+            "span": 8,
+            "rules": [
+              {
+                "message": "字段长度超限",
+                "max": 40
+              }
+            ]
+          },
+          "review_status": {
+            "label": "审核状态",
+            "control": "select",
+            "width":"auto",
+            "span": 8,
+            "dict": {
+              "dictType": "DECI_E_SCORE_REVIEW_STATUS",
+              "dictKey": [
+                  "DECI_E_SCORE_REVIEW_STATUS"
+              ],
+              "format": "label"
+          }
+          },
+          "operation_type": {
+            "label": "操作类型",
+            "control": "select",
+            "width":"auto",
+            "span": 8,
+            "dict": {
+              "dictType": "DECI_E_RISK_OPERATION_TYPE",
+              "dictKey": [
+                  "DECI_E_RISK_OPERATION_TYPE"
+              ],
+              "format": "label"
+          }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": []
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "deci010513",
+          "isList": true
+        }
+      },
+      "pagination": {
+        "hideOnSinglePage": false,
+        "show": true,
+        "pageSizes": [10, 15, 20],
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "type": "index",
+          "label": "序号",
+          "align": "center"
+      },
+        {
+          "label": "规则代码",
+          "prop": "rule_code"
+        },
+        {
+          "label": "规则名称",
+          "prop": "rule_name_after"
+        },
+        {
+          "label": "操作类型",
+          "prop": "operation_type",
+          "dict": {
+            "dictType": "DECI_E_RISK_OPERATION_TYPE",
+            "dictKey": [
+                "DECI_E_RISK_OPERATION_TYPE"
+            ],
+            "format": "label"
+        }
+        },
+        {
+          "label": "审核状态",
+          "prop": "review_status",
+          "dict": {
+            "dictType": "DECI_E_SCORE_REVIEW_STATUS",
+            "dictKey": [
+                "DECI_E_SCORE_REVIEW_STATUS"
+            ],
+            "format": "label"
+        }
+        },
+        {
+          "label": "申请人",
+          "prop": "apply_user_name"
+        },
+        {
+          "label": "申请时间",
+          "prop": "apply_time"
+        },
+        {
+          "label": "操作",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "审核",
+              "authId": "",
+              "toRequest": {
+                "url": "@decisionRuleReview",
+                "method": "get"
+              },
+              "props": {
+                "width": "90%",
+                "height": "85%"
+              },
+              "show": {
+                "expression": "'${{current.review_status}}'=== 'C'"
+              }
+            },
+            {
+              "type": "look",
+              "label": "查看",
+              "authId": "",
+              "toRequest": {
+                "url": "@decisionRuleReviewView",
+                "method": "get"
+              },
+              "props": {
+                "width": "90%",
+                "top": "4vh"
+              }
+            },
+            {
+              "type": "openVerify",
+              "label": "测试结果",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "deci010632",
+                  "rule_code": "${{current.rule_code}}"
+                }
+              },
+              "toRequest": {
+                "url": "/views/risk/risk_decision_rule/review/decision_rule_result.json",
+                "method": "get"
+              },
+              "props": {
+                "width": "70%"
+                
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

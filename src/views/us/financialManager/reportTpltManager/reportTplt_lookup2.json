@@ -1,0 +1,102 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [{
+                "indu_type": {
+                    "control": "select",
+                    "label": "报表行业类型",
+                    "dict": {
+                        "dictType": "US_E_INDU_TYPE",
+                        "dictKey": [
+                            "US_E_INDU_TYPE"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                "rpt_type": {
+                    "control": "select",
+                    "disabled": true,
+                    "value": "${{params.rpt_type}}",
+                    "dict": {
+                        "dictType": "US_E_RPT_TYPE",
+                        "dictKey": [
+                            "US_E_RPT_TYPE"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                }
+            }]
+        },
+        "datagrid": {
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "us0910",
+                    "is_halt_flag":"${{params.is_halt_flag}}"
+                }
+            },
+            "thead": [{
+                    "label": "报表模板名称",
+                    "prop": "tplt_name"
+                },
+                {
+                    "label": "报表模板编号",
+                    "prop": "tplt_id"
+                },
+                {
+                    "label": "报表行业类型",
+                    "prop": "indu_type",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "US_E_INDU_TYPE",
+                        "dictKey": [
+                            "US_E_INDU_TYPE"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "报表类型",
+                    "prop": "rpt_type",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "US_E_RPT_TYPE",
+                        "dictKey": [
+                            "US_E_RPT_TYPE"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "是否停用",
+                    "prop": "is_halt_flag",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                            "MS_E_YESORNO"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 100,
+                    "align": "center",
+                    "btns": [{
+                        "type": "bringback",
+                        "label": "选择"
+                    }]
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,161 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "cust_no": {
+                        "control": "text",
+                        "label": "客户编号"
+                    },
+                    "quota_status": {
+                        "control": "select",
+                        "label": "额度状态",
+                        "align": "center",
+                        "dict": {
+                            "dictType": "UCCP_E_QUOTA_STATUS",
+                            "dictKey": [
+                                "UCCP_E_QUOTA_STATUS"
+                            ],
+                            "format": "label"
+                        }
+                    }
+                }
+            ]
+          },
+        "toolbar": {
+            "btns": [{
+                "type": "add",
+                "label": "新增",
+                "target": "dialog",
+                "toRequest": {
+                    "method": "GET",
+                    "url": "/views/uccp/quotaManager/smallAmount/amount_exceed_limit_add.json",
+                    "params": {
+                        "dict_org_id": "$g{{user_info.org_id}}"
+                    }
+                },
+                "props": {
+                    "width": "80%",
+                    "title": "小额可超限额度信息新增"
+                }
+            }]
+        },
+        "datagrid": {
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "uccp3008",
+                    "appId":"uccpOnl",
+                    "dict_org_id":"$g{{user_info.org_id}}"
+                }
+            },
+            "thead": [
+                {
+                    "label": "业务法人",
+                    "prop": "dict_org_id",
+                    "align": "center"
+                },
+                {
+                    "label": "客户编号",
+                    "prop": "cust_no",
+                    "align": "center"
+                },
+                {
+                    "label": "生效日期",
+                    "prop": "effect_date",
+                    "control": "dateTimePicker",
+                    "format": "yyyyMMdd",
+                    "align": "center"
+                },
+                {
+                    "label": "失效日期",
+                    "prop": "expiry_date",
+                    "align": "center",
+                    "control": "dateTimePicker",
+                    "format": "yyyyMMdd"
+                },
+                {
+                    "label": "基础币种",
+                    "prop": "base_ccy_code",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "MS_CURRENCY",
+                        "dictKey": [
+                        "MS_CURRENCY"
+                        ]
+                    }
+                },
+                {
+                    "label": "小额可超限额度",
+                    "prop": "over_limit",
+                    "align": "center",
+                    "format": {
+                        "thousand": ","
+                      }
+                },
+                {
+                    "label": "小额可超限敞口额度",
+                    "prop": "over_exposure_limit",
+                    "align": "center",
+                    "format": {
+                        "thousand": ","
+                      }
+                },
+                {
+                    "label": "额度状态",
+                    "prop": "quota_status",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "UCCP_E_QUOTA_STATUS",
+                        "dictKey": [
+                            "UCCP_E_QUOTA_STATUS"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 230,
+                    "align": "center",
+                    "btns": [{
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/uccp/quotaManager/smallAmount/amount_exceed_limit_modify.json",
+                                "method": "GET",
+                                "params": {
+                                    
+                                }
+                            },
+
+                            "props": {
+                                "width": "80%",
+                                "title": "小额可超限额度信息维护"
+                            }
+                        },
+                        {
+                            "type": "custom",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/call/RPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "uccp3006"
+                                }
+                            },
+                            "confirm": {
+                                "title": "确定删除",
+                                "confirmButtonText": "确定",
+                                "cancelButtonText": "取消"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

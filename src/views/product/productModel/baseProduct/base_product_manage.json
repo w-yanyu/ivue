@@ -1,0 +1,214 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "prod_code": {
+            "control": "text",
+            "label": "产品代码"
+          },
+          "prod_nm": {
+            "control": "text",
+            "label": "产品名称"
+          }
+        },
+        {
+          "loan_prod_ste": {
+            "control": "select",
+            "label": "贷款产品状态",
+            "dict": {
+              "dictType": "LN_E_LOAN_PROD_STE",
+              "dictKey": [
+                "LN_E_LOAN_PROD_STE"
+              ],
+              "format": "label"
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/product/productModel/baseProduct/product_add.json"
+          },
+          "props": {
+            "title": "基础产品新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ln3270",
+          "outlistid": "lstProd",
+          "cust_class_list": "${{params.cust_class_list}}"
+        }
+      },
+      "thead": [
+        {
+          "label": "产品代码",
+          "prop": "prod_code",
+          "align": "center"
+        },
+        {
+          "label": "产品名称",
+          "prop": "prod_nm",
+          "align": "center"
+        },
+        {
+          "label": "产品描述",
+          "prop": "prod_dsc",
+          "align": "center"
+        },
+        {
+          "label": "生效日期",
+          "prop": "eff_dt",
+          "align": "center"
+        },
+        {
+          "label": "失效日期",
+          "prop": "invld_dt",
+          "align": "center"
+        },
+        {
+          "label": "贷款产品状态",
+          "prop": "loan_prod_ste",
+          "align": "center",
+          "dict": {
+            "dictType": "LN_E_LOAN_PROD_STE",
+            "dictKey": [
+              "LN_E_LOAN_PROD_STE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "上下架状态",
+          "prop": "on_off_shlvs_ste",
+          "align": "center",
+          "dict": {
+            "dictType": "LN_E_ON_OFF_SHLVS_STE",
+            "dictKey": [
+              "LN_E_ON_OFF_SHLVS_STE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "产品组代码",
+          "prop": "prod_grp_code",
+          "align": "center"
+        },
+        {
+          "label": "产品组名称",
+          "prop": "prod_grp_nm",
+          "align": "center"
+        },
+        {
+          "label": "产品模板代码",
+          "prop": "prod_tplt_code",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 130,
+          "align": "center",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/product/productModel/baseProduct/product_info.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "70%",
+                "title": "基础产品信息详情"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/product/productModel/baseProduct/product_info_update.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "70%",
+                "title": "基础产品信息维护"
+              }
+            },
+            {
+              "type": "add",
+              "label": "拷贝",
+              "toRequest": {
+                "url": "/views/product/productModel/baseProduct/product_copy_add.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "70%",
+                "title": "基础产品拷贝"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "上下架",
+              "toRequest": {
+                "url": "/views/product/productModel/baseProduct/product_sxj.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "70%",
+                "title": "产品上下架"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "默认值维护",
+              "toRequest": {
+                "url": "@baseProduct_valueEdit",
+                "method": "GET",
+                "target": "navTab",
+                "params": {
+                  "prod_code": "${{current.prod_code}}"
+                }
+              },
+              "props": {
+                "title": "默认值维护"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "停用",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "ln3274"
+                }
+              },
+              "confirm": {
+                "title": "确定停用",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

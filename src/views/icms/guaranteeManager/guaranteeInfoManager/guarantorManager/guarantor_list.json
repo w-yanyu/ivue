@@ -1,0 +1,237 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/icms/guaranteeManager/guaranteeInfoManager/guarantorManager/guarantor_add.json",
+            "params": {
+              "apply_no": "${{params.apply_no}}"
+            }
+          },
+          "props": {
+            "width": "75%",
+            "title": "新增保证人"
+          },
+          "show": {
+            "expression": "'${{params.pageType}}' != 'detail'"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "doRequest": {
+        "isInitSearch": true,
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "ar0725",
+          "apply_no": "${{params.apply_no}}",
+          "cust_no": "${{params.cust_no}}",
+          "query_type": "0"
+        }
+      },
+      "thead": [
+        {
+          "type": "index",
+          "align": "center",
+          "label": "序号"
+        },
+        {
+          "label": "客户名称",
+          "align": "center",
+          "width": "160px",
+          "prop": "cust_name"
+        },
+        {
+          "label": "证件类型",
+          "prop": "cert_type",
+          "align": "center",
+          "width": "160px",
+          "dict": {
+            "dictType": "MS_E_CRET_TYPE",
+            "dictKey": [
+              "MS_E_CRET_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "证件号码",
+          "align": "center",
+          "width": "160px",
+          "prop": "cert_no"
+        },
+        {
+          "label": {
+            "default": "担保方式", 
+             "i18n": "I10.guarantee-method"
+                            },
+          "prop": "guar_modality",
+          "align": "center",
+          "dict": {
+            "dictType": "AR_E_GUAR_CATG",
+            "dictKey": [
+              "AR_E_GUAR_CATG"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": {
+            "default": "担保比例", 
+             "i18n": "K0001.Guarantee-ratio"
+                            },
+          "align": "center",
+          "prop": "guar_ratio"
+        },
+        {
+          "label": {
+            "default": "担保金额", 
+             "i18n": "K0001.Guarantee-amount"
+                            },
+          "align": "center",
+          "prop": "guar_amt",
+          "format": {
+            "thousand": ","
+          }
+        },
+        {
+          "label": {
+            "default": "担保金额（折基准币种）", 
+             "i18n": "K0001.Guarantee-amount-in-base-currency"
+                            },
+          "align": "center",
+          "prop": "guar_base_amt",
+          "format": {
+            "thousand": ","
+          }
+        },
+        {
+          "label": "汇率",
+          "align": "center",
+          "prop": "exchange_rate"
+        },
+        {
+          "label": {
+            "default": "是否担保公司担保", 
+             "i18n": "K0001.guaranteed-by-the-company"
+                            },
+          "prop": "is_guar_company",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": {
+            "default": "担保币种", 
+             "i18n": "K0001.Guarantee-currency"
+                            },
+          "prop": "guar_ccy",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_CURRENCY",
+            "dictKey": [
+              "MS_CURRENCY"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": {
+            "default": "基准币种", 
+             "i18n": "K0001.base-currency"
+                            },
+          "prop": "base_ccy",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_CURRENCY",
+            "dictKey": [
+              "MS_CURRENCY"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作",
+          "width": "200px",
+          "fixed": "right",
+          "align": "center",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/icms/guaranteeManager/guaranteeInfoManager/guarantorManager/guarantor_detail.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "75%",
+                "title": "保证人信息详情"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/icms/guaranteeManager/guaranteeInfoManager/guarantorManager/guarantor_update.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "75%",
+                "title": "保证人信息维护"
+              },
+              "show": {
+                "expression": "'${{params.pageType}}' != 'detail'"
+              }
+            },
+            {
+              "apply_no": {
+                "control": "hidden",
+                "label": ""
+              },
+              "old_data_flag": {
+                "control": "hidden",
+                "label": ""
+            },
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "delete",
+                "params": {
+                  "servicecode": "ar0724"
+                }
+              },
+              "confirm": {
+                "title": "提示信息",
+                "msg": "确定删除该保证人信息吗？",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              },
+              "show": {
+                "expression": " '${{params.pageType}}' != 'detail' && '${{current.old_data_flag}}' !='1' " 
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "alert": {
+      "title": "说明",
+      "description": [
+        "【担保金额】新增时,授信金额无或为0时,默认值为100"
+      ]
+    }
+  }
+}

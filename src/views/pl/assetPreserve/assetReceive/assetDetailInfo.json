@@ -1,0 +1,153 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/pl/assetPreserve/assetReceive/assetInfoAdd.json",
+            "params": {
+              "cust_id":"${{params.cust_id}}",
+              "apply_no":"${{params.apply_no}}"
+            }
+          },
+          "props": {
+            "width": "65%",
+            "title":  "资产信息新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pl0276",
+          "apply_no":"${{params.apply_no}}"
+        }
+      },
+      "thead": [
+        {
+          "label": "资产编号",
+          "prop": "asset_no",
+          "align": "center"
+        },
+        {
+          "label": "资产类型",
+          "prop": "asset_tp",
+          "align": "center"
+        },
+        {
+          "label": "抵质押品产品类型",
+          "prop": "hold_pro_tp",
+          "align": "center"
+        },
+        {
+          "label": "存放地点",
+          "prop": "save_area",
+          "align": "center"
+        },
+        {
+          "label": "管理单位",
+          "prop": "manage_org",
+          "align": "center"
+        },
+        {
+          "label": "联系电话",
+          "prop": "phone_no",
+          "align": "center"
+        },
+        {
+          "label": "抵债金额",
+          "prop": "paydb_amt",
+          "align": "center",
+          "format":{
+            "thousand": ",",
+            "decimal": 3
+          }
+        },
+        {
+          "label": "是否完税",
+          "prop": "wthr_rate",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_YESORNO",
+            "dictKey": [
+              "MS_YESORNO"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "label": "是否过户",
+          "prop": "wthr_rate",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_YESORNO",
+            "dictKey": [
+              "MS_YESORNO"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "label": "操作",
+          "align":"center",
+          "fixed": "right",
+          "width": 200,
+          "btns": [
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/pl/assetPreserve/assetReceive/assetInfoUpd.json",
+                "method": "Get"
+              },
+              "props": {
+                "width": "65%",
+                "title":  "信贷业务信息维护"
+              }
+            },
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/pl/assetPreserve/assetReceive/assetInfoDetail.json",
+                "method": "Get"
+              },
+              "props": {
+                "width": "65%",
+                "title":  "信贷业务信息维护"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "pl0271"
+                }
+              },
+              "confirm": {
+                "title": "确定删除",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            }
+          ]
+        }
+
+      ]
+    }
+  }
+}

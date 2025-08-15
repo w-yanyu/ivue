@@ -1,0 +1,190 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "foldLineNumber": 2,
+      "scope": "formData",
+      "controls": [
+        {
+          "branch": {
+            "control": "remoteSelect",
+            "label": "区域中心",
+            "labelField": "brachName",
+            "valueField": "branchNo",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "RLMSPLTS1068"
+              }
+            },
+            "format": "value-label"
+          },
+          "lncfno": {
+            "control": "text",
+            "label": "借据号"
+          },
+         "cust_nm": {
+            "control": "text",
+            "label": "客户名称"
+          },
+          "cert_id": {
+            "control": "text",
+            "label": "证件号码"
+          },
+        "underta_name": {
+          "control": "select",
+          "label": "承办机构名称",
+          "dict": {
+            "dictType": "E_MECH_STATUS",
+            "dictKey": [
+              "E_MECH_STATUS"
+            ],
+            "format": "value-label",
+            "labelField": "dictName",
+            "valueField": "dictId"
+          }
+        }
+      }
+    ]
+  },
+  "toolbar": {
+    "btns": [
+      {
+        "type": "export",
+        "label": "导出",
+        "target": "dialog",
+        "icon": "iconfont icon-daochu",
+        "toRequest": {
+          "method": "post",
+          "url": "@exportApplication",
+          "params": {
+            "servicecode": "RLMSPLTS1084",
+            "branch":"${{formData.branch}}",
+            "lncfno":"${{formData.lncfno}}",
+            "acctna":"${{formData.acctna}}",
+            "idtfno":"${{formData.idtfno}}",
+            "underta_name":"${{formData.underta_name}}"
+
+          }
+        },
+        "props": {
+          "width": "30%",
+          "title": "导出"
+        }
+      }
+    ]
+  },
+    "datagrid": {
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "RLMSPLTS1083"
+        }
+      },
+      "thead": [
+        {
+          "type": "string",
+          "align": "center",
+          "label": "申请单编号",
+          "prop": "appl_id"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "借据号",
+          "prop": "lncfno"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "客户名称",
+          "prop": "acctna"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "证件号码",
+          "prop": "idtfno"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "诉讼类型",
+          "prop": "liti_type",
+        "dict": {
+          "dictType": "E_ISORNO_CASE",
+          "dictKey": [
+            "E_ISORNO_CASE"
+          ],
+          "format": "label",
+          "labelField": "dictName",
+          "valueField": "dictId"
+      }
+    },
+    {
+      "type": "string",
+      "align": "center",
+      "label": "承办机构名称",
+      "prop": "underta_name",
+    "dict": {
+      "dictType": "E_ISORNO_CASE",
+      "dictKey": [
+        "E_ISORNO_CASE"
+      ],
+      "format": "label",
+      "labelField": "dictName",
+      "valueField": "dictId"
+     }
+     },
+     {
+      "type": "string",
+      "align": "center",
+      "label": "受理机构名称",
+      "prop": "acce_institut",
+    "dict": {
+      "dictType": "E_ISORNO_CASE",
+      "dictKey": [
+        "E_ISORNO_CASE"
+      ],
+      "format": "label",
+      "labelField": "dictName",
+      "valueField": "dictId"
+     }
+     },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "执行案号",
+          "prop": "case_no"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "执行受理时间",
+          "prop": "case_times"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "申请人",
+          "prop": "appli_name"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "申请时间",
+          "prop": "appli_time"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "结案时间",
+          "prop": "close_time"
+        }
+      ]
+    }
+  }
+}

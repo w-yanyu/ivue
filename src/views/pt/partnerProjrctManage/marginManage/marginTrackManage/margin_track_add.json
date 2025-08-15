@@ -1,0 +1,90 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": "${{params}}",
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "pt0338",
+          "part_project_no": "${{params.part_project_no}}",
+          "part_no": "${{params.part_no}}",
+          "margin_protocol_no": "${{params.margin_protocol_no}}",
+          "project_version": "${{params.project_version}}"
+        }
+      },
+      "controls": [
+        {
+          "margin_oper_type": {
+            "control": "select",
+            "label": "保证金操作类型",
+            "span": 12,
+            "width": "150px",
+            "dict": {
+              "dictType": "PT_E_MARGIN_OPER_TYPE",
+              "dictKey": [
+                "PT_E_MARGIN_OPER_TYPE"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必输"
+              }
+            ]
+          },
+          "oper_amt": {
+            "control": "currency",
+            "label": "存入/取出金额",
+            "span": 12,
+            "width": "150px",
+            "align": "left",
+            "format": {
+              "thousand": ",",
+              "decimal": "2"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必输"
+              }
+            ]
+          },
+          "track_ccy_code": {
+            "control": "select",
+            "label": "调整金额币种",
+            "span": 12,
+            "width": "150px",
+            "dict": {
+              "dictType": "MS_CURRENCY",
+              "dictKey": [
+                "MS_CURRENCY"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必输"
+              }
+            ]
+          },
+          "track_remark": {
+            "label": "调整轨迹备注",
+            "control": "textarea",
+            "span": 24,
+            "width": "150px",
+            "autosize": {
+              "minRows": 3,
+              "maxRows": 5
+            },
+            "maxlength": 40,
+            "showWordLimit": true
+          }
+        }
+      ]
+    }
+  }
+}

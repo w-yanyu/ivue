@@ -1,0 +1,128 @@
+{
+  "module": "v-form-btn-dynamic",
+  "layout": {
+    "form": {
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ar0057",
+          "apply_no": "${{params.apply_no}}"
+        }
+      },
+      "controls": [
+        {
+          "apply_no": {
+            "control": "hidden",
+            "label": "流程申请号",
+            "span": 8
+          },
+          "order_form_num": {
+            "control": "text",
+            "span": 10,
+            "disabled": true,
+            "label": "订单编号"
+          },
+          "smilr_cr_card_loan_acct_num": {
+            "control": "text",
+            "label": "贷款账号",
+            "disabled": true,
+            "span": 10
+          }
+        },
+        {
+          "payment_dt": {
+            "control": "text",
+            "label": "所属账期",
+            "disabled": true,
+            "span": 10
+          },
+          "prod_no": {
+            "control": "text",
+            "label": "可售产品代码",
+            "disabled": true,
+            "span": 10
+          }
+        },
+        {
+          "loan_no": {
+            "control": "text",
+            "label": "贷款编号",
+            "disabled": true,
+            "span": 10
+          },
+          "detl_serl_num": {
+            "control": "text",
+            "label": "明细序号",
+            "disabled": true,
+            "span": 10
+          }
+        },
+        {
+          "order_amount": {
+            "control": "text",
+            "label": "订单金额",
+            "disabled": true,
+            "span": 10
+          },
+          "pay_date": {
+            "control": "text",
+            "label": "消费日期",
+            "disabled": true,
+            "span": 10
+          }
+        },
+        {
+          "transaction_type": {
+            "control": "select",
+            "label": "订单交易类型",
+            "disabled": true,
+            "span": 10,
+            "dict": {
+              "dictType": "E_TRANSACTION_TYPE",
+              "dictKey": [
+                "E_TRANSACTION_TYPE"
+              ],
+              "format": "label"
+            },
+            "showItem": {
+              "2": [
+                "istlmt_prds", "lstSmilrCrCardBillDetl"
+              ]
+            }
+          },
+          "istlmt_prds": {
+            "control": "select",
+            "initShow": false,
+            "label": "分期期数",
+            "disabled": true,
+            "span": 10,
+            "dict": {
+              "dictType": "E_ISTLMT_PRDS",
+              "dictKey": [
+                "E_ISTLMT_PRDS"
+              ],
+              "format": "label"
+            }
+          }
+        },
+        {
+          "lstSmilrCrCardBillDetl": {
+            "initShow": false,
+            "span": 24,
+            "control": "dynamic",
+            "toRequest": {
+              "url": "/views/lxyk/class_credit_card_supply_list_info.json",
+              "params": {
+                "smilr_cr_card_loan_acct_num": "${{form.smilr_cr_card_loan_acct_num}}",
+                "prcpl_smtn": "${{form.order_amount}}",
+                "istlmt_tp": 0,
+                "istlmt_prds": "${{form.istlmt_prds}}"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

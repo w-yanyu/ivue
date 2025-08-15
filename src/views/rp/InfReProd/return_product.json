@@ -1,0 +1,156 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "mercNo": {
+                        "control": "text",
+                        "label":  "商户号",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入商户号"
+                            },
+                            {
+                                "max": 20,
+                                "message": "长度不能超过20个字符"
+                            }
+                        ]
+                    },
+                    "payDateStart": {
+                        "control": "dateTimePicker",
+                        "label":  "打款日期起始"
+                    },
+                    "approvalStatus": {
+                        "control": "select",
+                        "label":  "审核状态",
+                        "dict": {
+                          "dictType": "E_AUDSTA",
+                          "dictKey": [
+                            "E_AUDSTA"
+                          ],
+                          "format": "label",
+                        "labelField":"dictName",
+                        "valueField":"dictId"
+                      }
+                    },
+                    "payDateEnd": {
+                        "control": "dateTimePicker",
+                        "label":  "打款日期截止"
+                    },
+                    "page":{
+                        "control": "hidden",
+                        "label":  "页数",
+                        "value":"1"
+                    },
+                    "pageSize":{
+                        "control": "hidden",
+                        "label":  "每页记录数",
+                        "value":"10"
+                    }
+                }
+               
+            ]
+        },
+        
+        "datagrid": {
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "callqryQuota"
+                }
+            },
+            "pagination": {
+                "pageSizes": [
+                    10,
+                    15,
+                    20
+                ],
+                "pageSize": 10
+            },
+            "thead": [
+                {
+                    "label": "商户号",
+                    "prop": "mercNo"
+                },
+                {
+                    "label":"商户名称",
+                    "prop": "mercName"
+                },
+                {
+                    "label":  "商户限额",
+                    "prop": "mercQuota"
+                },
+                {
+                    "label":  "当前可用退货额度",
+                    "prop": "mercRemainQuota"
+                },
+                {
+                    "label":  "打款账户名",
+                    "prop": "payAccountName"
+                },
+                {
+                    "label":  "打款账号",
+                    "prop": "payAccount"
+                },
+                {
+                    "label":  "打款日期",
+                    "prop": "payDate"
+                },
+                {
+                    "label":  "新增额度",
+                    "prop": "addQuota"
+                },
+                {
+                    "label":  "发起时间",
+                    "prop": "createDate"
+                },
+                {
+                    "label":  "审核时间",
+                    "prop": "updateDate"
+                },
+                {
+                    "label":  "审核状态",
+                    "prop": "approvalStatus",
+                    "dict": {
+                        "dictType": "E_AUDSTA",
+                        "dictKey": [
+                          "E_AUDSTA"
+                        ],
+                        "format": "label",
+                        "labelField":"dictName",
+                        "valueField":"dictId"
+                            }
+                },
+
+                {
+                    "label":  "记录流水号",
+                    "prop": "transCode"
+                },
+                {
+                  "label": "操作",
+                  "fixed": "right",
+                  "width": 100,
+                  "align":"center",
+                  "btns": [
+                    {
+                        "type": "look",
+                        "label": "进入审批",
+                        "toRequest": {
+                          "url": "/views/rp/InfReProd/approva_request.json",
+                          "method": "POST"
+                        },
+                        "props": {
+                          "width": "80%",
+                          "title": "商户审批页面"
+                        }
+                      }
+                  ]
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,81 @@
+{
+  "module": "v-inputDataForm-btn",
+  "layout": {
+    "form": {
+      "doRequest": {
+        "url": "/WEB/dict/type",
+        "method": "POST"
+      },
+      "controls": [
+        {
+          "dictType": {
+            "control": "text",
+            "label": "字典类型",
+            "required": true
+          },
+          "dictName": {
+            "control": "text",
+            "label": "字典名称",
+            "required": true
+          }
+        },
+        {
+          "application": {
+            "control": "select",
+            "label": "应用",
+            "required": true,
+            "dict": {
+              "dictType": "WEB",
+              "dictKey": [
+                "homepage",
+                "application"
+              ],
+              "labelField": "appName",
+              "valueField": "appCode",
+              "doRequest": {
+                "url": "/WEB/application/list",
+                "method": "GET"
+              }
+            }
+          },
+          "sequence": {
+            "control": "inputNumber",
+            "label": "排序"
+          }
+        },
+        {
+          "i18nCode": {
+            "control": "text",
+            "label": "名称国际化编码"
+          },
+          "enable": {
+            "control": "radio",
+            "label": "是否有效",
+            "value": "1",
+            "required": true,
+            "dict": {
+              "dictType": "WEB",
+              "dictKey": [
+                "WEB",
+                "boolean"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictCode",
+              "doRequest": {
+                "url": "/WEB/dict/common",
+                "method": "post"
+              }
+            }
+          }
+        },
+        {
+          "description": {
+            "control": "textarea",
+            "span": 24,
+            "label": "说明"
+          }
+        }
+      ]
+    }
+  }
+}

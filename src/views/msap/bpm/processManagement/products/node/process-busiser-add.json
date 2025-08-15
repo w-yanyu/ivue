@@ -1,0 +1,130 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "bpm4004",
+          "bpm_version": "${{params.bpm_version}}",
+          "wf_task_no": "${{params.wf_task_no}}",
+          "task_define_id":"${{params.task_define_id}}",
+          "appId":"${{params.appId}}"
+          ,
+          "task_deal_type":"0"
+        }
+      },
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "icon": "",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "bpm4031",
+              "bpm_version": "${{params.bpm_version}}",
+              "appId":"${{params.appId}}",
+              "task_deal_type":"0"
+
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "wf_prod_no": {
+            "control": "string",
+            "label": "流程产品编号",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true
+              }
+            ]
+          },
+          "task_define_id": {
+            "control": "string",
+            "label": "节点编号",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true
+              }
+            ]
+          },
+          "wf_task_no": {
+            "control": "string",
+            "label": "节点序号",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true
+              }
+            ]
+          },
+          "busi_id":{
+            "control": "lookup",
+            "label": "业务方法编号",
+            "width": "130px",
+            "edit": false,
+            "keyField": {
+                "busi_id": "busi_id",
+                "service_name":"service_name"
+            },
+            "toRequest": {
+                "url": "/views/msap/bpm/processManagement/business/businessServiceComposition_lookup.json",
+                "method": "post",
+                "params":{
+                  "servicecode": "bpm0065",
+                  "appId":"${{params.appId}}"
+                },
+                "props": {
+                  "width": "80%",
+                  "title": "业务方法编号选择"
+                }
+                
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入业务编号"
+              }
+            ]
+          },
+          "service_name": {
+            "control": "string",
+            "label": "业务方法名称",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入业务名称"
+              }
+            ]
+          },
+          "sort_no": {
+            "control": "inputNumber",
+            "label": "执行序号",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入执行序号",
+                "type":"integer",
+                "min": 0
+              },
+              {
+                "message": "请输入非负整数的执行序号",
+                "type":"integer",
+                "min": 0
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

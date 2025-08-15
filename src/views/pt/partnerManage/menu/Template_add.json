@@ -1,0 +1,121 @@
+{
+  "module": "d-steps",
+  "layout": {
+    "steps": {
+      "scope": "formObj",
+      "direction": "horizontal",
+      "alignCenter": true,
+      "finishStatus": "success",
+      "simpleType": false,
+      "nextStepType": "submit",
+      "list": [
+        {
+          "scope": "step1",
+          "title": "合作方信息",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "url": "/views/pt/partnerManage/ptPartner_add.json",
+            "method": "get",
+            "params": {
+              "part_no": "${{formObj.step2.part_no}}"
+            }
+          },
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "post",
+            "params":{
+              "servicecode":"pt0041"
+             
+            },
+            "resultSet": {
+              "part_no": "part_no"
+
+            }
+          }
+        },
+        {
+          "scope": "step2",
+          "##forbidBack":true,
+          "title": "合作方结算账户",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "url": "/views/pt/partnerManage/menu/middle.json",
+            "method": "get",
+            "params": {
+              "part_no": "${{formObj.step1.part_no}}"
+
+            }
+          },
+          "doRequest": {
+            "url": "/pte/json/layout/success.json",
+            "method": "post",
+            "eventAfter": {
+              "doParentCallback": true
+            }
+          }
+        },
+        {
+          "scope": "step3",
+          "###forbidBack":true,
+          "title": "伙伴体系",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "url": "/views/pt/partnerManage/ptb_part_system_tmp/ptb_part_system_tmp_partstr.json",
+            "method": "get",
+            "params": {
+              "part_no": "${{formObj.step2.part_no}}"
+            }
+          },
+          "doRequest": {
+            "url": "/pte/json/layout/success.json",
+            "method": "post",
+            "eventAfter": {
+              "doParentCallback": true
+            }
+          }
+        },
+        {
+          "scope": "step4",
+          "###forbidBack":true,
+          "title": "敞口信息",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "url": "/views/pt/partnerManage/expinfoview/ptb_part_system_tmp_expinfoview.json",
+            "method": "get",
+            "params": {
+              "part_no": "${{formObj.step2.part_no}}"
+            }
+          },
+          "doRequest": {
+            "url": "/pte/json/layout/success.json",
+            "method": "post",
+            "eventAfter": {
+              "doParentCallback": true
+            }
+          }
+        },
+        {
+          "scope": "step5",
+          "###forbidBack":true,
+          "title": "预警规则",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "url": "/views/pt/partnerManage/ptpWarnRules/ptpWarnRules_add.json",
+            "method": "get",
+            "params": {
+              "part_no": "${{formObj.step2.part_no}}"
+            }
+          },
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "pt0187"
+            }
+          }
+          }
+        
+      ]
+    }
+  }
+}

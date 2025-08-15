@@ -1,0 +1,60 @@
+{
+  "module": "lr-tree-dynamic",
+  "layout": {
+    "tree": {
+      "title": "决策配置信息",
+      "lazy": false,
+      "idField": "node_cd",
+      "pIdField": "parent_node_cd",
+      "labelField": "node_name",
+      "isLeafField": "is_leaf",
+      "nodeTypeField": "node_type",
+      "search": {
+        "enabled": "true",
+        "displayType": "list",
+        "nameFields": [
+          "menu_name"
+        ]
+      },
+      "initRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "POST",
+        "params": {
+          "#servicecode": "pd0351",
+          "servicecode": "deci090205"
+        }
+      },
+      "root": {
+        "rootNode": {
+          "name": "决策配置",
+          "value": "BASE",
+          "node_cd": "BASE",
+          "node_type": "1"
+        }
+      },
+      "nodeTypes": {
+        "1": {
+          "children": [
+            "1",
+            "2"
+          ]
+        },
+        "2": {
+          "children": [
+            "2"
+          ],
+          "toRequest": {
+            "url": "/views/risk/risk_decision_config/decision_config_template_details.json",
+            "method": "POST",
+            "params": {
+              "node_cd": "${{current.node_cd}}",
+              "node_name": "${{current.node_name}}",
+              "node_type": "${{current.node_type}}",
+              "is_leaf": "${{current.is_leaf}}"
+            }
+          }
+        }
+      }
+    }
+  }
+}

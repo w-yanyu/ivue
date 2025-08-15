@@ -1,0 +1,122 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": "${{params}}",
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "icon": "",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "bpm3008",
+              "appId":"${{params.appId}}"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "task_define_id": {
+            "width": "100px",
+            "control": "string",
+            "label": "节点定义id"
+          },
+          "next_task_define_id": {
+            "width": "100px",
+            "control": "string",
+            "label": "目标节点ID"
+          },
+          "route_type": {
+            "width": "100px",
+            "control": "select",
+            "label": "路线类型",
+            "dict": {
+              "dictType": "CT_E_APPLST",
+              "dictKey": [
+                "CT_E_APPLST"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择路线类型"
+              }
+            ]
+          },
+          "wfprod_tp_list": {
+            "width": "100px",
+            "control": "select",
+            "multiple":"true",
+            "label": "流程产品类型",
+            "valueDataType":"string",
+            "dict": {
+              "dictType": "BPM_E_WFPDTP",
+              "dictKey": [
+                "BPM_E_WFPDTP"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择流程产品类型"
+              }
+            ]
+          },
+          "goback_ind": {
+            "width": "100px",
+            "control": "select",
+            "label": "是否退回原处理人",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                  "MS_E_YESORNO"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择回退标识"
+              }
+            ]
+          },
+          "busi_list":{
+            "width": "100px",
+            "control": "lookup",
+            "label": "业务调用列表",
+            "span":"24",
+            "edit": false,
+            "multiple": true,
+            "valueDataType":"string",
+            "keyField": {
+                "busi_id": "busi_id"
+            },
+            "toRequest": {
+                "url": "/views/msap/bpm/processManagement/processQuick/processQuickRoute/businessServiceComposition_lookup.json",
+                "method": "post",
+                "params":{
+                  "appId":"${{params.appId}}"
+                },
+                "props": {
+                  "width": "80%",
+                  "title": "选择业务调用列表"
+                }
+                
+            },
+            "events":{
+              "set":{
+                "busi_list":"busi_id"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

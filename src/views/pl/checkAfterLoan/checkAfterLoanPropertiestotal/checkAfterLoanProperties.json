@@ -1,0 +1,159 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "condition_no": {
+            "label": "条件编号",
+            "control": "text",
+            "rules": [
+              {
+              }
+            ]
+          },
+          "condition_desc": {
+            "label": "条件描述",
+            "control": "text",
+            "rules": [
+              {
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/pl/checkAfterLoan/checkAfterLoanPropertiestotal/addCheckAfterLoanProperties.json",
+            "params": {
+              "check_rule_no":"${{params.check_rule_no}}"
+            }
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pl0151",
+          "check_rule_no": "${{params.check_rule_no}}"
+        }
+      },
+      "thead": [
+        {
+          "type": "index"
+        },
+        {
+          "prop": "condition_no",
+          "label": "条件编号",
+          "align": "center"
+        },
+        {
+          "prop": "condition_desc",
+          "label": "条件描述",
+          "align": "center"
+        },
+        {
+          "label": "业务类型",
+          "width": 120,
+          "prop": "rule_busi_type",
+          "dict": {
+            "dictType": "PL_E_LNCATP2",
+            "dictKey": [
+              "PL_E_LNCATP2"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "prop": "condition_table_name",
+          "label": "条件表名",
+          "align": "center"
+        },
+        {
+          "prop": "condition_field",
+          "label": "条件字段",
+          "align": "center"
+        },
+        {
+          "prop": "related_with_field",
+          "label": "同主表的关联字段",
+          "align": "center"
+        },
+        {
+          "label": "操作符",
+          "width": 120,
+          "prop": "operator",
+          "dict": {
+            "dictType": "PL_E_OPERATION",
+            "dictKey": [
+              "PL_E_OPERATION"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "值类别",
+          "width": 120,
+          "prop": "value_category",
+          "dict": {
+            "dictType": "PL_E_VALUES",
+            "dictKey": [
+              "PL_E_VALUES"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "prop": "field_value",
+          "label": "值",
+          "align": "center"
+        },
+        {
+          "prop": "check_frequency",
+          "label": "检查频率",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": "200",
+          "align": "center",
+          "btns": [
+            {
+              "toRequest": {
+                "method": "POST",
+                "url": "/views/pl/checkAfterLoan/checkAfterLoanPropertiestotal/updCheckAfterLoanProperties.json"
+              },
+              "label": "维护",
+              "type": "edit"
+            },
+            {
+              "doRequest": {
+                "method": "POST",
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "params": {
+                  "servicecode": "pl0153",
+                  "method": "del"
+                }
+              },
+              "label": "删除",
+              "type": "delete"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

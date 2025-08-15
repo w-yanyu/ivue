@@ -1,0 +1,89 @@
+{
+  "module": "lr-transferTable",
+  "layout": {
+    "transfer": {
+      "height": "500px",
+      "left": {
+        "title": "未分配",
+        "query": [
+          "userCode",
+          "userName"
+        ],
+        "btn": {
+          "doRequest": {
+            "url": "/WEB/role/user",
+            "method": "POST",
+            "params": {
+              "roleCode": "${{params.roleCode}}"
+            }
+          }
+        },
+        "datagrid": {
+          "doRequest": {
+            "url": "/WEB/role/user/unrelated",
+            "method": "GET",
+            "params": {
+              "roleCode": "${{params.roleCode}}"
+            }
+          },
+          "pagination": {
+            "show": true,
+            "pageSizes": [
+              10,
+              15,
+              20,
+              50,
+              100
+            ],
+            "pageSize": 10
+          },
+          "thead": [
+            {
+              "prop": "userCode",
+              "label": "用户编码"
+            },
+            {
+              "prop": "userName",
+              "label": "用户名称"
+            }
+          ]
+        }
+      },
+      "right": {
+        "title": "已分配",
+        "query": [
+          "userCode",
+          "userName"
+        ],
+        "btn": {
+          "doRequest": {
+            "url": "/WEB/role/user",
+            "method": "DELETE",
+            "params": {
+              "roleCode": "${{params.roleCode}}"
+            }
+          }
+        },
+        "datagrid": {
+          "doRequest": {
+            "url": "/WEB/role/user/related",
+            "method": "GET",
+            "params": {
+              "roleCode": "${{params.roleCode}}"
+            }
+          },
+          "thead": [
+            {
+              "prop": "userCode",
+              "label": "资源分组编码"
+            },
+            {
+              "prop": "userName",
+              "label": "资源分组名称"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,238 @@
+{
+  "module": "v-form-btn-dynamic",
+  "layout": {
+    "form": {
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ar1404",
+          "apply_no": "${{params.apply_no}}"
+        }
+      },
+      "controls": [
+        {
+          "credit_apply_id": {
+            "control": "hidden",
+            "span": 8
+          },
+          "contract_no": {
+            "control": "text",
+            "label": "授信通知书编号",
+            "disabled": true,
+            "span": 10
+          },
+          "base_ccy": {
+            "control": "select",
+            "label": "基准币种",
+            "disabled": true,
+            "span": 10,
+            "dict": {
+              "dictType": "MS_CURRENCY",
+              "dictKey": [
+                "MS_CURRENCY"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId",
+              "format": "label"
+            }
+          }
+        },
+        {
+          "old_apply_amt": {
+            "control": "currency",
+            "label": "原授信金额",
+            "align": "left",
+            "span": 10,
+            "disabled": true,
+            "format": {
+              "thousand": ","
+            }
+          },
+          "apply_amt": {
+            "control": "currency",
+            "label": "调整后授信金额",
+            "align": "left",
+            "span": 10,
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入授信金额"
+              }
+            ],
+            "format": {
+              "thousand": ","
+            }
+          }
+        },
+        {
+          "ccy_code": {
+            "control": "select",
+            "label": "主授信币种",
+            "span": 10,
+            "dict": {
+              "dictType": "MS_CURRENCY",
+              "dictKey": [
+                "MS_CURRENCY"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId",
+              "format": "label"
+            }
+          },
+          "exchange_rate": {
+            "control": "text",
+            "label": "授信汇率",
+            "span": 10,
+            "value": "1.0"
+          }
+        },
+        {
+          "base_busi_amt": {
+            "control": "currency",
+            "align": "left",
+            "label": "授信金额(折基准币种)",
+            "span": 10,
+            "compute": "${{form.apply_amt}}*${{form.exchange_rate}}",
+            "rules": [
+              {
+                "message": "请输入授信总金额(折基准币种)",
+                "required": true
+              }
+            ],
+            "format": {
+              "thousand": ","
+            }
+          },
+          "effective_date": {
+            "control": "dateTimePicker",
+            "label": "生效日期",
+            "disabled": true,
+            "span": 10
+          }
+        },
+        {
+          "old_appr_term": {
+            "control": "text",
+            "disabled": true,
+            "label": "原期限(月)",
+            "span": 10
+          },
+          "appr_term": {
+            "control": "text",
+            "label": "调整后期限(月)",
+            "span": 10,
+            "rules": [
+              {
+                "required": true,
+                "message": "请填写业务期限(月)"
+              }
+            ]
+          }
+        },
+        {
+          "old_credit_contract_status": {
+            "control": "select",
+            "disabled": true,
+            "label": "原授信状态",
+            "span": 10,
+            "dict": {
+              "dictType": "AR_E_QUOTA_STATUS",
+              "dictKey": [
+                "AR_E_QUOTA_STATUS"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId",
+              "format": "label"
+            }
+          },
+          "credit_contract_status": {
+            "control": "select",
+            "label": "调整后授信状态",
+            "span": 10,
+            "dict": {
+              "dictType": "AR_E_QUOTA_STATUS",
+              "dictKey": [
+                "AR_E_QUOTA_STATUS"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId",
+              "format": "label"
+            }
+          }
+        },
+        {
+          "old_loan_purpose_desc": {
+            "control": "lookup",
+            "label": "原授信资金用途",
+            "span": 20,
+            "color": "red",
+            "disabled": true,
+            "edit": false,
+            "rows": 4,
+            "keyField": {
+              "loan_purpose_desc": "amt_purpose_name"
+            },
+            "toRequest": {
+              "url": "/views/icms/docManager/loanPurpose/loanPurpose_lookup.json",
+              "method": "get",
+              "params": {
+                "sale_prod_cd": "${{params.credit_prod_cd}}",
+                "prod_version": "${{params.prod_version}}"
+              }
+            },
+            "multiple": false,
+            "props": {
+              "title": "选择贷款用途"
+            }
+          }
+        },
+        {
+          "loan_purpose_desc": {
+            "control": "lookup",
+            "label": "调整后授信资金用途",
+            "span": 20,
+            "edit": false,
+            "rows": 4,
+            "keyField": {
+              "loan_purpose_desc": "amt_purpose_name"
+            },
+            "toRequest": {
+              "url": "/views/icms/docManager/loanPurpose/loanPurpose_lookup.json",
+              "method": "get",
+              "params": {
+                "sale_prod_cd": "${{params.credit_prod_cd}}",
+                "prod_version": "${{params.prod_version}}"
+              }
+            },
+            "multiple": false,
+            "props": {
+              "title": "选择贷款用途"
+            }
+          }
+        }
+        
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "submit",
+          "label": "保存",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "ar0742",
+              "apply_no": "${{params.apply_no}}",
+              "credit_prod_cd": "${{params.credit_prod_cd}}"
+            }
+          },
+          "show": {
+            "expression": "'${{params.pageType}}' != 'detail'"
+          }
+        }
+      ]
+    }
+  }
+}

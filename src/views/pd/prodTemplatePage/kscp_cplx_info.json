@@ -1,0 +1,49 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+          "btns": [],
+            "##initRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "pd0125",
+                    "page_template_no": "${{params.page_template_no}}"
+                }
+            },
+            "controls": [
+                {
+                    "page_template_no": {
+                        "width": "180px",
+                        "control": "text",
+                        "label": "产品类型码值",
+                        "value": "${{params.page_template_no}}",
+                        "disabled": true,
+                        "#events": {
+                            "doRequest": {
+                                "url": "/SUMP/call/RPCCall",
+                                "method": "post",
+                                "params": {
+                                    "servicecode": "pd0143",
+                                    "grupno": "0006",
+                                    "id": "${{params.apply_type}}"
+                                },
+                                "resultSet": {
+                                    "prod_type": "pid",
+                                    "prod_type_name": "title"
+                                }
+                            }
+                        }
+                    },
+                    "page_template_name": {
+                        "width": "180px",
+                        "control": "text",
+                        "label": "产品类型名称",
+                        "value": "${{params.page_template_name}}",
+                        "disabled": true
+                    }
+                }
+            ]
+        }
+    }
+}

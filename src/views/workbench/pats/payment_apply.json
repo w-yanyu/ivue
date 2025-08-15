@@ -1,0 +1,198 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "paymentTime": {
+            "control": "dateTimePicker",
+            "label": "提现日期",
+            "value":""
+          },
+          "paymentNo": {
+            "control": "text",
+            "label": "外部订单号",
+            "rules": [
+              {
+                "max": 30,
+                "message": "长度不能超过30个字符"
+              }
+            ]
+          },
+          "reverseFlag": {
+            "control": "select",
+            "label": "冲正标志",
+            "disabled": false,
+            "value": "",
+            "dict": {
+              "dictType": "E_REVERSEFLAG",
+              "dictKey": [
+                "E_REVERSEFLAG"
+              ],
+              "format": "label"
+            }
+          }
+        },
+        {
+          "ownChannelCode": {
+            "control": "select",
+            "label": "渠道",
+            "disabled": false,
+            "value": "",
+            "dict": {
+              "dictType": "E_CHANNELCODE",
+              "dictKey": [
+                "E_CHANNELCODE"
+              ],
+              "format": "label"
+            }
+          },
+          "paymentStatus": {
+              "control": "select",
+              "label": "交易状态",
+              "disabled": false,
+              "dict": {
+                "dictType": "E_CHECKREPAYMENT_STATUS",
+                "dictKey": [
+                  "E_CHECKREPAYMENT_STATUS"
+                ],
+                "format": "label"
+              },
+              "rules": [
+                {
+                  "required": true,
+                  "message": "请选择交易状态"
+                }
+              ]
+          }
+        }
+
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "PATSCMSS1001"
+        }
+      },
+
+      "thead": [
+        {
+          "type": "index",
+          "align": "center"
+        },
+        {
+          "label": "订单号",
+          "prop": "orderNo",
+          "width": 160,
+          "align": "left"
+        },
+        {
+          "label": "渠道",
+          "prop": "ownChannelCode",
+          "align": "center",
+          "dict": {
+            "dictType": "E_CHANNELCODE",
+            "dictKey": [
+              "E_CHANNELCODE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "外部订单号",
+          "width": 160,
+          "prop": "paymentNo",
+          "align": "left"
+        },
+        {
+          "label": "提现金额",
+          "prop": "paymentAmount",
+          "align": "center"
+        },
+        {
+          "label": "交易状态",
+          "prop": "paymentStatus",
+          "align": "center",
+          "dict": {
+            "dictType": "E_CHECKREPAYMENT_STATUS",
+            "dictKey": [
+              "E_CHECKREPAYMENT_STATUS"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "冲正标志",
+          "width": 100,
+          "prop": "reverseFlag",
+          "align": "center",
+          "dict": {
+            "dictType": "E_REVERSEFLAG",
+            "dictKey": [
+              "E_REVERSEFLAG"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "异常错误信息",
+          "width": 210,
+          "prop": "retText",
+          "align": "center"
+        },
+        {
+          "label": "进件申请单号",
+          "width": 160,
+          "prop": "applyNo",
+          "align": "left"
+        },
+        {
+          "label": "提现时间",
+          "width": 130,
+          "prop": "paymentTime",
+          "align": "left",
+          "type": "dateTimePicker",
+          "format": "yyyy-MM-dd HH:mm:ss"
+        },
+        {
+          "label": "客户号",
+          "width": 120,
+          "prop": "custNo",
+          "align": "left"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 100,
+          "align":"center",
+          "btns": [
+
+            {
+              "type": "edit",
+              "label": "额度释放",
+              "show": {
+                "expression": "'${{current.reverseFlag}}' === 'Y'"
+              },
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "PATSCMSS1002"
+                }
+              },
+              "props": {
+                "width": "30%",
+                "title": "额度释放"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

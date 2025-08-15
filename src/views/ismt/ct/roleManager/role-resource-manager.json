@@ -1,0 +1,123 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "role_id": {
+            "control": "lookup",
+            "label": "角色ID",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入角色ID"
+              },
+              {
+                "max": 64,
+                "message": "长度不能超过64个字符"
+              }
+            ],
+            "keyField": {
+              "role_id": "role_id"
+            },
+            "toRequest": {
+              "url": "/views/ismt/ct/roleManager/role-manager_lookup.json",
+              "method": "post",
+              "params": "${{form.role_id}}"
+            },
+            "props": {
+              "title": "角色ID查询"
+            },
+            "format": "label"
+          },
+          "resource_type": {
+            "control": "select",
+            "dict": {
+              "dictType": "CT_E_ROLESYL",
+              "dictKey": [
+                "CT_E_ROLESYL"
+              ],
+              "format": "label"
+            },
+            "label": "资源类型"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "refresh": false,
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/ismt/ct/roleManager/role-resource-add.json",
+            "params": {
+              "role_id": "${{form.role_id}}"
+            }
+          },
+          "props": {
+            "title": "角色资源新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ct2060"
+        }
+      },
+      "pagination": {
+        "show": true,
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "type": "index"
+        },
+        {
+          "label": "角色ID",
+          "prop": "role_id"
+        },
+        {
+          "label": "资源类型",
+          "prop": "resource_type",
+          "dict": {
+            "dictType": "CT_E_ROLESYL",
+            "dictKey": [
+              "CT_E_ROLESYL"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "资源数值",
+          "prop": "resource_value"
+        },
+        {
+          "label": "操作",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "删除",
+              "toRequest": {
+                "method": "GET",
+                "url": "/views/ismt/ct/roleManager/role-resource-delete.json"
+              },
+              "props": {
+                "title": "角色资源删除"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "btns": [
+        {
+          "type": "submit",
+          "icon": "el-icon-check",
+          "label": "生成法律文书",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "cb0283",
+              "case_id": "${{params.selectedData}}"
+            }
+          }
+        },
+        {
+          "type": "close",
+          "label": "取消"
+        }
+      ],
+      "controls": [
+        {
+          "template_code": {
+            "control": "remoteSelect",
+            "label": "法诉模板",
+            "width": "180px",
+            "align": "center",
+            "rows": 6,
+            "labelField": "template_name",
+            "valueField": "template_code",
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择法诉模板"
+              }
+            ],
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "length": 999,
+                "template_type": "OL",
+                "servicecode": "cb0058"
+              }
+            },
+            "format": "value-label"
+          }
+        }
+      ]
+    }
+  }
+}

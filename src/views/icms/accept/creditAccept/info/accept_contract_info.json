@@ -1,0 +1,420 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "ar1560",
+          "apply_no": "${{params.apply_no}}"
+        }
+      },
+      "btns": [
+        {
+          "label": "提交",
+          "type": "submit",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "post",
+            "params": {
+              "servicecode": "ar1561"
+            }
+          },
+          "eventAfter": {
+            "doLastCallback": false
+          }
+        }
+      ],
+      "controls": [
+        {
+          "apply_no": {
+            "label": "申请号",
+            "control": "hidden",
+            "value": "${{params.apply_no}}"
+          },
+          "batch_no": {
+            "label": "批次号",
+            "control": "hidden"
+          },
+          "sale_prod_cd": {
+            "label": "业务产品号",
+            "control": "hidden"
+          },
+          "contract_no": {
+            "control": "text",
+            "label": "承兑合同编号",
+            "span": 8,
+            "disabled": true
+          },
+          "cor_invest_name": {
+            "control": "lookup",
+            "edit": false,
+            "span": 8,
+            "rules": [
+                {
+                    "required": true,
+                    "message": "选择协办调查人名称"
+                }
+            ],
+            "label": "协办调查人名称",
+            "keyField": {
+                "cor_invest_name": "user_name"
+            },
+            "toRequest": {
+                "url": "/views/icms/flowStart/lookup/user_manager_lookup.json",
+                "method": "post"
+            },
+            "props": {
+                "width": "80%",
+                "title": "协办调查人"
+            },
+            "format": "label"
+        },
+          "apply_term": {
+            "control": "text",
+            "label": "申请期限(月)",
+            "span": 8,
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必填项"
+              },
+              {
+                "pattern": "^[0-9]*$",
+                "message": "格式错误，请输入数字！"
+              }
+            ]
+          },
+          "apply_date": {
+            "control": "dateTimePicker",
+            "format": "yyyy-MM-dd",
+            "valueFormat": "yyyyMMdd",
+            "label": "申请日期",
+            "disabled": false,
+            "span": 8,
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "start_date": {
+            "control": "dateTimePicker",
+            "format": "yyyy-MM-dd",
+            "valueFormat": "yyyyMMdd",
+            "label": "合同起始日期",
+            "disabledDate": {
+              "startRange": "${{form.apply_date}}",
+              "endRange": "3000-01-01"
+          },
+            "span": 8,
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "matu_date": {
+            "control": "dateTimePicker",
+            "format": "yyyy-MM-dd",
+            "valueFormat": "yyyyMMdd",
+            "label": "合同到期日期",
+            "span": 8,
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "apply_ccy": {
+            "control": "select",
+            "label": "申请币种",
+            "span": 8,
+            "disabled": false,
+            "dict": {
+              "dictType": "MS_CURRENCY",
+              "dictKey": [
+                "MS_CURRENCY"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "conver_base_ccy": {
+            "control": "select",
+            "label": "折算基准币种",
+            "disabled": true,
+            "span": 8,
+ "selectFirstValue": "true",
+            "dict": {
+              "dictType": "MS_CURRENCY",
+              "dictKey": [
+                "MS_CURRENCY"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ] 
+          },
+          "exch_rate": {
+            "control": "string",
+            "label": "汇率",
+            "span": 8,
+            "disabled": true,
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ],
+            "value": "1.00"
+          },
+          "apply_amt": {
+            "control": "currency",
+            "decimal": "2",
+            "label": "申请金额(元) ",
+            "span": 8,
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必填项"
+              }
+            ],
+            "align": "left",
+            "format": {
+              "thousand": ","
+            }
+          },
+          "apply_amt_conver_baseccy": {
+            "control": "currency",
+            "decimal": "2",
+            "disabled": true,
+            "label": "申请金额(折基准币种)",
+            "compute": "${{form.apply_amt}}*${{form.exch_rate}}",
+            "span": 8,
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ],
+            "align": "left",
+            "format": {
+              "thousand": ","
+            }
+          },
+          "exposure_amt": {
+            "control": "currency",
+            "decimal": "2",
+            "label": "敞口金额(元)",
+            "disabled": true,
+            "compute": "${{form.apply_amt}}-${{form.margin_amt}}",
+            "span": 8,
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ],
+            "align": "left",
+            "format": {
+              "thousand": ","
+            }
+          },
+          "fee_rate": {
+            "control": "currency",
+            "label": "手续费率(%)",
+            "span": 8,
+            "align": "left",
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "handling_fee_income": {
+            "control": "currency",
+            "decimal": "2",
+            "label": "手续费收入",
+            "disabled": true,
+            "compute": "${{form.apply_amt}}*${{form.fee_rate}}/100",
+            "span": 8,
+            "align": "left",
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "advance_rate": {
+            "control": "currency",
+            "label": "垫款利率(%)",
+            "span": 8,
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "margin_perc": {
+            "control": "currency",
+            "label": "保证金比例(%)",
+            "span": 8,
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必填项"
+              }
+            ],
+            "align": "left"
+          },
+          "margin_amt": {
+            "control": "currency",
+            "decimal": "2",
+            "label": "保证金金额(元)",
+            "disabled": true,
+            "compute": "${{form.apply_amt}}*${{form.margin_perc}}/100",
+            "span": 8,
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ],
+            "align": "left",
+            "format":{
+              "thousand": ",",
+              "decimal": "2"
+            }
+          },
+          "settle_acct_no": {
+            "control": "text",
+            "label": "申请人结算账号",
+            "span": 8,
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必填项"
+              },
+              {
+                "max": 64,
+                "message": "长度不能超过64个字符"
+              }
+            ]
+          },
+          "settle_acct_name": {
+            "control": "string",
+            "label": "申请人结算账号名称",
+            "span": 8,
+            "rules": [
+              {
+                "max": 64,
+                "message": "长度不能超过64个字符"
+              }
+            ]
+          },
+          "busi_tran_bank_no": {
+            "control": "text",
+            "label": "申请人结算账号开户行号",
+            "span": 8,
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必填项"
+              },
+              {
+                "max": 64,
+                "message": "长度不能超过64个字符"
+              }
+            ]
+          },
+          "busi_tran_bank_name": {
+            "control": "text",
+            "label": "申请人结算账号开户行名称",
+            "span": 8,
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必填项"
+              },
+              {
+                "max": 64,
+                "message": "长度不能超过64个字符"
+              }
+            ]
+          },
+          "ticket_sign_branch": {
+            "control": "text",
+            "label": "签票机构",
+            "span": 8,
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必填项"
+              },
+              {
+                "max": 64,
+                "message": "长度不能超过64个字符"
+              }
+            ]
+          },
+          "settle_acct_branch": {
+            "control": "text",
+            "label": "办理机构",
+            "span": 8,
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必填项"
+              },
+              {
+                "max": 64,
+                "message": "长度不能超过64个字符"
+              }
+            ]
+          },
+          "pay_origin": {
+            "label": "付款资金来源",
+            "control": "textarea",
+            "disabled": false,
+            "span": 24,
+            "autosize": {
+              "minRows": 3,
+              "maxRows": 5
+            },
+            "maxlength": 40,
+            "showWordLimit": true
+          },
+          "remark": {
+            "label": "备注",
+            "control": "textarea",
+            "disabled": false,
+            "span": 24,
+            "autosize": {
+              "minRows": 3,
+              "maxRows": 5
+            },
+            "maxlength": 40,
+            "showWordLimit": true
+          }
+        }
+      ]
+    }
+  }
+}

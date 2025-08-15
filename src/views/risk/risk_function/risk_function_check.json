@@ -1,0 +1,205 @@
+{
+  "module": "v-form-editableDataGrid-btn",
+  "layout": {
+    "form": {
+      "####initRequest": "${{params.data}}",
+      "controls": [
+        {
+          "functionCode": {
+            "control": "text",
+            "label": "函数代码",
+            "span": "8",
+            "value": "${{params.data.functionCode}}",
+            "rules": [
+              {
+                "required": true,
+                "parttern": "",
+                "message": "请正确输入",
+                "max": 40
+              }
+            ],
+            "disabled": "true"
+          },
+          "functionName": {
+            "disabled": "true",
+            "control": "text",
+            "label": "函数名称",
+            "span": "8",
+            "value": "${{params.data.functionName}}",
+            "rules": [
+              {
+                "message": "字数超限",
+                "max": 100
+              }
+            ]
+          },
+          "resultType": {
+            "disabled": "true",
+            "control": "select",
+            "value": "${{params.data.resultType}}",
+            "label": "返回类型",
+            "format": "value-label",
+            "span": "8",
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择"
+              }
+            ],
+            "options": [
+              {
+                "value": "String",
+                "label": "字符串"
+              },
+              {
+                "value": "Int",
+                "label": "整数"
+              },
+              {
+                "value": "Decimal",
+                "label": "数值"
+              },
+              {
+                "value": "Boolean",
+                "label": "布尔值"
+              },
+              {
+                "value": "void",
+                "label": "无"
+              }
+            ]
+          },
+          "functionBody": {
+            "disabled": "true",
+            "control": "textarea",
+            "value": "${{params.data.functionBody}}",
+            "label": "函数体",
+            "span": "24",
+            "rows": 5,
+            "showWordLimit": 2000,
+            "maxlength": 2000,
+            "rules": [
+              {
+                "required": true,
+                "message": "请正确输入",
+                "max": 2000
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      
+    },
+    "datagrid": {
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "functionCode": "${{params.data.functionCode}}",
+          "servicecode": "deci010303"
+        }
+      },
+      "pagination": {
+        "show": false
+      },
+      "thead": [
+        {
+          "label": "序号",
+          "type": "index",
+          "align": "center"
+        },
+        {
+          "label": "参数类型",
+          "disabled": "true",
+          "align": "center",
+          "type": "select",
+          "prop": "paramsDataType",
+          "rules": [
+            {
+              "required": true,
+              "message": "请选择参数类型"
+            }
+          ],
+          "format": "value-label",
+          "options": [
+            {
+              "value": "String",
+              "label": "字符串"
+            },
+            {
+              "value": "Int",
+              "label": "整数"
+            },
+            {
+              "value": "Decimal",
+              "label": "数值"
+            },
+            {
+              "value": "Boolean",
+              "label": "布尔值"
+            }
+          ]
+        },
+        {
+          "disabled": "true",
+          "label": "参数字段",
+          "align": "center",
+          "type": "text",
+          "prop": "paramsCode",
+          "rules": [
+            {
+              "required": true,
+              "message": "请输入参数字段"
+            }
+          ]
+        },
+        {
+          "label": "参数值",
+          "align": "center",
+          "type": "text",
+          "prop": "paramsValues",
+          "rules": [
+            {
+              "required": true,
+              "message": "请输入参数值"
+            }
+          ]
+        },
+        {
+          "disabled": "true",
+          "label": "参数描述",
+          "align": "center",
+          "type": "text",
+          "prop": "paramsDesc",
+          "rules": [
+            {
+              "required": true,
+              "message": "请输入参数描述"
+            }
+          ]
+        }
+      ]
+    },
+    "footer": {
+      "btns": [
+        {
+          "type": "riskfunctioncheckbtn",
+          "label": "校验",
+          "icon": "el-icon-tickets",
+          "align": "center",
+          "doRequest": {
+            "#url": "/SUMP/riskController/riskCall",
+            "method": "POST",
+            "params": {
+              "updateUser": "$g{{user_info.userCode}}",
+              "request_url": "/SUMP/icmcall/icmRPCCall",
+              "servicecode": "deci010308"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

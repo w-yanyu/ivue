@@ -1,0 +1,115 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "scope": "formData",
+            "controls": [
+                {
+                    "case_tag_code": {
+                        "control": "text",
+                        "label": "案件标签代码"
+                    },
+                    "mark_name": {
+                        "control": "text",
+                        "label": "案件标签名称"
+                    }
+                },
+                {
+                    "mark_desc": {
+                        "control": "text",
+                        "label": "案件标签描述"
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "icon": "el-icon-circle-plus",
+                    "target": "dialog",
+                    "label": "新增",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/ce/paramManage/product/mark/mark_add.json"
+                    },
+                    "props": {
+                        "title": "新增案件标签定义"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ce0174"
+                }
+            },
+            "thead": [
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "案件标签代码",
+                    "prop": "case_tag_code"
+
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "案件标签名称",
+                    "prop": "mark_name"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "案件标签描述",
+                    "prop": "mark_desc"
+                },
+                {
+                    "label": "操作",
+                    "align":"center",
+                    "fixed": "right",
+                    "####width": "100px",
+                    "btns": [
+                        {
+                            "type":"look",
+                            "label":"详情",
+                            "toRequest":{
+                                "url":"/views/ce/paramManage/product/mark/mark_info.json",
+                                "method":"POST"
+                            },
+                            "props":{
+                                "title":"案件标签定义详情"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/ce/paramManage/product/mark/mark_modify.json",
+                                "method": "POST"
+                            },
+                            "props": {
+                                "title": "案件标签定义维护"
+                            }
+                        },
+                        {
+                            "type": "delete",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/call/RPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "ce0171"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

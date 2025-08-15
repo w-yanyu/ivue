@@ -1,0 +1,123 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "新增",
+          "target": "dialog",
+          "toRequest": {
+            "method": "POST",
+            "url": "/views/icms/accept/araPayeeInfo/info/ara_payee_info_add.json",
+            "params": {
+              "apply_no": "${{params.apply_no}}"
+            },
+            "props": {
+              "width": "65%",
+              "title": "新增收款人"
+            }
+          },
+          "###show": {
+            "expression": "'${{params.pageType}}' != 'detail'"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ar1550",
+          "apply_no": "${{params.apply_no}}"
+        }
+      },
+      "thead": [
+        {
+          "prop": "apply_no",
+          "label": "申请号",
+          "align": "center"
+        },
+        {
+          "label": "收款人名称",
+          "prop": "payee_name",
+          "align": "center"
+        },
+        {
+          "label": "签票总额",
+          "prop": "check_total_amt",
+          "align": "center"
+        },
+        {
+          "label": "收款人账号",
+          "prop": "payee_acct_no",
+          "align": "center"
+        },
+
+        {
+          "label": "收款人开户行名称",
+          "prop": "payee_bank_name",
+          "align": "center"
+        },
+        {
+          "label": "收款人开户行行号",
+          "prop": "payee_bank",
+          "align": "center"
+        },
+        {
+          "label": "收款人开户行地址",
+          "prop": "payee_bank_addr",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "fixed": "right",
+          "width": "200px",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/icms/accept/araPayeeInfo/info/ara_payee_info_modify.json",
+                "method": "POST"
+              },
+              "props": {
+                "title": "维护收款人"
+              }
+            },
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/icms/accept/araPayeeInfo/info/ara_payee_info_detail.json",
+                "method": "get"
+              },
+              "props": {
+                "width": "65%",
+                "title": "收款人信息详情"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "ar1553"
+                }
+              },
+              "##show": {
+                "expression": "'${{params.pageType}}' != 'detail'"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

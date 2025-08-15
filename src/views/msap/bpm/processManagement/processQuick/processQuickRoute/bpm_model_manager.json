@@ -1,0 +1,165 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "doRequest": {
+                "url": "",
+                "method": "POST",
+                "params": {}
+            },
+            "controls": [
+                {
+                    "appId": {
+                        "control": "select",
+                        "label": "业务模块",
+                        "selectFirstValue":true,
+                        "dict": {
+                            "dictType": "MS_APPID",
+                            "dictKey": [
+                                "MS_APPID"
+                            ],
+                            "format": "value-label"
+                        },
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请选择业务模块"
+                            }]
+                    }
+                },
+                {
+                    "task_define_id": {
+                        "control": "text",
+                          "label": "节点定义id"
+                    },
+                    "next_task_define_id": {
+                        "control": "text",
+                        "label": "目标节点ID"
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "target": "dialog",
+                    "label": "新增",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/msap/bpm/processManagement/processQuick/processQuickRoute/bpm_model_add.json",
+                        "params":{
+                            "appId":"${{form.appId}}"
+                        }
+                    },
+                    "props": {
+                    "title": "新增流程线路模板"
+                    }
+                }
+            ]
+          },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "bpm3005"
+                }
+            },
+            "thead": [
+                {
+                    "type": "index"
+                },
+                {
+                    "label": "节点定义id",
+                    "prop": "task_define_id"
+                },
+                {
+                    "prop": "next_task_define_id",
+                    "label": "目标节点ID"
+                },
+                {
+                    "prop": "route_type",
+                    "label": "路线类型",
+                    "dict": {
+                        "dictType": "CT_E_APPLST",
+                        "dictKey": [
+                          "CT_E_APPLST"
+                        ],
+                        "format": "label"
+                      }
+                },
+                {
+                    "prop": "goback_ind",
+                    "label": "是否退回原处理人",
+                    "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                            "MS_E_YESORNO"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "prop": "wf_prod_tp",
+                    "label": "流程产品类型",
+                    "dict": {
+                        "dictType": "BPM_E_WFPDTP",
+                        "dictKey": [
+                          "BPM_E_WFPDTP"
+                        ],
+                        "format": "label"
+                      }
+                },
+                {
+                    "prop": "busi_list",
+                    "label": "业务调用列表"
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 200,
+                    "align":"center",
+                    "btns": [
+                        {
+                            "type": "delete",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "post",
+                                "params": {
+                                    "servicecode": "bpm3007",
+                                    "appId":"${{form.appId}}",
+                                    "wfprod_tp":"${{current.wf_prod_tp}}",
+                                    "method":"del"
+                                }
+                            },
+                            "confirm": {
+                              "title": "提示信息",
+                              "msg": "确定删除该信息吗？",
+                              "confirmButtonText": "确定",
+                              "cancelButtonText": "取消"
+                            }
+                        },
+                        {
+                            "type": "add",
+                            "label": "维护",
+                            "toRequest": {
+                                "method": "GET",
+                                "url": "/views/msap/bpm/processManagement/processQuick/processQuickRoute/bpm_model_upd.json",
+                                "params":{
+                                    "appId":"${{form.appId}}"
+                                }
+                            },
+                            "props": {
+                                "title": "线路模板维护"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+  }

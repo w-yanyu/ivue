@@ -1,0 +1,208 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "cust_no": {
+            "label": "客户编号",
+            "control": "lookup",
+            "keyField": {
+              "cust_id": "custid"
+            },
+            "toRequest": {
+              "url": "/views/us/cust_lookup.json",
+              "method": "post"
+            },
+            "multiple": false,
+            "props": {
+              "title": "客户选择"
+            }
+          },
+          "limit_no": {
+            "control": "text",
+            "label": "额度编号",
+            "rules": [
+              {
+                "max": 20,
+                "message": "长度不能超过20个字符"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": []
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "cl0037"
+        }
+      },
+      "thead": [
+        {
+          "label": "序号",
+          "width": "50px",
+          "type": "index",
+          "align": "center"
+        },
+        {
+          "label": "额度编号",
+          "prop": "limit_no",
+          "width": "180px",
+          "align": "center"
+        },
+        {
+          "label": "客户号",
+          "prop": "cust_no",
+          "width": "180px",
+          "align": "center"
+        },
+        {
+          "label": "客户名称",
+          "prop": "cust_name",
+          "width": "120px",
+          "align": "center"
+        },
+        {
+          "label": "生效日期",
+          "prop": "effect_date",
+          "width": "100px",
+          "align": "center"
+        },
+        {
+          "label": "失效日期",
+          "prop": "expiry_date",
+          "width": "100px",
+          "align": "center"
+        },
+        {
+          "label": "额度金额",
+          "width": "140px",
+          "prop": "cl_amt",
+          "align": "center",
+          "format": {
+            "thousand": ","
+          }
+        },
+        {
+          "label": "额度级别",
+          "prop": "cl_level",
+          "align": "center",
+          "width": "100px",
+          "dict": {
+            "dictType": "CL_E_CL_LEVEL",
+            "dictKey": [
+              "CL_E_CL_LEVEL"
+            ],
+            "format": "label",
+            "labelField": "dictName",
+            "valueField": "dictId"
+          }
+        },
+        {
+          "label": "期限",
+          "width": "50px",
+          "prop": "credit_period",
+          "align": "center"
+        },
+        {
+          "label": "可用余额",
+          "prop": "avail_amt",
+          "width": "140px",
+          "align": "center",
+          "format": {
+            "thousand": ","
+          }
+        },
+        {
+          "label": "实际可用余额",
+          "width": "140px",
+          "prop": "reality_avail_amt",
+          "align": "center",
+          "format": {
+            "thousand": ","
+          }
+        },
+        {
+          "label": "产品名称",
+          "prop": "cl_prod_name",
+          "align": "center"
+        },
+        {
+          "label": "额度类型名称",
+          "prop": "cl_type_name",
+          "align": "center"
+        },
+        {
+          "label": "有效状态",
+          "width": "100px",
+          "prop": "status",
+          "align": "center",
+          "dict": {
+            "dictType": "CL_E_STATUS",
+            "dictKey": [
+              "CL_E_STATUS"
+            ],
+            "format": "label",
+            "labelField": "dictName",
+            "valueField": "dictId"
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "align": "center",
+          "width": "150px",
+          "btns": [
+            {
+              "type": "custom",
+              "label": "打印授信额度通知书",
+              "toRequest": {
+                "url": "@creditLimitPrint",
+                "props": {
+                  "width": "70%",
+                  "height": "590px",
+                  "title": "打印授信额度通知书"
+                }
+              },
+              "show": {
+                "expression": "'${{current.cl_level}}' == 'M'"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "使用明细",
+              "toRequest": {
+                "url": "/views/cl/CreditLimitInquiry/credit_limit_usedDetail.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "75%",
+                "title": "授信额度使用明细"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/cl/CreditLimitInquiry/credit_limit_detail.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "70%",
+                "title": "授信额度详情"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

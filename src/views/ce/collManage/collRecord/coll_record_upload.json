@@ -1,0 +1,74 @@
+{
+  "module": "v_form_btn_dynamic",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "formSetTitle": "催记数据导入",
+      "controls": [
+        {
+          "coll_record_month": {
+            "control": "dateTimePicker",
+            "type": "month",
+            "width": "180px",
+            "align": "center",
+            "span": 8,
+            "label": "催记月份",
+            "format": "yyyy-MM",
+            "rules": [
+              {
+              "required": true,
+              "message": "请选择月份"
+            }
+            ]
+          },
+
+          "collRecordUpload": {
+            "control": "dynamic",
+            "isShowChildForm": true,
+            "span": 12,
+            "toRequest": {
+              "url": "@collRecordUpload",
+              "method": "get",
+              "params": {
+                "formKey": "collRecordUpload",
+                "formLabel": "上传催记数据导入文件"
+
+              }
+            }
+
+          },
+
+          "collRecordModelDown": {
+            "control": "dynamic",
+            "isShowChildForm": true,
+            "span": 1,
+            "toRequest": {
+              "url": "@downModel",
+              "method": "post",
+              "params": {
+              }
+            }
+
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "unplain":true,
+          "icon": "",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "RLMSPLTS1303_pl1303"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

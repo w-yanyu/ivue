@@ -1,0 +1,126 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+
+    "toolbar": {
+      "btns": [
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "daikuanfile",
+          "applid": "${{params.applid}}"
+        }
+      },
+      
+      "pagination":{
+          "show":false,
+          "pageSize":10
+      },
+
+      "thead": [
+
+        {
+          "label": "文件类型",
+          "prop": "filetp",
+          "align":"center",
+          "dict": {
+            "dictType": "E_FILETYPE",
+            "dictKey": [
+                "E_FILETYPE"
+            ],
+            "format": "label"
+        }
+        },
+        {
+          "label": "文件名称",
+          "prop": "filena",
+          "align":"center"
+        },
+        {
+          "label": "key信息",
+          "prop": "key",
+          "align":"center"
+        },
+        {
+          "label": "操作",
+          "width": 100,
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "查看",
+              "toRequest": {
+                "url": "@PdfPreview",
+                "method": "GET",
+                "params": {
+                  "path": "${{current.key}}",
+                  "bucket": "${{current.bucket}}"
+                }
+              },
+              "props": {
+                "width": "1200px",
+                "height": "600px",
+                "title": "文件预览"
+              },
+              "show": {
+                "prop": "phototype",
+                "is":[
+                  "2"
+                ]
+              }
+            },
+            {
+              "type": "edit",
+              "label": "查看",
+              "toRequest": {
+                "url": "@ImgPreview",
+                "method": "GET",
+                "params": {
+                  "path": "${{current.key}}",
+                  "bucket": "${{current.bucket}}"
+                }
+              },
+              "props": {
+                "width": "1200px",
+                "title": "文件预览"
+              },
+              "show": {
+                "prop": "phototype",
+                "is":[
+                  "1"
+                ]
+              }
+            },
+            {
+              "type": "edit",
+              "label": "查看",
+              "toRequest": {
+                "url": "@VideoPreview",
+                "method": "GET",
+                "params": {
+                  "videoUrl": "${{current.videoUrl}}"
+                }
+              },
+              "props": {
+                "width": "1200px",
+                "title": "视频预览"
+              },
+              "show": {
+                "prop": "phototype",
+                "is":[
+                  "3"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

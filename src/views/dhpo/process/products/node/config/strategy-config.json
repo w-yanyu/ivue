@@ -1,0 +1,88 @@
+{
+  "module": "lr_transferTable",
+  "layout": {
+    "transfer": {
+      "height":"500px",
+      "left": {
+        "filterable":false,
+        "title": "可选策略",
+        "btn":{
+          "label": "授权",
+          "doRequest": {
+            "url":"/SUMP/call/playStrategy",
+            "method":"post",
+            "params":{
+              "trans_type": "INSERT",
+              "wftask_cd": "${{params.wftask_cd}}",
+              "servicecode": "plms_chcelv"
+            }
+          }
+        },
+        "datagrid": {
+          "doRequest": {
+            "url":"/SUMP/icmcall/icmRPCCall",
+            "method":"POST",
+            "params": {
+              "wftask_cd": "${{params.wftask_cd}}",
+              "servicecode": "plms_qrcelv"
+            }
+          },
+          "checked":"checked",
+          "pagination": {
+            "show":true,
+            "pageSizes": [5, 10, 15, 20],
+            "pageSize": 5
+          },
+          "thead": [
+            {
+              "prop": "celvnm",
+              "label":"策略名称"
+            },
+            {
+              "prop": "celvcd",
+              "label": "策略编号"
+
+            }
+          ]
+        }
+      },
+      "right": {
+        "filterable":false,
+        "title":"已选策略",
+        "placeholder": "请输入角色名称",
+        "btn":{
+          "label":"取消授权",
+          "doRequest": {
+            "url":"/SUMP/icmcall/icmRPCCall",
+            "method":"post",
+            "params":{
+              "trans_type": "INSERT",
+              "wftask_cd": "${{params.wftask_cd}}",
+              "servicecode": "plms_chcelv"
+            }
+          }
+        },
+        "datagrid": {
+          "doRequest": {
+            "url":"/SUMP/icmcall/icmRPCCall",
+            "method":"post",
+            "params": {
+              "wftask_cd": "${{params.wftask_cd}}",
+              "servicecode": "plms_mycelv"
+            }
+          },
+          "thead": [
+            {
+              "prop": "celvnm",
+              "label":"策略名称"
+            },
+            {
+              "prop": "celvcd",
+              "label": "策略编号"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

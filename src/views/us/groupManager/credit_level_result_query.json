@@ -1,0 +1,118 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "btn": [],
+            "controls": [{
+                "cust_no": {
+                    "control": "text",
+                    "label": "客户编号",
+                    "disable": true,
+                    "value": "${{params.cust_no}}"
+                }
+            }]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "cr1013"
+                }
+            },
+            "thead": [{
+                    "label": "申请书编号",
+                    "prop": "appl_id",
+                    "width": 160,
+                    "align": "center"
+                },
+                {
+                    "label": "客户名称",
+                    "prop": "cust_name",
+                    "width": 160,
+                    "align": "center"
+                },
+                {
+                    "label": "评级类型",
+                    "prop": "cust_type",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "E_TEMPTYPE",
+                        "dictKey": [
+                            "E_TEMPTYPE"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "评级日期",
+                    "prop": "eval_dt",
+                    "align": "center"
+                },
+                {
+                    "label": "报表日期",
+                    "prop": "rept_dt",
+                    "align": "center"
+                },
+                {
+                    "label": "当前步骤",
+                    "prop": "cur_step",
+                    "align": "center"
+                },
+                {
+                    "beff_dt": "有效起始日期",
+                    "prop": "beff_dt",
+                    "align": "center"
+                },
+                {
+                    "label": "有效到期日期",
+                    "prop": "eeff_dt",
+                    "align": "center"
+                },
+                {
+                    "label": "年度评级结果",
+                    "align": "select",
+                    "prop": "level_rule_rank",
+                    "dict": {
+                        "dictType": "MS_E_CRET_TYPE",
+                        "dictKey": [
+                            "MS_E_CRET_TYPE"
+                        ],
+                        "format": "label"
+                    }
+                    
+                },
+                {
+                    "label": "评级机构",
+                    "prop": "brch_no",
+                    "align": "center"
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 130,
+                    "align": "left",
+                    "btns": [{
+                            "type": "look",
+                            "label": "查看详情",
+                            "toRequest": {
+                                "url": "@CRWaitToDoDeal",
+                                "method": "GET",
+                                "target": "navTab",
+                                "params": {
+
+                                }
+                            },
+                            "props": {
+                                "title": "信用评级详情"
+                            }
+                        }
+
+                    ]
+                }
+            ]
+        }
+    }
+}

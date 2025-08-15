@@ -1,0 +1,318 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "cert_type": {
+            "control": "select",
+            "label": "证件类型",
+            "span": 12,
+            "dict": {
+              "dictType": "MS_E_CRET_TYPE",
+              "dictKey": [
+                "MS_E_CRET_TYPE"
+              ],
+              "format": "label"
+            }
+          },
+          "cert_no": {
+            "control": "text",
+            "label": "证件号码",
+            "span": 12,
+            "rules": [
+              {
+                "max": 30,
+                "message": "长度不能超过30个字符"
+              }
+            ]
+          },
+          "data_create_user": {
+            "label": "导入人员",
+            "control": "select",
+            "span": 12,
+            "dict": {
+              "dictType": "deciOnl",
+              "dictKey": [],
+              "labelField": "user_name",
+              "valueField": "user_id",
+              "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                  "length": 1000,
+                  "start": 1,
+                  "servicecode": "ct2502"
+                }
+              },
+              "format": "value-label"
+            }
+          },
+          "cust_name": {
+            "label": "客户姓名",
+            "control": "text",
+            "span": 12
+          },
+          "prod_cd": {
+            "label": "产品编号",
+            "control": "text",
+            "span": 12
+          },
+          "batch_no": {
+            "label": "批次编号",
+            "control": "text",
+            "span": 12
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "POST",
+            "url": "/views/icms/preCreditBusi/preCreditList/preCreditList_start.json"
+          },
+          "props": {
+            "width": "65%",
+            "height": "70%",
+            "title": "预授信申请"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": true,
+      "scope": "searchTable",
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ar0832"
+        }
+      },
+      "thead": [
+        {
+          "label": "序号",
+          "type": "index"
+        },
+        {
+          "type": "string",
+          "label": "执行编号",
+          "prop": "white_list_no",
+          "align": "center",
+          "width": "250px"
+        },
+        {
+          "type": "string",
+          "label": "产品编号",
+          "prop": "prod_cd",
+          "align": "center",
+          "width": "100px"
+        },
+        {
+          "type": "string",
+          "label": "证件类型",
+          "prop": "cert_type",
+          "align": "center",
+          "width": "100px",
+          "dict": {
+            "dictType": "MS_E_CRET_TYPE",
+            "dictKey": [
+              "MS_E_CRET_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "string",
+          "label": "证件号码",
+          "prop": "cert_no",
+          "align": "center",
+          "width": "200px"
+        },
+        {
+          "type": "string",
+          "label": "客户姓名",
+          "prop": "cust_name",
+          "align": "center",
+          "width": "100px"
+        },
+        {
+          "type": "string",
+          "label": "国籍",
+          "prop": "country_code",
+          "align": "center",
+          "dict": {
+            "dictType": "US_E_INCTRY",
+            "dictKey": [
+              "US_E_INCTRY"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "string",
+          "label": "婚姻状态",
+          "prop": "marr_state",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_MARITA",
+            "dictKey": [
+              "MS_E_MARITA"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "string",
+          "label": "手机号码",
+          "prop": "mobile_no",
+          "align": "center",
+          "width": "150px"
+        },
+        {
+          "type": "string",
+          "label": "客户经理",
+          "prop": "cust_manager_no",
+          "align": "center",
+          "width": "150px",
+          "dict": {
+            "dictType": "deciOnl",
+            "dictKey": [],
+            "labelField": "user_name",
+            "valueField": "user_id",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "length": 1000,
+                "start": 1,
+                "servicecode": "ct2502"
+              }
+            },
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "label": "预授信金额(元)",
+          "prop": "pre_credit_amt",
+          "align": "center",
+          "format": {
+            "thousand": ",",
+            "decimal": 2
+          }
+        },
+        {
+          "type": "string",
+          "label": "授信期限(月)",
+          "prop": "credit_term",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "贷款期限(月)",
+          "prop": "loan_term",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "年利率（%）",
+          "prop": "interest_rate",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "支持还款方式",
+          "prop": "repay_type_list_cd",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_REPAY_WAY",
+            "dictKey": [
+              "MS_E_REPAY_WAY"
+            ],
+            "format": "label-value"
+          }
+        },
+        {
+          "type": "string",
+          "label": "预授信登记日期",
+          "prop": "pre_credit_regi_date",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "预授信有效期(天)",
+          "prop": "pre_credit_period",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "预授信失效日期",
+          "prop": "pre_credit_end_date",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "执行状态",
+          "prop": "pre_credit_task_status",
+          "align": "center",
+          "width": "100px",
+          "dict": {
+            "dictType": "AR_E_PRE_CREDIT_LIST_STATUS",
+            "dictKey": [
+              "AR_E_PRE_CREDIT_LIST_STATUS"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 150,
+          "align": "center",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/icms/preCreditBusi/preCreditList/preCreditList_task_info.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "65%",
+                "title": "客户预授信详情"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "ar0833"
+                }
+              },
+              "confirm": {
+                "title": "确定删除",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              },
+              "show":{
+                "expression":"'${{current.white_list_status}}' === '3' || '${{current.white_list_status}}' === '4'"
+              }
+            }
+          ]
+        }
+      ],
+      "pagination": {
+        "show": true
+      }
+    }
+  }
+}

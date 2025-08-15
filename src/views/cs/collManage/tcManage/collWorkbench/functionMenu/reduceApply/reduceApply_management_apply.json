@@ -1,0 +1,295 @@
+{
+  "module": "v-inputDataForm-btn",
+  "layout": {
+    "form": {
+      "btns": [
+        {
+          "type": "submit",
+          "label": "申请",
+          "doRequest": {
+            "method": "POST",
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "params": {
+              "servicecode": "cb0272",
+              "appId": "cbOnl",
+              "case_id": "${{params.case_id}}",
+              "apply_reason": "${{form.apply_reason}}",
+              "reduce_type": "${{form.reduce_type}}",
+              "reduce_amt": "${{form.reduce_amt}}"
+            }
+          }
+        },
+        {
+          "type": "close",
+          "label": "返回"
+        }
+      ],
+      "controls": [
+        {
+          "reduce_mode": {
+            "control": "select",
+            "label": "减免方式",
+            "default": "1",
+            "labelWidth": "0",
+            "span": "7",
+            "dict": {
+              "format": "value-label",
+              "dictType": "CS_REDUCE_MODE",
+              "dictKey": [
+                "CS_REDUCE_MODE"
+              ]
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择减免方式"
+              }
+            ],
+            "events": {
+              "condition": {
+                "1": {
+                  "control": {
+                    "reduce_prin": {
+                      "disabled": true
+                    },
+                    "reduce_interest": {
+                      "disabled": true
+                    },
+                    "reduce_1": {
+                      "disabled": true
+                    },
+                    "reduce_2": {
+                      "disabled": true
+                    }
+                  }
+                },
+                "2": {
+                  "control": {
+                    "reduce_prin": {
+                      "disabled": false
+                    },
+                    "reduce_interest": {
+                      "disabled": false
+                    },
+                    "reduce_1": {
+                      "disabled": false
+                    },
+                    "reduce_2": {
+                      "disabled": false
+                    }
+                  }
+                },
+                "3": {
+                  "control": {
+                    "reduce_prin": {
+                      "disabled": false
+                    },
+                    "reduce_interest": {
+                      "disabled": false
+                    },
+                    "reduce_1": {
+                      "disabled": false
+                    },
+                    "reduce_2": {
+                      "disabled": false
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "reduce_type": {
+            "control": "select",
+            "label": "减免类型",
+            "span": "7",
+            "labelWidth": "0",
+            "dict": {
+              "format": "value-label",
+              "dictType": "CS_REDUCE_TYPE",
+              "dictKey": [
+                "CS_REDUCE_TYPE"
+              ]
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择减免类型"
+              }
+            ]
+          },
+          "applt_reason": {
+            "control": "select",
+            "label": "调整申请原因",
+            "labelWidth": "0",
+            "span": "7",
+            "dict": {
+              "format": "value-label",
+              "dictType": "CS_APPLT_REASON",
+              "dictKey": [
+                "CS_APPLT_REASON"
+              ]
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择调整申请原因"
+              }
+            ]
+          }
+        },
+        {
+          "cust_apply_time": {
+            "label": "客户申请减免时间",
+            "control": "dateTimePicker",
+            "type": "dateTimePicker",
+            "span": "7",
+            "labelWidth": "0",
+            "format": "yyyy-MM-dd HH:mm:ss"
+          },
+          "reduce_principal": {
+            "control": "currency",
+            "label": "减免本金",
+            "span": "7",
+            "labelWidth": "0",
+            "rules": [
+              {
+                "pattern": "^[0-9]+(\\.[0-9]{1,2})?$",
+                "message": "请输入正数金额！"
+              }
+            ]
+          },
+          "reduce_interest": {
+            "control": "currency",
+            "label": "减免利息",
+            "span": "7",
+            "labelWidth": "0",
+            "rules": [
+              {
+                "pattern": "^[0-9]+(\\.[0-9]{1,2})?$",
+                "message": "请输入正数金额！"
+              }
+            ]
+          }
+        },
+        {
+          "reduce_default_interest": {
+            "control": "currency",
+            "label": "减免罚息",
+            "span": "7",
+            "labelWidth": "0",
+            "rules": [
+              {
+                "pattern": "^[0-9]+(\\.[0-9]{1,2})?$",
+                "message": "请输入正数金额！"
+              }
+            ]
+          },
+          "reduce_cost": {
+            "control": "currency",
+            "label": "减免费用",
+            "span": "7",
+            "labelWidth": "0",
+            "rules": [
+              {
+                "pattern": "^[0-9]+(\\.[0-9]{1,2})?$",
+                "message": "请输入正数金额！"
+              }
+            ]
+          },
+          "reduce_total_amount": {
+            "control": "currency",
+            "label": "减免总金额",
+            "span": "7",
+            "labelWidth": "0",
+            "disabled": false,
+            "compute": "${{form.reduce_principal}}+${{form.reduce_interest}}+${{form.reduce_default_interest}}+${{form.reduce_cost}}"
+          }
+        },
+        {
+          "remark": {
+            "control": "textarea",
+            "span": "7",
+            "labelWidth": "0",
+            "inputWidth": "1000px",
+            "rows": "4",
+            "label": "备注"
+          }
+        },
+        {
+          "file1": {
+            "doRequest": {
+              "url": "/SUMP/minioCall/upload",
+              "method": "post",
+              "params": {},
+              "resultSet": {
+                "template_url": "path",
+                "file_name": "oldName",
+                "file_size": "size"
+              }
+            },
+            "control": "file",
+            "limit": 1,
+            "span": "5",
+            "limitSize": 10,
+            "label": "身份证附件",
+            "btnLable": "请选择文件"
+          },
+          "file2": {
+            "doRequest": {
+              "url": "/SUMP/minioCall/upload",
+              "method": "post",
+              "params": {},
+              "resultSet": {
+                "template_url": "path",
+                "file_name": "oldName",
+                "file_size": "size"
+              }
+            },
+            "control": "file",
+            "limit": 1,
+            "span": "5",
+            "limitSize": 10,
+            "label": "申请书附件",
+            "btnLable": "请选择文件"
+          },
+          "file3": {
+            "doRequest": {
+              "url": "/SUMP/minioCall/upload",
+              "method": "post",
+              "params": {},
+              "resultSet": {
+                "template_url": "path",
+                "file_name": "oldName",
+                "file_size": "size"
+              }
+            },
+            "control": "file",
+            "limit": 1,
+            "span": "5",
+            "limitSize": 10,
+            "label": "征信报告附件",
+            "btnLable": "请选择文件"
+          },
+          "file4": {
+            "doRequest": {
+              "url": "/SUMP/minioCall/upload",
+              "method": "post",
+              "params": {},
+              "resultSet": {
+                "template_url": "path",
+                "file_name": "oldName",
+                "file_size": "size"
+              }
+            },
+            "control": "file",
+            "limit": 1,
+            "span": "5",
+            "limitSize": 10,
+            "label": "其他证据附件",
+            "btnLable": "请选择文件"
+          }
+        }
+      ]
+    }
+  }
+}

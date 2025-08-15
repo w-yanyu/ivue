@@ -1,0 +1,152 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "htmctc": {
+                        "label": "合同名称",
+                        "control": "text",
+                        "rules": [
+                            {
+                                "max": 32,
+                                "message": "长度不能超过32个字符"
+                            }
+                        ]
+                    },
+                    
+                    "htlxtc": {
+                        "control": "select",
+                        "label": "合同类型",
+                        "dict": {
+                            "dictType": "E_HTLXTC",
+                            "dictKey": [
+                                "E_HTLXTC"
+                            ],
+                            "format": "label"
+                        }
+                    }
+                },
+                {
+                    
+                    "htfltc": {
+                        "control": "select",
+                        "label": "合同状态",
+                        "dict": {
+                            "dictType": "E_HTFLTC",
+                            "dictKey": [
+                                "E_HTFLTC"
+                            ],
+                            "format": "label"
+                        }
+                    }
+                }
+            ],
+            "foldLineNumber": 3
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "target": "dialog",
+                    "label": "新增",
+                    "toRequest": {
+                        "method": "POST",
+                        "url": "/views/other/loanManagement/protocol_add.json"
+                    },
+                    "props": {
+                        "width": "65%",
+                        "title": "新增"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "isInitSearch": false,
+            "scope": "searchTable",
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "AS_ICMS_PD_SYHTXX"
+                }
+            },
+            "thead": [
+                {
+                    "label": "序号",
+                    "type": "index"
+                },
+                {
+                    "label": "合同编号",
+                    "prop": "htxxid"
+                },
+                {
+                    "label": "合同名称",
+                    "prop": "htmctc"
+                },
+               
+                {
+                    "label": "合同类型",
+                    "prop": "htlxtc",
+                    "type": "select",
+                    "dict": {
+                        "dictType": "E_HTLXTC",
+                        "dictKey": [
+                            "E_HTLXTC"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "合同状态",
+                    "prop": "htfltc",
+                    "type": "select",
+                    "dict": {
+                        "dictType": "E_HTFLTC",
+                        "dictKey": [
+                            "E_HTFLTC"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 200,
+                    "align":"center",
+                    "btns": [
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/other/loanManagement/protocol_edit.json",
+                                "method": "post"
+                            },
+                            "props": {
+                                "width": "65%",
+                                "title": "维护"
+                            }
+                        },
+                       
+                        {
+                            "type": "delete",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "post",
+                                "params": {
+                                    "servicecode": "AS_ICMS_PD_HTXXNR",
+                                    "trantp":"DELETE"
+                                    
+                                }
+                            }
+                        }
+                    ]
+                }
+            ],
+            "pagination": {
+                "show": true
+            }
+        }
+    }
+}

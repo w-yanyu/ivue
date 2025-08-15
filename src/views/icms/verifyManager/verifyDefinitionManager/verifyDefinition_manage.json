@@ -1,0 +1,112 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "verify_cd": {
+            "label": "核实项代码",
+            "control": "text"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "新增",
+          "toRequest": {
+            "url": "/views/icms/verifyManager/verifyDefinitionManager/verifyDefinition_add.json",
+            "method": "get",
+            "params": {}
+          },
+          "props": {
+            "title": "核实项定义新增",
+            "width": "80%"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "ar1121"
+        }
+      },
+      "pagination": {
+        "pageSizes": [
+          10,
+          15,
+          20
+        ],
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "type": "index",
+          "align": "center"
+        },
+        {
+          "type": "leaf",
+          "label": "核实项代码",
+          "align": "center",
+          "prop": "verify_cd"
+        },
+        {
+          "label": "核实项描述",
+          "prop": "verify_desc",
+          "align": "center",
+          "type": "leaf"
+        },
+        {
+          "label": "业务类型",
+          "prop": "prod_type_name",
+          "align": "center",
+          "type": "leaf"
+        },
+        {
+          "label": "核实项分类代码",
+          "prop": "verify_type_cd",
+          "align": "center",
+          "type": "leaf"
+        },
+        {
+          "label": "操作",
+          "width": "150px",
+          "align": "center",
+          "fixed": "right",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/icms/verifyManager/verifyDefinitionManager/verifyDefinition_update.json",
+                "method": "get",
+                "params": {}
+              },
+              "props": {
+                "title": "核实项定义维护",
+                "width": "80%"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "DELETE",
+                "params": {
+                  "servicecode": "ar1123"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

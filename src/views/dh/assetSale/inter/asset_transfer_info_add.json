@@ -1,0 +1,130 @@
+{
+  "module": "v-inputDataForm-btn",
+  "layout": {
+    "form": {
+      "btns": [{
+          "type": "submit",
+          "label": "提交",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "PLMSKGTS1001",
+              "appl_id": "${{params.appl_id}}",
+              "apply_user": "$g{{user_info.userCode}}"
+
+            }
+          }
+        },
+        {
+          "type": "reset",
+          "label": "重置",
+          "confirm": {
+            "title": "提示信息",
+            "msg": "确定重置已填写的信息吗？",
+            "confirmButtonText": "确定",
+            "cancelButtonText": "取消"
+          }
+        }
+      ],
+      "controls": [{
+        "cust_id": {
+          "control": "hidden"
+        },
+        "ref_no": {
+          "control": "lookup",
+          "label": "业务编号",
+          "span": 9,
+          "edit": true,
+          "rules": [{
+            "required": true,
+            "message": "业务编号不能为空!"
+          }],
+          "keyField": {
+            "ref_no": "lncfno",
+            "asset_origin_price": "lncfam",
+            "cust_id": "custno",
+            "apply_date": "instdt"
+          },
+          "toRequest": {
+            "url": "/views/dh/assetSale/inter/loan_info_add.json",
+            "method": "get"
+          },
+          "props": {
+            "title": "选择借据",
+            "width": "80%"
+          }
+        },
+        "asset_origin_price": {
+          "control": "string",
+          "span": 6,
+          "label": "转让资产原价",
+          "disabled": true,
+          "rules": [{
+            "required": true,
+            "message": "转让资产原价不能为空!"
+          }]
+        },
+        "apply_date": {
+          "span": 6,
+          "control": "dateTimePicker",
+          "label": "申请日期",
+          "disabled": true,
+          "rules": [{
+            "required": true,
+            "message": "申请日期不能为空!"
+          }]
+        },
+        "sale_price": {
+          "span": 9,
+          "control": "currency",
+          "label": "转让价格",
+          "rules": [{
+              "required": true,
+              "message": "请输入数字"
+            }
+          ]
+        },
+        "recv_usr_name": {
+          "span": 6,
+          "control": "text",
+          "label": "受让人",
+          "rules": [{
+              "required": true,
+              "message": "请输入受让人"
+            },
+            {
+              "max": 30,
+              "message": "长度不能超过30个字符"
+            }
+          ]
+        },
+        "evl_price_type": {
+          "control": "select",
+          "label": "评估方式",
+          "span": 6,
+          "dict": {
+            "dictType": "E_EVALUATION_WAY",
+            "dictKey": [
+              "E_EVALUATION_WAY"
+            ],
+            "format": "label"
+          },
+          "rules": [{
+            "required": true,
+            "message": "请选择评估方式"
+          }]
+        },
+        "sale_dt": {
+          "span": 9,
+          "control": "dateTimePicker",
+          "label": "转让日期",
+          "rules": [{
+            "required": true,
+            "message": "请选择日期!"
+          }]
+        }
+      }]
+    }
+  }
+}

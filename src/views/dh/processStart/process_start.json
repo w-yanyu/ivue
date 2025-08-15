@@ -1,0 +1,181 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "PLMSKGTS0013"
+                }
+              },
+              "btns":[
+                
+              ],
+            "controls": [
+              {
+                "lncatp": {
+                  "control": "select",
+                  "label": "流程类型:",
+                  "align":"center",
+                  "dict": {
+                    "dictType": "E_LNCATP2",
+                    "dictKey": [
+                      "E_LNCATP2"
+                    ],
+                    "format": "label"
+                  },
+                  "width": "100px",
+                  "rules": [
+                    {
+                      "required": true,
+                      "message": "请选择"
+                    }
+                  ],
+                  "showItem": {
+                    "GRD": [
+                      "custid"
+                    ],
+                    "RGJM": [
+                      "custidView",
+                      "lncfno",
+                      "idtfno"
+                    ],
+                    "HK": [
+                      "custidView",
+                      "lncfno",
+                      "idtfno"
+                    ],
+                    "$default": [
+                      "custid"
+                    ]
+                  }
+                },
+                "custna": {
+                  "control": "hidden",
+                  "label": "客户名称"
+
+                },
+                "idtftp": {
+                  "control": "hidden",
+                  "label": "证件类型"
+
+                },
+                "custid": {
+                  "label": "客户编号",
+                  "width": "100px",
+                  "control": "lookup",
+                  "align":"center",
+                  "edit": true,
+                  
+                  "keyField": {
+                    "custid": "custid",
+                    "custna": "custna",
+                    "idtftp": "certtp",
+                    "idtfno": "certno"
+                  },
+                  "toRequest": {
+                    "url": "/views/dh/processStart/customer_list.json",
+                    "method": "post"
+                  },
+                  "events": {
+                    "set": {
+                      "temp_name": "请选择客户"
+                    }
+                  },
+                 
+                  "props": {
+                    "title": "客户选择"
+                  },
+                  "rules": [
+                    {
+                      "required": true,
+                      "message": "请输入客户信息"
+                    }
+                  ]
+                },
+                "lncfno": {
+                  "label": "借据号:",
+                  "width": "100px",
+                  "control": "lookup",
+                  "align":"center",
+                  "edit": false,
+                  "initShow": false,
+                  "keyField": {
+                    "lncfno": "lncfno",
+                    "custid": "custno",
+                    "custna": "custna",
+                    "idtftp": "idtftp",
+                    "idtfno": "idtfno",
+                    "custidView": "custno"
+                  },
+                  "toRequest": {
+                    "url": "/views/dh/processStart/loan_info_list.json",
+                    "method": "post"
+                  },
+                  "multiple": false,
+                  "props": {
+                    "title": "借据选择",
+                    "width": "1200px"
+                  },
+                  "rules": [
+                    {
+                      "required": true,
+                      "message": "请输入借据信息"
+                    }
+                  ]
+                }
+              },
+              {
+                "custidView": {
+                  "width": "100px",
+                  "control": "string",
+                  "label": "客户ID"
+                },
+                "idtfno": {
+                  "label": "证件号码",
+                  "width": "100px",
+                  "control": "lookup",
+                  "align":"center",
+                  "edit": false,
+                  "initShow": false,
+                  "keyField": {
+                    "lncfno": "lncfno",
+                    "custid": "custno",
+                    "custna": "custna",
+                    "idtftp": "idtftp",
+                    "idtfno": "idtfno",
+                    "custidView": "custno"
+                  },
+                  "toRequest": {
+                    "url": "/views/dh/processStart/loan_info_cust_list.json",
+                    "method": "post"
+                  },
+                  "multiple": false,
+                  "props": {
+                    "title": "借据选择",
+                    "width": "1200px"
+                  },
+                  "rules": [
+                    {
+                      "required": true,
+                      "message": "请输入证件号码"
+                    }
+                  ]
+                }
+              },
+              {
+                "toDbsx": {
+                  "span": 24,
+                  "control": "dynamic",
+                  "isShowChildrenForm": false,
+                  "toRequest": {
+                    "method": "GET",
+                    "url": "@SubmitBtn"
+                  }
+                }
+              }
+            ]
+        }
+    }
+}

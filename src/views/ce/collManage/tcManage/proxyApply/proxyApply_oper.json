@@ -1,0 +1,106 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "btns": [
+        {
+          "type": "submit",
+          "icon": "el-icon-check",
+          "label": "代理申请",
+          "doRequest": {
+            "url": "/SUMP/call/RPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "ce2535",
+              "case_no": "${{params.selectedData}}"
+            }
+          }
+        },
+        {
+          "type": "close",
+          "label": "取消"
+        }
+      ],
+      "controls": [
+        {
+          "proxy_coll_team": {
+            "control": "inputTree",
+            "label": "代理催收组",
+            "width": "180px",
+            "align": "center",
+            "span": "16",
+            "idField": "coll_group",
+            "nodeTypeField": "type",
+            "pIdField": "parent_coll_team",
+            "labelField": "coll_team_name",
+            "events": {
+              "emit": [
+                "proxy_collector"
+              ]
+            },
+            "root": {
+              "rootNode": {
+                "name": "BYB-BRANCH",
+                "value": "9999",
+                "disabled": true
+              }
+            },
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ce0180"
+              }
+            },
+            "format": "label",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          }
+        },
+        {
+          "proxy_collector": {
+            "control": "remoteSelect",
+            "label": "代理催收员",
+            "width": "180px",
+            "align": "center",
+            "span": "16",
+            "placeholder": "请选择",
+            "labelField": "collector_name",
+            "valueField": "collector",
+            "lazy": true,
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ce0184",
+                "coll_team": "${{form.proxy_coll_team}}"
+              }
+            },
+            "format": "label",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          }
+        },
+        {
+          "agency_end_date": {
+            "control": "dateTimePicker",
+            "placeholder": "请输入",
+            "disabledDate": "dateBefore",
+            "width": "180px",
+            "align": "center",
+            "span": "16",
+            "label": "代理结束日期"
+          }
+        }
+      ]
+    }
+  }
+}

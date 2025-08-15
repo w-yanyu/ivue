@@ -1,0 +1,102 @@
+{
+  "module": "v-inputDataForm-btn",
+  "layout": {
+    "form": {
+      "initRequest": "${{params}}",
+      "doRequest": {
+        "url": "/API/risk-management-service/risk-facts/update",
+        "method": "POST",
+        "params": {
+          "updateUser": "$g{{user_info.userCode}}"
+        }
+      },
+      "###btns":[
+        {
+          "type":"submit",
+          "label":"保存",
+          "doRequest":{
+            "url": "/API/risk-management-service/risk-facts/update",
+            "method": "POST",
+            "params": {
+            "updateUser": "$g{{user_info.userCode}}"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "fact_code": {
+            "label": "事实代码",
+            "control": "string",
+            "span": 8,
+            "rules": [
+              {
+                "required": true,
+                "pattern": "^[A-Za-z][A-Za-z\\d_]{0,59}$",
+                "message": "该控件必填"
+              }
+            ]
+          },
+          "fact_name": {
+            "label": "事实名称",
+            "control": "text",
+            "span": 8,
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入事实名称"
+              }
+            ]
+          },
+          "fact_scene": {
+            "label": "事实场景",
+            "control": "text",
+            "span": 8,
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入事实场景",
+                "max": 100
+              }
+            ]
+          }
+        },
+        {
+          "description": {
+            "label": "备注",
+            "control": "textarea",
+            "span": 24,
+            "maxlength": 500,
+            "showWordLimit": 500,
+            "rows": 5,
+            "rules": [
+              {
+                "message": "请正确输入",
+                "max": 500
+              }
+            ]
+          }
+        },
+        {
+          "attributesInfo": {
+            "label": "事实属性",
+            "initShow": true,
+            "span": 24,
+            "control": "dynamic",
+            "toRequest": {
+              "url": "/views/risk/risk_fact/attribute/risk_attribute_list.json",
+              "method": "get",
+              "params": {
+                "factCode": "${{params.fact_code}}",
+                "flag":"1"
+              }
+            },
+            "props": {
+             
+            }
+          }
+        }
+      ]
+    }
+  }
+}

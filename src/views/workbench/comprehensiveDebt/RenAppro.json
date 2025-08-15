@@ -1,0 +1,85 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+  
+                  "custna": {
+                        "control": "text",
+                        "label": "客户姓名",
+                        "value":"${{params.custna}}"
+                    },
+                  
+                  "certno": {
+                    "control": "text",
+                    "label": "利率",
+                    "value":""
+                  }
+                }
+  
+  
+            ],
+            "btns": []
+        },
+        
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "auditHstQuery",
+                    "applyNo": "${{params.applyNo}}",
+                    "applid": "${{params.applid}}" 
+                }
+            },
+            "thead": [
+               
+                {
+                    "label": "审批历程",
+                    "prop": "auditStep",
+                    "align":"center",
+                    "dict": {
+                      "dictType": "MS_E_GENDER",
+                      "dictKey": [
+                        "MS_E_GENDER"
+                      ],
+                    "labelField":"dictName",
+                    "valueField":"dictId"
+                  }
+                },
+                {
+                    "label": "审核员",
+                    "prop": "auditUserName",
+                    "align":"center"
+                },
+                {
+                    "label": "最终核准额度",
+                    "prop": "auditAmt",
+                    "align":"center"
+                    
+                    
+                },
+                {
+                    "label": "利率",
+                    "prop": "auditIntRate",
+                    "align":"center"
+                },
+              {
+                "label": "核准理由",
+                "prop": "cardsday",
+                "align":"center"
+              },
+              {
+                "label": "原因",
+                "prop": "auditRemark",
+                "align":"center"
+              }
+               
+              ]
+        }
+    }
+  }
+  

@@ -1,0 +1,119 @@
+{
+  "module": "v-search-editableDataGrid",
+  "layout": {
+    "init": {
+      "initRequest": "${{params}}"
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "新增",
+          "icon": "el-icon-plus",
+          "disabled": "'${{params.pageType}}' == 'look'"
+        },
+        {
+          "type": "batchDelete",
+          "label": "批量删除",
+          "icon": "el-icon-close",
+          "disabled": "'${{params.pageType}}' == 'look'"
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "dataSourceInputParamCom",
+      "###isInitSearch": true,
+      "name": "dataSourceInputParamCom",
+      "###initRequest": "${{params.dataSourceInputParamCom}}",
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "deci050042",
+          "data_source_code": "${{params.data_source_code}}"
+        }
+      },
+      "pagination": {
+        "pageSizes": [
+          10,
+          15,
+          20
+        ],
+        "show": false,
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "type": "selection",
+          "width": "55",
+          "align": "center"
+        },
+        {
+          "prop": "parm_code",
+          "type": "text",
+          "label": "参数代码",
+          "validate": "required",
+          "align": "center"
+        },
+        {
+          "prop": "parm_name",
+          "type": "text",
+          "label": "参数名称",
+          "validate": "required",
+          "align": "center"
+        },
+        {
+          "type": "select",
+          "label": "数据类型",
+          "prop": "data_type",
+          "dict": {
+            "dictType": "DECI_E_DATA_TYPE",
+            "dictKey": [
+              "DECI_E_DATA_TYPE"
+            ],
+            "format": "label"
+          },
+          "align": "center"
+        },
+        {
+          "type": "select",
+          "label": "是否必填",
+          "prop": "is_input",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "text",
+          "label": "校验规则",
+          "prop": "check_rule",
+          "align": "center"
+        },
+        {
+          "label": "描述",
+          "prop": "description",
+          "type": "text",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align": "center",
+          "btns": [
+            {
+              "type": "delete",
+              "label": "删除",
+              "disabled": "'${{params.pageType}}' == 'look'"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

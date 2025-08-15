@@ -1,0 +1,265 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": "${{params}}",
+      "doRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ce3543",
+          "case_no": "${{params.case_no}}",
+          "contact_id": "${{params.contact_id}}"
+        }
+      },
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "icon": "el-icon-tickets"
+        },
+        {
+          "type": "close",
+          "label": "取消"
+        }
+      ],
+      "controls": [
+        {
+          "assoc": {
+            "control": "select",
+            "span": "6",
+            "clearable": false,
+            "inputWidth": "200px",
+            "label": "客户关系",
+            "dict": {
+              "dictType": "CE_E_RELATIONSHIP",
+              "dictKey": [
+                "CE_E_RELATIONSHIP"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ],
+            "events": {
+              "condition": {
+                "keyVals": {
+                  "001": "'${{form.assoc}}' === '9999' && '${{form.reg_type}}' === 'M'",
+                  "002": "'${{form.assoc}}' !== '9999' && '${{form.reg_type}}' === 'M'"
+                },
+                "switch": {
+                  "001": {
+                    "control": {
+                      "linkman": {
+                        "disabled": true
+                      },
+                      "addr_type": {
+                        "disabled": true
+                      }
+                    },
+                    "doRequest": {
+                      "url": "/SUMP/call/RPCCall",
+                      "method": "POST",
+                      "params": {
+                        "servicecode": "ce3602",
+                        "case_no": "${{params.case_no}}"
+                      },
+                      "resultSet": {
+                        "linkman": "name"
+                      }
+                    }
+                  },
+                  "002": {
+                    "control": {
+                      "linkman": {
+                        "disabled": false
+                      },
+                      "addr_type": {
+                        "disabled": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "linkman": {
+            "control": "text",
+            "span": "8",
+            "inputWidth": "200px",
+            "label": "联系人姓名",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          },
+          "is_valid": {
+            "control": "select",
+            "span": "8",
+            "inputWidth": "200px",
+            "label": "是否有效",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          }
+        },
+        {
+          "addr_type": {
+            "control": "select",
+            "span": "6",
+            "inputWidth": "200px",
+            "label": "地址类型",
+            "dict": {
+              "dictType": "CE_E_ADDR_TYPE",
+              "dictKey": [
+                "CE_E_ADDR_TYPE"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ],
+            "####": "邮箱地址不显示省市区",
+            "showItem": {
+              "H": [
+                "city-picker3"
+              ],
+              "B": [
+                "city-picker3"
+              ]
+            }
+          },
+          "post_cd": {
+            "control": "text",
+            "span": "8",
+            "inputWidth": "200px",
+            "label": "邮编",
+            "rules": [
+              {
+                "pattern": "^[1-9]\\d{5}$",
+                "message": "请输入正确邮编！"
+              }
+            ]
+          },
+          "reg_type": {
+            "control": "hidden",
+            "span": "8",
+            "label": "系统类型",
+            "disabled": false,
+            "inputWidth": "200px",
+            "dict": {
+              "dictType": "CE_E_REG_TYPE",
+              "dictKey": [
+                "CE_E_REG_TYPE"
+              ],
+              "format": "label"
+            },
+            "events": {
+              "condition": {
+                "keyVals": {
+                  "001": "'${{form.assoc}}' === '9999' && '${{form.reg_type}}' === 'M'",
+                  "002": "'${{form.reg_type}}' === 'B'"
+                },
+                "switch": {
+                  "001": {
+                    "control": {
+                      "assoc": {
+                        "disabled": true
+                      },
+                      "linkman": {
+                        "disabled": true
+                      },
+                      "addr_type": {
+                        "disabled": true
+                      }
+                    },
+                    "doRequest": {
+                      "url": "/SUMP/call/RPCCall",
+                      "method": "POST",
+                      "params": {
+                        "servicecode": "ce3602",
+                        "case_no": "${{params.case_no}}"
+                      },
+                      "resultSet": {
+                        "linkman": "name"
+                      }
+                    }
+                  },
+                  "002": {
+                    "control": {
+                      "assoc": {
+                        "disabled": true
+                      },
+                      "linkman": {
+                        "disabled": true
+                      },
+                      "addr_type": {
+                        "disabled": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "city-picker3": {
+            "control": "hidden",
+            "span": "6",
+            "initShow": false,
+            "inputWidth": "1000px",
+            "label": "省/市/区",
+            "###rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          }
+        },
+        {
+          "address": {
+            "control": "text",
+            "span": "6",
+            "inputWidth": "1000px",
+            "label": "地址",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          }
+        },
+        {
+          "remark": {
+            "control": "textarea",
+            "span": "6",
+            "inputWidth": "1000px",
+            "rows": "12",
+            "label": "备注"
+          }
+        }
+      ]
+    }
+  }
+}

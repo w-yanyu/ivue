@@ -1,0 +1,295 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "pt0430",
+          "part_protocol_no": "${{params.part_protocol_no}}",
+          "version": "${{params.version}}"
+        }
+      },
+      "btns": [
+        {
+          "type": "submit",
+          "icon": "el-icon-check",
+          "label": "保存",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "post",
+            "params": {
+              "servicecode": "pt0431",
+              "part_protocol_no": "${{params.part_protocol_no}}",
+              "part_project_no": "${{params.part_project_no}}",
+              "version": "${{params.version}}"
+            }
+          },
+          "eventAfter": {
+            "doLastCallback": false
+          }
+        }
+      ],
+      "controls": [
+        {
+          "premium_protocol_no": {
+            "control": "hidden",
+            "label": "保费代收协议编号",
+            "width": "50px",
+            "span": 8
+          },
+          "premium_basis": {
+            "control": "select",
+            "label": "保费收取依据",
+            "width": "50px",
+            "span": 8,
+            "dict": {
+              "dictType": "PT_E_PREMIUM_BASIS",
+              "dictKey": [
+                "PT_E_PREMIUM_BASIS"
+              ],
+              "format": "label"
+            },
+            "showItem": {
+              "0": [],
+              "1": [
+                "premium_way",
+                "premium_base",
+                "ccy_code",
+                "execution_inst_rate",
+                "billing_frequency",
+                "billing_date",
+                "billing_period_unit",
+                "period_value"
+              ]
+            },
+            "events": {
+              "condition": {
+                "0": {
+                  "control": {
+                    "premium_way": {
+                      "value": "",
+                      "rules": [
+                        {
+                          "required": false
+                        }
+                      ]
+                    },
+                    "premium_base": {
+                      "value": ""
+                    },
+                    "ccy_code": {
+                      "value": "",
+                      "rules": [
+                        {
+                          "required": false
+                        }
+                      ]
+                    },
+                    "execution_inst_rate": {
+                      "value": ""
+                    },
+                    "billing_frequency": {
+                      "value": ""
+                    },
+                    "billing_date": {
+                      "value": ""
+                    },
+                    "billing_period_unit": {
+                      "value": ""
+                    },
+                    "period_value": {
+                      "value": ""
+                    }
+                  }
+                }
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请填写保费收取依据"
+              }
+            ]
+          },
+          "premium_way": {
+            "control": "select",
+            "label": "保费收取方式",
+            "width": "50px",
+            "span": 8,
+            "dict": {
+              "dictType": "PT_E_PREMIUM_WAY",
+              "dictKey": [
+                "PT_E_PREMIUM_WAY"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请填写保费收取方式"
+              }
+            ]
+          },
+          "premium_base": {
+            "control": "select",
+            "label": "保费计算基准",
+            "width": "50px",
+            "span": 8,
+            "dict": {
+              "dictType": "PT_E_COMPUTE_BASE",
+              "dictKey": [
+                "PT_E_COMPUTE_BASE"
+              ],
+              "format": "label"
+            },
+            "showItem": {
+              "$default": [],
+              "1": [
+                "ccy_code"
+              ]
+            }
+          },
+          "ccy_code": {
+            "control": "select",
+            "label": "币种",
+            "width": "50px",
+            "span": 8,
+            "dict": {
+              "dictType": "MS_CURRENCY",
+              "dictKey": [
+                "MS_CURRENCY"
+              ]
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择币种"
+              }
+            ]
+          },
+          "execution_inst_rate": {
+            "control": "currency",
+            "label": "执行费率(%)",
+            "width": "50px",
+            "span": 8,
+            "format": {
+              "thousand": ",",
+              "decimal": 2
+            }
+          },
+          "billing_frequency": {
+            "control": "select",
+            "label": "结算频率",
+            "width": "50px",
+            "span": 8,
+            "dict": {
+              "dictType": "PT_E_BILLING_PREQ",
+              "dictKey": [
+                "PT_E_BILLING_PREQ"
+              ],
+              "format": "label"
+            },
+            "showItem": {
+              "1": [
+                "billing_date"
+              ],
+              "2": [
+                "billing_period_unit",
+                "period_value"
+              ]
+            },
+            "events": {
+              "condition": {
+                "1": {
+                  "control": {
+                    "billing_period_unit": {
+                      "value": ""
+                    },
+                    "period_value": {
+                      "value": ""
+                    }
+                  }
+                },
+                "2": {
+                  "control": {
+                    "billing_date": {
+                      "value": ""
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "billing_date": {
+            "control": "dateTimePicker",
+            "label": "结算日期",
+            "width": "50px",
+            "span": 8,
+            "valueFormat": "yyyyMMdd"
+          },
+          "billing_period_unit": {
+            "control": "select",
+            "label": "结算周期单位",
+            "width": "50px",
+            "span": 8,
+            "dict": {
+              "dictType": "MS_E_CYCLETYPE",
+              "dictKey": [
+                "MS_E_CYCLETYPE"
+              ],
+              "format": "label"
+            }
+          },
+          "period_value": {
+            "control": "text",
+            "label": "周期值",
+            "width": "50px",
+            "span": 8,
+            "rules": [
+              {
+                "type": "number",
+                "message": "请输入正确整数"
+              }
+            ]
+          },
+          "premium_acct_no": {
+            "control": "lookup",
+            "label": "保费资金账号",
+            "width": "50px",
+            "span": 8,
+            "keyField": {
+              "premium_acct_no": "part_center_no",
+              "premium_acct_name": "part_center_name"
+            },
+            "toRequest": {
+              "url": "/views/pt/partnerProjrctManage/patrs/agreement/commissionProfit/account_lookup.json",
+              "method": "GET",
+              "params": {
+                "part_no": "${{params.part_no}}"
+              }
+            },
+            "props": {
+              "width": "50%",
+              "title": "查询账户"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请填写保费资金账号"
+              }
+            ]
+          },
+          "premium_acct_name": {
+            "control": "text",
+            "label": "保费资金账户名",
+            "width": "50px",
+            "span": 8,
+            "disabled": true
+          }
+        }
+      ]
+    }
+  }
+}

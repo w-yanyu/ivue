@@ -1,0 +1,144 @@
+{
+  "module":"v_search_btn_datagrid",
+  "layout":{
+    "form":{
+
+      "controls":[
+        {
+          "apply_no":{
+            "label":"重组申请流程号",
+            "control":"text",
+            "name":"apply_no",
+            "rules":[
+              {
+                "required":false
+              },
+              {
+                "max":40,
+                "message":"长度不能超过40个字符"
+              }
+            ]
+          },
+          "ctrct_num":{
+            "label":"贷款合同编号",
+            "control":"text",
+            "name":"ctrct_num",
+            "rules":[
+              {
+                "required":false
+              },
+              {
+                "max":40,
+                "message":"长度不能超过40个字符"
+              }
+            ]
+          }
+        
+        },
+        {
+          "cust_name":{
+            "label":"客户名称",
+            "control":"text",
+            "name":"cust_name"
+          },
+          "cmpld_id":{
+            "label":"是否完成",
+            "control":"select",
+            "name":"cmpld_id",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            }
+          }
+        
+        }
+
+      ]
+    },
+    "datagrid":{
+      "isInitSearch":false,
+      "scope":"searchTable",
+      "doRequest":{
+        "url":"/SUMP/icmcall/icmRPCCall",
+        "method":"POST",
+        "params":{
+          "servicecode":"pl2003"
+        }
+      },
+      "pagination":{
+        "show":true
+      },
+      "thead":[
+
+        {
+          "label":"申请流程号",
+          "prop":"apply_no"
+        },
+        {
+          "label":"贷款合同号",
+          "prop":"ctrct_num"
+        },
+        {
+          "label":"客户号",
+          "prop":"cust_no"
+        },
+        {
+          "label":"客户名",
+          "prop":"cust_name"
+        },
+        {
+          "label": "贷款形态",
+          "prop": "loan_form",
+          "dict": {
+            "dictType": "PL_E_CLSSST",
+            "dictKey": [
+              "PL_E_CLSSST"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label":"贷款余额",
+          "prop":"loan_balance"
+        },
+        {
+          "label":"重组金额",
+          "prop":"rebuild_amt"
+ 
+        },
+
+      
+        {
+          "label":"备注信息",
+          "prop":"remark"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "详情",
+              "toRequest": {
+                "url": "@debtRebuildDetail",
+                "method": "POST",
+                "params": {
+                  "servicecode": "pl2003",
+                  "appl_id":"${{current.apply_no}}"
+                }
+              },
+              "props": {
+                "width": "80%",
+                "title": "重组申请详情"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

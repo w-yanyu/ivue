@@ -1,0 +1,175 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [{
+                "bank_name": {
+                    "control": "text",
+                    "label": "开户行名称",
+                    "rules": [{
+                        "max": 80,
+                        "message": "长度不能超过80个字符"
+                    }]
+                },
+                "open_acct_bank_no": {
+                    "control": "text",
+                    "label": "开户行号"
+                }
+                
+            }]
+        },
+        "toolbar": {
+            "btns": [{
+                "type": "add",
+                "target": "dialog",
+                "label": "新增",
+                "toRequest": {
+                    "method": "GET",
+                    "url": "/views/us/entManager/custfinanceManager/custOthacManager/custOthac_add.json",
+                    "params": {
+                        "cust_no": "${{params.cust_no}}"
+                    }
+                },
+                "show": {
+                    "expression": "'${{params.show_flash}}' == '1'"
+                },
+                "props": {
+                    "title": "他行账户信息新增",
+                    "width": "80%"
+                }
+            }]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "us0330",
+                    "cust_no": "${{params.cust_no}}"
+                }
+            },
+            "thead": [{
+                    "type": "index",
+                    "align": "center",
+                    "label": "序号"
+                },
+                {
+                    "label": "开户行名称",
+                    "prop": "bank_name",
+                    "align": "center"
+                },
+                {
+                    "label": "币种",
+                    "prop": "ccy_code",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "MS_CURRENCY",
+                        "dictKey": [
+                            "MS_CURRENCY"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "账户类别",
+                    "prop": "account_type",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "US_E_ACCOUNT_TYPE",
+                        "dictKey": [
+                            "US_E_ACCOUNT_TYPE"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "存款种类",
+                    "prop": "deposit_type",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "US_E_DEPOSIT_TYPE",
+                        "dictKey": [
+                            "US_E_DEPOSIT_TYPE"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "余额（元）",
+                    "prop": "credit_balance",
+                    "align": "center"
+                },
+                {
+                    "label": "账户状态",
+                    "prop": "acct_state",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "US_E_STATE",
+                        "dictKey": [
+                            "US_E_STATE"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 160,
+                    "align": "center",
+                    "btns": [{
+                            "type": "look",
+                            "label": "详情",
+                            "toRequest": {
+                                "url": "/views/us/entManager/custfinanceManager/custOthacManager/custOthac_info.json",
+                                "method": "POST"
+                            },
+                            "props": {
+                                "width": "80%",
+                                "title": "他行账户信息详情"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/us/entManager/custfinanceManager/custOthacManager/custOthac_update.json",
+                                "method": "POST"
+                            },
+                            "show": {
+                                "expression": "'${{params.show_flash}}' == '1'"
+                            },
+                            "props": {
+                                "width": "80%",
+                                "title": "他行账户信息维护"
+                            }
+                            
+                        },
+                        {
+                            "type": "custom",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "us0333"
+                                    
+                                }
+                            },
+                            "confirm": {
+                                "title": "确定删除",
+                                "confirmButtonText": "确定",
+                                "cancelButtonText": "取消"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

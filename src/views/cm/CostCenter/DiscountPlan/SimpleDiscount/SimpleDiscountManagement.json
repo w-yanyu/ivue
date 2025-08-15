@@ -1,0 +1,199 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "branch_id": {
+                        "control": "text",
+                        "label": "机构号",
+                        "rules": [
+                            {
+                                "max": 10,
+                                "message": "长度不能超过10个字符"
+                            }
+                        ]
+                    },
+                    "branch_name": {
+                        "control": "text",
+                        "label": "机构名称",
+                        "rules": [
+                            {
+                                "max": 100,
+                                "message": "长度不能超过100个字符"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "branch_function_class": {
+                        "control": "select",
+                        "label": "机构职能分类",
+                        "rules": [
+                            {
+                                "max": 8,
+                                "message": "长度不能超过8个字符"
+                            }
+                        ],
+                        "dict": {
+                            "dictType": "E_BRANCHFUNTIONCLASS",
+                            "dictKey": [
+                                "E_BRANCHFUNTIONCLASS"
+                            ],
+                            "format": "label"
+                        }
+                    },
+                    "real_branch_ind": {
+                        "control": "select",
+                        "label": "实体机构标志",
+                        "dict": {
+                            "dictType": "MS_E_YESORNO",
+                            "dictKey": [
+                                "MS_E_YESORNO"
+                            ],
+                            "format": "label"
+                        }
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "target": "dialog",
+                    "label": "新增",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/ismt/ct/branch/branch-info-add.json"
+                    },
+                    "props": {
+                        "title": "机构信息新增"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ct2142",
+                    "page_id": "/views/ismt/ct/branch/brannch-info-manager.json"
+                }
+            },
+            "thead": [
+                {
+                    "type": "index"
+                },
+                {
+                    "label": "法人代码",
+                    "prop": "corpno"
+                },
+                {
+                    "label": "机构号",
+                    "prop": "branch_id"
+                },
+                {
+                    "label": "机构名称",
+                    "prop": "branch_name"
+                },
+                {
+                    "label": "实体机构标志",
+                    "prop": "real_branch_ind",
+                    "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                            "MS_E_YESORNO"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "机构地址",
+                    "prop": "branch_address"
+                },
+                {
+                    "label": "机构电话",
+                    "prop": "branch_phone"
+                },
+                {
+                    "label": "机构邮箱",
+                    "prop": "branch_mail"
+                },
+                {
+                    "label": "邮政编码",
+                    "prop": "postcode"
+                },
+                {
+                    "label": "联系人",
+                    "prop": "contacts_name"
+                },
+                {
+                    "label": "联系人电话",
+                    "prop": "contacts_phone"
+                },
+                {
+                    "label": "联系人邮箱",
+                    "prop": "contacts_mail"
+                },
+                {
+                    "label": "机构职能分类",
+                    "prop": "branch_function_class"
+                },
+                {
+                    "label": "SWIFT代码",
+                    "prop": "swift_no"
+                },
+                {
+                    "label": "节假日代码",
+                    "prop": "holiday_code"
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 200,
+                    "align":"center",
+                    "btns": [
+                        {
+                            "type": "look",
+                            "label": "详情",
+                            "toRequest": {
+                                "url": "/views/ismt/ct/branch/branch-info-detail.json",
+                                "method": "POST"
+                            },
+                            "props": {
+                                "width": "85%",
+                                "title": "机构信息详情"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/ismt/ct/branch/branch-info-update.json",
+                                "method": "GET"
+                            },
+                            "props": {
+                                "title": "机构信息维护"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "删除",
+                            "toRequest": {
+                                "url": "/views/ismt/ct/branch/branch-info-delete.json",
+                                "method": "GET"
+                            },
+                            "props": {
+                                "title": "机构信息删除"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

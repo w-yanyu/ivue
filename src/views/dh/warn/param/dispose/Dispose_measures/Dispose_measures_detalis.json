@@ -1,0 +1,87 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "initRequest": "${{params}}",
+            "initDataOnce": true,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "wa1402",
+                    "trantp": "UPDATE",
+                    "method_code": "${{params.method_code}}",
+                    "warning_cust": "${{params.warning_cust}}"
+                }
+            },
+            "btns": [],
+            "controls": [
+                {
+                    "method_code": {
+                        "control": "select",
+                        "label": "处理措施代码",
+                        "width": "130px",
+                        "span": 7,
+                        "disabled": true,
+                        "dict": {
+                            "dictType": "E_METHOD_CD",
+                            "dictKey": [
+                                "E_METHOD_CD"
+                            ]
+                        }
+                    },
+                    "method_name": {
+                        "control": "text",
+                        "label": "处理措施名称",
+                        "width": "130px",
+                        "disabled":true,
+                        "span": 7,
+                        "rules": [
+                            {
+                                "required": false,
+                                "message": "请输入处理措施名称"
+                            },
+                            {
+                                "pattern": "^[\\w\\u4E00-\\u9FA5]{1,20}$",
+                                "message": "请输入长度在1至20由汉字，字母，数字或下划线组成的字符串"
+                            }
+                        ]
+                    },
+                    "flow_ind": {
+                        "control": "select",
+                        "label": "是否启用流程",
+                        "disabled":true,
+                        "placeholder": "请选择",
+                        "width": "130px",
+                        "span": 7,
+                        "dict": {
+                            "dictType": "MS_E_YESORNO",
+                            "dictKey": [
+                                "MS_E_YESORNO"
+                            ],
+                            "format": "value-label"
+                        },
+                        "rules": [
+                            {
+                                "required": false,
+                                "message": "请选择是否启用流程"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "method_desc": {
+                        "control": "textarea",
+                        "label": "描述:",
+                        "width": "130px",
+                        "span": 24,
+                        "maxLength": 500,
+                        "autosize": false,
+                        "rows": 4,
+                        "disabled":true
+                    }
+                }
+            ]
+        }
+    }
+}

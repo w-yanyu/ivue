@@ -1,0 +1,254 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "foldLineNumber": 3,
+            "controls": [
+                {
+                    "cust_name": {
+                        "control": "text",
+                        "label": "客户姓名"
+                    },
+                    "cert_no": {
+                        "control": "text",
+                        "label": "证件号码"
+                    }
+                },
+                {
+                    "cust_no": {
+                        "control": "text",
+                        "label": "客户号"
+                    },
+                    "callon_status": {
+                        "control": "select",
+                        "label": "外访状态",
+                        "dict": {
+                          "dictType": "CE_CALLON_STATUS",
+                          "dictKey": [
+                            "CE_CALLON_STATUS"
+                          ],
+                          "format": "value-label"
+                        }
+                    }
+                },
+                {
+                    "is_end": {
+                        "control": "select",
+                        "label": "是否完成",
+                        "dict": {
+                          "dictType": "MS_E_YESORNO",
+                          "dictKey": [
+                            "MS_E_YESORNO"
+                          ],
+                          "format": "value-label"
+                        }
+                    }
+                }
+            ]
+        },
+        "toolbar": {},
+        "datagrid": {
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ce1553"
+                }
+            },
+            "thead": [
+
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width":"180px",
+                    "label": "客户姓名",
+                    "prop": "cust_name"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width":"180px",
+                    "label": "客户号",
+                    "prop": "cust_no"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width":"180px",
+                    "label": "证件号码",
+                    "prop": "cert_no"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width":"180px",
+                    "label": "借据号",
+                    "prop": "loan_no"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width":"180px",
+                    "label": "合同号",
+                    "prop": "contract_no"
+                },
+
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width":"180px",
+                    "label": "催收员",
+                    "prop": "collector",
+                    "dict": {
+                        "dictKey": [
+                            "collector"
+                        ],
+                        "format": "label",
+                        "labelField": "user_name",
+                        "valueField": "user_id",
+                        "doRequest": {
+                            "url": "/SUMP/call/RPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "ce0403"
+                            }
+                        }
+                    }
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width":"180px",
+                    "label": "申请人",
+                    "prop": "appt",
+                    "dict": {
+                        "dictKey": [
+                          "appt"
+                        ],
+                        "format": "label",
+                        "labelField": "user_name",
+                        "valueField": "user_id",
+                        "doRequest": {
+                          "url": "/SUMP/call/RPCCall",
+                          "method": "POST",
+                          "params": {
+                            "servicecode": "ce0403"
+                          }
+                        }
+                      }
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width":"180px",
+                    "label": "审核人",
+                    "prop": "approver",
+                    "dict": {
+                        "dictKey": [
+                          "approver"
+                        ],
+                        "format": "label",
+                        "labelField": "user_name",
+                        "valueField": "user_id",
+                        "doRequest": {
+                          "url": "/SUMP/call/RPCCall",
+                          "method": "POST",
+                          "params": {
+                            "servicecode": "ce0403"
+                          }
+                        }
+                      }
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width":"180px",
+                    "label": "是否完成",
+                    "prop": "is_end",
+                    "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                            "MS_E_YESORNO"
+                        ],
+                        "format": "value-label"
+                    }
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width":"180px",
+                    "label": "外访状态",
+                    "prop": "callon_status",
+                    "dict": {
+                      "dictType": "CE_CALLON_STATUS",
+                      "dictKey": [
+                        "CE_CALLON_STATUS"
+                      ],
+                      "format": "value-label"
+                    }
+                },
+                {
+                    "label": "操作",
+                    "align":"center",
+                    "width":"280px",
+                    "fixed": "right",
+                    "btns": [
+                        {
+                            "type": "custom",
+                            "label": "标记完成",
+                            "doRequest": {
+                                "url": "/SUMP/call/RPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode":"ce1554",
+                                    "work_seqno": "${{current.work_seqno}}"
+                                }
+                            }
+                        },
+                        {
+                            "type": "custom",
+                            "label": "外访记录",
+                            "toRequest": {
+                                "url": "/views/ce/assistManage/callOn/callOnWork/callOnWork_record.json",
+                                "method": "POST",
+                                "params": {
+                                    "work_seqno":"${{current.work_seqno}}"
+                                }
+                            },
+                            "props": {
+                                "title": "查看外访记录",
+                                "width":"50%"
+                            }
+                        },
+                        {
+                            "type": "custom",
+                            "label": "外访影像",
+                            "toRequest": {
+                                "url": "/views/ce/assistManage/callOn/callOnWork/callOnWork_plVideo.json",
+                                "method": "POST",
+                                "params": {}
+                            },
+                            "props": {
+                                "title": "外访影像",
+                                "width":"80%"
+                            }
+                        },
+                        {
+                            "type": "print",
+                            "label": "打印外访单",
+                            "doRequest": {
+                                "url": "/SUMP/call/RPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode":"ce1555",
+                                    "work_seqno": "${{current.work_seqno}}"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

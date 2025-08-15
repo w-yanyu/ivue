@@ -1,0 +1,113 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "doc_cd": {
+            "label": "文档编号",
+            "width": "140px",
+            "control": "string",
+            "required": false,
+            "disabled": true
+          },
+          "doc_desc": {
+            "label": "核实项描述",
+            "width": "140px",
+            "control": "string",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输核实项描述"
+              }
+            ]
+          },
+          "indv_flag": {
+            "label": "是否个人核实项",
+            "width": "140px",
+            "control": "string",
+            "multiple": false,
+            "value": "",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择是否个人核实项"
+              }
+            ]
+          },
+          "doc_cat": {
+            "label": "核实项分类",
+            "width": "140px",
+            "disabled": true,
+            "multiple": false,
+            "value": "",
+            "control": "remoteSelect",
+            "labelField": "title",
+            "valueField": "id",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "pd0144",
+                "grupno": "0006",
+                "pid": "KSCP"
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择核实项分类"
+              }
+            ]
+          },
+          "doc_ref_no": {
+            "label": "档案参考号",
+            "width": "140px",
+            "control": "string",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入档案参考号"
+              },
+              {
+                "max": 3,
+                "message": "最大长度3位"
+              }
+            ]
+          },
+          "doc_type_id": {
+            "label": "核实项分类代码",
+            "width": "140px",
+            "control": "remoteSelect",
+            "disabled": true,
+            "labelField": "doc_type_name",
+            "valueField": "doc_type_id",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "qdocts",
+                "start": 1,
+                "length": 10000
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择核实项分类代码"
+              }
+            ]
+          }
+        }
+      ],
+      "initRequest": "${{params}}"
+    }
+  }
+}

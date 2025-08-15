@@ -1,0 +1,152 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "cust_na": {
+                        "control": "text",
+                        "label": "客户名称",
+                        "rules": [
+                            {
+                                "max": 10,
+                                "message": "长度不能超过10个字符"
+                            }
+                        ]
+                    },
+                    "no": {
+                        "control": "text",
+                        "label": "申请书编号",
+                        "rules": [
+                            {
+                                "max": 32,
+                                "message": "长度不能超过32个字符"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+              "type": "add",
+              "target": "dialog",
+              "label": "接收",
+              "toRequest": {
+                "method": "GET",
+                "url": "/views/pl/archivesmgement/cleardata/role-info-add.json"
+              }
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "pl0350"
+                }
+            },
+          "pagination": {
+            "pageSizes": [
+              10,
+              15,
+              20,
+              50,
+              100
+            ],
+            "pageSize": 10
+          },
+            "thead": [
+                {
+                    "type": "index"
+                },
+                {
+                    "label": "客户名称",
+                    "prop": "cust_name"
+                },
+                {
+                    "label": "业务品种",
+                    "prop": "busi_type"
+                },
+                {
+                    "label": "业务金额",
+                    "prop": "busi_amt",
+                    "rules": [
+                        {
+                        }
+                    ]
+                },
+                {
+                    "label": "业务起始日",
+                    "prop": "busi_start"
+                },
+                {
+                    "label": "业务到期日",
+                    "prop": "busi_end"
+                },
+                {
+                    "label": "申请书编号",
+                    "prop": "apply_no",
+                    "dict": {
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "借据编号",
+                    "prop": "loan_no"
+                },
+                {
+                    "label": "放款审查员",
+                    "prop": "loan_examiner"
+                },
+                {
+                    "label": "放款经办机构",
+                    "prop": "loan_org"
+                },
+              {
+                "label": "操作",
+                "fixed": "right",
+                "width": 300,
+                "align": "center",
+                "btns": [
+                  {
+                    "type": "custom",
+                    "target": "dialog",
+                    "label": "打包入册",
+                    "toRequest": {
+                      "method": "post",
+                      "url": "/views/pl/archivesmgement/recordment/packin.json"
+                    },
+
+                    "props": {
+                      "title": "打包入册"
+                    }
+                  },
+                  {
+                    "type": "add",
+                    "target": "dialog",
+                    "label": "打印目录清单",
+                    "toRequest": {
+                      "method": "GET",
+                      "url": ""
+                    },
+                    "props": {
+                    }
+                  },
+                  {
+                    "type": "submit",
+                    "label": "取消归档",
+                    "toRequest": {
+                      "method": "GET",
+                      "url": ""
+                    },
+                    "props": {
+                    }
+                  }
+                ]
+              }
+
+            ]
+        }
+    }
+}

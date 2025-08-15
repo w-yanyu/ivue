@@ -1,0 +1,234 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": "${{params}}",
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "icon": "",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "bpm3004",
+              "appId":"${{params.appId}}"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "task_define_id": {
+            "control": "string",
+            "label": "节点定义编号",
+            "width": "100px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入节点定义编号"
+              },
+              {
+                "max": 64,
+                "message": "长度不能超过64个字符"
+              }
+            ]
+          },
+          "task_define_name": {
+            "control": "text",
+            "label": "节点定义名称",
+            "width": "100px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入节点定义名称"
+              },
+              {
+                "max": 100,
+                "message": "长度不能超过100个字符"
+              }
+            ]
+          },
+          "wfprod_tp_list": {
+            "control": "select",
+            "multiple":"true",
+            "label": "流程产品类型",
+            "width": "100px",
+            "valueDataType":"string",
+            "dict": {
+              "dictType": "BPM_E_WFPDTP",
+              "dictKey": [
+                "BPM_E_WFPDTP"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择流程产品类型"
+              }
+            ]
+          },
+          "task_type": {
+            "control": "select",
+            "label": "节点类型",
+            "width": "100px",
+            "dict": {
+              "dictType": "BPM_E_TASK_TYPE",
+              "dictKey": [
+                "BPM_E_TASK_TYPE"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择节点类型"
+              }
+            ],
+            "showItem": {
+              "MANUAL": ["select_type","wf_role_no","role_name","opinion_view_type","task_mode"]
+            }
+          },
+          "task_mode": {
+            "initShow": false,
+            "control": "select",
+            "label": "人工节点模式",
+            "width": "100px",
+            "dict": {
+              "dictType": "BPM_E_TASK_MODE",
+              "dictKey": [
+                "BPM_E_TASK_MODE"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择节点类型"
+              }
+            ]
+          },
+          "select_type": {
+            "initShow": false,
+            "control": "select",
+            "label": "处理方式",
+            "width": "100px",
+            "dict": {
+              "dictType": "BPM_E_SELECT_TYPE",
+              "dictKey": [
+                "BPM_E_SELECT_TYPE"
+              ],
+              "format": "label"
+            },
+            "showItem": {
+              "4": ["auto_select_rule"]
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择处理方式"
+              }
+            ]
+          },
+          "wf_role_no":{
+            "initShow":false,
+            "control": "lookup",
+            "label": "参与者角色编号",
+            "width": "100px",
+            "edit": false,
+            "keyField": {
+                "wf_role_no": "role_id",
+                "role_name": "role_name"
+            },
+            "toRequest": {
+                "url": "/views/ismt/ct/roleManager/role-manager_lookup.json",
+                "method": "post",
+                "params":{
+                  "appId":"${{params.appId}}"
+                }
+
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入参与者角色编号"
+              }
+            ]
+          },
+          "role_name":{
+            "initShow":false,
+            "control": "string",
+            "width": "100px",
+            "label": "角色名称"
+          },
+          "opinion_view_type": {
+            "initShow": false,
+            "control": "select",
+            "label": "会签审批意见查看模式",
+            "width": "100px",
+            "dict": {
+              "dictType": "BPM_E_OPINION_VIEW_TYPE",
+              "dictKey": [
+                "BPM_E_OPINION_VIEW_TYPE"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入会签审批意见查看模式"
+              },
+              {
+                "max": 200,
+                "message": "长度不能超过200个字符"
+              }
+            ]
+          },
+          "auto_select_rule": {
+            "initShow":false,
+            "control": "select",
+            "label": "自动选人策略",
+            "width": "100px",
+            "events" : {
+              "showItem": {
+                "3" : ["service_impl"],
+                "$default" : []
+              }
+            },
+            "dict": {
+              "dictType": "BPM_E_AUTO_SELECT_RULE",
+              "dictKey": [
+                "BPM_E_AUTO_SELECT_RULE"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入自动选人策略"
+              }
+            ]
+          },
+          "service_impl": {
+            "initShow":false,
+            "control": "text",
+            "label": "服务实现方法绝对路径",
+            "width": "100px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入服务实现方法绝对路径"
+              },
+              {
+                "max": 100,
+                "message": "长度不能超过100个字符"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

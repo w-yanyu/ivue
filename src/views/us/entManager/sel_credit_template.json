@@ -1,0 +1,90 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "scope": "form",
+            "initRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "us0201",
+                    "custid": "${{params.cust_no}}"
+                }
+            },
+            "btns": [{
+                "type": "submit",
+                "label": "提交",
+                "icon": "",
+                "doRequest": {
+                    "url": "/SUMP/icmcall/icmRPCCall",
+                    "method": "POST",
+                    "params": {
+                        "servicecode": "us0204",
+                        "cust_no": "${{params.cust_no}}"
+                        
+                    }
+                }
+            }],
+            "controls": [{
+                "cust_name": {
+                    "control": "text",
+                    "label": "客户名称",
+                    "value": "${{params.cust_name}}",
+                    "width": "130px",
+                    "disabled": true
+                },
+                "new_busi_class_std": {
+                    "control": "hidden",
+                    "label": "行业分类",
+                    "width": "130px",
+                    "disabled": true
+                },
+                "new_enterprise_size": {
+                    "control": "hidden",
+                    "label": "企业规模",
+                    "width": "130px",
+                    "disabled": true
+                },
+                "credit_template_name": {
+                    "control": "lookup",
+                    "width": "130px",
+                    "edit": true,
+                    "rules": [{
+                        "required": true,
+                        "message": "信评模板编号不能为空"
+                    }],
+                    "label": "信评模板",
+                    "keyField": {
+                        "credit_template_name": "temp_name",
+                        "credit_template_no": "temp_id"
+                    },
+                    "toRequest": {
+                        "url": "/views/cr/start/customer_template_lookup.json",
+                        "method": "post",
+                        "params": {
+                            "cust_type": "${{params.cust_type}}",
+                            "new_busi_class_std": "${{form.new_busi_class_std}}",
+                            "new_enterprise_size": "${{form.new_enterprise_size}}"
+                        }
+                    },
+                    "props": {
+                        "title": "查询信评模板"
+                    },
+                    "format": "label"
+                },
+                "crt_temp_id": {
+                    "control": "hidden",
+                    "label": "评级模板编码",
+                    "width": "130px",
+                    "disabled": true
+                },
+                "credit_template_no": {
+                    "control": "hidden",
+                    "label": "评级模板编码",
+                    "width": "130px",
+                    "disabled": true
+                }
+            }]
+        }
+    }
+}

@@ -1,0 +1,172 @@
+{
+  "module": "v-form-editableDataGrid-btn",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "initRequest": "${{params}}",
+      "controls": [
+        {
+          "assign_algorithm": {
+            "control": "select",
+            "label": "分配算法",
+            "width": "130px",
+            "format": "value-label",
+            "selectFirstValue": false,
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ],
+            "dict": {
+              "dictType": "CS_ASSIGN_ALG",
+              "dictKey": [
+                "CS_ASSIGN_ALG"
+              ],
+              "format": "value-label"
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "新增",
+          "icon": "el-icon-plus"
+        },
+        {
+          "type": "batchDelete",
+          "label": "删除",
+          "icon": "el-icon-close"
+        }
+      ]
+    },
+    "datagrid": {
+      "name": "scheme",
+      "scope": "scheme",
+      "pagination": {
+        "show": false
+      },
+      "allData": true,
+      "thead": [
+        {
+          "type": "selection",
+          "align": "center",
+          "width": "55",
+          "fixed": "left",
+          "show": {
+            "prop": "changkuan",
+            "is": [
+              "0"
+            ]
+          }
+        },
+        {
+          "label": "分配组",
+          "align": "center",
+          "prop": "coll_team",
+          "type": "inputTree",
+          "idField": "coll_team",
+          "nodeTypeField": "type",
+          "pIdField": "parent_coll_team",
+          "labelField": "coll_team_name",
+          "events": {
+            "emit": [
+              "collector"
+            ]
+          },
+          "nodeTypes": {
+            "collTeam": {
+              "icon": "el-icon-news",
+              "children": [
+                "collTeam"
+              ]
+            }
+          },
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "cb0041"
+            }
+          }
+        },
+        {
+          "prop": "collector",
+          "type": "remoteSelect",
+          "align": "center",
+          "label": "分配对象",
+          "format": "value-label",
+          "labelField": "user_name",
+          "valueField": "user_id",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "cb0084",
+              "coll_team": "${{current.coll_team}}"
+            }
+          },
+          "rules": [
+            {
+              "required": true,
+              "message": "请输入"
+            }
+          ]
+        },
+        {
+          "prop": "detail_assign_ratio",
+          "type": "inputNumber",
+          "align": "center",
+          "label": "分配比重",
+          "min": 1,
+          "max": 100,
+          "rules": [
+            {
+              "required": true,
+              "message": "请输入"
+            }
+          ]
+        },
+        {
+          "label": "操作",
+          "width": "100px",
+          "btns": [
+            {
+              "type": "delete",
+              "label": "删除",
+              "align": "center",
+              "icon": "el-icon-close"
+            }
+          ]
+        }
+      ]
+    },
+    "footer": {
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "icon": "el-icon-tickets",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "post",
+            "params": {
+              "servicecode": "cb0162",
+              "case_id": "${{params.selectedData}}",
+              "allData": "${{scheme}}",
+              "assign_algorithm": "${{formData.assign_algorithm}}"
+            }
+          }
+        },
+        {
+          "type": "close",
+          "icon": "el-icon-close",
+          "label": "关闭"
+        }
+      ]
+    }
+  }
+}

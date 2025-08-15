@@ -1,0 +1,93 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+      "form": {
+        "controls": [
+          {
+            "sale_prod_cd": {
+              "label": "业务产品",
+              "control": "text",
+              "span": 12
+            },
+            "report_freq": {
+              "label": "报表频率",
+              "control": "select",
+              "span": 12,"value":"1",
+
+              "dict": {
+                "dictType": "PL_E_REP_FREQ",
+                "dictKey": [
+                  "PL_E_REP_FREQ"
+                ],
+                "format": "label"
+              }
+            }
+          },
+          {
+            "start_date": {
+              "label": "起始日期",
+              "control": "dateTimePicker",
+              "span": 12,
+              "format": "yyyyMMdd"
+            },
+            "end_date": {
+              "label": "结束日期",
+              "control": "dateTimePicker",
+              "span": 12,
+              "format": "yyyyMMdd"
+            }
+          }
+        ]
+      },
+      "toolbar": {
+        "btns": []
+      },
+      "datagrid": {
+        "scope": "searchTable",
+        "isInitSearch": true,
+        "doRequest": {
+          "url": "/SUMP/icmcall/icmRPCCall",
+          "method": "POST",
+          "params": {
+            "servicecode": "pl0801",
+            "report_static_type":"2"
+          }
+        },
+        "thead": [
+            {
+              "label": "报表日期",
+              "prop": "rept_dt",
+              "align":"center"
+            },
+            {
+              "label": "报表频率",
+              "prop": "report_freq",
+              "align":"center",
+              "dict": {
+                "dictType": "PL_E_REP_FREQ",
+                "dictKey": [
+                  "PL_E_REP_FREQ"
+                ],
+                "format": "label"
+              }
+            },
+            {
+              "label": "业务产品",
+              "prop": "sale_prod_cd",
+              "align":"center"
+            },
+            {
+              "label": "不良资产新增数量",
+              "prop": "toxic_assets_add_number",
+              "align":"center"
+            },
+            {
+              "label": "不良资产新增金额",
+              "prop": "toxic_assets_add_mount",
+              "align":"center"
+            }       
+        ]
+      }
+    }
+  }
+  

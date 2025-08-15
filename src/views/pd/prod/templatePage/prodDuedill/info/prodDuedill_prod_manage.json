@@ -1,0 +1,79 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "detail,format=pd0145,temp=pd0146",
+          "pageTranType": "${{params.pageTranType}}",
+          "sale_prod_cd": "${{params.sale_prod_cd}}",
+          "prod_version": "${{params.prod_version}}",
+          "apply_type": "${{params.apply_type}}"
+        }
+      },
+      "pagination": {
+        "show":false
+      },
+      "thead": [
+        {
+          "label": "序号",
+          "type": "index",
+          "align": "center"
+        },
+        {
+          "label": "尽职调查模板编号",
+          "prop": "due_dili_template_no",
+          "align": "center"
+        },
+        {
+          "label": "尽职调查模板名称",
+          "prop": "due_dili_template_name",
+          "align": "center",
+          "btns": [
+            {
+              "type": "look",
+              "toRequest": {
+                "url": "@DueTemplateReportView",
+                "method": "get",
+                "params": {
+                  "group_num": "0002",
+                  "node_cd": "${{current.due_dili_template_no}}"
+                }
+              },
+              "props": {
+                "width": "75%",
+                "title": "预览"
+              }
+            }
+          ]
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align": "center",
+          "btns": [
+            {
+              "type": "custom",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/pd/prod/templatePage/prodDuedill/info/infomationCollect_tree.json",
+                "method": "GET",
+                "params": {
+                  "prod_cd": "${{params.sale_prod_cd}}",
+                  "apply_type": "${{params.apply_type}}"
+                }
+              },
+              "props": {
+                "width": "40%"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

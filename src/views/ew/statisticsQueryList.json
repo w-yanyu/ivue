@@ -1,0 +1,135 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "controls": [
+        {
+          "cmanager": {
+            "control": "text",
+            "span": 6,
+            "label": "客户经理"
+          },
+          "jgname": {
+            "span": 6,
+            "control": "text",
+            "label": "机构名称"
+          },
+          "daterange": {
+            "control": "dateTimePicker",
+            "span": 12,
+            "label": "起止时间",
+            "type": "daterange",
+            "valueFormat": "yyyyMMdd",
+            "startPlaceholder": "开始日期",
+            "endPlaceholder": "截止日期",
+            "startField": "start_date",
+            "endField": "end_date",
+            "unlinkPanels": true,
+            "computeType":"months",
+            "value": [
+              "today-3",
+              "today"
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "###type": "export",
+          "label": "导出",
+          "icon": "iconfont icon-daochu",
+          "doRequest": {
+            "method": "POST",
+            "url": "/SUMP/rest/file/commExport",
+            "params": {
+              "servicecode": "ew3170"
+            }
+          },
+          "confirm": {
+            "title": "提示信息",
+            "msg": "确认导出吗？",
+            "confirmButtonText": "确定",
+            "cancelButtonText": "取消"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ew3168"
+        }
+      },
+      "thead": [
+        {
+          "type": "string",
+          "align": "center",
+          "label": "任务总数",
+          "prop": "total_count"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "未处理已超时",
+          "prop": "status_count1"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "未处理未超时",
+          "prop": "status_count2"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "已处理已超时",
+          "prop": "status_count3"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "已处理未超时",
+          "prop": "status_count4"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "处理结果正常数",
+          "prop": "results_count1"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "120",
+          "label": "处理结果异常数",
+          "prop": "results_count2"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "客户经理",
+          "prop": "cmanager"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "客户经理账号",
+          "prop": "cmanagerId"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "130",
+          "label": "机构名称",
+          "prop": "jgname"
+        }
+      ]
+    }
+  }
+}

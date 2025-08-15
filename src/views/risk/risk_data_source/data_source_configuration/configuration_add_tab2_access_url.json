@@ -1,0 +1,154 @@
+{
+  "module": "v-search-editableDataGrid",
+  "layout": {
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "新增",
+          "icon": "el-icon-plus",
+          "disabled": "'${{params.pageType}}' == 'look'"
+        },
+        {
+          "type": "batchDelete",
+          "label": "批量删除",
+          "icon": "el-icon-close",
+          "disabled": "'${{params.pageType}}' == 'look'"
+        }
+      ]
+    },
+    "datagrid": {
+      "###isInitSearch": true,
+      "name": "urlData",
+      "###initRequest": "${{params.urlData}}",
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "deci050046",
+          "data_source_code": "${{params.data_source_code}}",
+          "config_type": "1"
+        }
+      },
+      "pagination": {
+        "pageSizes": [
+          10,
+          15,
+          20
+        ],
+        "show": true,
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "type": "selection",
+          "width": "55"
+        },
+        {
+          "prop": "parm_code",
+          "type": "text",
+          "label": "参数代码",
+          "validate": "required"
+        },
+        {
+          "prop": "parm_name",
+          "type": "text",
+          "label": "参数名称",
+          "validate": "required"
+        },
+        {
+          "type": "select",
+          "label": "数据类型",
+          "prop": "data_type",
+          "dict": {
+            "dictType": "RISK_ATTRIBUTE_TYPE",
+            "dictKey": [
+              "RISK_ATTRIBUTE_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "select",
+          "label": "加密方式",
+          "prop": "encrypt_mode",
+          "dict": {
+            "dictType": "DECI_E_ENCRYPT_MODE",
+            "dictKey": [
+              "DECI_E_ENCRYPT_MODE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "select",
+          "label": "取值类型",
+          "prop": "value_type",
+          "dict": {
+            "dictType": "DECI_E_GET_VALUE_TYPE",
+            "dictKey": [
+              "DECI_E_GET_VALUE_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "prop": "value_code",
+          "type": "text",
+          "label": "取值",
+          "validate": "required"
+        },
+        {
+          "prop":"roleId",
+          "value": "自定义",
+          "type": "lookup",
+          "label": "取值",
+          "btns": [
+            {
+              "type": "edit",
+              "toRequest": {
+                "url": "@permissionConfig",
+                "method": "get",
+                "target": "drawer",
+                "params": {
+                  "authPageId": "permission_config"
+                }
+              },
+              "props": {
+                "width": "35%",
+                "title": "自定义取值",
+                "close": "",
+                "openType": "drawer",
+                "that": "this",
+                "position": "right"
+              },
+              "keyField": {
+                "policy_rule_config": "policy_id"
+              }
+            }
+          ]
+      },
+      {
+        "prop": "dictCode",
+        "type": "text",
+        "label": "取值",
+        "isShow": false,
+        "validate": "required"
+      },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align": "center",
+          "btns": [
+            {
+              "type": "delete",
+              "label": "删除",
+              "disabled": "'${{params.pageType}}' == 'look'"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

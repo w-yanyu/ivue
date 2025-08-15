@@ -1,0 +1,73 @@
+{
+  "module": "v-form-editableDataGrid-btn",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "initRequest": "${{params}}"
+    },
+    "datagrid": {
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "cb0161",
+          "appId": "cbOnl",
+          "case_id": "${{params.case_id}}",
+          "allData": "${{params.allData}}",
+          "assign_algorithm": "${{params.assign_algorithm}}"
+        }
+      },
+      "pagination": {
+        "show": false
+      },
+      "thead": [
+        {
+          "type": "string",
+          "align": "center",
+          "label": "分配组",
+          "prop": "coll_team"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "分配对象",
+          "prop": "collector"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "分配数量",
+          "prop": "num"
+        }
+      ]
+    },
+    "footer": {
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "icon": "el-icon-tickets",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "post",
+            "params": {
+              "servicecode": "cb0162",
+              "case_id": "${{params.case_id}}",
+              "allData": "${{params.allData}}",
+              "assign_algorithm": "${{params.assign_algorithm}}"
+            }
+          },
+          "toRequest": {
+            "url": "/views/cs/assistManage/interview/assign/dispatch_case.json",
+            "method": "GET"
+          }
+        },
+        {
+          "type": "close",
+          "label": "返回"
+      }
+      ]
+    }
+  }
+}

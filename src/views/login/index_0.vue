@@ -1,0 +1,656 @@
+<template>
+  <div class="login-container" v-if="loginShow">
+    <img :src="loginBackground" class="login-background" fit="contain" />
+    <img :src="logoEn" class="login-logoen" />
+    <div class="login-container-box" :class="[`login-${position}`]">
+      <el-form
+        autocomplete="on"
+        :model="loginForm"
+        :rules="loginRules"
+        ref="loginForm"
+        label-position="left"
+        label-width="0px"
+        class="card-box login-form"
+        @submit.native.prevent
+      >
+        <img :src="loginLogo" class="login-logo" style="visibility: hidden;" />
+        <div class="bottom-light"></div>
+        <div class="left-light"></div>
+        <div class="right-light"></div>
+        <div class="top-left-light"></div>
+        <div class="top-right-light"></div>
+        <h3 class="title">{{ title }}</h3>
+        <el-form-item prop="corpno" class="input-hover">
+          <span class="svg-container svg-container_login">
+            <i class="icon-loginUser"></i>
+          </span>
+          <el-input
+            name="corpno"
+            type="text"
+            v-model="loginForm.corpno"
+            autocomplete="on"
+            :placeholder="$i18ns('法人代码')"
+          />
+        </el-form-item>
+        <el-form-item prop="userid" class="input-hover">
+          <span class="svg-container svg-container_login">
+            <i class="icon-loginUser"></i>
+          </span>
+          <el-input
+            name="userid"
+            type="text"
+            v-model="loginForm.userid"
+            autocomplete="on"
+            :placeholder="login_username"
+          />
+        </el-form-item>
+        <!-- <el-form-item prop="brchno" class="input-hover">
+                    <span class="svg-container svg-container_login">
+                        <i class="icon-loginUser"></i>
+                    </span>
+                    <el-input
+                        name="brchno"
+                        type="text"
+                        v-model="loginForm.brchno"
+                        autocomplete="on"
+                        placeholder="机构编号"
+                    />
+                    <div style="width:100%">
+                        <el-select
+                            v-model="loginForm.brchno"
+                            placeholder="机构编号"
+                            @change="changeValue"
+                            class="brchno_select"
+                        >
+                            <el-option
+                                v-for="item in branch_list"
+                                :key="item.brchno"
+                                :label="item.brchno"
+                                :value="item"
+                            >
+                                <span style="float: left">{{item.corpno}}-{{item.brchno}}</span>
+                            </el-option>
+                        </el-select>
+                    </div>
+                </el-form-item>-->
+        <el-form-item prop="passwd" class="input-hover">
+          <span class="svg-container">
+            <i class="icon-loginLock"></i>
+          </span>
+          <pte-password
+            v-model="loginForm.passwd"
+            name="passwd"
+            :type="pwdType"
+            encryptionType="SHA"
+            :min="1"
+            :placeholder="login_password"
+            autocomplete="on"
+          ></pte-password>
+          <span class="show-pwd" @click="showPwd">
+            <span class="iconfont icon-yanjing1" v-show="isShowPwd"></span>
+            <span class="iconfont icon-see" v-show="iseye"></span>
+          </span>
+        </el-form-item>
+        <el-form-item
+          v-if="is_open"
+          prop="verify_code"
+          class="input-hover position-yam"
+        >
+          <span class="svg-container">
+            <i class="el-icon-chat-dot-round"></i>
+          </span>
+          <el-input
+            type="text"
+            v-model="loginForm.verify_code"
+            autocomplete="off"
+            placeholder="验证码"
+          />
+          <el-popover placement="bottom" trigger="click" v-model="visible">
+            <slide-verify
+              :l="42"
+              :r="10"
+              :w="310"
+              :h="155"
+              :imgs="picArray"
+              ref="slideverify"
+              slider-text="向右滑动完成验证"
+              @success="sendSms"
+            />
+            <el-button slot="reference" type="text" @click="getSms">{{
+              codeShow ? "获取验证码" : `${count}秒后重试`
+            }}</el-button>
+          </el-popover>
+        </el-form-item>
+        <el-form-item class="no_bg" prop="ui_language">
+          <el-row class="lanBlock">
+            <el-col>
+              <!-- <el-dropdown trigger="click" @command="handleCommand">
+                                <span class="el-dropdown-link">
+                                    {{langName}}
+                                    <i class="el-icon-arrow-down el-icon--right"></i>
+                                </span>
+                                <el-dropdown-menu slot="dropdown">
+                                    <el-dropdown-item command="zh">中文</el-dropdown-item>
+                                    <el-dropdown-item command="en">English</el-dropdown-item>
+                                </el-dropdown-menu>
+                            </el-dropdown> -->
+              <el-radio
+                v-model="radioValue"
+                label="zh"
+                @input="handleChange"
+                class="radio-el"
+                >{{ $i18ns("home.chinese") }}</el-radio
+              >
+              <el-radio
+                v-model="radioValue"
+                label="en"
+                @input="handleChange"
+                class="radio-el"
+                >{{ $i18ns("home.english") }}</el-radio
+              >
+            </el-col>
+          </el-row>
+        </el-form-item>
+        <el-form-item class="loginbutton">
+          <el-button
+            class="login-button"
+            :loading="loading"
+            @click.native.prevent="handleLogin"
+            >{{ $i18ns("logIn") }}</el-button
+          >
+        </el-form-item>
+      </el-form>
+      <div class="login-foot">{{ $i18ns(footLabel || "home.footLabel") }}</div>
+    </div>
+  </div>
+</template>
+
+<script>
+import { mapGetters, mapMutations } from "vuex";
+// import { isvalidUsername } from 'pte-ui/utils/validate'
+import { i18ns } from "pte-ui/utils/i18n";
+import SysConfig from "@/pte/sysconfig.json";
+import Tools from "pte-ui/utils/Tools";
+import loginBackground from "pte-ui/images/login_bg.jpg";
+import loginLogo from "pte-ui/images/sunline_logo.png";
+import _ from "lodash";
+import userUtil from "pte-ui/utils/userUtil";
+import routerUtil from "pte-ui/utils/routerUtil";
+import Cookies from "js-cookie";
+import axios from "axios";
+
+export default {
+  name: "login",
+  props: {
+    cMeta: Object, // 布局相关json数据
+    cParentParams: Object, // 父页面传的参数
+    cParentMeta: Object, // 父页面的相关json数据
+    cParentScope: Object // 父页面的scope数据对象
+  },
+  data() {
+    const validateCorpno = (rule, value, callback) => {
+      if (!value) {
+        callback(new Error(this.i18ns("请输入法人代码")));
+      } else {
+        callback();
+      }
+    };
+    const validateUsername = (rule, value, callback) => {
+      let reg = /^[a-zA-Z0-9]{1,}$/;
+      if (!reg.test(value)) {
+        callback(new Error(this.i18ns("login.errorUsername")));
+      } else {
+        callback();
+      }
+    };
+    const validatePass = (rule, value, callback) => {
+      if (value.length < 5) {
+        callback(new Error(this.i18ns("login.errorPassword")));
+      } else {
+        callback();
+      }
+    };
+    return {
+      loginForm: {
+        userid: "",
+        brchno: "",
+        corpno: "",
+        passwd: "",
+        verify_code: "",
+        ui_language: ""
+      },
+      loginRules: {
+        corpno: [
+          {
+            required: true,
+            trigger: "blur",
+            validator: validateCorpno
+          }
+        ],
+        userid: [
+          {
+            required: true,
+            trigger: "blur",
+            validator: validateUsername
+          }
+        ],
+        passwd: [
+          {
+            required: true,
+            trigger: "blur",
+            validator: validatePass
+          }
+        ],
+        verify_code: [
+          {
+            required: true,
+            trigger: "blur",
+            message: "验证码不能为空"
+          }
+        ]
+      },
+      //branch_list : [],
+      login_username: this.i18ns("username"),
+      login_password: this.i18ns("password"),
+      loading: false,
+      pwdType: "password",
+      langName: this.checkInitLanguage(),
+      isShowPwd: true,
+      iseye: false,
+      loginBackground: loginBackground, // 背景图标
+      loginLogo: loginLogo, // logo图标
+      logoEn: require("@/assets/Sunline_LOGO_white.png"),
+      title: "", // 标题
+      footLabel: "", // 末尾文字
+      position: "", // 展示位置
+      visible: false,
+      is_open: false, // 是否开启双重验证
+      timer: null,
+      codeShow: true,
+      count: "",
+      time_interval: "",
+      radioValue: localStorage.getItem("PTE_LANGUAGE_STYLE"),
+      picArray: [
+        require("@/assets/verify-img/1.jpg"),
+        require("@/assets/verify-img/2.jpg"),
+        require("@/assets/verify-img/3.jpg"),
+        require("@/assets/verify-img/4.jpg"),
+        require("@/assets/verify-img/5.jpg")
+      ],
+      loginShow: false
+    };
+  },
+  created() {
+    //获取接收到的数据
+    let cookies_token = Cookies.get("accessToken");
+    if (cookies_token) {
+      this.singleLogin(cookies_token);
+    } else {
+      this.loginShow = true;
+      document.getElementById("sunloading").style.display = "none";
+      this.getSysName();
+      this.login_username = this.i18ns("username");
+      this.login_password = this.i18ns("password");
+      this.loginForm.userid = "";
+      this.getVerifySwitchStatus();
+    }
+  },
+  mounted() {
+    document.onkeyup = e => {
+      let event = e || window.event;
+      let key = event.which || window.charcode || event.keyCode;
+      if (key === 13) {
+        this.handleLogin();
+      }
+    };
+    this.judgeCode();
+  },
+  destroyed() {
+    document.onkeyup = null;
+  },
+  computed: {
+    ...mapGetters(["themes"])
+  },
+  methods: {
+    ...mapMutations([
+      "PTE_APP_SET_THEME",
+      "PTE_APP_SET_LANGUAGE",
+      "PTE_SET_HOME_NAME",
+      "PTE_TAGSVIEW_SET_HOME_NAME"
+    ]),
+    i18ns,
+    getSysName() {
+      // 初始化根据系统当前语言默认系统名称
+      const defaultLang = localStorage.getItem("PTE_LANGUAGE_STYLE");
+
+      if (defaultLang === "zh") {
+        this.title =
+          JSON.parse(localStorage.getItem("title_Zhname")) ||
+          this.i18ns("title");
+        document.title =
+          JSON.parse(localStorage.getItem("title_Zhname")) ||
+          this.i18ns("title");
+      } else {
+        this.title =
+          JSON.parse(localStorage.getItem("title_Enname")) ||
+          this.i18ns("title");
+        document.title =
+          JSON.parse(localStorage.getItem("title_Enname")) ||
+          this.i18ns("title");
+      }
+    },
+    getVerifySwitchStatus() {
+      this.$http.core(
+        res => {
+          this.is_open = res.data.is_open;
+          this.time_interval = res.data.time_interval;
+        },
+        err => {
+          console.log(err);
+        },
+        "/SUMP/rest/auth/getVerifySwitchStatus",
+        "get"
+      );
+    },
+    getSms() {
+      if (!this.codeShow) {
+        this.visible = true;
+      } else {
+        this.$refs.loginForm.validateField(["userid", "corpno"], valid => {
+          if (valid) {
+            this.visible = true;
+          }
+        });
+      }
+    },
+    sendSms(times) {
+      // console.log(times);
+      this.$http.core(
+        res => {
+          if (res.code === "200") {
+            if (!this.timer) {
+              this.count = this.time_interval;
+              this.codeShow = false;
+              this.timer = setInterval(() => {
+                if (this.count > 0 && this.count <= this.time_interval) {
+                  this.setStorage(this.count);
+                  this.count--;
+                } else {
+                  this.codeShow = true;
+                  clearInterval(this.timer);
+                  this.timer = null;
+                }
+              }, 1000);
+            }
+            this.visible = false;
+            this.$refs.slideverify.reset();
+            this.$message.success("短信验证码发送成功，3分钟内有效");
+          } else {
+            this.visible = false;
+            this.$refs.slideverify.reset();
+          }
+        },
+        err => {
+          console.log(err);
+          this.visible = false;
+          this.$refs.slideverify.reset();
+        },
+        "/SUMP/rest/auth/sendVerificationCode",
+        "post",
+        {
+          userid: this.loginForm.userid,
+          ui_language: "zh",
+          corpno: this.loginForm.corpno
+        }
+      );
+    },
+    setStorage(parm) {
+      localStorage.setItem("sms_dalay", parm);
+      localStorage.setItem("sms_time", new Date().getTime());
+    },
+    judgeCode() {
+      const sms_dalay = localStorage.getItem("sms_dalay");
+      const sms_time = localStorage.getItem("sms_time");
+      const secTime = parseInt((new Date().getTime() - sms_time) / 1000);
+      if (secTime > sms_dalay) {
+        this.codeShow = true;
+      } else {
+        const TIME_COUNT = sms_dalay - secTime;
+        if (!this.timer) {
+          this.count = TIME_COUNT;
+          this.codeShow = false;
+          this.timer = setInterval(() => {
+            if (this.count > 0 && this.count <= TIME_COUNT) {
+              this.setStorage(this.count);
+              this.count--;
+            } else {
+              this.codeShow = true;
+              clearInterval(this.timer);
+              this.timer = null;
+            }
+          }, 1000);
+        }
+      }
+    },
+    showPwd() {
+      if (this.pwdType === "password") {
+        this.pwdType = "";
+        this.isShowPwd = false;
+        this.iseye = true;
+      } else {
+        this.pwdType = "password";
+        this.isShowPwd = true;
+        this.iseye = false;
+      }
+    },
+    changeValue(item) {
+      this.loginForm.org_id = item.org_id;
+      this.loginForm.brchno = item.brchno;
+    },
+    /**
+     * 点击登录
+     */
+    handleLogin() {
+      this.loginForm.ui_language = this.$store.state.pte_app.language;
+      this.$refs.loginForm.validate(valid => {
+        if (valid) {
+          this.loading = true;
+          // 获取动态数据
+          let toRequestObj = Tools.resolveToRequest({
+            url: "/SUMP/rest/auth/login"
+          });
+          let req = _.assign(
+            { url: toRequestObj.url },
+            toRequestObj.params,
+            this.loginForm
+          );
+          this.$store
+            .dispatch("PTE_USER_LOGIN", req)
+            .then(url => {
+              //const cacheUserInfo = localStorage.getItem('user_info')
+              //const userInfo = JSON.parse(cacheUserInfo)
+              const userInfo = userUtil.get();
+              Tools.setUserConfig("userInfo", userInfo);
+              Tools.setUserConfig("user_info", userInfo);
+              this.name = userInfo.userName;
+              let passwdStatus = userInfo.getPassword_status;
+              if (passwdStatus === "O") {
+                this.$alert("您的密码已过期，请先修改密码");
+              }
+              let theme = _.find(
+                this.themes,
+                item => item.value === userInfo.theme
+              );
+              if (!theme) {
+                theme = this.themes[0];
+              }
+              this.PTE_APP_SET_THEME(theme.theme);
+              if (!SysConfig.isShell) {
+                // 非壳子登录
+                this.getRoutes(url);
+                this.$i18n.locale = localStorage.getItem("LANGUAGE_STYLE");
+              } else {
+                this.$router.push({
+                  path: url
+                });
+              }
+              this.loading = false;
+            })
+            .catch(res => {
+              this.loading = false;
+            });
+        } else {
+          this.loading = false;
+          return false;
+        }
+      });
+    },
+    /**
+     * 单点登录
+     */
+    singleLogin(data) {
+      const url = "/SUMP/rest/auth/ssoClientLogin?access_token=" + data;
+      axios
+        .post(url)
+        .then(response => {
+          // 处理响应
+          this.$store.commit("PTE_USER_SET_LOGIN_INFO", response.data);
+          const userInfo = response.data.data.user_info;
+
+          Tools.setUserConfig("userInfo", userInfo);
+          Tools.setUserConfig("user_info", userInfo);
+          this.name = userInfo.userName;
+          let passwdStatus = userInfo.getPassword_status;
+          if (passwdStatus === "O") {
+            this.$alert("您的密码已过期，请先修改密码");
+          }
+          let theme = _.find(
+            this.themes,
+            item => item.value === userInfo.theme
+          );
+          if (!theme) {
+            theme = this.themes[0];
+          }
+          this.PTE_APP_SET_THEME(theme.theme);
+          if (!SysConfig.isShell) {
+            // 非壳子登录
+            this.getRoutes("/dashboard");
+            this.$i18n.locale = localStorage.getItem("LANGUAGE_STYLE");
+          } else {
+            document.getElementById("sunloading").style.display = "none";
+            this.$router.push({
+              path: "/dashboard"
+            });
+          }
+        })
+        .catch(error => {
+          this.loginShow = true;
+          document.getElementById("sunloading").style.display = "none";
+          // 处理错误
+          this.$message({
+            type: "error",
+            message: "token无效！"
+          });
+        });
+    },
+    getRoutes(url) {
+      this.$store
+        .dispatch("PET_ROUTERMAP_GETROUTELIST")
+        .then(routesMap => {
+          const routeData = _.get(routesMap, "data");
+          let treeData = Tools.forRoutesData(routeData);
+          const root = {
+            path: "/",
+            redirect: treeData[0].path + "/" + treeData[0].children[0].path,
+            hidden: true
+          };
+          treeData.push(root);
+          // 将后台数据转为树形结构
+          // localStorage.setItem("ROUTES", JSON.stringify(routeData));
+          routerUtil.set(routeData);
+          this.$router.addRoutes(treeData);
+          this.PTE_TAGSVIEW_SET_HOME_NAME(treeData[0].children[0].name);
+          document.getElementById("sunloading").style.display = "none";
+          // location.href = url
+          this.$router.push({
+            path: url
+          });
+        })
+        .catch(e => {});
+    },
+    handleCommand(command) {
+      this.lang = command;
+      this.PTE_APP_SET_LANGUAGE(command);
+      this.$i18n.locale = command;
+      if (command === "en") {
+        this.langName = this.i18ns("home.english");
+      } else {
+        this.langName = this.i18ns("home.chinese");
+      }
+      //
+      this.login_username = this.i18ns("username");
+      this.login_password = this.i18ns("password");
+    },
+    checkInitLanguage() {
+      const lang = this.$store.state.pte_app.language;
+      // const lang = "zh"; //设置默认语言环境为英语
+      this.PTE_APP_SET_LANGUAGE(lang);
+      this.$i18n.locale = lang;
+      if (lang === "en") {
+        return this.i18ns("home.english");
+      } else {
+        return this.i18ns("home.chinese");
+      }
+    },
+    handleChange() {
+      this.lang = this.radioValue;
+      this.PTE_APP_SET_LANGUAGE(this.radioValue);
+      this.$i18n.locale = this.radioValue;
+      if (this.radioValue === "en") {
+        this.langName = this.i18ns("home.english");
+      } else {
+        this.langName = this.i18ns("home.chinese");
+      }
+      this.getSysName();
+      this.login_username = this.i18ns("username");
+      this.login_password = this.i18ns("password");
+    }
+  }
+};
+</script>
+<style lang="less" scoped>
+// .brchno_select {
+//     width: 90%;
+// }
+// .brchno_select >>> .el-input--medium {
+//     width: 100%;
+// }
+/deep/ .position-yam .el-form-item__content {
+  display: flex;
+  .el-button {
+    color: rgba(255, 255, 255, 0.8);
+    margin-right: 10px;
+    line-height: 42px;
+    &:hover {
+      color: rgba(255, 255, 255, 0.8) !important;
+    }
+  }
+}
+/deep/ .login-container .el-form-item {
+  margin-bottom: 24px !important;
+  .el-input .el-input__inner {
+    height: 48px !important;
+    line-height: 48px !important;
+  }
+}
+.el-radio {
+  color: #fff !important;
+  font-size: 18px;
+}
+.login-logoen {
+  position: absolute;
+  left: 3vw;
+  top: 3vh;
+  height: 5vh;
+}
+</style>

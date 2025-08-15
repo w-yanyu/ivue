@@ -1,0 +1,170 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "initRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "pd1534",
+                  "join_lend_config_no": "${{params.join_lend_config_no}}"
+                }
+              },
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "pd1532",
+                    "join_lend_config_no": "${{params.join_lend_config_no}}"
+                }
+            },
+            "controls": [
+                {
+                    "sale_prod_cd": {
+                        "label": "可售产品编号",
+                        "control": "hidden"
+                    },
+                    "prod_version": {
+                        "label": "产品版本",
+                        "control": "hidden"
+                    },
+                    "archive_table_name": {
+                        "label": "归档表名",
+                        "control": "text",
+                        "span": 12,
+                        "width": "140px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入归档表名"
+                            }
+                        ]
+                    },
+                    "archive_table_type": {
+                        "label": "归档表类型",
+                        "control": "select",
+                        "span": 12,
+                        "width": "140px",
+                        "dict": {
+                            "dictType": "PD_E_ARCHIVE_TYPE",
+                            "dictKey": [
+                              "PD_E_ARCHIVE_TYPE"
+                            ],
+                            "format": "value-label"
+                          },
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入归档表类型"
+                            }
+                        ],"events": {
+                            "condition": {
+                              "$default": {
+                                "control": {
+                                  "partition_rule": {
+                                    "disabled": true,
+                                    "value":""
+                                  }
+                                }
+                              },"1": {
+                                "control": {
+                                  "partition_rule": {
+                                    "disabled": false
+                                  }
+                                }
+                              },"2": {
+                                "control": {
+                                  "partition_rule": {
+                                    "disabled": true,
+                                    "value":""
+                                  }
+                                }
+                              }
+                            }
+                        }
+                    },"partition_rule": {
+                        "label": "分区规则",
+                        "control": "text",
+                        "span": 12,
+                        "width": "140px"
+                    },
+                    "archive_table_mode": {
+                        "label": "归档方式",
+                        "control": "select",
+                        "span": 12,
+                        "width": "140px",
+                        "dict": {
+                            "dictType": "PD_E_ARCHIVE_MODE",
+                            "dictKey": [
+                              "PD_E_ARCHIVE_MODE"
+                            ],
+                            "format": "value-label"
+                          },
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入归档方式"
+                            }
+                        ]
+                    },
+                    "ori_retention_days": {
+                        "label": "原表保留天数",
+                        "control": "text",
+                        "span": 12,
+                        "width": "140px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入原表保留天数"
+                            }
+                        ]
+                    },
+                    "archive_retention_days": {
+                        "label": "归档表保留天数",
+                        "control": "text",
+                        "span": 12,
+                        "width": "140px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入归档表保留天数"
+                            }
+                        ]
+                    },
+                    "archive_cycle": {
+                        "label": "归档周期",
+                        "control": "periodGet",
+                        "span": 12,
+                        "width": "140px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入归档周期"
+                            }
+                        ]
+                    },
+                    "is_enable": {
+                        "label": "是否启用",
+                        "control": "select",
+                        "span": 12,
+                        "width": "140px",
+                        "dict": {
+                            "dictType": "MS_E_YESORNO",
+                            "dictKey": [
+                              "MS_E_YESORNO"
+                            ],
+                            "format": "value-label"
+                          },
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入是否启用"
+                            }
+                        ]
+                    }
+                }
+                
+            ]
+        }
+    }
+}

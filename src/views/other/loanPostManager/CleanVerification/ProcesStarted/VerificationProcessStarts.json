@@ -1,0 +1,248 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "btns": [
+        {
+          "type": "submit",
+          "icon": "el-icon-check",
+          "label": "启动",
+          "doRequest": {
+            "method": "POST",
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "params": {
+              "servicecode": "PLMSKGTS0110"
+            }
+          },
+          "toRequest": {
+            "method": "POST",
+            "url": ""
+          }
+        },
+        {
+          "type": "reset",
+          "icon": "el-icon-close",
+          "label": "重置"
+        }
+      ],
+      "controls": [
+        {
+          "custid": {
+            "control": "hidden",
+            "label": "客户id"
+          }
+        },
+        {
+          "prodna": {
+            "control": "hidden",
+            "label": "贷款产品"
+          },
+          "initdt": {
+            "control": "hidden",
+            "label": "开户日期"
+          }
+        },
+        {
+          "matudt": {
+            "control": "hidden",
+            "label": "到期日期"
+          },
+          "lncfam": {
+            "control": "hidden",
+            "label": "贷款金额"
+          }
+        },
+        {
+          "lnnpbl": {
+            "control": "hidden",
+            "label": "正常本金"
+          }
+        },
+        {
+          "lnopbl": {
+            "control": "hidden",
+            "label": "逾期本金"
+          },
+          "lndpbl": {
+            "control": "hidden",
+            "label": "呆滞本金"
+          }
+        },
+        {
+          "lnbpbl": {
+            "control": "hidden",
+            "label": "呆账本金"
+          },
+          "ysyjni": {
+            "control": "hidden",
+            "label": "应收应计利息"
+          }
+        },
+        {
+          "csyjni": {
+            "control": "hidden",
+            "label": "催收应计利息"
+          },
+          "ysxxoi": {
+            "control": "hidden",
+            "label": "应收欠息"
+          }
+        },
+        {
+          "csxxoi": {
+            "control": "hidden",
+            "label": "催收欠息"
+          },
+          "ysyjni": {
+            "control": "hidden",
+            "label": "应收应计利息"
+          }
+        },
+        {
+          "ysyjpi": {
+            "control": "hidden",
+            "label": "应收应计罚息"
+          },
+          "csyjpi": {
+            "control": "hidden",
+            "label": "催收应计罚息"
+          }
+        },
+        {
+          "ysxxpi": {
+            "control": "hidden",
+            "label": "应收罚息"
+          },
+          "csxxpi": {
+            "control": "hidden",
+            "label": "催收罚息"
+          }
+        },
+        {
+          "custna": {
+            "control": "lookup",
+            "edit": true,
+            "label": "客户名称",
+            "span": 10,
+            "keyField": {
+              "custna": "custna",
+              "custid": "custid",
+              "idtfno": "certno",
+              "idtftp": "certtp",
+              "custty": "custty"
+            },
+            "toRequest": {
+              "url": "/views/us/usManager/userQuery/customer_lookup.json",
+              "method": "GET",
+              "params": {
+                "indvfg": "Y",
+                "statss": "Y"
+              }
+            },
+            "events": {
+              "set": {
+                "temp_name": ""
+              }
+            },
+            "props": {
+              "width": "80%",
+              "title": "查询客户名称"
+            },
+            "format": "label",
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择客户名称"
+              }
+            ]
+          },
+          "idtftp": {
+            "control": "select",
+            "span": 10,
+            "disabled": true,
+            "label": "证件类型",
+            "dict": {
+              "dictType": "E_IDTFTP",
+              "dictKey": [
+                "E_IDTFTP"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择证件类型"
+              }
+            ]
+          }
+        },
+        {
+          "idtfno": {
+            "control": "string",
+            "span": 10,
+            "label": "证件号码",
+            "placeholder": "请选择",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入证件号码"
+              }
+            ]
+          },
+          "lncfno": {
+            "control": "lookup",
+            "span": 10,
+            "edit": true,
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择核销借据信息"
+              }
+            ],
+            "label": "核销借据信息",
+            "keyField": {
+              "lncfno": "lncfno",
+              "initdt": "initdt",
+              "matudt": "matudt",
+              "lncfam": "lncfam",
+              "lnnpbl": "lnnpbl",
+              "lnopbl": "lnopbl",
+              "lndpbl": "lndpbl",
+              "lnbpbl": "lnbpbl",
+              "ysyjni": "ysyjni",
+              "csyjni": "csyjni",
+              "ysxxoi": "ysxxoi",
+              "csxxoi": "csxxoi",
+              "ysyjpi": "ysyjpi",
+              "csyjpi": "csyjpi",
+              "ysxxpi": "ysxxpi",
+              "csxxpi": "csxxpi"
+            },
+            "toRequest": {
+              "url": "/views/other/loanPostManager/CleanVerification/ProcesStarted/duebill_no_lookup.json",
+              "method": "post",
+              "params": {
+                "custno": "${{formData.custid}}"
+              }
+            },
+            "props": {
+              "width": "80%",
+              "title": "查询核销借据信息"
+            },
+            "format": "label"
+          }
+        },
+        {
+          "remark": {
+            "control": "textarea",
+            "label": "备注",
+            "placeholder": "请输入",
+            "rows": 4,
+            "span": 20
+          }
+        }
+      ]
+    }
+  }
+}

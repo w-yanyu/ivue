@@ -1,0 +1,112 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "scope": "templateScope",
+      "controls": [
+        {
+          "verify_list_cd": {
+            "label": "核实项列表代码",
+            "control": "text"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "新增",
+          "toRequest": {
+            "url": "/views/icms/verifyManager/relaProdManage/relaPord_add.json",
+            "method": "get",
+            "params": {
+            }
+          },
+          "props": {
+            "title": "核实项产品关联新增",
+            "width": "65%"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ar1181"
+        }
+      },
+      "thead": [
+        {
+          "label": "核实项列表组代码",
+          "prop": "verify_list_cd",
+          "align": "center"
+        },
+        {
+          "label": "贷款产品",
+          "prop": "sale_prod_cd",
+          "align": "center"
+        },
+        {
+          "label": "业务类型",
+          "align": "center",
+          "prop": "busi_type",
+          "control": "remoteSelect",
+          "labelField": "title",
+          "valueField": "id",
+          "doRequest": {
+            "url": "/SUMP/call/RPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "pd0144",
+              "grupno": "0006",
+              "pid": "KSCP"
+            }
+          }
+        },
+        {
+          "label": "审批类型",
+          "align": "center",
+          "prop": "apply_type_name"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/icms/verifyManager/relaProdManage/relaPord_modify.json",
+                "method": "get",
+                "params": {
+                }
+              },
+              "props": {
+                "title": "核实项产品关联维护",
+                "width": "80%"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "ar1183"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

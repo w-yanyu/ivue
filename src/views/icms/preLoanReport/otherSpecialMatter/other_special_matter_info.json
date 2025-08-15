@@ -1,0 +1,62 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "apply_no": "${{params.apply_no}}",
+          "servicecode": "ar0971"
+        }
+      },
+      "name":"detail",
+      "controls": [
+        {
+          "prim_key": {
+            "label": "主键",
+            "control": "hidden",
+            "width": "140px"
+          },
+          "contnt": {
+            "label": "内容",
+            "width": "120px",
+            "placeholder": "(2000个字以内,若没有请填“无”)",
+            "control": "textarea",
+            "span": 18,
+            "autosize": {
+              "minRows": 20,
+              "maxRows": 100
+            },
+            "maxlength": 2000,
+            "showWordLimit": true,
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入内容"
+              }
+            ]
+          }
+        }
+      ],
+      "btns": [
+        {
+          "type": "submit",
+          "label": "保存",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "ar0972",
+              "cust_no": "${{params.cust_no}}",
+              "apply_no": "${{params.apply_no}}"
+            }
+          },
+          "show": {
+            "expression": "'${{params.pageType}}' != 'detail'"
+          }
+        }
+      ]
+    }
+  }
+}

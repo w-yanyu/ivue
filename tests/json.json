@@ -1,0 +1,116 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ct2090",
+                    "operater_ind": "A"
+                }
+            },
+            "controls": [
+                {
+                    "workjob_id": { 
+                        "type": "select",
+                        "required": true,
+                        "label": "工作任务ID",
+                        "dict": {
+                            "dictType": "E_workjob_id",
+                            "dictKey": ["E_workjob_id"],
+                            "labelField": "drop_list_desc",
+                            "valueField": "drop_list_value",
+                            "doRequest":{
+                                    "url":"/SUMP/call/RPCCall",
+                                    "method": "POST",
+                                    "params":{
+                                        "servicecode":"ms1053",
+                                        "dynamic_drop_list_type":"CT0003"
+                                    }
+                            }
+                        }
+                    },
+                    "role_id": {
+                        "type": "lookup",
+                        "label": "角色ID",
+                        "prop": "prod_id",
+                        "placeholder": "角色ID",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "角色ID"
+                            }
+                        ],
+                        "toRequest": {
+                            "url": "/views/ismt/ct/ParameterManagement/WorkflowRoleMaintenance/role-info-query.json",
+                            "method": "post",
+                            "params": {}
+                        },
+                        "props": {
+                            "width": "85%",
+                            "title": "角色信息查询"
+                        }
+                    }
+                },
+                {
+                    "serial_no": {
+                        "type": "text",
+                        "label": "序号"
+                    },
+                    "scope_of_role": {
+                        "type": "select",
+                        "label": "角色所在机构范围",
+                        "dict": {
+                            "dictType": "E_BRCONFINE",
+                            "dictKey": [
+                                "E_BRCONFINE"
+                            ],
+                            "format": "label"
+                        }
+                    }
+                },
+                {
+                    "trxn_ccy": {
+                        "type": "select",
+                        "label": "交易币种",
+                        "dict": {
+                            "dictType": "E_ccy_code",
+                            "dictKey": [
+                                "E_ccy_code"
+                            ],
+                            "labelField": "drop_list_desc",
+                            "valueField": "drop_list_value",
+                            "doRequest": {
+                                "url": "/SUMP/call/RPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "ms1053",
+                                    "dynamic_drop_list_type": "AP0011"
+                                }
+                            },
+                            "format": "label"
+                        }
+                    },
+                    "min_limit_value": {
+                        "type": "text",
+                        "label": "最小限制值",
+                        "value": "0.00"
+                    }
+                },
+                {
+                    "max_limit_value": {
+                        "type": "text",
+                        "label": "最大限制值",
+                        "value": "999999999999.00"
+                    },
+                    "data_version": {
+                        "type": "string",
+                        "label": "版本号",
+                        "value": "1"
+                    }
+                }
+            ]
+        }
+    }
+}

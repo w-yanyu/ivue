@@ -1,0 +1,88 @@
+{
+  "module": "d-steps",
+  "layout": {
+    "steps": {
+      "scope": "newPart",
+      "direction": "horizontal",
+      "alignCenter": true,
+      "finishStatus": "success",
+      "simpleType": false,
+      "nextStepType": "validate",
+      "skip": false,
+      "list": [
+        {
+          "title": "协议模版",
+          "scope": "baseInfo",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "url": "/views/pt/partnertemplateManage/agreetemplateManage/agreeTemplate_add.json",
+            "method": "post",
+            "params": {
+              "protocol_template_no": "${{newPart.baseInfo1.protocol_template_no}}",
+              "version": "${{newPart.baseInfo1.version}}"
+            }
+          },
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "pt0070"
+            },
+            "resultSet": {
+              "protocol_template_no": "protocol_template_no",
+              "version": "version"
+            }
+          }
+        },
+        {
+          "title": "协议模版关联部件",
+          "###forbidBack": true,
+          "scope": "baseInfo1",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "#####": "先跳转中间页面",
+            "url": "/views/pt/partnertemplateManage/agreetemplateManage/middle.json",
+            "params": {
+              "servicecode": "pt0083",
+              "protocol_template_no": "${{newPart.baseInfo.protocol_template_no}}",
+              "version": "${{newPart.baseInfo.version}}"
+            }
+          },
+          "doRequest": {
+            "url": "/pte/json/layout/success.json",
+            "method": "post",
+            "eventAfter": {
+              "doParentCallback": true
+            }
+          }
+        },
+        {
+          "title": "提交审核",
+          "##forbidBack": true,
+          "scope": "baseInfo2",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "url": "/views/pt/partnertemplateManage/agreetemplateManage/submit.json",
+            "params": {
+              "protocol_template_no": "${{newPart.baseInfo1.protocol_template_no}}",
+              "approve_status": "01"
+            }
+          },
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "pt0074",
+              "sale_prod_cd": "${{newPart.baseInfo1.protocol_template_no}}",
+              "version": "${{newPart.baseInfo1.version}}",
+              "approve_comments": "1",
+              "approve_link": "02",
+              "approve_status": "01",
+              "mould_code": "1"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

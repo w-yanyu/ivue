@@ -1,0 +1,216 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "controls": [
+        {
+          "package_no": {
+            "control": "text",
+            "label": "资产包编码"
+          },
+          "package_name": {
+            "control": "text",
+            "label": "资产包名称"
+          }
+        },
+        {
+          "asset_package_type": {
+            "control": "select",
+            "label": "资产包类型",
+            "dict": {
+              "dictType": "PL_E_ASSET_PACKAGE_TYPE",
+              "dictKey": [
+                "PL_E_ASSET_PACKAGE_TYPE"
+              ],
+              "format": "label"
+            }
+          },
+          "asset_source": {
+            "control": "select",
+            "label": "资产来源",
+            "dict": {
+              "dictType": "PL_E_ASSET_SOURCE",
+              "dictKey": [
+                "PL_E_ASSET_SOURCE"
+              ],
+              "format": "label"
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "icon": "el-icon-circle-plus",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/pl/assetBuyingManagement/assetPackageInformation/asset_package_add.json"
+          },
+          "props": {
+            "width": "65%",
+            "title": "新增资产包"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pl0423"
+        }
+      },
+      "thead": [
+        {
+          "type": "string",
+          "align": "center",
+          "label": "资产包编号",
+          "prop": "package_no"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "资产包名称",
+          "prop": "package_name"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "债权基准日",
+          "prop": "bench_mark_date"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "资产包成本",
+          "format": {
+            "thousand": ","
+          },
+          "prop": "asset_package_cost"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "所在部门",
+          "prop": "department",
+          "dict": {
+            "dictKey": [
+              "department"
+            ],
+            "format": "label",
+            "labelField": "branch_name",
+            "valueField": "branch_id",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2173"
+              }
+            }
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "资产来源",
+          "prop": "asset_source",
+          "dict": {
+            "dictType": "PL_E_ASSET_SOURCE",
+            "dictKey": [
+              "PL_E_ASSET_SOURCE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "来源方资产包编号",
+          "prop": "source_asset_package_no"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "资产包类型",
+          "prop": "asset_package_type",
+          "dict": {
+            "dictType": "PL_E_ASSET_PACKAGE_TYPE",
+            "dictKey": [
+              "PL_E_ASSET_PACKAGE_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "currency",
+          "align": "center",
+          "label": "备注信息",
+          "prop": "remark"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "状态",
+          "prop": "asset_package_status",
+          "dict": {
+            "dictType": "PL_E_ASSET_PACKAGE_REVIEW_STATUS",
+            "dictKey": [
+              "PL_E_ASSET_PACKAGE_REVIEW_STATUS"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "fixed": "right",
+          "width": "200",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/pl/assetBuyingManagement/assetPackageInformation/asset_package_info.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "65%",
+                "title": "资产包信息详情"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/pl/assetBuyingManagement/assetPackageInformation/asset_package_modify.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "65%",
+                "title": "资产包信息维护"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "pl0422"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

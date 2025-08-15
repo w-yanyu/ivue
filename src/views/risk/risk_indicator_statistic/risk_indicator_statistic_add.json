@@ -1,0 +1,330 @@
+{
+  "module": "v-inputDataForm-btn",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "statisticCode": {
+            "label": "统计代码",
+            "control": "text",
+            "span": 12,
+            "rules": [
+              {
+                "required": true,
+                "pattern": "^[A-Za-z][A-Za-z\\d_]{0,39}$",
+                "message": "请正确输入"
+              }
+            ]
+          },
+          "statisticName": {
+            "label": "统计名称",
+            "control": "text",
+            "span": 12,
+            "rules": [
+              {
+                "required": true,
+                "message": "请正确输入",
+                "max": 100
+              }
+            ]
+          }
+        },
+        {
+          "statisticType": {
+            "label": "统计类型",
+            "control": "select",
+            "span": 12,
+            "dict": {
+              "dictType": "statisticType",
+              "dictKey": [],
+              "format": "value-label",
+              "doRequest": {
+                "url": "/views/risk/dictdata/statisticType.json",
+                "method": "get"
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "该控件必填",
+                "max": 10
+              }
+            ],
+            "events": {
+              "condition": {
+                "switch": {
+                  "Auth": {
+                    "control": {
+                      "statisticUnit" : {
+                        "value": "Day",
+                        "disabledOptions": ["Month"]
+                      }
+                    }
+                  },
+                  "Batch": {
+                    "control": {
+                      "statisticUnit" : {
+                        "value": "Day",
+                        "disabledOptions": []
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "statisticSource": {
+            "label": "统计来源",
+            "control": "select",
+            "span": 12,
+            "dict": {
+              "dictType": "statisticSource",
+              "dictKey": [],
+              "format": "value-label",
+              "doRequest": {
+                "url": "/views/risk/dictdata/statisticSource.json",
+                "method": "get"
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "该控件必填",
+                "max": 20
+              }
+            ]
+          }
+        },
+        {
+          "statisticDimension": {
+            "label": "统计维度",
+            "control": "select",
+            "span": 12,
+            "dict": {
+              "dictType": "indicatorDimension",
+              "dictKey": [],
+              "format": "value-label",
+              "doRequest": {
+                "url": "/views/risk/dictdata/indicatorDimension.json",
+                "method": "get"
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "该控件必填",
+                "max": 10
+              }
+            ]
+          },
+          "groupDimensionList": {
+            "label": "统计分组维度",
+            "control": "select",
+            "multiple": true,
+            "span": 12,
+            "dict": {
+              "dictType": "statisticField",
+              "dictKey": [],
+              "format": "value-label",
+              "doRequest": {
+                "url": "/API/risk-management-service/combobox-select/fact/trans",
+                "method": "post"
+              }
+            }
+          }
+        },
+        {
+          "cruleId": {
+            "label": "过滤组合规则ID",
+            "control": "select",
+            "span": 12,
+            "dict": {
+              "dictType": "rule_combine_list",
+              "dictKey": [],
+              "format": "value-label",
+              "doRequest": {
+                "url": "/API/risk-management-service/combobox-select/rule_combine_list",
+                "method": "post",
+                "params": {
+                  "cruleType":"RR"
+                }
+              }
+            }
+          },
+          "statisticFunction": {
+            "label": "统计函数",
+            "control": "select",
+            "span": 12,
+            "dict": {
+              "dictType": "statisticFunction",
+              "dictKey": [],
+              "format": "value-label",
+              "doRequest": {
+                "url": "/views/risk/dictdata/statisticFunction.json",
+                "method": "get"
+              }
+            },
+            "events": {
+              "condition": {
+                "switch": {
+                  "Count": {
+                    "control": {
+                      "statisticField": {
+                        "disabled": true,
+                        "value":"",
+                        "rules": [
+                          {
+                            "required": false
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "Sum": {
+                    "control": {
+                      "statisticField": {
+                        "disabled": false,
+                        "rules": [
+                          {
+                            "required": true,
+                            "message": "请正确输入",
+                            "max": 40
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "Max": {
+                    "control": {
+                      "statisticField": {
+                        "disabled": false,
+                        "rules": [
+                          {
+                            "required": true,
+                            "message": "请正确输入",
+                            "max": 40
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "Min": {
+                    "control": {
+                      "statisticField": {
+                        "disabled": false,
+                        "rules": [
+                          {
+                            "required": true,
+                            "message": "请正确输入",
+                            "max": 40
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "该控件必填",
+                "max": 10
+              }
+            ]
+          }
+        },
+        {
+          "statisticUnit": {
+            "label": "统计时间单位",
+            "control": "select",
+            "span": 12,
+            "value": "Day",
+            "dict": {
+              "dictType": "statisticUnit",
+              "dictKey": [],
+              "format": "value-label",
+              "doRequest": {
+                "url": "/views/risk/dictdata/statisticUnit.json",
+                "method": "get"
+              }
+            }
+          },
+          "statisticCycle": {
+            "label": "统计周期",
+            "control": "inputNumber",
+            "span": 12,
+            "rules": [{
+              "type": "integer",
+              "message": "请正确输入",
+              "max": 180,
+              "min": 1
+            }]
+          }
+        },
+        {
+          "statisticField": {
+            "label": "统计字段",
+            "control": "select",
+            "disabled": true,
+            "span": 12,
+            "dict": {
+              "dictType": "statisticField",
+              "dictKey": [],
+              "labelField": "label",
+              "valueField": "value",
+              "format": "value-label",
+              "doRequest": {
+                "url": "/API/risk-management-service/combobox-select/fact/trans",
+                "method": "post"
+              }
+            }
+          },
+          "dataType": {
+            "label": "统计数据类型",
+            "control": "select",
+            "span": 12,
+            "disabledOptions": ["String", "Boolean"],
+            "dict": {
+              "dictType": "dataType",
+              "dictKey": [],
+              "format": "value-label",
+              "doRequest": {
+                "url": "/views/risk/dictdata/dataType.json",
+                "method": "post"
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "该控件必填",
+                "max": 8
+              }
+            ]
+          }
+        },
+        {
+          "description": {
+            "label": "描述",
+            "control": "textarea",
+            "span": 24,
+            "rules": [
+              {
+                "message": "请正确输入",
+                "max": 500
+              }
+            ]
+          }
+        }
+      ],
+      "doRequest": {
+        "url": "/API/risk-management-service/risk-indicator-statistic/add",
+        "method": "POST",
+        "params":{
+          "createUser": "$g{{user_info.userCode}}",
+          "updateUser": "$g{{user_info.userCode}}"
+        }
+      }
+    }
+  }
+}

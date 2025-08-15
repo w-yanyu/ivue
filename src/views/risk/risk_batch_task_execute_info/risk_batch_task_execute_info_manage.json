@@ -1,0 +1,328 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "batchExecuteId": {
+            "control": "text",
+            "label": "批次编号",
+            "span": 6,
+            "width": "auto"
+          },
+          "testType": {
+            "label": "模型类型",
+            "span": 6,
+            "width": "auto",
+            "control": "select",
+            "dict": {
+              "dictType": "deciBatchModeType",
+              "dictKey": [],
+              "format": "label",
+              "doRequest": {
+                "url": "/views/risk/dictdata/deciBatchModeType.json",
+                "method": "get"
+              }
+            }
+          },
+          "ruleCode": {
+            "control": "text",
+            "label": "模型代码",
+            "width": "auto",
+            "span": 6
+          },
+          "ruleName": {
+            "control": "text",
+            "label": "模型名称",
+            "width": "auto",
+            "span": 6
+          },
+          "taskExecuteStatus": {
+            "label": "运行状态",
+            "span": 6,
+            "width": "auto",
+            "control": "select",
+            "dict": {
+              "dictType": "RISK_BATCH_TASK_EXECUTE_STATUS",
+              "dictKey": [
+                "RISK_BATCH_TASK_EXECUTE_STATUS"
+              ],
+              "format": "label"
+            }
+          },
+          "branchId": {
+            "label": "机构名称",
+            "control": "remoteSelect",
+            "labelField": "branch_name",
+            "valueField": "branch_id",
+            "searchField":"branch_name",
+            "span": 6,
+            "value": "$g{{user_info.branch_id}}",
+            "width": "auto",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "post",
+              "params": {
+                "servicecode": "ct2191"
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入机构名称",
+                "max": 125
+              }
+            ],
+            "format": "label"
+          },
+          "updateTime": {
+            "control": "dateTimePicker",
+            "label": "交易日期",
+            "type": "daterange",
+            "span": 12,
+            "width": "auto",
+            "startPlaceholder": "开始时间",
+            "endPlaceholder": "结束时间",
+            "value": ["today-6","today"],
+            "unlinkPanels": true,
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择交易日期"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "addlog",
+          "label": "模板下载",
+          "toRequest": {
+            "method": "GET",
+            "url": "@TemplateExport",
+            "params": {
+              "tranType": "add"
+            }
+          },
+          "props": {
+            "width": "50%",
+            "title": "模板下载"
+          }
+        },
+        {
+          "type": "add",
+          "target": "addlog",
+          "label": "模板导入",
+          "toRequest": {
+            "method": "GET",
+            "url": "@TemplateImport",
+            "params": {
+              "tranType": "add"
+            }
+          },
+          "props": {
+            "width": "50%",
+            "title": "模板导入"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "#servicecode": "deci030201",
+          "servicecode": "deci030008"
+        }
+      },
+      "thead": [
+        {
+          "label": "序号",
+          "type": "index"
+        },
+        {
+          "type": "string",
+          "label": "批次编号",
+          "prop": "batchExecuteId",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "模型类型",
+          "prop": "testType",
+          "align": "center",
+          "dict": {
+            "dictType": "deciBatchModeType",
+            "dictKey": [],
+            "format": "label",
+            "doRequest": {
+              "url": "/views/risk/dictdata/deciBatchModeType.json",
+              "method": "get"
+            }
+          }
+        },
+        {
+          "type": "string",
+          "label": "模型代码",
+          "prop": "ruleCode",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "模型名称",
+          "prop": "ruleName",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "版本号",
+          "prop": "ruleVersion",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "文件名称",
+          "prop": "batchFileName",
+          "align": "center",
+          "#btns": [
+            {
+              "#type": "export",
+              "#doRequest": {
+                "#url": "/SUMP/minioCall/download",
+                "#method": "GET",
+                "#params": {
+                  "#path": "${{current.filePath}}",
+                  "#filename": "${{current.batchFileName}}"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "label": "导入人员",
+          "prop": "createUser",
+          "dict": {
+            "dictType":"deciOnl",
+              "dictKey": [],
+              "format": "label",
+              "labelField": "user_name",
+              "valueField": "user_id",
+              "doRequest": {
+                  "url": "/SUMP/icmcall/icmRPCCall",
+                  "method": "POST",
+                  "params": {
+                    "length":1000,
+                    "start":1,
+                      "servicecode": "ct2503"
+                  }
+              }
+          }
+        },
+        {
+          "type": "string",
+          "label": "导入时间",
+          "prop": "createTime"
+        },
+        {
+          "type": "string",
+          "label": "运行状态",
+          "prop": "taskExecuteStatus",
+          "align": "center",
+          "dict": {
+            "dictType": "RISK_BATCH_TASK_EXECUTE_STATUS",
+            "dictKey": [
+              "RISK_BATCH_TASK_EXECUTE_STATUS"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "机构名称",
+          "prop": "branchId",
+          "dict": {
+            "dictType": "DECI_E_BRANCH_MARK",
+            "dictKey": [
+              "DECI_E_BRANCH_MARK"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": "150px",
+          "btns": [
+            {
+              "type": "look",
+              "label": "测试",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "deci030203"
+                }
+              },
+              "show": {
+                "expression": "'${{current.taskExecuteStatus}}' == '0'"
+              },
+              "confirm": {
+                "title": "是否进行测试",
+                "cancelButtonText": "取消",
+                "confirmButtonText": "确定"
+              }
+            },
+            {
+              "type": "export",
+              "label": "导出",
+              "doRequest": {
+                "url": "/SUMP/rest/file/riskDeciBatchExport",
+                "method": "post",
+                "params": {
+                  "#servicecode": "risk-decision-service/batch-task-execute/batch-result-export",
+                  "servicecode": "deci030204"
+                }
+              },
+              "show": {
+                "expression":  "'${{current.taskExecuteStatus}}' == '2'"
+              },
+              "confirm": {
+                "title": "是否导出",
+                "cancelButtonText": "取消",
+                "confirmButtonText": "确定"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/riskController/riskCall",
+                "method": "POST",
+                "params": {
+                  "createUser": "$g{{user_info.userCode}}",
+                  "updateUser": "$g{{user_info.userCode}}",
+                  "servicecode": "risk-management-service/batch-task-execute/delete-task-info",
+                  "appId": "risk-management-service"
+                }
+              },
+              "show": {
+                "expression": "false"
+              },
+              "confirm": {
+                "title": "确定删除",
+                "cancelButtonText": "取消",
+                "confirmButtonText": "确定"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

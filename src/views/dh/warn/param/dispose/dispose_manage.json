@@ -1,0 +1,116 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "controls": [
+        {
+          "method_code": {
+            "control": "text",
+            "label": "处置措施代码"
+          },
+          "method_name": {
+            "control": "text",
+            "label": "处置措施名称"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "custom",
+          "icon": "el-icon-plus",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/wa/param/dispose/customer/customer_add.json"
+          },
+          "props": {
+            "title": "处置措施定义新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/iccsCall/warnCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "wa4016",
+          "warning_cust": "C"
+        }
+      },
+      "thead": [
+        {
+          "type": "string",
+          "align": "center",
+          "label": "处置措施代码",
+          "width": "220",
+          "prop": "method_code"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "处置措施名称",
+          "width": "220",
+          "prop": "method_name"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "是否使用流程",
+          "width": "140",
+          "prop": "flow_ind",
+          "dict": {
+            "dictType": "E_ISORNO",
+            "dictKey": [
+              "E_ISORNO"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "220",
+          "label": "操作日期",
+          "prop": "data_update_time"
+        },
+        {
+          "label": "操作",
+          "align":"center",
+          "fixed": "right",
+          "width": "150px",
+          "btns": [
+            {
+              "type": "look",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/wa/param/dispose/customer/customer_modify.json",
+                "method": "GET"
+              },
+              "props": {
+                "title": "处置措施维护"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/iccsCall/warnCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "wa4013",
+                  "warning_cust": "C"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

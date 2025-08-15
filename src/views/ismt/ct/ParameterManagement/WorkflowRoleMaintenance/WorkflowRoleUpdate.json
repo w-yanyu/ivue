@@ -1,0 +1,151 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "initRequest": "${{params}}",
+            "btns": [
+                {
+                    "type": "submit",
+                    "label": "提交",
+                    "icon": "",
+                    "doRequest": {
+                        "url": "/SUMP/call/RPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "ct2092",
+                            "data_version": "${{params.data_version}}",
+                            "operater_ind": "M"
+                        }
+                    }
+                }
+            ],
+            "controls": [
+                {
+                    "workjob_id": {
+                        "control": "lookup",
+                        "label": "工作任务ID",
+                        "width": "204px",
+                        "disabled":true,
+                        "edit": false,
+                        "rules": [
+                            {
+                                "max": 32,
+                                "message": "长度不能超过32个字符"
+                            }
+                        ],
+                        "keyField": {
+                            "workjob_id": "workjob_id"
+                        },
+                        "toRequest": {
+                            "url": "/views/ismt/ct/ParameterManagement/WorkTasksInformation/WorkTasksManager_lookup.json",
+                            "method": "post",
+                            "params": "${{form.workjob_id}}"
+                        },
+                        "props": {
+                            "title": "工作任务ID查询"
+                        },
+                        "format": "label"
+                    },
+                    "role_id": {
+                        "control": "string",
+                        "label": "角色ID",
+                        "width": "204px",
+                        "prop": "prod_id",
+                        "placeholder": "角色ID",
+                        "rules": [
+                            {
+                                "max": 64,
+                                "message": "长度不能超过64个字符"
+                            }
+                        ],
+                        "toRequest": {
+                            "url": "/views/ismt/ct/ParameterManagement/WorkflowRoleMaintenance/role-info-query.json",
+                            "method": "post",
+                            "params": {}
+                        },
+                        "props": {
+                            "title": "角色信息查询"
+                        }
+                    }
+                },
+                {
+                    "serial_no": {
+                        "control": "string",
+                        "label": "序号",
+                        "width": "204px",
+                        "rules": [
+                            {
+                                "max": 32,
+                                "message": "长度不能超过32个字符"
+                            }
+                        ]
+                    },
+                    "scope_of_role": {
+                        "control": "select",
+                        "label": "角色所在机构",
+                        "width": "204px",
+                        "rules": [
+                            {
+                                "max": 32,
+                                "message": "长度不能超过32个字符"
+                            }
+                        ],
+                        "dict": {
+                            "dictType": "E_BRCONFINE",
+                            "dictKey": [
+                                "E_BRCONFINE"
+                            ],
+                            "format": "label"
+                        }
+                    }
+                },
+                {
+                    "min_limit_value": {
+                        "control": "text",
+                        "label": "审批金额下限",
+                        "width": "204px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入审批金额下限"
+                            },
+                            {
+                                "max": 32,
+                                "message": "长度不能超过32个字符"
+                            }
+                        ]
+                    },
+                    "max_limit_value": {
+                        "control": "text",
+                        "label": "审批金额上限",
+                        "width": "204px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入审批金额上限"
+                            },
+                            {
+                                "max": 32,
+                                "message": "长度不能超过32个字符"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "trxn_ccy": {
+                        "label": "交易币种",
+                        "width": "204px",
+                        "control": "select",
+                        "dict": {
+                            "dictType": "MS_CURRENCY",
+                            "dictKey": [
+                                "MS_CURRENCY"
+                            ],
+                            "format": "label"
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

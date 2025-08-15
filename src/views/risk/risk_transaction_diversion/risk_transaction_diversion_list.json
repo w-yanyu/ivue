@@ -1,0 +1,172 @@
+{
+  "module": "v-search-btn-datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "id": {
+            "label": "交易分流id",
+            "control": "text",
+            "span": 8,
+            "rules": [
+              {
+                "message": "字段长度超限",
+                "max": 8
+              }
+            ]
+          },
+          "trxnClass": {
+            "label": "交易类型",
+            "control": "select",
+            "span": 8,
+            "dict": {
+              "dictType": "trxnClass",
+              "dictKey": [],
+              "format": "value-label",
+              "doRequest": {
+                "url": "/views/risk/dictdata/trxnClass.json",
+                "method": "get"
+              }
+            }
+          },
+          "networkType": {
+            "label": "网络类型",
+            "control": "select",
+            "span": 8,
+            "dict": {
+              "dictType": "networkType",
+              "dictKey": [],
+              "format": "value-label",
+              "doRequest": {
+                "url": "/views/risk/dictdata/networkType.json",
+                "method": "get"
+              }
+            }
+          }
+        },
+        {
+          "posEntryMode": {
+            "label": "输入方式",
+            "control": "select",
+            "span": 8,
+            "dict": {
+              "dictType": "posEntryMode",
+              "dictKey": [],
+              "format": "value-label",
+              "doRequest": {
+                "url": "/views/risk/dictdata/posEntryMode.json",
+                "method": "get"
+              }
+            }
+          },
+          "countryCode": {
+            "label": "国家代码",
+            "control": "text",
+            "span": 8,
+            "rules": [
+              {
+                "message": "字段长度超限",
+                "max": 3
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "新增",
+          "toRequest": {
+            "url": "/views/risk/risk_transaction_diversion/risk_transaction_diversion_add.json",
+            "method": "get",
+            "params": {}
+          },
+          "props": {
+            "width": "70%",
+            "title": "新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/API/risk-management-service/risk-transaction-diversion/page-select",
+        "method": "post"
+      },
+      "thead": [
+        {
+          "label": "交易分流id",
+          "prop": "id"
+        },
+        {
+          "label": "交易类型",
+          "prop": "trxnClass"
+        },
+        {
+          "label": "网络类型",
+          "prop": "networkType"
+        },
+        {
+          "label": "输入方式",
+          "prop": "posEntryMode"
+        },
+        {
+          "label": "国家代码",
+          "prop": "countryCode"
+        },
+        {
+          "label": "描述",
+          "prop": "description"
+        },
+        {
+          "label": "最后更新人",
+          "prop": "updateUser"
+        },
+        {
+          "label": "最后修改日期",
+          "prop": "updateTime",
+          "type": "dateTimePicker",
+          "format": "yyyy-MM-dd HH:mm:ss"
+        },
+        {
+          "label": "操作",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "编缉",
+              "toRequest": {
+                "url": "/views/risk/risk_transaction_diversion/risk_transaction_diversion_edit.json",
+                "method": "get"
+              },
+              "props": {
+                "width": "70%"
+              }
+            },
+            {
+              "type": "look",
+              "label": "查看",
+              "toRequest": {
+                "url": "/views/risk/risk_transaction_diversion/risk_transaction_diversion_view.json",
+                "method": "get"
+              },
+              "props": {
+                "width": "70%"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/API/risk-management-service/risk-transaction-diversion/delete",
+                "method": "post"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

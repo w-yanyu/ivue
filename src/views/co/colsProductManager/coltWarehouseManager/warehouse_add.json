@@ -1,0 +1,142 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "name": "detail",
+      "controls": [
+        {
+          "wh_user_no": {
+            "label": "库房主管id",
+            "width": "140px",
+            "control": "hidden"
+          }
+        },
+        {
+          "wh_name": {
+            "label": "库房名称",
+            "width": "140px",
+            "control": "text",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入库房名称"
+              }
+            ]
+          },
+          "wh_level": {
+            "label": "库房级别",
+            "width": "140px",
+            "control": "select",
+            "dict": {
+              "dictType": "CO_E_WH_LEVEL",
+              "dictKey": [
+                "CO_E_WH_LEVEL"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择库房级别"
+              }
+            ]
+          },
+          "wh_user_name": {
+            "label": "库房主管",
+            "width": "140px",
+            "control": "lookup",
+            "edit": true,
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入库房主管"
+              }
+            ],
+            "keyField": {
+              "wh_user_name": "user_name",
+              "wh_user_no": "user_id"
+            },
+            "toRequest": {
+              "url": "/views/co/colsProductManager/coltWarehouseManager/user-manager-lookup.json",
+              "method": "get",
+              "params": {
+
+              }
+            },
+            "props": {
+              "title": "查询用户信息"
+            }
+          },
+          "wh_address": {
+            "label": "库房地址",
+            "width": "140px",
+            "control": "text",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入库房地址"
+              }
+            ]
+          },
+          "wh_phone": {
+            "label": "库房电话",
+            "width": "140px",
+            "control": "text",
+            "rules": [
+              {
+                "max": 20,
+                "message": "长度不能超过20个字符"
+              },
+              {
+                "required": true,
+                "message": "请输入库房电话"
+              }
+            ]
+          },
+          "wh_type": {
+            "label": "库房类型",
+            "width": "140px",
+            "control": "select",
+            "dict": {
+              "dictType": "CO_E_WH_TYPE",
+              "dictKey": [
+                "CO_E_WH_TYPE"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择库房类型"
+              }
+            ]
+          },
+          "remark": {
+            "label": "备注",
+            "width": "140px",
+            "rows": 4,
+            "span": 24,
+            "control": "textarea"
+          }
+        }
+      ],
+      "btns": [
+        {
+          "type": "submit",
+          "label": "保存",
+          "doRequest": {
+            "url": "/SUMP/call/RPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "co3022"
+            }
+          }
+        },
+        {
+          "type": "reset",
+          "label": "重置"
+        }
+      ]
+    }
+  }
+}

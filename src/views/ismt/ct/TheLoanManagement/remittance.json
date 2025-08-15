@@ -1,0 +1,149 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "custna": {
+            "control": "text",
+            "label": "姓名",
+            "rules": [
+              {
+                "max": 50,
+                "message": "长度不能超过10个字符"
+              }
+            ]
+          },
+          "idcardno": {
+          "control": "text",
+          "label": "证件号码",
+          "rules": [
+            {
+              "max": 100,
+              "message": "长度不能超过100个字符"
+            }
+          ]
+        },
+          "isthcl": {
+            "control": "select",
+            "label": "退汇是否已处理",
+            "dict": {
+              "dictType": "E_ISCL",
+              "dictKey": [
+                "E_ISCL"
+              ],
+              "format": "label"
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/ismt/ct/branch/branch-info-add.json"
+          },
+          "props": {
+            "title": "机构信息新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall?ran=0.35325429323917623",
+        "method": "POST",
+        "params": {
+          "servicecode": "selthf",
+          "cztype" : "select"
+        }
+      },
+      "thead": [
+        {
+          "type": "index",
+          "label": "选择"
+        },
+        {
+          "label": "姓名",
+          "prop": "custna"
+        },
+        {
+          "label": "证件类型",
+          "prop": "idtype"
+        },
+        {
+          "label": "证件号码",
+          "prop": "idcardno"
+        },
+        {
+          "label":"交易流水",
+          "prop":"channelseq"
+        },
+        {
+          "label":"交易日期",
+          "prop":"transdate"
+        },
+        {
+          "label":"退汇金额",
+          "prop":"thamt"
+        },
+        {
+          "label":"退汇账户",
+          "prop":"thaccno"
+        },
+        {
+          "label":"借据号",
+          "prop":"lncfno"
+        },
+        {
+          "label":"退汇原因",
+          "prop":"reason"
+        },
+        {
+          "label":"核心流水号",
+          "prop":"hexseq"
+        },{
+          "label":"退汇是否已处理",
+          "prop":"isrhcl"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/ismt/ct/branch/branch-info-update.json",
+                "method": "GET"
+              },
+              "props": {
+                "title": "信息维护"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "删除",
+              "toRequest": {
+                "url": "/views/ismt/ct/branch/branch-info-delete.json",
+                "method": "GET"
+              },
+              "props": {
+                "title": "信息删除"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

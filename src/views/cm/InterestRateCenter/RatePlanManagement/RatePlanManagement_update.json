@@ -1,0 +1,113 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "initRequest": "${{params}}",
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "updateplan",
+                    "planlist":"[${{form}}]"
+                }
+            },
+            "btns": [
+                {
+                    "type": "submit",
+                    "label": "提交",
+                    "icon": ""
+                }
+            ],
+            "controls": [
+                {
+                    "rate_code": {
+                        "control": "string",
+                        "label": "定价方案编号",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入定价方案编号号"
+                            },
+                            {
+                                "max": 20,
+                                "message": "长度不能超过20个字符"
+                            }
+                        ]
+                        
+                    },
+                    
+                    
+                    "periods": {
+                        "control": "string",
+                        "label": "期数",
+                        "dict": {
+                            "dictType": "E_PERIOD",
+                            "dictKey": [
+                                "E_PERIOD"
+                            ],
+                            "format": "label"
+                        }
+                    }
+                },
+                {   
+                    "rate_name": {
+                        "control":  "text",
+                        "label": "定价方案名称"
+                    },
+                    "subsidy_flag": {
+                        "control": "select",
+                        "label": "是否贴息",
+                        "dict": {
+                            "dictType": "E_SUBFLG",
+                            "dictKey": [
+                                "E_SUBFLG"
+                            ],
+                            "format": "label"
+                        }
+                    }
+                    
+                    
+                },
+                {
+                    "interest_rate": {
+                        "control": "text",
+                        "label": "利率",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入利率信息"
+                            }
+                        ]
+                    },
+                    "repayment_type": {
+                        "control": "select",
+                        "label": "还款方式",
+                        "dict": {
+                            "dictType": "E_SCHDTD",
+                            "dictKey": [
+                                "E_SCHDTD"
+                            ],
+                            "format": "label"
+                        }
+                    }
+                   
+                },
+                {
+                   "corpno": {
+                        "control": "hidden",
+                        "label": "法人代码"
+                    }
+                }
+
+            ]
+        },
+        "alert": {
+            "span": 8,
+              "title": "还款方式编号说明：",
+              "description": [
+                  "1-利随本清；2-按月还息一次还本；3-等额还款；4-等本还款；13-等本等息; 15-M+N模式。"
+              ],
+              "listStyle": "disc"
+          }
+    }
+}

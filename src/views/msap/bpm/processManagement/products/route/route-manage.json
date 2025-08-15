@@ -1,0 +1,158 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [],
+      "btns": []
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "custom",
+          "label": "自动获取",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "bpm0004",
+              "updway": "ROUT",
+              "wf_prod_no": "${{params.wf_prod_no}}",
+              "wf_prod_name": "${{params.wf_prod_name}}",
+              "wf_define_id": "${{params.wf_define_id}}",
+              "appId":"${{params.appId}}"
+            }
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "bpm0007",
+          "wf_prod_no": "${{params.wf_prod_no}}",
+          "appId":"${{params.appId}}"
+        }
+      },
+      "thead": [
+        {
+          "label": "路线id",
+          "prop": "route_id"
+        },
+        {
+          "label": "路线编码",
+          "prop": "route_cd"
+        },
+        {
+          "label": "路线名称",
+          "prop": "route_name"
+        },
+        {
+          "label":"路线类型",
+          "prop":"route_type",
+          "dict": {
+            "dictType": "BPM_E_ROUTE_TYPE",
+            "dictKey": [
+              "BPM_E_ROUTE_TYPE"
+            ],
+            "format": "value-label"
+          },
+          "align": "center"
+        },
+        {
+          "label":"流程编号",
+          "prop":"wf_prod_no"
+        },
+        {
+          "label":"流程名称",
+          "prop":"wf_prod_name"
+        },{
+          "label":"起始节点号",
+          "prop":"task_define_id"
+        },{
+          "label":"起始节点名称",
+          "prop":"task_define_name"
+        },{
+          "label":"目标节点号",
+          "prop":"next_task_define_id"
+        },{
+          "label":"目标节点名称",
+          "prop":"next_task_define_name"
+        },{
+          "label":"版本号",
+          "prop":"data_version"
+        },{
+          "label":"修改日期",
+          "prop":"data_update_time"
+        },{
+          "label":"修改人",
+          "prop":"data_update_user"
+        },{
+          "label": "操作",
+          "width": "260px",
+          "fixed": "right",
+          "align":"center",
+          "btns": [{
+            "type": "edit",
+            "label": "查看",
+            "toRequest": {
+              "url": "/views/msap/bpm/processManagement/products/route/view-route-detail.json",
+              "method": "GET",
+              "params": {
+                "appId":"${{form.appId}}"
+              }
+            },
+            "props": {
+              "width": "70%",
+              "title": "查看流程路线详情"
+            }
+          },{
+            "type": "edit",
+            "label": "维护",
+            "toRequest": {
+              "url": "/views/msap/bpm/processManagement/products/route/route-modify.json",
+              "method": "GET",
+              "params": {
+                "appId":"${{params.appId}}"
+              }
+            },
+            "props": {
+              "width": "70%",
+              "title": "流程路线维护"
+            }
+          },{
+            "type": "edit",
+            "label": "路线管理",
+            "toRequest": {
+              "url": "/views/msap/bpm/processManagement/products/route/route-deal-manage.json",
+              "method": "GET",
+              "params": {
+                "appId":"${{params.appId}}",
+                "wf_prod_no": "${{params.wf_prod_no}}"
+              }
+            },
+            "props": {
+              "width": "70%",
+              "title": "路线管理"
+            }
+          },
+          {
+            "type": "edit",
+            "label": "生成模板",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "bpm3014",
+                "appId":"${{params.appId}}"
+              }
+            }
+          }]
+        }
+      ]
+    }
+  }
+}

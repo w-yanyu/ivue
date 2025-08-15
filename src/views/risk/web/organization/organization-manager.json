@@ -1,0 +1,345 @@
+{
+  "module": "lr-tree-dynamic",
+  "layout": {
+    "tree": {
+      "title": "机构管理",
+      "lazy": true,
+      "idField": "code",
+      "labelField": "name",
+      "pIdField": "parent",
+      "isLeafField": "isLeaf",
+      "disabledField": "disabled",
+      "rootTypes": [
+        "corporation"
+      ],
+      "root": {
+        "rootNode": {
+          "name": "组织机构",
+          "value": "ROOT",
+          "icon": "shouye3",
+          "disabled": false
+        },
+        "toRequest": {
+          "url": "/views/risk/web/organization/organization-tabs.json",
+          "method": "GET"
+        },
+        "props": {
+        },
+        "contextMenu": [
+          {
+            "type": "add",
+            "label": "新增法人",
+            "icon": "el-icon-circle-plus-outline",
+            "childNodeType": "corporation",
+            "toRequest": {
+              "url": "/views/risk/web/organization/corporation-add.json",
+              "method": "GET"
+            },
+            "params": {},
+            "props": {
+              "width": "50%",
+              "title": "新增法人"
+            }
+          }
+        ]
+      },
+      "nodeTypes": {
+        "corporation": {
+          "children": [
+            "organization",
+            "department",
+            "user"
+          ],
+          "icon": "caidan-",
+          "doRequest": {
+            "url": "/WEB/organization/sub",
+            "method": "GET",
+            "params": {
+              "type": "corporation"
+            }
+          },
+          "toRequest": {
+            "url": "/views/risk/web/organization/corporation-update.json",
+            "method": "GET"
+          },
+          "props": {
+          },
+          "contextMenu": [
+            {
+              "type": "delete",
+              "label": "删除",
+              "icon": "el-icon-remove-outline",
+              "doRequest": {
+                "url": "/WEB/organization",
+                "method": "DELETE",
+                "params": {
+                  "orgCode": "${{current.orgCode}}"
+                }
+              },
+              "confirm": {
+                "title": "删除",
+                "msg": "确定删除所选数据项吗？",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            },
+            {
+              "type": "divider"
+            },
+            {
+              "type": "add",
+              "label": "新增机构",
+              "icon": "el-icon-circle-plus-outline",
+              "childNodeType": "organization",
+              "toRequest": {
+                "url": "/views/risk/web/organization/organization-add.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "50%",
+                "title": "新增机构",
+                "close": "",
+                "target": ""
+              }
+            },
+            {
+              "type": "add",
+              "label": "新增部门",
+              "icon": "el-icon-circle-plus-outline",
+              "childNodeType": "department",
+              "toRequest": {
+                "url": "/views/risk/web/organization/department-add.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "50%",
+                "title": "新增部门",
+                "close": "",
+                "target": ""
+              }
+            },
+            {
+              "type": "add",
+              "label": "新增用户",
+              "icon": "el-icon-circle-plus-outline",
+              "childNodeType": "user",
+              "toRequest": {
+                "url": "/views/risk/web/organization/organization-add.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "50%",
+                "title": "新增用户",
+                "close": "",
+                "target": ""
+              }
+            }
+          ]
+        },
+        "organization": {
+          "children": [
+            "organization",
+            "department",
+            "user"
+          ],
+          "icon": "el-icon-tickets",
+          "doRequest": {
+            "url": "/WEB/organization/sub",
+            "method": "get",
+            "params": {
+              "type": "organization"
+            }
+          },
+          "toRequest": {
+            "url": "/views/risk/web/organization/organization-update.json",
+            "method": "GET"
+          },
+          "props": {
+          },
+          "contextMenu": [
+            {
+              "type": "delete",
+              "label": "删除",
+              "icon": "el-icon-remove-outline",
+              "doRequest": {
+                "url": "/WEB/organization",
+                "method": "DELETE",
+                "params": {
+                  "orgCode": "${{current.orgCode}}"
+                }
+              },
+              "confirm": {
+                "title": "删除",
+                "msg": "确定删除所选数据项吗？",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            },
+            {
+              "type": "divider"
+            },
+            {
+              "type": "add",
+              "label": "新增机构",
+              "icon": "el-icon-circle-plus-outline",
+              "childNodeType": "organization",
+              "toRequest": {
+                "url": "/views/risk/web/organization/organization-add.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "50%",
+                "title": "新增机构",
+                "close": "",
+                "target": ""
+              }
+            },
+            {
+              "type": "add",
+              "label": "新增部门",
+              "icon": "el-icon-circle-plus-outline",
+              "childNodeType": "department",
+              "toRequest": {
+                "url": "/views/risk/web/organization/department-add.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "50%",
+                "title": "新增部门",
+                "close": "",
+                "target": ""
+              }
+            },
+            {
+              "type": "add",
+              "label": "新增用户",
+              "icon": "el-icon-circle-plus-outline",
+              "childNodeType": "user",
+              "toRequest": {
+                "url": "/views/risk/web/organization/organization-add.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "50%",
+                "title": "新增用户",
+                "close": "",
+                "target": ""
+              }
+            }
+          ]
+        },
+        "department": {
+          "children": [
+            "department",
+            "user"
+          ],
+          "icon": "el-icon-tickets",
+          "doRequest": {
+            "url": "/WEB/organization/sub",
+            "method": "get",
+            "params": {
+              "type": "department"
+            }
+          },
+          "toRequest": {
+            "url": "/views/risk/web/organization/department-update.json",
+            "method": "GET"
+          },
+          "props": {
+          },
+          "contextMenu": [
+            {
+              "type": "delete",
+              "label": "删除",
+              "icon": "el-icon-remove-outline",
+              "doRequest": {
+                "url": "/WEB/organization",
+                "method": "DELETE",
+                "params": {
+                  "orgCode": "${{current.orgCode}}"
+                }
+              },
+              "confirm": {
+                "title": "删除",
+                "msg": "确定删除所选数据项吗？",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            },
+            {
+              "type": "divider"
+            },
+            {
+              "type": "add",
+              "label": "新增部门",
+              "icon": "el-icon-circle-plus-outline",
+              "childNodeType": "department",
+              "toRequest": {
+                "url": "/views/risk/web/organization/department-add.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "50%",
+                "title": "新增部门",
+                "close": "",
+                "target": ""
+              }
+            },
+            {
+              "type": "add",
+              "label": "新增用户",
+              "icon": "el-icon-circle-plus-outline",
+              "childNodeType": "user",
+              "toRequest": {
+                "url": "/views/risk/web/organization/organization-add.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "50%",
+                "title": "新增用户",
+                "close": "",
+                "target": ""
+              }
+            }
+          ]
+        },
+        "user": {
+          "icon": "yonghu",
+          "doRequest": {
+            "url": "/WEB/organization/users",
+            "method": "GET",
+            "params": {
+              "enable": ""
+            }
+          },
+          "toRequest": {
+            "url": "/views/risk/web/user/update.json",
+            "method": "GET"
+          },
+          "props": {
+          },
+          "contextMenu": [
+            {
+              "type": "delete",
+              "label": "删除",
+              "icon": "el-icon-remove-outline",
+              "doRequest": {
+                "url": "/WEB/user",
+                "method": "DELETE",
+                "params": {
+                  "userCode": "${{current.userCode}}"
+                }
+              },
+              "confirm": {
+                "title": "删除",
+                "msg": "确定删除所选数据项吗？",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

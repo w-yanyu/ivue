@@ -1,0 +1,163 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "prod_group_code": {
+                        "control": "text",
+                        "label": "产品组编号"
+                    },
+                    "prod_group_name": {
+                        "control": "text",
+                        "label": "产品组名称"
+                    },
+                    "valid_flag": {
+                        "control": "select",
+                        "label": "有效标识",
+                        "align": "center",
+                        "dict": {
+                            "dictType": "UCCP_E_VALID_FLAG",
+                            "dictKey": [
+                                "UCCP_E_VALID_FLAG"
+                            ],
+                            "format": "label"
+                        }
+                    }
+                }
+            ]
+          },
+        "toolbar": {
+            "btns": [{
+                "type": "add",
+                "label": "新增",
+                "target": "dialog",
+                "toRequest": {
+                    "method": "GET",
+                    "url": "/views/uccp/prodManager/uccpProdGroup/prod_group_steps.json",
+                    "params": {
+                        "flag":"1"
+                    }
+                },
+                "props": {
+                    "width": "80%",
+                    "title": "管控产品组信息新增"
+                }
+            }]
+        },
+        "datagrid": {
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "uccp0008"
+                }
+            },
+            "thead": [
+                {
+                    "label": "产品组编号",
+                    "prop": "prod_group_code",
+                    "align": "center"
+                },
+                {
+                    "label": "产品组名称",
+                    "prop": "prod_group_name",
+                    "align": "center"
+                },
+                {
+                    "label": "产品组限额",
+                    "prop": "prod_group_limit",
+                    "align": "center",
+                    "format": {
+                        "thousand": ","
+                      }
+                },
+                {
+                    "label": "额度默认计算规则",
+                    "prop": "quota_calculation_rule",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "UCCP_E_QUOTA_CALCULATION_RULE",
+                        "dictKey": [
+                            "UCCP_E_QUOTA_CALCULATION_RULE"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "有效标识",
+                    "prop": "valid_flag",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "UCCP_E_VALID_FLAG",
+                        "dictKey": [
+                            "UCCP_E_VALID_FLAG"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "上级产品组编号",
+                    "prop": "sup_prod_group_code",
+                    "align": "center"
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 230,
+                    "align": "center",
+                    "btns": [
+                        {
+                            "type": "edit",
+                            "label": "详情",
+                            "toRequest": {
+                                "url": "/views/uccp/prodManager/uccpProdGroup/prod_group_detail_steps.json",
+                                "method": "GET",
+                                "params": {
+                                    
+                                }
+                            },
+                            "props": {
+                                "width": "80%",
+                                "title": "管控产品组信息维护"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/uccp/prodManager/uccpProdGroup/prod_group_edit_steps.json",
+                                "method": "GET",
+                                "params": {
+                                    "flag":0
+                                }
+                            },
+                            "props": {
+                                "width": "80%",
+                                "title": "管控产品组信息维护"
+                            }
+                        },
+                        {
+                            "type": "custom",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/call/RPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "uccp0006"
+                                }
+                            },
+                            "confirm": {
+                                "title": "确定删除",
+                                "confirmButtonText": "确定",
+                                "cancelButtonText": "取消"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

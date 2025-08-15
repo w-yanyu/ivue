@@ -1,0 +1,98 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": "${{params}}",
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "icon": "",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "ct2426",
+              "appId": "${{params.appId}}"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "dimension_code": {
+            "control": "string",
+            "label": "业务指标编码"
+          },
+          "field_code": {
+            "control": "string",
+            "label": "字段代码"
+          },
+          "field_name": {
+            "control": "text",
+            "label": "字段名",
+            "rules": [
+              {
+                "max": "500",
+                "message": "长度不能超过500个字符"
+              },
+              {
+                "required": true,
+                "message": "请输入字段名"
+              }
+            ]
+          },
+          "retrun_value_type": {
+            "control": "select",
+            "label": "返回值类型",
+            "dict": {
+              "dictType": "CT_E_RESULT_TYPE",
+              "dictKey": [
+                "CT_E_RESULT_TYPE"
+              ]
+            },
+            "events": {
+              "showItem": {
+                "3": [
+                  "string_en_value"
+                ],
+                "4": [
+                  "string_en_value"
+                ],
+                "$default": []
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入字段名"
+              }
+            ]
+          },
+          "string_en_value": {
+            "control": "text",
+            "label": "选项值",
+            "rules": [
+              {
+                "max": "500",
+                "message": "长度不能超过500个字符"
+              },
+              {
+                "required": true,
+                "message": "请输入选项值"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "alert": {
+      "span": 8,
+      "title": "提示",
+      "description": [
+        "当【返回值类型】字段为单选或多选时【选项值】字段配置规则如下： 码值-中文; 码值-中文; 以英文分号';'结尾 例如：0-信用;1-保证;2-抵押;3-质押; ，只有一个选项也需要以';'结尾 "
+      ],
+      "listStyle": "disc"
+    }
+  }
+}

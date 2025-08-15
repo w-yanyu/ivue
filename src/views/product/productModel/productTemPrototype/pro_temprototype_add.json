@@ -1,0 +1,53 @@
+{
+  "module": "d-steps",
+  "layout": {
+    "steps": {
+      "scope": "merchJoin",
+      "direction": "horizontal",
+      "alignCenter": true,
+      "finishStatus": "success",
+      "simpleType": false,
+      "nextStepType": "submit",
+      "list": [
+        {
+          "title": "产品模版原型基础信息",
+          "scope": "actBaseInfo",
+          "icon": "el-icon-document",
+          "toRequest": {
+            "url": "/views/product/productModel/productTemPrototype/pro_temprototype_addbase.json",
+            "method": "get"
+          },
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "ln3257"
+            }
+          }
+        },
+        {
+          "title": "关联部件",
+          "scope": "actRules",
+          "icon": "el-icon-document",
+          "toRequest": {
+            "url": "/views/product/productModel/productTemPrototype/pro_temprototype_addparrts.json",
+            "method": "get",
+            "params": {
+              "tplt_protp_code": "${{merchJoin.actBaseInfo.tplt_protp_code}}",
+              "tplt_protp_nm": "${{merchJoin.actBaseInfo.tplt_protp_nm}}",
+              "core_busi_dman": "${{merchJoin.actBaseInfo.core_busi_dman}}",
+              "tplt_protp_dsc": "${{merchJoin.actBaseInfo.tplt_protp_dsc}}"
+            }
+          },
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "ln3255"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,135 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "wfrlid": {
+                        "control": "text",
+                        "label": "审批角色编号",
+                        "rules": [
+                            {
+                                "max": 10,
+                                "message": "长度不能超过10个字符"
+                            }
+                        ]
+                    },
+                    "wfrlnm": {
+                        "control": "text",
+                        "label": "审批角色名称",
+                        "rules": [
+                            {
+                                "max": 100,
+                                "message": "长度不能超过100个字符"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },      
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "target": "dialog",
+                    "label": "新增",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/other/approval_role_add.json"
+                    },
+                    "props": {
+                        "title": "审批角色新增"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "AS_ICMS_CM_SEWFRL",
+                    "page_id": "/views/other/approval_role.json"
+                }
+            },
+            "thead": [               
+                {
+                    "label": "审批角色编号",
+                    "prop": "wfrlid"
+                },
+                {
+                    "label": "审批角色名称",
+                    "prop": "wfrlnm"
+                },
+                {
+                    "label": "审批层级",
+                    "prop": "rlauth"
+                },
+                {
+                    "label": "备注",
+                    "prop": "remark"
+                },
+                {
+                    "label": "最后修改人",
+                    "prop": "updusr"
+                },
+                {
+                    "label": "最后修改时间",
+                    "prop": "pljytjrq"
+                },
+
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 200,
+                    "align":"center",
+                    "btns": [
+                        {
+                            "type": "look",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/other/approval_role_update.json",
+                                "method": "POST"
+                            },
+                            "props": {
+                                "width": "70%",
+                                "title": "维护"
+                            }
+                        },
+                        {
+                            "type": "custom",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "POST",
+                                "params":{
+                                    "servicecode":"AS_ICMS_CM_DEWFRL",
+                                    "jiaoyzht":"${{form.wfrlid}}"
+                                }
+                            },
+                            "confirm": {
+                                "title": "确定删除",
+                                "confirmButtonText": "确定",
+                                "cancelButtonText": "取消"
+                            }
+                        },
+                        {
+                            "type": "look",
+                            "label": "关联操作员",
+                            "toRequest": {
+                                "url": "/views/other/approval_operator.json",
+                                "method": "POST"
+                            },
+                            "props": {
+                                "width": "70%",
+                                "title": "关联操作员"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

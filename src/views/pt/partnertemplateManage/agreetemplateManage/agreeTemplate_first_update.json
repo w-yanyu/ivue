@@ -1,0 +1,92 @@
+{
+  "module": "d-steps",
+  "layout": {
+      "steps": {
+         "scope": "newPart",
+          "direction": "horizontal",
+          "alignCenter": true,
+          "finishStatus": "success",
+          "simpleType": false,
+          "nextStepType": "validate",
+          "skip": true,
+          "list": [
+              {
+                  "title": "协议模版",
+                  "scope": "baseInfo",
+                  "icon": "el-icon-edit",
+                "toRequest": {
+                  "url": "/views/pt/partnertemplateManage/agreetemplateManage/agreeTemplate_update.json",
+                  "method": "post",
+                  "params": {
+                    "protocol_template_no": "${{params.protocol_template_no}}",
+                    "version":"${{params.version}}"
+                  }
+                },
+                "doRequest": {
+                  "url": "/SUMP/icmcall/icmRPCCall",
+                  "method": "POST",
+                  "params": {
+                    "servicecode": "pt0071",
+                    "protocol_template_no": "${{params.protocol_template_no}}",
+                    "version":"${{params.version}}"
+                  }
+                }
+              },
+
+              {
+                "title": "协议模版关联部件",
+                "##forbidBack": true,
+              "scope": "baseInfo1",
+                "icon": "el-icon-edit",
+                "toRequest": {
+                  "url": "/views/pt/partnertemplateManage/agreetemplaterelapartsManage/agreetemplaterelaParts_list.json",
+                  "params": {
+                      "protocol_template_no": "${{newPart.baseInfo.protocol_template_no}}",
+                      "version":"${{params.version}}",
+                      "show_flash": "1",
+                      "servicecode": "pt0083"
+                  }
+                },
+                "doRequest": {
+                  "url": "/pte/json/layout/success.json",
+                  "method": "post",
+                  "eventAfter": {
+                    "doParentCallback": true
+                  }
+                }
+              },
+
+
+              {
+                "title": "提交审核",
+                "##forbidBack": true,
+              "scope": "baseInfo3",
+                "icon": "el-icon-edit",
+              "toRequest": {
+                "url": "/views/pt/partnertemplateManage/agreetemplateManage/submit.json",
+                "params": {
+                  "protocol_template_no": "${{newPart.baseInfo.protocol_template_no}}",
+                  "version": "${{newPart.baseInfo.version}}",
+                  "approve_status": "01"
+                }
+              },
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "pt0074",
+                  "sale_prod_cd": "${{newPart.baseInfo.protocol_template_no}}",
+                  "version": "${{newPart.baseInfo.version}}",
+                  "approve_comments":"1",
+                  "approve_link":"02",
+                  "approve_status": "01",
+                  "mould_code":"1"
+                }
+              }
+            }
+
+
+          ]
+      }
+  }
+}

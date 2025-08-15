@@ -1,0 +1,96 @@
+{
+  "module": "v-form-editableDataGrid-btn",
+  "init": {
+    "initRequest": "${{params}}"
+  },
+  "layout": {
+    "toolbar": {
+      "#btnPlace": "right",
+      "btns": [
+        {
+          "type": "add",
+          "label": "新增",
+          "icon": "el-icon-plus",
+          "disabled": "'${{params.pageType}}' == 'look'"
+        }
+      ]
+    },
+    "datagrid": {
+      "name": "resultList",
+      "pagination": {
+        "show": false
+      },
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "deci050044",
+          "data_source_code": "${{params.data_source_code}}",
+          "config_type": "0"
+        }
+      },
+      "thead": [
+        {
+          "prop": "res_code_value_path",
+          "label": "接口响应代码取值路径（errcode）",
+          "type": "text",
+          "rules": [
+            {
+              "required": true,
+              "message": "请输入"
+            }
+          ]
+        },
+        {
+          "prop": "res_code_function",
+          "label": "响应代码函数",
+          "type": "textarea",
+          "rules": [
+            {
+              "required": true,
+              "message": "请输入"
+            }
+          ]
+        },
+        {
+          "prop": "res_msg_value_path",
+          "label": "接口响应消息取值路径(errmsg)",
+          "type": "text",
+          "rules": [
+            {
+              "required": true,
+              "message": "请输入"
+            }
+          ]
+        },
+        {
+          "prop": "res_msg_function",
+          "label": "响应消息函数",
+          "type": "textarea",
+          "rules": [
+            {
+              "required": true,
+              "message": "请输入"
+            }
+          ]
+        },
+        {
+          "prop": "res_seq",
+          "label": "返回流水号",
+          "type": "text"
+        },
+        {
+          "label": "操作",
+          "width": "70px",
+          "btns": [
+            {
+              "type": "delete",
+              "label": "删除"
+            }
+          ],
+          "align": "center"
+        }
+      ]
+    }
+  }
+}

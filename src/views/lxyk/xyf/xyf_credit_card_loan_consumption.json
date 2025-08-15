@@ -1,0 +1,273 @@
+{
+  "module": "v-form-editableDataGrid-btn",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "smilr_cr_card_loan_acct_num": {
+            "control": "hidden",
+            "width": "140px",
+            "span": 7,
+            "value": "${{params.smilr_cr_card_loan_acct_num}}",
+            "label": "类信用卡贷款账号"
+          },
+          "smilr_cr_card_acct_ste": {
+            "control": "hidden",
+            "width": "140px",
+            "span": 7,
+            "value": "${{params.smilr_cr_card_acct_ste}}",
+            "label": "类信用卡贷款账号状态",
+            "dict": {
+              "dictType": "E_SMILR_CR_CARD_ACCT_STE",
+              "dictKey": [
+                "E_SMILR_CR_CARD_ACCT_STE"
+              ],
+              "format": "label"
+            }
+          },
+          "cust_no": {
+            "control": "hidden",
+            "width": "140px",
+            "span": 7,
+            "value": "${{params.cust_num}}",
+            "label": "客户号"
+          },
+          "cust_name": {
+            "control": "hidden",
+            "width": "140px",
+            "span": 7,
+            "value": "${{params.cust_nm}}",
+            "label": "客户名称"
+          },
+          "prod_nm": {
+            "control": "string",
+            "width": "140px",
+            "span": 7,
+            "value": "${{params.slbl_prod_nm}}",
+            "label": "可售产品"
+          },
+          "####prod_nm": {
+            "control": "hidden",
+            "label": "可售产品",
+            "width": "140px",
+            "value": "${{params.slbl_prod_nm}}",
+            "span": 7,
+            "edit": true,
+            "rules": [
+              {
+                "required": true,
+                "message": "可售产品不能为空!"
+              }
+            ],
+            "keyField": {
+              "prod_nm": "sale_prod_name",
+              "prod_no": "sale_prod_cd"
+            },
+            "toRequest": {
+              "url": "/views/lxyk/xyf/public_credit_sell_product_lookup.json",
+              "method": "get"
+            },
+            "props": {
+              "title": "选择可售产品",
+              "width": "75%"
+            }
+          },
+          "prod_no": {
+            "control": "hidden",
+            "value": "${{params.slbl_prod_code}}",
+            "width": "140px",
+            "span": 7,
+            "label": "可售产品号"
+          },
+          "isAging": {
+            "control": "select",
+            "label": "是否分期支付",
+            "value": "0",
+            "width": "140px",
+            "span": 7,
+            "rules": [
+              {
+                "required": true,
+                "message": "是否分期不能为空!"
+              }
+            ],
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            },
+            "showItem": {
+              "0": [],
+              "1": [
+                "istlmt_prds"
+              ]
+            },
+            "events": {
+              "condition": {
+                "0": {
+                  "control": {
+                    "istlmt_prds": {
+                      "value": "",
+                      "showItem": {
+                        "$default": []
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "istlmt_prds": {
+            "control": "select",
+            "label": "分期期数",
+            "initShow": false,
+            "width": "140px",
+            "span": 7,
+            "dict": {
+              "dictType": "E_ISTLMT_PRDS",
+              "dictKey": [
+                "E_ISTLMT_PRDS"
+              ],
+              "exclude": [
+                "1"
+              ],
+              "format": "label"
+            },
+            "showItem": {
+              "$default": [],
+              "3": [
+                "lstSmilrCrCardBillDetl"
+              ],
+              "6": [
+                "lstSmilrCrCardBillDetl"
+              ],
+              "9": [
+                "lstSmilrCrCardBillDetl"
+              ],
+              "12": [
+                "lstSmilrCrCardBillDetl"
+              ]
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "分期期数不能为空!"
+              }
+            ]
+          },
+          "lstSmilrCrCardBillDetl": {
+            "initShow": false,
+            "span": 24,
+            "control": "dynamic",
+            "toRequest": {
+              "url": "/views/lxyk/class_credit_card_supply_list_info.json",
+              "params": {
+                "smilr_cr_card_loan_acct_num": "${{params.smilr_cr_card_loan_acct_num}}",
+                "istlmt_tp": 0,
+                "istlmt_prds": "${{form.istlmt_prds}}",
+                "goodsList":"${{datagrid}}"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "新增",
+          "icon": "el-icon-plus"
+        }
+      ]
+    },
+    "datagrid": {
+      "pagination": {
+        "show": false
+      },
+      "thead": [
+        {
+          "type": "index",
+          "label": "序号"
+        },
+        {
+          "prop": "product_id",
+          "type": "text",
+          "label": "商品编号",
+          "rules": [
+            {
+              "required": true,
+              "message": "商品编号不能为空!"
+            }
+          ]
+        },
+        {
+          "prop": "product_nm",
+          "type": "text",
+          "label": "商品名称",
+          "rules": [
+            {
+              "required": true,
+              "message": "商品名称不能为空!"
+            }
+          ]
+        },
+        {
+          "prop": "product_univalence",
+          "type": "currency",
+          "label": "商品单价(元)",
+          "rules": [
+            {
+              "required": true,
+              "message": "商品单价不能为空!"
+            }
+          ]
+        },
+        {
+          "prop": "product_count",
+          "type": "inputNumber",
+          "label": "商品数量",
+          "min": 1
+        },
+        {
+          "prop": "total_money",
+          "type": "currency",
+          "label": "总金额(元)",
+          "compute": "${{current.product_univalence}} * ${{current.product_count}}",
+          "disabled": true
+        },
+        {
+          "label": "操作",
+          "width": "280px",
+          "btns": [
+            {
+              "type": "delete",
+              "label": "删除",
+              "icon": "el-icon-close"
+            }
+          ]
+        }
+      ]
+    },
+    "footer": {
+      "btns": [
+        {
+          "type": "submit",
+          "label": "保存",
+          "icon": "el-icon-tickets",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "busi_type": "LXYKDK",
+              "apply_type_name": "消费申请",
+              "servicecode": "ar0056"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

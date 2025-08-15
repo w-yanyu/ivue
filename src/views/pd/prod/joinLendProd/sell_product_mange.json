@@ -1,0 +1,127 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "sale_prod_cd": {
+            "control": "text",
+            "label": "可售产品编号",
+            "span": 12
+          },
+          "sale_prod_name": {
+            "control": "text",
+            "label": "可售产品名称",
+            "span": 12
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pd0214",
+          "is_credit_prod": "0",
+          "cust_class_list": "${{params.cust_class_list}}",
+          "prod_type": "${{params.prod_type}}"
+        }
+      },
+      "thead": [
+        {
+          "type": "string",
+          "label": "可售产品名称",
+          "prop": "sale_prod_name",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "可售产品编号",
+          "prop": "sale_prod_cd",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "产品版本",
+          "prop": "prod_version",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "可售产品类型",
+          "prop": "prod_type_name",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "模板编号",
+          "prop": "template_id",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "模板版本",
+          "prop": "template_version",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "适用客户类型",
+          "prop": "cust_class",
+          "align": "center",
+          "dict": {
+            "dictType": "PD_E_CUST_CLASS",
+            "dictKey": [
+              "PD_E_CUST_CLASS"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "string",
+          "label": "审批状态",
+          "prop": "appr_status",
+          "align": "center",
+          "dict": {
+            "dictType": "PD_E_APPR_STATUS",
+            "dictKey": [
+              "PD_E_APPR_STATUS"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "string",
+          "label": "所属法人",
+          "prop": "org_id",
+          "align": "center"
+
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": "100px",
+          "btns": [
+            {
+              "type": "look",
+              "label": "批量规划",
+              "toRequest": {
+                "url": "@batchView",
+                "method": "GET",
+                "params": {
+                }
+              },
+              "props": {
+                "width": "75%",
+                "title": "批量规划详情"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

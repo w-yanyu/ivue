@@ -1,0 +1,277 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "name": "info",
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "us0005",
+          "cust_no": "${{params.cust_no}}"
+        }
+      },
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "icon": "",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "us0006"
+            }
+          }
+        }
+      ],
+      "controlsGroup": [
+        {
+          "title": "客户开户信息",
+          "tooltip": "",
+          "titleIcon": "",
+          "showHint": "",
+          "accordion": false,
+          "expand": true,
+          "controls": [
+            {
+              "cust_name": {
+                "control": "text",
+                "label": "客户名称",
+                "disabled": "'${{form.valid_state}}' === '1'",
+                "span": "8",
+                "width": "25px",
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请输入客户名称"
+                  },
+                  {
+                    "max": 200,
+                    "message": "长度不能超过200个字符"
+                  }
+                ]
+              },
+              "valid_state": {
+                "isShow": false,
+                "label": "是否有效"
+              },
+              "cust_befor_name": {
+                "control": "text",
+                "label": "客户曾用名",
+                "span": "8",
+                "width": "25px",
+                "rules": [
+                  {
+                    "required": false,
+                    "message": "请输入客户曾用名"
+                  },
+                  {
+                    "max": 80,
+                    "message": "长度不能超过80个字符"
+                  }
+                ]
+              },
+              "cust_english_name": {
+                "control": "text",
+                "label": "客户英文名称",
+                "span": "8",
+                "width": "25px",
+                "rules": [
+                  {
+                    "required": false,
+                    "message": "请输入客户英文名称"
+                  },
+                  {
+                    "max": 80,
+                    "message": "长度不能超过80个字符"
+                  }
+                ]
+              },
+              "country_code": {
+                "control": "select",
+                "label": "国籍",
+                "span": "8",
+                "width": "25px",
+                "dict": {
+                  "dictType": "US_E_INCTRY",
+                  "dictKey": [
+                    "US_E_INCTRY"
+                  ],
+                  "format": "label"
+                },
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请选择国别"
+                  }
+                ]
+              },
+              "cert_type": {
+                "control": "select",
+                "label": "证件类型",
+                "span": "8",
+                "disabled": true,
+                "width": "25px",
+                "dict": {
+                  "dictType": "MS_E_CRET_TYPE",
+                  "dictKey": [
+                    "MS_E_CRET_TYPE"
+                  ],
+                  "format": "label"
+                },
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请选择证件类型"
+                  }
+                ]
+              },
+              "cert_no": {
+                "control": "text",
+                "label": "证件号码",
+                "span": "8",
+                "width": "25px",
+                "disabled": "'${{form.valid_state}}' === '1'",
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请输入证件号码"
+                  },
+                  {
+                    "max": 30,
+                    "message": "长度不能超过30个字符"
+                  }
+                ]
+              },
+              "cert_day": {
+                "label": "证件签发日期",
+                "span": "8",
+                "width": "25px",
+                "control": "dateTimePicker",
+                "editable": true,
+                "format": "yyyyMMdd",
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请输入证件签发日期"
+                  }
+                ]
+              },
+              "card_end_day": {
+                "label": "证件到期日期",
+                "span": "8",
+                "width": "25px",
+                "control": "dateTimePicker",
+                "editable": true,
+                "format": "yyyyMMdd",
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请输入证件到期日期"
+                  }
+                ],
+                "disabledDate": {
+                  "startRange": "${{form.cardsday}}",
+                  "endRange": "3000-01-01"
+                }
+              },
+              "issuing_addr": {
+                "control": "areaCascade",
+                "title": "请选择注册地址",
+                "label": "注册地址",
+                "span": "8",
+                "width": "25px",
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请输入注册地址"
+                  },
+                  {
+                    "max": 80,
+                    "message": "长度不能超过80个字符"
+                  }
+                ]
+              },
+              "cust_type": {
+                "control": "select",
+                "label": "客户类型",
+                "span": "8",
+                "width": "25px",
+                "dict": {
+                  "dictType": "US_E_CUST_TYPE_PRI",
+                  "dictKey": [
+                    "US_E_CUST_TYPE_PRI"
+                  ],
+                  "format": "label"
+                },
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请选择客户类型"
+                  }
+                ]
+              }
+            },
+            {
+              "cust_no": {
+                "control": "hidden",
+                "label": "客户编号",
+                "width": "130px"
+              },
+              "islpac": {
+                "control": "hidden",
+                "label": "是否法人关联客户",
+                "span": "8",
+                "width": "25px",
+                "dict": {
+                  "dictType": "MS_E_YESORNO",
+                  "dictKey": [
+                    "MS_E_YESORNO"
+                  ],
+                  "format": "label"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "title": "客户号列表",
+          "tooltip": "",
+          "titleIcon": "",
+          "showHint": "",
+          "expand": true,
+          "controls": [
+            {
+              "cust_no_out": {
+                "control": "string",
+                "label": "客户编号",
+                "span": "8",
+                "width": "25px"
+              },
+              "acctno_type": {
+                "control": "select",
+                "label": "账户类型",
+                "span": "8",
+                "width": "25px",
+                "dict": {
+                  "dictType": "US_E_CUST_ACCT_TYPE",
+                  "dictKey": [
+                    "US_E_CUST_ACCT_TYPE"
+                  ],
+                  "format": "label"
+                }
+              },
+              "remark": {
+                "control": "text",
+                "label": "备注",
+                "span": "8",
+                "width": "25px"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

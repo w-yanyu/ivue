@@ -1,0 +1,231 @@
+{
+  "module": "v-search-btn-datagrid",
+  "pageId": "rule_tree",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "deci_tables_code": {
+            "label": "决策表代码",
+            "control": "text",
+            "width": "auto",
+            "span": 8,
+            "rules": [
+              {
+                "message": "字段长度超限",
+                "max": 40
+              }
+            ]
+          },
+          "deci_tables_name": {
+            "label": "决策表名称",
+            "width": "auto",
+            "control": "text",
+            "span": 8,
+            "rules": [
+              {
+                "message": "字段长度超限",
+                "max": 64
+              }
+            ]
+          },
+          "branchId": {
+            "label": "机构名称",
+              "control": "remoteSelect",
+              "labelField": "branch_name",
+              "valueField": "branch_id",
+              "searchField":"branch_name",
+              "span": 6,
+              "value": "$g{{user_info.branch_id}}",
+              "width": "auto",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "ct2191"
+                }
+            },
+            "format": "label"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "deci020450"
+        }
+      },
+      "thead": [
+        {
+          "label": "序号",
+          "type": "index"
+        },
+        {
+          "label": "决策表代码",
+          "prop": "deci_tables_code"
+        },
+        {
+          "label": "决策表名称",
+          "prop": "deci_tables_name"
+        },
+        {
+          "label": "机构名称",
+          "prop": "branch_id",
+          "dict": {
+            "dictType": "DECI_E_BRANCH_MARK",
+            "dictKey": [
+              "DECI_E_BRANCH_MARK"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "版本号",
+          "prop": "busi_version"
+        },
+        {
+          "label": "服务对象",
+          "prop": "service_object"
+        },
+        {
+          "label": "备注",
+          "prop": "deci_tables_describe"
+        },
+        {
+          "label": "最新维护人",
+          "prop": "apply_user",
+          "dict": {
+            "dictType":"deciOnl",
+              "dictKey": [],
+              "format": "label",
+              "labelField": "user_name",
+              "valueField": "user_id",
+              "doRequest": {
+                  "url": "/SUMP/icmcall/icmRPCCall",
+                  "method": "POST",
+                  "params": {
+                    "length":1000,
+                    "start":1,
+                      "servicecode": "ct2503"
+                  }
+              }
+          }
+        },
+        {
+          "label": "最新维护时间",
+          "prop": "apply_time"
+        },
+        {
+          "label": "操作",
+          "width": "200px",
+          "btns": [
+            {
+              "type": "look",
+              "label": "查看",
+              "authId": "rule_tree_vie_btn",
+              "toRequest": {
+                "url": "/views/risk/risk_decision_tables/risk_decision_tables_view.json",
+                "#url": "@riskDecisionTablesView",
+                "method": "get",
+                "props": {
+                  "width": "85%"
+                }
+              },
+              "props": {
+                "width": "85%"
+              }
+            },
+            {
+              "type": "confirmIncreaseBtn",
+              "label": "变更",
+              "width": "70px",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "deci020451",
+                  "deci_tables_operation_type": "U"
+                }
+              },
+              "confirm": {
+                "title": "提示信息",
+                "msgTemplate":"是否对“${{current.decision_tables_code}}”“${{current.decision_tables_code}}”发起变更？",
+                "msg": "",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+              ,"show": {
+                "expression": "'${{current.branch_id}}' == '$g{{user_info.branch_id}}'",
+                "#expression": "true"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "复制",
+              "toRequest": {
+                "url": "views/risk/risk_decision_tables/risk_decision_tables_copy.json",
+                "method": "get",
+                "params": {
+                  "decision_tables_code": "${{current.decision_tables_code}}",
+                  "decision_tables_name": "${{current.decision_tables_name}}",
+                  "treeId": "${{current.tree_id}}",
+                  "busi_version": "${{current.busi_version}}"
+                }
+              },
+              "props": {
+                
+              },
+              "show": {
+                "expression": "true"
+              }
+            },
+            {
+              "type": "confirmIncreaseBtn",
+              "label": "版本切换",
+              "width": "70px",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "deci020451",
+                  "deci_tables_operation_type": "S"
+                }
+              },
+              "confirm": {
+                "title": "提示信息",
+                "msgTemplate":"是否对“${{current.decision_tables_code}}”“${{current.decision_tables_code}}”发起版本切换？",
+                "msg": "",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              },"show": {
+                "expression": "'${{current.branch_id}}' == '$g{{user_info.branch_id}}'",
+                "#expression": "true"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "authId": "general_rule_del_btn",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "deci020451",
+                  "deci_tables_operation_type": "D"
+                }
+              },
+              "show": {
+                "expression": "'${{current.branch_id}}' == '$g{{user_info.branch_id}}'",
+                "#expression": "true"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

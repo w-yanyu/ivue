@@ -1,0 +1,538 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "scope":"strForm",
+      "initRequest": "${{params}}",
+      "doRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ct2141",
+          "operater_ind": "M"
+        }
+      },
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "icon": "",
+          "doRequest": {
+            "url": "/SUMP/call/RPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "ct2141",
+              "operater_ind": "M"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "branch_id": {
+            "control": "string",
+            "label": "机构号",
+            "width": "160px",
+            "rules": [
+              {
+                "max": 10,
+                "message": "长度不能超过10个字符"
+              }
+            ]
+          },
+          "brch_relation_code": {
+            "control": "hidden",
+            "label": "机构关系代码",
+            "width": "160px"
+          },
+          "ccy_code": {
+            "control": "hidden",
+            "label": "币种",
+            "width": "160px"
+          },
+          "branch_name": {
+            "control": "text",
+            "label": "机构名称",
+            "width": "160px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入机构名称"
+              },
+              {
+                "max": 100,
+                "message": "长度不能超过100个字符"
+              }
+            ]
+          }
+        },
+        {
+          "branch_address": {
+            "control": "text",
+            "label": "机构地址",
+            "width": "160px",
+            "rules": [
+              {
+                "max": 200,
+                "message": "长度不能超过200个字符"
+              }
+            ]
+          },
+          "branch_mail": {
+            "control": "text",
+            "label": "机构邮箱",
+            "width": "160px",
+            "rules": [
+              {
+                "max": 32,
+                "message": "长度不能超过32个字符"
+              }
+            ]
+          }
+        },
+        {
+          "branch_phone": {
+            "control": "text",
+            "label": "机构电话",
+            "width": "160px",
+            "rules": [
+              {
+                "max": 32,
+                "message": "长度不能超过32个字符"
+              }
+            ]
+          },
+          "postcode": {
+            "control": "text",
+            "label": "邮政编码",
+            "width": "160px",
+            "rules": [
+              {
+                "max": 10,
+                "message": "长度不能超过10个字符"
+              }
+            ]
+          }
+        },
+        {
+          "real_branch_ind": {
+            "control": "select",
+            "label": "实体机构标志",
+            "width": "160px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入实体机构标志"
+              }
+            ],
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            }
+          },
+          "contacts_name": {
+            "control": "text",
+            "label": "联系人",
+            "width": "160px",
+            "rules": [
+              {
+                "max": 100,
+                "message": "长度不能超过100个字符"
+              }
+            ]
+          }
+        },
+        {
+          "contacts_phone": {
+            "control": "text",
+            "label": "联系人电话",
+            "width": "160px",
+            "rules": [
+              {
+                "max": 32,
+                "message": "长度不能超过32个字符"
+              }
+            ]
+          },
+          "contacts_mail": {
+            "control": "text",
+            "label": "联系人邮箱",
+            "width": "160px",
+            "rules": [
+              {
+                "max": 32,
+                "message": "长度不能超过32个字符"
+              }
+            ]
+          }
+        },
+        {
+          "branch_function_class": {
+            "control": "select",
+            "label": "机构职能分类",
+            "rules": [
+              {
+                "max": 8,
+                "message": "长度不能超过8个字符"
+              }
+            ],
+            "width": "160px",
+            "dict": {
+              "dictType": "CT_E_BRCHTP",
+              "dictKey": [
+                "CT_E_BRCHTP"
+              ],
+              "format": "label"
+            }
+          },
+          "swift_no": {
+            "control": "text",
+            "label": "SWIFT代码",
+            "width": "160px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入SWIFT代码"
+              },
+              {
+                "max": 32,
+                "message": "长度不能超过32个字符"
+              }
+            ]
+          }
+        },
+        {
+          "branch_level": {
+            "control": "remoteSelect",
+            "label": "机构级别",
+            "width": "160px",
+            "format": "label",
+            "valueField": "dict_id",
+            "labelField": "dict_name",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "dict_type": "CT_E_BRANCHLEVEL",
+                "servicecode": "ct2205"
+              }
+            },
+            "rules": [{
+              "max": 10,
+              "message": "长度不能超过10个字符"
+            },
+              {
+                "required": true,
+                "message": "请选择机构级别"
+              }]
+          },
+          "parent_brch_id": {
+            "control": "lookup",
+            "edit": true,
+            "width": "160px",
+            "label": "上级机构",
+            "keyField": {
+              "parent_brch_id": "branch_id"
+            },
+            "toRequest": {
+              "url": "/views/ismt/ct/branch/branch_add_lookup.json",
+              "method": "post"
+            },
+            "props": {
+              "title": "机构信息查询"
+            },
+            "format": "label"
+          }
+
+        },
+        {
+          "branch_type": {
+            "control": "select",
+            "label": "机构类型",
+            "width": "160px",
+            "rules": [
+              {
+                "max": 8,
+                "message": "长度不能超过8个字符"
+              }
+            ],
+            "dict": {
+              "dictType": "CT_E_BRCHTP",
+              "dictKey": [
+                "CT_E_BRCHTP"
+              ],
+              "format": "label"
+            }
+          },
+          "branch_stus": {
+            "control": "string",
+            "label": "机构状态",
+            "width": "160px",
+            "rules": [
+              {
+                "max": 8,
+                "message": "长度不能超过8个字符"
+              }
+            ],
+            "dict": {
+              "dictType": "CT_E_BRCHSTUS",
+              "dictKey": [
+                "CT_E_BRCHSTUS"
+              ],
+              "format": "label"
+            }
+          }
+
+        },
+        {
+          "branch_city_no": {
+            "control": "text",
+            "label": "分行号",
+            "width": "160px",
+            "rules": [
+              {
+                "max": 10,
+                "message": "长度不能超过10个字符"
+              }
+            ]
+          },
+          "holiday_code": {
+            "control": "text",
+            "label": "节假日代码",
+            "width": "160px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入节假日代码"
+              },
+              {
+                "max": 8,
+                "message": "长度不能超过8个字符"
+              }
+            ],
+            "labelField": "drop_list_desc",
+            "valueField": "drop_list_value",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ms1053",
+                "dynamic_drop_list_type": "AP0002"
+              }
+            },
+            "format": "label"
+          }
+        },
+        {
+          "iscity": {
+            "control": "select",
+            "label": "是否展业城市",
+            "width": "160px",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            }
+          },
+          "address": {
+            "control": "text",
+            "label": "详细地址",
+            "width": "160px"
+          }
+        },
+        {
+          "province_code": {
+            "control": "remoteSelect",
+            "label": "省籍代码",
+            "width": "160px",
+            "placeholder": "请选择省",
+            "format": "value-label",
+            "valueField": "code",
+            "labelField": "name",
+            "span": 12,
+            "lazy": true,
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2200",
+                "parent_code": "0"
+              }
+            },
+            "rules": [{
+              "max": 20,
+              "message": "长度不能超过200个字符"
+            },
+              {
+                "required": false,
+                "message": "请输入省籍代码"
+              }
+            ],
+            "events": {
+              "emit": ["city_code"],
+              "condition": {
+                "$default": {
+                  "control": {
+                    "province": {
+                      "format": "${{current.name}}"
+                    }
+                  }
+                }
+              }
+            }
+
+          },
+          "province": {
+            "name": "province",
+            "control": "string",
+            "label": "省籍名称",
+            "width": "160px",
+            "disabled": false,
+            "span": 12,
+            "rules": [{
+              "max": 26,
+              "message": "长度不能超过26个字符"
+            },
+              {
+                "required": false,
+                "message": "请输入省籍名称"
+              }
+            ]
+          }
+        },
+        {
+          "city_code": {
+            "name": "city_code",
+            "control": "remoteSelect",
+            "label": "市籍代码",
+            "isInitSearch": false,
+            "width": "160px",
+            "format": "value-label",
+            "placeholder": "请选择市",
+            "valueField": "code",
+            "labelField": "name",
+            "span": 12,
+            "lazy": true,
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2200",
+                "parent_code": "${{strForm.province_code}}"
+              }
+            },
+            "rules": [{
+              "max": 20,
+              "message": "长度不能超过20个字符"
+            },
+              {
+                "required": false,
+                "message": "请输入市籍代码"
+              }
+            ],
+            "events": {
+              "emit": ["area_code"],
+              "condition": {
+                "$default": {
+                  "control": {
+                    "city": {
+                      "format": "${{current.name}}"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "city": {
+            "control": "string",
+            "label": "市籍名称",
+            "width": "160px",
+            "disabled": false,
+            "span": 12,
+            "rules": [{
+              "max": 26,
+              "message": "长度不能超过26个字符"
+            },
+              {
+                "required": false,
+                "message": "请输入市籍名称"
+              }
+            ]
+          }
+        },
+        {
+          "area_code": {
+            "name": "area_code",
+            "control": "remoteSelect",
+            "label": "区代码",
+            "width": "160px",
+            "isInitSearch": false,
+            "format": "value-label",
+            "placeholder": "请选择区",
+            "valueField": "code",
+            "labelField": "name",
+            "span": 12,
+            "lazy": true,
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2200",
+                "parent_code": "${{strForm.city_code}}"
+              }
+            },
+            "rules": [{
+              "max": 20,
+              "message": "长度不能超过20个字符"
+            },
+              {
+                "required": false,
+                "message": "请输入区代码"
+              }
+            ],
+            "events": {
+              "condition": {
+                "$default": {
+                  "control": {
+                    "area": {
+                      "format": "${{current.name}}"
+                    }
+                  }
+                }
+              }
+            }
+
+          },
+          "area": {
+            "control": "string",
+            "label": "区名称",
+            "width": "160px",
+            "disabled": false,
+            "span": 12,
+            "rules": [{
+              "max": 26,
+              "message": "长度不能超过26个字符"
+            },
+              {
+                "required": false,
+                "message": "请输入市籍代码"
+              }
+            ]
+          }
+        },
+        {
+          "agree_sign": {
+            "control": "text",
+            "label": "合同签署地",
+            "width": "160px"
+          }
+        }
+      ]
+    }
+  }
+}

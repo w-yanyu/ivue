@@ -1,0 +1,133 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "scope": "formData",
+            "controls": [
+                {
+                    "mark_code": {
+                        "control": "text",
+                        "label": "催收标识代码"
+                    },
+                    "mark_name": {
+                        "control": "text",
+                        "label": "催收标识名称"
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "icon": "el-icon-circle-plus",
+                    "target": "dialog",
+                    "label": "新增",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/cs/paramManage/business/mark/mark_add.json"
+                    },
+                    "props": {
+                        "width": "65%",
+                        "title": "新增催收标识定义"
+                    }
+                },
+                {
+                  "type": "add",
+                  "icon": "el-icon-circle-plus",
+                  "target": "dialog",
+                  "label": "个性化配置",
+                  "toRequest": {
+                    "url": "/views/cs/paramManage/business/mark/mark_assign_management.json",
+                    "method": "POST"
+                  },
+                  "props": {
+                    "width": "65%",
+                    "title": "个性化配置催收标识"
+                  }
+                }
+            ]
+        },
+        "datagrid": {
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "cb0031",
+                    "appId": "cbOnl"
+                }
+            },
+            "thead": [
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "催收标识代码",
+                    "prop": "mark_code"
+
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "催收标识名称",
+                    "prop": "mark_name"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "是否启用",
+                    "prop": "is_valid",
+                    "dict": {
+                        "dictType": "CS_E_YESORNO",
+                        "dictKey": [
+                            "CS_E_YESORNO"
+                        ],
+                        "format": "value-label"
+                    }
+                },
+                {
+                    "label": "操作",
+                    "align":"center",
+                    "fixed": "right",
+                    "width": "150%",
+                    "btns": [
+                        {
+                            "type":"look",
+                            "label":"详情",
+                            "toRequest":{
+                                "url":"/views/cs/paramManage/business/mark/mark_info.json",
+                                "method":"POST"
+                            },
+                            "props":{
+                                "title":"催收标识详情"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/cs/paramManage/business/mark/mark_modify.json",
+                                "method": "POST"
+                            },
+                            "props": {
+                                "title": "催收标识维护"
+                            }
+                        },
+                        {
+                            "type": "delete",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "cb0028",
+                                    "appId": "cbOnl"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

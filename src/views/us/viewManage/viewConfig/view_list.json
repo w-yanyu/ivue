@@ -1,0 +1,67 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "info_item_name": {
+            "control": "text",
+            "label": "信息项名称",
+            "rules": [
+              {
+                "max": 500,
+                "message": "长度不能超过500个字符"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "doRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "us1140",
+          "parent_node_cd": "${{params.parent_node_cd}}"
+        }
+      },
+      "thead": [
+        {
+          "label": "信息项编号",
+          "prop": "info_item_id"
+        },
+        {
+          "label": "信息项名称",
+          "prop": "info_item_name"
+        },
+        {
+          "label": "操作",
+          "width": "150px",
+          "align": "center",
+          "btns": [
+            {
+              "type": "custom",
+              "label": "预览",
+              "toRequest": {
+                "url": "@viewDetail",
+                "method": "get",
+                "params": {
+                  "cust_no": "${{params.cust_no}}"
+                }
+              },
+              "props": {
+                "width": "500px",
+                "height": "300px"
+              }
+            },
+            {
+              "type": "bringback",
+              "label": "选择"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,250 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+      "form": {
+        "scope": "form",
+        "initRequest": "${{params}}",
+        "btns": [
+
+        ],
+        "controls": [
+            {
+                "cust_num": {
+                "label": "客户号",
+                "control": "lookup",
+                "keyField": {
+                    "cust_num": "cust_no",
+                    "cust_nm": "cust_name"
+                  },
+                  "toRequest": {
+                    "url": "/views/pl/assetPreserve/assetRegistration/assetRegistrationlookup.json",
+                    "method": "get",
+                    "params": {
+                      "treeTitle": "客户选择"
+                    }
+                  },
+                  "props": {
+                    "title": "客户选择"
+                  },
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "客户号不能为空"
+                  }
+                ]
+              },
+              "cust_nm": {
+                "label": "客户名称",
+                "control": "text",
+                "disabled": true,
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "客户姓名不能为空"
+                  }
+                ]
+              }},{
+                "debt_asset_num": {
+
+                  "label": "抵债资产编号",
+                  "control": "text"
+                  ,
+                  "rules": [
+                    {
+                      "required": true,
+                      "message": "资产编号不得为空"
+                    }
+                  ]
+                }
+            ,
+            "debt_asset_nm": {
+              "label": "抵债资产名称",
+              "control": "text",
+
+
+            "rules": [
+                {
+                  "required": true,
+                  "message": "资产名称不得为空"
+                }
+              ]
+          }},
+          {
+            "hypth_debt_goods_mterls_class": {
+              "control": "select",
+              "label": "抵债资产类型",
+
+              "dict": {
+                "dictType": "Pl_E_HYPTH_DEBT_GOODS_MTERLS_CLASS",
+                "dictKey": [
+                  "Pl_E_HYPTH_DEBT_GOODS_MTERLS_CLASS"
+                ],
+                "format": "value-label"
+
+              },
+              "rules": [
+                {
+                  "required": true,
+                  "message": "资产类型不得为空"
+                }
+              ]
+            },
+              "eqty_right_ctfct_catg": {
+                "control": "select",
+                "label": "产权证明种类",
+
+                "dict": {
+                  "dictType": "Pl_E_EQTY_RIGHT_CTFCT_CATG",
+                  "dictKey": [
+                    "Pl_E_EQTY_RIGHT_CTFCT_CATG"
+                  ],
+                  "format": "value-label"
+
+                },
+                "rules": [
+                    {
+                      "required": true,
+                      "message": "产权证明种类不得为空"
+                    }
+                  ]
+            }
+            },
+            {
+                "ccy_code_num": {
+                  "control": "select",
+                  "label": "币种",
+
+                  "dict": {
+                    "dictType": "MS_CURRENCY",
+                    "dictKey": [
+                      "MS_CURRENCY"
+                    ],
+                    "format": "value-label"
+                    },
+                  "rules": [
+                    {
+                      "required": true,
+                      "message": "请选择币种"
+                    }
+                  ]
+                },
+
+            "wait_trfr_debt_asset": {
+              "control": "currency",
+              "label": "代保管抵债资产金额",
+
+              "format":{
+                "thousand": ",",
+                "decimal": 3
+              },
+              "rules": [
+                {
+                  "required": true,
+                  "message": "代保管抵债资金金额不得为空"
+                }
+              ]
+            }},{
+
+
+          "debt_asset_unit": {
+            "label": "抵债资产单位",
+            "control": "text",
+          "rules": [
+              {
+                "required": true,
+                "message": "资产单位不得为空"
+              }
+            ]
+        }
+        ,
+        "debt_asset_qty": {
+            "label": "抵债资产数量",
+            "control": "text",
+          "rules": [
+              {
+                "required": true,
+                "message": "资产数量不得为空"
+              }
+            ]
+        }},{
+        "evlan_val": {
+            "control": "currency",
+            "label": "评估价值",
+            "format":{
+              "thousand": ",",
+              "decimal": 3
+            },
+            "rules": [
+                {
+                  "required": true,
+                  "message": "评估价值不得为空"
+                }
+              ]
+          }
+          },
+          {
+      "remks": {
+        "control": "textarea",
+        "span": 24,
+        "label": "备注"
+      }},
+      {
+        "atchmt": {
+          "control": "hidden",
+          "label": "file_path"
+        },
+
+        "file": {
+          "doRequest": {
+            "url": "/SUMP/minioCall/uploadAndCheck",
+            "method": "post",
+            "params": {
+            },
+            "resultSet": {
+              "atchmt": "path",
+              "file_name": "oldName",
+              "file_size": "size"
+            }
+          },
+          "width": "240px",
+          "control": "file",
+
+          "limit": 1,
+          "limitSize": 10,
+          "label": "上传文件",
+          "btnLable": "请选择文件"
+        }
+      }
+    ,
+
+
+          {
+            "toDbsx": {
+              "span": 24,
+              "unFieldList": [
+                "apply_type",
+                "busi_type"
+              ],
+              "control": "dynamic",
+
+              "#isShowChildrenForm": false,
+              "toRequest": {
+                "method": "GET",
+                "url": "@FlowSubmitBtn",
+                "params": {
+                  "appId": "plOnl",
+                  "servicecode": "pl0291",
+                  "start_oprtr": "$g{{user_info.userCode}}",
+                  "actvn_org": "$g{{user_info.branch_id}}",
+                  "cust_no": "${{form.cust_no}}",
+                  "cust_name": "${{form.cust_nm}}",
+                  "finalUrl": "views/pl/workbench/workbench_wait_todo_view.json",
+                  "trans_type": "ADD"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  }

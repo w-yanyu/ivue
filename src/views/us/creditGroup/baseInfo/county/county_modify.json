@@ -1,0 +1,138 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POSt",
+        "params": {
+          "servicecode": "us1200",
+          "area_no": "${{params.area_no}}",
+          "area_name": "${{params.area_name}}"
+        }
+      },
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "us1201",
+          "area_type": "1"
+        }
+      },
+      "controls": [
+        {
+          "area_no": {
+            "width": "20px",
+            "control": "text",
+            "span": 8,
+            "disabled": true,
+            "label": "区域编号"
+          },
+          "area_name": {
+            "width": "20px",
+            "control": "text",
+            "span": 8,
+            "disabled": true,
+            "label": "镇名"
+          },
+          "build_date": {
+            "control": "dateTimePicker",
+            "label": "建立日期",
+            "width": "20px",
+            "span": "8",
+            "format": "yyyyMMdd"
+          },
+          "jurisdiction_area": {
+            "width": "20px",
+            "control": "text",
+            "span": 8,
+            "label": "管辖面积（公顷）"
+          },
+          "jurisdiction_county_num": {
+            "width": "20px",
+            "control": "text",
+            "span": 8,
+            "label": "管辖镇数（个）",
+            "rules": [
+              {
+                "type": "number",
+                "message": "请输入整数"
+              }
+            ]
+          },
+          "prov_code": {
+            "control": "remoteSelect",
+            "label": "省/直辖市",
+            "placeholder": "请选择省/直辖市",
+            "disabled": false,
+            "valueField": "code",
+            "labelField": "name",
+            "width": "20px",
+            "span": 8,
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2200",
+                "parent_code": "0"
+              }
+            },
+            "events": {
+              "emit": [
+                "city_code"
+              ]
+            }
+          },
+          "city_code": {
+            "control": "remoteSelect",
+            "label": "市/区",
+            "placeholder": "请选择市/区",
+            "valueField": "code",
+            "labelField": "name",
+            "width": "20px",
+            "span": 8,
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2200",
+                "parent_code": "${{formData.prov_code}}"
+              }
+            }
+          },
+          "county_code": {
+            "control": "remoteSelect",
+            "label": "县",
+            "placeholder": "请选择县",
+            "valueField": "code",
+            "labelField": "name",
+            "width": "20px",
+            "span": 8,
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2200",
+                "parent_code": "${{formData.city_code}}"
+              }
+            }
+          },
+          "address": {
+            "width": "20px",
+            "control": "text",
+            "span": 8,
+            "label": "地址信息"
+          },
+          "other_remark": {
+            "width": "20px",
+            "control": "textarea",
+            "span": "24",
+            "rows": "4",
+            "label": "其他情况说明"
+          }
+        }
+      ]
+    }
+  }
+}

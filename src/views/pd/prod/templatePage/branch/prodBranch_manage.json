@@ -1,0 +1,97 @@
+{
+  "module": "lr_transferTable",
+  "layout": {
+    "transfer": {
+      "height":"500px",
+      "multipageSelect": true,
+      "multipageSelectField": "branch_id",
+      "left": {
+        "filterable":true,
+        "title": "可选机构",
+        "placeholder": "请输入机构名称",
+        "query":["branch_name"],
+        "btn":{
+          "label": "关联",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode":"pd0272",
+              "sale_prod_cd": "${{params.sale_prod_cd}}",
+              "prod_version": "${{params.prod_version}}",
+              "apply_type": "${{params.apply_type}}",
+              "prod_type": "${{params.prod_type}}",
+              "busi_seq": "${{params.busi_seq}}"
+            }
+          }
+        },
+        "datagrid": {
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "ct2155"
+            }
+          },
+          "thead": [
+            {
+              "label": "机构号",
+              "prop": "branch_id",
+              "align": "center"
+            },
+            {
+              "label": "机构名称",
+              "prop": "branch_name",
+              "align": "center"
+            }
+          ]
+        }
+      },
+      "right": {
+        "title":"已选机构",
+        "filterable":false,
+        "placeholder": "请输入页面编号",
+        "query":["page_template_no"],
+        "btn":{
+          "label":"删除",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode":"pd0273",
+              "sale_prod_cd": "${{params.sale_prod_cd}}",
+              "prod_version": "${{params.prod_version}}",
+              "apply_type": "${{params.apply_type}}"
+            }
+          }
+        },
+        "datagrid": {
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "pd0271",
+              "sale_prod_cd": "${{params.sale_prod_cd}}",
+              "prod_version": "${{params.prod_version}}",
+              "apply_type": "${{params.apply_type}}"
+            }
+          },
+          "checked":"checked",
+          "thead": [
+            {
+              "label": "机构号",
+              "prop": "branch_id",
+              "control": "text",
+              "align": "center"
+            },
+            {
+              "label": "机构名称",
+              "prop": "branch_name",
+              "align": "center"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

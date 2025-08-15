@@ -1,0 +1,181 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "scope": "formData",
+            "foldLineNumber": 10,
+            "controls": [
+                {
+                    "loan_prod_cd": {
+                        "control": "remoteSelect",
+                        "label": "产品名称",
+                        "filterable": true,
+                        "labelField": "sale_prod_name",
+                        "valueField": "sale_prod_cd",
+                        "searchField": "sale_prod_name",
+                        "doRequest": {
+                            "url": "/SUMP/icmcall/icmRPCCall",
+                            "method": "post",
+                            "params": {
+                                "length": 999,
+                                "prod_type":"CL",
+                                "servicecode": "pd0214"
+                            }
+                        }
+                    },
+                    "cust_no": {
+                        "control": "text",
+                        "label": "客户编号"
+                    }
+                },
+                {
+                    "cust_name": {
+                        "control": "text",
+                        "label": "客户名称"
+                    },
+                    "cert_no": {
+                        "control": "text",
+                        "label": "证件号码"
+                    },
+                    "time": {
+                        "control": "dateTimePicker",
+                        "label": "申请时间",
+                        "type": "daterange",
+                        "valueFormat": "yyyyMMdd",
+                        "startPlaceholder": "",
+                        "endPlaceholder": ""
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "export",
+                    "icon": "iconfont icon-daochu",
+                    "label": "导出",
+                    "doRequest": {
+                        "loading": true,
+                        "timeout": 1000,
+                        "method": "POST",
+                        "url": "/SUMP/rest/file/commExport",
+                        "params": {
+                            "exportname": "授信结果查询结果",
+                            "servicecode": "ar0861",
+                            "length": 999
+                        }
+                    },
+                    "confirm": {
+                        "title": "提示信息",
+                        "msg": "确认导出吗？",
+                        "confirmButtonText": "确定",
+                        "cancelButtonText": "取消"
+                      }
+                }
+            ]
+        },
+        "datagrid": {
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ar0861"
+                }
+            },
+            "thead": [
+                {
+                    "label": "序号",
+                    "type": "index"
+                },
+                {
+                    "type": "string",
+                    "align": "center",
+                    "label": "申请编号",
+                    "prop": "apply_no"
+                },                
+                {
+                    "type": "string",
+                    "align": "center",
+                    "label": "产品编号",
+                    "prop": "loan_prod_cd"
+                },
+                {
+                    "type": "string",
+                    "align": "center",
+                    "label": "产品名称",
+                    "prop": "loan_prod_name"
+                },
+                {
+                    "type": "string",
+                    "align": "center",
+                    "label": "客户编号",
+                    "prop": "cust_no"
+                },
+                {
+                    "type": "string",
+                    "align": "center",
+                    "label": "客户名称",
+                    "prop": "cust_name"
+                },
+                {
+                    "type": "string",
+                    "align": "center",
+                    "label": "证件类型",
+                    "prop": "cert_type",
+                    "dict": {
+                        "dictType": "MS_E_CRET_TYPE",
+                        "dictKey": [
+                            "MS_E_CRET_TYPE"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "type": "string",
+                    "align": "center",
+                    "width": "160px",
+                    "label": "证件号码",
+                    "prop": "cert_no"
+                },
+                {
+                    "type": "string",
+                    "align": "center",
+                    "label": "流程状态",
+                    "prop": "wf_cur_status",
+                    "dict": {
+                        "dictType": "BPM_E_STATUS",
+                        "dictKey": [
+                            "BPM_E_STATUS"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "type": "string",
+                    "align": "center",
+                    "label": "申请金额（元）",
+                    "prop": "apply_amt",
+                    "format": {
+                        "thousand": ","
+                    }
+                },
+                {
+                    "type": "string",
+                    "align": "center",
+                    "label": "审批金额（元）",
+                    "prop": "advi_credit_amt",
+                    "format": {
+                        "thousand": ","
+                    }
+                },
+                {
+                    "type": "string",
+                    "align": "center",
+                    "label": "申请时间",
+                    "prop": "apply_date"
+                }
+            ]
+        }
+    }
+}

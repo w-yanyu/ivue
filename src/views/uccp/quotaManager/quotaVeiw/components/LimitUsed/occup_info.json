@@ -1,0 +1,225 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "prod_code": {
+                        "control": "text",
+                        "label": {
+                            "default": "产品编号",
+                            "i18n": "T302.product-number"
+                                    },
+                        "span": "12"
+                    },
+                    "prod_group_code": {
+                        "control": "text",
+                        "label": {
+                            "default": "产品组编号",
+                            "i18n": "T302.Product-Group-Number"
+                                    },
+                        "span": "12"
+                    },
+                    "occup_status": {
+                        "control": "select",
+                        "label": {
+                            "default": "占用状态",
+                            "i18n": "T302.Occupancy-status"
+                                    },
+                        "span": "12",
+                        "dict": {
+                            "dictType": "UCCP_E_PRECCUP_STATUS",
+                            "dictKey": [
+                                "UCCP_E_PRECCUP_STATUS"
+                            ],
+                            "format": "label"
+                        }
+                    },
+                    "occup_type": {
+                        "control": "select",
+                        "label": {
+                            "default": "占用类型",
+                            "i18n": "T302.Occupancy-type"
+                                    },
+                        "span": "12",
+                        "dict": {
+                            "dictType": "UCCP_E_OCCUP_TYPE",
+                            "dictKey": [
+                                "UCCP_E_OCCUP_TYPE"
+                            ],
+                            "format": "label"
+                        }
+                    }
+                },
+                {}
+            ]
+          },
+        "toolbar": {},
+        "datagrid": {
+            "isInitSearch": true,
+            "scope": "searchTable",
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "post",
+                "params": {
+                    "cust_no": "${{params.cust_no}}",
+                    "cust_name" : "${{params.cust_name}}",
+                    "servicecode": "uccp4008",
+                    "appId":"uccpOnl"
+                }
+            },
+            "thead": [
+                {
+                    "label": {
+                        "default": "占用类型",
+                        "i18n": "T302.Occupancy-type"
+                                },
+                    "align": "center",
+                    "prop": "occup_type",
+                    "dict": {
+                        "dictType": "UCCP_E_OCCUP_TYPE",
+                        "dictKey": [
+                            "UCCP_E_OCCUP_TYPE"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": {
+                        "default": "客户编号",
+                        "i18n": "T302.custom-number"
+                                },
+                    "align": "center",
+                    "prop": "cust_no"
+                },
+                {
+                    "label": {
+                        "default": "客户名称",
+                        "i18n": "T302.Customer-Name"
+                                },
+                    "align": "center",
+                    "prop": "cust_name"
+                },
+                
+                {
+                    "label": {
+                        "default": "产品编号",
+                        "i18n": "T302.product-number"
+                                },
+                    "prop": "prod_code",
+                    "align": "center"
+                },
+                {
+                    "label": {
+                        "default": "产品名称",
+                        "i18n": "T302.product-name"
+                                },
+                    "prop": "prod_name",
+                    "align": "center"
+                },
+                {
+                    "label": {
+                        "default": "产品额度编号",
+                        "i18n": "T302.Product-quota-number"
+                                },
+                    "align": "center",
+                    "prop": "prod_credit_seq"
+                },
+                {
+                    "label": {
+                        "default": "合同/协议/业务编号",
+                        "i18n": "T302.Contract-Agreement-Business-Number"
+                                },
+                    "align": "center",
+                    "prop": "contract_no"
+                },
+                {
+                    "label": {
+                        "default": "占用金额",
+                        "i18n": "T302.Occupation-amount"
+                                },
+                    "align": "center",
+                    "prop": "occup_reality_limit",
+                    "format": {
+                        "thousand": ","
+                      }
+                },
+                {
+                    "label": {
+                        "default": "占用敞口金额",
+                        "i18n": "T302.Occupation-exposure-amount"
+                                },
+                    "align": "center",
+                    "prop": "occup_reality_exposure_limit",
+                    "format": {
+                        "thousand": ","
+                      }
+                },
+                {
+                    "label": "创建时间",
+                    "align": "center",
+                    "prop": "data_create_time"
+                },
+                {
+                    "label": {
+                        "default": "占用状态",
+                        "i18n": "T302.Occupancy-status"
+                                },
+                    "align": "center",
+                    "prop": "occup_status",
+                    "dict": {
+                        "dictType": "UCCP_E_PRECCUP_STATUS",
+                        "dictKey": [
+                            "UCCP_E_PRECCUP_STATUS"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 140,
+                    "align": "center",
+                    "btns": [
+                        {
+                            "type": "edit",
+                            "label": "详情",
+                            "toRequest": {
+                                "url": "/views/uccp/quotaManager/quotaVeiw/components/LimitUsed/occup_info_detail.json",
+                                "method": "GET",
+                                "params": {
+                                    
+                                }
+                            },
+
+                            "props": {
+                                "width": "80%",
+                                "title": "预占用信息详情"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "借据信息",
+                            "toRequest": {
+                                "url": "/views/uccp/quotaManager/quotaVeiw/components/LimitUsed/loan_info_list.json",
+                                "method": "GET",
+                                "params": {
+                                    "contract_no": "${{current.contract_no}}",
+                                    "strt_cnt_num": "1",
+                                    "qry_cnt_num": "1"
+                                }
+                            },
+                            "show": {
+                                "expression":"'${{current.occup_type}}' == '1'"
+                              },
+                            "props": {
+                                "width": "80%",
+                                "title": "借据信息查看"
+                            }
+                        }
+                    ]
+                } 
+            ]
+        }
+    }
+}

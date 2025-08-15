@@ -1,0 +1,163 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "pageId": "F14",
+    "form": {
+      "doRequest": {
+        "url": "",
+        "method": "POST",
+        "params": {}
+      },
+      "controls": [
+        {
+          "batch_no": {
+            "control": "text",
+            "label": "批次",
+            "rules": [
+              {
+                "max": 64,
+                "message": "长度不能超过64个字符"
+              }
+            ]
+          },
+          "appt": {
+            "control": "text",
+            "label": "用户名称",
+            "rules": [
+              {
+                "max": 100,
+                "message": "长度不能超过100个字符"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增客户权限分配",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/us/authManger/authMangerStep.json"
+          },
+          "props": {
+            "width": "70%",
+            "title": "新增客户权限分配"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "us1303"
+        }
+      },
+      "pagination": {
+        "show": true,
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "label": "批次号",
+          "align": "center",
+          "prop": "batch_no"
+        },
+        {
+          "label": "申请用户名称",
+          "align": "center",
+          "prop": "appt"
+        },
+        {
+          "label": "申请用户编号",
+          "align": "center",
+          "prop": "trxn_teller"
+        },
+        {
+          "label": "申请时间",
+          "align": "center",
+          "prop": "appl_time"
+        },
+        {
+          "label": "分配状态",
+          "prop": "allocate_status",
+          "align": "center",
+          "dict": {
+            "dictType": "US_E_ALLOCATE_STATUS",
+            "dictKey": [
+              "US_E_ALLOCATE_STATUS"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 220,
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/us/authManger/authMangerUpdStep.json",
+                "method": "GET",
+                "params": {
+                  "batch_no": "${{current.batch_no}}"
+                }
+              },
+              "props": {
+                "width": "80%",
+                "title": "维护客户权限分配"
+              },
+              "show": {
+                "expression": "'${{current.allocate_status}}' == '2'"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "确认分配",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "us1313"
+                }
+              },
+              "show": {
+                "expression": "'${{current.allocate_status}}' == '2'"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "us1302"
+                }
+              },
+              "confirm": {
+                "title": "提示信息",
+                "msg": "确定删除吗？",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              },
+              "show": {
+                "expression": "'${{current.allocate_status}}' == '2'"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

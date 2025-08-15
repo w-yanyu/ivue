@@ -1,0 +1,64 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "btns":[]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "label": "提交",
+                    "doRequest": {  
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "bpm1018",
+                            "appId":"${{params.appId}}",
+                            "sign_mode":"${{params.sign_mode}}",
+                            "task_inst_id":"${{params.task_inst_id}}",
+                            "wf_inst_id": "${{params.wf_inst_id}}",
+                            "target_user_id":"${{current.user_id}}"
+                        }
+                    },
+                    "eventAfter": {
+                        "doParentCallback": true,
+                        "doLastCallback": true
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": false,
+            "doRequest": {  
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "bpm1019",
+                    "appId":"${{params.appId}}",
+                    "task_inst_id":"${{params.task_inst_id}}",
+                    "wf_inst_id":"${{params.wf_inst_id}}"
+                }
+            },
+            "pagination": {
+                "show": false
+            },
+            "thead": [
+                {
+                    "type": "radio",
+                    "align": "center",
+                    "label" : "选择"
+                },
+                {
+                  "label": "用户编号",
+                  "prop": "user_id"
+                },
+                {
+                    "prop": "user_name",
+                    "label": "用户名称"
+                }
+            ]
+        }
+    }
+  }

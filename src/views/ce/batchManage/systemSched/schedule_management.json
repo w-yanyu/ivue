@@ -1,0 +1,90 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "scope": "formData",
+            "controls": [
+                {
+                    "tran_flow_id": {
+                        "control": "text",
+                        "label": "批量流程ID"
+                    },
+                    "schedule_name": {
+                        "control": "text",
+                        "label": "批量流程名称"
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "icon": "el-icon-circle-plus",
+                    "target": "dialog",
+                    "label": "新增",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/pl/batchManage/systemSched/schedule_add.json"
+                    },
+                    "props": {
+                        "title": "新增定时任务"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ap1315"
+                }
+            },
+            "thead": [
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width": "300",
+                    "label": "批量流程ID",
+                    "prop": "tran_flow_id"
+                    
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width": "300",
+                    "label": "批量流程名称",
+                    "prop": "schedule_name"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "调度规则",
+                    "prop": "diaodu_rule"
+                },
+                {
+                    "label": "操作",
+                    "align":"center",
+                    "fixed": "right",
+                    "width": "150px",
+                    "btns": [
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/pl/batchManage/systemSched/schedule_modify.json",
+                                "method": "POST",
+                                "params": {}
+                            },
+                            "props": {
+                                "title": "批量调度维护"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

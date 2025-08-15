@@ -1,0 +1,186 @@
+{
+  "module": "v-search-btn-datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+        "tree_code": {
+          "label": "规则树代码",
+          "control": "text",
+          "width":"auto",
+          "span": 8,
+          "rules": [{
+            "message": "字段长度超限",
+            "max": 64
+          }]
+        },
+        "tree_name": {
+          "label": "规则树名称",
+          "control": "text",
+          "width":"auto",
+          "span": 8,
+          "rules": [{
+            "message": "字段长度超限",
+            "max": 64
+          }]
+        },
+        "review_status": {
+          "label": "审核状态",
+          "control": "select",
+          "width":"auto",
+          "span": 8,
+          "dict": {
+            "dictType": "DECI_E_SCORE_REVIEW_STATUS",
+            "dictKey": [
+                "DECI_E_SCORE_REVIEW_STATUS"
+            ],
+            "format": "label"
+        }
+        },
+        "operation_type": {
+          "label": "操作类型",
+          "control": "select",
+          "width":"auto",
+          "span": 8,
+          "dict": {
+            "dictType": "DECI_E_RISK_OPERATION_TYPE",
+            "dictKey": [
+                "DECI_E_RISK_OPERATION_TYPE"
+            ],
+            "format": "label"
+        }
+        }
+      }]
+    },
+    "toolbar": {
+      "btns": []
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "#doRequest": {
+        "url": "deci040105",
+        "method": "post"
+      },
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "deci040105",
+          "isList":true
+        }
+      },
+      "pagination": {
+        "hideOnSinglePage": false,
+        "show": true,
+        "pageSizes": [
+          10,
+          15,
+          20
+        ],
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "type": "index",
+          "label": "序号",
+          "align": "center"
+      },
+        {
+          "label": "规则树代码",
+          "prop": "tree_code"
+        },
+        {
+          "label": "规则树名称",
+          "prop": "tree_name"
+        },
+        {
+          "label": "操作类型",
+          "prop": "operation_type",
+          "dict": {
+            "dictType": "reviewOperationType",
+            "dictKey": [],
+            "format": "label",
+            "doRequest": {
+              "url": "/views/risk/dictdata/reviewOperationType.json",
+              "method": "get"
+            }
+          }
+        },
+        {
+          "label": "审核状态",
+          "prop": "review_status",
+          "dict": {
+            "dictType": "scoreCardReviewStatus",
+            "dictKey": [],
+            "format": "label",
+            "doRequest": {
+              "url": "/views/risk/dictdata/scoreCardReviewStatus.json",
+              "method": "get"
+            }
+          }
+        },
+        {
+          "label": "申请人",
+          "prop": "apply_user_name"
+        },
+        {
+          "label": "申请时间",
+          "prop": "apply_time"
+        },
+        {
+          "label": "操作",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "审核",
+              "authId": "",
+              "toRequest": {
+                "url": "@ruleTreeReview",
+                "method": "get"
+              },
+              "props": {
+                "width": "90%",
+                "height": "85%"
+              },
+              "show":{
+                "expression":"'${{current.review_status}}'=== 'C'"
+              }
+            },
+            {
+              "type": "look",
+              "label": "查看",
+              "authId": "",
+              "toRequest": {
+                "url": "@ruleTreeReviewView",
+                "method": "get"
+              },
+              "props": {
+                "width": "90%",
+                "top": "4vh"
+              }
+            },
+            {
+              "type": "openVerify",
+              "label": "测试结果",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "deci010632",
+                  "rule_code": "${{current.tree_code}}"
+                }
+              },
+              "toRequest": {
+                "url": "/views/risk/rule_tree/review/rule_tree_result.json",
+                "method": "get"
+              },
+              "props": {
+                "width": "70%"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

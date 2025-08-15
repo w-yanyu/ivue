@@ -1,0 +1,153 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "page_template_no": {
+                        "control": "text",
+                        "label": "页面模板编号",
+                        "rules": [
+                            {
+                                "max": 64,
+                                "message": "长度不能超过64个字符"
+                            }
+                        ]
+                    },
+                    "page_template_name": {
+                        "control": "text",
+                        "label": "页面模板名称",
+                        "rules": [
+                            {
+                                "max": 100,
+                                "message": "长度不能超过100个字符"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "target": "dialog",
+                    "label": "新增",
+                    "refresh": true,
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/pd/prodTemplatePage/prodPageComponents/page_components_add.json"
+                    },
+                    "props": {
+                        "width": "75%",
+                        "title": "页面模板新增"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "pd0163"
+                }
+            },
+            "pagination": {
+                "show": true,
+                "pageSize": 10
+            },
+            "thead": [
+                {
+                    "label": "页面模板编号",
+                    "align": "center",
+                    "prop": "page_template_no"
+                },
+                {
+                    "label": "页面模板名称",
+                    "align": "center",
+                    "prop": "page_template_name"
+                },
+                {
+                    "label": "新增页面路径",
+                    "align": "center",
+                    "prop": "add_path"
+                },
+                {
+                    "label": "维护页面路径",
+                    "align": "center",
+                    "prop": "modify_path"
+                },
+                {
+                    "label": "详情页面路径",
+                    "align": "center",
+                    "prop": "detail_path"
+                },
+                {
+                    "label": "数据库表描述",
+                    "align": "center",
+                    "prop": "page_affiliation_table_name"
+                },
+                {
+                    "label": "数据库表名",
+                    "align": "center",
+                    "prop": "page_affiliation_table"
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 150,
+                    "align": "center",
+                    "btns": [
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/pd/prodTemplatePage/prodPageComponents/page_components_modify.json",
+                                "method": "GET"
+                            },
+                            "props": {
+                                "width": "75%",
+                                "title": "页面模板维护"
+                            }
+                        },
+                        {
+                            "###type": "look",
+                            "label": "预览",
+                            "toRequest": {
+                                "url": "${{current.detail_path}}",
+                                "method": "POST",
+                                "params": {
+                                    "tranType": "detail",
+                                    "pageTranType": "temp"
+                                }
+                            },
+                            
+                            "props": {
+                                "title": "页面预览"
+                            }
+                        },
+                        {
+                            "type": "custom",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "pd0164"
+                                }
+                            },
+                            "confirm": {
+                                "title": "确定删除",
+                                "confirmButtonText": "确定",
+                                "cancelButtonText": "取消"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,398 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "foldLineNumber": 3,
+      "controls": [
+        {
+          "branch_id": {
+            "control": "inputTree",
+            "label": "机构",
+            "idField": "coll_team",
+            "nodeTypeField": "type",
+            "pIdField": "parent_coll_team",
+            "labelField": "coll_team_name",
+            "nodeTypes": {
+              "branchTeam": {
+                "icon": "el-icon-news",
+                "children": [
+                  "branchTeam"
+                ]
+              }
+            },
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "cb0041",
+                "query_type": "branchTeam"
+              }
+            },
+            "format": "value-label"
+          },
+          "cust_name": {
+            "control": "text",
+            "label": "客户姓名"
+          }
+        },
+        {
+          "daterange": {
+            "control": "dateTimePicker",
+            "label": "申请时间",
+            "type": "daterange",
+            "unlinkPanels": true,
+            "valueFormat": "yyyyMMdd",
+            "startPlaceholder": "请选择开始时间",
+            "endPlaceholder": "请选择结束时间",
+            "startField": "start_date",
+            "endField": "end_date",
+            "disabledDate": "dateAfter"
+          },
+          "approval_status": {
+            "control": "select",
+            "label": "审核状态",
+            "default": "NC",
+            "dict": {
+              "dictType": "CS_E_CHECK_STATUS",
+              "dictKey": [
+                "CS_E_CHECK_STATUS"
+              ],
+              "format": "value-label"
+            }
+          }
+        },
+        {
+          "template_code": {
+            "control": "lookup",
+            "label": "邮件模板",
+            "keyField": {
+              "template_code": "template_id",
+              "template_type": "template_type",
+              "email_content": "template_content"
+            },
+            "toRequest": {
+              "url": "/views/cs/collManage/tcManage/collWorkbench/functionMenu/emlApply/prodMailSet_lookup.json",
+              "method": "post",
+              "params": {
+                "org_id": "$g{{user_info.org_id}}"
+              }
+            }
+          },
+          "email_address": {
+            "control": "text",
+            "label": "邮件地址"
+          }
+        },
+        {
+          "cust_id": {
+            "control": "text",
+            "label": "客户号"
+          },
+          "cert_no": {
+            "control": "text",
+            "label": "证件号码"
+          }
+        },
+        {
+          "businessname": {
+            "control": "text",
+            "label": "业务品种"
+          },
+          "case_cust_type": {
+            "control": "select",
+            "label": "客户类型",
+            "dict": {
+              "dictType": "CS_E_CUST_TYPE",
+              "dictKey": [
+                "CS_E_CUST_TYPE"
+              ],
+              "format": "value-label"
+            }
+          }
+        },
+        {
+          "is_liability": {
+            "control": "select",
+            "label": "是否欠款",
+            "dict": {
+              "dictType": "CS_E_YESORNO",
+              "dictKey": [
+                "CS_E_YESORNO"
+              ],
+              "format": "value-label"
+            }
+          },
+          "classifyresult": {
+            "control": "select",
+            "label": "本期五级分类",
+            "dict": {
+              "dictType": "CS_E_CLASSIFYRESULT",
+              "dictKey": [
+                "CS_E_CLASSIFYRESULT"
+              ],
+              "format": "value-label"
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "custom",
+          "target": "dialog",
+          "checkCountMin": 1,
+          "label": "批量操作",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/cs/assistManage/eml/emlCheck/emlCheck_auditing.json"
+          }
+        },
+        {
+          "type": "custom",
+          "target": "dialog",
+          "label": "全部核准",
+          "disabled": "'${{formData.approval_status}}' === 'P' || '${{formData.approval_status}}' === 'R' || '${{formData.approval_status}}' === ''",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/cs/assistManage/eml/emlCheck/emlCheck_all_through.json",
+            "params": {
+              "branch_id": "${{form.branch_id}}",
+              "cust_name": "${{form.cust_name}}",
+              "start_date": "${{form.start_date}}",
+              "end_date": "${{form.end_date}}",
+              "id_no": "${{form.id_no}}",
+              "template_cd": "${{form.template_cd}}",
+              "email_addr": "${{form.email_addr}}",
+              "cust_id": "${{form.cust_id}}",
+              "duebill_no": "${{form.duebill_no}}",
+              "businessname": "${{form.businessname}}",
+              "case_cust_type": "${{form.case_cust_type}}",
+              "effect": "${{form.effect}}",
+              "classifyresult": "${{form.classifyresult}}"
+            }
+          }
+        },
+        {
+          "type": "custom",
+          "target": "dialog",
+          "label": "全部拒绝",
+          "disabled": "'${{formData.approval_status}}' === 'P' || '${{formData.approval_status}}' === 'R' || '${{formData.approval_status}}' === ''",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/cs/assistManage/eml/emlCheck/emlCheck_all_rejected.json",
+            "params": {
+              "branch_id": "${{form.branch_id}}",
+              "cust_name": "${{form.cust_name}}",
+              "start_date": "${{form.start_date}}",
+              "end_date": "${{form.end_date}}",
+              "id_no": "${{form.id_no}}",
+              "template_cd": "${{form.template_cd}}",
+              "email_addr": "${{form.email_addr}}",
+              "cust_id": "${{form.cust_id}}",
+              "duebill_no": "${{form.duebill_no}}",
+              "businessname": "${{form.businessname}}",
+              "case_cust_type": "${{form.case_cust_type}}",
+              "effect": "${{form.effect}}",
+              "classifyresult": "${{form.classifyresult}}"
+            }
+          }
+        },
+        {
+          "type": "export",
+          "icon": "iconfont icon-daochu",
+          "label": "导出",
+          "doRequest": {
+            "method": "POST",
+            "url": "/SUMP/rest/file/commExport",
+            "params": {
+              "length": 999,
+              "servicecode": "cb0248"
+            }
+          },
+          "confirm": {
+            "title": "提示信息",
+            "msg": "确认导出吗？",
+            "confirmButtonText": "确定",
+            "cancelButtonText": "取消"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "appId": "cbOnl",
+          "servicecode": "cb0248",
+          "page_id": "/views/cs/assistManage/eml/emlCheck/emlCheck_management.json"
+        }
+      },
+      "thead": [
+        {
+          "type": "selection",
+          "align": "center",
+          "width": "55",
+          "fixed": "left",
+          "show": {
+            "expression": "'${{approval_status}}' === 'NC'"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "机构",
+          "prop": "branch_id"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "客户姓名",
+          "prop": "cust_name"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "申请人",
+          "prop": "apply_user",
+          "dict": {
+            "dictType": "deciOnl",
+            "dictKey": ["apply_user"],
+            "labelField": "user_name",
+            "valueField": "user_id",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "length": 1000,
+                  "start": 1,
+                  "servicecode": "ct2502"
+              }
+            },
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "申请时间",
+          "prop": "apply_time"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "审核状态",
+          "prop": "approval_status",
+          "dict": {
+            "dictType": "CS_E_CHECK_STATUS",
+            "dictKey": [
+              "CS_E_CHECK_STATUS"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "证件类型",
+          "prop": "cert_type",
+          "dict": {
+            "dictType": "CS_E_CERT_TYPE",
+            "dictKey": [
+              "CS_E_CERT_TYPE"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "证件号码",
+          "prop": "cert_no"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "邮件地址",
+          "prop": "email_address"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "邮件模板",
+          "prop": "template_code"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "邮件内容",
+          "prop": "email_content"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "业务品种",
+          "prop": "businessname"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "本期五级分类",
+          "prop": "classifyresult",
+          "dict": {
+            "dictType": "CS_E_CLASSIFYRESULT",
+            "dictKey": [
+              "CS_E_CLASSIFYRESULT"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "客户号",
+          "prop": "cust_id"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "客户类型",
+          "prop": "customertype",
+          "dict": {
+            "dictType": "CS_E_CUST_TYPE",
+            "dictKey": [
+              "CS_E_CUST_TYPE"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "fixed": "right",
+          "width": "130px",
+          "btns": [
+            {
+              "type": "custom",
+              "label": "案件详情",
+              "toRequest": {
+                "url": "/views/cs/assistManage/caseDetail/caseDetail_2/case_detail_main.json",
+                "method": "POST",
+                "params": {
+                  "case_id": "${{current.case_id}}"
+                }
+              },
+              "props": {
+                "width": "80%",
+                "title": "案件详情"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

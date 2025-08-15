@@ -1,0 +1,146 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "scope": "formData",
+            "controls": [
+                {
+                    "protocol_template_no": {
+                        "control": "text",
+                        "label": "协议模版编号"
+                    },
+                    "mould_name": {
+                        "control": "text",
+                        "label": "模版名称"
+                    }
+                }
+
+            ]
+        },
+        "datagrid": {
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "pt0073",
+                    "approve_status":"01"
+                }
+            },
+            "thead": [
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "协议模版编号",
+                    "prop": "protocol_template_no"
+
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "模版名称",
+                    "prop": "mould_name"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "协议类型",
+                    "prop": "agree_type",
+                    "dict": {
+                      "dictType": "PT_E_AGREE_TYPE",
+                      "dictKey": [
+                        "PT_E_AGREE_TYPE"
+                      ],
+                      "format": "value-label"
+                    }
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "模版状态",
+                    "prop": "mould_status",
+                    "dict": {
+                      "dictType": "PT_E_STATUS",
+                      "dictKey": [
+                        "PT_E_STATUS"
+                      ],
+                      "format": "value-label"
+                    }
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "版本",
+                    "prop": "version"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "审批状态",
+                    "prop": "approve_status",
+                    "dict": {
+                        "dictType": "PT_E_APPROVE_STATUS",
+                        "dictKey": [
+                          "PT_E_APPROVE_STATUS"
+                        ],
+                        "format": "value-label"
+                      }
+                },
+                
+                {
+                    "label": "操作",
+                    "align":"center",
+                    "fixed": "right",
+                    "width": "150%",
+                    "btns": [
+                        {
+                            "type": "look",
+                            "label": "详情",
+                            "toRequest": {
+                                "url": "/views/pt/partnertemplateManage/agreetemplateManage/agreeTemplate_main_info.json",
+                                "method": "POST"
+                            },
+                            "props": {
+                                "title": "协议模版详情"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "审核记录",
+                            "toRequest": {
+                                "url": "/views/pt/partnertemplateManage/apprRecordManage/apprRecord_list.json",
+                                "method": "GET",
+                                "params": {
+                                    "sale_prod_cd": "${{current.protocol_template_no}}" ,
+                                    "mould_code":"1"  
+                                  }
+ 
+                            },
+                            "props": {
+                                "title": "审核记录"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "审核",
+                            "toRequest": {
+                              "url": "/views/pt/partnertemplateManage/agreetemplateManage/agreetemplateApproveManage/approve_update.json",
+                              "method": "GET",
+                              "params": {
+                                "sale_prod_cd": "${{current.protocol_template_no}}",
+                                "version": "${{current.version}}",
+                                "mould_code":"1"
+                                
+                              }
+                            },
+                            "props": {
+                              "width": "50%",
+                              "title": "协议模版审核"
+                            }
+                          }
+                    ]
+                }
+            ]
+        }
+    }
+}

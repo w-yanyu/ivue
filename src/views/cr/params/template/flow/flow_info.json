@@ -1,0 +1,130 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "toolbar": {
+            "btns": [{
+                "type": "add",
+                "target": "dialog",
+                "label": "新增",
+                "toRequest": {
+                    "method": "GET",
+                    "url": "/views/cr/params/template/flow/flow_add.json",
+                    "params": {
+                        "temp_id": "${{params.temp_id}}"
+                    }
+                },
+                "show": {
+                    "expression": "'${{params.is_valid}}' == '0'"
+                },
+                "props": {
+                    "width": "65%",
+                    "title": "流程评级新增"
+                }
+            }]
+        },
+        "datagrid": {
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "cr0061",
+                    "temp_id": "${{params.temp_id}}"
+                }
+            },
+            "pagination": {
+                "pageSizes": [
+                    10,
+                    15,
+                    20,
+                    50,
+                    100
+                ],
+                "pageSize": 10
+            },
+            "thead": [{
+                    "type": "index",
+                    "align": "center",
+                    "label": "序号"
+                },
+                {
+                    "label": "流程角色",
+                    "align": "center",
+                    "prop": "role_name"
+                },
+                {
+                    "label": "查看级别",
+                    "align": "center",
+                    "prop": "read_level",
+                    "dict": {
+                        "dictType": "CR_E_READ_LEVEL",
+                        "dictKey": [
+                            "CR_E_READ_LEVEL"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "可上调级数",
+                    "align": "center",
+                    "prop": "rank_up"
+                },
+                {
+                    "label": "可下调级数",
+                    "align": "center",
+                    "prop": "rank_down"
+                },
+                {
+                    "label": "操作",
+                    "width": "260px",
+                    "align": "center",
+                    "btns": [{
+                            "type": "edit",
+                            "label": "详情",
+                            "icon": "el-icon-view",
+                            "toRequest": {
+                                "url": "/views/cr/params/template/flow/flow_detail.json",
+                                "method": "GET"
+                            },
+                            "props": {
+                                "width": "65%",
+                                "title": "流程评级详情"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "icon": "el-icon-edit",
+                            "toRequest": {
+                                "url": "/views/cr/params/template/flow/flow_modify.json",
+                                "method": "GET"
+                            },
+                            "show": {
+                                "expression": "'${{params.is_valid}}' == '0'"
+                            },
+                            "props": {
+                                "width": "80%",
+                                "title": "流程评级维护"
+                            }
+                        },
+                        {
+                            "type": "delete",
+                            "label": "删除",
+                            "icon": "el-icon-close",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "cr0064",
+                                    "flproper_id": "${{current.flproper_id}}"
+                                }
+                            },
+                            "show": {
+                                "expression": "'${{params.is_valid}}' == '0'"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

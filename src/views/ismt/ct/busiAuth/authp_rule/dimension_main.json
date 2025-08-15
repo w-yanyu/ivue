@@ -1,0 +1,142 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "initRequest": "${{params}}",
+              "controls": [
+                
+            ],
+            "btns": []
+              
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "label": "新增规则维度",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/ismt/ct/busiAuth/authp_rule/dimension_add.json",
+                        "params": {
+                            "authp_system_code": "${{params.authp_system_code}}",
+                            "authp_rule_code": "${{params.authp_rule_code}}",
+                            "appId":"${{params.appId}}"
+                        }
+                    },
+                    "props": {
+                        "title": "新增规则维度"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ct2416",
+                    "authp_system_code": "${{params.authp_system_code}}",
+                    "authp_rule_code": "${{params.authp_rule_code}}",
+                    "dimension_type":"0",
+                    "appId":"${{params.appId}}"
+                }
+            },
+            "pagination": {
+                "show": true,
+                "pageSize": 10
+            },
+            "thead": [
+                {
+                    "label": "维度",
+                    "prop": "field_name"
+                },
+                {
+                    "label": "字段代码",
+                    "prop": "field_code"
+                },
+                {
+                    "label": "操作模式",
+                    "prop": "opt_type",
+                    "dict": {
+                        "format": "label",
+                        "dictKey": [
+                            "CT_E_OPERATE_MODE"
+                        ],
+                        "dictType": "CT_E_OPERATE_MODE"
+                    },
+                    "events" : {
+                        "showItem": {
+                          "00" : ["max_value"],
+                          "01" : ["max_value"],
+                          "02" : ["min_value","string_value"],
+                          "03" : ["min_value"],
+                          "04" : ["min_value"],
+                          "05" : ["min_value","max_value"],
+                          "06" : ["min_value","max_value"],
+                          "07" : ["string_value"]
+                        }
+                      }
+                },
+                {
+                    "label": "字符值",
+                    "prop": "string_value",
+                    "format":{
+                        "thousand":","
+                    }
+                },
+                {
+                    "label": "最小值",
+                    "prop": "min_value",
+                    "format":{
+                        "thousand":","
+                    }
+                },
+                {
+                    "label": "最大值",
+                    "prop": "max_value",
+                    "format":{
+                        "thousand":","
+                    }
+                },
+                {
+                    "label": "操作",
+                    "width": 150,
+                    "align":"center",
+                    "fixed": "right",
+                    "btns": [
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/ismt/ct/busiAuth/authp_rule/dimension_update.json",
+                                "method": "GET",
+                                "params":{
+                                    "appId":"${{params.appId}}"
+                                }
+                            },
+                            "props": {
+                                "title": "业务指标定义信息维护"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "删除",
+                            "toRequest": {
+                                "url": "/views/ismt/ct/busiAuth/authp_rule/dimension_delete.json",
+                                "method": "GET",
+                                "params":{
+                                    "appId":"${{params.appId}}"
+                                }
+                            },
+                            "props": {
+                                "title": "删除规则维度"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+  }

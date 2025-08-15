@@ -1,0 +1,208 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [{
+                "cust_name": {
+                    "control": "text",
+                    "label": "集团客户名称",
+                    "rules": [{
+                        "max": 80,
+                        "message": "长度不能超过80个字符"
+                    }]
+                },
+                "cust_class": {
+                    "control": "select",
+                    "disabled": true,
+                    "value": 5,
+                    "label": "客户类别",
+                    "width": "130px",
+                    "dict": {
+                        "dictType": "US_E_CUCLAS",
+                        "dictKey": [
+                            "US_E_CUCLAS"
+                        ],
+                        "format": "label"
+                    }
+                }
+            }]
+        },
+        "toolbar": {
+            "btns": [{
+                "type": "add",
+                "target": "dialog",
+                "label": "集团客户建立",
+                "toRequest": {
+                    "method": "GET",
+                    "url": "/views/ci/InformationManager/group_customer_info_add.json"
+                },
+                "props": {
+                    "width": "90%",
+                    "title": "集团客户建立"
+                }
+            }]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "IUMSCUTS0004",
+                    "page_id": "/views/ci/InformationManager/customer_info_manager.json"
+                }
+            },
+            "thead": [{
+                    "type": "index",
+                    "label": "序号"
+                },
+                {
+                    "label": "客户号",
+                    "prop": "custid",
+                    "align": "center"
+                },
+                {
+                    "label": "客户名称",
+                    "prop": "cust_name",
+                    "align": "center"
+                },
+                {
+                    "label": "证件类型",
+                    "prop": "certtp",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "E_IDTFTP",
+                        "dictKey": [
+                            "E_IDTFTP"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "证件号码",
+                    "prop": "certno",
+                    "align": "center"
+                },
+                {
+                    "label": "证件生效日",
+                    "prop": "cardsday",
+                    "align": "center"
+                },
+                {
+                    "label": "证件到期日",
+                    "prop": "cardeday",
+                    "align": "center"
+                },
+                {
+                    "label": "性别",
+                    "prop": "gender",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "E_SEXTYP",
+                        "dictKey": [
+                            "E_SEXTYP"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "出生日期",
+                    "prop": "birthday",
+                    "align": "center"
+                },
+                {
+                    "label": "操作",
+                    "align": "center",
+                    "btns": [{
+                            "type": "look",
+                            "label": "基础信息",
+                            "toRequest": {
+                                "method": "GET",
+                                "url": "/views/us/usManager/customerBasicInfo/baiscInfo_detail.json"
+                            },
+                            "props": {
+                                "width": "90%",
+                                "title": "客户基础信息"
+                            }
+                        },
+                        {
+                            "type": "look",
+                            "label": "关注事件",
+                            "toRequest": {
+                                "method": "GET",
+                                "url": "@legalPersonFocusEvent1"
+                            },
+                            "props": {
+                                "width": "90%",
+                                "title": "法人关注事件"
+                            }
+                        },
+                        {
+                            "type": "look",
+                            "label": "风险级别",
+                            "toRequest": {
+                                "method": "GET",
+                                "url": "@legalPersonFocusEvent"
+                            },
+                            "props": {
+                                "width": "90%",
+                                "title": "法人风险级别"
+                            }
+                        },
+                        {
+                            "type": "look",
+                            "label": "关联关系",
+                            "toRequest": {
+                                "method": "GET",
+                                "url": "@correlationManagement"
+                            },
+                            "props": {
+                                "width": "90%",
+                                "title": "关联关系管理"
+                            }
+                        },
+                        {
+                            "type": "look",
+                            "label": "详情",
+                            "toRequest": {
+                                "url": "/views/ci/InformationManager/account_opening_detail.json",
+                                "method": "POST"
+                            },
+                            "props": {
+                                "width": "90%",
+                                "title": "详情"
+                            }
+                        },
+                        {
+                            "type": "look",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/ci/InformationManager/customer_info_update.json",
+                                "method": "POST"
+                            },
+                            "props": {
+                                "width": "90%",
+                                "title": "维护"
+                            }
+                        },
+                        {
+                            "type": "look",
+                            "label": "变更历史",
+                            "toRequest": {
+                                "url": "/views/ci/InformationManager/cust_history_info_.json",
+                                "method": "POST"
+                            },
+                            "props": {
+                                "width": "90%",
+                                "title": "变更历史"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

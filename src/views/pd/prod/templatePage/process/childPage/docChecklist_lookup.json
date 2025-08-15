@@ -1,0 +1,69 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ar0141",
+          "cust_class_list": "${{params.cust_class_list}}"
+        }
+      },
+      "thead": [
+        {
+          "label": "资料检查列表编号",
+          "prop": "doc_check_list_no",
+          "align": "center"
+        },
+        {
+          "label": "资料检查列表名称",
+          "prop": "doc_check_list_desc",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "适用客户类型",
+          "prop": "cust_class",
+          "align": "center",
+          "dict": {
+            "dictType": "PD_E_CUST_CLASS",
+            "dictKey": [
+              "PD_E_CUST_CLASS"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "width": "120px",
+          "btns": [
+            {
+              "type": "bringback",
+              "label": "选择"
+            },
+            {
+              "label": "明细",
+              "type": "look",
+              "toRequest": {
+                "url": "/views/icms/docManager/docCheckManager/docCheckDetailManager/docCheckDetl_manager.json",
+                "method": "get",
+                "params": {
+                  "doc_check_list_no": "${{current.doc_check_list_no}}",
+                  "doc_type": "${{params.doc_type}}"
+                }
+              },
+              "props": {
+                "title": "资料检查详情",
+                "width": "80%"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

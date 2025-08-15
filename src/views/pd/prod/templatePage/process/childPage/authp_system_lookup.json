@@ -1,0 +1,89 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+          {
+              "authp_system_code": {
+                  "control": "text",
+                  "label": "授权体系编号"
+              },
+              "authp_system_name": {
+                  "control": "text",
+                  "label": "授权体系名称"
+              }
+          }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ct2408",
+          "authp_system_status" : "3",
+          "appId":"icmsOnl"
+        }
+      },
+      "pagination": {
+        "show": true,
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "label": "授权体系编号",
+          "prop": "authp_system_code"
+        },
+        {
+          "label": "授权体系名称",
+          "prop": "authp_system_name"
+        },
+        {
+          "label": "授权类型",
+          "prop": "authp_type",
+          "dict": {
+              "dictType": "CT_E_APPL_TYPE",
+              "format": "label",
+              "dictKey": [
+                  "CT_E_APPL_TYPE"
+              ]
+          },
+          "format": "label"
+        },
+        {
+           "label": "状态",
+            "prop": "authp_system_status",
+            "dict": {
+              "dictType": "CT_E_AUTH_STATUS",
+              "format": "label",
+              "dictKey": [
+                "CT_E_AUTH_STATUS"
+              ]
+            },
+          "format": "label"
+        },
+        {
+           "prop": "effect_date",
+            "label": "生效日期"
+        },
+        {
+            "label": "失效日期",
+            "prop": "invalid_date"
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "width": "120px",
+          "btns": [
+            {
+              "type": "bringback",
+              "label": "选择"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,142 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "scope": "formData",
+            "btns": [{
+                "type": "submit",
+                "label": "提交",
+                "icon": "",
+                "doRequest": {
+                    "url": "/SUMP/icmcall/icmRPCCall",
+                    "method": "POST",
+                    "params": {
+                        "servicecode": "us0608"
+                    }
+                }
+            }],
+            "controls": [{
+                    "is_virtual": {
+                        "control": "select",
+                        "label": "是否虚拟客户",
+                        "width": "130px",
+                        "dict": {
+                            "dictType": "MS_E_YESORNO",
+                            "dictKey": [
+                              "MS_E_YESORNO"
+                            ],
+                            "format": "label"
+                          },
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "请选择是否虚拟客户"
+                            }
+                          ],"events": {
+                            "condition": {
+                                "$default": {
+                                    "control": {
+                                      "cust_name": {
+                                        "initShow":false
+                                      },
+                                      "cust_name_look":{
+                                        "initShow":true
+                                      }
+                                    }
+                                  },
+                              "0": {
+                                "control": {
+                                  "cust_name": {
+                                    "initShow":false
+                                  },
+                                  "cust_name_look":{
+                                    "initShow":true
+                                  }
+                                }
+                              },
+                              "1": {
+                                "control": {
+                                    "cust_name": {
+                                        "initShow":true
+                                      },
+                                      "cust_name_look":{
+                                        "initShow":false
+                                      }
+                                }
+                              }
+                            }
+                          }
+                    },
+                    "cust_type": {
+                        "control": "select",
+                        "label": "客户类型",
+                        "width": "130px",
+                        "value":"30",
+                        "disabled":true,
+                        "dict": {
+                            "dictType": "US_E_CUST_TYPE",
+                            "dictKey": [
+                              "US_E_CUST_TYPE"
+                            ],
+                            "format": "label"
+                          },
+                        "rules": [
+                          {
+                            "required": true,
+                            "message": "请选择客户类型"
+                          }
+                        ]
+                      }
+                },
+                {
+                    "cust_name": {
+                        "control": "text",
+                        "width": "130px",
+                        "hidden":true,
+                        "label": "客户名称",
+                        "rules": [{
+                            "required": true,
+                            "message": "客户名称不能为空"
+                        }]
+                    },
+                    "cust_name_look": {
+                        "control": "lookup",
+                        "width": "130px",
+                        "rules": [{
+                            "required": true,
+                            "message": "客户名称不能为空"
+                        }],
+                        "label": "客户名称",
+                        "keyField": {
+                            "cust_name": "cust_name",
+                            "cust_name_look":"cust_name",
+                            "cust_no": "cust_no"
+                        },
+                        "toRequest": {
+                            "url": "/views/us/groupManager/group_from_cust_lookup.json",
+                            "method": "post",
+                            "params": {
+                            }
+                        },
+                        "props": {
+                            "title": "查询客户名称"
+                        },
+                        "format": "label"
+                    },
+                    "cust_no":{
+                        "type":"hidden",
+                        "name":"客户号"
+                    },"remark": {
+                        "control": "text",
+                        "label": "备注",
+                        "width": "130px",
+                        "rules": [{
+                            "max": 200,
+                            "message": "长度不能超过200个字符"
+                        }]
+                    }
+                }
+            ]
+        }
+    }
+}

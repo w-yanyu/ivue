@@ -1,0 +1,155 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "base_credit_seq": {
+                        "control": "text",
+                        "label": "基本授信额度编号"
+                    },
+                    "cust_no": {
+                        "control": "text",
+                        "label": "客户编号"
+                    }
+                }
+            ]
+          },
+        "toolbar": {
+            "btns": []
+        },
+        "datagrid": {
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "uccp3047",
+                    "appv_status": "1"
+                }
+            },
+            "thead": [
+                {
+                    "type": "selection",
+                    "align": "center",
+                    "width": "55",
+                    "fixed": "left"
+                },
+                {
+                    "label": "记录编号",
+                    "prop": "record_no",
+                    "align": "center"
+                },
+                {
+                    "label": "基本授信额度编号",
+                    "prop": "base_credit_seq",
+                    "align": "center"
+                },
+                {
+                    "label": "客户编号",
+                    "prop": "cust_no",
+                    "align": "center"
+                },
+                {
+                    "label": "生效日期",
+                    "prop": "effect_date",
+                    "align": "center"
+                },
+                {
+                    "label": "失效日期",
+                    "prop": "expiry_date",
+                    "align": "center"
+                },
+                {
+                    "label": "额度产生方式",
+                    "prop": "quota_genera_type",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "UCCP_E_QUOTA_GENERA_TYPE",
+                        "dictKey": [
+                            "UCCP_E_QUOTA_GENERA_TYPE"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "基准币种",
+                    "prop": "base_ccy_code",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "MS_CURRENCY",
+                        "dictKey": [
+                        "MS_CURRENCY"
+                        ]
+                    }
+                },
+                {
+                    "label": "基本授信额度",
+                    "prop": "basic_credit_limit",
+                    "align": "center",
+                    "format": {
+                        "thousand": ","
+                      }
+                },
+                {
+                    "label": "基本授信敞口额度",
+                    "prop": "basic_exposure_limit",
+                    "align": "center",
+                    "format": {
+                        "thousand": ","
+                      }
+                },
+                {
+                    "label": "额度状态",
+                    "prop": "quota_status",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "UCCP_E_QUOTA_STATUS",
+                        "dictKey": [
+                            "UCCP_E_QUOTA_STATUS"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 230,
+                    "align": "center",
+                    "btns": [
+                        {
+                            "type": "edit",
+                            "label": "详情",
+                            "toRequest": {
+                                "url": "/views/uccp/quotaManager/creditBase/credit_base_detail.json",
+                                "method": "GET",
+                                "params": {
+                                    
+                                }
+                            },
+                            "props": {
+                                "width": "80%",
+                                "title": "客户综合额度详情"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "审批",
+                            "toRequest": {
+                                "url": "/views/uccp/quotaManager/creditBase/credit_base_pass.json",
+                                "method": "GET",
+                                "params": {
+                                    
+                                }
+                            },
+                            "props": {
+                                "width": "80%",
+                                "title": "审批"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

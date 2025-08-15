@@ -1,0 +1,137 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": "${{params}}",
+      "btns": [
+        {
+          "type": "submit",
+          "label": "确定",
+          "icon": "",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "ct3011",
+              "appId":"deciOnl",
+              "opera_type":"2",
+              "editFlag":"0",
+              "applst":"${{params.applstvalue}}"
+            }
+          }
+        }
+      ],
+      "controls": [
+          {
+            "record_no": {
+              "control": "string",
+              "label": "记录编号",
+              "width": "240px"
+            },
+            "card_id": {
+              "control": "string",
+              "label": "卡片编号",
+              "width": "240px"
+            },
+            "card_name": {
+              "control": "string",
+              "label": "卡片名称",
+              "width": "240px"
+            },
+            "card_type": {
+              "control": "string",
+              "label": "卡片类型",
+              "width": "240px",
+              "dict": {
+                "dictType": "CT_E_CARD_TYPE",
+                "format": "label",
+                "dictKey": [
+                    "CT_E_CARD_TYPE"
+                ]
+              },
+              "showItem": {
+                "2": [
+                  "scope_range_str"
+                ]
+              }
+            },
+            "scope_range_str": {
+              "initShow": false,
+              "disabled":true,
+              "control": "lookup",
+              "label": "适用角色名称",
+              "width": "240px",
+              "multiple": true,
+              "valueDataType":"string",
+              "value": "",
+              "toRequest": {
+                "url": "/views/ismt/ct/card/role-manager_lookup.json",
+                "method": "post",
+                "params":{
+                  "appId":"${{params.appId}}"
+                }
+
+              },
+              "#keyField": {
+                "wf_role_no": "role_id",
+                "role_name": "role_name"
+              },
+              "edit": false,
+              "events":{
+                "set":{
+                  "scope_range":"role_id",
+                  "scope_range_str":"role_name"
+                }
+              }
+            },
+            "card_status": {
+              "control": "string",
+              "label": "卡片状态",
+              "width": "240px",
+              "dict": {
+                "dictType": "CT_E_CARD_STATUS",
+                "dictKey": [
+                  "CT_E_CARD_STATUS"
+                ],
+                "format": "label"
+              }
+            },
+            "effe_type": {
+              "control": "string",
+              "label": "生效类型",
+              "width": "240px",
+              "dict": {
+                "dictType": "CT_E_EFFE_TP",
+                "dictKey": [
+                  "CT_E_EFFE_TP"
+                ],
+                "format": "label"
+              },
+              "showItem": {
+                "1": [
+                  "effe_date"
+                ]
+              }
+            },
+            "effe_date": {
+              "initShow": false,
+              "control": "dateTimePicker",
+              "disabled": "true",
+              "label": "生效日期",
+              "prop": "effe_date"
+            }
+
+            },
+            {
+              "params": {
+                "control": "textarea",
+                "disabled": true,
+                "label": "参数",
+                "span": 20,
+                "align": "left"
+              }
+            }
+      ]
+    }
+  }
+}

@@ -1,0 +1,165 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "label_id": {
+            "control": "text",
+            "label": "标签编号"
+          },
+          "label_name": {
+            "control": "text",
+            "label": "标签名称"
+          }
+        },
+        {
+          "label_state": {
+            "label": "标签状态",
+            "#width": "130px",
+            "control": "select",
+            "dict": {
+              "format": "label",
+              "dictKey": [
+                "E_LABELSTATE"
+              ],
+              "dictType": "E_LABELSTATE"
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "addlog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/mk/custLabel/cust_label_add.json"
+          },
+          "props": {
+            "width": "80%",
+            "title": "新增客户标签"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "mk0001",
+          "#appr_status": "01"
+        }
+      },
+      "thead": [
+        {
+          "type": "string",
+          "label": "标签编号",
+          "prop": "label_id",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "标签名称",
+          "prop": "label_name",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "标签说明",
+          "prop": "label_comment",
+          "align": "center"
+        },
+        {
+          "type": "icon",
+          "label": "标签图标",
+          "prop": "label_flg",
+          "align": "center",
+          "isIconPath": true
+        },
+        {
+          "type": "string",
+          "label": "标签类型",
+          "prop": "label_type",
+          "align": "center",
+          "dict": {
+            "dictType": "E_LABELTYPE",
+            "dictKey": [
+              "E_LABELTYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "string",
+          "label": "生效日期",
+          "prop": "effect_date",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "失效日期",
+          "prop": "invalid_date",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "标签状态",
+          "prop": "label_state",
+          "align": "center",
+          "dict": {
+            "dictType": "E_LABELSTATE",
+            "dictKey": [
+              "E_LABELSTATE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "string",
+          "label": "备注",
+          "prop": "remarks",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": "150px",
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/mk/custLabel/cust_label_edit.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "60%",
+                "title": "修改客户标签"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "配置规则",
+              "toRequest": {
+                "url": "/views/mk/cognitRule/cognit_rule_config.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "60%",
+                "title": "配置规则"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,100 @@
+{
+    "module": "v_form_btn_dynamic",
+    "layout": {
+        "form": {
+          "initRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "PLMSKGTS0072",
+              "applid": "${{params.applid}}"
+            }
+          },
+            "scope": "formData",
+            "formSetTitle": "五级分类批量调整",
+            "controls": [
+                {
+                  "loanFileInfo": {
+                    "label": "key",
+                    "control": "hidden"
+                  },
+                  "applid": {
+                    "label": "key",
+                    "control": "hidden"
+                  },
+                  "buctetKey": {
+                    "label": "key",
+                    "control": "hidden"
+                  },
+                  "fileName": {
+                  "label": "文件名",
+                  "control": "hidden"
+                },
+                 "filePath": {
+                  "label": "文件路径",
+                  "control": "hidden"
+              },
+                  "bucket": {
+                    "label": "桶名",
+                    "control": "hidden"
+                  },
+                    "fiveTypeFileBack": {
+                        "control": "dynamic",
+                        "isShowChildForm": true,
+                        "span": 12,
+                        "toRequest": {
+                            "url": "@fiveTypeFileBack",
+                            "method": "get",
+                            "params": {
+                                "formKey": "fiveTypeFileBack",
+                                "formLabel": "上传五级分类批量调整文件",
+                                "form": "fiveTypeFileBackform",
+                                "required": true
+                            }
+                        },
+                      "rules": [
+                        {
+                          "required": true,
+                          "message": "请上传批量文件模板"
+                        }
+                      ]
+                    },
+                  "fileList": {
+                    "control": "dynamic",
+                    "isShowChildForm": true,
+                    "span": 12,
+                    "toRequest": {
+                      "url": "@fiveTypeUploadFileView",
+                      "method": "get",
+                      "params": {
+                        "formKey": "fileList",
+                        "formLabel": "附件上传",
+                        "applid": "${{params.applid}}"
+                      }
+                    }
+                  }
+
+
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "submit",
+                    "label": "保存",
+                    "unplain":true,
+                    "icon": "",
+                     "show": false,
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "AS_PLMS_KG_SAVELLFIN"
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

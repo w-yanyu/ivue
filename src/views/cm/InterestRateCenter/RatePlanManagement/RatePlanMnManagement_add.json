@@ -1,0 +1,75 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+
+            "initRequest": "${{params}}",
+            "scope": "first",
+            "btns": [
+                {
+                    "type": "submit",
+                    "label": "提交",
+                    "icon": ""
+                }
+            ],
+            "controls": [
+                {
+                    "rate_code": {
+                        "control": "lookup",
+                        "label": "定价方案编号",
+                        "edit": false,
+                        "keyField": {
+                            "ratecode": "rate_code",
+                            "periods":"periods"
+                        },
+                        "toRequest": {
+                            "url": "/views/cm/InterestRateCenter/RatePlanManagement/customermanager.json",
+                            "method": "post"
+                        },
+                        "multiple": false,
+                        "props": {
+                            "title": "属性选择"
+                        }
+                    }, 
+                    "periods": {
+                        "control": "select",
+                        "label": "期数",
+                        "dict": {
+                            "dictType": "E_PERIOD",
+                            "dictKey": [
+                                "E_PERIOD"
+                            ],
+                            "format": "label"
+                        }
+                        
+                    }
+                },
+                {
+                    
+                    "period": {
+                        "control": "text",
+                        "label": "M+N模式期数"
+                    },
+                    "interest_rate": {
+                        "control": "text",
+                        "label": "M+N模式利率"
+                    },
+                    "mark":{
+                        "control": "textarea",
+                        "label": "备注信息"
+                    }
+                   
+                }
+
+            ]
+        }, 
+        "alert": {
+            "span": 8,
+              "title": "注意:",
+              "description": [
+                 "上一页面还款方式不为 'M+N模式' 时,此页面不用配置 "
+              ],
+              "listStyle": "disc"
+          }
+    }
+}

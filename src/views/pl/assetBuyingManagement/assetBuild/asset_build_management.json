@@ -1,0 +1,277 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "foldLineNumber": 2,
+      "controls": [
+        {
+          "package_no": {
+            "control": "remoteSelect",
+            "label": "资产包名称",
+            "labelField": "package_name",
+            "valueField": "package_no",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "length": 999,
+                "start": 1,
+                "asset_package_type": "2",
+                "servicecode": "pl0423"
+              }
+            },
+            "format": "value-label"
+          },
+          "loan_no": {
+            "span": 12,
+            "control": "text",
+            "label": "借据号",
+            "rules": [
+              {
+                "max": 32,
+                "message": "长度不能超过32个字符"
+              }
+            ]
+          },
+          "contract_no": {
+            "control": "text",
+            "span": 12,
+            "label": "合同编号",
+            "format": "label",
+            "rules": [
+              {
+                "max": 80,
+                "message": "长度不能超过80个字符"
+              }
+            ]
+          },
+          "cust_no": {
+            "control": "text",
+            "span": 12,
+            "label": "客户号",
+            "format": "label",
+            "rules": [
+              {
+                "max": 16,
+                "message": "长度不能超过16个字符"
+              }
+            ]
+          },
+          "cust_name": {
+            "control": "text",
+            "span": 12,
+            "label": "客户名称",
+            "format": "label"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "custom",
+          "target": "dialog",
+          "icon": "el-icon-upload",
+          "label": "建账",
+          "toRequest": {
+            "method": "GET",
+            "params": {
+              "package_no": "${{form.package_no}}",
+              "package_name": "${{form.package_name}}",
+              "asset_no": "${{form.asset_no}}",
+              "out_part_asset_no": "${{form.out_part_asset_no}}",
+              "contract_no": "${{form.contract_no}}",
+              "cust_no": "${{form.cust_no}}",
+              "loan_no": "${{form.loan_no}}",
+              "cust_name": "${{form.cust_name}}"
+            },
+            "url": "/views/pl/assetBuyingManagement/assetBuild/asset_build.json"
+          },
+          "props": {
+            "width": "50%",
+            "title": "导入资产明细"
+          }
+        },
+        {
+          "type": "export",
+          "icon": "iconfont icon-daochu",
+          "label": "导出",
+          "doRequest": {
+            "method": "POST",
+            "loading": true,
+            "timeout": 1000,
+            "url": "/SUMP/rest/file/commExport",
+            "params": {
+              "length": 999,
+              "asset_package_type": "2",
+              "exportname": "资产建账查询结果",
+              "servicecode": "pl0440"
+            }
+          },
+          "confirm": {
+            "title": "提示信息",
+            "msg": "确认导出吗？",
+            "confirmButtonText": "确定",
+            "cancelButtonText": "取消"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "asset_package_type": "2",
+          "servicecode": "pl0440"
+        }
+      },
+      "thead": [
+        {
+          "align": "center",
+          "label": "客户姓名",
+          "prop": "cust_name"
+        },
+        {
+          "align": "center",
+          "label": "借据号",
+          "prop": "loan_no"
+        },
+        {
+          "align": "center",
+          "label": "合同编号",
+          "prop": "contract_no"
+        },
+        {
+          "align": "center",
+          "label": "客户号",
+          "prop": "cust_no"
+        },
+        {
+          "align": "center",
+          "label": "原借据号",
+          "prop": "orig_loan_no"
+        },
+        {
+          "align": "center",
+          "label": "原合同编号",
+          "prop": "orig_contract_no"
+        },
+        {
+          "align": "center",
+          "label": "原客户号",
+          "prop": "orig_cust_no"
+        },
+        {
+          "align": "center",
+          "label": "产品编号",
+          "prop": "prod_cd"
+        },
+        {
+          "align": "center",
+          "label": "产品名称",
+          "prop": "prod_name"
+        },
+        {
+          "align": "center",
+          "label": "放款日期",
+          "prop": "lend_date"
+        },
+        {
+          "align": "center",
+          "label": "到期日期",
+          "prop": "matu_date"
+        },
+        {
+          "align": "center",
+          "label": "借据金额(元)",
+          "prop": "due_bill_amt",
+          "format": {
+            "thousand": ","
+          }
+        },
+        {
+          "align": "center",
+          "label": "合同金额(元)",
+          "prop": "ctrct_amt",
+          "format": {
+            "thousand": ","
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "资产包类型",
+          "prop": "asset_package_type",
+          "dict": {
+            "dictType": "PL_E_ASSET_PACKAGE_TYPE",
+            "dictKey": [
+              "PL_E_ASSET_PACKAGE_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "align": "center",
+          "label": "贷款形态",
+          "prop": "loan_form",
+          "dict": {
+            "dictType": "LN_E_LOAN_FORM",
+            "dictKey": [
+              "LN_E_LOAN_FORM"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "align": "center",
+          "label": "贷款账户状态",
+          "prop": "loan_acct_ste",
+          "dict": {
+            "dictType": "LN_E_LOAN_ACCT_STE",
+            "dictKey": [
+              "LN_E_LOAN_ACCT_STE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "资产包编号",
+          "prop": "package_no"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "资产包名称",
+          "prop": "package_name"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "align": "center",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/integrated/loanInfo/loan_info_tabs.json",
+                "method": "POST",
+                "params": {
+                  "loan_due_bill_num": "${{current.orig_loan_no}}"
+                }
+              },
+              "props": {
+                "width": "80%",
+                "title": "借据信息详情"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

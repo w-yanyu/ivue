@@ -1,0 +1,83 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": "${{params}}",
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "pd0327",
+          "busi_seq": "${{params.busi_seq}}"
+        }
+      },
+      "controls": [
+        {
+          "servicecode": {
+            "control": "hidden",
+            "label": "新增交易码",
+            "value": "pd0326"
+          },
+          "prod_version": {
+            "control": "hidden",
+            "label": "授信产品版本",
+            "disabled": true,
+            "value": "${{params.prod_version}}"
+          },
+          "credit_prod_cd": {
+            "control": "hidden",
+            "label": "授信产品编号",
+            "disabled": true,
+            "value": "${{params.credit_prod_cd}}"
+          },
+          "sale_prod_cd": {
+            "control": "lookup",
+            "label": "可售产品编号",
+            "span": 8,
+            "keyField": {
+              "sale_prod_cd": "sale_prod_cd",
+              "prod_type": "prod_type",
+              "sale_prod_name": "sale_prod_name"
+            },
+            "toRequest": {
+              "url": "/views/pd/prod/sell_product_lookup.json",
+              "method": "post"
+            },
+            "props": {
+              "width": "87%",
+              "title": "可售产品信息选择"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          },
+          "sale_prod_name": {
+            "control": "string",
+            "label": "可售产品名称",
+            "span": 8,
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          },
+          "prod_type": {
+            "control": "string",
+            "label": "可售产品类型",
+            "span": 8,
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

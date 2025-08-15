@@ -1,0 +1,125 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+      "form": {
+        "controls": [
+          {
+            "custid": {
+              "control": "text",
+              "label": "客户号",
+              "rules": [
+                {
+                  "max": 14,
+                  "message": "长度不能超过14个字符"
+                }
+              ]
+            },
+            "custna": {  
+             "control": "text",
+              "label": "客户名称",
+              "rules": [
+                {
+                  "required" :true
+                },
+                { 
+                  "max": 80,
+                  "message": "长度不能超过80个字符"
+                }
+               
+              ]
+  
+            },
+            "cardno": {
+              "control": "text",
+              "label": "证件号码",
+              "rules": [
+                {
+                  "required" :true
+                },
+                {
+                  "max": 20,
+                  "message": "长度不能超过20个字符"
+                }
+              ]
+            }
+          }
+  
+  
+        ]
+      },
+      "toolbar": {
+        "btns": [
+       
+        ]
+      },
+      "datagrid": {
+        "scope": "searchTable",
+        "#name":"indvlast",
+        "isInitSearch": true,
+        "doRequest": {
+          "url": "/SUMP/icmcall/icmRPCCall",
+          "method": "POST",
+          "params": {
+            "servicecode": "AS_ICMS_CU_SEINDV",
+            "trantp": "SELECTALL"
+          }
+        },
+        "thead": [
+          { 
+            "type": "string",
+            "label": "客户号",
+            "prop": "custid"
+          },
+          {
+            "type": "string",
+            "label": "客户名称",
+            "prop": "custna"
+          },
+          {
+            "type": "string",
+            "label": "证件类型",
+            "prop": "idtype"
+          },
+          { "type": "string",
+            "label": "证件号码",
+            "prop": "cardno"
+          },
+          {
+            "type": "string",
+            "label": "修改人",
+            "prop": "upopri"
+          },
+          {
+            "type": "string",
+            "label": "修改时间",
+            "prop": "uptime"
+          },
+          {
+            "type": "string",
+            "label": "修改次数",
+            "prop": "versio"
+          },
+          {
+              "label": "修改详情",
+              "align":"center",
+              "fixed": "right",
+              "btns": [
+                  {
+                      "type": "look",
+                      "label": "修改详情",
+                      "toRequest": {
+                          "url": "/views/ci/InformationHistory/customer_info_history_modifier_detail.json",
+                          "method": "GET"
+                      },
+                      "props": {
+                          "title": "客户信息修改记录"
+                      }
+                  }
+              ]
+          }
+          
+        ]
+      }
+    }
+  }
+  

@@ -1,0 +1,290 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "cust_name": {
+            "label": "客户名称",
+            "control": "lookup",
+            "edit": true,
+            "keyField": {
+              "cust_no": "cust_no",
+              "cust_name": "cust_name"
+            },
+            "toRequest": {
+              "url": "/views/us/cust_lookup.json",
+              "method": "post",
+              "params": {
+              }
+            },
+            "format": "label"
+          },
+          "cust_no": {
+            "control": "hidden",
+            "label": {
+              "default": "客户编号",
+              "i18n": "I302.custom-number"
+                      }
+          },
+          "colt_no": {
+            "label": {
+              "default": "抵质押品编号",
+              "i18n": "I10.collateral-number"
+                      },
+            "control": "text"
+          },
+          "guar_type":{
+            "label": {
+              "default": "担保方式",
+              "i18n": "I10.guarantee-method"
+                      },
+            "control": "select",
+            "dict": {
+              "dictType": "MS_E_GUAR_TYPE",
+              "dictKey": [
+                "MS_E_GUAR_TYPE"
+              ],
+              "format": "label"
+            }
+        },
+          "io_state": {
+            "label": {
+              "default": "抵质押物出入库状态",
+              "i18n": "I10.Status-of-collateral-in-and-out-of-storage"
+                      },
+            "control": "select",
+            "dict": {
+              "dictType": "CO_E_IOSTATUS",
+              "dictKey": [
+                "CO_E_IOSTATUS"
+              ],
+              "format": "label"
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "新增",
+          "toRequest": {
+            "url": "@CollateralEntry",
+            "method": "get",
+            "params": {}
+          },
+          "props": {
+            "title": "抵质押品信息录入",
+            "width": "65%"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "co2101",
+          "params": {
+          }
+        }
+      },
+      "pagination": {
+        "pageSizes": [
+          10,
+          15,
+          20
+        ],
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "type": "index",
+          "align": "center"
+        },
+        {
+          "label": {
+            "default": "客户编号",
+            "i18n": "T302.custom-number"
+                    },
+          "prop": "cust_no",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": {
+            "default": "资产类型",
+            "i18n": "I10.asset-type"
+                    },
+          "align": "center",
+          "prop": "colt_type",
+          "dict": {
+            "dictKey": [
+              "E_COLT_TYPE"
+            ],
+            "format": "label",
+            "valueField": "colt_type",
+            "labelField": "colt_name",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "post",
+              "params": {
+                "servicecode": "co1012"
+              }
+            }
+          }
+        },
+        {
+          "type": "string",
+          "label": {
+            "default": "抵质押品产品",
+            "i18n": "I10.collateral-products"
+                    },
+          "prop": "colt_prod_cd",
+          "align": "center",
+          "dict": {
+            "dictKey": [
+              "E_COLT_PROD_CD"
+            ],
+            "format": "[value]label",
+            "valueField": "colt_prod_cd",
+            "labelField": "colt_prod_name",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "co1013"
+              }
+            }
+          }
+        },
+        {
+          "label": {
+            "default": "担保方式",
+            "i18n": "I10.guarantee-method"
+                    },
+          "prop": "guar_type",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_GUAR_TYPE",
+            "dictKey": [
+              "MS_E_GUAR_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": {
+            "default": "抵质押额",
+            "i18n": "I10.mortgage-and-pledge-amount"
+                    },
+          "prop": "sec_val",
+          "align": "center"
+        },
+        {
+          "label": {
+            "default": "我行认可价",
+            "i18n": "I10.Our"
+                    },
+          "prop": "value_price",
+          "align": "center"
+        },
+        {
+          "label": "押品编号",
+          "prop": "colt_no",
+          "align": "center"
+        },
+        {
+          "label": {
+            "default": "抵质押物出入库状态",
+            "i18n": "I10.Status-of-collateral-in-and-out-of-storage"
+                    },
+          "prop": "io_state",
+          "align": "center",
+          "dict": {
+            "dictType": "CO_E_IOSTATUS",
+            "dictKey": [
+              "CO_E_IOSTATUS"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作",
+          "width": "150px",
+          "align": "center",
+          "fixed": "right",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "${{current.url_update}}",
+                "method": "get",
+                "params": {
+                  "asset_list_id": "${{current.asset_list_id}}"
+                }
+              },
+              "props": {
+                "title": "抵质押品信息维护",
+                "width": "80%"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "详情",
+              "toRequest": {
+                "url": "${{current.url_query}}",
+                "method": "get",
+                "params": {
+                  "asset_list_id": "${{current.asset_list_id}}"
+                }
+              },
+              "props": {
+                "title": "抵质押品信息详情",
+                "width": "80%"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "co2049"
+                }
+              },
+              "show":{
+                "prop":"io_state",
+                "is":["0","2"]
+              }
+            },
+            {
+              "type": "custom",
+              "label": {
+                "default": "统一视图",
+                "i18n": "I10.unified-view"
+                        },
+              "toRequest": {
+                "url": "/views/co/colsEntryManage/coltTab.json",
+                "method": "get",
+                "params": {
+                  "colt_no": "${{current.colt_no}}"
+                }
+              },
+              "props": {
+                "title": "押品统一视图",
+                "width": "80%"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

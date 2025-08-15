@@ -1,0 +1,190 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "detail,format=pd0216,temp=pd0215",
+          "pageTranType": "${{params.pageTranType}}",
+          "sale_prod_cd": "${{params.sale_prod_cd}}",
+          "prod_version": "${{params.prod_version}}"
+        }
+      },
+      "btns": [],
+      "controls": [
+        {
+          "template_id": {
+            "control": "hidden",
+            "label": "模板编号",
+            "value": "${{params.template_id}}"
+          },
+          "prod_version": {
+            "control": "hidden",
+            "label": "授信产品版本",
+            "value": "${{params.prod_version}}"
+          },
+          "busi_seq": {
+            "control": "hidden",
+            "label": "业务流水",
+            "value": "${{params.busi_seq}}"
+          },
+          "sale_prod_cd": {
+            "control": "string",
+            "label": "授信产品编号",
+            "span": 8,
+            "rules": [
+              {
+                "required": false,
+                "message": "授信产品名称不得为空"
+              },
+              {
+                "max": 80,
+                "message": "长度不能超过80个字符"
+              }
+            ]
+          },
+          "sale_prod_name": {
+            "control": "string",
+            "label": "授信产品名称",
+            "span": 8,
+            "rules": [
+              {
+                "required": false,
+                "message": "授信产品名称不得为空"
+              },
+              {
+                "max": 80,
+                "message": "长度不能超过80个字符"
+              }
+            ]
+          },
+          "prod_type": {
+            "label": "授信产品类型",
+            "disabled": true,
+            "span": 8,
+            "control": "remoteSelect",
+            "labelField": "title",
+            "valueField": "id",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "pd0144",
+                "grupno": "0006",
+                "pid": "KSCP"
+              }
+            },
+            "format": "label",
+            "rules": [
+              {
+                "required": false,
+                "message": "授信产品类型不得为空"
+              }
+            ]
+          }
+
+        },
+        {
+          "sale_prod_attr": {
+            "control": "select",
+            "label": "授信产品属性",
+            "disabled": true,
+            "span": 8,
+            "dict": {
+              "dictType": "PD_E_PROD_ATTR",
+              "dictKey": [
+                "PD_E_PROD_ATTR"
+              ],
+              "format": "value-label"
+            },
+            "rules": [
+              {
+                "required": false,
+                "message": "授信产品属性不得为空"
+              }
+            ]
+          },
+          "prod_abbr_desc": {
+            "control": "string",
+            "label": "授信产品简称描述",
+            "span": 8,
+            "rules": [
+              {
+                "required": false,
+                "message": "授信产品简称描述不得为空"
+              }
+            ]
+          },
+          "prod_abbr_flag": {
+            "control": "string",
+            "label": "授信产品简称标志",
+            "span": 8,
+            "rules": [
+              {
+                "required": false,
+                "message": "授信产品简称标志不得为空"
+              }
+            ]
+          }
+        },
+        {
+          "prod_label": {
+            "control": "select",
+            "label": "产品标签",
+            "disabled": true,
+            "multiple": true,
+            "span": 8,
+            "dict": {
+              "dictType": "PD_E_PROD_LABEL",
+              "dictKey": [
+                "PD_E_PROD_LABEL"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId"
+            }
+          },
+          "prod_contents_name": {
+            "control": "string",
+            "label": "产品所属目录",
+            "span": 8
+          },
+          "prod_contents_cd": {
+            "control": "hidden",
+            "label": "产品所属目录编号",
+            "span": 8
+          },
+          "cust_class": {
+            "control": "select",
+            "disabled": true,
+            "label": "适用客户类型",
+            "span": 8,
+            "dict": {
+              "dictType": "PD_E_CUST_CLASS",
+              "dictKey": [
+                "PD_E_CUST_CLASS"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId",
+              "format": "label"
+            }
+          }
+        },
+        {
+          "amt_purpose_type_name": {
+            "label": "资金用途分类",
+            "control": "textarea",
+            "disabled": true,
+            "span": 8
+          },
+          "amt_purpose_type_no": {
+            "control": "hidden",
+            "label": "资金用途分类编号",
+            "span": 8
+          }
+        }
+      ]
+    }
+  }
+}

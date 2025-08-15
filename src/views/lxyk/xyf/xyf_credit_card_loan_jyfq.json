@@ -1,0 +1,234 @@
+{
+  "module": "v-form-editableDataGrid-btn",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "smilr_cr_card_loan_acct_num": {
+            "control": "hidden",
+            "width": "140px",
+            "span": 7,
+            "value": "${{params.smilr_cr_card_loan_acct_num}}",
+            "label": "类信用卡贷款账号"
+          },
+          "cur_bill_prds": {
+            "control": "hidden",
+            "width": "140px",
+            "span": 7,
+            "value": "${{params.cur_bill_prds}}",
+            "label": "账期"
+          },
+          "smilr_cr_card_acct_ste": {
+            "control": "hidden",
+            "width": "140px",
+            "span": 7,
+            "value": "${{params.smilr_cr_card_acct_ste}}",
+            "label": "类信用卡贷款账号状态",
+            "dict": {
+              "dictType": "E_SMILR_CR_CARD_ACCT_STE",
+              "dictKey": [
+                "E_SMILR_CR_CARD_ACCT_STE"
+              ],
+              "format": "label"
+            }
+          },
+          "cust_no": {
+            "control": "hidden",
+            "width": "140px",
+            "span": 7,
+            "value": "${{params.cust_no}}",
+            "label": "客户号"
+          },
+          "istlmt_tp": {
+            "control": "select",
+            "disabled": true,
+            "label": "分期类型",
+            "span": 7,
+            "width": "100px",
+            "dict": {
+              "dictType": "E_ISTLMT_TP",
+              "dictKey": [
+                "E_ISTLMT_TP"
+              ],
+              "format": "label"
+            },
+            "value": "1",
+            "rules": [
+              {
+                "required": false,
+                "message": "分期类型不能为空!"
+              }
+            ]
+          },
+          "apply_type": {
+            "control": "hidden",
+            "width": "140px",
+            "span": 7,
+            "value": "JYFQ",
+            "label": "申请类型"
+          },
+          "sale_prod_cd": {
+            "control": "hidden",
+            "value": "${{params.sale_prod_cd}}",
+            "width": "140px",
+            "span": 7,
+            "label": "可售产品号"
+          },
+          "txn_amt": {
+            "control": "currency",
+            "value": "${{params.avb_installment_amt}}",
+            "width": "140px",
+            "span": 7,
+            "label": "账单可分期金额"
+          },
+          "istlmt_prds": {
+            "control": "select",
+            "label": "分期期数",
+            "width": "140px",
+            "span": 7,
+            "dict": {
+              "dictType": "E_ISTLMT_PRDS",
+              "dictKey": [
+                "E_ISTLMT_PRDS"
+              ],
+              "format": "label"
+            },
+            "showItem": {
+              "3": [
+                "lstSmilrCrCardBillDetl"
+              ],
+              "6": [
+                "lstSmilrCrCardBillDetl"
+              ],
+              "9": [
+                "lstSmilrCrCardBillDetl"
+              ],
+              "12": [
+                "lstSmilrCrCardBillDetl"
+              ]
+            }
+          },
+          "lstSmilrCrCardBillDetl": {
+            "initShow": false,
+            "span": 24,
+            "control": "dynamic",
+            "toRequest": {
+              "url": "/views/lxyk/class_credit_card_supply_list_info.json",
+              "params": {
+                "smilr_cr_card_loan_acct_num": "${{params.smilr_cr_card_loan_acct_num}}",
+                "prcpl_smtn": "${{form.txn_amt}}",
+                "istlmt_tp": 2,
+                "istlmt_prds": "${{form.istlmt_prds}}"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "###toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "新增",
+          "icon": "el-icon-plus"
+        },
+        {
+          "type": "batchDelete",
+          "label": "批量删除",
+          "icon": "el-icon-close"
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ar0059",
+          "bill_type": "1",
+          "transaction_type": "1"
+        }
+      },
+      "thead": [
+        {
+          "type": "selection",
+          "width": "55"
+        },
+        {
+          "label": "订单编号",
+          "prop": "order_form_num",
+          "align": "center",
+          "type": "string"
+        },
+        {
+          "label": "所属账期",
+          "prop": "payment_dt",
+          "type": "string",
+          "align": "center"
+        },
+        {
+          "label": "订单金额",
+          "prop": "order_amount",
+          "type": "string",
+          "align": "center"
+        },
+        {
+          "label": "订单交易类型",
+          "prop": "transaction_type",
+          "type": "string",
+          "align": "center",
+          "dict": {
+            "dictType": "E_TRANSACTION_TYPE",
+            "dictKey": [
+              "E_TRANSACTION_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "消费日期",
+          "type": "string",
+          "prop": "pay_date",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "align": "center",
+          "btns": [
+            {
+              "type": "look",
+              "label": "订单明细",
+              "toRequest": {
+                "url": "/views/lxyk/xyf/xyf_credit_card_order_info_list.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "70%",
+                "title": "订单明细"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "footer": {
+      "btns": [
+        {
+          "type": "submit",
+          "label": "确认分期",
+          "icon": "el-icon-tickets",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "ar0066"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

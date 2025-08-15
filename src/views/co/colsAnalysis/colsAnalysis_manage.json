@@ -1,0 +1,137 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "colt_type": {
+            "span": 12,
+            "control": "remoteSelect",
+            "label":  "押品类型",
+            "labelField": "colt_name",
+            "valueField": "colt_type",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "post",
+              "params": {
+                "servicecode": "co1012"
+              }
+            },
+            "format": "label",
+            "rules": [{
+              "required": true,
+              "message": "请选择押品类型"
+            }]
+          },
+          "colt_prod_name": {
+            "span": 12,
+            "control": "text",
+            "label": "押品名称"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "custom",
+          "target": "dialog",
+          "label": "比较分析",
+          "checkCountMin": 2,
+          "checkCountMax": 3,
+          "toRequest": {
+            "method": "GET",
+            "url": "@comparativeAnalysisCollateral",
+            "params": {
+              "caozuolx" : "1"
+            }
+          },
+          "props": {
+            "width": "80%",
+            "title":  "同类押品比较分析"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "co1014"
+        }
+      },
+      "pagination": {
+        "pageSizes": [
+          10,
+          15,
+          20,
+          50,
+          100
+        ],
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "type": "selection",
+          "width": "55"
+        },
+        {
+          "label": "押品编码",
+          "prop": "colt_no",
+          "align": "center"
+        },
+        {
+          "label": "押品类型",
+          "prop": "colt_type",
+          "align": "center",
+          "dict": {
+            "dictKey": [
+              "E_COLT_TYPE"
+            ],
+            "format": "[value]label",
+            "valueField": "colt_type",
+            "labelField": "colt_name",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "post",
+              "params": {
+                "servicecode": "co1012"
+              }
+            }
+          }
+        },
+        {
+          "label":"押品名称",
+          "prop": "colt_prod_name",
+          "align": "center"
+        },
+        {
+          "label":  "押品状态",
+          "prop": "io_state",
+          "align": "center",
+          "dict": {
+            "dictType": "CO_E_IOSTATUS",
+            "dictKey": [
+              "CO_E_IOSTATUS"
+            ],
+            "labelField": "dictName",
+            "valueField": "dictId"
+          }
+        },
+        {
+          "label": "确认价值",
+          "prop": "doc_value_amt",
+          "align": "center"
+        },
+        {
+          "label":  "房库主管",
+          "prop": "ware_house_code",
+          "align": "center"
+        }
+      ]
+    }
+  }
+}

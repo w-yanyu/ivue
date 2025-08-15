@@ -1,0 +1,290 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "#initRequest": "${{params}}",
+      "####doRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": ""
+        }
+      },
+      "btns": [
+        {
+          "#": "1、判断回拨时间必须大于今天",
+          "##": "2、如果承诺时间不为空，则也必须大于当前时间",
+          "###": "3、如果承诺金额和承诺时间都为空，则直接保存催记",
+          "####": "4、如果承诺金额和承诺时间有一个为空，则提示都为空或都不为空",
+          "#####": "5、全部通过后保存催记",
+          "######": "6、保存后重置催收控制台信息，并均可手动输入",
+          "type": "submit",
+          "icon": "el-icon-document",
+          "label": "保存催记",
+          "doRequest": {
+            "url": "/SUMP/call/RPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "ce3610",
+              "case_no": "${{params.case_no}}",
+              "coll_kind": "02",
+              "linkman": "${{form.linkman}}",
+              "relationship": "${{form.relationship}}",
+              "tel_no": "${{form.tel_no}}",
+              "tele_type": "",
+              "collection_action": "${{form.collection_action}}",
+              "coll_result": "${{form.coll_result}}",
+              "proms_amt": "${{form.proms_amt}}",
+              "commit_date": "${{form.commit_date}}",
+              "remark": "${{form.remark}}",
+              "hold_time": "${{form.hold_time}}"
+            }
+          }
+        },
+        {
+          "type": "custom",
+          "icon": "el-icon-check",
+          "label": "完成",
+          "doRequest": {
+            "url": "/SUMP/call/RPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "ce3611",
+              "org_id": "985",
+              "coll_kind": "02",
+              "case_no": "${{params.case_no}}"
+            }
+          },
+          "confirm": {
+            "title": "提示信息",
+            "msg": "确认处理完成？",
+            "confirmButtonText": "确定",
+            "cancelButtonText": "取消"
+          }
+        },
+        {
+          "type": "nextCase",
+          "icon": "el-icon-caret-bottom",
+          "label": "下一个",
+          "params": {
+            "url": "/SUMP/call/RPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "ce3612",
+              "case_no": "${{params.case_no}}"
+            }
+          }
+        },
+        {
+          "type": "reset",
+          "icon": "el-icon-refresh",
+          "label": "重置"
+        },
+        {
+          "type": "custom",
+          "icon": "el-icon-upload2",
+          "label": "转出",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/ce/collManage/tcManage/collWorkbench/mainMenu/control/control_output.json",
+            "params": {
+              "queue_code": "${{params.queue_code}}",
+              "case_no":"${{params.case_no}}"
+            }
+          },
+          "props": {
+            "title": "案件转出"
+          }
+        }
+      ],
+      "controls": [
+        {
+          "collection_action": {
+            "control": "select",
+            "label": "是否接通",
+            "clearable": false,
+            "width": "130px",
+            "dict": {
+              "dictType": "CE_E_COLLECTION_ACTION",
+              "dictKey": [
+                "CE_E_COLLECTION_ACTION"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ],
+            "events": {
+              "emit": "coll_result"
+            }
+          },
+          "relationship": {
+            "control": "select",
+            "label": "客户关系",
+            "clearable": false,
+            "width": "130px",
+            "dict": {
+              "dictType": "CE_E_RELATIONSHIP",
+              "dictKey": [
+                "CE_E_RELATIONSHIP"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ],
+            "events": {
+              "condition": {
+                "9999": {
+                  "doRequest": {
+                    "url": "/SUMP/call/RPCCall",
+                    "method": "POST",
+                    "params": {
+                      "servicecode": "ce3602",
+                      "case_no": "${{params.case_no}}"
+                    },
+                    "resultSet": {
+                      "linkman": "name"
+                    }
+                  },
+                  "control": {
+                    "linkman": {
+                      "disabled": true
+                    }
+                  }
+                },
+                "####": "客户关系为非本人时，姓名置空",
+                "$default": {
+                  "control": {
+                    "linkman": {
+                      "value": "",
+                      "disabled": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "coll_result": {
+            "control": "remoteSelect",
+            "label": "催收结果",
+            "width": "130px",
+            "labelField": "cnct_rslt_name",
+            "valueField": "cnct_rslt_code",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ce0420",
+                "coll_kind": "02",
+                "is_valid": "1",
+                "cnct_rslt_type": "${{form.collection_action}}",
+                "#cnct_rslt_type": "N"
+              }
+            },
+            "format": "label",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          },
+          "linkman": {
+            "control": "text",
+            "label": "联系姓名",
+            "value": "${{form.collection_action}}",
+            "width": "130px",
+            "disabled": true,
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          }
+        },
+        {
+          "tel_no": {
+            "control": "text",
+            "label": "电话号码",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              },
+              {
+                "pattern": "\\d{3}-\\d{8}|\\d{4}-\\d{7}|^1(3[0-9]|4[57]|5[0-35-9]|7[0678]|8[0-9])\\d{8}$",
+                "message": "请输入正确的电话号码！"
+              }
+            ]
+          },
+          "commit_date": {
+            "control": "dateTimePicker",
+            "label": "承诺日期",
+            "width": "130px",
+            "format": "yyyyMMdd",
+            "type": "date",
+            "disabledDate": {
+              "endRange": "today"
+            },
+            "rules": [
+              {
+                "expression": "('${{form.commit_date}}' !== '' && '${{form.proms_amt}}' !== '') || ('${{form.commit_date}}' === '' && '${{form.proms_amt}}' === '')",
+                "message": "承诺金额不能为空"
+              }
+            ]
+          }
+        },
+        {
+          "hold_time": {
+            "control": "dateTimePicker",
+            "label": "回拨时间",
+            "width": "130px",
+            "type": "datetime",
+            "disabledDate": {
+              "endRange": "today"
+            },
+            "format": "yyyy-MM-dd HH:mm"
+          },
+          "proms_amt": {
+            "control": "inputNumber",
+            "label": "承诺金额",
+            "width": "130px",
+            "rules": [
+              {
+                "pattern": "^[1-9]\\d*|0$",
+                "message": "请输入正整数！"
+              },
+              {
+                "expression": "('${{form.commit_date}}' !== '' && '${{form.proms_amt}}' !== '') || ('${{form.commit_date}}' === '' && '${{form.proms_amt}}' === '')",
+                "message": "承诺日期不能为空"
+              },
+              {
+                "expression": "${{form.proms_amt}} > 0 ",
+                "message": "承诺金额必须大于0"
+              }
+            ]
+          }
+        },
+        {
+          "remark": {
+            "control": "textarea",
+            "label": "备注",
+            "rows": 3,
+            "width": "200px"
+          }
+        }
+      ]
+    }
+  }
+}

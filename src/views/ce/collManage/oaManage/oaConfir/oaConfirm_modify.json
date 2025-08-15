@@ -1,0 +1,56 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "btns": [
+                {
+                    "type": "submit",
+                    "icon": "el-icon-check",
+                    "label": "确认",
+                    "doRequest": {
+                        "method": "POST",
+                        "url": "/SUMP/call/RPCCall",
+                        "params": {
+                            "servicecode":"ce4559",
+                            "case_no":"${{params.selectedData}}"
+                        }
+                    }
+                },
+                {
+                    "type": "close",
+                    "label": "取消"
+                }
+            ],
+            "controls": [
+                {
+                    "oa_org_code": {
+                        "control": "remoteSelect",
+                        "label": "委外公司",
+                        "span": "18",
+                        "width": "180px",
+                        "align": "center",
+                        "labelField": "coll_org_name",
+                        "valueField": "coll_org_no",
+                        "doRequest": {
+                            "url": "/SUMP/call/RPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "ce0416",
+                                "coll_org_type":"OA01",
+                                "is_valid":"1",
+                                "coll_kind":"02"
+                            }
+                        },
+                        "format": "value-label",
+                        "rules": [
+                            {
+                                "required":true,
+                                "message":"请选择"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    }
+}

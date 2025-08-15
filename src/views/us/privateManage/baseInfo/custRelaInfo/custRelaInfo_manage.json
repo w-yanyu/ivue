@@ -1,0 +1,212 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "rela_cust_name": {
+            "control": "text",
+            "label": "对方客户名称",
+            "rules": [
+              {
+                "max": 80,
+                "message": "长度不能超过80个字符"
+              }
+            ]
+          },
+          "rela_type": {
+            "control": "select",
+            "label": "关联关系",
+            "dict": {
+              "dictType": "US_E_RELA_TYPE",
+              "dictKey": [
+                "US_E_RELA_TYPE"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId"
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/us/privateManage/baseInfo/custRelaInfo/custRelaInfo_add.json",
+            "params": {
+              "cust_no": "${{params.cust_no}}",
+              "cust_name": "${{params.cust_name}}"
+            }
+          },
+          "show": {
+            "expression": "'${{params.show_flash}}' == '1'"
+          },
+          "props": {
+            "title": "关联关系新增",
+            "width": "75%"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "us0047",
+          "cust_no": "${{params.cust_no}}"
+        }
+      },
+      "thead": [
+        {
+          "type": "index",
+          "width": 50,
+          "label": "序号"
+        },
+        {
+          "label": "客户序号",
+          "prop": "cust_no",
+          "align": "center"
+        },
+        {
+          "label": "客户名称",
+          "prop": "cust_name",
+          "align": "center"
+        },
+        {
+          "label": "对方客户",
+          "prop": "rela_cust_no",
+          "align": "center"
+        },
+        {
+          "label": "对方客户名称",
+          "prop": "rela_cust_name",
+          "align": "center"
+        },
+        {
+          "label": "关联关系",
+          "prop": "rela_type",
+          "align": "center",
+          "dict": {
+            "dictType": "US_E_RELA_TYPE",
+            "dictKey": [
+              "US_E_RELA_TYPE"
+            ],
+            "labelField": "dictName",
+            "valueField": "dictId"
+          }
+        },
+        {
+          "label": "逆向关系",
+          "prop": "rela_cv_type",
+          "align": "center",
+          "dict": {
+            "dictType": "US_E_RELA_TYPE",
+            "dictKey": [
+              "US_E_RELA_TYPE"
+            ],
+            "labelField": "dictName",
+            "valueField": "dictId"
+          }
+        },
+        {
+          "label": "关联关系描述",
+          "prop": "rela_desc",
+          "align": "center"
+        },
+        {
+          "label": "状态",
+          "prop": "real_status",
+          "align": "center",
+          "dict": {
+            "dictType": "US_E_RELA_STATUS",
+            "dictKey": [
+              "US_E_RELA_STATUS"
+            ],
+            "labelField": "dictName",
+            "valueField": "dictId"
+          }
+        },
+        {
+          "label": "备注",
+          "prop": "remark",
+          "align": "center"
+        },
+        {
+          "label": "关联关系分类",
+          "prop": "rela_classify",
+          "align": "center",
+          "dict": {
+            "dictType": "US_E_RELA_CLASSIFY",
+            "dictKey": [
+              "US_E_RELA_CLASSIFY"
+            ],
+            "labelField": "dictName",
+            "valueField": "dictId"
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/us/privateManage/baseInfo/custRelaInfo/custRelaInfo_info.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "75%",
+                "title": "个人客户关联关系详情"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/us/privateManage/baseInfo/custRelaInfo/custRelaInfo_modify.json",
+                "method": "GET"
+              },
+              "show": {
+                "expression": "'${{params.show_flash}}' == '1'"
+              },
+              "props": {
+                "width": "75%",
+                "title": "个人客户关联关系维护"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "us0050"
+                }
+              },
+              "show": {
+                "expression": "'${{params.show_flash}}' == '1'"
+              },
+              "confirm": {
+                "title": "确定删除",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

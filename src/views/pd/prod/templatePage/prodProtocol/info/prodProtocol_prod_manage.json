@@ -1,0 +1,85 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "detail,format=pd0250,temp=pd0251",
+          "pageTranType": "${{params.pageTranType}}",
+          "sale_prod_cd": "${{params.sale_prod_cd}}",
+          "prod_version": "${{params.prod_version}}",
+          "apply_type": "${{params.apply_type}}"
+        }
+      },
+      "pagination": {
+        "show":false
+      },
+      "thead": [
+        {
+          "label": "序号",
+          "type": "index",
+          "align": "center"
+        },
+        {
+          "label": "协议编号",
+          "prop": "protocol_no",
+          "align": "center"
+        },
+        {
+          "label": "业务类型",
+          "prop": "prod_type",
+          "align": "center",
+          "dict": {
+            "dictType": "PD_E_BUSI_TYPE",
+            "dictKey": [
+              "PD_E_BUSI_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "协议名称",
+          "prop": "protocol_name",
+          "align": "center",
+          "btns": [
+            {
+              "type": "look",
+              "toRequest": {
+                "url": "@lookAgreementBtn",
+                "params": {
+                  "protocol_path": "${{current.protocol_path}}"
+                }
+              },
+              "props": {
+                "width": "75%",
+                "title": "预览"
+              }
+            }
+          ]
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align": "center",
+          "btns": [
+            {
+              "type": "custom",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/pd/prod/templatePage/prodProtocol/info/prodProtocol_prod_detail.json",
+                "method": "GET",
+                "params": {
+                  "path": "${{current.protocol_no}}"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

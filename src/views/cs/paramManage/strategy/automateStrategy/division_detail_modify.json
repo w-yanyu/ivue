@@ -1,0 +1,129 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "initRequest": "${{params}}",
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "py0011",
+          "appId": "pyOnl"
+        }
+      },
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "icon": "el-icon-tickets"
+        }
+      ],
+      "controls": [
+        {
+          "strategy_group_code": {
+            "control": "hidden",
+            "label": "策略组编号",
+            "width": "130px",
+            "value": "${{params.strategy_group_code}}"
+          },
+          "serial_no": {
+            "control": "hidden",
+            "label": "分案流水编号",
+            "width": "130px",
+            "value": "${{params.serial_no}}"
+          },
+          "oa_org_id": {
+            "hidden": true,
+            "disabled": true,
+            "label": "委外公司代码",
+            "control": "remoteSelect",
+            "labelField": "outsourcing_org_name",
+            "valueField": "outsourcing_org_id",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "cb0052",
+                "org_id": "$g{{user_info.org_id}}"
+              }
+            },
+            "events": {
+              "emit": [
+                "operation"
+              ]
+            },
+            "format": "value-label"
+          },
+          "commission_plan_id": {
+            "hidden": true,
+            "label": "佣金方案编号",
+            "control": "remoteSelect",
+            "labelField": "common_scheme_name",
+            "valueField": "commission_plan_id",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "##委外公司佣金列表查询",
+                "oa_org_id": "##传入委外公司代码"
+              }
+            },
+            "events": {
+              "emit": [
+                "operation"
+              ]
+            },
+            "format": "value-label"
+          },
+          "oa_cycle": {
+            "control": "inputNumber",
+            "label": "委外周期",
+            "width": "130",
+            "min": 1,
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              },
+              {
+                "expression": "'${{form.oa_cycle}}'.length < 6",
+                "message": "最多可以输入 5 个字节"
+              }
+            ]
+          },
+          "oa_cycle_unit": {
+            "control": "select",
+            "label": "委外周期单位",
+            "selectFirstValue": false,
+            "dict": {
+              "dictType": "CS_OA_CYCLE_UNIT",
+              "dictKey": [
+                "CS_OA_CYCLE_UNIT"
+              ],
+              "format": "value-label"
+            }
+          },
+          "detail_assign_ratio": {
+            "control": "inputNumber",
+            "label": "明细分配比重",
+            "width": "130",
+            "min": 1,
+            "max": 100,
+            "rules": [
+              {
+                "required": true,
+                "pattern": "^[0-9]",
+                "message": "请输入 1 到 100 之间的数字"
+              },
+              {
+                "expression": "'${{form.detail_assign_ratio}}'.length < 4",
+                "message": "最多可以输入 4 个字节"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

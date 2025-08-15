@@ -1,0 +1,300 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": "${{params}}",
+      "#": "1、判断回拨时间必须大于今天",
+      "##": "2、如果承诺时间不为空，则也必须大于当前时间",
+      "###": "3、如果承诺金额和承诺时间都为空，则直接保存催记",
+      "####": "4、如果承诺金额和承诺时间有一个为空，则提示都为空或都不为空",
+      "#####": "5、全部通过后保存催记",
+      "######": "6、保存后重置催收控制台信息，并均可手动输入",
+      "btns": [
+        {
+          "type": "submit",
+          "icon": "el-icon-document",
+          "label": "保存催记",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "cb0108",
+              "org_id": "${{params.org_id}}",
+              "case_no": "${{params.case_no}}",
+              "case_id": "${{params.case_id}}",
+              "cust_id": "${{params.cust_id}}",
+              "oa_org_id": "${{params.oa_org_id}}",
+              "relation_cust_name": "${{form.relation_cust_name}}",
+              "relationship": "${{form.relationship}}",
+              "phone_no": "${{form.phone_no}}",
+              "phone_status": "${{form.phone_status}}",
+              "case_mark": "${{form.case_mark}}",
+              "phone_type": "",
+              "action_code": "${{form.action_code}}",
+              "coll_result": "${{form.coll_result}}",
+              "promise_amount": "${{form.promise_amount}}",
+              "promise_date": "${{form.promise_date}}",
+              "remark": "${{form.remark}}",
+              "handle_time": "${{form.handle_time}}"
+            }
+          }
+        },
+        {
+          "type": "custom",
+          "icon": "el-icon-check",
+          "label": "完成",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "cb0109",
+              "case_id": "${{params.case_id}}"
+            }
+          },
+          "confirm": {
+            "title": "提示信息",
+            "msg": "确认处理完成？",
+            "confirmButtonText": "确定",
+            "cancelButtonText": "取消"
+          }
+        },
+        {
+          "type": "nextCase",
+          "icon": "el-icon-caret-bottom",
+          "label": "下一个",
+          "params": {
+            "servicecode": "cb0110",
+            "case_id": "${{params.case_id}}"
+          }
+        },
+        {
+          "type": "custom",
+          "label": "重置",
+          "eventAfter": {
+            "callback": "clearCallback"
+          }
+        },
+        {
+          "type": "custom",
+          "icon": "el-icon-upload2",
+          "label": "转出",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/cs/collManage/tcManage/collWorkbench/mainMenu/control/control_output.json",
+            "params": {
+              "queue_code": "${{params.queue_code}}",
+              "case_id": "${{params.case_id}}"
+            }
+          },
+          "props": {
+            "title": "案件转出"
+          }
+        }
+      ],
+      "controls": [
+        {
+          "relation_cust_name": {
+            "control": "text",
+            "label": "联系姓名",
+            "value": "${{form.action_code}}",
+            "width": "130px",
+            "disabled": true,
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          },
+          "relationship": {
+            "disabled": true,
+            "control": "select",
+            "label": "客户关系",
+            "clearable": false,
+            "width": "130px",
+            "dict": {
+              "dictType": "CS_E_RELATIONSHIP",
+              "dictKey": [
+                "CS_E_RELATIONSHIP"
+              ],
+              "format": "value-label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          }
+        },
+        {
+          "phone_no": {
+            "disabled": true,
+            "control": "text",
+            "label": "电话号码",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          },
+          "phone_status": {
+            "control": "select",
+            "label": "电话状态",
+            "clearable": false,
+            "width": "130px",
+            "dict": {
+              "dictType": "CS_E_PHONE_STATUS",
+              "dictKey": [
+                "CS_E_PHONE_STATUS"
+              ],
+              "format": "value-label"
+            },
+            "format": "value-label",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ],
+            "events": {
+              "emit": "coll_result"
+            }
+          }
+        },
+        {
+          "coll_result": {
+            "control": "remoteSelect",
+            "label": "催收结果",
+            "width": "130px",
+            "labelField": "coll_result_name",
+            "valueField": "coll_result_code",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "cb0087",
+                "is_valid": "Y",
+                "coll_result_type": "${{form.action_code}}"
+              }
+            },
+            "format": "value-label",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          },
+          "promise_date": {
+            "control": "dateTimePicker",
+            "label": "承诺日期",
+            "width": "130px",
+            "format": "yyyyMMdd",
+            "type": "date",
+            "disabledDate": {
+              "endRange": "today"
+            },
+            "rules": [
+              {
+                "#expression": "('${{form.promise_date}}' !== '' && '${{form.promise_amount}}' !== '') || ('${{form.promise_date}}' === '' && '${{form.promise_amount}}' === '')",
+                "#message": "承诺金额不能为空"
+              }
+            ]
+          }
+        },
+        {
+          "handle_time": {
+            "control": "dateTimePicker",
+            "label": "回拨时间",
+            "width": "130px",
+            "type": "datetime",
+            "disabledDate": {
+              "endRange": "today"
+            },
+            "format": "yyyy-MM-dd HH:mm"
+          },
+          "promise_amount": {
+            "control": "text",
+            "label": "承诺金额",
+            "width": "130px",
+            "rules": [
+              {
+                "#pattern": "[1-9]\\d*.\\d*|0.\\d*[1-9]\\d*",
+                "pattern": "^[1-9]\\d*$",
+                "message": "请输入正整数！"
+              },
+              {
+                "#expression": "('${{form.promise_date}}' !== '' && '${{form.promise_amount}}' !== '') || ('${{form.promise_date}}' === '' && '${{form.promise_amount}}' === '')",
+                "#message": "承诺日期不能为空"
+              }
+            ]
+          }
+        },
+        {
+          "case_mark": {
+            "span": 24,
+            "control": "checkbox",
+            "###labelWidth": "0px",
+            "label": "催收标识",
+            "width": "130px",
+            "###rows": 2,
+            "options": [
+              {
+                "label": "难联",
+                "value": "1",
+                "width": "20%"
+              },
+              {
+                "label": "失联",
+                "value": "2",
+                "width": "20%"
+              },
+              {
+                "label": "死亡",
+                "value": "3",
+                "width": "20%"
+              },
+              {
+                "label": "投诉",
+                "value": "4",
+                "width": "20%"
+              },
+              {
+                "label": "筹资",
+                "value": "5",
+                "width": "20%"
+              },
+              {
+                "label": "重大疾病",
+                "value": "6",
+                "width": "20%"
+              },
+              {
+                "label": "刑事拘役",
+                "value": "7",
+                "width": "20%"
+              },
+              {
+                "label": "疑似欺诈",
+                "value": "8",
+                "width": "20%"
+              }
+            ]
+          }
+        },
+        {
+          "remark": {
+            "control": "textarea",
+            "label": "备注",
+            "rows": 3,
+            "width": "130px",
+            "span": 24
+          }
+        }
+      ]
+    }
+  }
+}

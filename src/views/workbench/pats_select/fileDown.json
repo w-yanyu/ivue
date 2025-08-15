@@ -1,0 +1,169 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "scope": "myForm",
+            "controls": [
+                {
+                    "transDate": {
+                        "control": "dateTimePicker",
+                        "label": "交易日期",
+                        "editable": true,
+                        "format": "yyyyMMdd",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请选择渠道类型"
+                            }
+                        ]
+
+                    },
+                    "fileProcessStatus": {
+                        "label": "处理状态",
+                        "control": "select",
+                        "dict": {
+                            "format": "label",
+                            "dictKey": [
+                                "E_FILE_PROCESS_STATUS"
+                            ],
+                            "dictType": "E_FILE_PROCESS_STATUS"
+                        }
+                    }
+                },
+                {
+                    "fileChannelCode": {
+                        "label": "渠道类型",
+                        "control": "select",
+                        "dict": {
+                            "format": "label",
+                            "dictKey": [
+                                "E_OWN_CHANNEL_CODE5_STATUS"
+                            ],
+                            "dictType": "E_OWN_CHANNEL_CODE5_STATUS"
+                        },
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请选择渠道类型"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "custom",
+                    "target": "dialog",
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "PATSIMSS1002",
+                            "istgal": "0",
+                            "transDate": "${{myForm.transDate}}",
+                            "fileChannelCode": "${{myForm.fileChannelCode}}",
+                            "selectName": "fileDetailList"
+                        }
+                    },
+                    "label": "触发文件下载",
+                    "confirm": {
+                        "title": "提示信息",
+                        "msg": "确认要触发文件下载吗？",
+                        "confirmButtonText": "确定",
+                        "cancelButtonText": "取消"
+                    }
+                },
+                {
+                    "type": "custom",
+                    "target": "dialog",
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "PATSIMSS1002",
+                            "istgal": "1",
+                            "transDate": "${{myForm.transDate}}",
+                            "fileChannelCode": "${{myForm.fileChannelCode}}",
+                            "selectName": "fileDetailList"
+                        }
+                    },
+                    "label": "全选触发文件下载",
+                    "confirm": {
+                        "title": "提示信息",
+                        "msg": "确认要全选触发文件下载吗？",
+                        "confirmButtonText": "确定",
+                        "cancelButtonText": "取消"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "PATSIMSS1001"
+                }
+            },
+            "thead": [
+                {
+                    "type": "selection",
+                    "width": "55"
+                },
+                {
+                    "label": "渠道",
+                    "prop": "fileChannelCode",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "E_OWN_CHANNEL_CODE5_STATUS",
+                        "dictKey": [
+                            "E_OWN_CHANNEL_CODE5_STATUS"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "处理状态",
+                    "prop": "fileProcessStatus",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "E_FILE_PROCESS_STATUS",
+                        "dictKey": [
+                            "E_FILE_PROCESS_STATUS"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "交易日期",
+                    "prop": "transDate",
+                    "align": "center"
+                },
+                {
+                    "label": "文件ID",
+                    "prop": "fileID",
+                    "align": "center"
+                },
+                {
+                    "label": "远程上传文件全路径",
+                    "prop": "remoteFilePath",
+                    "align": "center"
+                },
+                {
+                    "label": "本地上传文件全路径",
+                    "prop": "localFilePath",
+                    "align": "center"
+                },
+                {
+                    "label": "文件描述",
+                    "prop": "remark",
+                    "align": "center"
+                }
+            ]
+        }
+    }
+}

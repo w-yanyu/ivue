@@ -1,0 +1,178 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "controls": [
+        {
+          "early_warning_frequency": {
+            "control": "select",
+            "label": "预警频率",
+            "default": "",
+            "dict": {
+              "dictType": "early_warning_frequency",
+              "dictKey": [
+                "early_warning_frequency"
+              ],
+              "format": "label"
+            }
+          },
+          "early_warning_level": {
+            "control": "select",
+            "label": "预警级别",
+            "default": "",
+            "dict": {
+              "dictType": "early_warning_level",
+              "dictKey": [
+                "early_warning_level"
+              ],
+              "format": "label"
+            }
+          },
+          "rule_name": {
+            "control": "text",
+            "span": 12,
+            "label": "规则名称"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "edit",
+          "target": "dialog",
+          "label": "启用",
+          "checkCountMin": 1,
+          "doRequest": {
+            "method": "POST",
+            "url": "/SUMP/call/RPCCall",
+            "params": {
+              "servicecode": "ew3186"
+            }
+          },
+          "props": {
+            "width": "75%",
+            "height": "80%",
+            "title": "批量启用"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ew3165",
+          "queryType": "page",
+          "effective_status":"0"
+        }
+      },
+      "thead": [
+        {
+          "type": "selection",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "预警规则编号",
+          "prop": "rule_id"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "规则名称",
+          "prop": "rule_name"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "决策规则编号",
+          "prop": "rule_code"
+        },
+        
+        {
+          "type": "string",
+          "align": "center",
+          "width": "100px",
+          "label": "预警频率",
+          "prop": "early_warning_frequency",
+          "dict": {
+            "dictType": "early_warning_frequency",
+            "dictKey": [
+              "early_warning_frequency"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "100px",
+          "label": "预警级别",
+          "prop": "early_warning_level",
+          "dict": {
+            "dictType": "early_warning_level",
+            "dictKey": [
+              "early_warning_level"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "100px",
+          "label": "创建时间",
+          "prop": "data_create_time"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "创建人",
+          "prop": "data_create_user"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "120",
+          "label": "修改时间",
+          "prop": "data_update_time"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "修改人",
+          "prop": "data_update_user"
+        },
+        {
+          "label": "操作",
+          "width": "100px",
+          "align": "center",
+          "btns": [
+            {
+              "type": "custom",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "ew3187"
+                }
+              },
+              "confirm": {
+                "title": "删除",
+                "msg": "确定删除吗？",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

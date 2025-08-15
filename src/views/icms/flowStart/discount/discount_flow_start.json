@@ -1,0 +1,197 @@
+{
+  "module": "v-inputDataForm-btn",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "btns": [],
+      "controls": [
+        {
+          "cust_no": {
+            "control": "hidden",
+            "label": "cust_no"
+          },
+          "apply_no": {
+            "control": "hidden",
+            "label": "apply_no"
+          },
+          "cust_type": {
+            "control": "hidden",
+            "label": "cust_type"
+          },
+          "apply_type": {
+            "control": "hidden",
+            "label": "申请类型",
+            "value": "DISLNN"
+          },
+          "apply_type_name": {
+            "control": "hidden",
+            "label": "申请类型",
+            "value": "贴现申请"
+          },
+          "busi_type": {
+            "control": "hidden",
+            "label": "业务类型",
+            "value": "DISLN"
+          },
+          "trxn_teller": {
+            "control": "hidden",
+            "label": "办理用户",
+            "value": "$g{{user_info.userName}}"
+          },
+          "is_credit": {
+            "control": "hidden",
+            "label": "是否授信",
+            "value": "1"
+          },
+          "cust_name": {
+            "control": "lookup",
+            "label": "客户名称",
+            "width": "10px",
+            "keyField": {
+              "cust_no": "cust_no",
+              "cust_name": "cust_name",
+              "cert_type": "cert_type",
+              "cert_no": "cert_no",
+              "mobile_no": "phone_no",
+              "cust_type": "cust_type"
+            },
+            "events": {
+              "set": {
+                "limit_no": "",
+                "sale_prod_name": "",
+                "sale_prod_cd": "",
+                "apply_no": ""
+              }
+            },
+            "toRequest": {
+              "url": "/views/us/entManager/ent_cust_lookup.json",
+              "method": "get"
+            },
+            "props": {
+              "title": "选择客户",
+              "width": "75%"
+            },
+            "format": "label",
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择客户名称"
+              }
+            ]
+          },
+          "limit_no": {
+            "control": "lookup",
+            "#span": 12,
+            "label": "额度编号",
+            "width": "10px",
+            "keyField": {
+              "sale_prod_name": "cl_type_name",
+              "sale_prod_cd": "cl_type_cd",
+              "apply_no": "order_id"
+            },
+            "toRequest": {
+              "url": "/views/icms/flowStart/lend/creditBusinessStart/credit_limit_lookup.json",
+              "method": "get",
+              "params": {
+                "cust_no": "${{formData.cust_no}}",
+                "cl_level": "P",
+                "status": "Y",
+                "busi_prod_type": "${{formData.busi_type}}"
+              }
+            },
+            "props": {
+              "title": "请选择额度编号"
+            },
+            "format": "label",
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择额度编号"
+              }
+            ]
+          },
+          "prod_type_name": {
+            "control": "text",
+            "label": "业务类型",
+            "value": "贴现",
+            "disabled": true,
+            "width": "10px",
+            "span": 12
+          },
+          "mobile_no": {
+            "control": "text",
+            "width": "10px",
+            "label": "手机号码",
+            "disabled": true,
+            "span": 12,
+            "rules": [
+              {
+                "required": false,
+                "message": "请输入手机号码"
+              }
+            ]
+          },
+          "cert_type": {
+            "control": "select",
+            "label": "证件类型",
+            "#span": 12,
+            "width": "10px",
+            "disabled": true,
+            "dict": {
+              "dictType": "MS_E_CRET_TYPE",
+              "dictKey": [
+                "MS_E_CRET_TYPE"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId"
+            }
+          },
+          "cert_no": {
+            "control": "text",
+            "#span": 12,
+            "width": "10px",
+            "label": "证件号码",
+            "disabled": true
+          },
+          "sale_prod_cd": {
+            "control": "text",
+            "label": "可售产品",
+            "#span": 12,
+            "width": "10px",
+            "disabled": true
+          },
+          "sale_prod_name": {
+            "control": "text",
+            "label": "产品名称",
+            "#span": 12,
+            "width": "10px",
+            "disabled": true
+          },
+          
+          "toDbsx": {
+            "span": 24,
+            "control": "dynamic",
+            "unFieldList": [
+              "ccy_code",
+              "apply_type",
+              "apply_type_name",
+              "is_credit",
+              "busi_type",
+              "prod_type_name"
+            ],
+            "#isShowChildrenForm": false,
+            "toRequest": {
+              "method": "GET",
+              "url": "@FlowSubmitBtn",
+              "params": {
+                "appId": "icmsOnl",
+                "servicecode": "ar1035",
+                "finalUrl": "@CommWaitToDoDeal"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,57 @@
+{
+    "module": "d-steps",
+    "layout": {
+        "steps": {
+            "scope":"formObj",
+            "direction": "horizontal",
+            "alignCenter": true,
+            "finishStatus": "success",
+            "simpleType": false,
+            "nextStepType": "validate",
+            "list": [
+                {
+                    "scope":"step1",
+                    "title": "产品组信息配置",
+                    "icon": "el-icon-edit",
+                    "toRequest": { 
+                        "method": "GET",
+                        "url": "/views/uccp/prodManager/uccpProdGroup/uccp_prod_group_add.json",
+                        "params": {
+                            "flag":"${{params.flag}}"
+                        }
+                    },
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "uccp0005"
+                        },
+                        "resultSet": {
+                            "prod_group_code": "prod_group_code"
+                          }
+                    }
+                },
+                {
+                    "scope":"step2",
+                    "title": "产品关联配置",
+                    "icon": "el-icon-edit",
+                    "toRequest": {
+                        "url": "/views/uccp/prodManager/uccpProdGroup/uccp_prod_relation_manager.json",
+                        "params": {
+                            "prod_group_code":"${{formObj.step1.prod_group_code}}"
+                        },
+                        "method": "get"
+                    },
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "uccp0011",
+                            "prod_group_code":"${{formObj.step1.prod_group_code}}"
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,170 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "toolbar": {
+            "btns": [{
+                "type": "add",
+                "label": "新增",
+                "target": "dialog",
+                "toRequest": {
+                    "method": "GET",
+                    "url": "/views/us/financialManager/custReportDataManager/custReportData_add.json",
+                    "params": {
+                        "rpt_type": "02",
+                        "cust_no": "${{params.cust_no}}"
+                    }
+                },
+                "show": {
+                    "expression": "'${{params.show_flash}}' == '1'"
+                },
+                "props": {
+                    "width": "80%",
+                    "title": "财务报表新增"
+                }
+            }]
+        },
+        "datagrid": {
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "us0933",
+                    "rpt_type": "02",
+                    "cust_no": "${{params.cust_no}}"
+                }
+            },
+            "thead": [{
+                    "label": "客户编号",
+                    "prop": "cust_no"
+                },
+                {
+                    "label": "报表行业类型",
+                    "prop": "indu_type",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "US_E_INDU_TYPE",
+                        "dictKey": [
+                            "US_E_INDU_TYPE"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "报表类型",
+                    "prop": "rpt_type",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "US_E_RPT_TYPE",
+                        "dictKey": [
+                            "US_E_RPT_TYPE"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "报表期限类型",
+                    "prop": "rpt_perd_type",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "US_E_RPT_PERD_TYPE",
+                        "dictKey": [
+                            "US_E_RPT_PERD_TYPE"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "是否合并报表",
+                    "prop": "is_unit_flag",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                            "MS_E_YESORNO"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "是否审计",
+                    "prop": "is_check_flag",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                            "MS_E_YESORNO"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "报表合并口径",
+                    "prop": "unit_way",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "US_E_UNIT_WAY",
+                        "dictKey": [
+                            "US_E_UNIT_WAY"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "报表日期",
+                    "prop": "rpt_date",
+                    "align": "center"
+                },
+
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 130,
+                    "align": "center",
+                    "btns": [{
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "@CashFlowStatement",
+                                "method": "POST",
+                                "params": {
+                                  "tabelName": "损益表"
+                                }
+                            },
+
+                            "props": {
+                                "width": "80%",
+                                "title": "财务报表维护"
+                            }
+                        },
+                        {
+                            "type": "custom",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/call/RPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "us0932"
+                                    
+                                }
+                            },
+                            "show": {
+                                "expression": "'${{params.show_flash}}' == '1'"
+                            },
+                            "confirm": {
+                                "title": "确定删除",
+                                "confirmButtonText": "确定",
+                                "cancelButtonText": "取消"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

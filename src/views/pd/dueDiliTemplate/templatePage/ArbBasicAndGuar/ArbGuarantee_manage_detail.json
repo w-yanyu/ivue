@@ -1,0 +1,116 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ar1804",
+          "apply_no": "${{params.apply_no}}",
+          "cust_no": "${{params.cust_no}}",
+          "due_item_no": "${{params.due_item_no}}"
+        }
+      },
+      "thead": [
+        {
+          "type": "string",
+          "label": "抵押物序号",
+          "prop": "guar_no",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "抵押物地址",
+          "prop": "pledge_address",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "抵押物所有权是否属于借款人及其配偶",
+          "prop": "is_pled_borrower",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "string",
+          "label": "个人名下抵押物类型",
+          "prop": "personal_pled_type",
+          "align": "center",
+          "dict": {
+            "dictType": "AR_E_PERSONAL_PLEDGE_TYPE",
+            "dictKey": [
+              "AR_E_PERSONAL_PLEDGE_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "string",
+          "label": "经核实，抵押物情况与评估报告是否一致",
+          "prop": "is_check_pled_situ",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "string",
+          "label": "是否有其他情况",
+          "prop": "is_other_situation",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "string",
+          "label": "有其他情况的进行说明",
+          "prop": "other_situation_explain",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "fixed":"right",
+          "width": "200px",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/pd/dueDiliTemplate/templatePage/ArbBasicAndGuar/ArbGuarantee_info.json",
+                "method": "GET",
+                "params": {
+                  "apply_no": "${{params.apply_no}}",
+                  "cust_no": "${{params.cust_no}}",
+                  "due_item_no": "${{params.due_item_no}}"
+                }
+              },
+              "props": {
+                "width": "60%",
+                "title": "抵押物信息详情"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

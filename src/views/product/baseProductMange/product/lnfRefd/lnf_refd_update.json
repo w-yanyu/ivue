@@ -1,0 +1,126 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/product/baseProductMange/product/lnfRefd/lnf_refd_add.json",
+            "params": {
+              "prodcd": "${{params.prodcd}}"
+            }
+          },
+          "props": {
+            "width": "70%",
+            "title": "产品退货属性新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "CORELNTS9041",
+          "prodcd": "${{params.prodcd}}"
+        }
+      },
+      "thead": [
+        {
+          "label": "产品代码",
+          "prop": "prodcd"
+        },
+        {
+          "label": "是否支持退货",
+          "prop": "isrefd",
+          "dict": {
+            "dictType": "E_ISREFD",
+            "dictKey": [
+              "E_ISREFD"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "是否支持部分退货",
+          "prop": "isptrd",
+          "dict": {
+            "dictType": "E_ISPTRD",
+            "dictKey": [
+              "E_ISPTRD"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "退货是否收息",
+          "prop": "isrdin",
+          "dict": {
+            "dictType": "E_ISRDIN",
+            "dictKey": [
+              "E_ISRDIN"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "是否收取退货手续费",
+          "prop": "isrdfe",
+          "dict": {
+            "dictType": "E_ISRDFE",
+            "dictKey": [
+              "E_ISRDFE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "允许退货最大天数",
+          "prop": "rdmxdy"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "修改",
+              "toRequest": {
+                "url": "/views/product/baseProductMange/product/lnfRefd/lnf_refd_update_sub.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "70%",
+                "title": "产品到期属性修改"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "CORELNTS9042"
+                }
+              },
+              "confirm": {
+                "title": "确定删除",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

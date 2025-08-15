@@ -1,0 +1,76 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "initRequest": "${{params}}",
+            "controls": [
+                {
+                    "user_id": {
+                        "label": "操作员编号",
+                        "control": "text",
+                        "width": "130px",
+                        "rules": [
+                            {
+                                "max": 20,
+                                "message": "长度不能超过20个字符"
+                            }
+                        ]
+                    },
+                    "user_name": {
+                        "label": "操作员姓名",
+                        "control": "text",
+                        "width": "130px",
+                        "rules": [
+                            {
+                                "max": 80,
+                                "message": "长度不能超过80个字符"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "foldLineNumber": 3
+        },
+        "toolbar": {
+            "btns": [
+              {
+                "type": "bringback",
+                "label": "选择"
+              }
+            ]
+          },
+        "datagrid": {
+            "isInitSearch": true,
+            "scope": "searchTable",
+            "doRequest": {
+                "url": "/SUMP/rest/auth/userManager",
+                "method": "post",
+                "params": {
+                    "servicecode": "ct2002"
+                }
+            },
+            "thead": [
+                {
+                  "type": "selection",
+                  "width": "55px"
+                },              
+                {
+                    "label": "操作员编号",
+                    "prop": "user_id"
+                },
+                {
+                    "label": "操作员姓名",
+                    "prop": "user_name"
+                },
+               
+                {
+                    "label": "所属机构",
+                    "prop": "branch_id"
+                }
+            ],
+            "pagination": {
+                "show": true
+            }
+        }
+    }
+}

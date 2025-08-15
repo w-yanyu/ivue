@@ -1,0 +1,308 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+      "form": {
+        "foldLineNumber": 2,
+        "controls": [
+          {
+            "area_no": {
+              "control": "remoteSelect",
+              "label": "区域中心",
+              "span": 8,
+              "labelField": "brachName",
+              "valueField": "branchNo",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "RLMSPLTS1068"
+                }
+              },
+              "format": "value-label"
+            },
+            "lncfno": {
+                "control": "text",
+                "label": "借据号",
+                "span": 8,
+                "rules": [
+                    {
+                        "max": 100,
+                        "message": "长度不能超过100个字符"
+                    }
+                ]
+            },
+            "cust_nm": {
+                "control": "text",
+                "label": "客户姓名",
+                "span": 8,
+                "rules": [
+                    {
+                        "max": 100,
+                        "message": "长度不能超过100个字符"
+                    }
+                ]
+            }
+        },
+        {
+            "idtfno": {
+                "control": "text",
+                "label": "客户证件号码",
+                "span": 8,
+                "rules": [
+                    {
+                        "max": 100,
+                        "message": "长度不能超过100个字符"
+                    }
+                ]
+            },
+            "savetype": {
+                "control": "select",
+                "label": "保全类型",
+                "span": 8,
+                "dict": {
+                    "dictType": "E_SAVE_TYPE",
+                    "dictKey": [
+                      "E_SAVE_TYPE"
+                    ],
+                    "format": "label",
+                    "labelField": "dictName",
+                    "valueField": "dictId"
+                }
+            },
+            "saveresult": {
+                "control": "select",
+                "label": "保全结果",
+                "span": 8,
+                "dict": {
+                    "dictType": "E_SAVE_RESULT",
+                    "dictKey": [
+                      "E_SAVE_RESULT"
+                    ],
+                    "format": "label",
+                    "labelField": "dictName",
+                    "valueField": "dictId"
+                }
+            }
+        },
+        {
+            "savestate": {
+                "control": "select",
+                "label": "保全状态",
+                "span": 8,
+                "dict": {
+                    "dictType": "E_SAVE_STATE",
+                    "dictKey": [
+                      "E_SAVE_STATE"
+                    ],
+                    "format": "label",
+                    "labelField": "dictName",
+                    "valueField": "dictId"
+                }
+            }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "export",
+          "label": "导出",
+          "target": "dialog",
+          "icon": "iconfont icon-daochu",
+          "toRequest": {
+            "method": "post",
+            "url": "@ExportAssureList",
+            "params": {
+              "servicecode": "RLMSPLTS1087",
+              "area_no":"${{params.area_no}}"
+            }
+          },
+          "props": {
+            "width": "30%",
+            "title": "导出"
+          }
+        }
+      ]
+    },
+      "datagrid": {
+        "isInitSearch": true,
+        "doRequest": {
+          "url": "/SUMP/icmcall/icmRPCCall",
+          "method": "post",
+          "params": {
+            "servicecode": "RLMSPLTS1088"
+          }
+        },
+        "thead": [
+          {
+            "type": "selection",
+            "width": "35"
+          },
+          {
+            "type": "string",
+            "align": "center",
+            "label": "区域中心",
+            "prop": "area_name"
+          },
+          {
+            "type": "string",
+            "label": "借据号",
+            "prop": "lncfno",
+            "align": "center"
+          },
+          {
+            "type": "string",
+            "align": "center",
+            "label": "客户证件号码",
+            "prop": "idtfno"
+          },
+          {
+            "type": "string",
+            "align": "center",
+            "label": "客户姓名",
+            "prop": "cust_nm"
+          },
+          {
+            "type": "string",
+            "align": "center",
+            "label": "贷款状态",
+            "prop": "clssst",
+          "dict": {
+            "dictType": "E_CLSSST",
+            "dictKey": [
+              "E_CLSSST"
+            ],
+            "format": "label",
+            "labelField": "dictName",
+            "valueField": "dictId"
+        }
+      },
+          {
+            "type": "string",
+            "align": "center",
+            "label": "案件承办机构",
+            "prop": "case_org_name"
+          },
+          {
+            "type": "string",
+            "align": "center",
+            "label": "受理法院",
+            "prop": "accept_court_name"
+          },
+          {
+            "type": "string",
+            "align": "center",
+            "label": "保全阶段",
+            "prop": "savestage",
+            "dict": {
+              "dictType": "E_SAVE_STAGE",
+              "dictKey": [
+                "E_SAVE_STAGE"
+              ],
+              "format": "label",
+              "labelField": "dictName",
+              "valueField": "dictId"
+          }
+          },
+          {
+            "type": "string",
+            "align": "center",
+            "label": "保全结果",
+            "prop": "saveresult",
+            "dict": {
+              "dictType": "E_SAVE_RESULT",
+              "dictKey": [
+                "E_SAVE_RESULT"
+              ],
+              "format": "label",
+              "labelField": "dictName",
+              "valueField": "dictId"
+          }
+          },
+          {
+              "type": "string",
+              "align": "center",
+              "label": "保全类型",
+              "prop": "savetype",
+            "dict": {
+              "dictType": "E_SAVE_TYPE",
+              "dictKey": [
+                "E_SAVE_TYPE"
+              ],
+              "format": "label",
+              "labelField": "dictName",
+              "valueField": "dictId"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "保全期限",
+          "prop": "start_date"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "是否首封",
+          "prop": "isfirstSeal"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "房产地址",
+          "prop": "proaddress"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "保全状态",
+          "prop": "savestate",
+          "dict": {
+            "dictType": "E_SAVE_STATE",
+            "dictKey": [
+              "E_SAVE_STATE"
+            ],
+            "format": "label",
+            "labelField": "dictName",
+            "valueField": "dictId"
+        }
+        },
+          {
+            "label": "操作",
+            "align": "center",
+            "fixed": "right",
+            "btns": [
+              {
+                "type": "custom",
+                "label": "续保",
+                "toRequest": {
+                  "url": "@assureRenewApply",
+                  "method": "POST",
+                  "params": {
+                  },
+                  "props": {
+                    "width": "80%",
+                    "title": "续保"
+                  }
+                }
+              },
+              {
+                "type": "custom",
+                "label": "撤保",
+                "toRequest": {
+                  "url": "@assureCancleApply",
+                  "method": "POST",
+                  "params": {
+                  },
+                  "props": {
+                    "width": "80%",
+                    "title": "撤保"
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }

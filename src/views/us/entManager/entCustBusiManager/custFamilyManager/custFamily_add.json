@@ -1,0 +1,148 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "initRequest": "${{params}}",
+            "btns": [{
+                "type": "submit",
+                "label": "提交",
+                "doRequest": {
+                    "url": "/SUMP/icmcall/icmRPCCall",
+                    "method": "POST",
+                    "params": {
+                        "servicecode": "us0281"
+                    }
+                }
+            }],
+            "controls": [{
+                "cust_no": {
+                    "control": "hidden",
+                    "label": "客户编号",
+                    "width": "10px",
+                    "disabled": true
+                },
+                "faly_type": {
+                    "label": "关联类型",
+                    "control": "select",
+                    "width": "10px",
+                    "dict": {
+                        "dictType": "US_E_FALY_TYPE",
+                        "dictKey": [
+                            "US_E_FALY_TYPE"
+                        ],
+                        "format": "label"
+                    },
+                    "rules": [{
+                        "required": true,
+                        "message": "请选择关联类型"
+                    }]
+                },
+                "cust_name": {
+                    "control": "lookup",
+                    "width": "10px",
+                    "label": "家族成员姓名",
+                    "edit": true,
+                    "rules": [{
+                        "required": true,
+                        "max": 80,
+                        "message": "请选择成员"
+                    }],
+                    "keyField": {
+                        "cust_name": "cust_name",
+                        "cert_type": "cert_type",
+                        "cert_no": "cert_no"
+                    },
+                    "toRequest": {
+                        "url": "/views/us/privateManage/customer_lookup.json",
+                        "method": "get"
+                    },
+                    "props": {
+                        "title": "选择本行客户",
+                        "width": "65%"
+                    }
+                },
+                "cert_type": {
+                    "label": "证件类型",
+                    "width": "10px",
+                    "control": "select",
+                    "disabled": true,
+                    "dict": {
+                        "dictType": "MS_E_CRET_TYPE",
+                        "dictKey": [
+                            "MS_E_CRET_TYPE"
+                        ],
+                        "format": "label"
+                    },
+                    "rules": [{
+                        "message": "请选择证件类型"
+                    }]
+                },
+                "cert_no": {
+                    "control": "string",
+                    "width": "10px",
+                    "label": "证件号码",
+                    "rules": [{
+                        "required": true,
+                        "pattern": "^[A-Za-z0-9]+$",
+                        "max": 50,
+                        "message": "请输入正确的证件号码,长度50字符以内"
+                    }]
+                },
+                "cuorcode": {
+                    "control": "hidden",
+                    "width": "10px",
+                    "label": "家族企业组织机构代码",
+                    "value": "${{params.corgcd}}",
+                    "disabled": true,
+                    "#rules": [{
+                        "required": true,
+                        "max": 30,
+                        "message": "请输入正确的组织机构代码,长度30字符以内"
+                    }]
+                },
+                "family_relation": {
+                    "label": "家族关系",
+                    "width": "10px",
+                    "control": "select",
+                    "dict": {
+                        "dictType": "US_E_FAMILY_TIES",
+                        "dictKey": [
+                            "US_E_FAMILY_TIES"
+                        ],
+                        "format": "label"
+                    },
+                    "rules": [{
+                        "required": true,
+                        "message": "请选择家族关系"
+                    }]
+                },
+                "status": {
+                    "label": "是否有效",
+                    "width": "10px",
+                    "control": "select",
+                    "dict": {
+                        "dictType": "US_E_STATE",
+                        "dictKey": [
+                            "US_E_STATE"
+                        ],
+                        "format": "label"
+                    },
+                    "rules": [{
+                        "required": true,
+                        "message": "请选择是否有效"
+                    }]
+                },
+                "org_name": {
+                    "control": "hidden",
+                    "width": "10px",
+                    "label": "家族成员所在机构名称",
+                    "#rules": [{
+                        "required": true,
+                        "max": 80,
+                        "message": "请输入机构名称,长度80字符以内"
+                    }]
+                }
+            }]
+        }
+    }
+}

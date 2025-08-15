@@ -1,0 +1,242 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "controls": [
+        {
+          "announce_id": {
+            "control": "text",
+            "label": "公告ID"
+          },
+          "announce_title": {
+            "control": "text",
+            "label": "公告标题"
+          },
+          "announce_type": {
+            "control": "select",
+            "label": "公告类型",
+            "dict": {
+              "dictType": "CT_E_ANNOUNCETYPE",
+              "dictKey": [
+                  "CT_E_ANNOUNCETYPE"
+              ],
+              "format": "value-label"
+            }
+          },
+          "effect_date": {
+              "control": "dateTimePicker",
+              "label": "生效日期",
+              "align": "center",
+              "rules": [
+                  {
+                      "message": "请输入"
+                  }
+              ]
+          },
+          "expiry_date": {
+              "control": "dateTimePicker",
+              "label": "失效日期",
+              "align": "center",
+              "rules": [
+                  {
+                      "message": "请输入"
+                  }
+              ]
+          },
+          "publish_status": {
+            "control": "select",
+            "label": "是否发布",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                  "MS_E_YESORNO"
+              ],
+              "format": "value-label"
+            }
+          }
+          
+        }
+      ]
+    },
+
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "icon": "el-icon-circle-plus",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/ismt/ct/announceManage/announce_add.json",
+            "params": {
+              "appId":"deciOnl"
+            }
+          },
+          "props": {
+            "title": "新增公告"
+          }
+        },
+        {
+          "type": "custom",
+          "icon": "el-icon-circle-plus",
+          "target": "dialog",
+          "label": "用户公告查看",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/ismt/ct/announceManage/user_announce_management.json",
+            "params": {
+              "appId":"deciOnl"
+            }
+          },
+          "props": {
+            "title": "用户公告查看",
+            "width":"80%"
+          }
+        }
+      ]
+    },
+
+    "datagrid": {
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "ct2331"
+        }
+      },
+      "thead": [
+        {
+          "type":"string",
+          "label": "公告ID",
+          "align":"center",
+          "prop": "announce_id"
+        },
+        {
+          "type":"string",
+          "label": "公告标题",
+          "align":"center",
+          "prop": "announce_title"
+        },
+        {
+          "type":"string",
+          "label": "公告内容",
+          "align":"center",
+          "prop": "announce_content"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "附件地址",
+          "prop": "announce_file_path"
+        },
+        {
+          "type":"string",
+          "label": "公告类型",
+          "align":"center",
+          "width":"100%",
+          "prop": "announce_type",
+          "dict":{
+            "dictType": "CT_E_ANNOUNCETYPE",
+            "dictKey": [
+              "CT_E_ANNOUNCETYPE"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type":"string",
+          "label": "是否发布",
+          "align":"center",
+          "width":"100%",
+          "prop": "publish_status",
+          "dict":{
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "value-label"
+
+          }
+        },
+        {
+          "type":"string",
+          "label": "生效日期",
+          "align":"center",
+          "prop": "effect_date"
+        },
+        {
+          "type":"string",
+          "label": "失效日期",
+          "align":"center",
+          "prop": "expiry_date"
+        },
+        {
+          "type":"string",
+          "label": "发布人",
+          "align":"center",
+          "prop": "publisher"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width":"200%",
+          "align":"center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/ismt/ct/announceManage/announce_modify.json",
+                "method": "POST"
+              },
+              "props": {
+                "title": "公告信息维护"
+              }
+            },
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/ismt/ct/announceManage/announce_detail.json",
+                "method": "POST"
+              },
+              "props": {
+                "title": "公告信息详情"
+              }
+            },
+            {
+              "type": "look",
+              "label": "阅读情况",
+              "toRequest": {
+                "url": "/views/ismt/ct/announceManage/announce_read_tab.json",
+                "method": "POST"
+              },
+              "props": {
+                "title": "公告信息详情"
+              }
+            },
+            {
+                "type": "look",
+                "label": "删除",
+                "doRequest": {
+                    "url": "/SUMP/icmcall/icmRPCCall",
+                    "method": "POST",
+                    "params": {
+                        "servicecode": "ct2334"
+                    }
+                },
+                "confirm": {
+                    "title": "确定删除",
+                    "confirmButtonText": "确定",
+                    "cancelButtonText": "取消"
+                }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,163 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "title": "查询条件",
+      "controls": [
+        {
+          "prod_code": {
+            "control": "text",
+            "label": "产品代码",
+            "props": {
+              "width": "65%",
+              "title": "标题"
+            }
+          },
+          "prod_nm": {
+            "control": "text",
+            "label": "产品名称"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ln3270",
+          "outlistid": "lstProd"
+        }
+      },
+      "thead": [
+        {
+          "label": "产品代码",
+          "prop": "prod_code",
+          "align": "center"
+        },
+        {
+          "label": "产品名称",
+          "prop": "prod_nm",
+          "width": 160,
+          "align": "center"
+        },
+        {
+          "label": "产品描述",
+          "prop": "prod_dsc",
+          "align": "center"
+        },
+        {
+          "label": "贷款对象",
+          "prop": "loan_obj",
+          "align": "center",
+          "dict": {
+            "dictType": "LN_E_LOAN_OBJ",
+            "dictKey": [
+              "LN_E_LOAN_OBJ"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "生效日期",
+          "prop": "eff_dt",
+          "align": "center"
+        },
+        {
+          "label": "失效日期",
+          "prop": "invld_dt",
+          "align": "center"
+        },
+        {
+          "label": "贷款产品状态",
+          "prop": "loan_prod_ste",
+          "align": "center",
+          "dict": {
+            "dictType": "LN_E_LOAN_PROD_STE",
+            "dictKey": [
+              "LN_E_LOAN_PROD_STE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "上下架状态",
+          "prop": "on_off_shlvs_ste",
+          "align": "center",
+          "dict": {
+            "dictType": "LN_E_LOAN_PROD_STE",
+            "dictKey": [
+              "LN_E_ON_OFF_SHLVS_STE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "产品组代码",
+          "prop": "prod_grp_code",
+          "align": "center"
+        },
+        {
+          "label": "产品组名称",
+          "prop": "prod_grp_nm",
+          "align": "center"
+        },
+        {
+          "label": "产品模板代码",
+          "prop": "prod_tplt_code",
+          "align": "center"
+        },
+        {
+          "label": "产品创建日期",
+          "prop": "prod_crea_dt",
+          "align": "center"
+        },
+        {
+          "label": "产品创建用户",
+          "prop": "prod_crea_tlr",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align": "center",
+          "btns": [
+            {
+              "type": "look",
+              "label": "默认值查询",
+              "toRequest": {
+                "url": "@baseProduct_valueMaint",
+                "method": "GET",
+                "target": "navTab",
+                "params": {
+                  "prod_code": "${{current.prod_code}}"
+                }
+              },
+              "props": {
+                "title": "默认值查询"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "默认值维护",
+              "toRequest": {
+                "url": "@baseProduct_valueEdit",
+                "method": "GET",
+                "target": "navTab",
+                "params": {
+                  "prod_code": "${{current.prod_code}}"
+                }
+              },
+              "props": {
+                "title": "默认值维护"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

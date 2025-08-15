@@ -1,0 +1,287 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": "${{params}}",
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "us0061"
+        }
+      },
+      "controls": [
+        {
+          "cust_no": {
+            "control": "hidden",
+            "label": "客户编号",
+            "value": "${{params.cust_no}}",
+            "disabled": true
+          },
+          "cust_code": {
+            "control": "hidden",
+            "label": "客户内码",
+            "value": "${{params.cust_code}}",
+            "disabled": true
+          },
+          "contact_person_name": {
+            "control": "lookup",
+            "width": "10px",
+            "label": "联系人姓名",
+            "edit": true,
+            "keyField": {
+              "cust_code": "cust_no",
+              "contact_person_name": "cust_name",
+              "cert_type": "cert_type",
+              "cert_no": "cert_no",
+              "mobile_no": "phone_no"
+            },
+            "toRequest": {
+              "url": "/views/us/cust_lookup.json",
+              "method": "post"
+            },
+            "multiple": false,
+            "props": {
+              "title": "客户选择"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "联系人姓名不能为空"
+              }
+            ]
+          },
+          "contact": {
+            "control": "select",
+            "width": "10px",
+            "label": "联系人关系",
+            "dict": {
+              "dictType": "US_E_CONTACT",
+              "dictKey": [
+                "US_E_CONTACT"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "联系人关系不能为空"
+              }
+            ],
+            "events": {
+              "condition": {
+                "00": {
+                  "control": {
+                    "is_home_member": {
+                      "value": "1",
+                      "disabled": true
+                    }
+                  }
+                },
+                "06": {
+                  "control": {
+                    "is_home_member": {
+                      "value": "1",
+                      "disabled": true
+                    }
+                  }
+                },
+                "03": {
+                  "control": {
+                    "is_home_member": {
+                      "value": "1",
+                      "disabled": true
+                    }
+                  }
+                },
+                "01": {
+                  "control": {
+                    "is_home_member": {
+                      "value": "1",
+                      "disabled": true
+                    }
+                  }
+                },
+                "05": {
+                  "control": {
+                    "is_home_member": {
+                      "value": "1",
+                      "disabled": true
+                    }
+                  }
+                },
+                "07": {
+                  "control": {
+                    "is_home_member": {
+                      "value": "1",
+                      "disabled": true
+                    }
+                  }
+                },
+                "08": {
+                  "control": {
+                    "is_home_member": {
+                      "value": "1",
+                      "disabled": true
+                    }
+                  }
+                },
+                "02": {
+                  "control": {
+                    "is_home_member": {
+                      "value": "1",
+                      "disabled": true
+                    }
+                  }
+                },
+                "04": {
+                  "control": {
+                    "is_home_member": {
+                      "value": "1",
+                      "disabled": true
+                    }
+                  }
+                },
+                "10": {
+                  "control": {
+                    "is_home_member": {
+                      "value": "0",
+                      "disabled": true
+                    }
+                  }
+                },
+                "11": {
+                  "control": {
+                    "is_home_member": {
+                      "value": "",
+                      "disabled": false,
+                      "rules": [
+                        {
+                          "required": true,
+                          "message": "是否为家庭成员不可为空"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "09": {
+                  "control": {
+                    "is_home_member": {
+                      "value": "1",
+                      "disabled": true
+                    }
+                  }
+                },
+                "$default": {
+                  "control": {
+                    "is_home_member": {
+                      "value": "",
+                      "disabled": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "is_home_member": {
+            "control": "select",
+            "width": "10px",
+            "label": "是否为家庭成员",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId",
+              "format": "label"
+            }
+          },
+          "is_emergency_contact": {
+            "control": "select",
+            "width": "10px",
+            "label": "是否紧急联系人",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId",
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "是否紧急联系人不能为空"
+              }
+            ]
+          },
+          "cert_type": {
+            "control": "select",
+            "width": "10px",
+            "label": "证件类型",
+            "dict": {
+              "dictType": "MS_E_CRET_TYPE",
+              "dictKey": [
+                "MS_E_CRET_TYPE"
+              ],
+              "labelField": "label",
+              "valueField": "value"
+            }
+          },
+          "cert_no": {
+            "control": "text",
+            "width": "10px",
+            "label": "证件号码"
+          },
+          "work_addr_details": {
+            "control": "areaCascade",
+            "title": "请选择工作单位地址",
+            "label": "工作单位地址",
+            "width": "10px",
+            "rules": [
+              {
+                "max": 80,
+                "message": "长度不能超过80个字符"
+              }
+            ]
+          },
+          "mobile_no": {
+            "control": "text",
+            "width": "10px",
+            "label": "手机",
+            "align": "center"
+          },
+          "contact_unit": {
+            "control": "text",
+            "width": "10px",
+            "label": "联系单位",
+            "align": "center"
+          },
+          "phone_no": {
+            "control": "text",
+            "width": "10px",
+            "label": "联系电话",
+            "align": "center"
+          },
+          "remark": {
+            "label": "备注",
+            "control": "textarea",
+            "width": "10px",
+            "span": "24",
+            "autosize": {
+              "minRows": 4
+            },
+            "rules": [
+              {
+                "max": "100",
+                "message": "长度不能超过100个字符"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

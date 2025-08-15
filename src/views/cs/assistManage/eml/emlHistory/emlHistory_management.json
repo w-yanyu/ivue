@@ -1,0 +1,262 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "foldLineNumber": 3,
+      "scope": "formData",
+      "controls": [
+        {
+          "branch_id": {
+            "control": "inputTree",
+            "label": "机构",
+            "idField": "coll_team",
+            "nodeTypeField": "type",
+            "pIdField": "parent_coll_team",
+            "labelField": "coll_team_name",
+            "nodeTypes": {
+              "branchTeam": {
+                "icon": "el-icon-news",
+                "children": [
+                  "branchTeam"
+                ]
+              }
+            },
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "cb0041",
+                "query_type": "branchTeam"
+              }
+            },
+            "format": "value-label"
+          },
+          "cust_name": {
+            "control": "text",
+            "label": "客户姓名"
+          }
+        },
+        {
+          "cert_no": {
+            "control": "text",
+            "label": "证件号码"
+          },
+          "cust_id": {
+            "control": "text",
+            "label": "客户号"
+          }
+        },
+        {
+          "loan_no": {
+            "control": "text",
+            "label": "借据号"
+          },
+          "template_code": {
+            "control": "lookup",
+            "label": "邮件模板",
+            "keyField": {
+              "template_code": "template_id",
+              "template_type": "template_type",
+              "email_content": "template_content"
+            },
+            "toRequest": {
+              "url": "/views/cs/collManage/tcManage/collWorkbench/functionMenu/emlApply/prodMailSet_lookup.json",
+              "method": "post",
+              "params": {
+                "org_id": "$g{{user_info.org_id}}"
+              }
+            }
+          }
+        },
+        {
+          "email_addr": {
+            "control": "text",
+            "label": "邮件地址"
+          },
+          "send_status": {
+            "control": "select",
+            "label": "发送状态",
+            "dict": {
+              "dictType": "CS_E_SEND_STATUS",
+              "dictKey": [
+                "CS_E_SEND_STATUS"
+              ],
+              "format": "value-label"
+            }
+          }
+        },
+        {
+          "businessname": {
+            "control": "text",
+            "label": "业务品种"
+          },
+          "case_cust_type": {
+            "control": "select",
+            "label": "客户类型",
+            "dict": {
+              "dictType": "CS_E_CUST_TYPE",
+              "dictKey": [
+                "CS_E_CUST_TYPE"
+              ],
+              "format": "value-label"
+            }
+          }
+        },
+        {
+          "daterange": {
+            "control": "dateTimePicker",
+            "label": "发送时间",
+            "type": "daterange",
+            "unlinkPanels": true,
+            "valueFormat": "yyyyMMdd",
+            "startPlaceholder": "请选择开始时间",
+            "endPlaceholder": "请选择结束时间",
+            "startField": "start_date",
+            "endField": "end_date",
+            "disabledDate": "dateAfter"
+          },
+          "collector": {
+            "control": "text",
+            "label": "催收员"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "export",
+          "icon": "iconfont icon-daochu",
+          "label": "导出",
+          "doRequest": {
+            "method": "POST",
+            "url": "/SUMP/rest/file/commExport",
+            "params": {
+              "length": 999,
+              "servicecode": "cb0254"
+            }
+          },
+          "confirm": {
+            "title": "提示信息",
+            "msg": "确认导出吗？",
+            "confirmButtonText": "确定",
+            "cancelButtonText": "取消"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "method": "POST",
+        "appId": "cbOnl",
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "pageId": "/views/cs/assistManage/eml/emlHistory/emlHistory_management.json",
+        "params": {
+          "servicecode": "cb0254"
+        }
+      },
+      "thead": [
+        {
+          "type": "string",
+          "align": "center",
+          "label": "机构",
+          "prop": "branch_id"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "客户号",
+          "prop": "cust_id"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "客户姓名",
+          "prop": "cust_name"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "发送时间",
+          "prop": "send_date"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "发送状态",
+          "prop": "send_status",
+          "dict": {
+            "dictType": "CS_E_SEND_STATUS",
+            "dictKey": [
+              "CS_E_SEND_STATUS"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "证件类型",
+          "prop": "cert_type",
+          "dict": {
+            "dictType": "CS_E_CERT_TYPE",
+            "dictKey": [
+              "CS_E_CERT_TYPE"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "证件号码",
+          "prop": "cert_no"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "邮件模板",
+          "prop": "template_code"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "280px",
+          "label": "邮件内容",
+          "prop": "email_content"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "邮件地址",
+          "prop": "email_address"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "催收员",
+          "prop": "collector",
+          "dict": {
+            "dictType": "deciOnl",
+            "dictKey": [
+              "collector"
+            ],
+            "labelField": "user_name",
+            "valueField": "user_id",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "length": 1000,
+                  "start": 1,
+                  "servicecode": "ct2502"
+              }
+            },
+            "format": "value-label"
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,277 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "doRequest": {
+                "url": "",
+                "method": "POST",
+                "params": {}
+            },
+            "controls": [
+                {
+                    "corpno": {
+                        "control": "text",
+                        "label": "法人号"
+                    },
+                    "rfirtp": {
+                        "control": "select",
+                        "label": "基础利率类型",
+                        "dict": {
+                            "dictType": "E_RFIRTP",
+                            "dictKey": [
+                                "E_RFIRTP"
+                            ],
+                            "format": "label"
+                        }
+                    }
+                },
+                {
+                    "intrna": {
+                        "control": "text",
+                        "label": "利率名称"
+                    },
+                    "intrst": {
+                        "control": "select",
+                        "label": "利率状态",
+                        "dict": {
+                            "dictType": "E_INTRST",
+                            "dictKey": [
+                                "E_INTRST"
+                            ],
+                            "format": "label"
+                        }
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "label": "新增",
+                    "target": "dialog",
+                    "toRequest": {
+                        "url": "/views/cm/InterestRateCenter/BasicInterestRateManagement/BasicInterestRateManagement-add.json",
+                        "method": "get",
+                        "params": {}
+                    },
+                    "props": {
+                        "title": "基础利率信息新增",
+                        "width": "1200px"
+                    }
+                },
+                {
+                    "type": "edit",
+                    "label": "利率复核",
+                    "target": "dialog",
+                    "doRequest": {
+                        "url": "/SUMP/call/RPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "COREPBTS5001"
+                        }
+                    },
+                    "confirm": {
+                        "title": "提示信息",
+                        "msg": "该操作将对利率信息进行状态复核，确认信息无误吗？",
+                        "confirmButtonText": "确定",
+                        "cancelButtonText": "取消"
+                      }
+                }
+            ]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "selrfi"
+                }
+            },
+            "thead": [
+          
+                {
+                    "type": "selection",
+                    "width": "55",
+                    "align":"center"
+                },
+                {
+                    "label": "法人代码",
+                    "prop": "corpno",
+                    "align":"center"
+                },
+                {
+                    "label": "基础利率类型",
+                    "align":"center",
+                    "prop": "rfirtp",
+                    "dict": {
+                        "dictType": "E_RFIRTP",
+                        "dictKey": [
+                            "E_RFIRTP"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "基础利率代码",
+                    "prop": "rfircd",
+                    "align":"center"
+                },
+                {
+                    "label": "利率种类",
+                    "prop": "intrkd",
+                    "dict": {
+                        "dictType": "E_INTRTY",
+                        "dictKey": [
+                            "E_INTRTY"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "币种",
+                    "align":"center"
+,
+                    "prop": "crcycd",
+                    "dict": {
+                        "format": "label",
+                        "dictKey": [
+                            "MS_CURRENCY"
+                        ],
+                        "dictType": "MS_CURRENCY"
+                    }
+                },
+                {
+                    "label": "期限",
+                    "prop": "rfirtm",
+                    "align":"center"
+,
+                    "dict": {
+                        "dictType": "E_TERMCD",
+                        "dictKey": [
+                            "E_TERMCD"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "利率名称",
+                    "prop": "intrna",
+                    "align":"center"
+
+                },
+                {
+                    "label": "利率性质",
+                    "prop": "intrfg",
+                    "align":"center"
+                    ,
+                    "dict": {
+                        "dictType": "E_INRATE",
+                        "dictKey": [
+                            "E_INRATE"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "基础利率",
+                    "prop": "baseir",
+                    "align":"center"
+
+                },
+                {
+                    "label": "生效日期",
+                    "prop": "efctdt",
+                    "align":"center"
+
+                },
+                {
+                    "label": "生效时间",
+                    "prop": "efcttm",
+                    "align":"center"
+
+                },
+                {
+                    "label": "失效日期",
+                    "prop": "inefdt",
+                    "align":"center"
+
+                },
+                {
+                    "label": "失效时间",
+                    "prop": "ineftm",
+                    "align":"center"
+
+                },
+                {
+                    "label": "利率状态",
+                    "prop": "intrst",
+                    "align":"center",
+                    "dict": {
+                        "dictType": "E_INTRST",
+                        "dictKey": [
+                            "E_INTRST"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "基础利率序号",
+                    "prop": "rfirsq",
+                    "align":"center"
+                },
+                {
+                    "label": "交易用户",
+                    "prop": "tranus",
+                    "align":"center"
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 240,
+                    "align": "center",
+                    "btns": [
+                        {
+                            "type": "look",
+                            "label": "历史记录",
+                            "toRequest": {
+                                "url": "/views/cm/InterestRateCenter/BasicInterestRateManagement/BasicInterestRateManagement-history.json",
+                                "method": "POST"
+                            },
+                            "props": {
+                                "width": "80%",
+                                "title": "基础利率管理-历史记录表"
+                            }
+                        },
+          
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/cm/InterestRateCenter/BasicInterestRateManagement/BasicInterestRateManagement-update.json",
+                                "method": "GET"
+                            },
+                            "props": {
+                                "width": "80%",
+                                "title": "基础利率管理-维护"
+                            }
+                        },
+                        {
+                            "type": "delete",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/call/RPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "delrfi"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

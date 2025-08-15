@@ -1,0 +1,231 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "initRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "us0215",
+                    "cust_no": "${{params.cust_no}}"
+                }
+            },
+            "btns": [{
+                "type": "submit",
+                "label": "提交",
+                "icon": "",
+                "doRequest": {
+                    "url": "/SUMP/icmcall/icmRPCCall",
+                    "method": "POST",
+                    "params": {
+                        "servicecode": "us0216",
+                        "cust_no": "${{params.cust_no}}"
+                    }
+                }
+            }],
+            "controls": [{
+                    "cust_no": {
+                        "control": "text",
+                        "label": "客户编号",
+                        "span": "8",
+                        "width": "25px",
+                        "disabled": true,
+                        "rules": [{
+                            "required": true
+                        }]
+                    },
+                    "country_code": {
+                        "control": "select",
+                        "label": "国籍",
+                        "span": "8",
+                        "width": "25px",
+                        "dict": {
+                            "dictType": "US_E_INCTRY",
+                            "dictKey": [
+                                "US_E_INCTRY"
+                            ],
+                            "format": "label"
+                        },
+                        "rules": [{
+                            "required": true,
+                            "message": "请选择国别"
+                        }]
+                    },
+                    "valid_state":{
+                        "isShow":false,
+                        "label":"是否有效"
+                       },
+                    "cust_name": {
+                        "control": "text",
+                        "label": "客户名称",
+                        "span": "8",
+                        "width": "25px",
+                        "disabled":  "'${{form.valid_state}}' === '1'",
+                        "rules": [{
+                            "required": true,
+                            "max": 32,
+                            "message": "长度不能超过32个字符"
+                        }]
+                    }
+                },
+                {
+                    "cust_befor_name": {
+                        "control": "text",
+                        "label": "客户曾用名",
+                        "span": "8",
+                        "width": "25px",
+                        "rules": [{
+                            "max": 80,
+                            "message": "长度不能超过80个字符"
+                        }]
+                    },
+                    "cust_english_name": {
+                        "control": "text",
+                        "label": "客户英文名称",
+                        "span": "8",
+                        "width": "25px",
+                        "rules": [{
+                            "max": 80,
+                            "message": "长度不能超过80个字符"
+                        }]
+                    },
+                    "cert_type": {
+                        "control": "select",
+                        "label": "证件类型",
+                        "disabled": true,
+                        "rules": [{
+                            "required": true
+                        }],
+                        "span": "8",
+                        "width": "25px",
+                        "dict": {
+                            "dictType": "MS_E_CRET_TYPE",
+                            "dictKey": [
+                                "MS_E_CRET_TYPE"
+                            ],
+                            "format": "label"
+                        }
+                    }
+                },
+                {
+                    "cert_no": {
+                        "control": "text",
+                        "label": "证件号码",
+                        "span": "8",
+                        "width": "25px",
+                        "disabled": "'${{form.valid_state}}' === '1'",
+                        "rules": [{
+                            "required": true,
+                            "message": "请输入证件号码"
+                        }]
+                    },
+                    "cert_day": {
+                        "label": "证件签发日期",
+                        "width": "25px",
+                        "span": "8",
+                        "control": "dateTimePicker",
+                        "editable": true,
+                        "format": "yyyyMMdd",
+                        "rules": [{
+                            "required": true,
+                            "message": "请输入证件签发日期"
+                        }]
+                    },
+                    "card_end_day": {
+                        "label": "证件到期日期",
+                        "width": "25px",
+                        "span": "8",
+                        "control": "dateTimePicker",
+                        "editable": true,
+                        "format": "yyyyMMdd",
+                        "rules": [{
+                            "required": true,
+                            "message": "请输入证件到期日期"
+                        }],
+                        "disabledDate": {
+                            "startRange": "${{form.cardsday}}",
+                            "endRange": "3000-01-01"
+                        }
+                    },
+                    "issuing_addr": {
+                        "control": "text",
+                        "label": "注册地址",
+                        "span": "8",
+                        "width": "25px",
+                        "disabled": true,
+                        "rules": [{
+                                "required": true,
+                                "message": "请输入注册地址"
+                            },
+                            {
+                                "max": 80,
+                                "message": "长度不能超过80个字符"
+                            }
+                        ]
+                    },
+                    "org_code": {
+                        "control": "text",
+                        "label": "组织机构代码",
+                        "span": "8",
+                        "width": "25px"
+                    },
+                    "credit_org_code": {
+                        "control": "text",
+                        "label": "机构信用代码",
+                        "span": "8",
+                        "width": "25px",
+                        "disabled": true
+                    },
+                    "cust_type": {
+                        "label": "客户类型",
+                        "control": "select",
+                        "span": "8",
+                        "width": "25px",
+                        "dict": {
+                            "format": "label",
+                            "dictKey": [
+                                "US_E_CUST_TYPE"
+                            ],
+                            "dictType": "US_E_CUST_TYPE"
+                        },
+                        "disabled": true
+                    },
+                    "cust_nature": {
+                        "control": "select",
+                        "label": "客户性质",
+                        "span": "8",
+                        "width": "25px",
+                        "disabled": true,
+                        "rules": [{
+                            "required": true,
+                            "message": "请选择客户性质"
+                        }],
+                        "dict": {
+                            "dictType": "US_E_LEGAL_CUST_PROPERTY",
+                            "dictKey": [
+                                "US_E_LEGAL_CUST_PROPERTY"
+                            ],
+                            "format": "label"
+                        }
+                    },
+
+                    "frozen_state": {
+                        "control": "select",
+                        "label": "冻结状态",
+                        "width": "25px",
+                        "span": "8",
+                        "dict": {
+                            "dictType": "MS_E_YESORNO",
+                            "dictKey": [
+                                "MS_E_YESORNO"
+                            ],
+                            "format": "label"
+                        }
+                    }
+
+                }
+
+            ]
+        }
+    }
+}

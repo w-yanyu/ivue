@@ -1,0 +1,159 @@
+{
+	"module":"v_search_btn_datagrid",
+	"layout":{
+		"form":{
+			"controls":[
+				{   
+					
+					"lncfno":{
+						"label":"借据号",
+						"control":"text",
+						"name":"lncfno",
+						"rules":[
+							{
+								"required":false
+							},
+							{
+								"max":40,
+								"message":"长度不能超过40个字符"
+							}
+						]
+					},
+					"acctna":{
+						"label":"客户姓名",
+						"control":"text",
+						"name":"acctna",
+						"rules":[
+							{
+								"required":false
+							},
+							{
+								"max":32,
+								"message":"长度不能超过32个字符"
+							}
+						]
+					},
+					"idtfno":{
+						"label":"证件号码",
+						"control":"text",
+						"name":"idtfno",
+						"rules":[
+							{
+								"required":false
+							},
+							{
+								"max":32,
+								"message":"长度不能超过32个字符"
+							}
+						]
+					}
+				}
+				
+			]
+		},
+		"datagrid":{
+			"isInitSearch":false,
+			"scope":"searchTable",
+			"doRequest":{
+				"url":"/SUMP/icmcall/icmRPCCall",
+				"method":"POST",
+				"params":{
+					"servicecode":"PLMSKGTS0030"
+				}
+			},
+			"pagination":{
+				"show":true
+			},
+			"thead":[
+
+				{
+					"label":"借据号",
+					"prop":"lncfno",
+					"align": "center"
+				},
+				{
+					"label":"客户姓名",
+					"prop":"acctna",
+					"align": "center"
+					
+				},
+				{
+					"label":"证件号",
+					"prop":"idtfno",
+					"align": "center"
+				},
+				{
+					"label":"产品名称",
+					"prop":"prodna",
+					"align": "center"
+				},
+				{
+					"label":"还款类型",
+					"prop":"rptype",
+					"align": "center",
+					"dict":{
+						"dictType":"E_RPTYPE",
+						"dictKey":[
+							"E_RPTYPE"
+						],
+						"format":"label"
+					}
+				},
+				{
+					"label":"逾期天数",
+					"prop":"ovdays",
+					"align": "center"
+				},
+				
+				{
+					"label":"贷款状态",
+					"prop":"clssst",
+					"align": "center",
+					"dict": {
+						"dictType": "E_CLSSST",
+						"dictKey": [
+							"E_CLSSST"
+						],
+						"format": "label"
+					}
+				},
+				{
+					"label":"还款金额",
+					"prop":"rpamount",
+					"align": "center"
+				},
+				{
+					"label":"还款申请状态",
+					"prop":"rpaplstus",
+					"align": "center",
+					"dict":{
+						"dictType":"E_PAY_STATUES",
+						"dictKey":[
+							"E_PAY_STATUES"
+						],
+						"format":"label"
+					}
+				},
+				{
+					"label": "操作",
+					"fixed": "right",
+					"align": "center",
+					"btns": [
+					  {
+						"type": "edit",
+						"label": "详情",
+						"toRequest": {
+						  "url": "/views/other/loanPostManager/repayment_application_query.json",
+						  "method": "POST"
+						},
+						"props": {
+						  "title": "详情",
+						  "width":"80%"
+						}
+					  }
+					]
+				  }
+			]
+		}
+	}
+}

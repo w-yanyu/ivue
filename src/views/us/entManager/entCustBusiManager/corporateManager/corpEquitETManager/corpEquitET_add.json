@@ -1,0 +1,247 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "us0291"
+                }
+            },
+            "btns": [{
+                "type": "submit",
+                "label": "提交"
+            }],
+            "controls": [{
+                "cust_no": {
+                    "control": "hidden",
+                    "label": "客户编号",
+                    "value": "${{params.cust_no}}",
+                    "width": "10px",
+                    "disabled": true
+                },
+                "shoret": {
+                    "control": "hidden",
+                    "label": "股东构成/主要控股企业",
+                    "value":"ET"
+                },
+                "shareholder_id": {
+                    "control": "hidden",
+                    "width": "10px",
+                    "label": "股东ID"
+                },
+                "cust_name": {
+                    "control": "lookup",
+                    "edit": true,
+                    "width": "10px",
+                    "rules": [{
+                            "required": true,
+                            "message": "请输入被控股企业名称"
+                        },
+                        {
+                            "max": 80,
+                            "message": "长度不能超过80个字符"
+                        }
+                    ],
+                    "label": "被控股企业名称",
+                    "keyField": {
+                        "cust_name": "cust_name",
+                        "shareholder_id": "cust_no",
+                        "cust_type": "cust_type"
+                    },
+                    "toRequest": {
+                        "url": "/views/us/entManager/ent_cust_lookup.json",
+                        "method": "post"
+                    },
+                    "props": {
+                        "title": "查询被控股企业名称"
+                    },
+                    "format": "label"
+                },
+                "is_our_cust": {
+                    "control": "select",
+                    "label": "是否我行客户",
+                    "width": "10px",
+                    "value": "1",
+                    "disabled": true,
+                    "rules": [{
+                        "required": true,
+                        "message": "请选择是否我行客户"
+                    }],
+                    "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                            "MS_E_YESORNO"
+                        ],
+                        "format": "label"
+                    }
+                },
+
+                "cust_type": {
+                    "control": "select",
+                    "label": "客户类型",
+                    "width": "10px",
+                    "disabled": true,
+                    "dict": {
+                        "dictType": "US_E_CUST_TYPE",
+                        "dictKey": [
+                            "US_E_CUST_TYPE"
+                        ],
+                        "format": "label"
+                    },
+                    "rules": [{
+                        "required": true,
+                        "message": "请选择客户类别"
+                    }]
+                },
+                "registration_no": {
+                    "label": "登记注册号",
+                    "control": "text",
+                    "width": "10px",
+                    "rules": [{
+                        "required": true,
+                        "max": 30,
+                        "message": "30字以内"
+                    }]
+                },
+                "is_max_holder": {
+                    "control": "select",
+                    "label": "是否最大股东",
+                    "width": "10px",
+                    "rules": [{
+                        "required": true,
+                        "message": "请选择是否最大股东"
+                    }],
+                    "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                            "MS_E_YESORNO"
+                        ],
+                        "format": "label"
+                    }
+                },
+                "holder_type": {
+                    "control": "select",
+                    "label": "法人客户性质",
+                    "width": "10px",
+                    "rules": [{
+                        "required": true,
+                        "message": "请选择法人客户性质"
+                    }],
+                    "dict": {
+                        "dictType": "US_E_HOLDER_TYPE",
+                        "dictKey": [
+                            "US_E_HOLDER_TYPE"
+                        ],
+                        "format": "label"
+                    }
+                },
+                "contributive_type": {
+                    "control": "select",
+                    "label": "出资类别",
+                    "width": "10px",
+                    "rules": [{
+                        "required": true,
+                        "message": "请选择出资类别"
+                    }],
+                    "dict": {
+                        "dictType": "US_E_INVEST_TYPE",
+                        "dictKey": [
+                            "US_E_INVEST_TYPE"
+                        ],
+                        "format": "label"
+                    }
+                },
+                "ccy_code": {
+                    "control": "select",
+                    "label": "币种",
+                    "width": "10px",
+                    "dict": {
+                      "dictType": "MS_CURRENCY",
+                      "dictKey": [
+                        "MS_CURRENCY"
+                      ],
+                      "format": "label"
+                    },
+                    "rules": [{
+                        "required": true,
+                        "message": "请选择币种"
+                    }]
+                  },
+                "contributive_amt": {
+                    "label": "出资金额/价值（万元）",
+                    "control": "currency",
+                    "width": "10px",
+                    "max": 16,
+                    "rules": [{
+                        "required": true,
+                        "message": "请输入出资金额/价值（万元）"
+                    }]
+                },
+                "ownership_ratio": {
+                    "label": "股权比例",
+                    "control": "text",
+                    "width": "10px",
+                    "suffix": "%",
+                    "rules": [{
+                        "required": true,
+                        "max": 250,
+                        "pattern": "^(100.00|[1-9]?\\d(\\.\\d\\d\\d?)?)$",
+                        "message": "请输入(0-100)之间的利率"
+                    }]
+                },
+                "is_controller": {
+                    "control": "select",
+                    "label": "是否实际控制人",
+                    "width": "10px",
+                    "rules": [{
+                        "required": true,
+                        "message": "请选择"
+                    }],
+                    "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                            "MS_E_YESORNO"
+                        ],
+                        "format": "label"
+                    }
+                },
+                "is_valid": {
+                    "control": "select",
+                    "label": "是否有效",
+                    "width": "10px",
+                    "rules": [{
+                        "required": true,
+                        "message": "请选择是否有效"
+                    }],
+                    "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                            "MS_E_YESORNO"
+                        ],
+                        "format": "label"
+                    }
+                },
+                "shareholder_date": {
+                    "label": "成为股东的日期",
+                    "control": "dateTimePicker",
+                    "width": "10px",
+                    "rules": [{
+                        "required": true,
+                        "message": "请选择成为股东的日期"
+                    }]
+                },
+                "shareholder_change_date": {
+                    "control": "dateTimePicker",
+                    "label": "股东结构变更日期",
+                    "width": "10px",
+                    "rules": [{
+                        "required": true,
+                        "message": "请选择股东结构变更日期"
+                    }]
+                }
+            }]
+        }
+    }
+}

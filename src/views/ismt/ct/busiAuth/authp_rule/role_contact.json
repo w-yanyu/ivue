@@ -1,0 +1,84 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "role_id": {
+            "control": "text",
+            "label": "角色ID",
+            "rules": [
+              {
+                "max": 64,
+                "message": "长度不能超过64个字符"
+              }
+            ]
+          },
+          "role_name": {
+            "control": "text",
+            "label": "角色名称",
+            "rules": [
+              {
+                "max": 100,
+                "message": "长度不能超过100个字符"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "提交",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+                "servicecode": "ct2432",
+                "authp_system_code": "${{params.authp_system_code}}",
+                "auth_version": "${{params.auth_version}}",
+                "appId":"${{params.appId}}"
+            }
+          },
+          "eventAfter": { 
+            "doParentCallback": true,
+            "doLastCallback": true
+          }
+        }
+      ]
+      
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ct2050"
+        }
+      },
+      "pagination": {
+        "show": true,
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "type": "radio",
+          "align": "center",
+          "label" : "选择"
+        },
+        {
+          "label": "角色ID",
+          "prop": "role_id"
+        },
+        {
+          "label": "角色名称",
+          "prop": "role_name"
+        }
+      ]
+    }
+  }
+}

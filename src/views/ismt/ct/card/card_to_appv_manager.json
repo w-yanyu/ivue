@@ -1,0 +1,190 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+      "form": {
+          "doRequest": {
+              "url": "",
+              "method": "POST",
+              "params": {}
+          },
+          "controls": [
+              {
+                "card_id": {
+                    "control": "text",
+                    "label": "卡片编号",
+                    "rules": [
+                        {
+                            "max": 30,
+                            "message": "长度不能超过30个字符"
+                        }
+                    ]
+                },
+                "card_name": {
+                    "control": "text",
+                    "label": "卡片名称"
+                }
+              }
+          ]
+      },
+      "toolbar": {
+          
+      },
+      "datagrid": {
+          "scope": "searchTable",
+          "isInitSearch": false,
+          "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                  "servicecode": "ct3011",
+                  "appId":"deciOnl",
+                  "opera_type":"3",
+                  "applst":"0"
+              }
+          },
+          "pagination": {
+              "show": true,
+              "pageSize": 10
+          },
+          "thead": [
+              {
+                  "type": "index"
+              },
+              {
+                "label": "记录编号",
+                "prop": "record_no"
+              },
+              {
+                  "label": "卡片编号",
+                  "prop": "card_id"
+              },
+              {
+                  "label": "卡片名称",
+                  "prop": "card_name"
+              },
+              {
+                  "label": "卡片类型",
+                  "prop": "card_type",
+                  "dict": {
+                      "dictType": "CT_E_CARD_TYPE",
+                      "format": "label",
+                      "dictKey": [
+                          "CT_E_CARD_TYPE"
+                      ]
+                  },
+                  "format": "label"
+              },
+              {
+                "label": "适用角色名称",
+                "prop": "scope_range_str"
+              },
+              {
+                "label": "卡片状态",
+                "prop": "card_status",
+                "dict": {
+                    "dictType": "CT_E_CARD_STATUS",
+                    "format": "label",
+                    "dictKey": [
+                        "CT_E_CARD_STATUS"
+                    ]
+                }
+              },
+              {
+                "label": "生效类型",
+                "prop": "effe_type",
+                "dict": {
+                    "dictType": "CT_E_EFFE_TP",
+                    "dictKey": [
+                      "CT_E_EFFE_TP"
+                    ],
+                    "format": "label"
+                  }
+              },
+              {
+                "label": "生效日期",
+                "prop": "effe_date"
+              },
+              {
+                "label": "审批状态",
+                "prop": "applst",
+                "dict": {
+                    "dictType": "CT_E_CARD_APPLST",
+                    "dictKey": [
+                      "CT_E_CARD_APPLST"
+                    ],
+                    "format": "label"
+                  }
+              },
+              {
+                "label": "参数",
+                "prop": "params"
+              },
+              {
+                "label": "备注信息",
+                "prop": "remark"
+              },
+              {
+                  "label": "操作",
+                  "width": 200,
+                  "align":"center",
+                  "fixed": "right",
+                  "btns": [
+                      {
+                          "type": "edit",
+                          "label": "编辑",
+                          "toRequest": {
+                              "url": "/views/ismt/ct/card/card_appv_update.json",
+                              "method": "GET"
+                          },
+                          "props": {
+                              "title": "编辑录入信息"
+                          }
+                      },
+                      {
+                        "type": "edit",
+                        "label": "提交",
+                        "doRequest": {
+                          "url": "/SUMP/call/RPCCall",
+                          "method": "DELETE",
+                          "params": {
+                            "servicecode": "ct3011",
+                            "appId":"deciOnl",
+                            "opera_type":"2",
+                            "editFlag":"0",
+                            "applst":"1"
+                          }
+                        },
+                        "confirm":{
+                          "title":"提示信息",
+                          "msg":"确认提交到审批吗？",
+                          "confirmButtonText":"确定",
+                          "cancelButtonText":"取消"
+                        }
+                      },
+                      {
+                        "type": "edit",
+                        "label": "作废",
+                        "doRequest": {
+                          "url": "/SUMP/call/RPCCall",
+                          "method": "DELETE",
+                          "params": {
+                            "servicecode": "ct3011",
+                            "appId":"deciOnl",
+                            "opera_type":"2",
+                            "editFlag":"0",
+                            "applst":"2"
+                          }
+                        },
+                        "confirm":{
+                          "title":"提示信息",
+                          "msg":"确认作废吗？",
+                          "confirmButtonText":"确定",
+                          "cancelButtonText":"取消"
+                        }
+                    }
+                  ]
+              }
+          ]
+      }
+  }
+}

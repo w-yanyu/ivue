@@ -1,0 +1,115 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "btns": [
+                {
+                    "type": "submit",
+                    "label": "提交",
+                    "icon": "",
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "cb0059",
+                            "page_id": "/views/cs/paramManage/template/collTemplate/collTemplate_add.json",
+                            "appId": "cbOnl",
+                            "coll_kind": "02",
+                            "org_id": "$g{{user_info.org_id}}"
+                          }
+                    }
+                }
+            ],
+            "controls": [
+                {
+                    "template_type": {
+                        "control": "select",
+                        "label": "模板类型",
+                        "width": "130px",
+                        "dict": {
+                          "dictType": "CS_E_TEMPLATE_TYPE",
+                          "dictKey": [
+                            "CS_E_TEMPLATE_TYPE"
+                          ],
+                          "format": "value-label"
+                        },
+                        "rules": [
+                          {
+                            "required": true,
+                            "message": "请选择模板类型"
+                          }
+                        ]
+                    },
+                    "template_code": {
+                        "control": "text",
+                        "label": "模板代码",
+                        "width": "130px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message":"请输入"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "template_name": {
+                        "control": "text",
+                        "label": "模板名称",
+                        "width": "130px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message":"请输入"
+                            }
+                        ]
+                    },
+                    "template_desc": {
+                        "control": "text",
+                        "label": "模板用途",
+                        "width": "130px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message":"请输入"
+                            }
+                        ]
+                    }
+                },
+                {
+                  "file_name": {
+                    "control": "hidden"
+                  }
+                },
+                {
+                  "template_url": {
+                    "control": "hidden"
+                  }
+                },
+                {
+                  "file": {
+                    "doRequest": {
+                        "url": "/SUMP/minioCall/upload",
+                        "method": "post",
+                        "params": {
+                          "org_id": "$g{{user_info.org_id}}"
+                        },
+                        "resultSet": {
+                          "template_url": "path",
+                          "file_name": "oldName",
+                          "file_size": "size"
+                        }
+                      },
+                      "width": "240px",
+                      "control": "file",
+            
+                      "limit": 1,
+                      "limitSize": 10,
+                      "label": "上传文件",
+                      "btnLable": "请选择文件"
+                  }
+                }
+            ]
+        }
+    }
+}

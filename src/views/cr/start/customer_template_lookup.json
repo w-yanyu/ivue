@@ -1,0 +1,142 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [{
+                "temp_name": {
+                    "label": "模版名称",
+                    "control": "text"
+                },
+                "temp_id": {
+                    "control": "text",
+                    "label": "模版编码"
+                },
+                "ind_kind": {
+                    "label": "行业类型",
+                    "control": "text",
+                    "dict": {
+                        "dictType": "CR_E_IND_KIND",
+                        "dictKey": [
+                            "CR_E_IND_KIND"
+                        ],
+                        "format": "label"
+                    }
+                },
+                "corp_size": {
+                    "control": "text",
+                    "label": "企业规模",
+                    "dict": {
+                        "dictType": "CR_E_CORP_SIZE",
+                        "dictKey": [
+                            "CR_E_CORP_SIZE"
+                        ],
+                        "format": "label"
+                    }
+                }
+            }]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "cr0016",
+                    "cust_type": "${{params.cust_type}}",
+                    "corp_size": "${{params.corp_size}}",
+                    "sex_tp": "${{params.sex_tp}}",
+                    "is_listed_company": "${{params.is_listed_company}}",
+                    "is_group_company": "${{params.is_group_company}}",
+                    "education": "${{params.education}}",
+                    "marr_state": "${{params.marr_state}}",
+                    "temp_type": "${{params.temp_type}}"
+                }
+            },
+            "thead": [{
+                    "type": "selection",
+                    "align": "left"
+                },
+                {
+                    "label": "模版编码",
+                    "prop": "temp_id",
+                    "width": 160
+                },
+                {
+                    "label": "模版名称",
+                    "prop": "temp_name",
+                    "width": 160
+                },
+                {
+                    "label": "策略编码",
+                    "prop": "unfincl_strtegy_id"
+                },
+                {
+                    "label": "模版类型",
+                    "prop": "temp_type",
+                    "width": 160,
+                    "align": "center",
+                    "type": "leaf",
+                    "dict": {
+                        "dictType": "CR_E_TEMP_TYPE",
+                        "dictKey": [
+                            "CR_E_TEMP_TYPE"
+                        ],
+                        "format": "value-label"
+                    }
+                },
+                {
+                    "label": "模版种类",
+                    "prop": "temp_kind",
+                    "align": "center",
+                    "type": "leaf",
+                    "dict": {
+                        "dictType": "CR_E_TEMP_KIND",
+                        "dictKey": [
+                            "CR_E_TEMP_KIND"
+                        ],
+                        "format": "value-label"
+                    }
+                },
+                {
+                    "label": "财务占比",
+                    "prop": "fincl_rate"
+                },
+                {
+                    "label": "非财务占比",
+                    "prop": "unfincl_rate"
+                },
+                {
+                    "label": "失效比",
+                    "prop": "point_diff"
+                },
+                {
+                    "label": "是否有效",
+                    "prop": "is_valid",
+                    "align": "center",
+                    "type": "leaf",
+                    "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                            "MS_E_YESORNO"
+                        ],
+                        "format": "value-label"
+                    }
+                },
+                {
+                    "label": "有效期期限",
+                    "prop": "dt_term"
+                },
+                {
+                    "label": "操作",
+                    "align": "center",
+                    "fixed": "right",
+                    "btns": [{
+                        "type": "bringback",
+                        "label": "选择"
+                    }]
+                }
+            ]
+        }
+    }
+}

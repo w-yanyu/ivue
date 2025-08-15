@@ -1,0 +1,222 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "controls": [
+        {
+          "org_id": {
+            "control": "text",
+            "label": "法人号"
+          },
+          "org_name": {
+            "control": "text",
+            "label": "法人名称"
+          },
+          "org_level": {
+            "control": "select",
+            "label": "法人级别",
+            "dict": {
+              "dictType": "MS_E_CORPLEVEL",
+              "dictKey": [
+                  "MS_E_CORPLEVEL"
+              ],
+              "format": "value-label"
+            }
+          },
+          "upper_org": {
+            "control": "text",
+            "label": "上级法人"
+          },
+          "ccy_code": {
+            "control": "select",
+            "label": "默认币种",
+            "selectFirstValue":false,
+              "dict": {
+                  "dictType": "MS_CURRENCY",
+                  "dictKey": [
+                      "MS_CURRENCY"
+                  ],
+                  "format": "value-label"
+              }
+          },
+          "multi_ccy_flag": {
+              "control": "select",
+              "label": "多币种标志",
+              "selectFirstValue":false,
+              "dict": {
+                  "dictType": "MS_E_YESORNO",
+                  "dictKey": [
+                      "MS_E_YESORNO"
+                  ],
+                  "format": "value-label"
+              }
+          }
+        }
+      ]
+    },
+
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "icon": "el-icon-circle-plus",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/ismt/ct/orgManage/org_add.json",
+            "params": {
+              "appId":"deciOnl"
+            }
+          },
+          "props": {
+            "title": "新增法人"
+          }
+        }
+      ]
+    },
+
+    "datagrid": {
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "ct2311"
+        }
+      },
+      "thead": [
+        {
+          "type":"string",
+          "label": "法人号",
+          "align":"center",
+          "prop": "org_id"
+        },
+        {
+          "type":"string",
+          "label": "法人名称",
+          "align":"center",
+          "prop": "org_name"
+        },
+        {
+          "type":"string",
+          "label": "法人地址",
+          "align":"center",
+          "prop": "org_address"
+        },
+        {
+          "type": "string",
+          "width": "150px",
+          "align": "center",
+          "label": "系统日期",
+          "prop": "system_date"
+        },
+        {
+          "type":"string",
+          "label": "法人级别",
+          "align":"center",
+          "width":"100%",
+          "prop": "org_level",
+          "dict":{
+            "dictType": "MS_E_CORPLEVEL",
+            "dictKey": [
+              "MS_E_CORPLEVEL"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type":"string",
+          "label": "上级法人号",
+          "align":"center",
+          "width":"100%",
+          "prop": "upper_org"
+        },
+        {
+          "type":"string",
+          "label": "默认币种",
+          "align":"center",
+          "width":"100%",
+          "prop": "ccy_code",
+          "dict":{
+            "dictType": "MS_SETT_CURRENCY",
+            "dictKey": [
+              "MS_SETT_CURRENCY"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type":"string",
+          "label": "多币种标志",
+          "align":"center",
+          "width":"100%",
+          "prop": "multi_ccy_flag",
+          "dict":{
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "value-label"
+
+          }
+        },
+        {
+          "type":"string",
+          "label": "数据版本号",
+          "width":"100%",
+          "align":"center",
+          "prop": "data_version"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width":"250%",
+          "align":"center",
+          "btns": [     
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/ismt/ct/orgManage/org_modify.json",
+                "method": "POST"
+              },
+              "props": {
+                "title": "法人信息维护"
+              }
+            },
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/ismt/ct/orgManage/org_detail.json",
+                "method": "POST"
+              },
+              "props": {
+                "title": "法人信息详情"
+              }
+            },
+            {
+                "type": "look",
+                "label": "删除",
+                "show": {"expression":"'${{current.is_inited}}'=== '0'"},
+                "doRequest": {
+                    "url": "/SUMP/icmcall/icmRPCCall",
+                    "method": "POST",
+                    "params": {
+                        "servicecode": "ct2314"
+                    }
+                },
+                "confirm": {
+                    "title": "确定删除",
+                    "confirmButtonText": "确定",
+                    "cancelButtonText": "取消"
+                }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

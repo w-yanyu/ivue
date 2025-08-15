@@ -1,0 +1,160 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "method_code": {
+            "control": "select",
+            "label": "处置措施代码",
+            "dict": {
+              "dictType": "E_METHOD_CD",
+              "dictKey": [
+                "E_METHOD_CD"
+              ],
+              "format": "value-label"
+            }
+          },
+          "method_name": {
+            "control": "text",
+            "label": "处置措施名称"
+          },
+          "warning_cust": {
+            "control": "hidden",
+            "label": "预警对象",
+            "dict": {
+              "dictType": "E_WARN_TARGET",
+              "dictKey": [
+                "E_WARN_TARGET"
+              ]
+            },
+            "closable": true,
+            "disabled": true
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "POST",
+            "url": "/views/dh/warn/param/dispose/Dispose_measures/Dispose_measures_add.json",
+            "params": {
+              "warning_cust": "C"
+            }
+            
+          },
+          "props": {
+            "width": "75%",
+            "title": "预警处置措施新增"
+          }
+        }
+
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "wa1401",
+          "page_id": "/views/dh/warn/param/dispose/Dispose_measures/Dispose_measures_manage.json"
+        }
+      },
+      "thead": [
+        {
+          "label": "序号",
+          "type" :  "index"
+        },
+        {
+          "label": "处置措施代码",
+          "prop": "method_code",
+          "align":"center",
+          "dict": {
+            "dictType": "E_METHOD_CD",
+            "dictKey": [
+              "E_METHOD_CD"
+            ]
+          }
+        },
+        {
+          "label": "处置措施名称",
+          "prop": "method_name",
+          "align":"center"
+        },
+        {
+          "label": "是否启用流程",
+          "prop": "flow_ind",
+          "align":"center",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ]
+          }
+        },
+        {
+          "label": "操作日期",
+          "prop": "data_update_time",
+          "align":"center"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 180,
+          "align":"center",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/dh/warn/param/dispose/Dispose_measures/Dispose_measures_detalis.json",
+                "method": "POST",
+                "params": {
+                }
+              },
+              "props": {
+                "width": "75%",
+                "title": "预警处置措施详情"
+              }
+            },
+            {
+              "type": "look",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/dh/warn/param/dispose/Dispose_measures/Dispose_measures_update.json",
+                "method": "POST",
+                "params": {
+                }
+              },
+              "props": {
+                "width": "75%",
+                "title": "预警处置措施维护"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "wa1402",
+                  "trantp": "DELETE",
+                  "warning_cust": "C"
+                }
+              }
+            }
+
+          ]
+        }
+      ]
+    }
+  }
+}

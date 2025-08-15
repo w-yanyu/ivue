@@ -1,0 +1,255 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": "${{params}}",
+      "scope": "form",
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "cb0322",
+              "id": "${{params.id}}"
+            }
+          }
+        },
+        {
+          "type": "close",
+          "label": "取消"
+        }
+      ],
+      "controls": [
+        {
+          "indicator_no": {
+            "label": "指标",
+            "value": "${{form.indicator_alias}}",
+            "control": "remoteSelect",
+            "format": "value-label",
+            "labelField": "indicator_alias",
+            "valueField": "indicator_no",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "cb0313"
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          },
+          "batch_no": {
+            "control": "select",
+            "label": "批次号",
+            "value": "${{form.batch_no}}"
+          }
+        },
+        {
+          "stage_code": {
+            "control": "remoteSelect",
+            "label": "逾期阶段",
+            "labelField": "stage_name",
+            "valueField": "stage_code",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "length": 999,
+                "servicecode": "cb0083"
+              }
+            },
+            "format": "value-label"
+          },
+          "oa_org_id": {
+            "label": "委外公司",
+            "control": "remoteSelect",
+            "labelField": "outsourcing_org_name",
+            "valueField": "outsourcing_org_id",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "cb0052",
+                "org_id": "$g{{user_info.org_id}}"
+              }
+            },
+            "format": "value-label",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          }
+        },
+        {
+          "coll_team": {
+            "control": "inputTree",
+            "label": "催收组",
+            "idField": "coll_team",
+            "nodeTypeField": "type",
+            "pIdField": "parent_coll_team",
+            "labelField": "coll_team_name",
+            "events": {
+              "emit": [
+                "collector"
+              ]
+            },
+            "nodeTypes": {
+              "collTeam": {
+                "icon": "el-icon-news",
+                "children": [
+                  "collTeam"
+                ]
+              }
+            },
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "cb0041"
+              }
+            },
+            "format": "value-label"
+          },
+          "collector": {
+            "control": "remoteSelect",
+            "label": "催收员",
+            "labelField": "user_name",
+            "valueField": "user_id",
+            "lazy": true,
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "appId": "cbOnl",
+                "servicecode": "cb0084"
+              }
+            },
+            "format": "value-label"
+          }
+        },
+        {
+          "frequency": {
+            "control": "select",
+            "label": "频度",
+            "dict": {
+              "dictType": "CS_E_INDICATOR_FREQUENCY",
+              "dictKey": [
+                "CS_E_INDICATOR_FREQUENCY"
+              ],
+              "format": "value-label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          },
+          "ccy_code": {
+            "label": "币种",
+            "control": "select",
+            "dict": {
+              "dictType": "MS_CURRENCY",
+              "dictKey": [
+                "MS_CURRENCY"
+              ]
+            }
+          }
+        },
+        {
+          "date": {
+            "label": "日期",
+            "control": "dateTimePicker",
+            "value": "${{form.date}}",
+            "format": "yyyyMMdd",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          },
+          "loan_prod_cd": {
+            "control": "text",
+            "label": "贷款产品",
+            "value": "${{form.loan_prod_cd}}"
+          }
+        },
+        {
+          "indicator_task": {
+            "control": "text",
+            "label": "指标任务值",
+            "value": "${{form.indicator_task}}",
+            "rules": [
+              {
+                "required": true,
+                "max": 400,
+                "message": "必填项且长度不能超过400个字符"
+              }
+            ]
+          },
+          "org_id": {
+            "label": "创建法人",
+            "control": "remoteSelect",
+            "labelField": "org_name",
+            "valueField": "org_id",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2311"
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "branch_id": {
+            "label": "创建机构",
+            "control": "remoteSelect",
+            "labelField": "branch_name",
+            "valueField": "branch_id",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2142",
+                "user_id": "$g{{user_info.userCode}}",
+                "branch_id": "$g{{user_info.branch_id}}",
+                "brch_relation_code": "01"
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ],
+            "format": "value-label"
+          },
+          "id": {
+            "control": "text",
+            "disabled": true,
+            "label": "考核任务编号",
+            "value": "${{form.id}}"
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,170 @@
+{
+  "module": "v-search-btn-datagrid",
+  "pageId": "rule_flow",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "scoreCardCode": {
+            "label": "复杂评分卡代码",
+            "control": "text",
+            "width":"auto",
+            "span": 8
+          },
+          "scoreCardNameAfter": {
+            "label": "复杂评分卡名称",
+            "control": "text",
+            "width":"auto",
+            "span": 8
+          },
+          "reviewStatus": {
+            "label": "审核状态",
+            "control": "select",
+            "dict": {
+              "dictType": "DECI_E_SCORE_REVIEW_STATUS",
+              "dictKey": [
+                  "DECI_E_SCORE_REVIEW_STATUS"
+              ],
+              "format": "label"
+          },
+          "width":"auto",
+            "span": 8
+          }
+        },{
+          "riskOperationType": {
+            "label": "操作类型",
+            "control": "select",
+            "dict": {
+              "dictType": "DECI_E_RISK_OPERATION_TYPE",
+              "dictKey": [
+                  "DECI_E_RISK_OPERATION_TYPE"
+              ],
+              "format": "label"
+          },
+          "width":"auto",
+            "span": 8
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "deci020208",
+          "score_card_type": "1"
+          
+        }
+      },
+      "thead": [
+        {
+          "type": "index",
+          "label": "序号",
+          "align": "center"
+      },
+        {
+          "label": "复杂评分卡代码",
+          "prop": "scoreCardCode"
+        },
+        {
+          "label": "复杂评分卡名称",
+          "prop": "scoreCardNameAfter"
+        },
+        {
+          "label": "操作类型",
+          "prop": "operationType",
+          "dict": {
+            "dictType": "DECI_E_RISK_OPERATION_TYPE",
+            "dictKey": [
+                "DECI_E_RISK_OPERATION_TYPE"
+            ],
+            "format": "label"
+        }
+        },
+        {
+          "label": "审核状态",
+          "prop": "reviewStatus",
+          "dict": {
+            "dictType": "DECI_E_SCORE_REVIEW_STATUS",
+            "dictKey": [
+                "DECI_E_SCORE_REVIEW_STATUS"
+            ],
+            "format": "label"
+        }
+        },
+        {
+          "label": "申请人",
+          "prop": "applyUserName"
+        },
+        {
+          "label": "申请时间",
+          "prop": "applyTime"
+        },
+        {
+          "label": "操作",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "审核",
+              "authId": "",
+              "toRequest": {
+                "url": "@scoreCardReview",
+                "method": "get",
+                
+                "params":{
+                  "scoreCardType":"${{current.scoreCardType}}"
+                }
+              },
+              "props": {
+                "width": "90%",
+                "height": "85%"
+              },
+              "show": {
+                "expression": "'${{current.reviewStatus}}'=== 'C'"
+              }
+            },
+            {
+              "type": "look",
+              "label": "查看",
+              "authId": "",
+              "toRequest": {
+                "url": "@scoreCardReviewView",
+                "method": "get"
+              },
+              "props": {
+                "width": "90%",
+                "top": "4vh"
+              }
+            },
+            {
+              "type": "openVerify",
+              "label": "测试结果",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "deci020219",
+                  "score_card_code": "${{current.scoreCardCode}}"
+                }
+              },
+              "toRequest": {
+                "url": "@PFBG",
+                "method": "get"
+              },
+              "props": {
+                "width": "90%",
+                "top": "4vh"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

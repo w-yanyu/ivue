@@ -1,0 +1,65 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "controls": [
+                {          
+                    "tool_id": {
+                        "label": "营销工具",
+                        "control": "remoteSelect",
+                        "labelField": "tool_name",
+                        "valueField": "tool_id",
+                        "doRequest": {
+                            "url": "/SUMP/call/RPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "mk0009",
+                                "tool_state": "0",
+                                "grupno": "0006",
+                                "pid": "KSCP"
+                            }
+                        },
+                        "width": "25px",
+                        "rules": [ 
+                            {
+                                "required": true,
+                                "message": "必填项"
+                            }
+                        ]
+                    }
+                },
+                {
+                 "active_count": {
+                    "control": "text",
+                    "label": "活动数量",
+                    "width": "25px",
+                    "rules": [
+                        {
+                          "expression": " ${{form.active_count}} >=  0 ",
+                          "message": "活动数量初值不能小于零"
+                        },
+                        {
+                          "pattern": "^[1-9]+[0-9]*$",
+                          "message": "请输入整数"
+                        }
+                      ]
+                  },
+                  "active_amt": {
+                    "label": "活动金额",
+                    "#span": "7",
+                    "control": "currency",
+                    "suffix": "元",
+                    "width": "25px",
+                    "thousand": ",",
+                    "rules": [
+                      {
+                        "expression": " ${{form.active_amt}} >=  0 ",
+                        "message": "活动金额末值不能小于零"
+                      }
+                    ]
+                  }
+                }
+            ]
+        }
+    }
+}

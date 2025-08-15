@@ -1,0 +1,393 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "name": "info",
+      "scope": "formData",
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pd0313",
+          "credit_prod_cd": "${{params.sale_prod_cd}}",
+          "prod_version": "${{params.prod_version}}"
+        }
+      },
+      "btns": [],
+      "controls": [
+        {
+          "servicecode": {
+            "control": "hidden",
+            "label": "新增交易码",
+            "value": "pd0314"
+          },
+          "prod_version": {
+            "control": "hidden",
+            "label": "授信产品版本"
+          },
+          "credit_prod_cd": {
+            "control": "text",
+            "label": "授信产品编号",
+            "span": 8,
+            "disabled": true
+          },
+          "is_self_help": {
+            "control": "select",
+            "label": "是否自助",
+            "span": 8,
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          },
+          "multiple_credit_allow_flag": {
+            "control": "select",
+            "label": "是否允许多个有效授信",
+            "span": 8,
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          },
+          "credit_way": {
+            "control": "select",
+            "label": "授信类型",
+            "span": 8,
+            "dict": {
+              "dictType": "PD_E_CREDIT_WAY",
+              "dictKey": [
+                "PD_E_CREDIT_WAY"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          },
+          "guar_type":{
+            "span": 8,
+            "disabled": false,
+            "label": {
+              "default": "担保方式",
+              "i18n": "I10.guarantee-method"
+                      },
+            "control": "select",
+            "dict": {
+              "dictType": "MS_E_GUAR_TYPE",
+              "dictKey": [
+                "MS_E_GUAR_TYPE"
+              ],
+              "format": "label"
+            }
+        },
+        "colt_type": {
+          "label": "押品种类",
+          "control": "remoteSelect",
+          "disabled": false,
+          "span": 8,
+          "valueField": "colt_type",
+          "labelField": "colt_name",
+          "doRequest": {
+            "url": "/SUMP/call/RPCCall",
+            "method": "post",
+            "params": {
+              "servicecode": "co1012",
+              "guar_type": "${{formData.guar_type}}"
+            }
+          }
+        },
+          "is_allow_mul_prod": {
+            "control": "select",
+            "label": "是否允许同时存在多个产品明细",
+            "span": 8,
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ],
+            "showItem": {
+              "1": [
+                "credit_allow_num"
+              ]
+            },
+            "events": {
+              "condition": {
+                "1": {
+                  "control": {
+                    "cl_allocation_mode": {
+                      "disabled": false,
+                      "rules": [
+                        {
+                          "required": true,
+                          "message": "请输入"
+                        }
+                      ]
+                    },
+                    "credit_allow_num": {
+                      "rules": [
+                        {
+                          "required": true,
+                          "message": "请输入"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "0": {
+                  "control": {
+                    "cl_allocation_mode": {
+                      "disabled": true,
+                      "value": "1",
+                      "rules": [
+                        {
+                          "required": false,
+                          "message": "请输入"
+                        }
+                      ]
+                    }
+                  },
+                  "credit_allow_num": {
+                    "rules": [
+                      {
+                        "required": false
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "credit_allow_num": {
+            "control": "text",
+            "initShow": false,
+            "label": "允许授信出账产品数量",
+            "span": 8,
+            "rules": [
+              {
+                "type": "number",
+                "message": "请输入正确整数"
+              },
+              {
+                "pattern": "^[1-9]+[0-9]*$",
+                "message": "请输入正整数"
+              }
+            ]
+          },
+          "cl_allocation_mode": {
+            "control": "select",
+            "label": "分配方式",
+            "span": 8,
+            "dict": {
+              "dictType": "PD_E_CLALLOCATION_MODE",
+              "dictKey": [
+                "PD_E_CLALLOCATION_MODE"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          },
+          "min_credit_amt": {
+            "control": "currency",
+            "align": "left",
+            "label": "最小授信额度",
+            "span": 8,
+            "format": {
+              "thousand": ",",
+              "decimal": 2
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          },
+          "max_credit_amt": {
+            "control": "currency",
+            "align": "left",
+            "label": "最大授信额度",
+            "span": 8,
+            "format": {
+              "thousand": ",",
+              "decimal": 2
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          },
+          "min_credit_exposure": {
+            "control": "currency",
+            "align": "left",
+            "label": "最小授信敞口",
+            "span": 8,
+            "format": {
+              "thousand": ",",
+              "decimal": 2
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          },
+          "max_credit_exposure": {
+            "control": "currency",
+            "align": "left",
+            "label": "最大授信敞口",
+            "span": 8,
+            "format": {
+              "thousand": ",",
+              "decimal": 2
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          },
+          "due_date_option": {
+            "control": "select",
+            "label": "到期日选项",
+            "span": 8,
+            "dict": {
+              "dictType": "PD_E_DUE_DATE_OPTION",
+              "dictKey": [
+                "PD_E_DUE_DATE_OPTION"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          },
+          "control_credit_flag": {
+            "control": "select",
+            "label": "是否控制授信额度",
+            "span": 8,
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          },
+          "inti_credit_allo_flag": {
+            "control": "select",
+            "label": "是否初始化额度分配组合",
+            "span": 8,
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          },
+          "credit_grace_days": {
+            "control": "text",
+            "label": "授信宽限天数",
+            "span": 8,
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              },
+              {
+                "type": "number",
+                "message": "请输入正确整数"
+              }
+            ]
+          },
+          "max_credit_term": {
+            "control": "text",
+            "label": "最大授信期限(月)",
+            "span": 8,
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              },
+              {
+                "type": "number",
+                "message": "请输入正确整数"
+              }
+            ]
+          },
+          "is_promptly_effect": {
+            "control": "select",
+            "label": "是否立即生效",
+            "span": 8,
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,142 @@
+
+
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "prod_tplt_code": {
+                        "control": "text",
+                        "value": "${{params.prod_tplt_code}}",
+                        "label": "产品模板代码",
+                        "disabled": true
+                    },
+                    "tplt_nm": {
+                        "control": "text",
+                        "value": "${{params.tplt_nm}}",
+                        "label": "模板名称",
+                        "disabled": true
+                    }
+                },
+                {
+                    "tplt_protp_code": {
+                        "control": "text",
+                        "value": "${{params.tplt_protp_code}}",
+                        "label": "模板原型代码",
+                        "disabled": true
+                    },
+                    "tplt_dsc": {
+                        "control": "text",
+                        "value": "${{params.tplt_dsc}}",
+                        "label": "模版描述",
+                        "disabled": true
+                    }
+                },
+                {
+                    "core_busi_dman": {
+                        "control": "select",
+                        "label": "业务领域",
+                        "value": "${{params.core_busi_dman}}",
+                        "dict": {
+                            "dictType": "LN_E_BUSI_DMAN",
+                            "dictKey": [
+                                "LN_E_BUSI_DMAN"
+                            ],
+                            "format": "label"
+                        },
+                        "disabled": true
+                    },
+                    "loan_tplt_ste": {
+                        "control": "select",
+                        "label": "贷款模板状态",
+                        "value": "${{params.loan_tplt_ste}}",
+                        "dict": {
+                            "dictType": "LN_E_LOAN_CMPT_STE",
+                            "dictKey": [
+                                "LN_E_LOAN_CMPT_STE"
+                            ],
+                            "format": "label"
+                        },
+                        "disabled": true
+                    }
+                }
+            ],
+            "btns": []
+        },
+        "datagrid": {
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ln3261",
+                    "outlistid": "lstklnf_cmpt_rgstn",
+                    "iscomplex": true
+                }
+            },
+            "thead": [
+                {
+                    "label": "部件id",
+                    "prop": "cmpt_id",
+                    "align": "center"
+                },
+                {
+                    "label": "部件对象",
+                    "prop": "cmpt_obj",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "LN_E_CMPT_OBJ",
+                        "dictKey": [
+                            "LN_E_CMPT_OBJ"
+                        ],
+                        "format": "label-value"
+                    }
+                },
+                {
+                    "label": "贷款币种规则",
+                    "prop": "loan_ccy_rule",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "LN_E_CCY_RULE",
+                        "dictKey": [
+                            "LN_E_CCY_RULE"
+                        ],
+                        "format": "label-value"
+                    }
+                },
+                {
+                    "label": "指定币种",
+                    "prop": "asgn_ccy",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "MS_CURRENCY",
+                        "dictKey": [
+                            "MS_CURRENCY"
+                        ],
+                        "format": "label-value"
+                    }
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 100,
+                    "align": "center",
+                    "btns": [
+                        {
+                            "type": "custom",
+                            "label": "详情",
+                            "toRequest": {
+                                "url": "/views/product/productModel/productTemplate/prod_cmpt_id_qry.json",
+                                "method": "GET",
+                                "params": {
+                                    "path": "${{current.cmpt_id}}"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,164 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "btns": [
+                {
+                    "type": "submit",
+                    "label": "提交",
+                    "doRequest": {
+                        "url": "/SUMP/call/RPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "ce0010",
+                            "page_id": "/views/ce/paramManage/product/function/function_add.json",
+                            "coll_kind":"02"
+                        }
+                    }
+                }
+            ],
+            "controls": [
+                {
+                    "overdue_stage_code": {
+                        "control": "text",
+                        "label": "逾期阶段代码",
+                        "width": "130px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入"
+                            },
+                            {
+                                "max":10,
+                                "message":"最多可以输入 10 个字节"
+                            }
+                        ]
+                    },
+                    "ovd_period_name": {
+                        "control": "text",
+                        "label": "逾期阶段名称",
+                        "width": "130px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入"
+                            },
+                            {
+                                "max": 30,
+                                "message": "最多可以输入 30 个字节"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "overdue_period_type": {
+                        "control": "select",
+                        "label": "逾期阶段类型",
+                        "width": "130px",
+                        "dict": {
+                          "dictType": "CE_OVER_DUE",
+                          "dictKey": [
+                            "CE_OVER_DUE"
+                          ],
+                          "format": "value-label"
+                        },
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入"
+                            }
+                        ]
+                    },
+                    "overdue_period_desc": {
+                        "control": "text",
+                        "label": "逾期阶段描述",
+                        "width": "130px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "pmt_percent": {
+                        "control": "inputNumber",
+                        "label": "承诺付款比例(%)",
+                        "width": "130px",
+                         "min": 0,
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入"
+                            },
+                            {
+                                "expression": "${{form.pmt_percent}} <= 100",
+                                "message": "只能输入小于等于 100 的整数"
+                            }
+                        ],
+                        "####rules2方法二用正则校验":[
+                            {
+                                "pattern":"^([1-9][0-9]{0,1}|100)$",
+                                "message":"只能输入小于等于 100 的整数"
+                            }
+                        ]
+                    },
+                    "max_prom_days": {
+                        "control": "inputNumber",
+                        "label": "最大复核天数",
+                        "width": "130px",
+                        "min": 0,
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入"
+                            },
+                            {
+                                "expression":"'${{form.max_prom_days}}'.length <= 10",
+                                "message":"最多可以输入 10 个字节"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "max_hold_days": {
+                        "control": "inputNumber",
+                        "label": "最大滞留天数",
+                        "width": "130px",
+                        "min": 0,
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入"
+                            },
+                            {
+                                "expression":"'${{form.max_hold_days}}'.length <= 19",
+                                "message":"最多可以输入 19 个字节"
+                            }
+                        ]
+                    },
+                    "is_default": {
+                        "control": "select",
+                        "label": "是否默认",
+                        "default":"0",
+                        "width": "130px",
+                        "dict": {
+                            "dictType": "MS_E_YESORNO",
+                            "dictKey": [
+                                "MS_E_YESORNO"
+                            ],
+                            "format": "value-label"
+                        },
+                        "rules": [
+                            {
+                                "required":true,
+                                "message": "请输入"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    }
+}

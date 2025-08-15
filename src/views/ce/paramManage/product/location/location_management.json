@@ -1,0 +1,138 @@
+{
+    "module": "v_search_btn_datagrid",
+
+    "layout": {
+        "form": {
+
+            "scope": "formData",
+            "controls": [
+                {
+                    "case_cls_code": {
+                        "control": "text",
+                        "label": {
+                            "default": "案件分类代码",
+                            "i18n": "prodParamConfig.locationCode"
+                        }
+                    },
+                    "location_name": {
+                        "control": "text",
+                        "label": "案件分类名称"
+                    }
+                },
+                {
+                    "case_type_desc": {
+                        "control": "text",
+                        "label": "案件分类描述"
+                    }
+                }
+            ]
+        },
+
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "icon": "el-icon-circle-plus",
+                    "target": "dialog",
+                    "label": "新增",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/ce/paramManage/product/location/location_add.json"
+                    },
+                    "props": {
+                        "title": "新增案件分类定义"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ce0004"
+                }
+                
+            },
+
+            "thead": [
+
+                {
+
+                    "label": "案件分类代码",
+                    "align":"center",
+                    "prop": "case_cls_code"
+                },
+                {
+
+                    "label": "案件分类名称",
+                    "align":"center",
+                    "prop": "location_name"
+                },
+                {
+
+                    "label": "案件分类描述",
+                    "align":"center",
+                    "prop": "case_type_desc"
+                },
+                {
+
+                    "label": "是否默认",
+                    "align":"center",
+                    "prop": "is_default",
+                    "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                            "MS_E_YESORNO"
+                        ],
+                        "format": "value-label"
+                    }
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "align":"center",
+                    "btns": [
+                        {
+                            "type": "look",
+                            "label": "详情",
+                            "toRequest": {
+                                "url": "/views/ce/paramManage/product/location/location_info.json",
+                                "method": "POST"
+                            },
+                            "props": {
+                                "title": "案件分类定义详情"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/ce/paramManage/product/location/location_modify.json",
+                                "method": "POST",
+                                "####target":"navTab",
+                                "####注释":"navTab表示不会弹出框，而在导航页签打开。dialog表示弹出框"
+                            },
+                            "props": {
+                                "title": "案件分类定义维护"
+                            }
+                        },
+                        {
+                            "type": "delete",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/call/RPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "ce0001",
+                                    "coll_kind":"02"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

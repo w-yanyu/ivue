@@ -1,0 +1,121 @@
+{
+    "module": "v-inputDataForm-btn",
+    "layout": {
+      "form": {
+        "initDataOnce":true,
+        "initRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+                "servicecode": "PATSCMSS3002",
+                "orderNo": "${{params.orderNo}}",
+                "tranType": "${{params.tranType}}"
+            }
+        },
+        "btns": [
+            {
+                "type": "submit",
+                "label": "保存",
+                "icon": "el-icon-tickets",
+                "doRequest": {
+                    "url": "/SUMP/icmcall/icmRPCCall",
+                    "method": "POST",
+                    "params": {
+                      "servicecode": "PATSCMSS1003",
+                      "orderNo": "${{params.orderNo}}",
+                      "tranType": "${{params.tranType}}",
+                      "trxnSq": "${{params.trxnSq}}",
+                      "paymentAmount": "${{form.paymentAmount}}"
+                    }
+                },
+                "props": {
+                    "width": "65%",
+                    "title":  "重入帐"
+                }
+            }
+        ],
+        "controls": [
+          {
+            "orderNo": {
+              "control": "text",
+              "label": "内部订单号",
+              "disabled": true
+            },
+            "paymentNo": {
+              "control": "text",
+              "label": "外部订单号",
+              "disabled": true
+            },
+            "paymentAmount": {
+              "label": "提现金额",
+              "control": "text",
+              "disabled": true
+            },
+            "ownChannelCode": {
+              "control": "select",
+              "label": "渠道",
+              "dict": {
+                "format": "label",
+                "dictKey": [
+                  "E_CHANNELCODE"
+                ],
+                "dictType": "E_CHANNELCODE"
+              },
+              "disabled": true
+            },
+            "applyNo": {
+              "control": "text",
+              "label": "授信申请单号",
+              "disabled": true
+            },
+            "notifyStatus": {
+              "control": "select",
+              "label": "渠道方通知状态",
+              "dict": {
+                "dictType": "E_NOTIFY_STATUS",
+                "dictKey": [
+                  "E_NOTIFY_STATUS"
+                ],
+                "format": "label"
+              },
+              "disabled": true
+            },
+            "ipmsStatus": {
+              "control": "select",
+              "label": "伙伴中心状态",
+              "dict": {
+                "dictType": "E_IPMS_STATUS",
+                "dictKey": [
+                  "E_IPMS_STATUS"
+                ],
+                "format": "label"
+              },
+              "disabled": true
+            },
+            "trxnStatus":{
+              "label": "交易状态",
+              "control": "select",
+              "dict": {
+                "format": "label",
+                "dictKey": [
+                  "E_TRXN_STATUS"
+                ],
+                "dictType": "E_TRXN_STATUS"
+              },
+              "disabled": true
+            }
+          },
+          {
+            "paymentTime":{
+              "label": "提现时间",
+              "control": "dateTimePicker",
+              "disabled": true,
+              "valueFormat": "yyyyMMdd HHmmss",
+              "format": "yyyy-MM-dd HH:mm:ss"
+            }
+          }
+      ]
+      }
+    }
+  }
+  

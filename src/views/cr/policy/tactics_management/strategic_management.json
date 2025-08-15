@@ -1,0 +1,116 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [{
+                "celvcd": {
+                    "control": "text",
+                    "label": "策略编号",
+                    "rules": [{
+                        "max": 100,
+                        "message": "长度不能超过100个字符"
+                    }]
+                },
+                "celvnm": {
+                    "control": "text",
+                    "label": "策略名称",
+                    "rules": [{
+                        "max": 50,
+                        "message": "长度不能超过10个字符"
+                    }]
+                }
+            }]
+        },
+        "toolbar": {
+            "btns": [{
+                "type": "add",
+                "target": "dialog",
+                "label": "新增",
+                "toRequest": {
+                    "method": "POST",
+                    "url": "/views/cr/policy/tactics_management/strategic_management_add.json"
+                },
+                "props": {
+                    "title": "新增"
+                }
+            }]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "CRMSCPTS0030"
+                }
+            },
+            "thead": [{
+                    "type": "index"
+                },
+                {
+                    "label": "策略编号",
+                    "prop": "celvcd",
+                    "align": "center"
+                },
+                {
+                    "label": "策略名称",
+                    "prop": "celvnm",
+                    "align": "center"
+                },
+                {
+                    "label": "策略描述",
+                    "prop": "cldesc",
+                    "align": "center"
+                },
+                {
+                    "label": "有效标志",
+                    "prop": "isflag",
+                    "align": "center"
+                },
+                {
+                    "label": "最近修改人",
+                    "prop": "updusr",
+                    "align": "center"
+                },
+                {
+                    "label": "最近修改时间",
+                    "prop": "upddat",
+                    "align": "center"
+                }, {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 200,
+                    "align": "center",
+                    "btns": [{
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/cr/policy/tactics_management/strategic_management_edit.json",
+                                "method": "post"
+                            },
+                            "props": {
+                                "width": "65%",
+                                "title": "维护"
+                            }
+                        },
+                        {
+                            "type": "delete",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "post",
+                                "params": {
+                                    "servicecode": "CRMSCPTS0014"
+                                }
+                            }
+                        }
+                    ],
+                    "pagination": {
+                        "show": true
+                    }
+                }
+            ]
+        }
+    }
+}

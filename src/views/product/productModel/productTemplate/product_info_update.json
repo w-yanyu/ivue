@@ -1,0 +1,147 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "btns": [
+                {
+                    "type": "submit",
+                    "label": "提交",
+                    "icon": "",
+                    "doRequest": {
+                        "url": "/SUMP/call/RPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "syln3263"
+                        }
+                    }
+                }
+            ],
+            "controlsGroup": [
+                {
+                    "title": "产品模版信息",
+                    "tooltip": "产品模版信息",
+                    "titleIcon": "el-icon-info",
+                    "expand": true,
+                    "accordion": false,
+                    "controls": [
+                        {
+                            "prod_tplt_code": {
+                                "control": "text",
+                                "label": "产品模板代码",
+                                "width": "130px",
+                                "value": "${{params.prod_tplt_code}}",
+                                "rules": [
+                                    {
+                                        "required": true,
+                                        "message": "请输入产品模板代码"
+                                    },
+                                    {
+                                        "max": 10,
+                                        "message": "长度不能超过10个字符"
+                                    }
+                                ]
+                            },
+                            "tplt_nm": {
+                                "control": "text",
+                                "label": "模版名称",
+                                "width": "130px",
+                                "value": "${{params.tplt_nm}}",
+                                "rules": [
+                                    {
+                                        "required": true,
+                                        "message": "请输入产品名称"
+                                    },
+                                    {
+                                        "max": 750,
+                                        "message": "长度不能超过750个字符"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "core_busi_dman": {
+                                "control": "hidden",
+                                "label": "业务领域",
+                                "width": "130px",
+                                "value": "${{params.core_busi_dman}}",
+                                "dict": {
+                                    "dictType": "LN_E_BUSI_DMAN",
+                                    "dictKey": [
+                                        "LN_E_BUSI_DMAN"
+                                    ],
+                                    "format": "label"
+                                },
+                                "rules": [
+                                    {
+                                        "required": true,
+                                        "message": "请选择业务领域"
+                                    }
+                                ]
+                            },
+                            "tplt_protp_code": {
+                                "control": "lookup",
+                                "width": "130px",
+                                "value": "${{params.tplt_protp_code}}",
+                                "label": "模版原型代码",
+                                "keyField": {
+                                    "tplt_protp_code": "tplt_protp_code"
+                                },
+                                "toRequest": {
+                                    "url": "/views/product/productModel/productTemplate/pro_temprototype_mannage.json",
+                                    "method": "post",
+                                    "params": "${{form.tplt_protp_code}}"
+                                },
+                                "props": {
+                                    "width": "80%",
+                                    "title": "模版原型代码查询"
+                                },
+                                "format": "label"
+                            },
+                            "tplt_dsc": {
+                                "label": "模板描述",
+                                "control": "textarea",
+                                "width": "130px",
+                                "value": "${{params.tplt_dsc}}",
+                                "rules": [
+                                    {
+                                        "required": true,
+                                        "message": "请输入模板描述"
+                                    }
+                                ],
+                                "span": 12,
+                                "autosize": {
+                                    "minRows": 3,
+                                    "maxRows": 5
+                                },
+                                "maxlength": 300,
+                                "showWordLimit": true
+                            }
+                        }
+                    ]
+                },
+                {
+                    "title": "关联部件信息",
+                    "tooltip": "关联部件信息",
+                    "titleIcon": "el-icon-info",
+                    "expand": true,
+                    "accordion": false,
+                    "controls": [
+                        {
+                            "lstKlnf_cmpt_rgstn": {
+                                "span": 24,
+                                "control": "dynamic",
+                                "toRequest": {
+                                    "url": "/views/product/productModel/productTemplate/product_assembly_unit.json",
+                                    "params": {
+                                        "prod_tplt_code": "${{params.prod_tplt_code}}",
+                                        "rgstn_tp": 1
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

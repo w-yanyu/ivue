@@ -1,0 +1,630 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "pageId":"unionPayConfirm",
+        "form": {
+           "scope":"unionPayConfirm",
+            "controls": [
+                {
+                    "unkpdt": {
+                        "control": "dateTimePicker",
+                        "label": "银联清算日期",
+                        "span": 16,
+                        "startField": "begndt",
+                        "endField": "termdt",
+                        "type": "daterange",
+                        "startPlaceholder": "年/月/日",
+                        "endPlaceholder": "年/月/日",
+                        "unlinkPanels": false,
+                        "disabledDate": "dateAfter",
+                        "valueFormat": "yyyyMMdd"
+                    },
+                    "busitp": {
+                        "control": "select",
+                        "label": "业务类型",
+                        "span": 8,
+                        "dict": {
+                            "dictType": "E_ANGTBUSITP",
+                            "dictKey": [
+                                "E_ANGTBUSITP"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "chckdt": {
+                        "control": "dateTimePicker",
+                        "label": "清算对账日",
+                        "span": 16,
+                        "type": "daterange",
+                        "startField": "chckdtbg",
+                        "endField": "chckdted",
+                        "startPlaceholder": "年/月/日",
+                        "endPlaceholder": "年/月/日",
+                        "unlinkPanels": false,
+                        "disabledDate": "dateAfter",
+                        "valueFormat": "yyyyMMdd"
+                    },
+                    "refeno": {
+                        "control": "text",
+                        "label": "参考号",
+                        "span": 8
+                    }
+                },
+                {
+                    "sbrand": {
+                        "control": "remoteSelect",
+                        "label": "品牌名称",
+                        "valueField": "orgncd",
+                        "labelField": "sbrand",
+                        "span": 8,
+                        "doRequest": {
+                            "url": "/pss/call/RPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "CIF_SLBDIF",
+                                "noLoading": true
+                            }
+                        }
+                    },
+                    "changkuan": {
+                        "control": "select",
+                        "label": "差错数据确认结果",
+                        "width":"150px",
+                        "span": 8,
+                        "dict": {
+                            "dictType": "E_RESULT",
+                            "dictKey": [
+                                "E_RESULT"
+                            ]
+                        }
+                    }, 
+                    "finsty": {
+                        "control": "select",
+                        "label": "结算方式",
+                        "span": 8,
+                        "dict": {
+                            "dictType": "E_FINSTY",
+                            "dictKey": [
+                                "E_FINSTY"
+                            ]
+                        }
+                    } 
+                },
+                {
+                    "inmeid": {
+                        "control": "text",
+                        "label": "商户号",
+                        "span": 8
+                    },
+                    "shortLabel": {
+                        "control": "select",
+                        "label": "差错数据类型",
+                        "span": 8,
+                        "options": [
+                            {
+                            "label": "长款",
+                            "value": "0"
+                             },
+                            {
+                            "label": "短款",
+                            "value": "1"
+                            }
+                        ],
+                        "rules": [
+                            {
+                                "required": "true",
+                                "message": "请选择差错数据类型"
+                            }
+                        ]
+                    }   
+                }
+            ]
+        },
+        "alert": {
+            "description": [
+                "共搜索到<span style='color:red;padding:5px;'>${{pageParam.total}}</span>条<span style='padding:15px;'>|</span>总金额<span style='color:red;padding:5px;'>${{totlam}}</span>元<span style='padding:15px;'>|</span>总结算金额<span style='color:red;padding:5px;'>${{actlam}}</span>元<span style='padding:15px;'>"
+            ],
+            "position": "top",
+            "listStyle": "disc"
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "authId":"unionPayConfirm_batchsubmit_btn",
+                    "type": "delete",
+                    "label": "批量长款确认",
+                    "doRequest": {
+                        "url": "/pss/call/RPCCall",
+                        "method": "post",
+                        "params": {
+                            "servicecode": "settleaccount",
+                            "operateUser":"qingsuan",
+                            "dealperson":"$g{{user_info.userCode}}",  
+                            "changkuan1" : "1"
+                        }
+                    }
+                },
+                {
+                    "authId":"unionPayConfirm_batchcancel_btn",
+                    "type": "delete",
+                    "label": "批量长款取消",
+                    "doRequest": {
+                        "url": "/pss/call/RPCCall",
+                        "method": "post",
+                        "params": {
+                            "servicecode": "errorcancel",
+                            "operateUser":"qingsuan",
+                            "dealperson":"$g{{user_info.userCode}}",  
+                            "changkuan1" : "1",
+                            "cancelFlg":"1"
+                        }
+                    }
+                },
+                {
+                    "authId":"unionPayConfirm_dkbatchsubmit_btn",
+                    "type": "delete",
+                    "label": "批量短款确认",
+                    "doRequest": {
+                        "url": "/pss/call/RPCCall",
+                        "method": "post",
+                        "params": {
+                            "servicecode": "shortdeal",
+                            "operateUser":"qingsuan",
+                            "dealperson":"$g{{user_info.userCode}}",  
+                            "changkuan1" : "1"
+                        }
+                    }
+                },
+                {
+                    "authId":"unionPayConfirm_dkbatchcancel_btn",
+                    "type": "delete",
+                    "label": "批量短款取消",
+                    "doRequest": {
+                        "url": "/pss/call/RPCCall",
+                        "method": "post",
+                        "params": {
+                            "servicecode": "errorcancel",
+                            "operateUser":"qingsuan",
+                            "dealperson":"$g{{user_info.userCode}}",  
+                            "changkuan1" : "1",
+                            "cancelFlg":"0"
+                        }
+                    }
+                },
+                {
+                    "authId":"unionPayConfirm_allbatchsubmit_btn",
+                    "type": "custom",
+                    "label": "全部长款确认",
+                    "doRequest": {
+                        "url": "/pss/call/RPCCall",
+                        "method": "post",
+                        "params": {
+                            "servicecode": "settleaccount",
+                            "operateUser":"qingsuan",
+                            "dealperson":"$g{{user_info.userCode}}",  
+                            "changkuan1" : "1",
+                            "dealFlag" : "1",
+                            "begndt": "${{unionPayConfirm.begndt}}",
+                            "termdt": "${{unionPayConfirm.termdt}}",
+                            "chckdtbg": "${{unionPayConfirm.chckdtbg}}",
+                            "chckdted": "${{unionPayConfirm.chckdted}}",
+                            "refeno": "${{unionPayConfirm.refeno}}",
+                            "sbrand": "${{unionPayConfirm.sbrand}}", 
+                            "finsty": "${{unionPayConfirm.finsty}}",
+                            "changkuan": "${{unionPayConfirm.changkuan}}",
+                            "shortLabel": "${{unionPayConfirm.shortLabel}}",
+                            "inmeid": "${{unionPayConfirm.inmeid}}",
+                            "busitp": "${{unionPayConfirm.busitp}}"
+                            
+                        }
+                    },
+                    "confirm": { 
+                        "title": "提示信息", 
+                        "msg": "直接全部长款确认吗？", 
+                        "confirmButtonText": "确定", 
+                        "cancelButtonText": "取消" 
+                    }
+                },
+                {
+                    "authId":"unionPayConfirm_dkallbatchsubmit_btn",
+                    "type": "custom",
+                    "label": "全部短款取消",
+                    "doRequest": {
+                        "url": "/pss/call/RPCCall",
+                        "method": "post",
+                        "params": {
+                            "servicecode": "errorcancel",
+                            "operateUser":"qingsuan",
+                            "dealperson":"$g{{user_info.userCode}}",  
+                            "changkuan1" : "1",
+                            "dealFlag" : "1",
+                            "begndt": "${{unionPayConfirm.begndt}}",
+                            "termdt": "${{unionPayConfirm.termdt}}",
+                            "chckdtbg": "${{unionPayConfirm.chckdtbg}}",
+                            "chckdted": "${{unionPayConfirm.chckdted}}",
+                            "refeno": "${{unionPayConfirm.refeno}}",
+                            "sbrand": "${{unionPayConfirm.sbrand}}", 
+                            "finsty": "${{unionPayConfirm.finsty}}",
+                            "changkuan": "${{unionPayConfirm.changkuan}}",
+                            "shortLabel": "${{unionPayConfirm.shortLabel}}",
+                            "inmeid": "${{unionPayConfirm.inmeid}}",
+                            "busitp": "${{unionPayConfirm.busitp}}"
+                        }
+                    },
+                    "confirm": { 
+                        "title": "提示信息", 
+                        "msg": "直接全部短款取消吗？", 
+                        "confirmButtonText": "确定", 
+                        "cancelButtonText": "取消" 
+                    }
+                },
+                {
+                    "authId":"unionPayConfirm_export_btn",
+                    "type": "custom",
+                    "label": "导出",
+                    "doRequest": {
+                      "url": "/SUMP/rest/auth/excelExportTest",
+                      "method": "post",
+                      "params": {
+                        "exportName": "银联差错确认列表",
+                        "servicecode": "exportck",
+                        "qrytyp":"1",
+                        "begndt": "${{unionPayConfirm.begndt}}",
+                        "termdt": "${{unionPayConfirm.termdt}}",
+                        "chckdtbg": "${{unionPayConfirm.chckdtbg}}",
+                        "chckdted": "${{unionPayConfirm.chckdted}}",
+                        "refeno": "${{unionPayConfirm.refeno}}",
+                        "sbrand": "${{unionPayConfirm.sbrand}}", 
+                        "finsty": "${{unionPayConfirm.finsty}}",
+                        "changkuan": "${{unionPayConfirm.changkuan}}",
+                        "shortLabel": "${{unionPayConfirm.shortLabel}}",
+                        "inmeid": "${{unionPayConfirm.inmeid}}",
+                        "busitp": "${{unionPayConfirm.busitp}}"
+                      }
+                    },
+                    "confirm":{
+                      "title":"提示信息",
+                      "msg":"确认导出吗？",
+                      "confirmButtonText":"确定",
+                      "cancelButtonText":"取消"
+                    }
+                  }
+            ]
+        },
+        "datagrid": {
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/pss/call/RPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "qryerr"
+                }
+            },
+            "pagination": {
+                "show": true,
+                "pageSizes": [
+                    10,
+                    20,
+                    50,
+                    100
+                
+                ],
+                "pageSize": 10
+            },
+            "thead": [
+                {
+                    "type": "selection",
+                    "align":"center",
+                    "width": "55",
+                    "fixed": "left",
+                    "show": {
+                        "prop": "changkuan",
+                        "is": [
+                            "0"
+                        ]
+                    }
+                },
+                {
+                    "label": "序号",
+                    "type": "index",
+                    "align":"center",
+                    "width": "55"
+                },
+                {
+                    "label": "品牌",
+                    "align": "center",
+                    "prop": "sbrand",
+                    "dict": {
+                        "dictType": "pcmc",
+                        "dictKey": [
+                            "orgncd"
+                        ],
+                        "valueField": "orgncd",
+                        "labelField": "sbrand",
+                        "doRequest": {
+                            "url": "/pss/call/RPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "CIF_SLBDIF"
+                            }
+                        }
+                    }
+                },
+                {
+                    "label": "业务类型",
+                    "width": "120px",
+                    "align":"center",
+                    "prop": "busitp",
+                    "dict": {
+                        "dictType": "E_BUSITY",
+                        "dictKey": [
+                            "E_BUSITY"
+                        ]
+                    }
+                },
+                {
+                    "label": "交易类型",
+                    "width": "130px",
+                    "align":"center",
+                    "prop": "transType"
+                },
+                {
+                    "label": "手机号",
+                    "width": "180px",
+                    "align":"center",
+                    "prop": "teleno"
+                },
+                {
+                    "label": "商户名称",
+                    "width": "120px",
+                    "align":"center",
+                    "prop": "inmena"
+                },
+                {
+                    "label": "商户号",
+                    "width": "120px",
+                    "align":"center",
+                    "prop": "inmeid"
+                },
+                {
+                    "label": "订单号",
+                    "width": "180px",
+                    "align":"center",
+                    "prop": "ordeno"
+                },
+                {
+                    "label": "交易流水",
+                    "width": "120px",
+                    "align":"center",
+                    "prop": "uniseq"
+                },
+                {
+                    "label": "参考号",
+                    "width": "120px",
+                    "align":"center",
+                    "prop": "refeno"
+                },
+                {
+                    "label": "交易日期",
+                    "width": "120px",
+                    "align":"center",
+                    "prop": "prepdt"
+                },
+                {
+                    "label": "交易时间",
+                    "width": "120px",
+                    "align":"center",
+                    "prop": "preptm",
+                    "type":"dateTimePicker",
+                    "format":"HH:mm:ss"
+                },
+                {
+                    "label": "银联清算日期",
+                    "width": "120px",
+                    "align":"center",
+                    "prop": "unkpdt"
+                },
+                {
+                    "label": "卡类型",
+                    "width": "120px",
+                    "align":"center",
+                    "prop": "cardtp",
+                    "dict": {
+                        "dictType": "E_CARDTP2",
+                        "dictKey": [
+                            "E_CARDTP2"
+                        ]
+                    }
+                },
+                {
+                    "label": "付款账户",
+                    "width": "180px",
+                    "align":"center",
+                    "prop": "cardno"
+                },
+                {
+                    "label": "交易金额（元）",
+                    "width": "120px",
+                    "align":"center",
+                    "prop": "tranam"
+                }, 
+                {
+                    "label": "结算方式",
+                    "width": "120px",
+                    "align":"center",
+                    "prop": "finsty",
+                    "dict": {
+                        "dictType": "E_FINSTY",
+                        "dictKey": [
+                            "E_FINSTY"
+                        ]
+                    }
+                },
+                {
+                    "label": "实际结算方式",
+                    "width": "120px",
+                    "align":"center",
+                    "prop": "acfist",
+                    "dict": {
+                        "dictType": "E_FINSTY",
+                        "dictKey": [
+                            "E_FINSTY"
+                        ]
+                    }
+                },
+                {
+                    "label": "代发流水",
+                    "align":"center",
+                    "width": "120px",
+                    "prop": "paypsq"
+                },
+                {
+                    "label": "交易状态",
+                    "width": "120px",
+                    "align":"center",
+                    "prop": "transt",
+                    "dict": {
+                        "dictType": "E_CUPSST",
+                        "dictKey": [
+                            "E_CUPSST"
+                        ]
+                    }
+                },
+                {
+                    "label": "银联总成本(银联)",
+                    "width": "150px",
+                    "align":"center",
+                    "prop": "total_fee"
+                },
+                {
+                    "label": "银联核心对账状态",
+                    "width": "130px",
+                    "align":"center",
+                    "prop": "chckst",
+                    "dict": {
+                        "dictType": "E_CHCKST",
+                        "dictKey": [
+                            "E_CHCKST"
+                        ]
+                    }
+                },
+                {
+                    "label": "银联核心对账结果",
+                    "width": "130px",
+                    "align":"center",
+                    "prop": "checkresult"
+                },
+                {
+                    "label": "差错数据确认结果",
+                    "width": "150px",
+                    "align":"center",
+                    "prop": "changkuan",
+                    "dict": {
+                        "dictType": "E_RESULT",
+                        "dictKey": [
+                            "E_RESULT"
+                        ]
+                    }
+                },
+                {
+                    "label": "操作",
+                    "align":"center",
+                    "width": "250px",
+                    "fixed": "right",
+                    "btns": [
+                        {
+                            "authId":"unionPayConfirm_detail_btn",
+                            "type": "edit",
+                            "label": "详情",
+                            "toRequest": {
+                                "url": "/views/icoreCenter/errorHandling/errorHand_detail_list.json",
+                                "method": "POST"
+                            },
+                            "props": {
+                                "width": "1000px",
+                                 "title":"银联长款确认详情"
+                              }
+                        },
+                        {
+                            "authId":"unionPayConfirm_submit_btn",
+                            "type": "delete",
+                            "label": "长款确认",
+                            "doRequest": {
+                                "url": "/pss/call/RPCCall",
+                                "method": "post",
+                                "params": {
+                                    "servicecode" : "settleaccount",
+                                    "operateUser" : "qingsuan",
+                                    "dealperson"  : "$g{{user_info.userCode}}",
+                                    "changkuan1" : "1",
+                                    "flag":"0"
+                                }
+                            },
+                            "show": {
+                              "expression": "'${{short_label}}' != '1' && '${{changkuan}}' === '0'"
+                            }
+                        },
+                        {
+                            "authId":"unionPayConfirm_cancel_btn",
+                            "type": "delete",
+                            "label": "长款取消",
+                            "doRequest": {
+                                "url": "/pss/call/RPCCall",
+                                "method": "post",
+                                "params": {
+                                    "servicecode" : "errorcancel",
+                                    "operateUser" : "qingsuan",
+                                    "dealperson"  : "$g{{user_info.userCode}}",
+                                    "changkuan1" : "1",
+                                    "flag":"0"
+                                }
+                            },
+                            "show": {
+                              "expression": "'${{short_label}}' != '1' && '${{changkuan}}' === '0'"
+                            }  
+                        },
+                        {
+                            "authId":"unionPayConfirm_dksubmit_btn",
+                            "type": "delete",
+                            "label": "短款确认",
+                            "doRequest": {
+                                "url": "/pss/call/RPCCall",
+                                "method": "post",
+                                "params": {
+                                    "servicecode" : "shortdeal",
+                                    "operateUser" : "qingsuan",
+                                    "dealperson"  : "$g{{user_info.userCode}}",
+                                    "changkuan1" : "1",
+                                    "flag":"0"
+                                }
+                            },
+                            "show": {
+                              "expression": "'${{short_label}}' === '1' && '${{changkuan}}' === '0'"
+                            }  
+                        },
+                        {
+                            "authId":"unionPayConfirm_dkcancel_btn",
+                            "type": "delete",
+                            "label": "短款取消",
+                            "doRequest": {
+                                "url": "/pss/call/RPCCall",
+                                "method": "post",
+                                "params": {
+                                    "servicecode" : "errorcancel",
+                                    "operateUser" : "qingsuan",
+                                    "dealperson"  : "$g{{user_info.userCode}}",
+                                    "changkuan1" : "1",
+                                    "flag":"0"
+                                }
+                            },
+                            "show": {
+                              "expression": "'${{short_label}}' === '1' && '${{changkuan}}' === '0'"
+                            }  
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

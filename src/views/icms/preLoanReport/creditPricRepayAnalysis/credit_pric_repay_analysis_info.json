@@ -1,0 +1,146 @@
+{
+  "module": "v-inputDataForm-btn",
+  "layout": {
+    "form": {
+      "initRequest": {
+      "url": "/SUMP/icmcall/icmRPCCall",
+      "method": "POST",
+      "params": {
+        "servicecode": "ar0941",
+        "apply_no": "${{params.apply_no}}"
+      }
+    },
+      "btns": [{
+        "type": "submit",
+        "label": "保存",
+        "doRequest": {
+          "url": "/SUMP/icmcall/icmRPCCall",
+          "method": "POST",
+          "params": {
+            "servicecode": "ar0942",
+            "cust_no": "${{params.cust_no}}",
+            "apply_no": "${{params.apply_no}}"
+          }
+        },
+        "show": {
+          "expression": "'${{params.pageType}}' != 'detail'"
+        }
+      }],
+      "controlsGroup": [{
+          "title": "授信定价",
+          "accordion": false,
+          "controls": [{
+              "cust_manager_inst_rate": {
+                "control": "text",
+                "label": "客户经理建议利率",
+                "suffix": "%",
+                "rules": [{
+                  "required": true,
+                  "pattern": "^(100|[1-9]?\\d?(\\.\\d\\d?)?)$",
+                  "message": "请输入(0-100)之间的利率"
+                }]
+              }
+            },
+            {
+              "prim_key": {
+                "control": "hidden"
+              }
+            },
+            {
+              "small_and_medium_inst_rate": {
+                "control": "text",
+                "label": "按中小企业定价办法计算出的利率",
+                "suffix": "%",
+                "rules": [{
+                  "required": true,
+                  "pattern": "^(100|[1-9]?\\d?(\\.\\d\\d?)?)$",
+                  "message": "请输入(0-100)之间的利率"
+                }]
+              }
+            },
+            {
+              "other_credit_inst_rate": {
+                "control": "text",
+                "label": "他行授信利率（如有）",
+                "suffix": "%",
+                "rules": [{
+                  "pattern": "^(100.00|[1-9]?\\d(\\.\\d\\d?)?)$",
+                  "message": "请输入(0-100)之间的利率"
+                }]
+              }
+            },
+            {
+              "low_inst_rate_desc": {
+                "control": "textarea",
+                "label": "低于办法计算利率的依据（说明)",
+                "placeholder": "200个字以内,若没有请填“无” ",
+                "maxlength": 200,
+                "span": 18,
+                "rows": 5,
+                "showWordLimit": true,
+                "resize": "none",
+                "rules": [{
+                  "required": true,
+                  "message": "`请输入说明"
+                }]
+              }
+            }
+          ]
+        },
+        {
+          "title": "还款分析",
+          "accordion": false,
+          "controls": [{
+              "repay_willingness": {
+                "control": "textarea",
+                "label": "还款意愿",
+                "placeholder": "200个字以内,若没有请填“无” ",
+                "maxlength": 200,
+                "span": 18,
+                "rows": 5,
+                "showWordLimit": true,
+                "resize": "none",
+                "rules": [{
+                  "required": true,
+                  "message": "`请输入文字"
+                }]
+              }
+            },
+            {
+              "repay_origin": {
+                "control": "textarea",
+                "label": "还款资金来源（如有贸易背景，应对应明确的业务收入）",
+                "placeholder": "200个字以内,若没有请填“无” ",
+                "maxlength": 200,
+                "span": 18,
+                "rows": 5,
+                "showWordLimit": true,
+                "resize": "none",
+                "rules": [{
+                  "required": true,
+                  "message": "`请输入文字"
+                }]
+              }
+            },
+            {
+              "repay_able_analyse": {
+                "control": "textarea",
+                "label": "还款能力分析",
+                "placeholder": "200个字以内,若没有请填“无” ",
+                "maxlength": 200,
+                "span": 18,
+                "rows": 5,
+                "showWordLimit": true,
+                "resize": "none",
+                "rules": [{
+                  "required": true,
+                  "message": "请输入文字"
+                }]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

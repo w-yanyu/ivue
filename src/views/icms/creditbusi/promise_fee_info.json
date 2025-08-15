@@ -1,0 +1,151 @@
+{
+  "module": "v-form-btn-dynamic",
+  "layout": {
+    "form": {
+      "scope": "detail",
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ar3001",
+          "apply_no": "${{params.apply_no}}"
+        }
+      },
+      "controls": [
+        {
+          "chrg_pstg_acct_name": {
+            "control": "text",
+            "disabled": false,
+            "label": "承诺费收取入账账户名",
+            "span": "7",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入承诺费收取入账账户名"
+              }
+            ]
+          },
+          "chrg_pstg_acct_num": {
+            "control": "text",
+            "disabled": false,
+            "label": "承诺费收取入账账号",
+            "span": "7",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入承诺收费入账账号"
+              }
+            ]
+          },
+          "billing_cond": {
+            "control": "select",
+            "label": "承诺费收取条件",
+            "span": "7",
+            "dict": {
+              "dictType": "AR_E_BILLING_COND",
+              "dictKey": [
+                "AR_E_BILLING_COND"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择承诺费收取条件"
+              }
+            ]
+          }
+        },
+        {
+          "chrg_dt": {
+            "control": "dateTimePicker",
+            "format": "yyyy-MM-dd",
+            "label": "承诺费收取开始日期",
+            "valueFormat": "yyyyMMdd",
+            "span": "7",
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "charg_basis": {
+            "control": "select",
+            "label": "承诺费收取基准",
+            "span": "7",
+            "dict": {
+              "dictType": "AR_E_CHARG_BASIS",
+              "dictKey": [
+                "AR_E_CHARG_BASIS"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "charg_calcula_type": {
+            "control": "select",
+            "label": "承诺费收取计算方式",
+            "span": "7",
+            "dict": {
+              "dictType": "AR_E_CHARG_CALCULA_TYPE",
+              "dictKey": [
+                "AR_E_CHARG_CALCULA_TYPE"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必填项"
+              }
+            ]
+          }
+        },
+        {
+          "billing_value": {
+            "control": "currency",
+            "label": "承诺费收取数值",
+            "span": "7",
+            "rules": [
+              {
+                "required": true,
+                "message": "收费数值不能为空"
+              }
+            ],
+            "align": "left",
+            "format": {
+              "thousand": ","
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "post",
+            "params": {
+              "servicecode": "ar3002",
+              "apply_no": "${{params.apply_no}}"
+            }
+          }
+        },
+        {
+          "type": "reset",
+          "btnStyle": "success",
+          "label": "重置"
+        }
+      ]
+    }
+  }
+}

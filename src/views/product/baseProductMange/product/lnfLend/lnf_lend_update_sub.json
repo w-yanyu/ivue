@@ -1,0 +1,287 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "scope":"formData",
+      "initRequest": "${{params}}",
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "icon": "",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "CORELNTS9017"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "prodcd": {
+            "control": "text",
+            "label": "产品代码",
+            "width": "160px",
+            "disabled": true
+          },
+          "crcycd": {
+            "control": "select",
+            "label": "货币代号",
+            "width": "160px",
+            "dict": {
+              "dictType": "MS_CURRENCY",
+              "dictKey": [
+                "MS_CURRENCY"
+              ],
+              "format": "label"
+            },
+            "value": "CNY",
+            "disabled": true
+          }
+        },
+        {
+          "mxtlam": {
+            "control": "currency",
+            "label": "单笔放款最大金额",
+            "width": "160px",
+            "rules": [
+              {
+                "expression":"'${{formData.mxtlam}}'.length < 16",
+                "message": "长度不能超过15位字符"
+              }
+            ]
+          },
+          "mntlam": {
+            "control": "currency",
+            "label": "单笔放款最小金额",
+            "width": "160px",
+            "rules": [
+              {
+                "expression":"'${{formData.mntlam}}'.length < 16",
+                "message": "长度不能超过15位字符"
+              }
+            ]
+          }
+        },
+        {
+          "mxterm": {
+            "control": "text",
+            "label": "单笔放款最长贷款期限",
+            "width": "160px",
+            "rules": [
+              {
+                "pattern": "^[0-9]+[MQY]",
+                "message": "输入不合法"
+              },
+              {
+                "max": "6",
+                "message": "长度不能超过6位字符"
+              }
+            ],
+            "suffix": {
+              "title": "期限",
+              "width": "130px",
+              "placeholder":"请输入正整数",
+              "options": [
+                {
+                  "value": "M",
+                  "label": "月"
+                },
+                {
+                  "value": "Q",
+                  "label": "季"
+                },
+                {
+                  "value": "Y",
+                  "label": "年"
+                }
+              ]
+            }
+          },
+          "mnterm": {
+            "control": "text",
+            "label": "单笔放款最短贷款期限",
+            "width": "160px",
+            "rules": [
+              {
+                "pattern": "^[0-9]+[MQY]",
+                "message": "输入不合法"
+              },
+              {
+                "max": "6",
+                "message": "长度不能超过6位字符"
+              }
+            ],
+            "suffix": {
+              "title": "期限",
+              "placeholder":"请输入正整数",
+              "options": [
+                {
+                  "value": "M",
+                  "label": "月"
+                },
+                {
+                  "value": "Q",
+                  "label": "季"
+                },
+                {
+                  "value": "Y",
+                  "label": "年"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "lendmd": {
+            "control": "select",
+            "label": "放款类型",
+            "width": "160px",
+            "dict": {
+              "dictType": "E_LENDMD",
+              "dictKey": [
+                "E_LENDMD"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入放款类型"
+              }
+            ]
+          },
+          "fundsr": {
+            "control": "select",
+            "label": "放款资金来源类型",
+            "width": "160px",
+            "dict": {
+              "dictType": "E_FUNDSR",
+              "dictKey": [
+                "E_FUNDSR"
+              ],
+              "format": "label"
+            },
+            "value": "1",
+            "disabled": true
+          }
+        },
+        {
+          "mxotam": {
+            "control": "hidden",
+            "label": "每次最大金额",
+            "width": "160px",
+            "rules": [
+              {
+                "expression":"'${{formData.mxotam}}'.length < 16",
+                "message": "长度不能超过15位字符"
+              }
+            ]
+          },
+          "mnotam": {
+            "control": "hidden",
+            "label": "每次最小金额",
+            "width": "160px",
+            "rules": [
+              {
+                "expression":"'${{formData.mxotam}}'.length < 16",
+                "message": "长度不能超过15位字符"
+              }
+            ]
+          }
+        },
+        {
+          "fundmd": {
+            "control": "select",
+            "label": "支付方式",
+            "width": "160px",
+            "dict": {
+              "dictType": "E_FUNDMD",
+              "dictKey": [
+                "E_FUNDMD"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入支付方式"
+              }
+            ]
+          },
+          "bchlty": {
+            "control": "select",
+            "label": "自主支付卡类型",
+            "width": "160px",
+            "dict": {
+              "dictType": "E_BCHLTY",
+              "dictKey": [
+                "E_BCHLTY"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入自主支付卡类型"
+              }
+            ]
+          }
+        },
+        {
+          "mxtmes": {
+            "control": "text",
+            "label": "最大放款次数",
+            "width": "160px",
+            "value": "99",
+            "disabled": true
+          },
+          "contsm": {
+            "control": "text",
+            "label": "每日最大放款次数",
+            "width": "160px",
+            "value":"1",
+            "disabled": true
+          }
+        },
+        {
+          "vadays": {
+            "control": "text",
+            "label": "首次动用有效期限(天)",
+            "width": "160px",
+            "rules": [
+              {
+                "max": "19",
+                "message": "长度不能超过19位字符"
+              },
+              {
+                "required": true,
+                "message": "请输入首次动用有效期限（天）"
+              }
+            ]
+          },
+          "isauld": {
+            "control": "select",
+            "label": "自动放款标志",
+            "width": "160px",
+            "dict": {
+              "dictType": "E_ISAULD",
+              "dictKey": [
+                "E_ISAULD"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入自动放款标志"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

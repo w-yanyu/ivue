@@ -1,0 +1,179 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "initRequest": "${{params}}",
+            "controls": [
+                {
+                    "norm_no": {
+                        "label": "限额编号",
+                        "control": "string"
+                    },
+                    "norm_name": {
+                        "label": "限额名称",
+                        "control": "string"
+                    }
+                },
+                {
+                    "cust_no": {
+                        "label": "客户编号",
+                        "control": "lookup",
+                        "keyField": {
+                          "cust_id": "custid"
+                        },
+                        "toRequest": {
+                          "url": "/views/us/cust_lookup.json",
+                          "method": "post"
+                        },
+                        "multiple": false,
+                        "props": {
+                          "title": "客户选择"
+                        }
+                    },
+                    "limit_used_type": {
+                        "label": "限额操作类型",
+                        "control": "select",
+                        "dict": {
+                        "dictType": "UCCP_E_LIMIT_USED_TYPE",
+                        "dictKey": [
+                            "UCCP_E_LIMIT_USED_TYPE"
+                        ],
+                        "format": "label"
+                        }
+                    }
+                },
+                {
+                    "start_date": {
+                        "control": "dateTimePicker",
+                        "label": "交易起始日期",
+                        "format": "yyyyMMdd"
+                    },
+                    "end_date": {
+                        "control": "dateTimePicker",
+                        "label": "交易截止日期",
+                        "format": "yyyyMMdd"
+                    }
+                }
+            ]
+          },
+        "toolbar": {},
+        "datagrid": {
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "uccp5024",
+                    "norm_no": "${{params.norm_no}}"
+                }
+            },
+            "thead": [
+                {
+                    "label": "限额占用流水",
+                    "prop": "limit_used_seq",
+                    "align": "center"
+                },
+                {
+                    "label": "限额编号",
+                    "prop": "norm_no",
+                    "align": "center"
+                },
+                {
+                    "label": "业务流水",
+                    "prop": "busi_seq",
+                    "align": "center"
+                },
+                {
+                    "label": "客户编号",
+                    "prop": "cust_no",
+                    "align": "center"
+                },
+                {
+                    "label": "限额操作类型",
+                    "prop": "limit_used_type",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "UCCP_E_LIMIT_USED_TYPE",
+                        "dictKey": [
+                            "UCCP_E_LIMIT_USED_TYPE"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "交易日期",
+                    "prop": "trxn_date",
+                    "align": "center"
+                },
+                {
+                    "label": "交易时间",
+                    "prop": "trxn_time",
+                    "align": "center"
+                },
+                {
+                    "label": "交易流水",
+                    "prop": "trxn_seq",
+                    "align": "center"
+                },
+                {
+                    "label": "交易金额",
+                    "prop": "trxn_amt",
+                    "align": "center",
+                    "format":{
+                        "thousand": ","
+                    }
+                },
+                {
+                    "label": "交易敞口",
+                    "prop": "trxn_exposure_amt",
+                    "align": "center",
+                    "format":{
+                        "thousand": ","
+                    }
+                },
+                {
+                    "label": "限额可用金额",
+                    "prop": "limit_available_amt",
+                    "align": "center",
+                    "format":{
+                        "thousand": ","
+                    }
+                },
+                {
+                    "label": "限额可用敞口",
+                    "prop": "limit_available_exposure_amt",
+                    "align": "center",
+                    "format":{
+                        "thousand": ","
+                    }
+                },
+                {
+                    "label": "限额校验状态",
+                    "prop": "limit_check_status",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "UCCP_E_LIMIT_CHECK_STATUS",
+                        "dictKey": [
+                            "UCCP_E_LIMIT_CHECK_STATUS"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "业务状态",
+                    "prop": "busi_status",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "UCCP_E_OCCUP_STATUS",
+                        "dictKey": [
+                            "UCCP_E_OCCUP_STATUS"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                }
+            ]
+        }
+    }
+}

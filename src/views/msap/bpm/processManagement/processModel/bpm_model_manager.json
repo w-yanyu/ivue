@@ -1,0 +1,207 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "appId": {
+            "control": "select",
+            "label": "业务模块",
+            "selectFirstValue": true,
+            "clearable": false,
+            "dict": {
+              "dictType": "MS_APPID",
+              "dictKey": ["MS_APPID"],
+              "format": "value-label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择业务模块"
+              }
+            ]
+          }
+        },
+        {
+          "model_name": {
+            "control": "text",
+            "label": "模型名称"
+          },
+          "model_key": {
+            "control": "text",
+            "label": "模型关键字"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "新增流程",
+          "toRequest": {
+            "target": "navTab",
+            "url": "@flowDesigner",
+            "method": "GET",
+            "params": {
+              "type": "add",
+              "appId": "${{form.appId}}"
+            }
+          }
+        },
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "导入流程",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/msap/bpm/processManagement/processModel/bpm_model_deploy.json",
+            "params": {
+              "appId": "${{form.appId}}"
+            }
+          },
+          "props": {
+            "title": "导入流程"
+          },
+          "show": {
+            "expression": "'1' === '0'"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "bpm2001"
+        }
+      },
+      "thead": [
+        {
+          "type": "index"
+        },
+        {
+          "label": "流程模板编号",
+          "prop": "model_id"
+        },
+        {
+          "label": "流程模板中文名称",
+          "prop": "model_name"
+        },
+        {
+          "label": "流程模板英文名称",
+          "prop": "model_key"
+        },
+        {
+          "label": "流程模板描述",
+          "prop": "model_description"
+        },
+        {
+          "prop": "last_updated",
+          "label": "最新编辑时间"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "编辑",
+              "toRequest": {
+                "target": "navTab",
+                "url": "@flowDesigner",
+                "method": "GET",
+                "params": {
+                  "appId": "${{form.appId}}"
+                }
+              },
+              "props": {
+                "title": "流程编辑",
+                "width":"75%"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "bpm2003",
+                  "appId": "${{form.appId}}",
+                  "method": "del"
+                }
+              },
+              "confirm": {
+                "title": "提示信息",
+                "msg": "确定删除该信息吗？",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            },
+            {
+              "type": "export",
+              "icon": "iconfont icon-daochu",
+              "target": "dialog",
+              "label": "导出",
+              "doRequest": {
+                "method": "POST",
+                "#url": "/views/msap/bpm/processManagement/processModel/bpm_model_export.json",
+                "url": "/SUMP/rest/file/xmlExport",
+                "params": {
+                  "servicecode": "bpm2005",
+                  "appId": "${{form.appId}}",
+                  "model_id": "${{current.model_id}}",
+                  "file_path": "/data/inmp/"
+                }
+              },
+              "confirm":{
+                "title":"提示信息",
+                "msg":"确认导出吗？",
+                "confirmButtonText":"确定",
+                "cancelButtonText":"取消"
+              },
+              "show": {
+                "expression": "'1' === '0'"
+              }
+            },
+            {
+              "type": "add",
+              "label": "部署",
+              "toRequest":{
+                "url":"/views/msap/bpm/processManagement/processModel/bpm_model_todeploy.json",
+                "method": "POST",
+                "params": {
+                  "appId": "${{form.appId}}"
+                }
+              },
+              "#doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "bpm2008",
+                  "appId": "${{form.appId}}"
+                }
+              }
+            },
+            {
+              "type": "add",
+              "label": "修订历史",
+              "toRequest":{
+                "url":"/views/msap/bpm/processManagement/processModel/bpm_model_history.json",
+                "method": "POST",
+                "params": {
+                  "appId": "${{form.appId}}"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

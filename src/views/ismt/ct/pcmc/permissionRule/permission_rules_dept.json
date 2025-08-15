@@ -1,0 +1,175 @@
+{
+  "module": "v-inputDataForm-btn",
+  "layout": {
+    "form": {
+      "btns": [],
+      "scope": "ruleTypeDept",
+      "initRequest": "${{params}}",
+      "controls": [
+        {
+          "related_below": {
+            "span": 18,
+            "control": "radio",
+            "label": "关联下级",
+            "value": "${{params.related_below}}",
+            "dict": {
+              "format": "label",
+              "dictKey": ["CT_RELATED_BELOW"],
+              "dictType": "CT_RELATED_BELOW"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择！",
+                "max": 80
+              }
+            ],
+            "events": {
+              "firstInit": false,
+              "condition": {
+                "$default": {
+                  "control": {
+                    "column_operator": {
+                      "value": "",
+                      "disabled": false
+                    }
+                  }
+                },
+                "3": {
+                  "control": {
+                    "column_operator": {
+                      "value": "1",
+                      "disabled": true
+                    },
+                    "dict_type": {
+                      "value": ""
+                    },
+                    "rule_value": {
+                      "value": ""
+                    }
+                  }
+                }
+              }
+            },
+            "showItem": {
+              "$default": ["dict_type","rule_value_name"],
+              "3": []
+            }
+          }
+        },
+        {
+          "column_operator": {
+            "span": 18,
+            "control": "select",
+            "label": "列连接符",
+            "value": "${{params.column_operator}}",
+            "format": "label",
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择！"
+              }
+            ],
+            "options": [
+              {
+                "label": "等于",
+                "value": "1"
+              },
+              {
+                "label": "包含",
+                "value": "7"
+              },
+              {
+                "label": "不包含",
+                "value": "8"
+              }
+            ]
+          }
+        },
+        {
+          "old_dict_type": {
+            "span": 18,
+            "control": "hidden",
+            "value": "${{ruleTypeDept.dict_type}}"
+          },
+          "dict_type": {
+            "span": 18,
+            "control": "remoteSelect",
+            "label": "顶层机构",
+            "value": "${{params.dict_type}}",
+            "valueField": "org_id",
+            "labelField": "org_name",
+            "format": "value[label]",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2311"
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择！"
+              }
+            ],
+            "events": {
+              "firstInit": false,
+              "condition": {
+                "$default": {
+                  "control": {
+                    "rule_value": {
+                      "value": ""
+                    },
+                    "rule_value_name": {
+                      "value": ""
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "rule_value": {
+            "span": 18,
+            "control": "hidden",
+            "value": "${{params.rule_value}}"
+          }
+        },
+        {
+          "rule_value_name": {
+            "span": 18,
+            "control": "lookup",
+            "value": "${{params.rule_value_name}}",
+            "label": "规则值",
+            "multiple": true,
+            "valueDataType": "string",
+            "toRequest": {
+              "url": "@ruleValueTree",
+              "method": "get",
+              "params": {
+                "dict_type": "${{ruleTypeDept.dict_type}}",
+                "rule_type": "dept",
+                "rule_value": "${{ruleTypeDept.rule_value}}"
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择！"
+              }
+            ],
+            "keyField": {
+              "rule_value": "branch_id",
+              "rule_value_name": "branch_name"
+            },
+            "props": {
+              "title": "机构选择带回"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

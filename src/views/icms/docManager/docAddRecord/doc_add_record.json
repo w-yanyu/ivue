@@ -1,0 +1,122 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "initDataOnce": true,
+      "controls": [
+        {
+          "apply_no": {
+            "label": "申请号",
+            "control": "text"
+          },
+          "cust_name": {
+            "label": "客户名称",
+            "control": "text"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": []
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ar0260"
+        }
+      },
+      "thead": [
+        {
+          "label": "申请号",
+          "prop": "apply_no",
+          "align": "center"
+        },
+        {
+          "label": "客户编号",
+          "prop": "cust_no",
+          "align": "center"
+        },
+        {
+          "label": "客户姓名",
+          "prop": "cust_name",
+          "align": "center"
+        },
+        {
+          "label": "补录状态",
+          "prop": "doc_add_status",
+          "align": "center",
+          "dict": {
+            "dictType": "AR_E_DOC_ADD_STATUS",
+            "dictKey": [
+              "AR_E_DOC_ADD_STATUS"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align": "center",
+          "btns": [
+
+            {
+              "type": "edit",
+              "label": "补录资料",
+              "toRequest": {
+                "url": "/views/icms/docManager/docAddRecord/doc_manage_list.json",
+                "method": "POST",
+                "params": {
+                  "apply_no": "${{current.apply_no}}"
+                }
+              },
+              "show": {
+                "expression": "'${{current.doc_add_status}}' != '1'"
+              },
+              "props": {
+                "width": "65%",
+                "title": "资料管理"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "完成补录",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "ar0262"
+                }
+              },
+              "show": {
+                "expression": "'${{current.doc_add_status}}' != '1'"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "查看",
+              "toRequest": {
+                "url": "/views/icms/docManager/docAddRecord/doc_manage_list_view.json",
+                "method": "POST",
+                "params": {
+                  "apply_no": "${{current.apply_no}}"
+                }
+              },
+              "show": {
+                "expression": "'${{current.doc_add_status}}' == '1'"
+              },
+              "props": {
+                "width": "65%",
+                "title": "资料管理"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

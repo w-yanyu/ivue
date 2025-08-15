@@ -1,0 +1,160 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/pt/partnerProjrctManage/patrs/agreement/compenRules/compen_rules_add.json",
+            "params": {
+              "part_project_no": "${{params.part_project_no}}",
+              "version": "${{params.version}}",
+              "part_protocol_no": "${{params.part_protocol_no}}",
+              "part_no": "${{params.part_no}}"
+            }
+          },
+          "props": {
+            "width": "65%",
+            "title":  "代偿规则新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "pt0123",
+          "part_protocol_no": "${{params.part_protocol_no}}",
+          "version": "${{params.version}}"
+        }
+      },
+      "thead": [
+        {
+          "type": "index",
+          "label": "序号"
+        },
+        {
+          "label": "代偿方式",
+          "prop": "compensate_method",
+          "dict": {
+            "dictType": "PT_E_REPAYMENT_METHOD",
+            "dictKey": [
+              "PT_E_REPAYMENT_METHOD"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "代偿条件",
+          "prop": "compensate_condition",
+          "dict": {
+            "dictType": "PT_E_REPAYMENT_CONDITION",
+            "dictKey": [
+              "PT_E_REPAYMENT_CONDITION"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label":"代偿触发数值",
+          "prop": "compensate_trigger_value"
+        },
+        {
+          "label":  "全额代偿追索模式",
+          "prop": "full_payment_recovery_mode",
+          "dict": {
+            "dictType": "PT_E_FULL_PAYMENT_RECOVERY_MODE",
+            "dictKey": [
+              "PT_E_FULL_PAYMENT_RECOVERY_MODE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label":  "代偿账户",
+          "prop": "compensate_account_no"
+        },
+        {
+          "label": "代偿保证金账户",
+          "prop": "compensate_bond_no"
+
+        },
+        {
+          "label":  "代偿还款结算户",
+          "prop": "compensate_repayment_no"
+        },
+        {
+          "label":  "是否预代偿",
+          "prop": "is_pre_compensate",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "value-label"
+          }
+        },
+
+        {
+          "label": "操作",
+          "width": "260px",
+          "fixed": "right",
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label":  "维护",
+              "fixed":"right",
+              "toRequest": {
+                "url": "/views/pt/partnerProjrctManage/patrs/agreement/compenRules/compen_rules_md.json",
+                "method": "Get",
+                "params": {
+                  "part_no": "${{params.part_no}}"
+                }
+              },
+              "props": {
+                "width": "65%",
+                "title":  "代偿规则维护"
+              }
+            },
+            {
+              "type": "custom",
+              "fixed":"right",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "pt0122"
+                }
+              },
+              "confirm": {
+                "title": "确定删除",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            },
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/pt/partnerProjrctManage/patrs/agreement/compenRules/compen_rules_detail.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "65%",
+                "title":  "查看详情"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

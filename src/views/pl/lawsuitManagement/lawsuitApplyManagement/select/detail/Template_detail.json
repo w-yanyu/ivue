@@ -1,0 +1,99 @@
+{
+  "module": "d-steps",
+  "layout": {
+    "steps": {
+      "scope": "formObj",
+      "direction": "vertical",
+      "alignCenter": true,
+      "finishStatus": "success",
+      "simpleType": false,
+      "nextStepType": "submit",
+      "list": [
+        {
+          "scope": "step1",
+          "title": "法诉一览表信息",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "url": "/views/pt/partnerManage/ptPartner_info.json",
+            "method": "get",
+            "params": {
+
+            }
+          },
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "post",
+            "params":{
+              "servicecode":"pt0041"
+             
+            },
+            "resultSet": {
+
+            }
+          }
+        },
+        {
+          "scope": "step2",
+          "forbidBack": true,
+          "title": "诉讼发起申请",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "url": "/views/pl/lawsuitManagement/lawsuitApplyManagement/select/detail/PlbStartApply_list.json",
+            "method": "get",
+            "params": {
+              "loan_no": "${{formObj.step1.loan_no}}"
+
+            }
+          },
+          "doRequest": {
+            "url": "/pte/json/layout/success.json",
+            "method": "post",
+            "eventAfter": {
+              "doParentCallback": true
+            }
+          }
+        },
+        {
+          "scope": "step3",
+          "forbidBack": true,
+          "title": "诉讼委案申请",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "url": "/views/pl/lawsuitManagement/lawsuitApplyManagement/select/detail/PlbEntrustApply_list.json",
+            "method": "get",
+            "params": {
+              "loan_no": "${{formObj.step1.loan_no}}"
+            }
+          },
+          "doRequest": {
+            "url": "/pte/json/layout/success.json",
+            "method": "post",
+            "eventAfter": {
+              "doParentCallback": true
+            }
+          }
+        },
+        {
+          "scope": "step3",
+          "forbidBack": true,
+          "title": "诉讼委案申请",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "url": "/views/pl/lawsuitManagement/lawsuitApplyManagement/select/detail/PlbEntrustApply_list.json",
+            "method": "get",
+            "params": {
+              "loan_no": "${{formObj.step1.loan_no}}"
+            }
+          },
+          "doRequest": {
+            "url": "/pte/json/layout/success.json",
+            "method": "post",
+            "eventAfter": {
+              "doParentCallback": true
+            }
+          }
+        }
+      ]
+    }
+  }
+}

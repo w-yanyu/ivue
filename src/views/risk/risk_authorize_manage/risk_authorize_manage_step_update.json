@@ -1,0 +1,71 @@
+{
+  "module": "d-steps",
+  "layout": {
+    "steps": {
+      "scope": "formObj",
+      "alignCenter": true,
+      "finishStatus": "success",
+      "simpleType": false,
+      "nextStepType": "submit",
+      "skip": false,
+      "list": [
+        {
+          "scope": "step1",
+          "title": "授权基本信息",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "url": "/views/risk/risk_authorize_manage/baseInfo/risk_authorize_manage_base_update.json",
+            "method": "get",
+            "params": {
+              "systemName": "${{params.systemName}}",
+              "systemId": "${{params.systemId}}",
+              "systemBranchId": "${{params.systemBranchId}}",
+              "remark": "${{params.remark}}"
+            }
+          },
+          "btnsLable":{
+            "submit":"下一步"
+          },
+          "props": {},
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "post",
+            "params": {
+              "servicecode": "deci090104",
+              "orgId": "${{params.orgId}}"
+            }
+          }
+        },
+        {
+          "scope": "step2",
+          "forbidBack": false,
+          "title": "服务授权详情",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "url": "@AuthorizeRelation",
+            "method": "get",
+            "params": {
+              "systemId": "${{formObj.step1.systemId}}",
+              "systemBranchId": "${{formObj.step1.systemBranchId}}"
+            }
+          },
+          "props": {},
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "post",
+            "params": {
+              "servicecode": "deci090108",
+              "systemId": "${{formObj.step1.systemId}}"
+            }
+          }, 
+          "confirm": {
+            "title": "提示信息",
+            "msg": "请确定是否做此维护！",
+            "confirmButtonText": "确定",
+            "cancelButtonText": "取消"
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,208 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "appId": {
+              "control": "select",
+              "label": "业务模块",
+              "selectFirstValue":true,
+              "dict": {
+                  "dictType": "MS_APPID",
+                  "dictKey": [
+                      "MS_APPID"
+                  ],
+                  "format": "value-label"
+              },
+              "rules": [
+                  {
+                      "required": true,
+                      "message": "请选择业务模块"
+                  }]
+          }
+        },
+        {
+          "busi_kind": {
+            "control": "select",
+            "label": "业务场景种类",
+            "dict": {
+              "dictType": "BPM_E_BUSI_KIND",
+              "dictKey": [
+                "BPM_E_BUSI_KIND"
+              ],
+              "format": "value-label"
+
+            }
+          },
+          "busi_method_call_type": {
+            "control": "select",
+            "label": "业务方法调用类型",
+            "dict": {
+              "dictType": "BPM_E_CALL_BUSI_TYPE",
+              "dictKey": [
+                "BPM_E_CALL_BUSI_TYPE"
+              ],
+              "format": "value-label"
+            }
+          },
+          "service_name": {
+            "control": "text",
+            "label": "服务名称",
+            "rules": [
+              {
+                "max": 500,
+                "message": "长度不能超过500个字符"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/msap/bpm/processManagement/business/businessServiceComposition_add.json",
+            "params": {
+              "appId":"${{form.appId}}"
+            }
+          },
+          "props": {
+            "width": "75%",
+            "title": "业务场景服务组合信息明细"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "bpm0036"
+        }
+      },
+      "thead": [
+
+        {
+          "label": "业务编号",
+          "prop": "busi_id",
+          "align": "center",
+          "width": "250px"
+        },
+        {
+          "label": "业务类型",
+          "prop": "busi_type",
+          "align": "center",
+          "width": "100px",
+          "dict": {
+            "dictType": "BPM_E_WFPDTP",
+            "dictKey": [
+              "BPM_E_WFPDTP"
+            ]
+          },
+          "format": "value-label"
+        },
+        {
+          "label": "业务场景种类",
+          "prop": "busi_kind",
+          "align": "center",
+          "width": "150px",
+          "dict": {
+            "dictType": "BPM_E_BUSI_KIND",
+            "dictKey": [
+              "BPM_E_BUSI_KIND"
+            ]
+          },
+          "format": "value-label"
+        },
+        {
+          "label": "业务方法调用类型",
+          "prop": "busi_method_call_type",
+          "align": "center",
+          "width": "150px",
+          "dict": {
+            "dictType": "BPM_E_CALL_BUSI_TYPE",
+            "dictKey": [
+              "BPM_E_CALL_BUSI_TYPE"
+            ]
+
+          }
+        },
+        {
+          "label": "服务名称",
+          "prop": "service_name",
+          "align": "center",
+          "width": "300px"
+        },
+        {
+          "label": "内部服务码",
+          "prop": "inner_service_code",
+          "align": "center",
+          "width": "150px"
+        },
+        {
+          "label": "方法对应的伪代码描述",
+          "prop": "remark",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "align":"center",
+          "fixed": "right",
+          "btns": [
+
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/msap/bpm/processManagement/business/businessServiceComposition_details.json",
+                "method": "GET",
+                "params": {
+                  "appId":"${{form.appId}}"
+                }
+              },
+              "props": {
+                "width": "75%",
+                "title": "业务场景服务组合信息明细"
+              }
+            },{
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/msap/bpm/processManagement/business/businessServiceComposition_modify.json",
+                "method": "GET",
+                "params": {
+                  "appId":"${{form.appId}}"
+                }
+              },
+              "props": {
+                "width": "75%",
+                "title": "业务场景服务组合信息明细"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "bpm0035",
+                  "appId":"${{form.appId}}"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

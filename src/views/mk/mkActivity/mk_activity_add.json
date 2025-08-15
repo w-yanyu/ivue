@@ -1,0 +1,137 @@
+{
+    "module": "d-steps",
+    "layout": {
+        "steps": {
+            "scope": "addTable",
+            "direction": "horizontal",
+            "alignCenter": true,
+            "finishStatus": "success",
+            "simpleType": false,
+            "nextStepType": "submit",
+            "list": [
+                {
+                    "title": "活动基本信息",
+                    "scope": "tablePage1",
+                    "icon": "el-icon-document",
+                    "toRequest": {
+                        "url": "/views/mk/mkActivity/mk_activity_add_baseInfo.json",
+                        "method": "get"
+                    },
+                    "isInitSearch": false,
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "mk0017"
+                        },
+                        "resultSet": {
+                            "active_id": "active_id"
+                        }
+                    }
+                },
+                {
+                    "title": "面向客群",
+                    "forbidBack": "true",
+                    "scope": "tablePage2",
+                    "icon": "el-icon-document",
+                    "toRequest": {
+                        "url": "/views/mk/mkActivity/mk_activity_add_custGroup.json",
+                        "method": "get",
+                        "#method": "POST",
+                        "params": {
+                            "rgstn_tp": 2,
+                            "active_id": "${{addTable.tablePage1.active_id}}"
+                        }
+                    },
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "mk0024"
+                        },
+                        "resultSet": {
+                            "active_id": "active_id"
+                        }
+                    }
+                },
+                {
+                    "title": "推荐产品",
+                    "forbidBack": "true",
+                    "scope": "tablePage3",
+                    "icon": "el-icon-document",
+                    "toRequest": {
+                        "url": "/views/mk/mkActivity/mk_activity_add_prod.json",
+                        "method": "get",
+                        "params": {
+                            "#prod_tplt_code": "${{merchJoin.actBaseInfo.active_name}}",
+                            "active_id": "${{addTable.tablePage2.active_id}}",
+                            "rgstn_tp": 3
+                        }
+                    },
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "mk0024"
+                        },
+                        "resultSet": {
+                            "active_id": "active_id"
+                        }
+                    }
+                },
+                {
+                    "title": "营销工具",
+                    "forbidBack": "true",
+                    "scope": "tablePage4",
+                    "icon": "el-icon-document",
+                    "toRequest": {
+                        "url": "/views/mk/mkActivity/mk_activity_add_tool.json",
+                        "method": "get",
+                        "params": {
+                            "active_id": "${{addTable.tablePage3.active_id}}",
+                            "#active_id": "${{params.active_id}}",
+                            "rgstn_tp": 4
+                        }
+                    },
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "mk0020"
+                        }
+                    }
+                },{
+                    "title": "营销页面",
+                    "scope": "tablePage1",
+                    "icon": "el-icon-document",
+                    "toRequest": {
+                        "url": "/views/mk/mkActivity/mk_activity_add_baseInfoImg.json",
+                        "method": "get",
+                        "params": {
+                            "active_id": "${{params.active_id}}",
+                            "active_name": "${{params.active_name}}",
+                            "start_date": "${{params.start_date}}",
+                            "end_date": "${{params.end_date}}",
+                            "active_topic": "${{params.active_topic}}",
+                            "active_connect": "${{params.active_connect}}",
+                            "active_sects": "${{params.active_sects}}",
+                            "active_img": "${{params.active_img}}"
+                          }
+                       
+                    },
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "mk0023",
+                            "active_id": "${{params.active_id}}"
+                        }
+                    },
+                    "eventAfter": {
+                        "doParentCallback": true
+                    }
+                }
+            ]
+        }
+    }
+}

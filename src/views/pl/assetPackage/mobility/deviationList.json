@@ -1,0 +1,98 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "start_date": {
+            "label": "最小日期",
+            "control": "dateTimePicker",
+            "type": "date",
+            "format":"yyyyMMdd"   
+        },              
+          "end_date": {
+            "label": "最大日期",
+            "control": "dateTimePicker",
+            "type": "date",
+            "format":"yyyyMMdd"   
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "edit",
+          "label": "查看偏差分析图",
+          "icon": "el-icon-data-analysis",
+          "toRequest": {
+              "url": "@deviationChart",
+              "method": "POST",
+              "params":{
+                  "start_date": "${{form.start_date}}",
+                  "end_date": "${{form.end_date}}"
+              }
+          }
+      }
+
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pl0727"
+        }
+      },
+      "thead": [
+        {
+          "type": "index"
+        },
+        {
+          "prop": "operation_date",
+          "label": "数据日期",
+          "align": "center"
+        },
+        {
+          "prop": "income_repay",
+          "label": "入金-还款",
+          "align": "right"
+          
+        },
+        {
+          "label": "入金-借入",        
+          "align": "right",
+          "prop": "income_loan"
+
+        },     
+        {
+          "label": "出金-放款",        
+          "align": "right",
+          "prop": "out_loan"
+
+        },
+        {
+          "prop": "out_repay",
+          "label": "出金-返还",
+          "align": "right"
+          
+        },
+        {
+          "label": "预测缺口",        
+          "align": "right",
+          "prop": "forecast_gap"
+
+        },     
+        {
+          "label": "偏差分析",        
+          "align": "right",
+          "prop": "deviation_analysis"
+
+        }
+      ]
+    }
+  }
+}

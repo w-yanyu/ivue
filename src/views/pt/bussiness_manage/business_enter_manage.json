@@ -1,0 +1,214 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "scope": "strForm",
+      "controls":
+      [
+        {
+          "partner_no": {
+            "control": "text",
+            "label":  "商户号",
+            "span": 8
+          },
+          "partner_name": {
+            "control": "text",
+            "label": "商户名称",
+            "span": 8
+
+          },
+          "business_tp": {
+            "control": "select",
+            "span": 8,
+            "label": "商户类型",
+            "dict": {
+              "dictType": "PT_E_BUSINESS_TYPE",
+              "dictKey": [
+                "PT_E_BUSINESS_TYPE"
+              ],
+              "format": "label"
+            }
+          }
+        },
+        {
+          "province_code": {
+            "control": "remoteSelect",
+            "label": "省份",
+            "#placeholder": "请选择省",
+            "format": "label",
+            "valueField": "code",
+            "labelField": "name",
+            "span": 8,
+            "lazy": true,
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2200",
+                "parent_code": "0"
+              }
+            },
+            "events": {
+              "emit": ["city_code"],
+              "condition": {
+                "$default": {
+                  "control": {
+                    "province": {
+                      "format": "${{current.name}}"
+                    }
+                  }
+                }
+              }
+            }
+
+          },
+          "city_code": {
+            "name": "city_code",
+            "control": "remoteSelect",
+            "label": "地市",
+            "isInitSearch": false,
+            "lazy": true,
+            "format": "label",
+            "#placeholder": "请选择市",
+            "valueField": "code",
+            "labelField": "name",
+            "span": 8,
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2200",
+                "parent_code": "${{strForm.province_code}}"
+              }
+            },
+            "events": {
+              "emit": ["county_code"]
+            }
+          },
+          "district_code": {
+            "name": "district_code",
+            "control": "remoteSelect",
+            "label": "镇区",
+            "isInitSearch": false,
+            "lazy": true,
+            "format": "label",
+            "#placeholder": "请选择区",
+            "valueField": "code",
+            "labelField": "name",
+            "span": 8,
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2200",
+                "parent_code": "${{strForm.city_code}}"
+              }
+            }
+
+          }
+
+        }
+      ]
+    },
+    "datagrid": {
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "pt0900"
+        }
+      },
+      "thead": [
+        {
+          "type": "index",
+          "label": "序号"
+        },
+        {
+          "label": "商户号",
+          "prop": "partner_no"
+        },
+        {
+          "label": "商户名称",
+          "prop": "partner_name"
+        },
+        {
+          "label":"省份",
+          "prop": "province_name"
+        },
+        {
+          "label":  "市区",
+          "prop": "city_name"
+        },
+        {
+          "label":  "镇区",
+          "prop": "district_name"
+        },
+        {
+          "label": "商户类型",
+          "prop": "business_tp",
+          "dict": {
+            "dictType": "PT_E_BUSINESS_TYPE",
+            "dictKey": ["E_BUSINESS_TYPE"],
+            "format": "label"
+          }
+
+        },
+        {
+          "label":  "法定代表人",
+          "prop": "partner_corp_name"
+        },
+        {
+          "label":  "法定代表人联系方式",
+          "prop": "contact_info"
+        },
+        {
+          "type": "string",
+          "label": "所属法人",
+          "prop": "org_id",
+          "align": "center"         
+        },         
+        {
+          "label": "操作",
+          "width": "260px",
+          "btns": [
+            {
+              "type": "custom",
+              "label":  "变更",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "pt0909"
+                }
+              }
+            },
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "@BusinessDetail",
+                "method": "GET"
+              },
+              "props": {
+                "width": "65%",
+                "title":  "查看详情"
+              }
+            },
+            {
+              "type": "look",
+              "label": "维护记录",
+              "toRequest": {
+                "url": "/views/pt/bussiness_manage/business_hs_list.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "65%",
+                "title":  "查看详情"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

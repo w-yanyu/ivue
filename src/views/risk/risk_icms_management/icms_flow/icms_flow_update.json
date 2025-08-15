@@ -1,0 +1,169 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": "${{params}}",
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "icon": "",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "deci050112"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "scene_type": {
+            "label": "业务场景",
+            "control": "select",
+            "disabled": true,
+            "span": 8,
+            "dict": {
+              "format": "label",
+              "dictKey": [
+                "DECI_E_SCENE_TYPE"
+              ],
+              "dictType": "DECI_E_SCENE_TYPE"
+            }
+          },
+          "icms_queue_code": {
+            "control": "text",
+            "label": "进件队列代码",
+            "disabled": true,
+            "span": 8
+          },
+          "icms_queue_name": {
+            "control": "text",
+            "label": "进件队列名称",
+            "span": 8,
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入进件队列名称"
+              },
+              {
+                "max": 125,
+                "message": "长度不能超过115个字符"
+              }
+            ]
+          },
+          "description": {
+            "control": "textarea",
+            "label": "队列描述",
+            "span": 24,
+            "rows": 5,
+            "showWordLimit": 2000,
+            "maxlength": 2000,
+            "rules": [
+              {
+                "required": true,
+                "max": 2000,
+                "message": "长度不能超过2000个字符"
+              }
+            ]
+          },
+          "model_id": {
+            "control": "lookup",
+            "label": "队列规则",
+            "span": 8,
+            "keyField": {
+              "model_id": "model_id",
+              "model_name": "model_name",
+              "model_type": "model_type",
+              "model_version": "model_version"
+            },
+            "toRequest": {
+              "url": "/views/risk/risk_icms_management/icms_flow/model_lookup.json",
+              "method": "post",
+              "params": {
+                "org_id": "${{params.org_id}}"
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "模型编号不得为空"
+              }
+            ]
+          },
+          "prod_type": {
+            "control": "remoteSelect",
+            "label": "产品类型",
+            "labelField": "title",
+            "valueField": "id",
+            "span": 8,
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "pd0144",
+                "grupno": "0006",
+                "pid": "KSCP"
+              }
+            },
+            "format": "label",
+            "events": {
+              "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "pd0143",
+                  "grupno": "0006",
+                  "id": "${{strForm.prod_type}}"
+                },
+                "resultSet": {
+                  "prod_type_name": "title"
+                }
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "必填项"
+              }
+            ]
+          },
+          "thread_num": {
+            "control": "inputNumber",
+            "label": "线程数量",
+            "span": 8,
+            "value": "${{strForm.threadMaxNum}}",
+            "min": 0,
+            "rules": [
+              {
+                "required": true,
+                "message": "线程数量不得为空"
+              }
+            ]
+          },
+          "prod_type_name": {
+            "control": "hidden",
+            "span": 8,
+            "label": "产品类型名称"
+          },
+          "model_name": {
+            "control": "string",
+            "span": 8,
+            "label": "模型名称"
+          },
+          "model_type": {
+            "control": "string",
+            "span": 8,
+            "label": "模型类型"
+          },
+          "model_version": {
+            "control": "string",
+            "span": 8,
+            "label": "模型版本"
+          }
+        }
+      ]
+    }
+  }
+}

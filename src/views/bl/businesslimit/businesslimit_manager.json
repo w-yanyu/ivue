@@ -1,0 +1,240 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "qutaty": {
+
+            "control": "select",
+            "label": "限额类型",
+            "rules": [
+              {
+                "max": 2,
+                "message": "长度不能超过2个字符"
+              }
+            ],
+            "dict": {
+              "dictType": "E_LIMIT",
+              "dictKey": [
+                "E_LIMIT"
+              ],
+              "format": "label"
+            }
+          },
+          "brchcd": {
+
+            "control": "text",
+            "label": "适用机构",
+            "rules": [
+              {
+                "max": 100,
+                "message": "长度不能超过100个字符"
+              }
+            ]
+          },
+          "chanid": {
+
+            "control": "text",
+            "label": "渠道编号",
+            "rules": [
+              {
+                "max": 100,
+                "message": "长度不能超过100个字符"
+              }
+            ]
+          },
+          "channa": {
+
+            "control": "text",
+            "label": "渠道名称",
+            "rules": [
+              {
+                "max": 20,
+                "message": "长度不能超过10个字符"
+              }
+            ]
+          },
+          "prodcd": {
+
+            "control": "text",
+            "label": "产品编号",
+            "rules": [
+              {
+                "max": 100,
+                "message": "长度不能超过100个字符"
+              }
+            ]
+          },
+          "prodna": {
+
+            "control": "text",
+            "label": "产品名称",
+            "rules": [
+              {
+                "max": 100,
+                "message": "长度不能超过100个字符"
+              }
+            ]
+          }
+        }
+        ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "custom",
+          "target": "dialog",
+          "label": "新增渠道限额",
+          "round": true,
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/bl/businesslimit/businesslimit_manager_chouse.json"
+          },
+          "props": {
+            "title": "新增渠道限额"
+          }
+        },
+        {
+          "type": "custom",
+          "target": "dialog",
+          "label": "新增产品限额",
+          "round": true,
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/bl/businesslimit/businesslimit_manager_chouse1.json"
+          },
+          "props": {
+            "title": "新增产品限额"
+          }
+        },
+        {
+          "type": "custom",
+          "target": "dialog",
+          "label": "新增客户限额",
+          "round": true,
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/bl/businesslimit/businesslimit_manager_add2.json"
+          },
+          "props": {
+            "title": "新增客户限额"
+          }
+        },
+        {
+          "type": "custom",
+          "target": "dialog",
+          "label": "新增协议限额",
+          "round": true,
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/bl/businesslimit/businesslimit_manager_chouse3.json"
+          },
+          "props": {
+            "title": "新增协议限额"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "bsququ",
+          "page_id": "/views/bl/businesslimit/businesslimit_manager.json"
+        }
+      },
+      "thead": [
+        {
+          "type": "index"
+        },
+        {
+          "label": "限额类型",
+          "prop": "qutaty",
+          "align": "center",
+          "dict": {
+            "dictType": "E_LIMIT",
+            "dictKey": [
+              "E_LIMIT"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "限额对象名称",
+          "prop": "qutana",
+          "align": "center"
+        },
+        {
+          "label": "渠道编号",
+          "prop": "chanid",
+          "align": "center"
+        },
+        {
+          "label": "产品编号",
+          "prop": "prodcd",
+          "align": "center"
+        },
+        {
+          "label": "产品名称",
+          "prop": "prodna",
+          "align": "center"
+        },
+        {
+          "label": "合作方合同编号",
+          "prop": "cortno",
+          "align": "center"
+        },
+        {
+          "label": "合作方名称",
+          "prop": "ofpana",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align":"center",
+          "btns": [
+            {
+              "type": "look",
+              "label": "查看机构信息",
+              "toRequest": {
+                "url": "/views/bl/businesslimit/businesslimit_manager_see.json",
+                "method": "GET"
+              },
+              "props": {
+                "title": "查看机构信息"
+              }
+            },
+            {
+              "type": "look",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/bl/businesslimit/businesslimit_manager_update.json",
+                "method": "GET"
+              },
+              "props": {
+                "title": "维护限额信息"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "bsqude"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

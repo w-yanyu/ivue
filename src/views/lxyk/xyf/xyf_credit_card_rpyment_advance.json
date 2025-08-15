@@ -1,0 +1,73 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "ar0069",
+          "smilr_cr_card_loan_acct_num": "${{params.smilr_cr_card_loan_acct_num}}"
+        }
+      },
+      "btns": [
+        {
+          "type": "submit",
+          "label": "确认还款",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "post",
+            "params": {
+              "servicecode": "ar0049",
+              "smilr_cr_card_loan_acct_num": "${{params.smilr_cr_card_loan_acct_num}}",
+              "min_rpymt_amt_flg": "0",
+              "rpymt_amt": "${{form.rpymt_amt}}",
+              "rpymt_acct_num": "${{params.rpymt_acct_num}}",
+              "cust_num": "${{params.cust_num}}",
+              "cust_nm": "${{params.cust_nm}}",
+              "ccy_code_num": "${{params.ccy_code_num}}"
+            }
+          }
+        },
+        {
+          "type": "close",
+          "label": "取消"
+        }
+      ],
+      "controls": [
+        {
+          
+          "total_amt": {
+            "control": "currency",
+            "decimal": "2",
+            "label": "累计待还总额(元) ",
+            "value":"${{params.outstanding_account_total_amt}}",
+            "disabled": true,
+            "span": 12,
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ],
+            "format": {
+              "thousand": ","
+            }
+          }
+        },
+        {
+          "rpymt_amt": {
+            "control": "currency",
+            "label": "还款金额",
+            "value":"${{form.total_amt}}",
+            "format": {
+              "thousand": ","
+            },
+            "span": 12
+          }
+        }
+      ]
+    },
+    "toolbar": {}
+  }
+}

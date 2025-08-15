@@ -1,0 +1,274 @@
+{
+  "module": "v_search_editableDataGrid",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "initRequest": "${{params}}",
+      "controls": [
+        {
+          "call_object_code": {
+            "control": "remoteSelect",
+            "label": "调用对象代码",
+            "format": "label",
+            "labelField": "variable_code",
+            "valueField": "variable_code",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "variable_code": "",
+                "variable_name": "",
+                "variable_status": "",
+                "start_status": "",
+                "length": 999,
+                "regist_status": "",
+                "servicecode": "deci050057",
+                "start": 1,
+                "variable_class_code": ""
+              }
+            }
+          },
+          "call_object_name": {
+            "control": "remoteSelect",
+            "label": "调用对象名称",
+            "format": "label",
+            "labelField": "variable_name",
+            "valueField": "variable_name",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "variable_code": "",
+                "variable_name": "",
+                "variable_status": "",
+                "start_status": "",
+                "length": 999,
+                "regist_status": "",
+                "servicecode": "deci050057",
+                "start": 1,
+                "variable_class_code": ""
+              }
+            }
+          },
+          "called_object_code": {
+            "control": "remoteSelect",
+            "label": "被调用对象代码",
+            "format": "label",
+            "labelField": "data_source_code",
+            "valueField": "data_source_code",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "data_source_code": "",
+                "data_source_name": "",
+                "data_source_status": "",
+                "data_source_type": "",
+                "length": 10,
+                "regist_status": "",
+                "servicecode": "deci050013",
+                "start": 1,
+                "start_status": ""
+              }
+            }
+          },
+          "called_object_name": {
+            "control": "remoteSelect",
+            "label": "被调用对象名称",
+            "format": "label",
+            "labelField": "data_source_name",
+            "valueField": "data_source_name",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "data_source_code": "",
+                "data_source_name": "",
+                "data_source_status": "",
+                "data_source_type": "",
+                "length": 10,
+                "regist_status": "",
+                "servicecode": "deci050013",
+                "start": 1,
+                "start_status": ""
+              }
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "新增",
+          "icon": "el-icon-plus",
+          "disabled": "'${{params.pageType}}' === 'look'"
+        },
+        {
+          "type": "batchDelete",
+          "label": "批量删除",
+          "icon": "el-icon-close",
+          "disabled": "'${{params.pageType}}' === 'look'"
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "deci050045",
+          "kinship_type": "2",
+          "call_object_type": "VARIABLES",
+          "call_object_code": "",
+          "call_object_name": ""
+        }
+      },
+      "name": "kinshipList",
+      "pagination": {
+        "show": false
+      },
+      "thead": [
+        {
+          "type": "selection",
+          "align": "center",
+          "width": "55",
+          "fixed": "left"
+        },
+        {
+          "align": "center",
+          "label": "血缘关系类型",
+          "prop": "kinship_type",
+          "value": "3",
+          "dict": {
+            "dictType": "DECI_E_KINSHIP_TYPE",
+            "dictKey": ["DECI_E_KINSHIP_TYPE"],
+            "format": "label"
+          },
+          "type": "select",
+          "disabled": true
+        },
+        {
+          "align": "center",
+          "label": "调用对象类型",
+          "value": "VARIABLES",
+          "prop": "call_object_type",
+          "dict": {
+            "dictType": "DECI_E_CALL_OBJECT_TYPE",
+            "dictKey": ["DECI_E_CALL_OBJECT_TYPE"],
+            "format": "label"
+          },
+          "type": "select",
+          "disabled": true
+        },
+        {
+          "align": "center",
+          "label": "调用对象代码",
+          "prop": "call_object_code",
+          "type": "text",
+          "value": "${{params.variable_code}}",
+          "disabled": true
+        },
+        {
+          "align": "center",
+          "label": "调用对象名称",
+          "prop": "call_object_name",
+          "type": "text",
+          "value": "${{params.variable_name}}",
+          "disabled": true
+        },
+        {
+          "align": "center",
+          "label": "被调用对象类型",
+          "prop": "called_object_type",
+          "dict": {
+            "dictType": "DECI_E_CALL_OBJECT_TYPE",
+            "dictKey": ["DECI_E_CALL_OBJECT_TYPE"],
+            "format": "label"
+          },
+          "type": "select",
+          "disabled": "'${{params.pageType}}' === 'look'"
+        },
+        {
+          "align": "center",
+          "label": "被调用对象代码",
+          "prop": "called_object_code",
+          "type": "remoteSelect",
+          "format": "label",
+          "labelField": "data_source_code",
+          "valueField": "data_source_code",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "data_source_code": "",
+              "data_source_name": "",
+              "data_source_status": "",
+              "data_source_type": "",
+              "length": 10,
+              "regist_status": "",
+              "servicecode": "deci050013",
+              "start": 1,
+              "start_status": ""
+            }
+          },
+          "disabled": "'${{params.pageType}}' === 'look'"
+        },
+        {
+          "align": "center",
+          "label": "被调用对象名称",
+          "prop": "called_object_name",
+          "type": "remoteSelect",
+          "format": "label",
+          "labelField": "data_source_name",
+          "valueField": "data_source_name",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "data_source_code": "",
+              "data_source_name": "",
+              "data_source_status": "",
+              "data_source_type": "",
+              "length": 10,
+              "regist_status": "",
+              "servicecode": "deci050013",
+              "start": 1,
+              "start_status": ""
+            }
+          },
+          "disabled": "'${{params.pageType}}' === 'look'"
+        },
+        {
+          "align": "center",
+          "label": "调用状态",
+          "prop": "call_status",
+          "dict": {
+            "dictType": "DECI_E_CALL_STATUS",
+            "dictKey": ["DECI_E_CALL_STATUS"],
+            "format": "value-label"
+          },
+          "type": "text",
+          "disabled": "'${{params.pageType}}' === 'look'"
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "fixed": "right",
+          "width": "250px",
+          "btns": [
+            {
+              "type": "delete",
+              "label": "删除",
+              "show": {
+                "expression": "'${{params.pageType}}' === 'edit'"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

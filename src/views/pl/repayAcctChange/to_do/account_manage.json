@@ -1,0 +1,82 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pl0006",
+          "apply_no": "${{params.applid}}"
+        }
+      },
+      "thead": [
+        {
+          "label": "借据号",
+          "prop": "loan_no",
+          "align": "center"
+        },
+        {
+          "label": "贷款产品",
+          "prop": "prod_no",
+          "align": "center"
+        },
+        {
+          "label": "还款账号",
+          "prop": "change_aft_acct",
+          "align": "center"
+        },
+        {
+          "label": "账户类型",
+          "prop": "change_aft_acct_tp",
+          "dict": {
+            "dictType": "PL_E_PAYACT",
+            "dictKey": [
+              "PL_E_PAYACT"
+            ],
+            "format": "label"
+          },
+          "align": "center"
+        },
+        {
+          "label": "币种",
+          "prop": "ccy_code",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_CURRENCY",
+            "dictKey": [
+              "MS_CURRENCY"
+            ],
+            "format": "label"
+          }
+        },
+      
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align":"center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "查看",
+              "toRequest": {
+                "url": "/views/pl/repayAcctChange/change/account_detail.json",
+                "method": "GET",
+                "params": {
+
+                }
+              },
+              "props": {
+                "width": "65%",
+                "title": "查看"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

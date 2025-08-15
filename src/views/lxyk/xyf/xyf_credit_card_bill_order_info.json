@@ -1,0 +1,138 @@
+{
+  "module": "v-form-btn-dynamic",
+  "layout": {
+    "form": {
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "ar0069",
+          "smilr_cr_card_loan_acct_num":"${{params.parentRowData.smilr_cr_card_loan_acct_num}}"
+        }
+      },
+
+      "controls": [
+        {
+          "overdue_amt_total": {
+            "control": "currency",
+            "decimal": "2",
+            "align": "left",
+            "label": "累计待还总额(元) ",
+            "disabled": true,
+            "span": 8,
+            "format": {
+              "thousand": ","
+            }
+          },"outstanding_account_total_amt": {
+            "control": "currency",
+            "decimal": "2",
+            "align": "left",
+            "label": "未出账消费累计(元) ",
+            "disabled": true,
+            "span": 8,
+            "format": {
+              "thousand": ","
+            }
+          },
+          "next_bill_prds": {
+            "control": "dateTimePicker",
+            "format": "yyyy-MM",
+            "valueFormat": "yyyyMM",
+            "label": "未出账账期",
+            "disabled": true,
+            "span": 8,
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "rpymt_acct_num": {
+            "control": "hidden",
+            "label": "还款账号"
+          },
+          "min_rpymt_amt": {
+            "control": "hidden",
+            "label": "最低还款额"
+          },
+          "cust_num": {
+            "control": "hidden",
+            "label": "客户号"
+          },
+          "cust_nm": {
+            "control": "hidden",
+            "label": "客户名称"
+          },
+          "ccy_code_num": {
+            "control": "hidden",
+            "label": "货币"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "我要还款",
+          "toRequest": {
+            "url": "/views/lxyk/xyf/xyf_credit_card_rpyment_advance.json",
+            "params": {
+              "smilr_cr_card_loan_acct_num": "${{params.parentRowData.smilr_cr_card_loan_acct_num}}",
+              "rpymt_amt": "${{form.rpymt_amt}}",
+              "rpymt_acct_num": "${{form.rpymt_acct_num}}",
+              "cust_num": "${{form.cust_num}}",
+              "cust_nm": "${{form.cust_nm}}",
+              "ccy_code_num": "${{form.ccy_code_num}}",
+              "outstanding_account_total_amt":"${{form.outstanding_account_total_amt}}"
+            }
+          },
+          "props": {
+            "width": "70%",
+            "title": "提前还款"
+          }
+        },
+        {
+          "type": "add",
+          "label": "交易分期",
+          "toRequest": {
+            "url": "@transactionInstallment",
+            "###url": "/views/lxyk/xyf/xyf_credit_card_loan_jyfq.json",
+            "params": {
+              "smilr_cr_card_loan_acct_num":"${{params.parentRowData.smilr_cr_card_loan_acct_num}}",
+              "istlmt_tp": "1",
+              "sale_prod_cd":"${{params.parentRowData.slbl_prod_code}}",
+              "cur_bill_prds":"${{form.cur_bill_prds}}",
+              "apply_type":"JYFQ",
+              "cust_no":"${{params.parentRowData.cust_num}}"
+            }
+          },
+          "props": {
+            "width": "70%",
+            "height": "80%",
+            "title": "期供详情"
+          }
+        },
+        {
+          "type": "add",
+          "label": "我要延期",
+          "toRequest": {
+            "url": "/views/lxyk/class_credit_card_supply_list_info.json",
+            "params": {
+              "smilr_cr_card_loan_acct_num": "${{form.smilr_cr_card_loan_acct_num}}",
+              "prcpl_smtn": "${{form.trxn_amt}}",
+              "istlmt_tp": "${{form.istlmt_tp}}",
+              "istlmt_prds": "${{form.istlmt_prds}}"
+            }
+          },
+          "props": {
+            "width": "70%",
+            "title": "期供详情"
+          }
+        }
+      ]
+
+    }
+  }
+}

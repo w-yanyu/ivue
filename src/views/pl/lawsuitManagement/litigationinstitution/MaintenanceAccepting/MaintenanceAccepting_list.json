@@ -1,0 +1,155 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+      "form": {
+        "controls": [
+          {
+            "case_acceptance": {
+              "control": "select",
+              "label": "机构类型",
+               "dict": {
+                 "dictType": "PL_E_ACCOUNT_TYPE",
+                 "dictKey": [
+                   "PL_E_ACCOUNT_TYPE"
+                 ]}},
+                 "branch_name": {
+                    "control": "text",
+                    "label": "机构名称"
+                  }
+                
+               
+            
+          }
+        ]
+      },
+      "toolbar": {
+        "btns": [
+          {
+            "type": "add",
+            "target": "dialog",
+            "label": "新增",
+            "toRequest": {
+              "method": "GET",
+              "url": "/views/pl/lawsuitManagement/litigationinstitution/MaintenanceAccepting/MaintenanceAccepting_add.json"
+            },
+            "props": {
+              "title": "机构及收款账户新增",
+              "width": "75%"
+            }
+  
+          }
+  
+        ]
+      },
+      "datagrid": {
+        "scope": "searchTable",
+        "isInitSearch": true,
+        "doRequest": {
+          "url": "/SUMP/icmcall/icmRPCCall",
+          "method": "POST",
+          "params": {
+            "servicecode": "pl0538",
+             "page_id": "/views/pl/lawsuitManagement/litigationinstitution/MaintenanceAccepting/MaintenanceAccepting_list.json"
+          }
+        },
+        "thead": [
+          {
+            "type": "index",
+            "label": "序号"
+          },
+          {
+            "label": "受理机构编号",
+            "prop": "ma_org_no",
+            "align":"center"
+          },
+          
+          {
+            "label": "机构类型",
+            "prop": "case_acceptance",
+            "align":"center",
+            "dict": {
+              "dictType": "PL_E_ACCOUNT_TYPE",
+              "dictKey": [
+                "PL_E_ACCOUNT_TYPE"
+              ],
+              "format": "label"
+            }
+          },{
+            "label": "机构名称",
+            "prop": "branch_name",
+            "align":"center"
+          },{
+            "label": "机构状态",
+            "prop": "acceptance_org_type",
+            "align":"center",
+            "dict": {
+              "dictType": "PL_E_BRANCH_STATUS",
+              "dictKey": [
+                "PL_E_BRANCH_STATUS"
+              ],
+              "format": "label"
+            }
+          },
+          {
+            "label": "备注",
+            "prop": "remark",
+            "align":"center"
+          },
+          {
+            "label": "操作",
+            "fixed": "right",
+            "width": 200,
+            "align":"center",
+            "btns": [
+              {
+                "type": "look",
+                "label": "详情",
+                "toRequest": {
+                  "url": "/views/pl/lawsuitManagement/litigationinstitution/MaintenanceAccepting/tab_detail_see.json",
+                  "method": "GET",
+                  "params": {
+                    "ma_org_no": "${{current.ma_org_no}}",
+                    "case_acceptance":"${{current.case_acceptance}}",
+                    "branch_name":"${{current.branch_name}}",
+                    "acceptance_org_type":"${{current.acceptance_org_type}}",
+                    "remark":"${{current.remark}}",
+                    "show_flash":"0"
+                  }
+                },
+                "props": {
+                  "width": "75%",
+                  "title": "机构及收款账户详情"
+                }
+              },
+              {
+                "type": "edit",
+                "label": "维护",
+                "toRequest": {
+                  "url": "/views/pl/lawsuitManagement/litigationinstitution/MaintenanceAccepting/MaintenanceAccepting_update.json",
+                  "method": "POST"
+  
+                },
+                "props": {
+                  "title": "机构及收款账户维护",
+                  "width": "75%"
+                }
+              },
+              {
+                "type": "delete",
+                "label": "删除",
+                "doRequest": {
+                  "url": "/SUMP/icmcall/icmRPCCall",
+                  "method": "POST",
+                  "params": {
+                    "servicecode": "pl0541"
+                  }
+                }
+              }
+  
+            ]
+          }
+        ]
+      }
+    }
+  }
+  

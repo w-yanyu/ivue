@@ -1,0 +1,222 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "acct_num": {
+                        "control": "text",
+                        "label": "暂收暂付账号"
+                    },
+                    "acct_nm": {
+                        "control": "text",
+                        "label": "账户名称"
+                    }
+                },
+                {
+                    "acct_busi_catg": {
+                        "control": "select",
+                        "label": "账户业务种类",
+                        "value": "10",
+                        "dict": {
+                            "dictType": "AC_E_ACCT_BUSI_CATG",
+                            "dictKey": [
+                                "AC_E_ACCT_BUSI_CATG"
+                            ],
+                            "format": "label"
+                        },
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "账户业务种类不能为空"
+                            }
+                        ]
+                    },
+                    "busi_code": {
+                        "control": "text",
+                        "label": "业务编码"
+                    }
+                },
+                {
+                    "ccy_code_num": {
+                        "control": "select",
+                        "label": "货币代号",
+                        "value": "156",
+                        "dict": {
+                            "dictType": "MS_CURRENCY",
+                            "dictKey": [
+                                "MS_CURRENCY"
+                            ],
+                            "format": "label"
+                        }
+                    },
+                    "acct_oprtg_org": {
+                        "control": "text",
+                        "label": "账户营业机构"
+                    }
+                },
+                {
+                    
+                    "acct_num_serl_num": {
+                        "control": "text",
+                        "label": "账号序号"
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "target": "dialog",
+                    "label": "开户",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/paramManage/loanAcInfo/suspend_pay_add.json"
+                    },
+                    "props": {
+                        "title": "内部户开户"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ta7502",
+                    "outlistid": "listnm"
+                }
+            },
+            "thead": [
+                {
+                    "label": "账号",
+                    "prop": "acct_num",
+                    "align": "center"
+                },
+                {
+                    "label": "账户名称",
+                    "prop": "acct_nm",
+                    "align": "center"
+                },
+                {
+                    "label": "账户业务种类",
+                    "prop": "acct_busi_catg",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "AC_E_ACCT_BUSI_CATG",
+                        "dictKey": [
+                            "AC_E_ACCT_BUSI_CATG"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "账户类型",
+                    "prop": "acct_tp",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "AC_E_ACCT_TP",
+                        "dictKey": [
+                            "AC_E_ACCT_TP"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "业务编码",
+                    "prop": "busi_code",
+                    "align": "center"
+                },
+                {
+                    "label": "业务编码说明",
+                    "prop": "busi_code_comt",
+                    "align": "center"
+                },
+                {
+                    "label": "账户标识码",
+                    "prop": "acct_id_code",
+                    "align": "center"
+                },
+                {
+                    "label": "账号序号",
+                    "prop": "acct_num_serl_num",
+                    "align": "center"
+                },
+                {
+                    "label": "核算代码",
+                    "prop": "busi_acctg_code",
+                    "align": "center"
+                },
+                {
+                    "label": "账户营业机构",
+                    "prop": "acct_oprtg_org",
+                    "align": "center"
+                },
+                {
+                    "label": "货币代号",
+                    "prop": "ccy_code_num",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "MS_CURRENCY",
+                        "dictKey": [
+                            "MS_CURRENCY"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 130,
+                    "align": "center",
+                    "btns": [
+                        {
+                            "type": "look",
+                            "label": "详情",
+                            "toRequest": {
+                                "url": "/views/paramManage/loanAcInfo/suspend_pay_manager_info.json",
+                                "method": "POST"
+                            },
+                            "props": {
+                                "width": "70%",
+                                "title": "暂收暂付账户信息详情"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/paramManage/loanAcInfo/suspend_pay_update.json",
+                                "method": "GET"
+                            },
+                            "props": {
+                                "width": "70%",
+                                "title": "暂收暂付账户信息维护"
+                            }
+                        },
+                        {
+                            "type": "custom",
+                            "label": "销户",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "ta7501"
+                                }
+                            },
+                            "confirm": {
+                                "title": "确定销户",
+                                "confirmButtonText": "确定",
+                                "cancelButtonText": "取消"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

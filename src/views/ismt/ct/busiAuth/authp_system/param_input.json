@@ -1,0 +1,107 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+      "form": {
+        "initRequest": "${{params}}",
+        "doRequest": {
+          "url": "/SUMP/icmcall/icmRPCCall",
+          "method": "POST",
+          "params": {
+            "authp_system_code": "${{params.authp_system_code}}",
+            "auth_version": "${{params.auth_version}}",
+            "servicecode": "ct2436",
+            "appId":"${{params.appId}}"
+          }
+      },
+        
+        "controls": [
+            {
+              "field_code": {
+                "label": "业务指标参数编号",
+                "control": "lookup",
+                "width": "100px",
+                "keyField": {
+                  "field_code": "field_code",
+                  "field_name": "field_name",
+                  "dimension_code": "dimension_code",
+                  "dimension_name":"dimension_name",
+                  "retrun_value_type":"retrun_value_type",
+                  "string_en_value":"string_en_value"
+                },
+                "toRequest": {
+                  "url": "/views/ismt/ct/busiAuth/authp_system/param_contact_lookup.json",
+                  "method": "post",
+                  "params": {
+                    "authp_system_code": "${{params.authp_system_code}}",
+                      "appId":"${{params.appId}}"
+                  }
+                },
+                "rules": [
+                    {
+                        "required": true,
+                        "message": "业务指标参数编号"
+                    }
+                ],
+                "multiple": false,
+                "props": {
+                  "title": "业务指标参数编号选择"
+                }
+              },
+              "field_name": {
+                "control": "string",
+                "label": "业务指标参数名称",
+                "width": "100px"
+                
+              },
+              "dimension_code": {
+                "control": "string",
+                "label": "业务指标编号",
+                "width": "100px"
+              },
+              "dimension_name": {
+                "control": "string",
+                "label": "业务指标名称",
+                "width": "100px"
+              }, 
+              "retrun_value_type": {
+                "control": "string",               
+                "label": "业务指标编号",
+                "width": "100px",
+                "dict": {
+                  "dictType": "CT_E_RESULT_TYPE",
+                  "dictKey": [
+                      "CT_E_RESULT_TYPE"
+                  ],
+                  "format": "label"
+                }
+
+              },
+              "string_en_value": {
+                "control": "string",
+                "label": "选项值",
+                "width": "100px"
+              },                   
+              "dimension_type": {
+              "control": "select",
+              "label": "业务指标类型",
+              "width": "100px",
+              "dict": {
+                "dictType": "CT_E_DIMENSION_TYPE",
+                "dictKey": [
+                  "CT_E_DIMENSION_TYPE"
+                ],
+                "format": "label"
+              },
+              "rules": [
+                {
+                  "required": true,
+                  "message": "请选择指标参数类型"
+                }
+              ]
+              }            
+            }
+        ]
+      }
+    }
+  }
+  

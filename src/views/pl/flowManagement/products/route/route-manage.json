@@ -1,0 +1,131 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [],
+      "btns": []
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "custom",
+          "label": "自动获取",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "bpm0004",
+              "updway": "ROUT",
+              "wf_prod_no": "${{params.wf_prod_no}}",
+              "wf_prod_name": "${{params.wf_prod_name}}",
+              "wf_define_id": "${{params.wf_define_id}}",
+              "appId":"plOnl"
+            }
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "bpm0007",
+          "wf_prod_no": "${{params.wf_prod_no}}",
+          "appId":"plOnl"
+        }
+      },
+      "thead": [
+        {
+          "label": "路线id",
+          "prop": "route_id"
+        },
+        {
+          "label": "路线编码",
+          "prop": "route_cd"
+        },
+        {
+          "label": "路线名称",
+          "prop": "route_name"
+        },
+        {
+          "label":"路线类型",
+          "prop":"route_type",
+          "dict": {
+            "dictType": "BPM_E_ROUTE_TYPE",
+            "dictKey": [
+              "BPM_E_ROUTE_TYPE"
+            ],
+            "format": "label"
+          },
+          "align": "center"
+        },
+        {
+          "label":"流程编号",
+          "prop":"wf_prod_no"
+        },
+        {
+          "label":"流程名称",
+          "prop":"wf_prod_name"
+        },{
+          "label":"活动号",
+          "prop":"task_define_id"
+        },{
+          "label":"活动名称",
+          "prop":"task_define_name"
+        },{
+          "label":"下一活动号",
+          "prop":"next_task_define_id"
+        },{
+          "label":"下一活动名称",
+          "prop":"next_task_define_name"
+        },{
+          "label":"版本号",
+          "prop":"data_version"
+        },{
+          "label":"修改日期",
+          "prop":"data_update_time"
+        },{
+          "label":"修改人",
+          "prop":"data_update_user"
+        },{
+          "label": "操作",
+          "width": "100px",
+          "fixed": "right",
+          "align":"center",
+          "btns": [{
+            "type": "edit",
+            "label": "查看",
+            "toRequest": {
+              "url": "/views/pl/flowManagement/products/route/view-route-detail.json",
+              "method": "GET",
+              "params": {
+                "appId":"plOnl"
+              }
+            },
+            "props": {
+              "width": "70%",
+              "title": "查看流程路线详情"
+            }
+          },{
+            "type": "edit",
+            "label": "修改",
+            "toRequest": {
+              "url": "/views/pl/flowManagement/products/route/route-modify.json",
+              "method": "GET",
+              "params": {
+                "appId":"plOnl"
+              }
+            },
+            "props": {
+              "width": "70%",
+              "title": "流程路线修改"
+            }
+          }]
+        }
+      ]
+    }
+  }
+}

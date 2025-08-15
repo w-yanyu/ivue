@@ -1,0 +1,148 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "POST",
+            "url": "/views/us/privateManage/assetStatus/yearIncome/yearIncome_add.json",
+            "params": {
+              "cust_no": "${{params.cust_no}}"
+            }
+          },
+          "show": {
+            "expression": "'${{params.show_flash}}' == '1'"
+          },
+          "props": {
+            "width": "75%",
+            "title": "个人年收入信息录入"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "scope": "searchTable",
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "us0086",
+          "cust_no": "${{params.cust_no}}"
+        }
+      },
+      "thead": [
+        {
+          "label": "收入年度（年）",
+          "prop": "income_year",
+          "align": "center"
+        },
+        {
+          "label": "结存货币",
+          "prop": "yrin_remain",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_CURRENCY",
+            "dictKey": [
+              "MS_CURRENCY"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "经营性收入（元）",
+          "prop": "yrin_manage",
+          "align": "center",
+          "format": {
+            "thousand": ",",
+            "decimal": "2",
+            "type": "currency"
+          }
+        },
+        {
+          "label": "职务名称",
+          "align": "center",
+          "prop": "job_name",
+          "dict": {
+            "dictType": "US_E_EXECUTIVE_TYPE",
+            "dictKey": [
+              "US_E_EXECUTIVE_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "投资收入(元)",
+          "prop": "yrin_invest",
+          "align": "center",
+          "format": {
+            "thousand": ",",
+            "decimal": "2",
+            "type": "currency"
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 160,
+          "align": "center",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/us/privateManage/assetStatus/yearIncome/yearIncome_manage_info.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "75%",
+                "title": "个人收入信息详情"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/us/privateManage/assetStatus/yearIncome/yearIncome_modify.json",
+                "method": "post"
+              },
+              "show": {
+                "expression": "'${{params.show_flash}}' == '1'"
+              },
+              "props": {
+                "width": "75%",
+                "title": "个人收入信息维护"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "us0089"
+                }
+              },
+              "show": {
+                "expression": "'${{params.show_flash}}' == '1'"
+              },
+              "confirm": {
+                "title": "确定删除",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            }
+          ]
+        }
+      ],
+      "pagination": {
+        "show": true
+      }
+    }
+  }
+}

@@ -1,0 +1,149 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "controls": [
+        {
+          "project_template_no": {
+            "control": "text",
+            "label": "项目模版编号"
+          },
+          "project_mould_name": {
+            "control": "text",
+            "label": "项目模版名称"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pt0095",
+          "approve_status": "02"
+        }
+      },
+      "thead": [
+        {
+          "type": "string",
+          "align": "center",
+          "label": "项目模版编号",
+          "prop": "project_template_no"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "项目模版名称",
+          "prop": "project_mould_name"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "合作项目类型",
+          "prop": "part_project_type",
+          "dict": {
+            "dictType": "PT_E_PART_PROJECT_TYPE",
+            "dictKey": [
+              "PT_E_PART_PROJECT_TYPE"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "项目模版状态",
+          "prop": "mould_status",
+          "dict": {
+            "dictType": "PT_E_STATUS",
+            "dictKey": [
+              "PT_E_STATUS"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "版本",
+          "prop": "version"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "审批状态",
+          "prop": "approve_status",
+          "dict": {
+            "dictType": "PT_E_APPROVE_STATUS",
+            "dictKey": [
+              "PT_E_APPROVE_STATUS"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "fixed": "right",
+          "width": "150%",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/pt/partnertemplateManage/projecttemplateManage/projectTemplateTem_tab.json",
+                "method": "POST"
+              },
+              "props": {
+                "title": "合作项目模版详情"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "审核记录",
+              "toRequest": {
+                "url": "/views/pt/partnertemplateManage/apprRecordManage/apprRecord_list.json",
+                "method": "GET",
+                "params": {
+                  "sale_prod_cd": "${{current.project_template_no}}",
+                  "mould_code": "2"
+                }
+              },
+              "props": {
+                "title": "审核记录"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "变更",
+              "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "pt0502",
+                  "sale_prod_cd": "${{current.project_template_no}}",
+                  "version": "${{current.version}}",
+                  "mould_code": "2"
+                }
+              },
+              "confirm": {
+                "title": "提示信息",
+                "msg": "请确认是否变更？确定后请前往“项目模版管理”继续处理！",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              },
+              "eventAfter": {
+                "callback": "renderTree"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

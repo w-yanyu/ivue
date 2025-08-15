@@ -1,0 +1,114 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": "${{params}}",
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "icon": "",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "CORELNTS9056",
+              "operater_ind": "M"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "prodcd": {
+            "control": "text",
+            "label": "产品代码",
+            "width": "160px",
+            "disabled":true
+          },
+          "crcycd": {
+            "control": "select",
+            "label": "货币代号",
+            "width": "160px",
+            "dict": {
+              "dictType": "MS_CURRENCY",
+              "dictKey": [
+                "MS_CURRENCY"
+              ],
+              "format": "label"
+            },
+            "value":"CNY",
+            "disabled": true
+          }
+        },
+        {
+          "termfm": {
+            "control": "text",
+            "label": "期限",
+            "width": "160px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入期限"
+              },
+              {
+                "pattern": "^[0-9]+[M]",
+                "message": "输入不合法"
+              },
+              {
+                "max": 6,
+                "message": "长度不能超过6个字符"
+              }
+            ],
+            "suffix": {
+              "title": "期限",
+              "width": "130px",
+              "placeholder":"请输入正整数",
+              "options": [
+                {
+                  "value": "M",
+                  "label": "月"
+                }
+              ]
+            }
+          },
+          "dtitcd": {
+            "control": "text",
+            "label": "核算代码",
+            "width": "160px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入核算代码"
+              },
+              {
+                "max": 20,
+                "message": "长度不能超过20个字符"
+              }
+            ]
+          }
+        },
+        {
+          "guarty": {
+            "control": "select",
+            "label": "担保方式",
+            "width": "160px",
+            "dict": {
+              "dictType": "E_GUARTY",
+              "dictKey": [
+                "E_GUARTY"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入担保方式"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,159 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": "${{params}}",
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pd1565",
+          "sale_prod_cd": "${{params.sale_prod_cd}}",
+          "prod_version": "${{params.prod_version}}",
+          "apply_type": "${{params.apply_type}}"
+        }
+      },
+      "controls": [
+        {
+          "parse_no": {
+            "control": "hidden",
+            "label": "解析编号",
+            "width": "120px",
+            "span": 8
+          },
+          "source_file_name": {
+            "control": "string",
+            "label": "贴源文件名",
+            "width": "120px",
+            "span": 8
+          },
+          "source_file_parse_way": {
+            "control": "select",
+            "label": "贴源文件解析方式",
+            "width": "120px",
+            "span": 8,
+            "dict": {
+              "dictType": "PD_E_SOURCE_FILE_PASE_WAY",
+              "dictKey": [
+                "PD_E_SOURCE_FILE_PASE_WAY"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true
+              }
+            ],
+            "events": {
+              "condition": {
+                "01": {
+                  "control": {
+                    "source_file_parse_content": {
+                      "initShow": true,
+                      "value": "",
+                      "rules": [
+                        {
+                          "required": true
+                        }
+                      ]
+                    },
+                    "source_file_parse_content1": {
+                      "initShow": false,
+                      "value": "",
+                      "rules": [
+                        {
+                          "required": false
+                        }
+                      ]
+                    }
+                  }
+                },
+                "02": {
+                  "control": {
+                    "source_file_parse_content": {
+                      "initShow": false,
+                      "value": "",
+                      "rules": [
+                        {
+                          "required": false
+                        }
+                      ]
+                    },
+                    "source_file_parse_content1": {
+                      "initShow": true,
+                      "value": "${{params.source_file_parse_content}}",
+                      "rules": [
+                        {
+                          "required": true
+                        }
+                      ]
+                    }
+                  }
+                },
+                "$default": {
+                }
+              }
+            }
+          },
+          "source_file_parse_content1": {
+            "control": "textarea",
+            "label": "贴源文件解析方式内容",
+            "width": "120px",
+            "span": 24,
+            "rows": 4,
+            "value": "${{params.source_file_parse_content}}",
+            "initShow": false
+          },
+          "source_file_parse_content": {
+            "control": "lookup",
+            "label": "贴源文件解析方式内容",
+            "width": "120px",
+            "span": 8,
+            "initShow": false,
+            "keyField": {
+              "source_file_parse_content": "tran_code",
+              "source_file_parse_content1": "tran_code"
+            },
+            "toRequest": {
+              "url": "/views/pd/prod/templatePage/batchTranConfig/batchTranConfig_manage_lookup.json",
+              "method": "get",
+              "params": {
+                "sale_prod_cd": "${{params.sale_prod_cd}}",
+                "prod_version": "${{params.prod_version}}",
+                "apply_type": "${{params.apply_type}}"
+              }
+            }
+          },
+          "post_source_file_desc": {
+            "control": "textarea",
+            "label": "贴源文件描述",
+            "width": "120px",
+            "span": 24,
+            "rows": 4,
+            "disabled": true
+          },
+          "source_file_local_path": {
+            "control": "textarea",
+            "label": "贴源本地存放路径",
+            "width": "120px",
+            "span": 24,
+            "rows": 4,
+            "disabled": true
+          },
+          "source_file_template": {
+            "control": "textarea",
+            "label": "贴源文件模板",
+            "width": "120px",
+            "span": 24,
+            "rows": 4,
+            "rules": [
+              {
+                "required": true
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

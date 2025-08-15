@@ -1,0 +1,366 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "foldLineNumber": 3,
+      "scope": "formData",
+      "controls": [
+        {
+          "branch_id": {
+            "control": "inputTree",
+            "label": "机构",
+            "idField": "coll_team",
+            "nodeTypeField": "type",
+            "pIdField": "parent_coll_team",
+            "labelField": "coll_team_name",
+            "nodeTypes": {
+              "branchTeam": {
+                "icon": "el-icon-news",
+                "children": ["branchTeam"]
+              }
+            },
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "cb0041",
+                "query_type": "branchTeam"
+              }
+            },
+            "format": "value-label"
+          },
+          "cust_name": {
+            "control": "text",
+            "label": "客户姓名"
+          }
+        },
+        {
+          "cert_no": {
+            "control": "text",
+            "label": "证件号码"
+          },
+          "cust_id": {
+            "control": "text",
+            "label": "客户编号"
+          }
+        },
+        {
+          "approval_status": {
+            "control": "select",
+            "label": "审核状态",
+            "default": "NC",
+            "dict": {
+              "dictType": "CS_E_CHECK_STATUS",
+              "dictKey": ["CS_E_CHECK_STATUS"],
+              "format": "value-label"
+            }
+          },
+          "queue_code": {
+            "control": "remoteSelect",
+            "label": "队列名称",
+            "labelField": "queue_name",
+            "valueField": "queue_code",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "cb0082"
+              }
+            },
+            "format": "value-label"
+          }
+        },
+        {
+          "case_id": {
+            "control": "text",
+            "label": "案件编号"
+          },
+          "case_status": {
+            "control": "select",
+            "label": "案件状态",
+            "dict": {
+              "dictType": "CS_E_STATUS_CD",
+              "dictKey": ["CS_E_STATUS_CD"],
+              "format": "value-label"
+            }
+          }
+        },
+        {
+          "stage_code": {
+            "control": "remoteSelect",
+            "label": "逾期阶段",
+            "labelField": "stage_name",
+            "valueField": "stage_code",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "cb0083"
+              }
+            },
+            "format": "value-label"
+          },
+          "daterange": {
+            "control": "dateTimePicker",
+            "label": "申请时间",
+            "span": "12",
+            "type": "daterange",
+            "unlinkPanels": true,
+            "valueFormat": "yyyyMMdd",
+            "startPlaceholder": "请选择开始时间",
+            "endPlaceholder": "请选择结束时间",
+            "startField": "start_date",
+            "endField": "end_date",
+            "disabledDate": "dateAfter"
+          }
+        },
+        {
+          "ovd_amt_total_1": {
+            "control": "currency",
+            "label": "欠款金额区间开始值"
+          },
+          "ovd_amt_total_2": {
+            "control": "currency",
+            "label": "欠款金额区间结束值"
+          }
+        },
+        {
+          "collect_date_1": {
+            "control": "inputNumber",
+            "label": "入催天数区间开始值"
+          },
+          "collect_date_2": {
+            "control": "inputNumber",
+            "label": "入催天数区间结束值"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "icon": "el-icon-edit",
+          "target": "dialog",
+          "label": "批量审核",
+          "checkCountMin": 1,
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/cs/collManage/lgManage/lgCheck/lgCheck_auditing.json",
+            "params": {}
+          },
+          "props": {
+            "title": "法诉审核"
+          }
+        },
+        {
+          "type": "add",
+          "icon": "el-icon-circle-check",
+          "target": "dialog",
+          "label": "全部核准",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/cs/collManage/lgManage/lgCheck/lgCheck_all_through.json",
+            "params": {
+              "branch_id": "${{formData.branch_id}}",
+              "case_id": "${{formData.case_id}}",
+              "cust_name": "${{formData.cust_name}}",
+              "cert_no": "${{formData.cert_no}}",
+              "cert_type": "${{formData.cert_type}}",
+              "overdue_days": "${{formData.overdue_days}}",
+              "approval_status": "${{formData.approval_status}}",
+              "queue_code": "${{formData.queue_code}}",
+              "classify_code": "${{formData.classify_code}}",
+              "case_status": "${{formData.case_status}}",
+              "stage_code": "${{formData.stage_code}}",
+              "start_date": "${{formData.start_date}}",
+              "end_date": "${{formData.end_date}}",
+              "ovd_amt_total_1": "${{formData.ovd_amt_total_1}}",
+              "ovd_amt_total_2": "${{formData.ovd_amt_total_2}}",
+              "collect_date_1": "${{formData.collect_date_1}}",
+              "collect_date_2": "${{formData.collect_date_2}}"
+            }
+          },
+          "props": {
+            "title": "法诉审核"
+          }
+        },
+        {
+          "type": "add",
+          "target": "dialog",
+          "icon": "el-icon-circle-close",
+          "label": "全部拒绝",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/cs/collManage/lgManage/lgCheck/lgCheck_all_rejected.json",
+            "params": {
+              "branch_id": "${{formData.branch_id}}",
+              "case_id": "${{formData.case_id}}",
+              "cust_name": "${{formData.cust_name}}",
+              "cert_no": "${{formData.cert_no}}",
+              "cert_type": "${{formData.cert_type}}",
+              "overdue_days": "${{formData.overdue_days}}",
+              "approval_status": "${{formData.approval_status}}",
+              "queue_code": "${{formData.queue_code}}",
+              "classify_code": "${{formData.classify_code}}",
+              "case_status": "${{formData.case_status}}",
+              "stage_code": "${{formData.stage_code}}",
+              "start_date": "${{formData.start_date}}",
+              "end_date": "${{formData.end_date}}",
+              "ovd_amt_total_1": "${{formData.ovd_amt_total_1}}",
+              "ovd_amt_total_2": "${{formData.ovd_amt_total_2}}",
+              "collect_date_1": "${{formData.collect_date_1}}",
+              "collect_date_2": "${{formData.collect_date_2}}"
+            }
+          },
+          "props": {
+            "title": "法诉审核"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "cb0189"
+        }
+      },
+      "thead": [
+        {
+          "type": "selection",
+          "align": "center",
+          "width": "55",
+          "fixed": "left",
+          "show": {
+            "expression": "'${{approval_status}}' === 'NC'"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "机构",
+          "prop": "branch_id"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "案件编号",
+          "prop": "case_id"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "客户姓名",
+          "prop": "cust_name"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "证件类型",
+          "prop": "cert_type",
+          "dict": {
+            "dictType": "CS_E_CERT_TYPE",
+            "dictKey": ["CS_E_CERT_TYPE"],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "证件号码",
+          "prop": "cert_no"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "逾期天数",
+          "prop": "overdue_days"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "申请人",
+          "prop": "apply_user"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "申请类型",
+          "prop": "register_type",
+          "dict": {
+            "dictType": "CS_E_REGISTER_TYPE",
+            "dictKey": ["CS_E_REGISTER_TYPE"],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "申请时间",
+          "prop": "apply_time"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "申请原因",
+          "prop": "apply_reason"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "审核状态",
+          "prop": "approval_status",
+          "dict": {
+            "dictType": "CS_E_CHECK_STATUS",
+            "dictKey": [
+              "CS_E_CHECK_STATUS"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "审核人",
+          "prop": "approval_user"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "审核时间",
+          "prop": "approval_time"
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "width": "180px",
+          "fixed": "right",
+          "btns": [
+            {
+              "type": "custom",
+              "label": "案件详情",
+              "toRequest": {
+                "url": "/views/cs/assistManage/caseDetail/caseDetail_1/case_detail_main.json",
+                "method": "POST",
+                "params": {
+                  "case_id": "${{current.case_id}}",
+                  "case_no": "${{current.case_no}}",
+                  "cust_id": "${{current.cust_id}}",
+                  "org_id": "${{current.org_id}}",
+                  "oa_org_id": "${{current.oa_org_id}}"
+                }
+              },
+              "props": {
+                "width": "80%",
+                "title": "案件详情"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

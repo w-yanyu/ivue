@@ -1,0 +1,148 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "initRequest": "${{params}}",
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "edprio",
+                    "prioif":"[${{form}}]"
+                }
+            },
+            "btns": [
+                {
+                    "type": "submit",
+                    "label": "提交",
+                    "icon": ""
+                }
+            ],
+            "controls": [
+                {
+                    "buckcd": {
+                        "control": "string",
+                        "label": "扣款参数编号",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入扣款参数编号"
+                            }
+                        ]
+                    },
+                    "sequno": {
+                        "control": "string",
+                        "label": "序号",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入序号"
+                            },
+                            {
+                                "max": 19,
+                                "message": "长度不能超过19个字符"
+                            },
+                            {
+                                "pattern": "^\\d+(\\.{0,1}[\\d]{2}){0,1}$",
+                                "message": "请输入大于或等于零的数值"
+                            }
+                        ]
+                    }
+
+                },
+                {
+                    "buckds": {
+                        "control":  "text",
+                        "label": "扣款参数描述"
+                    },
+                    "clssst": {
+                        "control": "string",
+                        "label": "贷款形态",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入贷款形态"
+                            }
+                        ],
+                        "dict": {
+                          "dictType": "E_CLSSST",
+                          "dictKey": [
+                            "E_CLSSST"
+                          ],
+                          "format": "label"
+                        }
+                    }
+                },
+                {
+                    "prlntg": {
+                        "control": "string",
+                        "label": "应计非应计状态",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请选择应计非应计状态"
+                            }
+                        ],
+                        "dict": {
+                            "dictType": "E_PRLNTG",
+                            "dictKey": [
+                                "E_PRLNTG"
+                            ],
+                            "format": "label"
+                        }
+                    },
+                    "reipro": {
+                        "control": "string",
+                        "label": "还款属性",
+                        "dict": {
+                            "dictType": "E_REIPRO",
+                            "dictKey": [
+                                "E_REIPRO"
+                            ],
+                            "format": "label"
+                        }
+                    }
+                },
+                {
+                    "reista": {
+                        "control": "string",
+                        "label": "还款状态规则",
+                        "dict": {
+                            "dictType": "E_REISTA",
+                            "dictKey": [
+                                "E_REISTA"
+                            ],
+                            "format": "label"
+                        }
+                    },
+                    "repysq": {
+                        "control": "text",
+                        "label": "还款顺序编号",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入还款顺序编号"
+                            }
+                        ]
+
+                    }
+                },
+                {
+                    "datads": {
+                        "control": "text",
+                        "label": "数据说明"
+                    }
+                }
+
+            ]
+        },
+        "alert": {
+          "span": 8,
+            "title": "还款顺序编号说明：",
+            "description": [
+                "0-本金；1-应收应计利息；2-催收应计利息；3-应收欠息；4-催收欠息；5-应收应计罚息；6-催收应计罚息；7-应收罚息；8-催收罚息；9-应计复息；a-复息；b-应收罚金；c-应收费用。"
+            ],
+            "listStyle": "disc"
+        }
+    }
+}

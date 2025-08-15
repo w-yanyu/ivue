@@ -1,0 +1,188 @@
+{
+  "module": "v-inputDataForm-btn",
+  "layout": {
+    "form": {
+      "doRequest": {
+        "url": "/SUMP/iccsCall/warnCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "wa3023",
+          "risk_type": "C"
+        }
+      },
+      "controls": [
+        {
+          "risk_rate_code": {
+            "control": "text",
+            "label": "风险级别代码",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          },
+          "risk_rate_name": {
+            "control": "text",
+            "label": "风险级别名称",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              },
+              {
+                "pattern": "^[\\w\\u4E00-\\u9FA5]{1,20}$",
+                "message": "请输入长度在1至20由汉字，字母，数字或下划线组成的字符串"
+              }
+            ]
+          }
+        },
+        {
+          "risk_rate_signal": {
+            "control": "select",
+            "label": "风险信号",
+            "placeholder":"请选择",
+            "dict": {
+              "dictType": "E_RISKSIGNAL",
+              "dictKey": [
+                "E_RISKSIGNAL"
+              ],
+              "format": "value-label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择风险信号"
+              }
+            ]
+          },
+          "priority": {
+            "control": "text",
+            "label": "优先级",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入优先级"
+              },
+              {
+                "pattern": "^[0-9]*$",
+                "message": "请输入整数"
+              }
+            ]
+          }
+        },
+        {
+          "first_operator": {
+            "control": "select",
+            "label": "风险分值区间(初值)",
+            "placeholder":"请选择",
+            "dict": {
+              "dictType": "E_RELATIONOPERATOR",
+              "dictKey": [
+                "E_RELATIONOPERATOR"
+              ],
+              "format": "label ${{current.second_number}}"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择区间符号"
+              }
+            ]
+          },
+          "first_number": {
+            "control": "text",
+            "label": "",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入初始值"
+              },
+              {
+                "pattern": "^[0-9]*$",
+                "message": "请输入整数"
+              }
+            ]
+          }
+        },
+        {
+          "second_operator": {
+            "control": "select",
+            "label": "风险分值区间(末值)",
+            "placeholder":"请选择",
+            "dict": {
+              "dictType": "E_RELATIONOPERATOR",
+              "dictKey": [
+                "E_RELATIONOPERATOR"
+              ],
+              "format": "label ${{current.second_number}}"
+            }
+          },
+          "second_number": {
+            "control": "text",
+            "label": "",
+            "rules": [
+              {
+                "pattern": "^[0-9]*$",
+                "message": "请输入整数"
+              }
+            ]
+          }
+        },
+        {
+          "auto_deal_ind": {
+            "control": "select",
+            "label": "是否自动预警处置",
+            "placeholder":"请选择",
+            "dict": {
+              "dictType": "E_ISORNO",
+              "dictKey": [
+                "E_ISORNO"
+              ],
+              "format": "value-label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择"
+              }
+            ]
+          },
+          "method_code": {
+            "control": "select",
+            "label": "借款人默认处置方式",
+            "placeholder":"请选择",
+            "dict": {
+              "dictType": "E_RISKPMETHOD",
+              "dictKey": [
+                "E_RISKPMETHOD"
+              ],
+              "format": "value-label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择处置方式"
+              }
+            ]
+          }
+        },
+        {
+          "label": {
+            "control": "link",
+            "label": "风险级别描述:",
+            "span": 5
+          },
+          "risk_rate_desc": {
+            "control": "textarea",
+            "label": "",
+            "span": 19,
+            "maxLength": 200,
+            "autosize": false,
+            "rows": 4
+          }
+        }
+      ]
+    }
+  }
+}

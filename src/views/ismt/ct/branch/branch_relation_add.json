@@ -1,0 +1,73 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "scope": "strForm",
+      "btns": [{
+        "type": "submit",
+        "label": "提交",
+        "icon": "",
+        "doRequest": {
+          "url": "/SUMP/call/RPCCall",
+          "method": "POST",
+          "params": {
+            "operater_ind": "A",
+            "servicecode": "ct2144"
+          }
+        }
+      }],
+      "controls": [
+        {
+          "parent_brch_id": {
+            "control": "text",
+            "label": "当前机构号",
+            "width": "130px",
+            "value": "${{params.parent_brch_id}}",
+            "disabled": true
+          },
+
+          "branch_id": {
+            "control": "lookup",
+            "width": "130px",
+            "edit": true,
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入下级机构编号"
+              },
+              {
+                "max": 32,
+                "message": "长度不能超过32个字符"
+              }
+            ],
+            "label": "下级机构编号",
+            "keyField": {
+              "branch_id": "branch_id"
+            },
+            "toRequest": {
+              "url": "/views/ismt/ct/branch/branch_info_lookup.json",
+              "method": "post",
+              "params": {
+                "brch_relation_code": "${{params.brch_relation_code}}"
+              }
+            },
+            "props": {
+              "title": "机构信息查询"
+            },
+            "format": "label"
+          }
+        },
+        {
+          "brch_relation_code": {
+            "control": "hidden",
+            "label": "机构关系",
+            "width": "130px",
+            "value": "${{params.brch_relation_code}}",
+            "disabled": false
+          }
+        }
+
+      ]
+    }
+  }
+}

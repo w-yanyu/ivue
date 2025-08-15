@@ -1,0 +1,62 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "pl0410",
+                    "task_no": "${{params.task_no}}"
+                }
+            },
+            "initDataOnce": true,
+            "btns": [{
+                "type": "submit",
+                "label": "提交",
+                "refresh": true
+            }],
+            "controls": [{
+                "file_path": {
+                    "control": "hidden",
+                    "label": "file_path"
+                },
+                "file_name": {
+                    "control": "hidden",
+                    "label": "file_name"
+                },
+                "file_size": {
+                    "control": "hidden",
+                    "label": "file_size"
+                }
+            }, {
+                "attach_name": {
+                    "label": "附件备注",
+                    "control": "text",
+                    "rules": [{
+                        "max": 64,
+                        "message": "长度不能超过64个字符"
+                    }]
+                },
+                "file": {
+                    "doRequest": {
+                        "url": "/SUMP/minioCall/upload",
+                        "method": "post",
+                        "params": {},
+                        "resultSet": {
+                            "file_path": "path",
+                            "file_name": "oldName",
+                            "file_size": "size"
+                        }
+                    },
+                    "width": "130px",
+                    "control": "file",
+                    "limit": 1,
+                    "limitSize": 10,
+                    "label": "上传文件",
+                    "btnLable": "请选择文件"
+                }
+            }]
+        }
+    }
+}

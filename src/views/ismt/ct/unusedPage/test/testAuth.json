@@ -1,0 +1,115 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "doRequest": {
+                "url": "",
+                "method": "POST",
+                "params": {}
+            },
+            "controls": [
+                {
+                    "role_id": {
+                        "control": "text",
+                        "label": "角色ID",
+                        "rules": [
+                            {
+                                "max": 64,
+                                "message": "长度不能超过64个字符"
+                            }
+                        ]
+                    },
+                    "role_name": {
+                        "control": "text",
+                        "label": "角色名称",
+                        "rules": [
+                            {
+                                "max": 100,
+                                "message": "长度不能超过100个字符"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "target": "dialog",
+                    "label": "新增",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/ismt/ct/roleManager/role-info-add.json"
+                    },
+                    "title": "角色新增"
+                }
+            ]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "doRequest": {
+                "url": "/SUMP/rest/auth/delAuth",
+                "method": "POST",
+                "params": {
+                    "servicecode": ""
+                }
+            },
+            "pagination": {
+                "pageSizes": [
+                    10,
+                    15,
+                    20,
+                    50,
+                    100
+                ],
+                "show": true,
+                "pageSize": 10
+            },
+            "thead": [
+                {
+                    "type": "index"
+                },
+                {
+                    "label": {
+                        "default": "角色ID",
+                        "i18n": "permission.auth_reason_type"
+                    },
+                    "prop": "role_id"
+                },
+                {
+                    "label": "角色名称",
+                    "prop": "role_name"
+                },
+                {
+                    "label": "操作",
+                    "btns": [
+                        {
+                            "type": "edit",
+                            "label": "修改",
+                            "toRequest": {
+                                "url": "/views/ismt/ct/roleManager/role-info-update.json",
+                                "method": "GET"
+                            },
+                            "props": {
+                                "title": "角色修改"
+                            }
+                        },
+                        {
+                            "type": "delete",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/call/RPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "ct2052",
+                                    "operater_ind": "D"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

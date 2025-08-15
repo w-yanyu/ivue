@@ -1,0 +1,183 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "doRequest": {
+                "url": "",
+                "method": "POST",
+                "params": {}
+            },
+            "controls": [
+                {
+                    "trxn_code": {
+                        "control": "text",
+                        "label": "柜面交易码",
+                        "rules": [
+                            {
+                                "max": 20,
+                                "message": "长度不能超过10个字符"
+                            }
+                        ]
+                    },
+                    "trxn_hdlg_method": {
+                        "control": "select",
+                        "dict": {
+                            "dictType": "CT_E_TEXNTYLE",
+                            "dictKey": [
+                                "CT_E_TEXNTYLE"
+                            ],
+                            "format": "label"
+                        },
+                        "label": "受理方式"
+                    }
+                },
+                {
+                    "fun_auth_id": {
+                        "control": "text",
+                        "label": "功能授权ID",
+                        "labelField": "drop_list_desc",
+                        "valueField": "drop_list_value",
+                        "rules": [
+                            {
+                                "max": 32,
+                                "message": "长度不能超过32个字符"
+                            }
+                        ],
+                        "doRequest": {
+                            "url": "/SUMP/call/RPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "ms9999",
+                                "dynamic_drop_list_type": "CT0005"
+                            }
+                        },
+                        "format": "label"
+                    },
+                    "workflow_id": {
+                        "control": "text",
+                        "label": "工作流ID",
+                        "rules": [
+                            {
+                                "max": 32,
+                                "message": "长度不能超过32个字符"
+                            }
+                        ],
+                        "keyField": {
+                            "workflow_id": "workflow_id"
+                        },
+                        "toRequest": {
+                            "url":"/views/ismt/ct/ParameterManagement/WorkflowDefinitionMaintenance/WorkflowDefinitionManager_lookup.json",
+                            "method": "post",
+                            "params": "${{form.workflow_id}}"
+                        },
+                        "props":{
+                            "title":"工作流ID查询"
+                        },
+                        "format": "label"
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "target": "dialog",
+                    "label": "新增",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/ismt/ct/tranAccept/tran_accept-add.json"
+                    },
+                    "props": {
+                        "title": "交易受理方式新增"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ct2063"
+                }
+            },
+            "pagination": {
+                "show": true,
+                "pageSize": 10
+            },
+            "thead": [
+                {
+                    "type": "index"
+                },
+                {
+                    "label": "柜面交易码",
+                    "prop": "trxn_code"
+                },
+                {
+                    "label": "柜面交易码名称",
+                    "prop": "trxn_code_name"
+                },
+                {
+                    "label": "受理方式",
+                    "prop": "trxn_hdlg_method",
+                    "dict": {
+                        "dictType": "CT_E_TEXNTYLE",
+                        "dictKey": [
+                            "CT_E_TEXNTYLE"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "功能授权ID",
+                    "prop": "fun_auth_id"
+                },
+                {
+                    "label": "功能授权名称",
+                    "prop": "fun_auth_name"
+                },
+                {
+                    "label": "工作流ID",
+                    "prop": "workflow_id"
+                },
+                {
+                    "label": "工作流描述",
+                    "prop": "workflow_desc"
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 150,
+                    "align": "center",
+                    "btns": [
+                        {
+                            "type": "look",
+                            "label": "详情",
+                            "toRequest": {
+                                "url": "/views/ismt/ct/tranAccept/tran_accept_detail.json",
+                                "method": "POST"
+                            },
+                            "props": {
+                                "title": "交易受理方式详情"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/ismt/ct/tranAccept/tran_accept-update.json",
+                                "method": "GET"
+                            },
+                            "props": {
+                                "title": "交易受理方式维护"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

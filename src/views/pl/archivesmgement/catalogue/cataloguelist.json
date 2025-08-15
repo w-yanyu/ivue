@@ -1,0 +1,138 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "archives_level": {
+                        "control": "text",
+                        "label": "档案等级",
+                        "rules": [
+                            {
+                                "max": 10,
+                                "message": "长度不能超过10个字符"
+                            }
+                        ]
+                    },
+                    "archives_directory": {
+                        "control": "text",
+                        "label": "档案目录",
+                        "rules": [
+                            {
+                                "max": 10,
+                                "message": "长度不能超过10个字符"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "target": "dialog",
+                    "label": "新增",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/pl/archivesmgement/catalogue/cataloguelist-add.json"
+                    },
+                    "props": {
+                        "title": "档案清单",
+                        "width": "80%"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "pl0353"
+                }
+            },
+            "pagination": {
+                "show": true
+            },
+            "thead": [
+                {
+                    "type": "index"
+                },
+                {
+                    "label": "档案等级",
+                    "prop": "archives_level",
+                    "dict": {
+                      "dictType": "PL_E_ARCHIVES_LEVEL",
+                      "dictKey": [
+                        "PL_E_ARCHIVES_LEVEL"
+                      ],
+                      "format": "label"
+                    }
+                },
+                {
+                    "label": "档案目录",
+                    "prop": "archives_directory"
+                },
+                {
+                    "label": "登记人",
+                    "prop": "registration"
+                },
+                {
+                    "label": "登记日期",
+                    "prop": "reg_date"
+                },
+                {
+                    "label": "登记机构",
+                    "prop": "reg_organization"
+                },
+              {
+                "label": "操作",
+                "fixed": "right",
+                "width": 120,
+                "align": "center",
+                "btns": [
+                  {
+                    "type": "add",
+                    "target": "dialog",
+                    "label": "修改",
+                    "toRequest": {
+                      "method": "GET",
+                      "url": "/views/pl/archivesmgement/catalogue/cataloguelist-update.json"
+                    },
+                    "props": {
+                      "title": "维护",
+                      "width":"80%"
+                    }
+                  },
+                  {
+                    "type": "add",
+                    "target": "dialog",
+                    "label": "删除",
+                    "doRequest": {
+                      "url": "/SUMP/call/RPCCall",
+                      "method": "POST",
+                      "params": {
+                        "servicecode": "pl0356",
+                        "bind_default_menu_ind": "1",
+                        "system_id": ""
+                      }
+                    },
+                    "confirm": {
+                      "title": "确认删除",
+                      "msg": "您确定要删除该档案目录吗？",
+                      "confirmButtonText": "确定",
+                      "cancelButtonText": "取消"
+                    },
+                    "props": {
+                      "title": ""
+                    }
+                  }
+                ]
+              }
+            ]
+        }
+    }
+}

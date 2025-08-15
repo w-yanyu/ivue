@@ -1,0 +1,77 @@
+{
+  "module": "v-inputDataForm-btn",
+  "layout": {
+    "form": {
+      "###initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "scoreCardType": "${{params.scoreCardType}}",
+          "servicecode": "deci020126"
+        }
+      },
+      "controls": [
+        {
+          "scoreCardCode": {
+            "label": "复杂评分卡代码",
+            "width": "auto",
+            "control": "text",
+            "disabled":false,
+            "span": 12,
+            "rules": [
+              {
+                "required": true,
+                "pattern": "^[A-Za-z][A-Za-z\\d_]{0,39}$",
+                "message": "请正确输入"
+              }
+            ]
+          },
+          "scoreCardName": {
+            "label": "复杂评分卡名称",
+            "width": "auto",
+            "control": "text",
+            "span": 12,
+            "rules": [
+              {
+                "required": true,
+                "pattern": "^[a-z0-9A-Z\u4e00-\u9fa5]+$",
+                "message": "仅可为字母、数字、文字及相关组合",
+                "max": 125
+              }
+            ]
+          }
+        },
+        {
+          "description": {
+            "label": "备注",
+            "width": "auto",
+            "control": "textarea",
+            "span": 24,
+            "showWordLimit": 200,
+            "maxlength": 200,
+            "rows": 5,
+            "rules": [
+              {
+                "message": "请正确输入",
+                "max": 200
+              }
+            ]
+          }
+        }
+      ],
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "scoreCardType": "${{params.scoreCardType}}",
+          "createUser": "$g{{user_info.userCode}}",
+          "updateUser": "$g{{user_info.userCode}}",
+          "riskOperationType": "A",
+          "approveStatus":"00",
+          "branchId": "$g{{user_info.branch_id}}",
+          "servicecode": "deci020202"
+        }
+      }
+    }
+  }
+}

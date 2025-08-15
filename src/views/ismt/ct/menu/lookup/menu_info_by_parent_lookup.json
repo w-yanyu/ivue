@@ -1,0 +1,109 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "menu_id": {
+                        "control": "text",
+                        "label": "菜单编号",
+                        "rules": [
+                            {
+                                "max": 10,
+                                "message": "长度不能超过10个字符"
+                            }
+                        ]
+                    },
+                    "menu_name": {
+                        "control": "text",
+                        "label": "菜单名称",
+                        "rules": [
+                            {
+                                "max": 32,
+                                "message": "长度不能超过50个字符"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ct3111",
+                    "menu_upper_id":"${{params.menu_upper_id}}"
+
+                }
+            },
+            "pagination": {
+                "show": true
+            },
+            "thead": [
+                {
+                    "type": "index"
+                },
+                {
+                    "label": "菜单ID",
+                    "prop": "menu_id"
+                },
+                {
+                    "label": "菜单编号",
+                    "prop": "menu_code"
+                },
+                {
+                    "label": "菜单描述",
+                    "prop": "menu_desc"
+                },
+                {
+                    "label": "菜单组别",
+                    "prop": "menu_group"
+                },
+                {
+                    "label": "上级菜单ID",
+                    "prop": "menu_upper_id"
+                },
+                {
+                    "label": "默认菜单标志",
+                    "prop": "menu_default_ind",
+                    "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                            "MS_E_YESORNO"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "页面ID",
+                    "prop": "page_id"
+                },
+                {
+                    "label": "可显示渠道",
+                    "prop": "channel_list",
+                    "dict": {
+                        "dictKey": [
+                          "E_CHANNEL_LIST"
+                        ],
+                        "dictType": "E_CHANNEL_LIST"
+                      }
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 150,
+                    "align": "center",
+                    "btns": [
+                        {
+                            "type": "bringback",
+                            "label": "选择"
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,117 @@
+{
+  "module": "lr_transferTable",
+  "layout": {
+    "transfer": {
+      "height":"600px",
+      "left": {
+        "filterable":false,
+        "title": "规则列表",
+        "btn":{
+          "label": "关联",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "mk0027",
+              "label_id": "${{params.label_id}}"
+            }
+          },
+          "eventAfter": {
+            "callback": "restCallBack"
+          }
+        },
+        "datagrid": {
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "pd0294",
+              "rule_code": "mk"
+            }
+          },
+          "checked":"checked",
+          "thead": [
+            {
+              "label": "序号",
+              "type": "index",
+              "align": "center"
+            },
+            {
+              "type": "string",
+              "label": "规则id",
+              "prop": "rule_id",
+              "align": "center"
+            },
+            {
+              "type": "string",
+              "label": "规则代码",
+              "align": "center",
+              "prop": "rule_code"
+            },
+            {
+              "type": "string",
+              "label": "规则名称",
+              "prop": "rule_name",
+              "align": "center"
+            },
+            {
+              "label": "规则类型",
+              "prop": "rule_type",
+              "align": "center",
+              "type": "string",
+              "dict": {
+                "dictType": "PD_E_RULE_TYPE",
+                "dictKey": [
+                  "PD_E_RULE_TYPE"
+                ],
+                "format": "label"
+              }
+            }
+          ]
+        }
+      },
+      "right": {
+        "filterable":false,
+        "title":"已关联规则",
+        "btn":{
+          "label":"取消关联",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "mk0028",
+              "label_id": "${{params.label_id}}"
+            }
+          },
+          "eventAfter": {
+            "callback": "restCallBack"
+          }
+        },
+        "datagrid": {
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "mk0025",
+              "label_id": "${{params.label_id}}"
+            }
+          },
+          "thead": [
+            {
+              "type": "string",
+              "label": "规则id",
+              "prop": "rule_id",
+              "align": "center"
+            },
+            {
+              "type": "string",
+              "label": "规则名称",
+              "prop": "rule_name",
+              "align": "center"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

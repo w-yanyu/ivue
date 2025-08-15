@@ -1,0 +1,186 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "regionalCenter": {
+            "span":"6",
+            "control": "remoteSelect",
+            "label": "区域中心",
+            "labelField": "brachName",
+            "valueField": "branchNo",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "RLMSPLTS1068"
+              }
+            },
+            "format": "label"
+          },
+          "lncfno": {
+            "span":"6",
+            "control": "text",
+            "label": "借据号",
+            "rules": [
+              {
+                "max": 80,
+                "message": "借据号不能为空"
+              }
+            ]
+          },
+          "lcEndData": {
+            "span":"6",
+            "control": "dateTimePicker",
+            "label": "到期时间",
+            "format": "yyyyMMdd"
+          },
+          "accountAge": {
+            "span":"6",
+            "label": "账龄",
+            "control": "select",
+            "multiple":true,
+            "value": [],
+            "dict": {
+              "dictKey": [
+                "E_ACCT_DURATION"
+              ],
+              "dictType": "E_ACCT_DURATION",
+              "format": "label"
+            }
+          }
+          
+        },
+        {
+          "certId": {
+            "span":"6",
+            "control": "text",
+            "label": "证件号码"
+          },
+          "oaOrgId":{
+            "span":"6",
+            "label": "委案公司",
+            "control": "remoteSelect",
+            "labelField": "dictName",
+            "valueField": "dictId",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "RLMSPLTS1072"
+              }
+            },
+            "format": "label"
+          },
+          "prodcd": {
+            "span": 6,
+            "control": "select",
+            "dict": {
+              "format": "label",
+              "dictKey": [
+                "E_PROD"
+              ],
+              "dictType": "E_PROD"
+            },
+            "label": "产品名称",
+            "props": {
+              "title": "产品查询"
+            },
+            "format": "label"
+          },
+          "custNm": {
+            "span":"6",
+            "control": "text",
+            "label": "客户姓名"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "RLMSPLTS1301_pl1301"
+        }
+      },
+      "thead": [
+        {
+          "label": "区域中心",
+          "prop": "regional_center"
+        },
+
+        {
+          "label": "借据号",
+          "prop": "lncfno"
+        },
+        {
+          "label": "客户姓名",
+          "prop": "cust_nm"
+        },
+        {
+          "label": "产品名称",
+          "prop": "prodcd",
+          "dict": {
+            "dictType": "E_PROD",
+            "dictKey": [
+              "E_PROD"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "逾期天数",
+          "prop": "over_due_day"
+        },
+        {
+          "label": "委案时现贷余额",
+          "prop": "now_credit_balance"
+        },
+        {
+          "label": "当前现贷余额",
+          "prop": "now_credit_balance"
+        },
+        {
+          "label": "委案时解除逾期金额",
+          "prop": "oa_overdue_amount"
+        },
+        {
+          "label": "当前解除逾期金额",
+          "prop": "oa_overdue_amount"
+        },
+        {
+          "label": "委案时账龄",
+          "prop": "oa_account_age"
+        },
+        {
+          "label": "当前账龄",
+          "prop": "account_age"
+        },
+        {
+          "label": "委案公司",
+          "prop": "oa_org_name"
+        },
+        {
+          "label": "委案到期时间",
+          "prop": "oa_end_date"
+        },
+        {
+          "label": "上一月委案公司",
+          "prop": "pro_oa_name"
+        },
+        {
+          "label": "是否高危",
+          "prop": "is_high_risk"
+        },
+        {
+          "label": "是否法诉",
+          "prop": "whether_the_litigation"
+        }
+      ]
+    }
+  }
+}

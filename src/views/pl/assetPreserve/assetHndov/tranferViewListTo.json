@@ -1,0 +1,160 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+
+    "toolbar": {
+      "btns":[
+        {
+          "type": "edit",
+          "#icon": "el-icon-edit",
+          "label": "移入",
+          "toRequest": {
+            "target": "dialog",
+              "url": "/views/pl/assetPreserve/assetHndov/tranferViewTo.json",
+              "params": {
+                "apply_no": "${{params.apply_no}}"
+              }
+            },
+            "props": {
+              "width": "80%",
+              "title": "资产移入"
+            }
+        },
+        {
+          "type": "edit",
+          "#icon": "el-icon-edit",
+          "label": "移出",
+          "toRequest": {
+            "target": "dialog",
+              "url": "/views/pl/assetPreserve/assetHndov/tranferViewOutTo.json",
+              "params": {
+                "apply_no": "${{params.apply_no}}"
+              }
+            },
+            "props": {
+              "width": "80%",
+              "title": "资产移出"
+            }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pl0253",
+          "apply_no":"${{params.apply_no}}"
+        }
+      },
+      "thead": [
+        {
+          "type": "index",
+          "align": "center"
+        },
+        {
+          "label": "借据号",
+          "prop": "loan_no",
+          "align": "center"
+        },
+        {
+          "label": "币种",
+          "prop": "ccy_code",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_CURRENCY",
+            "dictKey": [
+              "MS_CURRENCY"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "客户编号",
+          "prop": "cust_no",
+          "align": "center"
+        },
+        {
+          "label": "客户名称",
+          "prop": "cust_nm",
+          "align": "center"
+        },
+        {
+          "label": "还款账号",
+          "prop": "rpymt_acct_num",
+          "align": "center"
+        },
+        {
+          "label": "贷款期限",
+          "prop": "loan_matu",
+          "align": "center"
+
+        },
+        {
+          "label": "贷款形态",
+          "prop": "loan_form",
+          "align": "center",
+          "dict": {
+            "dictType": "PL_E_CLSSST",
+            "dictKey": [
+              "PL_E_CLSSST"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "贷款账户状态",
+          "prop": "loan_acct_ste",
+          "align": "center",
+          "dict": {
+            "dictType": "LN_E_LOAN_ACCT_STE",
+            "dictKey": [
+              "LN_E_LOAN_ACCT_STE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "资产移交方式",
+          "prop": "hndov_way",
+          "align": "center",
+          "dict": {
+            "dictType": "PL_E_HNDOV_WAY",
+            "dictKey": [
+              "PL_E_HNDOV_WAY"
+            ],
+            "labelField": "dictName",
+            "valueField": "dictId"
+          }
+        },
+        {
+          "label": "新机构",
+          "prop": "new_org_num",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "align":"center",
+          "fixed": "right",
+          "btns": [
+            {
+              "type": "delete",
+              "label": "撤回",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "pl0254",
+                  "apply_no":"${{params.apply_no}}"
+                }
+              }
+            }
+          ]
+        }
+
+      ]
+    }
+  }
+}

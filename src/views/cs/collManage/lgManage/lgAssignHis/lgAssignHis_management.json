@@ -1,0 +1,221 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "foldLineNumber": 3,
+            "scope": "formData",
+            "controls": [
+                {
+                    "cust_name": {
+                        "control": "text",
+                        "label": "客户姓名"
+                    },
+                    "cert_no": {
+                        "control": "text",
+                        "label": "证件号码"
+                    }
+                },
+                {
+                    "legal_status": {
+                        "control": "remoteSelect",
+                        "label": "法诉状态",
+                        "labelField": "drop_list_desc",
+                        "valueField": "drop_list_value",
+                        "doRequest": {
+                            "url": "/SUMP/icmcall/icmRPCCall",
+                            "method": "POST",
+                            "params": {
+                              "###servicecode":"TODO临时注释替换ap1071",
+                              "servicecode": "cb0042",
+                              "drop_list_type": "lg_status_loan"
+                            }
+                        },
+                        "format": "value-label"
+                    },
+                    "legal_org_id": {
+                        "control": "remoteSelect",
+                        "label": "诉讼机构",
+                        "labelField": "coll_org_id",
+                        "valueField": "coll_org_name",
+                        "doRequest": {
+                            "url": "/SUMP/icmcall/icmRPCCall",
+                            "method": "POST",
+                            "params": {
+                              "###servicecode":"TODO临时注释替换pl0416",
+                              "servicecode": "cb0042",
+                              "coll_kind":"02",
+                              "is_valid":"Y"
+                            }
+                        },
+                        "format": "value-label"
+                    }
+                },
+                {
+                    "daterange": {
+                        "control": "dateTimePicker",
+                        "label": "诉讼日期",
+                        "type": "daterange",
+                        "unlinkPanels": true,
+                        "valueFormat": "yyyyMMdd",
+                        "startPlaceholder": "请选择开始时间",
+                        "endPlaceholder": "请选择结束时间",
+                        "startField":"legal_begin_date",
+                        "endField":"legal_end_date",
+                        "disabledDate":"dateAfter"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "appId": "cbOnl",
+                  "servicecode": "cb0193"
+                }
+            },
+            "thead": [
+                {
+                  "type": "string",
+                  "align": "center",
+                  "label": "机构",
+                  "width": "180px",
+                  "prop": "branch_id"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width": "180px",
+                    "label": "客户姓名",
+                    "prop": "cust_name"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width": "180px",
+                    "label": "证件号码",
+                    "prop": "cert_no"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width": "180px",
+                    "label": "批次",
+                    "prop": "series_num"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width": "180px",
+                    "label": "法诉金额",
+                    "prop": "overdue_amount"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width": "180px",
+                    "label": "派案日期",
+                    "prop": "legal_begin_date"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width": "180px",
+                    "label": "回收日期",
+                    "prop": "legal_end_date"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width": "180px",
+                    "label": "实际结束时间",
+                    "prop": "real_end_date"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width": "180px",
+                    "label": "法诉状态",
+                    "prop": "legal_status",
+                    "dict":{
+                        "dictKey": [
+                            "legal_status"
+                        ],
+                        "format": "value-label",
+                        "labelField": "drop_list_desc",
+                        "valueField": "drop_list_value",
+                        "doRequest": {
+                            "url": "/SUMP/icmcall/icmRPCCall",
+                            "method": "POST",
+                            "params": {
+                              "###servicecode":"TODO临时注释替换ap1071",
+                              "servicecode": "cb0042",
+                              "drop_list_type": "lg_status_loan"
+                            }
+                        }
+                    }
+                },
+                {
+                  "type": "string",
+                  "align": "center",
+                  "width": "150",
+                  "label": "案件状态",
+                  "prop": "case_status",
+                  "dict": {
+                    "dictType": "CS_E_STATUS_CD",
+                    "dictKey": [
+                      "CS_E_STATUS_CD"
+                    ],
+                    "format": "value-label"
+                  }
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width": "180px",
+                    "label": "上次法诉公司名称",
+                    "prop": "last_legal_org_id"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width": "180px",
+                    "label": "是否完成",
+                    "prop": "is_call_end",
+                    "dict": {
+                      "format": "value-label",
+                      "dictKey": [
+                        "CS_E_YESORNO"
+                      ],
+                      "dictType": "CS_E_YESORNO"
+                    }
+                },
+                {
+                    "label": "操作",
+                    "align":"center",
+                    "width": "180px",
+                    "fixed": "right",
+                    "btns": [
+                      {
+                        "type": "custom",
+                        "label": "案件详情",
+                        "toRequest": {
+                          "url": "/views/cs/assistManage/caseDetail/caseDetail_1/case_detail_main.json",
+                          "method": "POST",
+                          "params": {
+                            "case_id": "${{current.case_id}}"
+                          }
+                        },
+                        "props": {
+                          "width": "80%",
+                          "title": "案件详情"
+                        }
+                      }
+                    ]
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,119 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "template_id": {
+            "control": "text",
+            "label": "模板编号",
+            "rules": [
+              {
+                "max": 30,
+                "message": "长度不能超过30个字符"
+              }
+            ]
+          },
+          "template_name": {
+            "control": "text",
+            "label": "模板名称"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "新增模板",
+          "toRequest": {
+            "target": "navTab",
+            "url": "@layoutTempDesigner",
+            "method": "GET"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ct3014"
+        }
+      },
+      "thead": [
+        {
+          "type": "index"
+        },
+        {
+          "label": "模板编号",
+          "prop": "template_id"
+        },
+        {
+          "label": "模板名称",
+          "prop": "template_name"
+        },
+        {
+          "label": "创建时间",
+          "prop": "data_create_time"
+        },
+        {
+          "label": "创建人",
+          "prop": "data_create_user"
+        },
+        {
+          "label": "备注信息",
+          "prop": "remark"
+        },
+        {
+          "label": "操作",
+          "width": "200px",
+          "align": "center",
+          "btns": [
+            {
+              "type": "look",
+              "label": "查看",
+              "toRequest": {
+                "url": "@layoutTempLook",
+                "method": "GET",
+                "props": {
+                  "title": "查看缩略图",
+                  "width": "30%"
+                }
+              }
+            },
+            {
+              "type": "edit",
+              "label": "编辑",
+              "toRequest": {
+                "target": "navTab",
+                "url": "@layoutTempDesigner",
+                "method": "GET"
+              },
+              "props": {
+                "title": "编辑布局模板"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "ct3013"
+                }
+              },
+              "confirm": {
+                "title": "提示信息",
+                "msg": "确定删除该信息吗？"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

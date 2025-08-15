@@ -1,0 +1,76 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "detail,format=pd0364,temp=pd0360",
+          "pageTranType": "${{params.pageTranType}}",
+          "sale_prod_cd": "${{params.sale_prod_cd}}",
+          "prod_version": "${{params.prod_version}}",
+          "busi_seq": "${{params.busi_seq}}",
+          "apply_type": "${{params.apply_type}}"
+        }
+      },
+      "thead": [
+        {
+          "type": "string",
+          "label": "模板编号",
+          "prop": "template_id",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "发送类型",
+          "prop": "template_type",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_TEMPLATE_TYPE",
+            "dictKey": [
+              "MS_E_TEMPLATE_TYPE"
+            ],
+            "format": "label-value"
+          }
+        },
+        {
+          "type": "string",
+          "label": "发送节点",
+          "prop": "mail_send_node",
+          "align": "center",
+          "dict": {
+            "dictType": "PD_E_PROTOCOL_NODE",
+            "dictKey": [
+              "PD_E_PROTOCOL_NODE"
+            ],
+            "format": "label-value"
+          }
+        },
+        {
+          "type": "string",
+          "label": "模板内容",
+          "prop": "template_content",
+          "align": "center",
+          "btns": [
+            {
+              "type": "look",
+              "toRequest": {
+                "url": "@htmlRender",
+                "params": {
+                  "template_content": "${{current.template_content}}"
+                }
+              },
+              "props": {
+                "width": "45%",
+                "title": "预览"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

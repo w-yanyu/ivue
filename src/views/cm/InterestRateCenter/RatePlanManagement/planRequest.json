@@ -1,0 +1,53 @@
+{
+    "module": "d-steps",
+    "layout": {
+        "steps": {
+            "scope":"formObj",
+            "direction": "horizontal",
+            "alignCenter": true,
+            "finishStatus": "success",
+            "simpleType": false,
+          
+            "nextStepType": "validate",
+            "list": [
+                {
+                    "scope":"step1",
+                    "title": "新增定价方案信息",
+                    "icon": "el-icon-edit",
+                    "toRequest": { 
+                        "url": "/views/cm/InterestRateCenter/RatePlanManagement/RatePlanManagement_add.json",
+                        "method": "get"
+                    },
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "post",
+                        "params": {
+                            "servicecode": "insertplan"
+                        }
+                    }
+                },
+                {
+                    "scope":"step2",
+                    "title": "新增M+N分段利率方案",
+                    "icon": "el-icon-edit",
+                    "toRequest": {
+                        "url": "/views/cm/InterestRateCenter/RatePlanManagement/MnManageAddForInsert.json",
+                        "method": "get",
+                        "params": {
+                            "rate_code": "${{formObj.step1.rate_code}}",
+                            "periods": "${{formObj.step1.periods}}"
+                        }
+
+                    },
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "post",
+                        "params": {
+                            "servicecode": "insertPlanMn"
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

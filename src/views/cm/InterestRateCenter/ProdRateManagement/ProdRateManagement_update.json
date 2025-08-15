@@ -1,0 +1,132 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "initRequest": "${{params}}",
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "updateprod",
+                    "prodlist":"[${{form}}]"
+                }
+            },
+            "btns": [
+                {
+                    "type": "submit",
+                    "label": "提交",
+                    "icon": ""
+                }
+            ],
+            "controls": [
+                {
+                    "rate_code": {
+                        "control": "lookup",
+                        "label": "定价方案编号",
+                        "edit": false,
+                        "keyField": {
+                            "ratecode": "rate_code", 
+                            "rate_name":"rate_name"
+                        },
+                        "toRequest": {
+                            "url": "/views/cm/InterestRateCenter/ProdRateManagement/customermanager.json",
+                            "method": "post"
+                        },
+                        "multiple": false,
+                        "props": {
+                            "title": "属性选择"
+                        },
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "定价方案编号不得为空"
+                            },
+                            {
+                                "max": 20,
+                                "message": "长度不能超过20个字符"
+                            }
+                        ]
+                    },
+                    "rate_name": {
+                        "control": "string",
+                        "label": "定价方案名称"
+                    }
+                },
+                
+                {
+                    
+                    "crdtcd": {
+                        "control": "string",
+                        "label": "项目编号",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入序号"
+                            },
+                            {
+                                "max": 20,
+                                "message": "长度不能超过20个字符"
+                            }
+                        ]
+                    },
+                    "prodna": {
+                        "control":  "text",
+                        "label": "项目名称"
+                    }
+                    
+                },
+                {
+                    
+                    
+                    "area_code": {
+                        "control": "string",
+                        "label": "区域中心代码",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入区域中心代码"
+                            }
+                        ]
+                    },
+
+                    "area_name": {
+                        "control": "text",
+                        "label": "区域中心名称"
+                    }
+                },
+                {
+                    "corpno": {
+                        "control": "hidden",
+                        "label": "法人代码"
+                    },
+                    "cust_label": {
+                        "control": "string",
+                        "label": "客群",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入客群信息"
+                            }
+                        ],
+                        "dict": {
+                          "dictType": "E_CUSLAB",
+                          "dictKey": [
+                            "E_CUSLAB"
+                          ],
+                          "format": "label"
+                        }
+                    }
+                }
+                
+            ]
+        },
+        "alert": {
+            "span": 8,
+              "title": "客群类别说明：",
+              "description": [
+                  "A-A类; B-B类; ALL-全部。"
+              ],
+              "listStyle": "disc"
+          }
+    }
+}

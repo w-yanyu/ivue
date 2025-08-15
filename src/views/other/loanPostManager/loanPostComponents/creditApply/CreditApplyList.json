@@ -1,0 +1,150 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "scope": "formData",
+            "controls": [
+                {
+                  "brchno": {
+                    "control": "remoteSelect",
+                    "label": "区域中心",
+                    "labelField": "brachName",
+                    "valueField": "branchNo",
+                    "doRequest": {
+                      "url": "/SUMP/icmcall/icmRPCCall",
+                      "method": "POST",
+                      "params": {
+                        "servicecode": "PLMSKGTS0135"
+                      }
+                    },
+                    "format": "label"
+                  },
+                  "lncfno": {
+                    "control": "text",
+                    "label": "借据号"
+                  }
+                },
+                {
+                  "custna": {
+                    "control": "text",
+                    "label": "客户名称"
+                  },
+                  "cardno": {
+                    "control": "text",
+                    "label": "证件号码",
+                    "rules": [
+                      {
+                        "max": 20,
+                        "message": "长度不能超过20个字符"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "callStartTime": {
+                     "control": "dateTimePicker",
+                      "label": "调取起始日期",
+                    "editable": true,
+                      "format":"yyyyMMdd"
+                  },
+                  "callEndTime": {
+                     "control": "dateTimePicker",
+                      "label": "调取截止日期",
+                    "editable": true,
+                      "format":"yyyyMMdd"
+                  }
+
+                },
+                {
+                  "phoneno": {
+                    "control": "text",
+                    "label": "手机号码"
+                  }
+                }
+
+
+            ]
+        },
+        "toolbar": {
+            "btns": [
+            ]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "PLMSKGTS0043"
+                }
+            },
+            "thead": [
+              {
+                "label": "申请号",
+                "prop": "applid",
+                "align":"center",
+                "visible": "true"
+              },  {
+                "label": "借据号",
+                "prop": "lncfno",
+                "align":"center",
+                "visible": "true"
+              },
+                {
+                    "label": "客户名称",
+                    "prop": "custna",
+                    "align":"center"
+                },
+                {
+                    "label": "证件号码",
+                    "prop": "cardno",
+                    "align":"center"
+                },
+                {
+                    "label": "机构名称",
+                    "prop": "brchna",
+                    "align":"center"
+                },
+                 {
+                    "label": "手机号码",
+                    "prop": "phoneno",
+                    "align":"center"
+                },  {
+                    "label": "调取时间",
+                    "prop": "callDate",
+                    "align":"center"
+                }, {
+                  "label": "是否调取成功",
+                  "prop": "creditStatus",
+                  "align":"center",
+                  "dict": {
+                      "dictType": "E_YES___",
+                      "dictKey": [
+                          "E_YES___"
+                      ],
+                      "format": "label"
+                  }
+              },  {
+                 "label": "详情",
+                 "align":"center",
+                 "width": 150,
+                 "btns": [
+                   {
+                     "type": "look",
+                     "label": "查看",
+                     "toRequest": {
+                       "url": "/views/other/loanPostManager/loanPostComponents/creditApply/CreditReportTag.json",
+                       "method": "POST"
+                     },
+                     "props": {
+                       "width": "1200px",
+                       "title": "查看"
+                     }
+                   }
+                  ]
+                }
+              ]
+        }
+    }
+}

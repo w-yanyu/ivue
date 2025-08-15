@@ -1,0 +1,50 @@
+{
+    "module": "v-inputDataForm-btn",
+    "layout": {
+        "scope": "templateScope",
+        "form": {
+            "btns": [
+                {
+                    "type": "add",
+                    "label": "提交",
+                    "doRequest": {
+                      "url": "/SUMP/icmcall/icmRPCCall",
+                      "method": "POST",
+                      "params": {
+                          "servicecode": "ct2434",
+                          "authp_system_code": "${{params.authp_system_code}}",
+                          "auth_version": "${{params.auth_version}}",
+                          "appId":"${{params.appId}}"
+                      }
+                    },
+                    "eventAfter": { 
+                      "doParentCallback": true,
+                      "doLastCallback": true
+                    }
+                  }
+            ],
+            "controls": [
+                {
+                    "top": {
+                        "control": "dynamic",
+                        "span": 24,
+                        "toRequest": {
+                            "method": "post",
+                            "url": "/views/ismt/ct/busiAuth/authp_rule/branch_manager.json",
+                            "params":{
+                                "authp_system_code": "${{params.authp_system_code}}",
+                                "authp_rule_code": "${{params.authp_rule_code}}",
+                                "auth_version": "${{params.auth_version}}",
+                                "appId":"${{params.appId}}"
+                            }
+                        },
+                        "eventAfter": { 
+                            "doParentCallback": true,
+                            "doLastCallback": true
+                          }
+                    }
+                }
+            ]
+        }
+    }
+}

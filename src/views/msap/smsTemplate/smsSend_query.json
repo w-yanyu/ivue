@@ -1,0 +1,171 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "controls": [
+        {
+          "appId": {
+              "control": "select",
+              "label": "业务模块",
+              "selectFirstValue":true,
+              "dict": {
+                  "dictType": "MS_APPID",
+                  "dictKey": [
+                      "MS_APPID"
+                  ],
+                  "format": "value-label"
+              },
+              "rules": [
+                  {
+                      "required": true,
+                      "message": "请选择业务模块"
+                  }]
+          }
+          
+        },{
+          "template_id": {
+            "control": "text",
+            "label": "模板编号"
+          },
+          "mobile_no": {
+            "control": "text",
+            "label": "手机号码"
+          }
+        },{
+          "cust_no": {
+            "label": "客户编号",
+            "control": "lookup",
+            "keyField": {
+              "cust_no": "cust_no"
+            },
+            "toRequest": {
+              "url": "/views/us/cust_lookup.json",
+              "method": "post"
+            },
+            "multiple": false,
+            "props": {
+              "title": "客户选择"
+            }
+          },
+          "sms_id": {
+            "control": "text",
+            "label": "短信编号"
+          }
+        },{
+          "send_status": {
+            "control": "select",
+              "label": "处理状态",
+              "selectFirstValue":false,
+              "dict": {
+                  "dictType": "MS_E_PROCESS_STATUS",
+                  "dictKey": [
+                      "MS_E_PROCESS_STATUS"
+                  ],
+                  "format": "value-label"
+              }
+          },
+          "apply_id": {
+            "control": "text",
+            "label": "申请编号"
+          }
+        }
+      ]
+    },
+
+    "toolbar": {
+      "btns": [
+        
+      ]
+    },
+
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "ms0080"
+        }
+      },
+      "thead": [
+        {
+          "type":"string",
+          "label": "模板编号",
+          "align":"center",
+          "prop": "template_id"
+        },
+        {
+          "type":"string",
+          "label": "短信编号",
+          "align":"center",
+          "prop": "sms_id"
+        },
+        {
+          "type":"string",
+          "label": "短信内容",
+          "align":"center",
+          "prop": "sms_content"
+        },
+        {
+          "type":"string",
+          "label": "申请编号",
+          "align":"center",
+          "prop": "apply_id"
+        },
+        {
+          "type":"string",
+          "label": "客户编号",
+          "align":"center",
+          "prop": "cust_no"
+        },
+        {
+          "type":"string",
+          "label": "手机号码",
+          "align":"center",
+          "prop": "mobile_no"
+        },
+        {
+          "type":"string",
+          "label": "申请编号",
+          "align":"center",
+          "prop": "apply_id"
+        },
+        {
+          "type":"string",
+          "label": "是否定时短信",
+          "align":"center",
+          "prop": "is_timed_sms",
+          "dict":{
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "value-label"
+
+          }
+        },
+        {
+          "type":"string",
+          "label": "发送时间",
+          "align":"center",
+          "prop": "send_time"
+        },
+        {
+          "type":"string",
+          "label": "处理状态",
+          "align":"center",
+          "prop": "send_status",
+          "dict":{
+            "dictType": "MS_E_PROCESS_STATUS",
+            "dictKey": [
+              "MS_E_PROCESS_STATUS"
+            ],
+            "format": "value-label"
+
+          }
+        }
+      ]
+    }
+  }
+}

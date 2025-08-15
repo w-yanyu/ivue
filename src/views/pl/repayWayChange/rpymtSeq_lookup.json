@@ -1,0 +1,107 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "initRequest": "${{params}}",
+      "controls": [
+        {
+          "ddc_mny_parm_num": {
+            "control": "text",
+            "label": "扣款顺序编号",
+            "value":"${{params.ddc_mny_parm_num}}"
+          },
+            "acd_non_acd_ste": {
+              "control": "select",
+              "label": "应计非应计状态",
+              "dict": {
+                "dictType": "LN_E_ACD_NON_ACD_STE",
+                "dictKey": [
+                       "LN_E_ACD_NON_ACD_STE"
+                 ],
+                  "format": "label"
+             }
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "syln0022",
+          "outlistid":"list01"
+        }
+      },
+      "thead": [
+       
+        {
+          "label": "扣款参数编号",
+          "prop": "ddc_mny_parm_num",
+          "align": "center"
+        },
+        {
+          "label": "应计非应计状态",
+          "prop": "acd_non_acd_ste",
+          "dict": {
+            "dictType": "LN_E_ACD_NON_ACD_STE",
+            "dictKey": [
+                   "LN_E_ACD_NON_ACD_STE"
+             ],
+              "format": "label"
+         },
+          "align": "center"
+        },
+        {
+          "label": "还款属性",
+          "prop": "rpymt_attr",
+          "dict": {
+            "dictType": "LN_E_RPYMT_ATTR",
+            "dictKey": [
+                   "LN_E_RPYMT_ATTR"
+             ],
+              "format": "label"
+         },
+          "align": "center" 
+        },
+        {
+          "label": "还款状态规则",
+          "prop": "rpymt_ste_rule",
+          "dict": {
+            "dictType": "LN_E_RPYMT_STE_RULE",
+            "dictKey": [
+                   "LN_E_RPYMT_STE_RULE"
+             ],
+              "format": "label"
+         },
+          "align": "center"
+        },
+        {
+          "label": "还款顺序",
+          "prop": "rpymt_seq",
+          "align": "center" 
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "fixed": "right",
+          "btns": [
+            {
+              "type": "bringback",
+              "label": "选择"
+            }
+          ]
+        }
+      ]
+    },"alert": {
+      "description": [
+        "0-本金、 1-应收应计利息、2-催收应计利息、3-应收欠息、4-催收欠息、5-应收应计罚息、",
+        "6-催收应计罚息、7-应收罚息、8-催收罚息 、9-应计复息、a-复息、b-应收罚金、c-应收费用"
+      ],
+      "position": "top",
+      "listStyle": "disc"
+  }
+  }
+}

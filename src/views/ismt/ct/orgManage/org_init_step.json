@@ -1,0 +1,50 @@
+{
+  "module": "d-steps",
+  "layout": {
+    "steps": {
+      "scope": "formObj",
+      "direction": "horizontal",
+      "alignCenter": true,
+      "finishStatus": "success",
+      "simpleType": false,
+      "nextStepType": "validate",
+      "list": [
+        {
+          "scope": "step1",
+          "title": "法人初始化",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/ismt/ct/orgManage/org_copy_start.json",
+            "params": {
+              
+            }
+          },
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "appId": "deciOnl",
+              "servicecode": "ms0011"
+            },
+            "resultSet": {
+              "busi_seq": "busi_seq"              
+          }
+          }
+        },
+        {
+          "scope": "step2",
+          "title": "进度查看",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "url": "@orgInitProcess",
+            "params": {
+              "busi_seq":"${{formObj.step1.busi_seq}}"
+            },
+            "method": "get"
+          }
+        }
+      ]
+    }
+  }
+}

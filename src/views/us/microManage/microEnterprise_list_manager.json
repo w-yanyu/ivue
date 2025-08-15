@@ -1,0 +1,227 @@
+{
+  "module": "v_search_btn_datagrid",
+  "pageId": "####",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "cust_no": {
+            "control": "text",
+            "label": "客户编号",
+            "rules": [
+              {
+                "max": 30,
+                "message": "长度不能超过30个字符"
+              }
+            ]
+          },
+          "cust_name": {
+            "control": "text",
+            "label": "客户名称",
+            "rules": [
+              {
+                "max": 80,
+                "message": "长度不能超过80个字符"
+              }
+            ]
+          },
+          "cert_type": {
+            "control": "select",
+            "label": "证件类型",
+            "dict": {
+              "dictType": "US_E_PUB_CRET_TYPE",
+              "dictKey": [
+                "US_E_PUB_CRET_TYPE"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId"
+            }
+          },
+          "cert_no": {
+            "control": "text",
+            "label": "证件号码"
+          },
+          "valid_state": {
+            "control": "select",
+            "label": "是否有效",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId"
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/us/microManage/micro_cust_add.json"
+          },
+          "props": {
+            "width": "90%",
+            "title": "小微客户建立"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "us0201",
+          "cust_type": "70"
+        }
+      },
+      "thead": [
+        {
+          "type": "index",
+          "label": "序号"
+        },
+        {
+          "label": "客户编号",
+          "prop": "cust_no",
+          "align": "center"
+        },
+        {
+          "label": "客户名称",
+          "prop": "cust_name",
+          "align": "center"
+        },
+        {
+          "label": "客户类型",
+          "prop": "cust_type",
+          "align": "center",
+          "dict": {
+            "dictType": "US_E_CUST_TYPE",
+            "dictKey": [
+              "US_E_CUST_TYPE"
+            ],
+            "labelField": "dictName",
+            "valueField": "dictId"
+          }
+        },
+        {
+          "label": "客户性质",
+          "prop": "cust_nature",
+          "align": "center",
+          "dict": {
+            "dictType": "US_E_LEGAL_CUST_PROPERTY",
+            "dictKey": [
+              "US_E_LEGAL_CUST_PROPERTY"
+            ],
+            "labelField": "dictName",
+            "valueField": "dictId"
+          }
+        },
+        {
+          "label": "证件类型",
+          "prop": "cert_type",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_CRET_TYPE",
+            "dictKey": [
+              "MS_E_CRET_TYPE"
+            ],
+            "labelField": "dictName",
+            "valueField": "dictId"
+          }
+        },
+        {
+          "label": "证件号码",
+          "prop": "cert_no",
+          "align": "center"
+        },
+        {
+          "label": "信评模板名称",
+          "prop": "credit_template_name",
+          "align": "center"
+        },
+        {
+          "label": "是否有效",
+          "prop": "valid_state",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "labelField": "dictName",
+            "valueField": "dictId"
+          }
+        },
+        {
+          "label": "操作",
+          "width": "210px",
+          "align": "center",
+          "btns": [
+            {
+              "type": "custom",
+              "label": "详细信息",
+              "toRequest": {
+                "url": "/views/us/microManage/micro_cust_tree.json",
+                "params": {
+                  "show_flash": "1",
+                  "grupno": "0007"
+                },
+                "props": {
+                  "width": "95%",
+                  "height": "590px",
+                  "title": "小微企业客户信息"
+                }
+              },
+              "show": {
+                "expression": "'${{current.cust_type}}' == '70'"
+              }
+            },
+            {
+              "type": "edit",
+              "show": {
+                "prop": "valid_state",
+                "is": [
+                  "0"
+                ]
+              },
+              "label": "信评模板",
+              "toRequest": {
+                "url": "/views/us/entManager/sel_credit_template.json",
+                "props": {
+                  "width": "80%",
+                  "title": "信评模板选择"
+                }
+              }
+            },
+            {
+              "type": "edit",
+              "show": {
+                "prop": "valid_state",
+                "is": [
+                  "0"
+                ]
+              },
+              "label": "状态审核",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "us0205"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

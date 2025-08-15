@@ -1,0 +1,147 @@
+{
+  "module": "v-search-btn-datagrid",
+  "pageId": "risk_rule_constant",
+  "layout": {
+    "form": {
+      "controls": [{
+        "settle_mode": {
+          "label": "结算方式",
+          "control": "select",
+          "span": 8,
+          "dict": {
+            "format": "label",
+            "dictKey": [
+              "DECI_E_SETTLE_MODE"
+            ],
+            "dictType": "DECI_E_SETTLE_MODE"
+          }
+        }
+      }]
+    },
+    "toolbar": {
+      "btns": [{
+        "type": "add",
+        "label": "新增",
+        "toRequest": {
+          "url": "/views/risk/risk_data_source/data_source_configuration/settlement_allocation_add.json",
+          "method": "get"
+        },
+        "props": {
+          "width": "70%",
+          "height": "70%",
+          "title": "新增"
+        }
+      }]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+            "servicecode": "deci050023",
+            "data_source_code": "${{params.data_source_code}}"
+        }
+      },
+      "thead": [
+        {
+        "label": "序号",
+        "type": "index"
+        },
+        {
+          "label": "结算方式",
+          "prop": "settle_mode",
+          "dict": {
+            "format": "label",
+            "dictKey": [
+              "DECI_E_SETTLE_MODE"
+            ],
+            "dictType": "DECI_E_SETTLE_MODE"
+          }
+        },
+        {
+          "label": "价格（元）",
+          "prop": "price"
+        },
+        {
+          "label": "免费条数",
+          "prop": "free_count"
+        },
+        {
+          "label": "生效起始日期",
+          "prop": "effect_date"
+        },
+        {
+          "label": "生效结束日期",
+          "prop": "expiry_date"
+        },
+        {
+          "label": "数据创建时间",
+          "prop": "data_create_time"
+        },
+        {
+          "label": "数据更新时间",
+          "prop": "data_update_time"
+        },
+        {
+          "label": "数据创建柜员",
+          "prop": "data_create_user"
+        },
+        {
+          "label": "数据更新柜员",
+          "prop": "data_update_user"
+        },
+        {
+          "label": "数据版本号",
+          "prop": "data_version"
+        },
+        {
+          "label": "操作",
+          "width": "200px",
+          "btns": [{
+              "type": "edit",
+              "authId": "constant_upd_btn",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/risk/risk_data_source/data_source_configuration/settlement_allocation_edit.json",
+                "method": "get"
+              },
+              "props": {
+                "width": "70%"
+              }
+            },
+            {
+              "type": "look",
+              "label": "查看",
+              "toRequest": {
+                "url": "/views/risk/risk_data_source/data_source_configuration/settlement_allocation_view.json",
+                "method": "get"
+              },
+              "props": {
+                "width": "70%"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "deci050026",
+                  "parm_code": "${{current.parm_code}}"
+                }
+              },
+              "confirm": {
+                  "title": "提示信息",
+                  "msg": "确认删除当前数据？",
+                  "confirmButtonText": "确定",
+                  "cancelButtonText": "取消"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

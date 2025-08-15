@@ -1,0 +1,62 @@
+{
+    "module": "d-steps",
+    "layout": {
+      "steps": {
+        "scope": "formObj",
+        "direction": "horizontal",
+        "alignCenter": true,
+        "finishStatus": "success",
+        "simpleType": false,
+        "nextStepType": "submit",
+        "list": [
+          {
+            "title": "新增限额部件",
+            "scope": "sp1",
+            "icon": "el-icon-document",
+            "toRequest": {
+              "url": "/views/uccp/limit/component/uccp_component_define_add.json",
+              "method": "get",
+              "params": {
+                
+              }
+            },
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "post",
+              "params": {
+                  "servicecode": "uccp5006"
+              },
+              "resultSet":{
+                "limit_component_code":"limit_component_code"
+              }
+            }
+          },
+          {
+            "title": "部件维度配置",
+            "scope": "sp2",
+            "forbidBack":true,
+            "icon": "el-icon-document",
+            "toRequest": {
+              "url": "/views/uccp/limit/component/uccp_component_detail_list.json",
+              "method": "get",
+              "params": {
+                "limit_component_code": "${{formObj.sp2.limit_component_code}}"
+                
+              },
+              "eventAfter": {
+                "doParentCallback": true
+              }
+            },
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "uccp5014"
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+  

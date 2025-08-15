@@ -1,0 +1,138 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "ysjnum": {
+                        "label": "元数据编号",
+                        "control": "text",
+                        "rules": [
+                            {
+                                "max": 100,
+                                "message": "长度不能超过100个字符"
+                            }
+                        ]
+                    },
+                    "ysjnam": {
+                        "label": "元数据名称",
+                        "control": "text",
+                        "rules": [
+                            {
+                                "max": 50,
+                                "message": "长度不能超过50个字符"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "foldLineNumber": 3
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "target": "dialog",
+                    "label": "新增",
+                    "toRequest": {
+                        "method": "POST",
+                        "url": "/views/cstm/tactics_management/metadata_management_add.json"
+                    },
+                    "props": {
+                        "width": "65%",
+                        "title": "新增元数据"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "isInitSearch": false,
+            "scope": "searchTable",
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "AS_RLMS_CP_SEDTSR"
+                }
+            },
+            "thead": [
+
+                {
+                    "label": "元数据编号",
+                    "prop": "ysjnum",
+                    "align": "center"
+                },
+                {
+                    "label": "元数据名称",
+                    "prop": "ysjnam",
+                    "align": "center"
+                },
+                {
+                    "label": "数据类型",
+                    "prop": "dattyp",
+                    "type": "select",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "BPM_E_DATTYP",
+                        "dictKey": [
+                            "BPM_E_DATTYP"
+                        ],
+                        "format": "label"
+                    }
+                },
+
+                {
+                    "label": "获取方式",
+                    "prop": "gettyp",
+                    "type": "select",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "BPM_E_GETTYP",
+                        "dictKey": [
+                            "BPM_E_GETTYP"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 200,
+                    "align":"center",
+                    "btns": [
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/cstm/tactics_management/metadata_management_edit.json",
+                                "method": "post"
+                            },
+                            "props": {
+                                "width": "65%",
+                                "title": "维护"
+                            }
+                        },
+
+                        {
+                            "type": "delete",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "post",
+                                "params": {
+                                    "servicecode": "AS_RLMS_CP_DEDTSR",
+                                    "trantp":"DELETE",
+                                    "methnm": "${{params.methnm}}"
+
+                                }
+                            }
+                        }
+                    ]
+                }
+            ],
+            "pagination": {
+                "show": true
+            }
+        }
+    }
+}

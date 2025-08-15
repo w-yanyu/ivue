@@ -1,0 +1,151 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [{
+                "item_code": {
+                    "control": "text",
+                    "label": "科目编号",
+                    "rules": [{
+                        "max": 20,
+                        "message": "长度不能超过20个字符"
+                    }]
+                },
+                "item_name": {
+                    "control": "text",
+                    "label": "科目名称",
+                    "rules": [{
+                        "max": 100,
+                        "message": "长度不能超过100个字符"
+                    }]
+                },
+                "item_type": {
+                    "control": "select",
+                    "label": "科目类型",
+                    "dict": {
+                        "dictType": "US_E_ITEM_TYPE",
+                        "dictKey": [
+                            "US_E_ITEM_TYPE"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                }
+            }]
+        },
+        "toolbar": {
+            "btns": [{
+                "type": "add",
+                "label": "新增",
+                "target": "dialog",
+                "toRequest": {
+                    "method": "GET",
+                    "url": "/views/us/financialManager/reportItemManager/reportItem_add.json"
+                },
+                "props": {
+                    "width": "80%",
+                    "title": "财务报表科目新增"
+                }
+            }]
+        },
+        "datagrid": {
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "us0900"
+                }
+            },
+            "thead": [{
+                    "label": "科目编号",
+                    "prop": "item_code"
+                },
+                {
+                    "label": "科目名称",
+                    "prop": "item_name"
+                },
+                {
+                    "label": "科目类型",
+                    "prop": "item_type",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "US_E_ITEM_TYPE",
+                        "dictKey": [
+                            "US_E_ITEM_TYPE"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "上级科目编号",
+                    "prop": "parent_item_code"
+                },
+                {
+                    "label": "显示标志",
+                    "prop": "show_flag",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "US_E_SHOW_FLAG",
+                        "dictKey": [
+                            "US_E_SHOW_FLAG"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "自动计算标志",
+                    "prop": "auto_flag",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                            "MS_E_YESORNO"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": "100px",
+                    "align": "center",
+                    "btns": [{
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/us/financialManager/reportItemManager/reportItem_update.json",
+                                "method": "GET"
+
+                            },
+                            "props": {
+                                "width": "80%",
+                                "title": "财务报表科目维护"
+                            }
+                        },
+                        {
+                            "type": "custom",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/call/RPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "us0903"
+                                    
+
+                                }
+                            },
+                            "confirm": {
+                                "title": "删除财务报表科目",
+                                "confirmButtonText": "确定",
+                                "cancelButtonText": "取消"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

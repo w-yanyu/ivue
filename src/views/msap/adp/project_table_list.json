@@ -1,0 +1,100 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "appId": {
+            "control": "select",
+            "label": "业务模块",
+            "selectFirstValue": true,
+            "dict": {
+              "dictType": "MS_APPID",
+              "dictKey": [
+                "MS_APPID"
+              ],
+              "format": "value-label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择业务模块"
+              }
+            ],
+            "value": "${{params.appId}}"
+          }
+        },
+        {
+          "table_name": {
+            "control": "text",
+            "label": "数据表名"
+          },
+          "table_desc": {
+            "control": "text",
+            "label": "数据表中文名称"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "user_id": "$g{{user_info.userCode}}",
+          "servicecode": "ms0201",
+          "appId": "${{form.appId}}"
+        }
+      },
+      "pagination": {
+        "show": true,
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "type": "index",
+          "label": "序号"
+        },
+        {
+          "label": "项目表编号",
+          "prop": "table_full_id"
+        },
+        {
+          "label": "数据表名",
+          "prop": "table_name"
+        },
+        {
+          "label": "数据表中文名",
+          "prop": "table_desc"
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "fixed": "right",
+          "btns": [
+            {
+              "type": "edit",
+              "label": {
+                "default": "表详情"
+              },
+              "toRequest": {
+                "url": "/views/msap/adp/project_table_detail_group.json",
+                "method": "GET",
+                "params": {
+                  "appId": "${{form.appId}}",
+                  "table_full_id": "${{current.table_full_id}}"
+                }
+              },
+              "props": {
+                "width": "1200px",
+                "title": "表详情"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

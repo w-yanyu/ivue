@@ -1,0 +1,158 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        
+        "toolbar": {
+            "btns": [{
+                "type": "add",
+                "target": "dialog",
+                "label": "新增",
+                "toRequest": {
+                    "method": "GET",
+                    "url": "/views/us/entManager/custfinanceManager/partAcctManager/partAcct_add.json",
+                    "params": {
+                        "cust_no": "${{params.cust_no}}",
+                        "cust_type": "${{params.cust_type}}"
+                    }
+                },  
+                "show": {
+                    "expression": "'${{params.show_flash}}' == '1'"
+                },
+                "props": {
+                    "title": "结算账户信息新增",
+                    "width": "80%"
+                }
+            }]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "us0500",
+                    "cust_no": "${{params.cust_no}}"
+                }
+            },
+            "thead": [{
+                    "type": "index",
+                    "align": "center",
+                    "label": "序号"
+                },
+                {
+                    "label": "客户编号",
+                    "prop": "cust_no",
+                    "align": "center"
+                },
+                {
+                    "label": "账户类型",
+                    "prop": "acct_type",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "US_E_ACCT_TYPE",
+                        "dictKey": [
+                            "US_E_ACCT_TYPE"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "账号",
+                    "prop": "acct_no",
+                    "align": "center"
+                   
+                },
+                {
+                    "label": "账户名称",
+                    "prop": "account_name",
+                    "align": "center"
+                    
+                },
+                {
+                    "label": "联行号",
+                    "prop": "bank_no",
+                    "align": "center"
+                },
+                {
+                    "label": "开户行号",
+                    "prop": "open_acct_bank_no",
+                    "align": "center"
+                    
+                },
+                {
+                    "label": "开户行",
+                    "prop": "open_acct_bank",
+                    "align": "center"
+                    
+                },
+                {
+                    "label": "开户行省份",
+                    "prop": "open_bank_province",
+                    "align": "center"
+                    
+                },
+                {
+                    "label": "开户行城市",
+                    "prop": "open_bank_city",
+                    "align": "center"
+                    
+                },
+                
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 160,
+                    "align": "center",
+                    "btns": [{
+                            "type": "look",
+                            "label": "详情",
+                            "toRequest": {
+                                "url": "/views/us/entManager/custfinanceManager/partAcctManager/partAcct_info.json",
+                                "method": "POST"
+                            },
+                            "props": {
+                                "width": "80%",
+                                "title": "结算账户信息详情"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/us/entManager/custfinanceManager/partAcctManager/partAcct_update.json",
+                                "method": "POST"
+                            },
+                            "show": {
+                                "expression": "'${{params.show_flash}}' == '1'"
+                            },
+                            "props": {
+                                "width": "80%",
+                                "title": "结算账户信息维护"
+                            }
+                            
+                        },
+                        {
+                            "type": "custom",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "us0503"
+                                    
+                                }
+                            },
+                            "confirm": {
+                                "title": "确定删除",
+                                "confirmButtonText": "确定",
+                                "cancelButtonText": "取消"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

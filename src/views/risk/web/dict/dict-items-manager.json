@@ -1,0 +1,96 @@
+{
+  "module": "v-search-editableDataGrid",
+  "layout": {
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "新增",
+          "icon": "el-icon-plus"
+        },
+        {
+          "type": "batchDelete",
+          "label": "批量删除",
+          "icon": "el-icon-close"
+        },
+        {
+          "type": "save",
+          "label": "保存",
+          "icon": "el-icon-tickets",
+          "doRequest": {
+            "url": "/WEB/dict/items/setting",
+            "method": "post",
+            "params": {
+              "application": "${{params.application}}",
+              "dictType": "${{params.dictType}}"
+            }
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "doRequest": {
+        "url": "/WEB/dict/items",
+        "method": "GET",
+        "params": {
+          "dictType": "${{params.dictType}}",
+          "application": "${{params.application}}"
+        }
+      },
+      "pagination": {
+        "show": false,
+        "pageSizes": [
+          10,
+          15,
+          20,
+          50,
+          100
+        ],
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "type": "selection",
+          "width": "55"
+        },
+        {
+          "prop": "dictCode",
+          "type": "text",
+          "label": "字典编码",
+          "validate": "required"
+        },
+        {
+          "prop": "dictName",
+          "type": "text",
+          "label": "字典名称",
+          "validate": "required"
+        },
+        {
+          "prop": "sequence",
+          "type": "inputNumber",
+          "label": "排序号"
+        },
+        {
+          "prop": "enable",
+          "type": "switch",
+          "label": "是否有效",
+          "value": "1",
+          "activeText": "是",
+          "inactiveText": "否",
+          "activeValue": "1",
+          "inactiveValue": "0"
+        },
+        {
+          "prop": "i18nCode",
+          "type": "text",
+          "label": "国际化编码"
+        },
+        {
+          "prop": "description",
+          "type": "text",
+          "label": "说明"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,132 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "initRequest": "${{params}}",
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "us0241"
+                   
+                }
+            },
+            "controls": [{
+                "cust_no": {
+                    "control": "hidden",
+                    "label": "客户编号",
+                    "value": "${{params.cust_no}}",
+                    "disabled": true
+                },
+                "apcr_name": {
+                    "control": "text",
+                    "width": "10px",
+                    "label": "证书名称",
+                    "rules": [{
+                            "max": 30,
+                            "message": "长度不能超过30个字符"
+                        },
+                        {
+                            "required": true,
+                            "message": "证书名称不能为空"
+                        }
+                    ]
+                },
+                "apcr_code": {
+                    "control": "text",
+                    "width": "10px",
+                    "label": "证书编号",
+                    "rules": [{
+                            "max": 30,
+                            "message": "长度不能超过30个字符"
+                        },
+                        {
+                            "required": true,
+                            "message": "证书编号不能为空"
+                        }
+                    ]
+                },
+                "apcr_level": {
+                    "control": "select",
+                    "width": "10px",
+                    "label": "资质等级",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "US_E_QUAL_LEVEL",
+                        "dictKey": [
+                            "US_E_QUAL_LEVEL"
+                        ],
+                        "format": "label"
+                    },
+                    "rules": [{
+                        "required": true,
+                        "message": "资质等级不能为空"
+                    }]
+                },
+                "base_start_date": {
+                    "control": "dateTimePicker",
+                    "label": "证件生效日期",
+                    "width": "10px",
+                    "rules": [{
+                        "required": true,
+                        "message": "证书生效日期不能为空"
+                    }]
+                },
+                "end_date": {
+                    "control": "dateTimePicker",
+                    "width": "10px",
+                    "label": "证件失效日期",
+                    "rules": [{
+                        "required": true,
+                        "message": "证书失效日期不能为空"
+                    }],
+                    "disabledDate": {
+                        "startRange": "${{form.apcsdt}}",
+                        "endRange": "3000-12-30"
+                    }
+                },
+                "apcr_unit": {
+                    "control": "text",
+                    "width": "10px",
+                    "label": "颁发单位",
+                    "rules": [{
+                            "max": 40,
+                            "message": "长度不能超过40个字符"
+                        },
+                        {
+                            "required": true,
+                            "message": "颁发单位不能为空"
+                        }
+                    ]
+                },
+                "apcr_content": {
+                    "control": "text",
+                    "width": "10px",
+                    "label": "证书内容",
+                    "rules": [{
+                            "max": 100,
+                            "message": "长度不能超过100个字符"
+                        },
+                        {
+                            "required": true,
+                            "message": "证书内容不能为空"
+                        }
+                    ]
+                },
+                "remark": {
+                    "label": "备注",
+                    "control": "textarea",
+                    "width": "10px",
+                    "span": "24",
+                    "autosize": {
+                        "minRows": 4
+                    },
+                    "rules": [{
+                        "max": "100",
+                        "message": "长度不能超过100个字符"
+                    }]
+                }
+            }]
+        }
+    }
+}

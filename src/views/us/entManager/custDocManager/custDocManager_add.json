@@ -1,0 +1,67 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "us1111"
+        }
+      },
+      "controls": [
+        {
+          "cust_no": {
+            "control": "hidden",
+            "label": "客户编号",
+            "width": "130px",
+            "value":"${{params.cust_no}}"
+
+          },
+          "doc_name": {
+            "control": "text",
+            "label": "影像资料名称",
+            "width": "130px",
+            "rules": [
+              {
+                "min": 0,
+                "max": 20,
+                "message": "长度不能超过20个字符"
+              },
+              {
+                "required": true
+              }
+            ]
+          },
+          "doc_path": {
+            "control": "string",
+            "label": "客户影像资料路径",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请上影像资料"
+              }
+            ]
+          },
+          "fileList": {
+            "control": "dynamic",
+            "isShowChildForm": true,
+            "span": 12,
+            "toRequest": {
+              "url": "@minioUploadButton",
+              "method": "get",
+              "params": {
+                "file_path": "doc_path",
+                "file_name": "oldName",
+                "formKey": "fileList",
+                "formLabel": "附件上传"
+              }
+            }
+          }
+
+        }
+      ]
+    }
+  }
+}

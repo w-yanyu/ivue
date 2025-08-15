@@ -1,0 +1,96 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [],
+            "btns": []  
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "label": "关联角色",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/ismt/ct/busiAuth/authp_rule/role_contact_main.json",
+                        "params": {
+                            "authp_system_code": "${{params.authp_system_code}}",
+                            "authp_rule_code": "${{params.authp_rule_code}}",
+                            "auth_version": "${{params.auth_version}}",
+                            "appId":"${{params.appId}}"
+                        }
+                    },
+                    "props": {
+                        "title": "关联角色"
+                    }
+                }
+
+            ]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ct2431",
+                    "authp_system_code": "${{params.authp_system_code}}",
+                    "auth_version": "${{params.auth_version}}",
+                    "appId":"${{params.appId}}"
+                }
+            },
+            "pagination": {
+                "show": false,
+                "pageSize": 10
+            },
+            "thead": [
+                {
+                    "label": "角色编号",
+                    "prop": "role_id",
+                    "align": "center"
+
+                },
+                {
+                    "label": "关联审批角色名称",
+                    "prop": "role_name",
+                    "align": "center"
+
+                },
+                {
+                    "label": "操作",
+                    "width": 250,
+                    "align":"center",
+                    "fixed": "right",
+                    "btns": [
+                       
+                        {
+                            "type": "edit",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "ct2433",
+                                    "authp_system_code": "${{params.authp_system_code}}",
+                                    "auth_version": "${{params.auth_version}}",
+                                    "appId":"${{params.appId}}"
+                                }
+                            },
+                            "props": {
+                                "title": "关联角色信息删除"
+                            },
+                            "confirm":{
+                                "title":"提示信息",
+                                "msg":"确认要删除吗？",
+                                "confirmButtonText":"确定",
+                                "cancelButtonText":"取消"
+                            }
+                        }
+                    ]
+                }
+            ]
+            
+        }
+    }
+  }

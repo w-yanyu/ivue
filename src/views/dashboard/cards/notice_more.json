@@ -1,0 +1,97 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "announce_title": {
+            "control": "text",
+            "label": "公告标题",
+            "rules": [
+              {
+                "max": 64,
+                "message": "长度不能超过64个字符"
+              }
+            ]
+          },
+          "daterange": {
+            "control": "dateTimePicker",
+            "label": "发布日期",
+            "type": "daterange",
+            "unlinkPanels": true,
+            "valueFormat": "yyyyMMdd",
+            "startPlaceholder": "选择开始时间",
+            "endPlaceholder": "选择结束时间",
+            "startField": "start_date",
+            "endField": "end_date",
+            "disabledDate": "dateAfter"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ct2335",
+          "user_id": "$g{{user_info.userCode}}"
+        }
+      },
+      "thead": [
+        {
+          "type": "index"
+        },
+        {
+          "label": "公告标题",
+          "prop": "announce_title"
+        },
+        {
+          "label": "发布人",
+          "prop": "publisher"
+        },
+        {
+          "label": "发布时间",
+          "prop": "effect_date"
+        },
+        {
+          "label": "有效期至",
+          "prop": "expiry_date"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 150,
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "公告详情",
+              "toRequest": {
+                "url": "@cardNoticeInfo",
+                "method": "GET",
+                "params": {
+                  "announce_id": "${{current.announce_id}}",
+                  "announce_title": "${{current.announce_title}}",
+                  "announce_content": "${{current.announce_content}}",
+                  "announce_type": "${{current.announce_type}}",
+                  "announce_file_path": "${{current.announce_file_path}}",
+                  "effect_date": "${{current.effect_date}}",
+                  "publisher": "${{current.publisher}}",
+                  "read_ind": "${{current.read_ind}}"
+                }
+              },
+              "props": {
+                "width": "65%",
+                "height": "80%",
+                "title": "公告详情"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

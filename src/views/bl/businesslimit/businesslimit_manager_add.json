@@ -1,0 +1,75 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "ofpana": {
+            "control": "text",
+            "label": "渠道编号",
+            "rules": [
+              {
+                "max": 20,
+                "message": "长度不能超过10个字符"
+              }
+            ]
+          },
+          "cmcrno": {
+            "control": "text",
+            "label": "渠道名称",
+            "rules": [
+              {
+                "max": 100,
+                "message": "长度不能超过100个字符"
+              }
+            ]
+          }
+
+        }
+
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "chanqr"
+
+        }
+      },
+      "thead": [
+        {
+          "type": "index"
+        },
+        {
+          "label": "渠道编号",
+          "prop": "chanid",
+          "align":"center"
+        },
+        {
+          "label": "渠道名称",
+          "prop": "channa",
+          "align":"center",
+          "dict": {
+            "dictType": "E_IDTFTP",
+            "dictKey": [
+              "E_IDTFTP"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作",
+          "width": 70,
+          "btns": [{
+            "type": "bringback",
+            "label": "选择"
+          }]
+        }
+      ]
+    }
+  }
+}

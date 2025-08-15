@@ -1,0 +1,116 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "branch_id": {
+            "control": "text",
+            "label": "机构号",
+            "rules": [
+              {
+                "max": 10,
+                "message": "长度不能超过10个字符"
+              }
+            ]
+          },
+          "branch_mapping_type": {
+            "control": "select",
+            "label": "机构映射类型",
+            "dict": {
+              "dictType": "CT_E_BRANCH_MAPPING_TYPE",
+              "dictKey": [
+                "CT_E_BRANCH_MAPPING_TYPE"
+              ],
+              "format": "label"
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/ismt/ct/branch/branchMapping/branch_mapping_add.json"
+          },
+          "props": {
+            "title": "机构映射新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ct2177"
+        }
+      },
+      "thead": [
+        {
+          "type": "index"
+        },
+        {
+          "label": "机构号",
+          "align": "center",
+          "prop": "branch_id"
+        },
+        {
+          "label": "映射机构号",
+          "align": "center",
+          "prop": "related_branch_id"
+        },
+        {
+          "label": "映射类型",
+          "prop": "branch_mapping_type",
+          "align": "center",
+          "dict": {
+            "dictType": "CT_E_BRANCH_MAPPING_TYPE",
+            "dictKey": [
+              "CT_E_BRANCH_MAPPING_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align":"center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/ismt/ct/branch/branchMapping/branch_mapping_update.json",
+                "method": "GET"
+              },
+              "props": {
+                "title": "机构映射信息维护"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "ct2175"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

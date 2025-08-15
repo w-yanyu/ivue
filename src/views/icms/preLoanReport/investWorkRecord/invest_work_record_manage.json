@@ -1,0 +1,109 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "新增",
+          "toRequest": {
+            "url": "/views/icms/preLoanReport/investWorkRecord/invest_work_record_add.json",
+            "method": "get",
+            "params": {
+              "apply_no": "${{params.apply_no}}",
+              "cust_no": "${{params.cust_no}}",
+              "investig_group_flag": "${{params.investig_group_flag}}"
+            }
+          },
+          "props": {
+            "title": "新增",
+            "width": "65%"
+          },
+          "show": {
+            "expression": "'${{params.pageType}}' != 'detail'"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "ar0901",
+          "apply_no": "${{params.apply_no}}",
+          "investig_group_flag": "${{params.investig_group_flag}}"
+        }
+      },
+      "pagination": {
+        "pageSizes": [
+          10,
+          15,
+          20
+        ],
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "type": "index",
+          "align": "center"
+        },
+        {
+          "label": "调查时间",
+          "prop": "investig_time",
+          "align": "center"
+        },
+        {
+          "label": "调查地点",
+          "prop": "investig_address",
+          "align": "center"
+        },
+        {
+          "label": "调查渠道",
+          "prop": "investig_channel",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "width": "150px",
+          "align": "center",
+          "fixed": "right",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/icms/preLoanReport/investWorkRecord/invest_work_record_modify.json",
+                "method": "get",
+                "params": {}
+              },
+              "props": {
+                "title": "维护",
+                "width": "80%"
+              },
+              "show": {
+                "expression": "'${{params.pageType}}' != 'detail'"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "ar0904"
+                }
+              },
+              "show": {
+                "expression": "'${{params.pageType}}' != 'detail'"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

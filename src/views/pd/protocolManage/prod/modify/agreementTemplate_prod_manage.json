@@ -1,0 +1,69 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "###toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/product/agreementTemplateManage/prod/modify/agreementTemplate_prod_manage_add.json",
+            "params": {
+              "servicecode": "ICMSLNTS0206",
+              "sale_prod_cd": "${{params.crdtcd}}"
+            }
+          },
+          "props": {
+            "width": "70%",
+            "title": "协议新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ICMSLNTS0206",
+          "sale_prod_cd": "${{params.crdtcd}}"
+        }
+      },
+      "pagination": {
+        "show":false
+      },
+      "thead": [
+        {
+          "label": "序号",
+          "type": "index",
+          "align": "center"
+        },
+        {
+          "label": "协议编号",
+          "prop": "protocol_no",
+          "align": "center"
+        },
+        {
+          "label": "业务类型",
+          "prop": "business_type",
+          "align": "center",
+          "dict": {
+            "dictType": "PD_E_BUSI_TYPE",
+            "dictKey": [
+              "PD_E_BUSI_TYPE"
+            ],
+            "format": "label-value"
+          }
+        },
+        {
+          "label": "协议名称",
+          "prop": "protocol_name",
+          "align": "center"
+        }
+      ]
+    }
+  }
+}

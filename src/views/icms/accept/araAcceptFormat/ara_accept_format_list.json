@@ -1,0 +1,174 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [{
+                "contract_no": {
+                    "label": "合同号",
+                    "control": "text",
+                    "width": "100px",
+                    "rules": [
+                      {
+                        "max": 64,
+                        "message": "长度不能超过64个字符"
+                      }
+                    ]
+                },
+                "apply_no": {
+                    "label": "申请号",
+                    "control": "text",
+                    "width": "100px",
+                    "rules": [
+                      {
+                        "max": 64,
+                        "message": "长度不能超过64个字符"
+                      }
+                    ]
+                },
+                "cust_no": {
+                    "label": "客户编号",
+                    "control": "text",
+                    "width": "100px",
+                    "rules": [
+                      {
+                        "max": 64,
+                        "message": "长度不能超过64个字符"
+                      }
+                    ]
+                },
+                "cust_name": {
+                    "label": "客户名称",
+                    "control": "text",
+                    "width": "100px",
+                    "rules": [
+                      {
+                        "max": 64,
+                        "message": "长度不能超过64个字符"
+                      }
+                    ]
+                },
+                "valid_state": {
+                    "label": "有效状态",
+                    "control": "select",
+                    "width": "100px",
+                    "dict": {
+                        "dictType": "AR_E_STATE",
+                        "dictKey": [
+                            "AR_E_STATE"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                }
+
+            }]
+
+        },
+        "datagrid": {
+            "isInitSearch": true,
+            "scope": "searchTable",
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ar1565"
+                }
+            },
+            "thead": [
+                {
+                    "label": "申请号",
+                    "prop": "apply_no",
+                    "align": "center"
+                },
+                {
+                    "label": "合同号",
+                    "prop": "contract_no",
+                    "align": "center"
+                },
+                {
+                    "label": "客户编号",
+                    "prop": "cust_no",
+                    "align": "center"
+                },
+                {
+                    "label": "客户姓名",
+                    "prop": "cust_name",
+                    "align": "center"
+                },
+                {
+                    "label": "合同金额",
+                    "prop": "apply_amt",
+                    "align": "center"
+                },
+                {
+                    "label": "保证金金额",
+                    "prop": "margin_amt",
+                    "align": "center",
+                    "format":{
+                      "thousand": ",",
+                      "decimal": "2"
+                    }
+                },
+                {
+                    "label": "批次号",
+                    "prop": "batch_no",
+                    "align": "center"
+                },
+                {
+                    "label": "有效状态",
+                    "prop": "valid_state",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "AR_E_ACCEPT_STATE",
+                        "dictKey": [
+                            "AR_E_ACCEPT_STATE"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+              {
+                "label": "操作",
+                "width": "200px",
+                "align": "center",
+                "btns": [
+                  {
+                    "type": "custom",
+                    "label": "出票",
+                    "doRequest": {
+                      "url": "/SUMP/icmcall/icmRPCCall",
+                      "method": "post",
+                      "params": {
+                        "servicecode": "ar1570"
+                      }
+                    },
+                    "show": {
+                      "expression": "'${{current.valid_state}}' == '1'"
+                    },
+                    "eventAfter": {
+                      "doParentCallback": true
+                    }
+                  },
+                  {
+                    "type": "look",
+                    "label": "票据列表",
+                    "toRequest": {
+                      "url": "/views/icms/accept/araAcceptFormat/accept_draft_apply_list.json",
+                      "method": "get"
+                    },
+                    "props": {
+                      "width": "65%",
+                      "title": "票据列表"
+                    }
+                  }
+                ],
+                "pagination": {
+                  "show": true
+                }
+
+              }
+
+            ]
+        }
+    }
+}

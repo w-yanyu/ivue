@@ -1,0 +1,124 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+      "form": {
+          "doRequest": {
+              "url": "",
+              "method": "POST",
+              "params": {}
+          },
+          "controls": [
+              {
+                "card_id": {
+                    "control": "text",
+                    "label": "卡片编号",
+                    "rules": [
+                        {
+                            "max": 30,
+                            "message": "长度不能超过30个字符"
+                        }
+                    ]
+                },
+                "card_name": {
+                    "control": "text",
+                    "label": "卡片名称"
+                }
+              }
+          ]
+      },
+      "toolbar": {
+          
+      },
+      "datagrid": {
+          "scope": "searchTable",
+          "isInitSearch": false,
+          "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                  "servicecode": "ct3011",
+                  "appId":"deciOnl",
+                  "opera_type":"3"
+              }
+          },
+          "pagination": {
+              "show": true,
+              "pageSize": 10
+          },
+          "thead": [
+              {
+                  "type": "index"
+              },
+              {
+                "label": "记录编号",
+                "prop": "record_no"
+              },
+              {
+                  "label": "卡片编号",
+                  "prop": "card_id"
+              },
+              {
+                  "label": "卡片名称",
+                  "prop": "card_name"
+              },
+              {
+                  "label": "卡片类型",
+                  "prop": "card_type",
+                  "dict": {
+                      "dictType": "CT_E_CARD_TYPE",
+                      "format": "label",
+                      "dictKey": [
+                          "CT_E_CARD_TYPE"
+                      ]
+                  },
+                  "format": "label"
+              },
+              {
+                "label": "适用角色名称",
+                "prop": "scope_range_str"
+              },
+              {
+                "label": "卡片状态",
+                "prop": "card_status",
+                "dict": {
+                    "dictType": "CT_E_CARD_STATUS",
+                    "format": "label",
+                    "dictKey": [
+                        "CT_E_CARD_STATUS"
+                    ]
+                }
+              },
+              {
+                "label": "生效类型",
+                "prop": "effe_type",
+                "dict": {
+                    "dictType": "CT_E_EFFE_TP",
+                    "dictKey": [
+                      "CT_E_EFFE_TP"
+                    ],
+                    "format": "label"
+                  }
+              },
+              {
+                "label": "生效日期",
+                "prop": "effe_date"
+              },
+              {
+                "label": "审批状态",
+                "prop": "applst",
+                "dict": {
+                    "dictType": "CT_E_CARD_APPLST",
+                    "dictKey": [
+                      "CT_E_CARD_APPLST"
+                    ],
+                    "format": "label"
+                  }
+              },
+              {
+                "label": "参数",
+                "prop": "params"
+              }
+          ]
+      }
+  }
+}

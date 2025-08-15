@@ -1,0 +1,193 @@
+{
+  "module": "v-search-btn-datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "orgCode": {
+            "control": "text",
+            "label": "机构编码"
+          },
+          "orgName": {
+            "control": "text",
+            "label": "机构名称"
+          }
+        },
+        {
+          "orgType": {
+            "control": "select",
+            "label": "机构类型",
+            "dict": {
+              "dictType": "WEB",
+              "dictKey": [
+                "WEB",
+                "organization-type"
+              ],
+              "labelField": "appName",
+              "valueField": "appCode",
+              "doRequest": {
+                "url": "/WEB/application/list",
+                "method": "GET"
+              }
+            }
+          },
+          "enable": {
+            "control": "select",
+            "label": "是否有效",
+            "value": "1",
+            "dict": {
+              "dictType": "WEB",
+              "dictKey": [
+                "WEB",
+                "boolean"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictCode",
+              "doRequest": {
+                "url": "/WEB/dict/common",
+                "method": "post"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "delete",
+          "label": "删除",
+          "icon": "el-icon-close",
+          "doRequest": {
+            "url": "/WEB/organization",
+            "method": "DELETE"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "doRequest": {
+        "url": "/WEB/organization/page",
+        "method": "GET"
+      },
+      "pagination": {
+        "pageSizes": [
+          10,
+          15,
+          20,
+          50,
+          100
+        ],
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "width": "55",
+          "type": "selection"
+        },
+        {
+          "type": "index",
+          "label": "序号"
+        },
+        {
+          "label": "机构编码",
+          "prop": "orgCode"
+        },
+        {
+          "label": "机构名称",
+          "prop": "orgName"
+        },
+        {
+          "label": "类型",
+          "prop": "orgType",
+          "dict": {
+            "dictType": "WEB",
+            "dictKey": [
+              "WEB",
+              "organization-type"
+            ]
+          }
+        },
+        {
+          "label": "是否有效",
+          "prop": "enable",
+          "dict": {
+            "dictType": "WEB",
+            "dictKey": [
+              "WEB",
+              "boolean"
+            ]
+          }
+        },
+        {
+          "label": "操作",
+          "width": "100",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "编辑",
+              "toRequest": {
+                "url": "/views/risk/web/organization/corporation-update.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "65%",
+                "title": "编辑"
+              },
+              "show": {
+                "prop": "orgType",
+                "is": [
+                  "corporation"
+                ]
+              }
+            },
+            {
+              "type": "edit",
+              "label": "编辑",
+              "toRequest": {
+                "url": "/views/risk/web/organization/organization-update.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "65%",
+                "title": "编辑"
+              },
+              "show": {
+                "prop": "orgType",
+                "is": [
+                  "organization"
+                ]
+              }
+            },
+            {
+              "type": "edit",
+              "label": "编辑",
+              "toRequest": {
+                "url": "/views/risk/web/organization/department-update.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "65%",
+                "title": "编辑"
+              },
+              "show": {
+                "prop": "orgType",
+                "is": [
+                  "department"
+                ]
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/WEB/organization",
+                "method": "DELETE"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

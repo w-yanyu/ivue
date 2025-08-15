@@ -1,0 +1,192 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "cust_no": {
+                        "control": "text",
+                        "label": "客户编号"
+                    },
+                    "cust_name": {
+                        "control": "text",
+                        "label": "客户名称"
+                    },
+                    "intbnk_credit_seq": {
+                        "control": "text",
+                        "label": "同业额度编号"
+                    },
+                    "source_credit_number": {
+                        "control": "text",
+                        "label": "源系统授信额度编号"
+                    }
+                }
+            ]
+          },
+        "toolbar": {
+            
+        },
+        "datagrid": {
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "uccp3062",
+                    "appId":"uccpOnl"
+                }
+            },
+            "thead": [
+                {
+                    "label": "客户编号",
+                    "prop": "cust_no",
+                    "align": "center"
+                },
+                {
+                    "label": "客户名称",
+                    "prop": "cust_name",
+                    "align": "center"
+                },
+                {
+                    "label": "同业额度编号",
+                    "prop": "intbnk_credit_seq",
+                    "align": "center"
+                },
+                {
+                    "label": "源系统授信额度编号",
+                    "prop": "source_credit_number",
+                    "align": "center"
+                },
+                {
+                    "label": "来源系统",
+                    "prop": "source_system",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "UCCP_E_SOURCE_SYSTEM",
+                        "dictKey": [
+                            "UCCP_E_SOURCE_SYSTEM"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "同业总额度",
+                    "prop": "intbnk_total_limit",
+                    "align": "center"
+                },
+                {
+                    "label": "已用同业总额度",
+                    "prop": "used_intbnk_total_limit",
+                    "align": "center"
+                },
+                {
+                    "label": "同业总敞口额度",
+                    "prop": "intbnk_total_exposure_limit",
+                    "align": "center"
+                },
+                {
+                    "label": "已用同业总敞口额度",
+                    "prop": "used_intbnk_total_exposure_limit",
+                    "align": "center"
+                },
+                {
+                    "label": "基础币种",
+                    "prop": "base_ccy_code",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "MS_CURRENCY",
+                        "dictKey": [
+                        "MS_CURRENCY"
+                        ]
+                    }
+                },
+                {
+                    "label": "原始币种",
+                    "prop": "old_ccy_code",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "MS_CURRENCY",
+                        "dictKey": [
+                        "MS_CURRENCY"
+                        ]
+                    }
+                },
+                {
+                    "label": "时点汇率",
+                    "prop": "time_point_rate",
+                    "align": "center"
+                },
+                {
+                    "label": "生效日期",
+                    "prop": "effect_date",
+                    "align": "center"
+                },
+                {
+                    "label": "失效日期",
+                    "prop": "expiry_date",
+                    "align": "center"
+                },
+                {
+                    "label": "额度状态",
+                    "prop": "quota_status",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "UCCP_E_QUOTA_STATUS",
+                        "dictKey": [
+                            "UCCP_E_QUOTA_STATUS"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 120,
+                    "align": "center",
+                    "btns": [
+                        {
+                            "type": "edit",
+                            "label": "详细信息",
+                            
+                            "toRequest": {
+                                "#target": "navTab",
+                                "#url": "/views/uccp/quotaManager/creditTree/credit_tree_detail.json",
+                                "url": "/views/uccp/quotaManager/intbnkCredit/intbnk_info_dynamictabs.json",
+                                "method": "GET",
+                                "params": {
+                                    "cust_no":"${{current.cust_no}}",
+                                    "cust_name":"${{current.cust_name}}"
+                                }
+                            },
+                            "props": {
+                                "width": "90%",
+                                "title": "详细信息"
+                            }
+                        },
+                        {
+                            "type": "custom",
+                            "label": {
+                                "default": "刷新", 
+                                "i18n": "T302.refresh"
+                             },
+                            "doRequest": {
+                              "url": "/SUMP/icmcall/icmRPCCall",
+                              "method": "POST",
+                              "loading":"true",
+                              "params": {
+                                "servicecode": "uccp3063",
+                                "appId": "uccpOnl",
+                                "intbnk_credit_seq": "${{current.intbnk_credit_seq}}"
+                              }
+                            },
+                            "confirm": {
+                              "title": "确定删除",
+                              "confirmButtonText": "确定",
+                              "cancelButtonText": "取消"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

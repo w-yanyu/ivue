@@ -1,0 +1,250 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "initRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "co0045",
+          "car_model_no": "${{params.car_model_no}}"
+        }
+      },
+      "btns": [
+        {
+          "type": "custom",
+          "label": "查看车型详情",
+          "toRequest": {
+            "url": "@carDetailView",
+            "method": "get",
+            "params": {
+              "car_model_no": "${{params.car_model_no}}"
+            }
+          },
+          "props": {
+            "width": "30%",
+            "title": "车型详情"
+          }
+        },
+        {
+          "type": "submit",
+          "label": "提交",
+          "doRequest": {
+            "url": "/SUMP/call/RPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "co0043"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "car_kind_no": {
+            "label": "car_kind_no",
+            "control": "hidden",
+            "width": "140px"
+          }
+        },
+        {
+          "car_model_no": {
+            "label": "车型编号",
+            "width": "140px",
+            "control": "text",
+            "disabled": true,
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入车型编号"
+              }
+            ]
+          },
+          "car_model_name": {
+            "label": "车型名称",
+            "width": "140px",
+            "control": "text",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入车型名称"
+              }
+            ]
+          },
+          "brand_state": {
+            "label": "使用状态",
+            "width": "140px",
+            "control": "select",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择使用状态"
+              }
+            ]
+          },
+          "sizetype": {
+            "control": "text",
+            "label": "尺寸类型",
+            "width": "140px",
+            "span": 12
+          },
+          "displacement2": {
+            "control": "text",
+            "label": "排量",
+            "width": "140px",
+            "span": 12,
+            "format": {
+              "decimal": 2
+            }
+          },
+          "price": {
+            "control": "currency",
+            "label": "厂商指导价",
+            "width": "140px",
+            "span": 12,
+            "format": {
+              "thousand": ",",
+              "decimal": 2
+            }
+          },
+          "productionstate": {
+            "control": "text",
+            "label": "生产状态",
+            "width": "140px",
+            "span": 12
+          },
+          "salestate": {
+            "control": "text",
+            "label": "销售状态",
+            "width": "140px",
+            "span": 12
+          },
+          "yeartype": {
+            "control": "dateTimePicker",
+            "label": "年款",
+            "width": "140px",
+            "span": 12,
+            "type": "year"
+          },
+          "listdate": {
+            "control": "dateTimePicker",
+            "label": "上市日期",
+            "width": "140px",
+            "span": 12,
+            "format": "yyyyMMdd"
+          },
+          "seatnum": {
+            "control": "text",
+            "label": "乘员人数 (个)",
+            "width": "140px",
+            "span": 12,
+            "rules": [
+              {
+                "type": "number",
+                "message": "请输入整数"
+              }
+            ]
+          },
+          "geartype": {
+            "control": "select",
+            "label": "变速箱类型",
+            "width": "140px",
+            "span": 12,
+            "dict": {
+              "dictType": "CO_E_GEAR_TYPE",
+              "dictKey": [
+                "CO_E_GEAR_TYPE"
+              ],
+              "format": "label"
+            }
+          },
+          "gearnum": {
+            "control": "text",
+            "label": "档位数",
+            "width": "140px",
+            "span": 12,
+            "rules": [
+              {
+                "type": "number",
+                "message": "请输入整数"
+              }
+            ]
+          },
+          "compartnum": {
+            "control": "text",
+            "label": "车厢数",
+            "width": "140px",
+            "span": 12,
+            "rules": [
+              {
+                "type": "number",
+                "message": "请输入整数"
+              }
+            ]
+          }
+        },
+        {
+          "logo": {
+            "label": "车型图标",
+            "width": "140px",
+            "span": 12,
+            "control": "text",
+            "events": {
+              "condition": {
+                "$default": {
+                  "control": {
+                    "img": {
+                      "value": "${{formData.logo}}"
+                    }
+                  }
+                },
+                "": {
+                  "control": {
+                    "img": {
+                      "value": "${{formData.logo}}"
+                    }
+                  }
+                }
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入车型图标"
+              }
+            ]
+          },
+          "fileList": {
+            "control": "dynamic",
+            "isShowChildForm": true,
+            "span": 4,
+            "toRequest": {
+              "url": "@logoUploadButton",
+              "method": "get",
+              "params": {
+                "file_path": "logo",
+                "formKey": "fileList",
+                "formLabel": "附件上传"
+              }
+            }
+          },
+          "img": {
+            "control": "img",
+            "value": "${{formData.logo}}",
+            "span": 12,
+            "width": "200",
+            "height": "200",
+            "fit": "fill"
+          }
+        }
+      ]
+    }
+  }
+}

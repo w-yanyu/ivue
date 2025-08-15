@@ -1,0 +1,93 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+        "scope": "templateScope",
+        "initDataOnce": true,
+        "initRequest": "${{params}}",
+        "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+                "servicecode": "pt0151"
+
+            }
+        },
+        "btns": [{
+            "type": "submit",
+            "label": "保存"
+        }],
+        "controls": [
+            {
+                "project_template_no": {
+                    "control": "string",
+                    "label": "项目模版编号",
+                    "disabled": true,
+                    "value": "${{params.project_template_no}}"
+                },
+                "wf_prod_no": {
+                    "control": "lookup",
+                    "edit": true,
+                    "label": "流程产品编号",
+                    "keyField": {
+                        "wf_prod_no": "wf_prod_no",
+                        "wf_prod_name":"wf_prod_name"
+                    },
+                    "toRequest": {
+                        "url": "/views/pt/partnertemplateManage/CooperatItemFlowRelaManage/process-product-manage_lookup.json",
+                        "method": "GET",
+                        "params": {}
+                    },
+                    "props": {
+                        "width": "80%",
+                        "title": "查询流程产品编"
+                    },
+                    "format": "label",
+                    "rules": [
+                        {
+                            "required": true,
+                            "message": "请选择流程产品编"
+                        }
+                    ]
+                }
+            },
+            {
+                "wf_prod_name": {
+                    "control": "select",
+                    "label": "流程产品名称",
+                    "disabled": true,
+                    "rules": [
+                        {
+                            "required": true,
+                            "message": "请填写流程产品名称"
+                        }
+                    ]
+                },
+                "flow_appl_type": {
+                    "control": "select",
+                    "label": "申请流程类型",
+                    "placeholder": "请选择",
+                    "dict": {
+                        "dictType": "PT_E_FLOW_APPL_TYPE",
+                        "dictKey": [
+                            "PT_E_FLOW_APPL_TYPE"
+                        ],
+                        "format": "label"
+                    },
+                    "rules": [
+                        {
+                            "required": true,
+                            "message": "请选择"
+                        }
+                    ]
+                },
+                "version": {
+                    "control": "hidden",
+                    "label": "版本号",
+                    "##value": "${{params.version}}"
+                }
+            }
+        ]
+      }
+  }
+}

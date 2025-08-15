@@ -1,0 +1,180 @@
+{
+  "module": "v-search-btn-datagrid",
+  "pageId": "risk_alert_assign",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "alertQueueId": {
+            "label": "警报队列",
+            "control": "select",
+            "span": 8,
+            "dict": {
+              "dictType": "alertQueueIdSource",
+              "dictKey": [],
+              "format": "value-label",
+              "valueField": "queueId",
+              "labelField": "queueName",
+              "doRequest": {
+                "url": "/API/risk-management-service/risk-alert-queue/queryAll",
+                "method": "post"
+              }
+            }
+          },
+          "alertTrxnSeq": {
+            "label": "交易流水号",
+            "control": "text",
+            "span": 8,
+            "rules": [
+              {
+                "message": "请正确输入",
+                "max": 40
+              }
+            ]
+          },
+          "accountId": {
+            "label": "账号",
+            "control": "text",
+            "span": 8,
+            "rules": [
+              {
+                "message": "请正确输入",
+                "max": 40
+              }
+            ]
+          }
+        },
+        {
+          "cardNumber": {
+            "label": "卡号",
+            "control": "text",
+            "span": 8,
+            "rules": [
+              {
+                "message": "请正确输入",
+                "max": 19
+              }
+            ]
+          },
+          "startAlertDate": {
+            "label": "开始日期",
+            "control": "dateTimePicker",
+            "format": "yyyyMMdd",
+            "span": 8
+          },
+          "endAlertDate": {
+            "label": "结束日期",
+            "control": "dateTimePicker",
+            "format": "yyyyMMdd",
+            "span": 8
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/API/risk-management-service/risk-alert-information/assignPage-select",
+        "method": "post"
+      },
+      "thead": [
+        {
+          "label": "警报信息ID",
+          "prop": "alertId",
+          "align": "center"
+        },
+        {
+          "label": "警报日期",
+          "prop": "alertDate",
+          "align": "center"
+        },
+        {
+          "label": "警报风险级别",
+          "prop": "alertRiskLevel",
+          "align": "center",
+          "dict": {
+            "dictType": "alertRiskLevelSource",
+            "dictKey": [],
+            "format": "label",
+            "doRequest": {
+              "url": "/views/risk/dictdata/alertRiskLevel.json",
+              "method": "get"
+            }
+          }
+        },
+        {
+          "label": "警报交易流水号",
+          "prop": "alertTrxnSeq",
+          "align": "center"
+        },
+        {
+          "label": "卡号",
+          "prop": "cardNumber",
+          "align": "center"
+        },
+        {
+          "label": "账号",
+          "prop": "accountId",
+          "align": "center"
+        },
+        {
+          "label": "客户号",
+          "prop": "customerId",
+          "align": "center"
+        },
+        {
+          "label": "国家代码",
+          "prop": "countryCode",
+          "align": "center",
+          "dict": {
+            "dictType": "countryCodeSource",
+            "dictKey": [],
+            "format": "label",
+            "valueField": "numericCode",
+            "labelField": "chineseName",
+            "doRequest": {
+              "url": "/API/risk-management-service/risk-country-code/query",
+              "method": "post"
+            }
+          }
+        },
+        {
+          "label": "商户号",
+          "prop": "merchantId",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "width": "100px",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/risk/risk_alert_assign/risk_alert_assign_tab.json",
+                "method": "get",
+                "params": {}
+              },
+              "props": {
+                "width": "70%",
+                "height": "100%"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "分配",
+              "authId": "alert_assign_btn",
+              "toRequest": {
+                "url": "/views/risk/risk_alert_assign/risk_alert_assign_edit.json",
+                "method": "get"
+              },
+              "props": {
+                "width": "70%"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

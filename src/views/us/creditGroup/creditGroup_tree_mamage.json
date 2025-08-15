@@ -1,0 +1,123 @@
+{
+  "module": "lr_tree_dynamic",
+  "layout": {
+    "tree": {
+      "scope": "creditGroupTree",
+      "title": "村镇县信用体系管理",
+      "width": "300px",
+      "lazy": true,
+      "idField": "node_cd",
+      "nodeType": "node_type",
+      "pIdField": "parent_node_cd",
+      "labelField": "node_name",
+      "isLeafField": "is_leaf",
+      "disabledField": "disabled",
+      "search": {
+        "enabled": "true",
+        "displayType": "tree",
+        "nameFields": ["search_name"]
+      },
+      "rootTypes": [
+        "1"
+      ],
+      "root": {
+        "rootNode": {
+          "name": "村镇县信用体系",
+          "value": "0",
+          "node_cd": "0",
+          "icon": "xitongguanli"
+        },
+        "toRequest": {
+          "url": "@creditGroupView",
+          "method": "get",
+          "params": {
+            "node_type": "0"
+          }
+        },
+        "contextMenu": [
+          {
+            "type": "add",
+            "label": "新增",
+            "icon": "el-icon-circle-plus-outline",
+            "toRequest": {
+              "url": "/views/us/creditGroup/creditGroup_tree_add.json",
+              "method": "get",
+              "params": {
+                "node_type": "0",
+                "node_cd": "0"
+              }
+            },
+            "props": {
+              "width": "50%",
+              "title": "标题"
+            }
+          }
+        ]
+      },
+      "nodeTypes": {
+        "1": {
+          "icon": "el-icon-news",
+          "children": [
+            "1",
+            "2",
+            "3"
+          ],
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "post",
+            "params": {
+              "servicecode": "us1100",
+              "node_cd": "${{current.node_cd}}",
+              "node_group": "0001"
+            }
+          },
+          "toRequest": {
+            "url": "@creditGroupView",
+            "method": "get",
+            "params": {
+              "node_type": "${{current.node_type}}"
+            }
+          },
+          "contextMenu": [
+            {
+              "type": "add",
+              "label": "新增",
+              "icon": "el-icon-circle-plus-outline",
+              "toRequest": {
+                "url": "/views/us/creditGroup/creditGroup_tree_add.json",
+                "method": "get",
+                "params": {
+                }
+              },
+              "props": {
+                "width": "50%",
+                "title": "标题"
+              }
+            },
+            {
+              "type": "divider"
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "icon": "el-icon-remove-outline",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "us1103"
+                }
+              },
+              "confirm": {
+                "title": "提示信息",
+                "msg": "确定要删除吗？",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

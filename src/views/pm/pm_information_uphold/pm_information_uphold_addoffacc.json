@@ -1,0 +1,119 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "initReqeust": true,
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "addlog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/pm/pm_information_uphold/pm_information_uphold_editaccadd.json",
+            "params": {
+              "servicecode": "accadd",
+              "ofpacd": "${{params.ofpacd}}",
+              "acct_type": "${{params.acct_type}}"
+            }
+          },
+          "props": {
+            "title": "合作方账户信息新增",
+            "width": "45%"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "accupt",
+          "ofpacd": "${{params.ofpacd}}"
+        }
+      },
+      "thead": [
+        {
+          "type": "index",
+          "label": "序号"
+        },
+        {
+          "label": "合作方编号",
+          "prop": "ofpacd"
+        },
+        {
+          "label": "账户类型",
+          "prop": "acct_type",
+          "dict": {
+            "dictType": "E_ACCTYP",
+            "dictKey": [
+              "E_ACCTYP"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "账号",
+          "prop": "acct_no"
+        },
+        {
+          "label": "账号名",
+          "prop": "acct_name"
+        },
+        {
+          "label": "联行号",
+          "prop": "bank_id"
+        },
+        {
+          "label": "开户行行号",
+          "prop": "open_bank_id"
+        },
+        {
+          "label": "开户行名称",
+          "prop": "open_bank_name"
+        },
+        {
+          "label": "开户行省份",
+          "prop": "open_bank_prov"
+        },
+        {
+          "label": "开户行城市",
+          "prop": "open_bank_city"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "align": "center",
+          "width": "200",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "修改",
+              "toRequest": {
+                "url": "/views/pm/pm_information_uphold/pm_information_uphold_editaccppsl.json",
+                "method": "POST"
+              },
+              "props": {
+                "title": "合作方账户信息修改"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "accdel"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

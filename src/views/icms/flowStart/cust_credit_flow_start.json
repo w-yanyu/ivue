@@ -1,0 +1,201 @@
+{
+    "module": "v-inputDataForm-btn",
+    "layout": {
+        "form": {
+            "btns": [],
+            "scope": "templateScope",
+            "controls": [
+                {
+                    "sale_prod_cd": {
+                        "control": "hidden",
+                        "label": "可售产品编号",
+                        "disabled": true,
+                        "width": "140px",
+                        "span": 7,
+                        "value": "0005008"
+                    },
+                    "busi_type": {
+                        "width": "140px",
+                        "span": 7,
+                        "disabled": true,
+                        "label": "业务类型",
+                        "control": "remoteSelect",
+                        "labelField": "title",
+                        "valueField": "id",
+                        "value": "V",
+                        "doRequest": {
+                            "url": "/SUMP/call/RPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "pd0144",
+                                "grupno": "0006",
+                                "pid": "KSCP"
+                            }
+                        },
+                        "events": {
+                            "doRequest": {
+                                "url": "/SUMP/call/RPCCall",
+                                "method": "post",
+                                "params": {
+                                    "servicecode": "pd0143",
+                                    "grupno": "0006",
+                                    "id": "${{templateScope.busi_type}}"
+                                },
+                                "resultSet": {
+                                    "prod_type_name": "title"
+                                }
+                            }
+                        }
+                    },
+                    "prod_type_name": {
+                        "control": "hidden",
+                        "label": "业务类型名称"
+                    }
+                },
+                {
+                    "cust_name": {
+                        "control": "lookup",
+                        "label": "客户姓名",
+                        "width": "140px",
+                        "span": 7,
+                        "edit": true,
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "客户名称不能为空!"
+                            }
+                        ],
+                        "keyField": {
+                            "cust_name": "cust_name",
+                            "cert_type": "cert_type",
+                            "cert_no": "cert_no",
+                            "cust_no": "cust_no",
+                            "mobile_no": "phone_no",
+                            "cust_type": "cust_type"
+                        },
+                        "toRequest": {
+                            "url": "/views/us/entManager/ent_cust_lookup.json",
+                            "method": "get",
+                            "####params": {
+                                "valid_state": "1"
+                            }
+                        },
+                        "props": {
+                            "title": "选择客户",
+                            "width": "75%"
+                        }
+                    },
+                    "cust_no": {
+                        "control": "text",
+                        "label": "客户编号",
+                        "disabled": true,
+                        "width": "140px",
+                        "span": 7
+                    },
+                    "mobile_no": {
+                        "control": "text",
+                        "label": "电话号码",
+                        "disabled": true,
+                        "width": "140px",
+                        "span": 7,
+                        "rules": [
+                            {
+                                "message": "手机号码必须为数字",
+                                "type": "number"
+                            },
+                            {
+                                "message": "手机号码不应超过11位",
+                                "min": 0,
+                                "max": 11
+                            }
+                        ]
+                    }
+                },
+                {
+                    "cust_type": {
+                        "control": "select",
+                        "label": "客户类型",
+                        "width": "140px",
+                        "disabled": true,
+                        "span": 7,
+                        "dict": {
+                            "format": "label",
+                            "dictKey": [
+                                "US_E_CUST_TYPE"
+                            ],
+                            "dictType": "US_E_CUST_TYPE"
+                        }
+                    },
+                    "cert_type": {
+                        "control": "select",
+                        "label": "证件类型",
+                        "width": "140px",
+                        "disabled": true,
+                        "span": 7,
+                        "rules": [
+                            {
+                                "required": false,
+                                "message": "证件类型不能为空!"
+                            }
+                        ],
+                        "dict": {
+                            "dictType": "MS_E_CRET_TYPE",
+                            "dictKey": [
+                                "MS_E_CRET_TYPE"
+                            ],
+                            "format": "label"
+                        }
+                    },
+                    "cert_no": {
+                        "control": "text",
+                        "label": "证件号码",
+                        "disabled": true,
+                        "width": "140px",
+                        "span": 7,
+                        "rules": [
+                            {
+                                "required": false,
+                                "message": "证件号码不能为空!"
+                            }
+                        ]
+                    },
+                    "apply_type": {
+                        "span": 7,
+                        "label": "申请类型",
+                        "width": "140px",
+                        "hidden": true,
+                        "value": "VCL"
+                    },
+                    "apply_type_name": {
+                        "span": 7,
+                        "label": "申请类型名称",
+                        "width": "140px",
+                        "hidden": true,
+                        "value": "授信新申请"
+                    }
+                },       
+                {
+                    "toDbsx": {
+                        "span": 24,
+                        "unFieldList": [
+                            "apply_type",
+                            "busi_type"                     
+                        ],
+                        "control": "dynamic",
+                        "#isShowChildrenForm": false,
+                        "toRequest": {
+                            "method": "GET",
+                            "url": "@FlowSubmitBtn",
+                            "params": {
+                                "appId": "icmsOnl",
+                                "servicecode": "ar0000",
+                                "finalUrl": "/views/msap/bpm/workbench/workbench_main_tabs.json",
+                                "trans_type": "ADD"
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,65 @@
+{
+    "module": "d-steps",
+    "layout": {
+        "steps": {
+            "scope": "formObj",
+            "direction": "horizontal",
+            "alignCenter": true,
+            "finishStatus": "success",
+            "simpleType": false,
+            "nextStepType": "validate",
+            "list": [
+                {
+                    "scope": "step1",
+                    "title": "打包条件编辑",
+                    "icon": "el-icon-edit",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/pl/assetPackage/packageAsset/addpackageAsset.json",
+                        "params": {
+                            "package_no": "${{formObj.step1.package_no}}"
+                        }
+                    },
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "pl0713"
+                        }
+                    }
+                },
+                {
+                    "scope": "step2",
+                    "title": "借据关联",
+                    "icon": "el-icon-edit",
+                    "toRequest": {
+                        "url": "/views/pl/assetPackage/packageAsset/addRelateLoan.json",
+                        "params": {
+                            "package_no": "${{formObj.step1.package_no}}"
+                        },
+                        "method": "get"
+                    }
+                },
+                {
+                    "scope": "step3",
+                    "title": "已关联借据编辑",
+                    "icon": "el-icon-edit",
+                    "toRequest": {
+                        "url": "/views/pl/assetPackage/packageAsset/updRelateLoan.json",
+                        "params": {
+                            "package_no": "${{formObj.step1.package_no}}"
+                        },
+                        "method": "get"
+                    },
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "pl0715"
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

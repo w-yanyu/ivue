@@ -1,0 +1,91 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "icon": "el-icon-circle-plus",
+          "target": "dialog",
+          "label": "附件上传",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/cs/generalManage/knowledgeMnt/knowledgeMnt_add.json"
+          },
+          "props": {
+            "width": "50%",
+            "title": "上传附件"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "cb0107",
+          "appId": "cbOnl",
+          "case_id": "${{params.cust_id}}",
+          "case_no": "${{params.case_no}}",
+          "cust_id": "${{params.cust_id}}",
+          "org_id": "${{params.org_id}}",
+          "oa_org_id": "${{params.oa_org_id}}"
+        }
+      },
+      "thead": [
+        {
+          "type": "string",
+          "label": "附件名称",
+          "align": "center",
+          "value": "身份证正面",
+          "prop": "attachment_name"
+        },
+        {
+          "type": "string",
+          "label": "附件类型",
+          "align": "center",
+          "value": "身份证",
+          "prop": "attachment_type",
+          "dict": {
+            "dictType": "CS_E_RELATIONSHIP",
+            "dictKey": [
+              "CS_E_RELATIONSHIP"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "label": "附件大小",
+          "align": "center",
+          "value": "1M",
+          "prop": "file_size"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 120,
+          "align": "center",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "##toRequest": {
+                "url": "/views/fxyj/mx_details/alertQryTab.json",
+                "method": "GET",
+                "params": {}
+              },
+              "props": {
+                "width": "80%",
+                "height": "85%",
+                "title": "预警信息详情"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

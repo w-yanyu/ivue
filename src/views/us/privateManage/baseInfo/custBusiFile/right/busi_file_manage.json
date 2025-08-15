@@ -1,0 +1,124 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "datagrid": {
+      "isInitSearch": false,
+      "scope": "searchTable",
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ar0268",
+          "doc_no": "${{params.doc_no}}",
+          "cert_type": "${{params.cert_type}}",
+          "cert_no": "${{params.cert_no}}"
+        }
+      },
+      "thead": [
+        {
+          "type":"string",
+          "label": "资料编号",
+          "align": "center",
+          "prop": "doc_no"
+        },
+        {
+          "type":"string",
+          "label": "资料名称",
+          "align": "center",
+          "prop": "doc_name",
+          "width": "200px",
+          "btns": [
+            {
+              "type": "look",
+              "toRequest": {
+                "url": "@lookAgreementBtn",
+                "params": {
+                  "protocol_path": "${{current.file_path}}"
+                }
+              },
+              "props": {
+                "width": "75%",
+                "height": "80%",
+                "title": "预览"
+              }
+            }
+          ]
+        },
+        {
+          "type":"string",
+          "label": "申请号",
+          "align": "center",
+          "prop": "apply_no",
+          "width": "200px"
+        },
+        {
+          "type":"string",
+          "label": "业务类型",
+          "align": "center",
+          "prop": "busi_type",
+          "dict": {
+            "dictType": "AR_E_BUSI_TYPE",
+            "dictKey": [
+              "AR_E_BUSI_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type":"string",
+          "label": "产品编号",
+          "align": "center",
+          "prop": "sale_prod_cd"
+        },
+        {
+          "type":"string",
+          "label": "产品名称",
+          "align": "center",
+          "prop": "sale_prod_name"
+        },
+        {
+          "type":"string",
+          "label": "附件类型",
+          "align": "center",
+          "prop": "filetype",
+          "dict": {
+            "dictType": "AR_E_FILETYPE",
+            "dictKey": [
+              "AR_E_FILETYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type":"string",
+          "label": "文件路径",
+          "align": "center",
+          "prop": "file_path"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 120,
+          "align": "center",
+          "btns": [
+            {
+              "type": "export",
+              "label": "下载",
+              "doRequest": {
+                "url": "/SUMP/minioCall/download",
+                "method": "GET",
+                "params": {
+                  "path": "${{current.file_path}}",
+                  "fileName": "${{current.doc_name}}"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "pagination": {
+        "show": true
+      }
+    }
+  }
+}

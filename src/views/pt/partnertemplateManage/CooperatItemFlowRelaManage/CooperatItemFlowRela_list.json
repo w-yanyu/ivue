@@ -1,0 +1,133 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "toolbar": {
+            "btns": [{
+                "type": "add",
+                "target": "dialog",
+                "label": "新增",
+                "toRequest": {
+                    "method": "GET",
+                    "url": "/views/pt/partnertemplateManage/CooperatItemFlowRelaManage/CooperatItemFlowRela_add.json",
+                    "params": {
+                        "project_template_no": "${{params.project_template_no}}",
+                        "version": "${{params.version}}"
+                    }
+                },
+                "show": {
+                    "expression": "'${{params.show_flash}}' == '1'"
+                },
+                "props": {
+                    "title": "新增合作项目模版流程产品",
+                    "width": "75%"
+                }
+            }]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "pt0153",
+                    "project_template_no": "${{params.project_template_no}}",
+                    "version": "${{params.version}}"
+                }
+            },
+            "thead": [
+                {
+                    "type": "index",
+                    "width": 50,
+                    "label": "序号"
+                },
+                {
+                    "label": "项目模版编号",
+                    "prop": "project_template_no",
+                    "align": "center",
+                    "disabled": true
+                },
+                {
+                    "label": "流程产品编号",
+                    "prop": "wf_prod_no",
+                    "align": "center"
+                },
+                {
+                    "label": "流程产品名称",
+                    "prop": "wf_prod_name",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "PT_E_AGREE_TYPE",
+                        "dictKey": [
+                            "PT_E_AGREE_TYPE"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "申请流程类型",
+                    "prop": "flow_appl_type",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "PT_E_FLOW_APPL_TYPE",
+                        "dictKey": [
+                            "PT_E_FLOW_APPL_TYPE"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "版本",
+                    "prop": "version",
+                    "align": "center"
+                },
+
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 160,
+                    "align": "center",
+                    "btns": [
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/pt/partnertemplateManage/CooperatItemFlowRelaManage/CooperatItemFlowRela_update.json",
+                                "method": "GET"
+                            },
+                            "show": {
+                                "expression": "'${{params.show_flash}}' == '1'"
+                            },
+                            "props": {
+                                "width": "75%",
+                                "title": "合作项目模版流程关联维护"
+                            }
+                        },
+                        {
+                            "type": "custom",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "pt0152"
+
+                                }
+                            },
+                            "confirm": {
+                                "title": "确定删除",
+                                "confirmButtonText": "确定",
+                                "cancelButtonText": "取消"
+                            },
+                            "show": {
+                                "expression": "'${{params.show_flash}}' == '1'"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

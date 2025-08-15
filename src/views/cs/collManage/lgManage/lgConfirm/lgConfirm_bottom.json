@@ -1,0 +1,209 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "scope": "formData",
+            "initRequest": "${{params}}",
+            "controls": [
+                {
+                    "cert_no": {
+                        "control": "text",
+                        "label": "证件号码"
+                    },
+                    "oa_org_id": {
+                        "control": "remoteSelect",
+                        "label": "诉讼公司",
+                        "labelField": "coll_org_name",
+                        "valueField": "coll_org_id",
+                        "doRequest":{
+                            "url": "/SUMP/icmcall/icmRPCCall",
+                            "method": "POST",
+                            "params":{
+                                "servicecode": "cb0042",
+                                "coll_org_type":"LG01",
+                                "is_valid":"Y"
+                            }
+                        },
+                        "format":"value-label"
+                    }
+                }
+            ]
+        },
+
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "delete",
+                    "icon": "el-icon-back",
+                    "label": "退回",
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "post",
+                        "params": {
+                            "servicecode": "cb0199"
+                        }
+                    },
+                    "confirm": {
+                        "title": "提示信息",
+                        "msg": "确认将案件退回，重新分配？",
+                        "confirmButtonText": "确定",
+                        "cancelButtonText": "取消"
+                    }
+                },
+                {
+                    "type": "custom",
+                    "icon": "el-icon-check",
+                    "label": "确认分配",
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "post",
+                        "params": {
+                            "servicecode": "cb0200"
+                        }
+                    },
+                    "confirm": {
+                        "title": "提示信息",
+                        "msg": "确认要分配选中案件？",
+                        "confirmButtonText": "确定",
+                        "cancelButtonText": "取消"
+                    }
+                }
+            ]
+        },
+
+        "datagrid": {
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "cb0198",
+                  "assign_status": "Y"
+                }
+            },
+            "thead": [
+                {
+                    "type": "selection",
+                    "align":"center",
+                    "width": "55",
+                    "fixed": "left"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width": "180px",
+                    "label": "客户姓名",
+                    "prop": "cust_name"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width": "180px",
+                    "label": "客户编号",
+                    "prop": "case_id"
+
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width": "180px",
+                    "label": "证件号码",
+                    "prop": "cert_no"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width": "180px",
+                    "label": "借据号",
+                    "prop": "loan_no"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width": "180px",
+                    "label": "逾期天数",
+                    "prop": "overdue_days"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width": "180px",
+                    "label": "逾期金额",
+                    "prop": "overdue_amount"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width": "180px",
+                    "label": "诉讼公司",
+                    "prop": "oa_org_id",
+                    "dict": {
+                      "dictKey": [
+                        "oa_org_id"
+                      ],
+                      "format": "value-label",
+                      "labelField": "coll_org_name",
+                      "valueField": "coll_org_id",
+                      "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                          "servicecode": "cb0042",
+                          "coll_org_type":"LG01",
+                          "is_valid":"Y"
+                        }
+                      }
+                    }
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width": "180px",
+                    "label": "诉讼金额",
+                    "prop": "oa_amt"
+
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width": "180px",
+                    "label": "派案日期",
+                    "prop": "legal_begin_date"
+
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width": "180px",
+                    "label": "回收日期",
+                    "prop": "legal_end_date"
+
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width": "180px",
+                    "label": "上一次公司名称",
+                    "prop": "last_legal_org_id"
+
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width": "180px",
+                    "label": "上一次派案日期",
+                    "prop": "last_legal_begin_date"
+
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width": "180px",
+                    "label": "上一次回收日期",
+                    "prop": "last_real_end_date"
+
+                }
+            ]
+        }
+    }
+}

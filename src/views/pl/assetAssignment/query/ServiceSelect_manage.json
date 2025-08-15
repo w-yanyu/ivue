@@ -1,0 +1,91 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "asmt_code": {
+            "control": "text",
+            "label": "转让编码"
+          },
+          "apply_no": {
+            "control": "text",
+            "label": "申请编号"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pl0026"
+        }
+      },
+      "thead": [
+        {
+          "type": "index",
+          "align": "center",
+          "label": "序号"
+        },
+        {
+          "label": "转让编码",
+          "prop": "asmt_code",
+          "align": "center"
+        },
+        {
+          "label": "申请编号",
+          "prop": "apply_no",
+          "align": "center"
+        },
+        {
+          "label": "启动操作员",
+          "prop": "start_oprtr",
+          "align": "center"
+        },
+        {
+          "label": "当前处理人",
+          "prop": "cur_agnt",
+          "align": "center"
+        },        {
+          "label": "当前处理步骤",
+          "prop": "cur_deal_step",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "align":"center",
+          "fixed": "right",
+          "btns": [
+            
+            {
+              "type": "look",
+              "label": "查看详情",
+              "toRequest": {
+                "url": "@ZDHAssetsaleHandover",
+                "method": "GET",
+                "target": "navTab",
+                "params": {
+                  "hndov_code": "${{current.hndov_code}}",
+                  "apply_no": "${{current.appl_id}}",
+                  "flow_no": "${{current.flow_no}}"
+                }
+              },
+              "props": {
+                "title": "查看详情"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

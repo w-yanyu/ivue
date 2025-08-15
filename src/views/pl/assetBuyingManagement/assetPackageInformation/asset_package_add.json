@@ -1,0 +1,143 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "pagination": {
+        "show": false
+      },
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "pl0420",
+              "page_id": "/views/pl/assetBuyingManagement/assetPackageInformation/asset_package_add.json"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "package_name": {
+            "control": "text",
+            "label": "资产包名称",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              },
+              {
+                "max": 64,
+                "message": "最多可以输入 64 个字节"
+              }
+            ]
+          },
+          "package_no": {
+            "control": "text",
+            "disabled": true,
+            "label": "资产包编码"
+          },
+          "bench_mark_date": {
+            "label": "债权基准日",
+            "control": "dateTimePicker",
+            "rules": [
+                {
+                    "max": "10",
+                    "message": "长度不能超过10个字符"
+                },
+                {
+                    "required": true,
+                    "message": "请输入债权基准日"
+                }
+            ]
+        },
+          "asset_package_cost": {
+            "control": "currency",
+            "label": "资产包成本",
+            "format": {
+              "decimal": "2"
+            }
+          },
+          "department": {
+            "control": "remoteSelect",
+            "label": "所在部门",
+            "labelField": "branch_name",
+            "valueField": "branch_id",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2173"
+              }
+            },
+            "format": "label"
+          },
+          "asset_source": {
+            "control": "select",
+            "label": "资产来源",
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择"
+              }
+            ],
+            "dict": {
+              "dictType": "PL_E_ASSET_SOURCE",
+              "dictKey": [
+                "PL_E_ASSET_SOURCE"
+              ],
+              "format": "label"
+            }
+          },
+          "source_asset_package_no": {
+            "control": "text",
+            "label": "来源方资产包编号",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              },
+              {
+                "max": 64,
+                "message": "最多可以输入 64 个字节"
+              }
+            ]
+          },
+          "asset_package_type": {
+            "control": "select",
+            "label": "资产包类型",
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择"
+              }
+            ],
+            "dict": {
+              "dictType": "PL_E_ASSET_PACKAGE_TYPE",
+              "dictKey": [
+                "PL_E_ASSET_PACKAGE_TYPE"
+              ],
+              "format": "label"
+            }
+          },
+          "remark": {
+            "control": "textarea",
+            "label": "备注",
+            "align": "center",
+            "span": "20",
+            "rows": 6,
+            "rules": [
+                {
+                    "required": true,
+                    "message":"请输入"
+                }
+            ]
+          } 
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "module": "v-inputDataForm-btn",
+  "layout": {
+    "scope": "templateScope",
+    "form": {
+      "btns": [],
+      "controls": [
+        {
+          "org_id":{
+            "hidden": true,
+            "span":12,
+            "label": "法人信息",
+            "control": "remoteSelect",
+            "labelField": "org_name",
+            "valueField": "org_id",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2311",
+                "length":100
+              }
+            },
+            "events": {
+              "emit": [
+                "operation"
+              ]
+            },
+            "initShow": {
+              "expression": "'${{form.org_id}}' === ''"
+            },
+            "format": "value-label"
+          },
+          "operation": {
+            "span": 24,
+            "allowCreate": true,
+            "control": "dynamic",
+            "toRequest": {
+              "url": "/views/cs/paramManage/business/mark/mark_assign.json",
+              "method": "get",
+              "params": {
+                "org_id": "${{form.org_id}}"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

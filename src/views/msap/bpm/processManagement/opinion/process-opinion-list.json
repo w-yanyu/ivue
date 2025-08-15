@@ -1,0 +1,196 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "appId": {
+            "control": "select",
+            "label": "业务模块",
+            "selectFirstValue": true,
+            "dict": {
+              "dictType": "MS_APPID",
+              "dictKey": [
+                "MS_APPID"
+              ],
+              "format": "value-label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择业务模块"
+              }
+            ]
+          }
+        },
+        {
+          "opinion_define_name": {
+            "control": "text",
+            "label": "审批意见定义名称",
+            "rules": [
+              {
+                "max": 100,
+                "message": "长度不能超过100个字符"
+              }
+            ]
+          },
+          "appv_opinion_type": {
+            "control": "select",
+            "label": "意见类型",
+            "selectFirstValue": true,
+            "dict": {
+              "dictType": "BPM_E_OPINION_TYPE",
+              "dictKey": [
+                "BPM_E_OPINION_TYPE"
+              ],
+              "format": "value-label"
+            }
+          },
+          "busi_type": {
+            "control": "select",
+            "label": "业务类型",
+            "selectFirstValue": true,
+            "dict": {
+              "dictType": "AR_E_BUSI_TYPE",
+              "dictKey": [
+                "AR_E_BUSI_TYPE"
+              ],
+              "format": "value-label"
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "post",
+            "url": "@opinionAdd",
+            "params": {
+              "appId": "${{form.appId}}",
+              "opinion_belong": "${{params.opinion_belong}}"
+            }
+          },
+          "props": {
+            "width": "65%",
+            "title": "审批意见新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "bpm6001",
+          "appId": "${{form.appId}}",
+          "opinion_belong": "${{params.opinion_belong}}"
+        }
+      },
+      "thead": [
+        {
+          "label": "意见名称",
+          "align": "center",
+          "prop": "opinion_define_name"
+        },
+        {
+          "label": "意见类型",
+          "align": "center",
+          "prop": "appv_opinion_type",
+          "dict": {
+            "dictType": "BPM_E_OPINION_TYPE",
+            "dictKey": [
+              "BPM_E_OPINION_TYPE"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "label": "业务类型",
+          "align": "center",
+          "prop": "busi_type",
+          "dict": {
+            "dictType": "AR_E_BUSI_TYPE",
+            "dictKey": [
+              "AR_E_BUSI_TYPE"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "label": "意见内容",
+          "align": "center",
+          "prop": "opinion_desc"
+        },
+        {
+          "label": "操作",
+          "width": "280px",
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "编辑",
+              "toRequest": {
+                "url": "@opinionUpd",
+                "method": "POST",
+                "params": {
+                  "appId": "${{form.appId}}",
+                  "opinion_belong": "${{params.opinion_belong}}"
+                }
+              },
+              "props": {
+                "width": "900px",
+                "title": "编辑审批意见"
+              }
+              
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "bpm6004",
+                  "appId": "${{form.appId}}",
+                  "method": "del"
+                },
+                "props": {
+                  "width": "900px",
+                  "title": "删除审批意见"
+                }
+              },
+              "confirm": {
+                "title": "提示信息",
+                "msg": "确定删除该信息吗？",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/msap/bpm/processManagement/opinion/process-opinion_view.json",
+                "method": "POST",
+                "params": {}
+               
+                },
+                "props": {
+                  "width": "75%",
+                  "title": "查看审批意见详情"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

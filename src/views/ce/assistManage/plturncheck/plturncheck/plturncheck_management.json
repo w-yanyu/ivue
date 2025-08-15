@@ -1,0 +1,414 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "foldLineNumber": 3,
+      "controls": [
+        {
+          "coll_group": {
+            "control": "inputTree",
+            "label": "催收组",
+            "idField": "coll_group",
+            "nodeTypeField": "type",
+            "pIdField": "parent_coll_team",
+            "labelField": "coll_team_name",
+            "events": {
+              "emit": [
+                "collector"
+              ]
+            },
+            "root": {
+              "rootNode": {
+                "name": "BYB-BRANCH",
+                "value": "9999",
+                "disabled": true
+              }
+            },
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ce0180"
+              }
+            },
+            "format": "label"
+          },
+          "collector": {
+            "control": "remoteSelect",
+            "label": "催收员",
+            "labelField": "collector_name",
+            "valueField": "collector",
+            "lazy": true,
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ce0184",
+                "coll_group": "${{form.coll_group}}"
+              }
+            },
+            "format": "label"
+          }
+        },
+        {
+          "cust_name": {
+            "control": "text",
+            "label": "客户姓名"
+          },
+          "appr_state": {
+            "control": "select",
+            "label": "审核状态",
+            "default": "NC",
+            "dict": {
+              "dictType": "CE_APPR_STATE",
+              "dictKey": [
+                "CE_APPR_STATE"
+              ],
+              "format": "value-label"
+            }
+          }
+        },
+        {
+          "cert_no": {
+            "control": "text",
+            "label": "证件号码"
+          },
+          "cust_no": {
+            "control": "text",
+            "label": "客户号"
+          }
+        },
+        {
+          "loan_no": {
+            "control": "text",
+            "label": "借据号"
+          },
+          "overdue_days": {
+            "control": "inputNumber",
+            "label": "最大逾期天数"
+          }
+        },
+        {
+        "cert_type": {
+            "control": "string",
+            "label": "证件类型",
+            "dict": {
+              "dictType": "MS_E_CRET_TYPE",
+              "dictKey": [
+                "MS_E_CRET_TYPE"
+              ],
+              "format": "value-label"
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "custom",
+          "target": "dialog",
+          "checkCountMin": 1,
+          "label": "批量操作",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/ce/assistManage/plturncheck/plturncheck/plturncheck_auditing.json"
+          }
+        },
+
+        {
+          "type": "custom",
+          "icon": "el-icon-circle-check",
+          "target": "dialog",
+          "label": "全部核准",
+          "disabled":"'${{form.appr_state}}' === 'P' || '${{form.appr_state}}' === 'R' || '${{form.appr_state}}' === ''",
+          "doRequest": {
+            "method": "POST",
+            "url": "/SUMP/call/RPCCall",
+            "params": {
+              "servicecode":"ce2542",
+              "submit_type":"P",
+              "appr_state": "NC",
+              "coll_group": "${{form.coll_group}}",
+              "collector": "${{form.collector}}",
+              "cust_name": "${{form.cust_name}}",
+              "cert_no": "${{form.cert_no}}",
+              "cust_no": "${{form.cust_no}}",
+              "loan_no": "${{form.loan_no}}",
+              "overdue_days": "${{form.overdue_days}}",
+              "cert_type": "${{form.cert_type}}"
+            }
+          },
+          "confirm": {
+            "title": "提醒",
+            "msg": "确定将案件全部核准？",
+            "confirmButtonText": "确定",
+            "cancelButtonText": "取消"
+          }
+        },
+
+        {
+          "type": "custom",
+          "target": "dialog",
+          "label": "全部拒绝",
+          "disabled":"'${{form.appr_state}}' === 'P' || '${{form.appr_state}}' === 'R' || '${{form.appr_state}}' === ''",
+          "doRequest": {
+            "method": "POST",
+            "url": "/SUMP/call/RPCCall",
+            "params": {
+              "servicecode":"ce2542",
+              "submit_type":"R",
+              "appr_state": "NC",
+              "coll_group": "${{form.coll_group}}",
+              "collector": "${{form.collector}}",
+              "cust_name": "${{form.cust_name}}",
+              "cert_no": "${{form.cert_no}}",
+              "cust_no": "${{form.cust_no}}",
+              "loan_no": "${{form.loan_no}}",
+              "overdue_days": "${{form.overdue_days}}",
+              "cert_type": "${{form.cert_type}}"
+            }
+          },
+          "confirm": {
+            "title": "提醒",
+            "msg": "确定将案件全部拒绝？",
+            "confirmButtonText": "确定",
+            "cancelButtonText": "取消"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ce2540"
+        }
+      },
+      "thead": [
+        {
+          "type": "selection",
+          "align": "center",
+          "width": "55",
+          "fixed": "left",
+          "show":{
+            "expression":"'${{appr_state}}' === 'NC'"
+          }
+        },
+
+        {
+          "type": "string",
+          "align": "center",
+          "width": "180px",
+          "label": "催收组",
+          "prop": "coll_group",
+          "dict": {
+            "dictKey": [
+              "coll_group"
+            ],
+            "format": "label",
+            "labelField": "coll_team_name",
+            "valueField": "coll_group",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ce0180"
+              }
+            }
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "180px",
+          "label": "催收员",
+          "prop": "collector",
+          "dict": {
+            "dictKey": [
+              "collector"
+            ],
+            "format": "label",
+            "labelField": "collector_name",
+            "valueField": "collector",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ce0403"
+              }
+            }
+          }
+        },
+        {
+          "type":"string",
+          "align":"center",
+          "width": "180px",
+          "label": "客户姓名",
+          "prop": "cust_name"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "180px",
+          "label": "证件类型",
+          "prop": "cert_type",
+          "dict": {
+            "dictType": "MS_E_CRET_TYPE",
+            "dictKey": [
+              "MS_E_CRET_TYPE"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type":"string",
+          "align":"center",
+          "width": "180px",
+          "label": "证件号码",
+          "prop": "cert_no"
+        },
+
+        {
+          "type": "string",
+          "align": "center",
+          "width": "180px",
+          "label": "转出队列",
+          "prop": "diretor_queue_code"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "180px",
+          "label": "转入队列",
+          "prop": "queue_code"
+        },
+
+        {
+          "type": "string",
+          "align": "center",
+          "width": "180px",
+          "label": "申请人",
+          "prop": "appt",
+          "dict": {
+            "dictKey": [
+              "appt"
+            ],
+            "format": "label",
+            "labelField": "collector_name",
+            "valueField": "collector",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ce0403"
+              }
+            }
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "180px",
+          "label": "申请时间",
+          "prop": "apply_date"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "180px",
+          "label": "借据号",
+          "prop": "loan_no"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "180px",
+          "label": "客户号",
+          "prop": "cust_no"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "180px",
+          "label": "最大逾期天数",
+          "prop": "overdue_days"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "180px",
+          "label": "本期五级分类",
+          "prop": "classify_result",
+          "dict": {
+            "dictType": "MS_E_LEVEL5_TYPE",
+            "dictKey": [
+              "MS_E_LEVEL5_TYPE"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "180px",
+          "label": "审核状态",
+          "prop": "appr_state",
+          "dict": {
+            "dictType": "CE_APPR_STATE",
+            "dictKey": [
+              "CE_APPR_STATE"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type":"string",
+          "align":"center",
+          "width": "180px",
+          "label": "审核人",
+          "prop": "approver"
+        },
+        {
+          "type":"string",
+          "align":"center",
+          "width": "180px",
+          "label": "审核时间",
+          "prop": "appr_date"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width":"180px",
+          "label": "审核说明",
+          "prop": "appr_comment"
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "fixed": "right",
+          "width": "130px",
+          "btns": [
+            {
+              "type": "custom",
+              "label": "案件详情",
+              "toRequest": {
+                "url": "/views/ce/assistManage/caseDetail/caseDetail_2/case_detail_main.json",
+                "method": "POST",
+                "params": {
+                  "case_no": "${{current.case_no}}"
+                }
+              },
+              "props": {
+                "width": "80%",
+                "title": "案件详情"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

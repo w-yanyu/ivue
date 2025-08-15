@@ -1,0 +1,206 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "controls": [
+        {
+          "ctrno": {
+            "control": "text",
+            "label": "合同编号"
+          },
+          "contract_name": {
+            "control": "text",
+            "label": "合同名称"
+          }
+        },
+        {
+          "daterange": {
+            "control": "dateTimePicker",
+            "label": "合同签署日期",
+            "type": "daterange",
+            "unlinkPanels": true,
+            "valueFormat": "yyyyMMdd",
+            "startPlaceholder": "请选择开始时间",
+            "endPlaceholder": "请选择结束时间",
+            "startField": "start_date_c",
+            "endField": "end_date_c",
+            "disabledDate": "dateAfter"
+          },
+          "party_a_name": {
+            "control": "text",
+            "label": "甲方名称"
+          }
+        },
+        {
+          "party_b_name": {
+            "control": "text",
+            "label": "乙方名称"
+          },
+          "org_id": {
+            "control": "text",
+            "label": "创建法人",
+            "disabled": true,
+            "value": "$g{{user_info.org_id}}"
+          }
+        },
+        {
+          "branch_id": {
+            "control": "text",
+            "label": "创建机构",
+            "disabled": true,
+            "value": "$g{{user_info.branch_id}}"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "icon": "el-icon-circle-plus",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/cs/compManage/contrManage/contract_add.json"
+          },
+          "props": {
+            "width": "70%",
+            "title": "新增录入合同"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "cb0300",
+          "appId": "cbOnl"
+        }
+      },
+      "thead": [
+        {
+          "type": "string",
+          "label": "合同编号",
+          "align": "center",
+          "prop": "ctrno"
+        },
+        {
+          "type": "string",
+          "label": "合同名称",
+          "align": "center",
+          "prop": "contract_name"
+        },
+        {
+          "type": "string",
+          "label": "合同类型",
+          "align": "center",
+          "prop": "contract_type",
+          "dict": {
+            "dictType": "CS_E_CONTRACT_TYPE",
+            "dictKey": ["CS_E_CONTRACT_TYPE"],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "label": "合同签署日期",
+          "align": "center",
+          "prop": "sign_date"
+        },
+        {
+          "type": "string",
+          "label": "甲方名称",
+          "align": "center",
+          "prop": "party_a_name"
+        },
+        {
+          "type": "string",
+          "label": "乙方名称",
+          "align": "center",
+          "prop": "party_b_name"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "align": "center",
+          "width": "220px",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/cs/compManage/contrManage/detail/contract_info_tab.json",
+                "method": "POST",
+                "params": {
+                  "id": "${{current.id_}}"
+                }
+              },
+              "props": {
+                "width": "70%",
+                "height": "80%",
+                "title": "合同详情"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/cs/compManage/contrManage/contract_modify.json",
+                "method": "POST",
+                "params": {
+                  "id": "${{current.id_}}"
+                }
+              },
+              "props": {
+                "width": "70%",
+                "height": "80%",
+                "title": "合同维护"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "佣金方案",
+              "toRequest": {
+                "url": "@commissionScheme",
+                "method": "POST",
+                "params": {
+                  "id": "${{current.id_}}"
+                }
+              },
+              "props": {
+                "width": "70%",
+                "title": "合同佣金方案"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                  "url": "/SUMP/icmcall/icmRPCCall",
+                  "method": "POST",
+                  "params": {
+                      "servicecode": "cb0303",
+                      "ctrno": "${{current.ctrno}}"
+                  }
+              },
+              "confirm": {
+                  "title": "提示信息",
+                  "msg": "确认删除吗？",
+                  "confirmButtonText": "确定",
+                  "cancelButtonText": "取消"
+              },
+              "show": {
+                "expression": "'${{current.contract_status}}' != 'use'"
+              }
+          }
+          ]
+        }
+      ]
+    }
+  }
+}

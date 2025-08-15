@@ -1,0 +1,193 @@
+{
+  "module": "v-form-editableDataGrid-btn",
+  "layout": {
+    "form": {
+      "initRequest": {
+        "url": "/WEB/resource",
+        "method": "GET",
+        "params": {
+          "resourceCode": "${{params.resourceCode}}"
+        }
+      },
+      "controls": [
+        {
+          "resourceCode": {
+            "control": "string",
+            "label": "资源编码"
+          },
+          "resourceName": {
+            "control": "text",
+            "label": "资源名称"
+          }
+        },
+        {
+          "application": {
+            "control": "select",
+            "label": "所属应用",
+            "dict": {
+              "dictType": "WEB",
+              "dictKey": [
+                "homepage",
+                "application"
+              ],
+              "labelField": "appName",
+              "valueField": "appCode",
+              "doRequest": {
+                "url": "/WEB/application/list",
+                "method": "GET"
+              }
+            }
+          },
+          "sequence": {
+            "control": "text",
+            "label": "顺序号"
+          }
+        },
+        {
+          "resourceType": {
+            "control": "select",
+            "label": "资源类型",
+            "disabled": true,
+            "dict": {
+              "dictType": "WEB",
+              "dictKey": [
+                "WEB",
+                "resourceType"
+              ]
+            }
+          },
+          "enable": {
+            "control": "radio",
+            "label": "是否有效",
+            "dict": {
+              "dictType": "WEB",
+              "dictKey": [
+                "WEB",
+                "boolean"
+              ]
+            }
+          }
+        },
+        {
+          "description": {
+            "span": 24,
+            "control": "textarea",
+            "label": "备注"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "新增",
+          "icon": "el-icon-plus"
+        },
+        {
+          "type": "batchDelete",
+          "label": "批量删除",
+          "icon": "el-icon-close"
+        }
+      ]
+    },
+    "datagrid": {
+      "doRequest": {
+        "url": "/WEB/resource/rule/rules",
+        "method": "get",
+        "params": {
+          "resourceCode": "${{params.resourceCode}}"
+        }
+      },
+      "pagination": {
+        "show": false
+      },
+      "thead": [
+        {
+          "type": "index",
+          "label": "序号"
+        },
+        {
+          "prop": "privCode",
+          "type": "lookup",
+          "label": "权限位编码",
+          "toRequest": {
+            "url": "/views/risk/web/rbac/privilege/privilege-lookup.json",
+            "method": "GET"
+          },
+          "props": {
+          }
+        },
+        {
+          "prop": "ruleColumn",
+          "type": "text",
+          "label": "字段"
+        },
+        {
+          "prop": "ruleCondition",
+          "type": "select",
+          "label": "条件",
+          "dict": {
+            "dictType": "WEB",
+            "dictKey": [
+              "WEB",
+              "condition"
+            ]
+          }
+        },
+        {
+          "prop": "ruleValue",
+          "type": "select",
+          "label": "值",
+          "allowCreate": true,
+          "dict": {
+            "dictType": "WEB",
+            "dictKey": [
+              "WEB",
+              "rule-value"
+            ]
+          }
+        },
+        {
+          "prop": "ruleConSymbol",
+          "type": "select",
+          "label": "连接符",
+          "dict": {
+            "dictType": "WEB",
+            "dictKey": [
+              "WEB",
+              "connect-symbol"
+            ]
+          }
+        },
+        {
+          "label": "操作",
+          "width": "100px",
+          "btns": [
+            {
+              "type": "delete",
+              "label": "删除",
+              "icon": "el-icon-close"
+            }
+          ]
+        }
+      ]
+    },
+    "footer": {
+      "btns": [
+        {
+          "type": "submit",
+          "label": "保存",
+          "icon": "el-icon-tickets",
+          "doRequest": {
+            "url": "/WEB/resource",
+            "method": "POST",
+            "params": {
+              "resourceParent": "${{params.resourceCode}}"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

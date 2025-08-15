@@ -1,0 +1,175 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "simwf_cd": {
+            "control": "text",
+            "label": "移交产品编码"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/dh/transfer/handover/ServiceHandOver_add.json"
+          },
+          "props": {
+            "width": "75%",
+            "title": "业务移交明细"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "kg0009"
+        }
+      },
+      "thead": [
+        {
+          "type": "index",
+          "align": "center"
+        },
+        {
+          "label": "移交产品编号",
+          "prop": "simwf_cd",
+          "align": "center"
+        },
+        {
+          "label": "是否移交账户",
+          "prop": "accting_flag",
+          "align": "center",
+          "dict": {
+            "dictType": "E_YES_",
+            "dictKey": [
+              "E_YES_"
+            ]
+          },
+          "format": "label"
+        },
+        {
+          "label": "是否移交客户",
+          "prop": "cust_tx_flag",
+          "align": "center",
+          "dict": {
+            "dictType": "E_YES_",
+            "dictKey": [
+              "E_YES_"
+            ]
+          },
+          "format": "label"
+        },        {
+          "label": "移交状态",
+          "prop": "trans_status",
+          "align": "center",
+          "dict": {
+            "dictType": "E_ALTER_STATUS",
+            "dictKey": [
+              "E_ALTER_STATUS"
+            ]
+          },
+          "format": "label"
+        },
+        {
+          "label": "是否跨机构移交",
+          "prop": "trans_brch_flag",
+          "align": "center",
+          "dict": {
+            "dictType": "E_YES_",
+            "dictKey": [
+              "E_YES_"
+            ]
+          },
+          "format": "label"
+        },
+        {
+          "label": "启动操作员",
+          "prop": "start_usr",
+          "align": "center"
+        },
+        {
+          "label": "启动机构",
+          "prop": "start_org",
+          "align": "center"
+        },
+        {
+          "label": "当前处理人",
+          "prop": "handle_user",
+          "align": "center"
+        },        {
+          "label": "当前处理步骤",
+          "prop": "handle_node",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "align":"center",
+          "fixed": "right",
+          "btns": [
+            {
+              "type": "look",
+              "label": "查看",
+              "toRequest": {
+                "url": "/views/dh/transfer/handover/ServiceHandOver_details.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "75%",
+                "title": "业务移交明细"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/dh/transfer/handover/ServiceHandOver_modify.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "75%",
+                "title": "业务移交明细"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "dehavo"
+                }
+              }
+            },
+            {
+              "type": "edit",
+              "label":  "流程启动",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "startPayAcctTransfer",
+                  "transfer_id": "${{current.transfer_id}}",
+                  "simwf_cd": "${{current.simwf_cd}}"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

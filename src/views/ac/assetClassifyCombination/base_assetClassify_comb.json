@@ -1,0 +1,124 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "groupi": {
+                        "label": "组合编号",
+                        "control": "text",
+                        "rules": [
+                            {
+                                "max": 5,
+                                "message": "长度不能超过5个字符"
+                            }
+                        ]
+                    },
+                    "groupd": {
+                        "label": "组合描述",
+                        "control": "text",
+                        "rules": [
+                            {
+                                "max": 30,
+                                "message": "长度不能超过30个字符"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "foldLineNumber": 3
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "target": "dialog",
+                    "label": "新增",
+                    "toRequest": {
+                        "method": "POST",
+                        "url": "/views/ac/assetClassifyCombination/base_assetClassify_comb_add.json"
+                    },
+                    "props": {
+                        "width": "65%",
+                        "title": "新增组合"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "isInitSearch": false,
+            "scope": "searchTable",
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "AS_PLMS_KG_RUCURD",
+                    "method": "queryAll"
+                }
+            },
+            "thead": [
+                {
+                    "label": "序号",
+                    "type": "index"
+                },
+                {
+                    "label": "组合编号",
+                    "prop": "groupi"
+                },
+                {
+                    "label": "组合描述",
+                    "prop": "groupd"
+                },
+                {
+                    "label": "担保方式",
+                    "prop": "dbtype",
+                    "type": "select",
+                    "dict": {
+                        "dictType": "E_DBTYPE",
+                        "dictKey": [
+                            "E_DBTYPE"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 200,
+                    "align":"center",
+                    "btns": [
+                     
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/ac/assetClassifyCombination/base_assetClassify_comb_edit.json",
+                                "method": "post"
+                            },
+                            "props": {
+                                "width": "65%",
+                                "title": "维护"
+                            }
+                        },
+                       
+                        {
+                            "type": "delete",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "post",
+                                "params": {
+                                    "servicecode": "AS_PLMS_KG_RUCURD",
+                                    "method":"del"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ],
+            "pagination": {
+                "show": true
+            }
+        }
+    }
+}

@@ -1,0 +1,110 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [{
+                "corp_size": {
+                    "control": "select",
+                    "label": "企业规模",
+                    "value": "${{params.cozine}}",
+                    "dict": {
+                        "dictType": "E_CORPSIZENEW",
+                        "dictKey": [
+                            "E_CORPSIZENEW"
+                        ],
+                        "format": "label"
+                    },
+                    "disabled": true
+                },
+                "cust_type": {
+                    "control": "select",
+                    "label": "客户类别",
+                    "value": "${{params.custty}}",
+                    "disabled": true,
+                    "dict": {
+                        "dictType": "E_CUSTTY",
+                        "dictKey": [
+                            "E_CUSTTY"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                }
+            }]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "CRMSXPTS0016"
+                }
+            },
+            "thead": [{
+                    "type": "index",
+                    "label": "序号"
+                },
+                {
+                    "label": "评级模板编码",
+                    "prop": "temp_id",
+                    "align": "center"
+                },
+                {
+                    "label": "评级模板名称",
+                    "prop": "temp_name",
+                    "align": "center"
+                },
+                {
+                    "label": "评级模板类型",
+                    "prop": "temp_type",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "E_TEMPTYPE",
+                        "dictKey": [
+                            "E_TEMPTYPE"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "评级模板种类",
+                    "prop": "temp_kind",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "BPM_E_MBZLEI",
+                        "dictKey": [
+                            "BPM_E_MBZLEI"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "是否有效",
+                    "prop": "is_valid",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                            "MS_E_YESORNO"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "操作",
+                    "align": "center",
+                    "fixed": "right",
+                    "btns": [{
+                        "type": "bringback",
+                        "label": "选择"
+                    }]
+                }
+            ]
+        }
+    }
+}

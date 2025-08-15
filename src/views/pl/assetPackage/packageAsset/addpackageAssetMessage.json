@@ -1,0 +1,55 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": "${{params}}",
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pl0733"
+        }
+      },
+      "controls": [
+        {
+          "package_no": {
+            "label": "资产包编号",
+            "control": "text",
+            "disabled": true
+          },
+          "package_name": {
+            "label": "资产包名称",
+            "control": "text",
+            "disabled": true
+          },
+          "template_id": {
+            "label": "短信公告编号",
+            "control": "lookup",
+            "toRequest": {
+              "url": "/views/pl/assetPackage/packageAsset/prodMailSet_lookup.json",
+              "method": "post",
+              "params":{
+                "appId":"plOnl"
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择短信公告"
+              }
+            ],
+            "keyField": {
+              "template_id": "template_id",
+              "template_name": "template_name"
+            }
+          },
+          "template_name": {
+            "label": "短信公告名称",
+            "control": "text",
+            "disabled": true
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,314 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "foldLineNumber": 2,
+      "controls": [
+        {
+          "branch": {
+            "control": "remoteSelect",
+            "label": "区域中心",
+            "labelField": "brachName",
+            "valueField": "branchNo",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "RLMSPLTS1068"
+              }
+            },
+            "format": "label"
+          },
+        "org_type": {
+          "control": "select",
+          "label": "合作机构类型",
+          "dict": {
+            "dictType": "E_ORG_TYPE",
+            "dictKey": [
+              "E_ORG_TYPE"
+            ],
+            "format": "label",
+            "labelField": "dictName",
+            "valueField": "dictId"
+          }
+        },
+        "oa_org_name": {
+          "control": "text",
+          "label": "外包商名称"
+        },
+
+        "operation_status": {
+          "control": "text",
+          "label": "经营状态"
+        }
+      },
+      {
+        "work_begin_time": {
+          "control": "dateTimePicker",
+          "label": "合作开始时间",
+          "type": "daterange",
+          "unlinkPanels": true,
+          "valueFormat": "yyyyMMdd",
+          "startPlaceholder": "选择开始时间",
+          "endPlaceholder": "选择结束时间",
+          "startField": "start_date",
+          "endField": "end_date"
+        },
+        "work_end_time": {
+          "control": "dateTimePicker",
+          "label": "合作结束时间",
+          "type": "daterange",
+          "unlinkPanels": true,
+          "valueFormat": "yyyyMMdd",
+          "startPlaceholder": "选择开始时间",
+          "endPlaceholder": "选择结束时间",
+          "startField": "starts_date",
+          "endField": "ends_date"
+        },
+        "buyer_review_no": {
+          "control": "text",
+          "label": "采购评审编号"
+        },
+        "work_status": {
+          "control": "select",
+          "label": "合作状态",
+          "dict": {
+            "dictType": "E_WORK_STATUS",
+            "dictKey": [
+              "E_WORK_STATUS"
+            ],
+            "format": "label",
+            "labelField": "dictName",
+            "valueField": "dictId"
+          }
+        }
+      }
+
+    ]
+  },
+    "datagrid": {
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "RLMSPLTS1001"
+        }
+      },
+      "thead": [
+        {
+          "type": "string",
+          "align": "center",
+          "label": "区域中心",
+          "prop": "branch_name"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "注册资本",
+          "prop": "regis_capital"
+        },
+        {
+          "label": "合作机构类型",
+          "prop": "org_type",
+          "align": "center",
+          "dict": {
+            "dictType": "E_ORG_TYPE",
+            "dictKey": [
+              "E_ORG_TYPE"
+            ],
+            "format": "label",
+            "labelField": "dictName",
+            "valueField": "dictId"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "外包商名称",
+          "prop": "oa_org_name"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "统一社会信用代码",
+          "prop": "social_credit_code"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "办公地址",
+          "prop": "addr"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "经营期限开始时间",
+          "prop": "operation_begin_date"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "经营期限截止时间",
+          "prop": "operation_end_date"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "经营状态",
+          "prop": "operation_status"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "合作开始时间",
+          "prop": "work_begin_time"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "合作结束时间",
+          "prop": "work_end_time"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "采购评审编号",
+          "prop": "buyer_review_no"
+        },
+        {
+          "label": "合作状态",
+          "prop": "work_status",
+          "align": "center",
+          "dict": {
+            "dictType": "E_WORK_STATUS",
+            "dictKey": [
+              "E_WORK_STATUS"
+            ],
+            "format": "label",
+            "labelField": "dictName",
+            "valueField": "dictId"
+          }
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "fixed": "right",
+          "width": "130px",
+          "btns": [
+            {
+              "type": "custom",
+              "label": "合作确认",
+              "disabled" : "'${{current.is_curr_areacenter}}' === 'false'",
+              "toRequest": {
+                "url": "@outsourcerConfirm",
+                "method": "POST",
+                "params": {
+                }
+              },
+              "props": {
+                "width": "80%",
+                "title": "合作确认"
+              },
+              "show": {
+                "prop": "work_status",
+                "is": ["1"]
+              }
+            },
+            {
+              "type": "custom",
+              "label": "退出",
+              "disabled" : "'${{current.is_curr_areacenter}}' === 'false'",
+              "toRequest": {
+                "url": "@outsourcerQuit",
+                "method": "POST",
+                "params": {
+                }
+              },
+              "props": {
+                "width": "80%",
+                "title": "外包商退出"
+              },
+              "show": {
+                "prop": "work_status",
+                "is": ["4","5"]
+              }
+            },
+            {
+              "type": "custom",
+              "label": "续签",
+              "disabled" : "'${{current.is_curr_areacenter}}' === 'false'",
+              "toRequest": {
+                "url": "@outsourcerRenewal",
+                "method": "POST",
+                "params": {
+                  "case_id": "${{current.case_id}}"
+                }
+              },
+              "props": {
+                "width": "80%",
+                "title": "续签"
+              },
+              "show": {
+                "prop": "work_status",
+                "is":["4","5"]
+              }
+            },
+            {
+              "type": "custom",
+              "label": "评价",
+              "disabled" : "'${{current.is_curr_areacenter}}' === 'false'",
+              "toRequest": {
+                "url": "@waibaoinfo",
+                "method": "POST",
+                "params": {
+                }
+              },
+              "props": {
+                "width": "80%",
+                "title": "外包商评价"
+              },
+              "show": {
+                "prop": "work_status",
+                "is": ["4","5"]
+              }
+            },
+            {
+              "type": "custom",
+              "label": "查看详情",
+              "toRequest": {
+                "url": "@OutsourcerView",
+                "method": "POST",
+                "params": {
+                },
+                "props": {
+                  "width": "80%",
+                  "title": "外包商信息详情"
+                }
+              }
+            },
+            {
+              "type": "custom",
+              "label": "试用期考核",
+              "disabled" : "'${{current.is_curr_areacenter}}' === 'false'",
+              "toRequest": {
+                "url": "@outinformation",
+                "method": "POST",
+                "params": {
+                }
+              },
+              "props": {
+                "width": "80%",
+                "title": "试用期考核"
+              },
+              "show": {
+                "prop": "work_status",
+                "is": ["4","5"]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

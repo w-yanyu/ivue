@@ -1,0 +1,102 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "scope": "strForm",
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ln3997",
+          "smilr_cr_card_loan_acct_num": "${{params.smilr_cr_card_loan_acct_num}}"
+        }
+      },
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "icon": "",
+          "doRequest": {
+            "url": "/SUMP/call/RPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "ln3975"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "smilr_cr_card_loan_acct_num": {
+            "control": "string",
+            "label": "类信用卡贷款账号",
+            "width": "100px"
+          },
+          "cust_num": {
+            "control": "string",
+            "label": "客户号",
+            "width": "100px"
+          }
+        },
+        {
+          "cust_nm": {
+            "control": "string",
+            "label": "客户名称",
+            "width": "100px"
+          },
+          "smilr_cr_card_acct_ste": {
+            "control": "select",
+            "label": "类信用卡账户状态",
+            "width": "100px",
+            "disabled": true,
+            "dict": {
+              "dictType": "E_SMILR_CR_CARD_ACCT_STE",
+              "dictKey": [
+                "E_SMILR_CR_CARD_ACCT_STE"
+              ],
+              "format": "label"
+            }
+          }
+        },
+        {
+          "ccy_code_num": {
+            "control": "select",
+            "label": "货币代号",
+            "width": "100px",
+            "disabled": true,
+            "dict": {
+              "dictType": "MS_CURRENCY",
+              "dictKey": [
+                "MS_CURRENCY"
+              ],
+              "format": "label"
+            }
+          },
+          "pstp_rpymt_chrg_code": {
+            "control": "text",
+            "label": "延期还款收费代码",
+            "width": "100px"
+          }
+        },
+        {
+          "pstp_amt": {
+            "control": "currency",
+            "label": "延期金额",
+            "width": "100px",
+            "format": "label",
+            "rules": [
+              {
+                "expression": "${{form.pstp_amt}} >=  0  ",
+                "message": "延期金额不能小于零"
+              },
+              {
+                  "required": true,
+                  "message": "请输入延期金额"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

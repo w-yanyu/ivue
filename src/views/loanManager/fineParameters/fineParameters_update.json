@@ -1,0 +1,176 @@
+{
+  "module": "v-inputDataForm-btn",
+  "layout": {
+    "form": {
+      "initRequest": "${{params}}",
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "caozuolx": "1",
+          "servicecode": "edeppe"
+        }
+      },
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "icon": ""
+        }
+      ],
+      "controls": [
+        {
+            "epcgcd": {
+                "control": "string",
+                "label": "罚金编号",
+                "rules": [
+                    {
+                        "max": 10,
+                        "min": 3,
+                        "message": "不能超过10个字符,少于3个字符"
+                    },
+                    {
+                        "required": true,
+                        "message": "请输入编号"
+                    },
+                    {
+                        "pattern": "^[0-9a-zA-Z]+$",
+                        "message": "字符不合法"
+                    }
+                ]
+            },
+            "epcgna": {
+                "control": "text",
+                "label": "罚金名称",
+                "rules": [
+                    {
+                        "max": 80,
+                        "message": "不能超过80个字符"
+                    },
+                    {
+                        "required": true,
+                        "message": "请输入名称"
+                    }
+                ]
+            }
+        },
+        {
+            "efctdt": {
+                "control": "dateTimePicker",
+                "label": "生效日期",
+                "type": "date",
+                "format": "yyyyMMdd",
+                "rules": [
+                    {
+                        "required": true,
+                        "message": "请输入生效日期"
+                    }
+                ]
+            },
+            "inefdt": {
+                "control": "dateTimePicker",
+                "label": "失效日期",
+                "type": "date",
+                "format": "yyyyMMdd",
+                "rules": [
+                    {
+                        "required": true,
+                        "message": "请输入失效日期"
+                    },
+                    {
+                        "message": "失效日期必须大于生效日期",
+                        "expression": "${{form.efctdt}} < ${{form.inefdt}}"
+                    }
+                ]
+            }
+        },
+        {
+            "epcgmx": {
+                "control": "text",
+                "label": "最大罚金金额",
+                "rules": [
+                    {
+                        "required": true,
+                        "message": "请输入最大罚金金额"
+                    },
+                    {
+                        "pattern": "^\\d+(\\.{0,1}[\\d]{2}){0,1}$",
+                        "message": "请输入大于或等于零的数值"
+                    }
+                ]
+            },
+            "epcgmn": {
+                "control": "text",
+                "label": "最小罚金金额",
+                "rules": [
+                    {
+                        "required": true,
+                        "message": "请输入最小罚金金额"
+                    },
+                    {
+                        "pattern": "^\\d+(\\.{0,1}[\\d]{2}){0,1}$",
+                        "message": "请输入大于或等于零的数值"
+                    },
+                    {
+                        "message": "最小罚金不可大于最小罚金金额",
+                        "expression": "${{form.epcgmn}} < ${{form.epcgmx}}"
+                    }
+                ]
+            }
+        },
+        {
+            "pentyp": {
+                "control": "select",
+                "label": "罚金计算类型",
+                "rules": [
+                    {
+                        "required": true,
+                        "message": "请输入罚金计算类型"
+                    }
+                ],
+                "dict": {
+                    "dictType": "E_PENTYP",
+                    "dictKey": [
+                        "E_PENTYP"
+                    ],
+                    "format": "label",
+                    "labelField": "dictName",
+                    "valueField": "dictId"
+                }
+            },
+            "stadat": {
+                "control": "select",
+                "label": "起始日期规则",
+                "rules": [
+                    {
+                        "required": true,
+                        "message": "请输入起始日期规则"
+                    }
+                ],
+                "dict": {
+                    "dictType": "E_STADAT",
+                    "dictKey": [
+                        "E_STADAT"
+                    ],
+                    "format": "label",
+                    "labelField": "dictName",
+                    "valueField": "dictId"
+                }
+            }
+        },
+        {
+            "fxcgam": {
+                "control": "text",
+                "label": "固定金额",
+                "rules": [
+                    {
+                        "pattern": "^\\d+(\\.{0,1}[\\d]{2}){0,1}$",
+                        "message": "请输入大于或等于零的数值"
+                    }
+                ]
+            }
+        }
+    ]
+    }
+  }
+}

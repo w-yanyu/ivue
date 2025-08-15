@@ -1,0 +1,293 @@
+{
+  "module": "lr-tree-dynamic",
+  "layout": {
+    "tree": {
+      "title": "车辆信息设置",
+      "lazy": false,
+      "idField": "tree_id",
+      "pIdField": "tree_pid",
+      "labelField": "tree_title",
+      "isLeafField": "tree_is_left",
+      "nodeTypeField": "tree_type",
+      "expandId": ["-1"],
+      "initRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "co0010"
+        }
+      },
+      "search": {
+        "enabled": "true",
+        "displayType": "tree",
+        "showChildren": true
+      },
+      "root": {
+        "rootNode": {
+          "name": "车辆信息",
+          "value": "-1"
+        },
+        "contextMenu": [
+          {
+            "type": "custom",
+            "label": "同步品牌库",
+            "icon": "el-icon-circle-plus-outline",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "co0025"
+              }
+            },
+            "eventAfter": {
+              "callback": "renderTree"
+            }
+          },
+          {
+            "type": "add",
+            "label": "新增",
+            "icon": "el-icon-circle-plus-outline",
+            "toRequest": {
+              "url": "/views/co/carManager/carBrand_add.json",
+              "method": "get",
+              "params": {
+                "id": "${{current.id}}"
+              }
+            },
+            "props": {
+              "width": "80%",
+              "title": "新增车辆品牌"
+            },
+            "eventAfter": {
+              "callback": "renderTree"
+            }
+          }
+        ]
+      },
+      "nodeTypes": {
+        "carBrand": {
+          "icon": "el-icon-collection",
+          "children": [
+            "carBrand"
+          ],
+          "toRequest": {
+            "url": "/views/co/carManager/carBrand_detail.json",
+            "params": {
+              "brand_no": "${{current.tree_id}}",
+              "brand_name": "${{current.tree_title}}",
+              "method": "post"
+            }
+          },
+          "eventAfter": {
+            "callback": "renderTree"
+          },
+          "contextMenu": [
+            {
+              "type": "custom",
+              "label": "同步车系库",
+              "icon": "el-icon-circle-plus-outline",
+              "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "co0037",
+                  "brand_no": "${{current.tree_id}}",
+                  "brand_name": "${{current.tree_title}}"
+                }
+              },
+              "eventAfter": {
+                "callback": "renderTree"
+              }
+            },
+            {
+              "type": "add",
+              "label": "新增",
+              "icon": "el-icon-circle-plus-outline",
+              "childNodeType": "carBrand",
+              "toRequest": {
+                "url": "/views/co/carManager/carKind_add.json",
+                "method": "get",
+                "params": {
+                  "brand_no": "${{current.tree_id}}",
+                  "brand_name": "${{current.tree_title}}"
+                }
+              },
+              "props": {
+                "width": "80%",
+                "title": "新增车系"
+              },
+              "eventAfter": {
+                "callback": "renderTree"
+              }
+            },
+            {
+              "type": "divider"
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "childNodeType": "carBrand",
+              "icon": "el-icon-remove-outline",
+              "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "DELETE",
+                "params": {
+                  "servicecode": "co0024",
+                  "trans_type": "DEL",
+                    "brand_no": "${{current.tree_id}}"
+
+                }
+              },
+              "confirm":{
+                "title":"提示信息",
+                "msg":"确认删除吗？",
+                "confirmButtonText":"确定",
+                "cancelButtonText":"取消"
+              },
+              "eventAfter": {
+                "callback": "renderTree"
+              }
+            }
+          ]
+        },
+        "carKind": {
+          "children": [
+            "carKind"
+          ],
+          "toRequest": {
+            "url": "/views/co/carManager/carKind_detail.json",
+            "params": {
+              "car_kind_no": "${{current.tree_id}}",
+              "car_kind_name": "${{current.tree_title}}",
+              "method": "post"
+            }
+          },
+          "eventAfter": {
+            "callback": "renderTree"
+          },
+          "contextMenu": [
+            {
+              "type": "custom",
+              "label": "同步车型库",
+              "icon": "el-icon-circle-plus-outline",
+              "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "co0047",
+                  "car_kind_no": "${{current.tree_id}}",
+                  "car_kind_name": "${{current.tree_title}}"
+                }
+              },
+              "eventAfter": {
+                "callback": "renderTree"
+              }
+            },
+            {
+              "type": "add",
+              "label": "新增",
+              "icon": "el-icon-circle-plus-outline",
+              "childNodeType": "carKind",
+              "toRequest": {
+                "url": "/views/co/carManager/carModel_add.json",
+                "method": "get",
+                "params": {
+                  "tree_id": "${{current.tree_id}}",
+                  "tree_pid": "${{current.tree_pid}}"
+                }
+              },
+              "props": {
+                "width": "80%",
+                "title": "新增车系"
+              },
+              "eventAfter": {
+                "callback": "renderTree"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "childNodeType": "coltType",
+              "icon": "el-icon-remove-outline",
+              "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "DELETE",
+                "params": {
+                  "servicecode": "co0034",
+                  "car_kind_no": "${{current.tree_id}}"
+                }
+              },
+              "confirm":{
+                "title":"提示信息",
+                "msg":"确认删除吗？",
+                "confirmButtonText":"确定",
+                "cancelButtonText":"取消"
+              },
+              "eventAfter": {
+                "callback": "renderTree"
+              }
+            }
+          ]
+        },
+        "carModel": {
+          "children": [
+            "carModel"
+          ],
+          "toRequest": {
+            "url": "/views/co/carManager/carModel_detail.json",
+            "method": "post",
+            "params": {
+              "car_model_no": "${{current.tree_id}}",
+              "car_model_name": "${{current.tree_title}}"
+            }
+          },
+          "eventAfter": {
+            "callback": "renderTree"
+          },
+          "contextMenu": [
+            {
+              "type": "custom",
+              "label": "同步车型详情",
+              "icon": "el-icon-circle-plus-outline",
+              "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "co0048",
+                  "car_model_no": "${{current.tree_id}}",
+                  "car_model_name": "${{current.tree_title}}"
+                }
+              },
+              "eventAfter": {
+                "callback": "renderTree"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "childNodeType": "coltType",
+              "icon": "el-icon-remove-outline",
+              "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "DELETE",
+                "params": {
+                  "servicecode": "co0044",
+                  "car_model_no": "${{current.tree_id}}"
+                }
+              },
+              "confirm":{
+                "title":"提示信息",
+                "msg":"确认删除吗？",
+                "confirmButtonText":"确定",
+                "cancelButtonText":"取消"
+              },
+              "eventAfter": {
+                "callback": "renderTree"
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

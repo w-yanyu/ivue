@@ -1,0 +1,313 @@
+{
+    "module": "lr_tree_dynamic",
+    "layout": {
+      "tree": {
+        "scope": "treeTemplateParams",
+        "title": "法诉模板定义",
+        "lazy": false,
+        "width": "300px",
+        "hideDynamicArea": false,
+        "draggable": {
+          "isDrag":true,
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "cb0113",
+              "appId": "cbOnl",
+              "coll_kind": "02"
+            }
+          }
+        
+        },
+        "showToolbar": false,
+        "stopAddNodeField": "stopAddNode",
+        "stopDeleteNodeField": "isStopDeleteNode",
+        "draggableField": "isStopDraggable",
+        "isSupportHandleNode": false,
+        "idField": "litigation_stage_code",
+        "nodeTypeField": "stage_type",
+        "expandId": ["-1"],
+        "pIdField": "litigation_parent_stage_code",
+        "labelField": "stage_name",
+        "isLeafField": "isLeaf",
+        "stopClickNodeField": "stopNodeClick",
+        "disabledField": "disabled",
+        "search": {
+          "enabled": "true",
+          "displayType": "tree",
+          "showChildren": true
+        },
+        "initRequest": {
+          "url": "/SUMP/icmcall/icmRPCCall",
+          "method": "POST",
+          "params": {
+            "servicecode":"cb0073",
+            "appId": "cbOnl",
+            "coll_kind": "02"
+          }
+        },
+        "root": {
+          "rootNode": {
+            "name": "根节点",
+            "value": "-1"
+          }, 
+          "contextMenu": [
+            {
+              "type": "add",
+              "label": "添加下级节点",
+              "icon": "el-icon-circle-plus-outline",
+              "toRequest": {
+                "url": "/views/cs/paramManage/template/lawTemplate/lawTemplate_add.json",
+                "method": "get",
+                "params": {
+                  "tree": "${{treeTemplateParams}}",
+                  "props": "${{current}}",
+                  "exchange_flag": "child",
+                  "litigation_parent_stage_code":"${{current.litigation_stage_code}}",
+                  "stage_type":"1"
+                }
+              },
+              "props": {
+                "width": "50%",
+                "title": "添加法诉阶段",
+                "close": "",
+                "target": ""
+              }
+            }]
+      },
+        "nodeTypes": {
+          "1": {
+            "icon": "el-icon-news",
+            "children": [
+              "1"
+            ],
+            "toRequest": {
+                "url": "",
+              "method": "get",
+              "params": {
+                "props": "${{current}}"
+              }
+            },
+            "contextMenu": [
+              {
+                "type": "add",
+                "label": "添加下级节点",
+                "icon": "el-icon-circle-plus-outline",
+                "toRequest": {
+                  "url": "/views/cs/paramManage/template/lawTemplate/lawTemplate_add.json",
+                  "method": "get",
+                  "params": {
+                    "tree": "${{treeTemplateParams}}",
+                    "props": "${{current}}",
+                    "exchange_flag": "child",
+                    "litigation_parent_stage_code":"${{current.litigation_stage_code}}",
+                    "stage_type":"2"
+                  }
+                },
+                "props": {
+                  "width": "50%",
+                  "title": "添加法诉阶段",
+                  "close": "",
+                  "target": ""
+                }
+              }, {
+                "type": "add",
+                "label": "上方添加节点",
+                "icon": "el-icon-circle-plus-outline",
+                "toRequest": {
+                  "url": "/views/cs/paramManage/template/lawTemplate/lawTemplate_add.json",
+                  "method": "get",
+                  "params": {
+                    "tree": "${{treeTemplateParams}}",
+                    "props": "${{current}}",
+                    "exchange_flag": "before",
+                    "litigation_parent_stage_code":"${{current.litigation_parent_stage_code}}",
+                    "current_litigation_stage_code":"${{current.litigation_stage_code}}",
+                    "stage_type":"1"
+                  }
+                },
+                "props": {
+                  "width": "50%",
+                  "title": "添加法诉阶段",
+                  "close": "",
+                  "target": ""
+                }
+              },
+              {
+                "type": "add",
+                "label": "下方添加节点",
+                "icon": "el-icon-circle-plus-outline",
+                "toRequest": {
+                  "url": "/views/cs/paramManage/template/lawTemplate/lawTemplate_add.json",
+                  "method": "get",
+                  "params": {
+                    "tree": "${{treeTemplateParams}}",
+                    "props": "${{current}}",
+                    "exchange_flag": "after",
+                    "litigation_parent_stage_code":"${{current.litigation_parent_stage_code}}",
+                    "current_litigation_stage_code":"${{current.litigation_stage_code}}",
+                    "stage_type":"1"
+                  }
+                },
+                "props": {
+                  "width": "50%",
+                  "title": "添加法诉阶段",
+                  "close": "",
+                  "target": ""
+                }
+              },
+              {
+                "type": "edit",
+                "label": "维护",
+                "icon": "el-icon-edit",
+                "toRequest": {
+                  "url": "/views/cs/paramManage/template/lawTemplate/lawTemplate_edit.json",
+                  "method": "get",
+                  "params": {
+                    "tree": "${{treeTemplateParams}}",
+                    "props": "${{current}}",
+                    "sorttype": "next",
+                    "litigation_parent_stage_code":"${{current.litigation_parent_stage_code}}",
+                    "litigation_stage_code":"${{current.litigation_stage_code}}",
+                    "stage_name":"${{current.stage_name}}",
+                    "data_sort":"${{current.data_sort}}",
+                    "reminder_time":"${{current.reminder_time}}",
+                    "reminder_method":"${{current.reminder_method}}",
+                    "reminder":"${{current.reminder}}",
+                    "reminder_content":"${{current.reminder_content}}",
+                    "stage_type":"1"
+                  }
+                },
+                "props": {
+                  "width": "50%",
+                  "title": "维护法诉阶段",
+                  "close": "",
+                  "target": ""
+                }
+              },
+              {
+                "type": "delete",
+                "label": "删除",
+                "icon": "el-icon-remove-outline",
+                "doRequest": {
+                  "url": "/SUMP/icmcall/icmRPCCall",
+                  "method": "POST",
+                  "params": {
+                    "servicecode":"cb0071",
+                    "appId": "cbOnl",
+                    "coll_kind": "02"
+                  }
+                }
+              }
+            ]
+          },
+          "2": {
+            "icon": "el-icon-news",
+            "children": [
+              "2"
+            ],
+            "toRequest": {
+                "url": "@lgLitigation",
+              "method": "get",
+              "params": {
+                "props": "${{current}}"
+              }
+            },
+            "contextMenu": [
+              {
+                "type": "add",
+                "label": "上方添加节点",
+                "icon": "el-icon-circle-plus-outline",
+                "toRequest": {
+                  "url": "/views/cs/paramManage/template/lawTemplate/lawTemplate_add.json",
+                  "method": "get",
+                  "params": {
+                    "tree": "${{treeTemplateParams}}",
+                    "props": "${{current}}",
+                    "exchange_flag": "before",
+                    "litigation_parent_stage_code":"${{current.litigation_parent_stage_code}}",
+                    "current_litigation_stage_code":"${{current.litigation_stage_code}}",
+                    "stage_type":"2"
+                  }
+                },
+                "props": {
+                  "width": "50%",
+                  "title": "添加法诉阶段",
+                  "close": "",
+                  "target": ""
+                }
+              },
+              {
+                "type": "add",
+                "label": "下方添加节点",
+                "icon": "el-icon-circle-plus-outline",
+                "toRequest": {
+                  "url": "/views/cs/paramManage/template/lawTemplate/lawTemplate_add.json",
+                  "method": "get",
+                  "params": {
+                    "tree": "${{treeTemplateParams}}",
+                    "props": "${{current}}",
+                    "exchange_flag": "after",
+                    "litigation_parent_stage_code":"${{current.litigation_parent_stage_code}}",
+                    "current_litigation_stage_code":"${{current.litigation_stage_code}}",
+                    "stage_type":"2"
+                  }
+                },
+                "props": {
+                  "width": "50%",
+                  "title": "添加法诉阶段",
+                  "close": "",
+                  "target": ""
+                }
+              },
+              {
+                "type": "edit",
+                "label": "维护",
+                "icon": "el-icon-edit",
+                "toRequest": {
+                  "url": "/views/cs/paramManage/template/lawTemplate/lawTemplate_edit.json",
+                  "method": "get",
+                  "params": {
+                    "tree": "${{treeTemplateParams}}",
+                    "props": "${{current}}",
+                    "sorttype": "next",
+                    "litigation_parent_stage_code":"${{current.litigation_parent_stage_code}}",
+                    "litigation_stage_code":"${{current.litigation_stage_code}}",
+                    "stage_name":"${{current.stage_name}}",
+                    "data_sort":"${{current.data_sort}}",
+                    "reminder_time":"${{current.reminder_time}}",
+                    "reminder_method":"${{current.reminder_method}}",
+                    "reminder":"${{current.reminder}}",
+                    "reminder_content":"${{current.reminder_content}}",
+                    "stage_type":"2"
+                  }
+                },
+                "props": {
+                  "width": "50%",
+                  "title": "维护法诉阶段",
+                  "close": "",
+                  "target": ""
+                }
+              },
+              {
+                "type": "delete",
+                "label": "删除",
+                "icon": "el-icon-remove-outline",
+                "doRequest": {
+                  "url": "/SUMP/icmcall/icmRPCCall",
+                  "method": "POST",
+                  "params": {
+                    "servicecode": "cb0071",
+                    "appId": "cbOnl",
+                    "coll_kind": "02"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+  

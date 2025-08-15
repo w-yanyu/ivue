@@ -1,0 +1,129 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+        "wfrlid": {
+          "span": 8,
+          "control": "text",
+          "label": "审批角色编号:",
+          "placeholder": "请输入审批角色编号"
+        },
+        "wfrlnm": {
+          "span": 8,
+          "control": "text",
+          "label": "审批角色名称:",
+          "placeholder": "请输入审批角色名称"
+        }
+      }]
+    },
+    "toolbar": {
+      "btns": [
+        {
+        "type": "add",
+        "target": "dialog",
+        "label": "新增",
+        "toRequest": {
+          "url": "/views/cspo/process/products/role/approval-role-add.json",
+          "method": "GET"
+        },
+        "props": {
+          "width": "65%",
+          "title": "新增审批角色详情"
+        }
+      }
+      ]
+    },
+    "datagrid": {
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "AS_RLMS_PB_SEWFRL"
+        }
+      },
+      "thead": [{
+        "type": "selection",
+        "width": "55"
+      }, {
+        "type": "index",
+        "label": "序号"
+      }, {
+        "label": "审批角色编号",
+        "prop": "wfrlid",
+        "align":"center"
+      }, {
+        "label": "审批角色名称",
+        "prop": "wfrlnm",
+        "align":"center"
+      },
+        {
+          "label": "审批角色描述",
+          "prop": "wfrlds",
+          "align":"center"
+        }
+      ,
+      {
+        "label": "角色权限",
+        "prop": "rlauth",
+        "align":"center",
+        "dict": {
+          "dictType": "E_CS_RLAUTH",
+          "dictKey": [
+            "E_CS_RLAUTH"
+          ],
+          "format": "label"
+        }
+      }
+      ,
+        {
+          "label": "备注信息",
+          "prop": "remark",
+          "align":"center"
+        },
+        {
+          "label": "操作",
+          "align":"center",
+          "width": "180",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "修改",
+              "toRequest": {
+                "url": "/views/cspo/process/products/role/approval-role-update.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "65%",
+                "title": "审批角色修改"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "AS_RLMS_PB_DEWFRL"
+                }
+              }
+            },
+            {
+              "type": "edit",
+              "label": "权限分配",
+              "toRequest": {
+                "url": "/views/cspo/process/products/role/approval-role-pow.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "65%",
+                "title": "权限分配"
+              }
+            }
+          ]
+        }]
+    }
+  }
+}

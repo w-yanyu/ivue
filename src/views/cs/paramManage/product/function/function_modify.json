@@ -1,0 +1,157 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "scope":"formData",
+            "initRequest": "${{params}}",
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "cb0008",
+                    "appId": "cbOnl"
+                }
+            },
+            "btns": [
+                {
+                    "type": "submit",
+                    "label": "提交",
+                    "icon": "el-icon-tickets"
+                }
+            ],
+            "controls": [
+                {
+                    "stage_code": {
+                        "control": "text",
+                        "disabled":true,
+                        "label": "逾期阶段代码",
+                        "width": "130px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入"
+                            },
+                            {
+                                "max":10,
+                                "message":"最多可以输入 10 个字节"
+                            }
+                        ]
+                    },
+                    "stage_name": {
+                        "control": "text",
+                        "label": "逾期阶段名称",
+                        "width": "130px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入"
+                            },
+                            {
+                                "max": 30,
+                                "message": "最多可以输入 30 个字节"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "stage_type": {
+                        "control": "select",
+                        "label": "逾期阶段类型",
+                        "width": "130px",
+                        "dict": {
+                            "dictType": "CS_FUNCTION_TYPE",
+                            "dictKey": [
+                                "CS_stage_TYPE"
+                            ],
+                            "format": "value-label"
+                          },
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入"
+                            }
+                        ]
+                    },
+                    "stage_desc": {
+                        "control": "text",
+                        "label": "逾期阶段描述",
+                        "width": "130px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "promise_payment_ratio": {
+                        "control": "inputNumber",
+                        "label": "承诺付款比例(%)",
+                        "width": "130px",
+                        "min": 1,
+                        "max": 100,
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入[1-100]之间的整数"
+                            }
+                        ]
+                    },
+                    "max_promise_days": {
+                        "control": "inputNumber",
+                        "label": "最大承诺天数",
+                        "width": "130px",
+                        "min": 0,
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入"
+                            },
+                            {
+                              "expression":"'${{form.max_promise_days}}'.length <= 10",
+                              "message":"最多可以输入 10 个字节"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "max_coll_days": {
+                        "control": "inputNumber",
+                        "label": "最大跟催天数",
+                        "width": "130px",
+                        "min": 0,
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入"
+                            },
+                            {
+                              "expression":"'${{form.max_coll_days}}'.length <= 19",
+                              "message":"最多可以输入 19 个字节"
+                            }
+                        ]
+                    },
+                    "is_default": {
+                        "control": "select",
+                        "label": "是否默认",
+                        "width": "130px",
+                        "dict": {
+                            "dictType": "CS_E_YESORNO",
+                            "dictKey": [
+                                "CS_E_YESORNO"
+                            ],
+                            "format": "value-label"
+                        },
+                        "rules": [
+                            {
+                                "required":true,
+                                "message": "请输入"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    }
+}

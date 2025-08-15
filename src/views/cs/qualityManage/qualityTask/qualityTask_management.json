@@ -1,0 +1,263 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "scope": "formData",
+            "controls": [
+                {
+                    "quality_task_no": {
+                        "hidden": true,
+                        "label": "质检任务",
+                        "control": "remoteSelect",
+                        "labelField": "quality_task_name",
+                        "valueField": "quality_task_no",
+                        "doRequest": {
+                            "url": "/SUMP/icmcall/icmRPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "qc1004",
+                                "org_id": "$g{{user_info.org_id}}"
+                            }
+                        },
+                        "format": "value-label"
+                    },
+                    "quality_plan_no": {
+                        "hidden": true,
+                        "label": "质检方案",
+                        "control": "remoteSelect",
+                        "labelField": "quality_plan_name",
+                        "valueField": "quality_plan_no",
+                        "doRequest": {
+                            "url": "/SUMP/icmcall/icmRPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "qc0005",
+                                "org_id": "$g{{user_info.org_id}}"
+                            }
+                        },
+                        "format": "value-label"
+                    }
+                },
+                {
+                    "task_trigger_type": {
+                        "control": "select",
+                        "label": "任务触发类型",
+                        "selectFirstValue": false,
+                        "dict": {
+                            "dictType": "CS_TASK_TRIGGER_TYPE",
+                            "dictKey": [
+                                "CS_TASK_TRIGGER_TYPE"
+                            ],
+                            "format": "value-label"
+                        }
+                    },
+                    "task_status": {
+                        "control": "select",
+                        "label": "任务状态",
+                        "selectFirstValue": false,
+                        "dict": {
+                            "dictType": "CS_TASK_STATUS",
+                            "dictKey": [
+                                "CS_TASK_STATUS"
+                            ],
+                            "format": "value-label"
+                        }
+                    }
+                },
+                {
+                    "data_create_time": {
+                        "label": "创建时间",
+                        "control": "dateTimePicker",
+                        "span": 12,
+                        "format": "yyyy-MM-dd HH:mm:ss"
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "icon": "el-icon-circle-plus",
+                    "target": "dialog",
+                    "label": "新增",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/cs/qualityManage/qualityTask/qualityTask_add.json"
+                    },
+                    "props": {
+                        "width": "65%",
+                        "title": "新增质检任务"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "qc1004",
+                    "appId": "qcOnl"
+                }
+            },
+            "thead": [
+                {
+                    "type": "string",
+                    "label": "质检任务编号",
+                    "align": "center",
+                    "prop": "quality_task_no"
+                },
+                {
+                    "type": "string",
+                    "label": "质检任务名称",
+                    "align": "center",
+                    "prop": "quality_task_name"
+                },
+                {
+                    "type": "string",
+                    "label": "质检方案编号",
+                    "align": "center",
+                    "prop": "quality_plan_no"
+                },
+                {
+                    "type": "string",
+                    "align": "center",
+                    "label": "生效方式",
+                    "prop": "task_effective_mode",
+                    "dict": {
+                        "dictType": "CS_TASK_EFFECTIVE_MODE",
+                        "dictKey": [
+                            "CS_TASK_EFFECTIVE_MODE"
+                        ],
+                        "format": "value-label"
+                    }
+                },
+                {
+                    "align": "center",
+                    "label": "任务生效时间",
+                    "format": "yyyy-MM-dd HH:mm:ss",
+                    "prop": "task_effective_time"
+                },
+                {
+                    "type": "string",
+                    "align": "center",
+                    "label": "触发类型",
+                    "prop": "task_trigger_type",
+                    "dict": {
+                        "dictType": "CS_TASK_TRIGGER_TYPE",
+                        "dictKey": [
+                            "CS_TASK_TRIGGER_TYPE"
+                        ],
+                        "format": "value-label"
+                    }
+                },
+                {
+                    "type": "string",
+                    "label": "触发频率值",
+                    "align": "center",
+                    "prop": "task_trigger_frequency_num"
+                },
+                {
+                    "type": "string",
+                    "label": "触发频率",
+                    "align": "center",
+                    "prop": "task_trigger_frequency",
+                    "dict": {
+                        "dictType": "CS_TASK_TRIGGER_FREQUENCY",
+                        "dictKey": [
+                            "CS_TASK_TRIGGER_FREQUENCY"
+                        ],
+                        "format": "value-label"
+                    }
+                },
+                {
+                    "type": "string",
+                    "align": "center",
+                    "label": "任务状态",
+                    "prop": "task_status",
+                    "dict": {
+                        "dictType": "CS_TASK_STATUS",
+                        "dictKey": [
+                            "CS_TASK_STATUS"
+                        ],
+                        "format": "value-label"
+                    }
+                },
+                {
+                    "type": "string",
+                    "label": "预计执行时间",
+                    "align": "center",
+                    "prop": "task_execution_time"
+                },
+                {
+                    "label": "操作",
+                    "width": "300%",
+                    "fixed": "right",
+                    "align": "center",
+                    "btns": [
+                        {
+                            "type": "look",
+                            "label": "详情",
+                            "toRequest": {
+                                "url": "/views/cs/qualityManage/qualityTask/qualityTask_info.json",
+                                "method": "POST"
+                            },
+                            "props": {
+                                "title": "质检任务详情"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/cs/qualityManage/qualityTask/qualityTask_modify.json",
+                                "method": "POST"
+                            },
+                            "props": {
+                                "title": "质检任务维护"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "质检范围配置",
+                            "toRequest": {
+                              "url": "/views/cs/qualityManage/qualityTask/qualityTask_rule_config.json",
+                              "method": "POST"
+                            },
+                            "props": {
+                              "width": "80%",
+                              "title": "质检范围配置"
+                            }
+                          },
+                          {
+                            "type": "look",
+                            "label": "任务批次",
+                            "toRequest": {
+                                "url": "/views/cs/qualityManage/qualityTask/qualityTaskBatch_management.json",
+                                "method": "POST"
+                            },
+                            "props": {
+                                "width": "80%",
+                                "title": "任务批次"
+                            }
+                        },
+                        {
+                            "type": "delete",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "qc1003",
+                                    "appId": "qcOnl"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

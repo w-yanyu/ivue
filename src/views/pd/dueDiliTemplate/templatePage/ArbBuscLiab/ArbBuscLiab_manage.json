@@ -1,0 +1,194 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "addlog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/pd/dueDiliTemplate/templatePage/ArbBuscLiab/ArbBuscLiab_add.json",
+            "params": {
+              "apply_no": "${{params.apply_no}}",
+              "cust_no": "${{params.cust_no}}",
+              "due_item_no": "${{params.due_item_no}}"
+            }
+          },
+          "props": {
+            "width": "60%",
+            "title": "企业法人负债情况信息新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ar1820",
+          "apply_no": "${{params.apply_no}}",
+          "cust_no": "${{params.cust_no}}",
+          "due_item_no": "${{params.due_item_no}}"
+        }
+      },
+      "thead": [
+        {
+          "type": "string",
+          "label": "借款种类编号",
+          "prop": "loan_type_no",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "借款种类",
+          "prop": "loan_type",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "贷款行",
+          "prop": "loan_bank",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "币种",
+            "disabled": true,
+          "prop": "ccy_code",
+          "dict": {
+            "dictType": "MS_CURRENCY",
+            "dictKey": [
+              "MS_CURRENCY"
+            ],
+            "format": "label"
+          },
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "合同金额",
+          "prop": "contract_amt",
+          "decimal": "2",
+          "control": "currency",
+          "format": {
+            "thousand": ","
+          },
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "贷款期限(月)",
+          "prop": "loan_term",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "还款方式",
+          "prop": "repay_type",
+          "dict": {
+            "dictType": "MS_E_REPAY_WAY",
+            "dictKey": [
+              "MS_E_REPAY_WAY"
+            ],
+            "labelField": "dictName",
+            "valueField": "dictId"
+          },
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "当前余额",
+          "prop": "curr_bala",
+          "decimal": "2",
+          "control": "currency",
+          "format": {
+            "thousand": ","
+          },
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "具体抵押物",
+          "prop": "spec_coll",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "不良记录",
+          "prop": "bad_record",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "备注",
+          "prop": "remark",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "fixed":"right",
+          "width": "200px",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/pd/dueDiliTemplate/templatePage/ArbBuscLiab/ArbBuscLiab_info.json",
+                "method": "GET",
+                "params": {
+                  "apply_no": "${{params.apply_no}}",
+                  "cust_no": "${{params.cust_no}}",
+                  "due_item_no": "${{params.due_item_no}}"
+                }
+              },
+              "props": {
+                "width": "60%",
+                "title": "企业法人负债情况信息详情"
+              }
+            },
+            {
+              "type": "look",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/pd/dueDiliTemplate/templatePage/ArbBuscLiab/ArbBuscLiab_update.json",
+                "method": "GET",
+                "params": {
+                  "apply_no": "${{params.apply_no}}",
+                  "cust_no": "${{params.cust_no}}",
+                  "due_item_no": "${{params.due_item_no}}"
+                }
+              },
+              "props": {
+                "width": "60%",
+                "title": "企业法人负债情况信息维护"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "ar1823"
+                }
+              },
+              "confirm": {
+                "title": "删除",
+                "msg": "确定删除吗？",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

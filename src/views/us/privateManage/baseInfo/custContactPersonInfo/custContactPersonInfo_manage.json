@@ -1,0 +1,143 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "新增",
+          "target": "dialog",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/us/privateManage/baseInfo/custContactPersonInfo/custContactPersonInfo_add.json",
+            "params": {
+              "cust_no": "${{params.cust_no}}"
+            }
+          },
+          "show": {
+            "expression": "'${{params.show_flash}}' == '1'"
+          },
+          "props": {
+            "title": "客户联系人信息新增",
+            "width": "75%"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "us0060",
+          "cust_no": "${{params.cust_no}}"
+        }
+      },
+      "thead": [
+        {
+          "type": "index",
+          "width": 50,
+          "label": "序号"
+        },
+        {
+          "label": "客户序号",
+          "prop": "cust_no",
+          "align": "center",
+          "disabled": true
+        },
+        {
+          "label": "联系人姓名",
+          "prop": "contact_person_name",
+          "align": "center"
+        },
+        {
+          "label": "联系人关系",
+          "prop": "contact",
+          "align": "center",
+          "dict": {
+            "dictType": "US_E_CONTACT",
+            "dictKey": [
+              "US_E_CONTACT"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "工作单位地址",
+          "prop": "work_addr_details",
+          "align": "center"
+        },
+        {
+          "label": "联系单位",
+          "prop": "contact_unit",
+          "align": "center"
+        },
+        {
+          "label": "联系电话",
+          "prop": "phone_no",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 160,
+          "align": "center",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/us/privateManage/baseInfo/custContactPersonInfo/custContactPersonInfo_info.json",
+                "method": "GET",
+                "cust_no": "${{params.cust_no}}"
+              },
+              "props": {
+                "width": "75%",
+                "title": "客户联系人信息详情"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/us/privateManage/baseInfo/custContactPersonInfo/custContactPersonInfo_modify.json",
+                "method": "GET",
+                "cust_no": "${{params.cust_no}}"
+              },
+              "show": {
+                "expression": "'${{params.show_flash}}' == '1'"
+              },
+              "props": {
+                "width": "75%",
+                "title": "客户联系人信息维护"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "us0063",
+                  "cust_no": "${{params.cust_no}}"
+                }
+              },
+              "show": {
+                "expression": "'${{params.show_flash}}' == '1'"
+              },
+              "confirm": {
+                "title": "确定删除",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

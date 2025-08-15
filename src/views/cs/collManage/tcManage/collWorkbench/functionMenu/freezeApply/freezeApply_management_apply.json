@@ -1,0 +1,108 @@
+{
+  "module": "v-inputDataForm-btn",
+  "layout": {
+    "form": {
+      "btns": [
+        {
+          "type": "submit",
+          "target": "dialog",
+          "label": "申请",
+          "doRequest": {
+            "url": "/SUMP/iccsCall/iccsEurekaCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "pl3762",
+              "case_id": "${{params.case_id}}",
+              "apply_reason": "${{form.apply_reason}}",
+              "frozen_type": "${{form.frozen_type}}",
+              "frozen_quota": "${{form.frozen_quota}}"
+            }
+          }
+        },
+        {
+          "type": "close",
+          "label": "返回"
+        }
+      ],
+      "controls": [
+        {
+          "frozen_type": {
+            "control": "remoteSelect",
+            "label": "冻结类型",
+            "span": 8,
+            "labelWidth": "0",
+            "format": "value-label",
+            "labelField": "drop_list_desc",
+            "valueField": "drop_list_value",
+            "doRequest": {
+              "url": "/SUMP/iccsCall/iccsEurekaCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ap1071",
+                "drop_list_type": "freezeType"
+              }
+            },
+            "events": {
+              "condition": {
+                "ALL": {
+                  "control": {
+                    "frozen_quota": {
+                      "value": "",
+                      "disabled": true
+                    }
+                  }
+                },
+                "$default": {
+                  "control": {
+                    "frozen_quota": {
+                      "value": "",
+                      "disabled": false
+                    },
+                    "rules": [
+                      {
+                        "required": true,
+                        "message": "请输入"
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          },
+          "frozen_quota": {
+            "control": "currency",
+            "label": "部分冻结额度",
+            "span": 14,
+            "rules": [
+              {
+                "pattern": "^[0-9]+(\\.[0-9]{1,2})?$",
+                "message": "请输入正数金额！"
+              }
+            ]
+          }
+        },
+        {
+          "apply_reason": {
+            "control": "textarea",
+            "labelWidth": "0",
+            "span": 22,
+            "rows": "6",
+            "label": "申请原因",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

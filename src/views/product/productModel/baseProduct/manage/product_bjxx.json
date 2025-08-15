@@ -1,0 +1,84 @@
+
+
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "datagrid": {
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ln3271",
+                    "prod_code": "${{params.prod_code}}",
+                    "outlistid": "lst_cmpt"
+                }
+            },
+            "pagination": {
+                "show": false
+            },
+            "thead": [
+                {
+                    "label": "部件id",
+                    "prop": "cmpt_id",
+                    "align": "center"
+                },
+                {
+                    "label": "部件对象",
+                    "prop": "cmpt_obj",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "LN_E_CMPT_OBJ",
+                        "dictKey": [
+                            "LN_E_CMPT_OBJ"
+                        ],
+                        "format": "label-value"
+                    }
+                },
+                {
+                    "label": "贷款币种规则",
+                    "prop": "loan_ccy_rule",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "LN_E_CCY_RULE",
+                        "dictKey": [
+                            "LN_E_CCY_RULE"
+                        ],
+                        "format": "label-value"
+                    }
+                },
+                {
+                    "label": "指定币种",
+                    "prop": "asgn_ccy",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "MS_CURRENCY",
+                        "dictKey": [
+                            "MS_CURRENCY"
+                        ],
+                        "format": "label-value"
+                    }
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 100,
+                    "align": "center",
+                    "btns": [
+                        {
+                            "type": "custom",
+                            "label": "详情",
+                            "toRequest": {
+                                "url": "/views/product/productModel/productTemplate/prod_cmpt_id_qry.json",
+                                "method": "GET",
+                                "params": {
+                                    "path": "${{current.cmpt_id}}"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

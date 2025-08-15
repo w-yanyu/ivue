@@ -1,0 +1,95 @@
+{
+  "module": "lr_transferTable",
+  "layout": {
+    "transfer": {
+      "height":"500px",
+      "left": {
+        "filterable":false,
+        "title": "可售产品",
+        "placeholder": "请输入页面编号",
+        "query":["page_template_no"],
+        "btn":{
+          "label": "关联可售产品",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode":"mk0019",
+              "active_id": "${{params.active_id}}"
+            }
+          }
+        },
+        "datagrid": {
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "pd0214",
+              "#cust_class": "10",
+              "#prod_status": "00",
+              "#appr_status": "03",
+              "active_id": "${{params.active_id}}"
+            }
+          },
+          "thead": [
+            {
+              "label": "可售产品编号",
+              "prop": "sale_prod_cd",
+              "align": "center"
+            },
+            {
+              "label": "可售产品名称",
+              "prop": "sale_prod_name",
+              "align": "center"
+            }
+          ]
+        }
+      },
+
+      "right": {
+        "title":"已关联可售产品",
+        "filterable":false,
+        "placeholder": "请输入页面编号",
+        "query":["page_template_no"],
+        "btn":{
+          "label":"解绑可售产品",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode":"mk0029",
+              "#prod_no": "${{params.sale_prod_cd}}",
+              "#prod_name": "${{params.sale_prod_name}}",
+              "active_id": "${{params.active_id}}"
+            }
+          }
+        },
+        "datagrid": {
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "mk0015",
+              "sale_prod_cd": "${{params.sale_prod_cd}}",
+              "sale_prod_name": "${{params.sale_prod_name}}",
+              "active_id": "${{params.active_id}}"
+            }
+          },
+          "checked":"checked",
+          "thead": [
+            {
+              "label": "可售产品编号",
+              "prop": "sale_prod_cd",
+              "align": "center"
+            },
+            {
+              "label": "可售产品名称",
+              "prop": "sale_prod_name",
+              "align": "center"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

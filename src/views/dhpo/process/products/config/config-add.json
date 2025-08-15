@@ -1,0 +1,82 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "orgidd": {
+            "control": "text",
+            "label": "机构号",
+            "rules": [
+              {
+                "max": 100,
+                "message": "长度不能超过10个字符"
+              }
+            ]
+          },
+          "orgnam": {
+            "control": "text",
+            "label": "机构名称",
+            "rules": [
+              {
+                "max": 100,
+                "message": "长度不能超过100个字符"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "custom",
+          "label": "配置机构",
+          "checkCountMin": 1,
+          "doRequest": {
+            "url": "/SUMP/call/playOrganizations",
+            "method": "post",
+            "params": {
+              "servicecode": "plms_updwfp",
+              "key": "add",
+              "wfprod_cd": "${{params.wfprod_cd}}",
+              "wfprod_name": "${{params.wfprod_name}}",
+              "wfprod_st": "${{params.wfprod_st}}",
+              "wfprod_tp": "${{params.wfprod_tp}}"
+            }
+          },
+          "eventAfter": {
+            "doParentCallback": true
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "plms_qrybrs"
+        }
+      },
+      "thead": [
+        {
+          "type": "selection",
+          "width": "55"
+        },
+        {
+          "label": "机构号",
+          "prop": "branch",
+          "align": "center"
+        },
+        {
+          "label": "机构名称",
+          "prop": "orgnam",
+          "align": "center"
+        }
+      ]
+    }
+  }
+}

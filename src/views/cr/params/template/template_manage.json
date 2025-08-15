@@ -1,0 +1,226 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [{
+                "temp_name": {
+                    "label": "模版名称",
+                    "control": "text"
+                },
+                "temp_id": {
+                    "control": "text",
+                    "label": "模版编码"
+                }
+            }]
+        },
+        "toolbar": {
+            "btns": [{
+                "type": "add",
+                "target": "dialog",
+                "label": "新增",
+                "toRequest": {
+                    "method": "GET",
+                    "url": "/views/cr/params/template/template_add.json"
+                },
+                "props": {
+                    "width": "65%",
+                    "title": "评级模板管理新增"
+                }
+            }]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "cr0013"
+                }
+            },
+            "thead": [{
+                    "type": "selection",
+                    "align": "left"
+                },
+                {
+                    "label": "模版编码",
+                    "prop": "temp_id",
+                    "align": "center"
+                },
+                {
+                    "label": "模版名称",
+                    "width": 160,
+                    "prop": "temp_name",
+                    "align": "center"
+                },
+                {
+                    "label": "非财务指标策略编码",
+                    "prop": "unfincl_strtegy_id",
+                    "align": "center"
+                },
+                {
+                    "label": "财务指标策略编码",
+                    "prop": "fincl_strtegy_id",
+                    "align": "center"
+                },
+                {
+                    "label": "模版类型",
+                    "prop": "temp_type",
+                    "align": "center",
+                    "width": 160,
+                    "dict": {
+                        "dictType": "CR_E_TEMP_TYPE",
+                        "dictKey": [
+                            "CR_E_TEMP_TYPE"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "模版种类",
+                    "align": "center",
+                    "prop": "temp_kind",
+                    "dict": {
+                        "dictType": "CR_E_TEMP_KIND",
+                        "dictKey": [
+                            "CR_E_TEMP_KIND"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "财务占比(%)",
+                    "align": "center",
+                    "prop": "fincl_rate"
+                },
+                {
+                    "label": "非财务占比(%)",
+                    "align": "center",
+                    "prop": "unfincl_rate"
+                },
+                {
+                    "label": "无效分差",
+                    "align": "center",
+                    "prop": "point_diff"
+                },
+                {
+                    "label": "是否启用",
+                    "align": "center",
+                    "prop": "is_valid",
+                    "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                            "MS_E_YESORNO"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "有效期期限(月)",
+                    "align": "center",
+                    "prop": "dt_term"
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 200,
+                    "align": "center",
+                    "btns": [{
+                            "type": "edit",
+                            "label": "模板设置",
+                            "toRequest": {
+                                "url": "@CRSetTemplate",
+                                "method": "GET",
+                                "target": "navTab",
+                                "params": {
+                                    "framecd": "warnMan",
+                                    "is_valid": "${{current.is_valid}}"
+                                }
+                            },
+                            "props": {
+                                "title": "信用评级模板设置"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/cr/params/template/template_modify.json",
+                                "method": "GET"
+                            },
+                            "props": {
+                                "width": "65%",
+                                "title": "评级模板管理维护"
+                            },
+                            "show": {
+                                "expression": "'${{current.is_valid}}' == '0'"
+                            }
+                        },
+                        {
+                            "type": "custom",
+                            "label": "禁用",
+                            "doRequest": {
+                                "url": "/SUMP/call/RPCCall",
+                                "method": "post",
+                                "params": {
+                                    "servicecode": "cr0018",
+                                    "temp_id": "${{current.temp_id}}",
+                                    "is_valid": "0"
+                                }
+                            },
+                            "show": {
+                                "expression": "'${{current.is_valid}}' == '1'"
+                            }
+                        },
+                        {
+                            "type": "custom",
+                            "label": "启用",
+                            "doRequest": {
+                                "url": "/SUMP/call/RPCCall",
+                                "method": "post",
+                                "params": {
+                                    "servicecode": "cr0018",
+                                    "temp_id": "${{current.temp_id}}",
+                                    "is_valid": "1"
+                                }
+                            },
+                            "show": {
+                                "expression": "'${{current.is_valid}}' == '0'"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "详情",
+                            "toRequest": {
+                                "url": "/views/cr/params/template/template_detail.json",
+                                "method": "GET"
+                            },
+                            "props": {
+                                "width": "65%",
+                                "title": "评级模板管理详情"
+                            },
+                            "show": {
+                                "expression": "'${{current.is_valid}}' == '1'"
+                            }
+                        },
+                        {
+                            "type": "delete",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "cr0014",
+                                    "temp_id": "${{current.temp_id}}"
+                                }
+                            },
+                            "show": {
+                                "expression": "'${{current.is_valid}}' == '0'"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

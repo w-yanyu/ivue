@@ -1,0 +1,126 @@
+{
+  "module": "v-search-btn-datagrid",
+  "pageId": "risk_list",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "ownerId": {
+            "label": "属主ID",
+            "control": "text",
+            "span": 8,
+            "rules": [
+              {
+                "message": "字段长度超限",
+                "max": 40
+              }
+            ]
+          },
+          "indicatorCode": {
+            "label": "指标变量代码",
+            "control": "select",
+            "span": 8,
+            "dict": {
+              "dictType": "list-indicator",
+              "dictKey": [],
+              "format": "value-label",
+              "doRequest": {
+                "url": "/API/risk-management-service/combobox-select/list-indicator",
+                "method": "POST"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "新增",
+          "authId": "list_add_btn",
+          "toRequest": {
+            "url": "/views/risk/risk_list/risk_list_add.json",
+            "method": "get",
+            "params": {}
+          },
+          "props": {
+            "width": "70%",
+            "title": "新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/API/risk-management-service/risk-list/page-select",
+        "method": "post"
+      },
+      "thead": [
+        {
+          "label": "属主ID",
+          "prop": "ownerId"
+        },
+        {
+          "label": "指标变量代码",
+          "prop": "indicatorCode"
+        },
+        {
+          "label": "生效时间",
+          "prop": "effectDate",
+          "type": "dateTimePicker",
+          "format": "yyyy-MM-dd HH:mm:ss"
+        },
+        {
+          "label": "失效时间",
+          "prop": "expiryDate",
+          "type": "dateTimePicker",
+          "format": "yyyy-MM-dd HH:mm:ss"
+        },
+        {
+          "label": "批量任务ID",
+          "prop": "taskId"
+        },
+        {
+          "label": "操作",
+          "width": "150px",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "编缉",
+              "authId": "list_upd_btn",
+              "toRequest": {
+                "url": "/views/risk/risk_list/risk_list_edit.json",
+                "method": "get"
+              },
+              "props": {
+                "width": "70%"
+              }
+            },
+            {
+              "type": "look",
+              "label": "查看",
+              "toRequest": {
+                "url": "/views/risk/risk_list/risk_list_view.json",
+                "method": "get"
+              },
+              "props": {
+                "width": "70%"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "authId": "list_del_btn",
+              "doRequest": {
+                "url": "/API/risk-management-service/risk-list/delete",
+                "method": "post"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

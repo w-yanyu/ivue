@@ -1,0 +1,120 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "activity_name": {
+            "control": "text",
+            "label": "流程名称",
+            "rules": [
+              {
+                "max": 50,
+                "message": "长度不能超过10个字符"
+              }
+            ]
+          },
+          "keyword": {
+            "control": "text",
+            "label": "流程关键字",
+            "width": 100,
+            "rules": [
+              {
+                "max": 100,
+                "message": "长度不能超过100个字符"
+              }
+            ]
+          },
+          "activity_version": {
+            "control": "text",
+            "label": "版本号",
+            "rules": [
+              {
+                "max": 100,
+                "message": "长度不能超过100个字符"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "部署流程",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/pl/flowManagement/design/product-design-deploy.json",
+            "params":{
+              "appId":"plOnl"
+            }
+          },
+          "props": {
+            "title": "部署流程"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "bpm0002",
+          "appId":"plOnl"
+        }
+      },
+      "thead": [
+        {
+          "label": "流程编号",
+          "prop": "id_"
+        },
+        {
+          "label": "流程名称",
+          "prop": "name_"
+        },
+        {
+          "label": "流程关键字",
+          "prop": "key_"
+        },
+        {
+          "label":"版本号",
+          "prop":"version_",
+          "width": 80
+        },
+        {
+          "label":"流程资源名称",
+          "prop":"resource_name_"
+        },
+        {
+          "label":"流程图名称",
+          "prop":"dgrm_resource_name_"
+        },{
+          "label": "操作",
+          "width": "220px",
+          "align":"center",
+          "btns": [{
+            "type": "edit",
+            "label": "查看流程图",
+            "toRequest": {
+              "url": "@ZProcessImgView",
+              "method": "GET",
+              "params": {
+                "from": "processDesign",
+                "appId":"plOnl"
+              }
+            },
+            "props": {
+              "width": "1200px",
+              "title": "流程模板图片信息"
+            }
+          }]
+        }
+      ]
+    }
+  }
+}

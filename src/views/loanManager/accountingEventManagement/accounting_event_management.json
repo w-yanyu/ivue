@@ -1,0 +1,164 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "scope": "formData",
+            "controls": [
+                {
+                    "accounting_subject": {
+                        "control": "select",
+                        "label": "会计主体",
+                        "dict": {
+                            "dictType": "E_ATOWTP",
+                            "dictKey": [
+                                "E_ATOWTP"
+                            ],
+                            "format": "label"
+                        }
+                    },
+                    "accounting_alias": {
+                        "control": "text",
+                        "label": "核算别名"
+                    }
+                },
+                {
+                    "gl_code": {
+                        "control": "text",
+                        "label": "科目号"
+                    },
+                    "offset_gl_code": {
+                        "control": "text",
+                        "label": "对方科目"
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "target": "dialog",
+                    "label": "新增",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/loanManager/accountingEventManagement/add/accounting_event_add.json",
+                        "params": {}
+                    },
+                    "props": {
+                        "title": "会计核算事件新增"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "IGLSFATS2005"
+                }
+            },
+            "thead": [
+                {
+                    "type":"string",
+                    "label": "系统编号",
+                    "prop": "sys_no",
+                    "align": "center"
+                },
+                {
+                    "type":"string",
+                    "label": "法人代码",
+                    "prop": "corpno",
+                    "align": "center"
+                },
+                {
+                    "type":"string",
+                    "label": "会计主体",
+                    "prop": "accounting_subject",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "E_ATOWTP",
+                        "dictKey": [
+                            "E_ATOWTP"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "type":"string",
+                    "label": "核算别名",
+                    "prop": "accounting_alias",
+                    "align": "center"
+                },
+                {
+                    "type":"string",
+                    "label": "描述",
+                    "prop": "remark",
+                    "align": "center"
+                },
+                {
+                    "type":"string",
+                    "label": "余额属性",
+                    "prop": "bal_attributes",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "E_BLTYPE",
+                        "dictKey": [
+                            "E_BLTYPE"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "type":"string",
+                    "label": "科目号",
+                    "prop": "gl_code",
+                    "align": "center"
+                },
+                {
+                    "type":"string",
+                    "label": "对方科目",
+                    "prop": "offset_gl_code",
+                    "align": "center"
+                },
+                {
+                    "type":"string",
+                    "label": "数据版本号",
+                    "prop": "recdver",
+                    "align": "center"
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "align": "center",
+                    "btns": [
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/loanManager/accountingEventManagement/modify/accounting_event_modify.json",
+                                "method": "POST",
+                                "params": {}
+                            },
+                            "props": {
+                                "title": "会计核算事件维护"
+                            }
+                        },
+                        {
+                          "type": "delete",
+                          "label": "删除",
+                          "doRequest": {
+                            "url": "/SUMP/icmcall/icmRPCCall",
+                            "method": "POST",
+                            "params": {
+                              "servicecode": "IGLSFATS9004"
+                            }
+                          }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

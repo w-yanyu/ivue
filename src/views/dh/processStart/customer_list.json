@@ -1,0 +1,108 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [{
+                "custid": {
+                  "control": "text",
+                  "label": "客户编号"
+                },
+                "custna": {
+                    "control": "text",
+                    "label": "客户名称",
+                    "rules": [{
+                        "max": 80,
+                        "message": "长度不能超过80个字符"
+                    }]
+                },
+                "certtp": {
+                    "control": "select",
+                    "label": "证件类型",
+                    "dict": {
+                        "dictType": "E_IDTFTP",
+                        "dictKey": [
+                            "E_IDTFTP"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                "certno": {
+                    "control": "text",
+                    "label": "证件号码"
+
+                }
+            }]
+        },
+        "toolbar": {
+            "btns": []
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "IUMSCUTS0004",
+                    "page_id": "/views/ci/InformationManager/customer_info_manager.json"
+                }
+            },
+            "thead": [{
+                    "label": "操作",
+                    "btns": [{
+                        "type": "bringback",
+                        "label": "选择"
+                    }]
+                },
+                {
+                    "label": "客户号",
+                    "prop": "custid",
+                    "align": "center"
+                },
+                {
+                    "label": "客户名称",
+                    "prop": "custna",
+                    "align": "center"
+                },
+                {
+                    "label": "证件类型",
+                    "prop": "certtp",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "E_IDTFTP",
+                        "dictKey": [
+                            "E_IDTFTP"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "证件号码",
+                    "prop": "certno",
+                    "align": "center"
+                },
+                {
+                    "label": "性别",
+                    "prop": "gender",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "MS_E_GENDER",
+                        "dictKey": [
+                            "MS_E_GENDER"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "出生日期",
+                    "prop": "birthday",
+                    "align": "center"
+
+                }
+            ]
+        }
+    }
+}

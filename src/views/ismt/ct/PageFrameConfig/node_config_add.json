@@ -1,0 +1,108 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "scope": "templateScope",
+            "init":{
+                "initRequest":"${{params}}"
+            },
+            "initDataOnce":true,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "AS_ICMS_PB_ADFATR"
+                }
+              },
+              "btns":[
+				{
+					"type":"submit",
+					"label":"提交"
+				}
+			],
+            "controls": [
+                {
+                    "frame_cd": {
+                        "label": "框架编号",
+                        "control": "string",
+                        "value":"${{params.frame_cd}}",
+                        "width": "130px"
+                    },
+
+                    "funccode": {
+                        "label": "功能编号",
+                        "control": "lookup",
+                        "edit": true,
+                        "width": "130px",
+                        "keyField": {
+                            "funccode": "auth_cd"
+                        },
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入功能编号"
+                            }
+                        ],
+                        "toRequest": {
+                            "url": "/views/ismt/ct/PageFrameConfig/menu_list.json",
+                            "method": "post"
+                        },
+                        "props": {
+                            "width": "85%",
+                            "title": "菜单选择"
+                        }
+                    },
+                    "tree_menu_name": {
+                        "label": "菜单名称",
+                        "control": "text",
+                        "width": "130px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入菜单名称"
+                            }
+                        ]
+                    },
+                    "is_enabled": {
+                        "control": "select",
+                        "label": "是否有效",
+                        "dict": {
+                            "dictType": "E_ISENBE",
+                            "dictKey": [
+                                "E_ISENBE"
+                            ],
+                            "format": "label"
+                        },
+                        
+                        "width": "130px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请选择是否有效"
+                            }
+                        ]
+                    },
+                    
+                    "child_frame_flag": {
+                        "control": "select",
+                        "label": "是否子框架",
+                        "dict": {
+                            "dictType": "E_ISCHFR",
+                            "dictKey": [
+                                "E_ISCHFR"
+                            ],
+                            "format": "label"
+                        },
+                        "width": "130px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请选择是否子框架"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    }
+}

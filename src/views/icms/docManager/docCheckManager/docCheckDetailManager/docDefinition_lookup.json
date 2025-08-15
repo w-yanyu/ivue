@@ -1,0 +1,122 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "doc_type": {
+            "label": "资料类型",
+            "width": "25px",
+            "control": "remoteSelect",
+            "labelField": "title",
+            "valueField": "id",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "pd0144",
+                "grupno": "0006",
+                "pid": "KSCP"
+              }
+            }
+          },
+          "doc_name": {
+            "label": "资料名称",
+            "control": "text",
+            "width": "25px"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "ar0121",
+          "doc_type": "${{params.doc_list_type}}"
+        }
+      },
+      "pagination": {
+        "pageSizes": [
+          10,
+          15,
+          20
+        ],
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "type": "index",
+          "align": "center"
+        },
+        {
+          "type": "leaf",
+          "label": "资料编号",
+          "align": "center",
+          "prop": "doc_no"
+        },
+        {
+          "label": "资料名称",
+          "prop": "doc_name",
+          "align": "center",
+          "type": "leaf"
+        },
+        {
+          "label": "是否个人资料",
+          "prop": "is_person_doc",
+          "align": "center",
+          "type": "leaf",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "资料列表类型",
+          "prop": "doc_type",
+          "align": "center",
+          "width": "150px",
+          "type": "leaf",
+          "dict": {
+            "dictType": "icmsOnl",
+            "dictKey": [],
+            "labelField": "title",
+            "valueField": "id",
+            "doRequest":{
+              "url":"/SUMP/icmcall/icmRPCCall",
+              "method":"post",
+              "params":{
+                "servicecode": "pd0144",
+                "grupno": "0006",
+                "pid": "KSCP"
+              }
+            },
+            "format": "label"
+          }
+        },
+        {
+          "label": "资料分类编号",
+          "prop": "doc_type_no",
+          "align": "center",
+          "type": "leaf"
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "fixed": "right",
+          "btns": [
+            {
+              "type": "bringback",
+              "label": "选择"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

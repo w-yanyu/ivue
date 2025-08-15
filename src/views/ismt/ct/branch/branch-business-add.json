@@ -1,0 +1,49 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ct2190",
+          "revoke_no":"${{params.revoke_no}}",
+          "branch_id":"${{params.branch_id}}",
+          "branch_name":"${{params.branch_name}}"
+        }
+      },
+      "controls": [
+        {
+          "target_branch": {
+            "control": "lookup",
+            "align": "center",
+            "label": "机构编号",
+            "toRequest": {
+              "url": "/views/ismt/ct/branch/branch-lookup.json",
+              "method": "GET",
+              "params": {
+              }
+            },
+            "keyField": {
+              "target_branch": "branch_id",
+              "target_branch_name": "branch_name"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择机构编号"
+              }
+            ]
+          }
+        },
+        {
+          "target_branch_name": {
+            "control": "string",
+            "align": "center",
+            "label": "机构名称"
+          }
+        }
+      ]
+    }
+  }
+}

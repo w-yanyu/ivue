@@ -1,0 +1,119 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "cb0115",
+          "case_id": "${{params.case_id}}",
+          "case_no": "${{params.case_no}}",
+          "cust_id": "${{params.cust_id}}",
+          "org_id": "${{params.org_id}}",
+          "oa_org_id": "${{params.oa_org_id}}"
+        }
+      },
+      "pagination": {
+        "pageSizes": [
+          5,
+          10,
+          15,
+          20
+        ],
+        "pageSize": 5,
+        "show": true
+      },
+      "thead": [
+        {
+          "type": "string",
+          "label": "流转时间",
+          "align": "center",
+          "prop": "data_create_time"
+        },
+        {
+          "type": "string",
+          "label": "流转类型",
+          "align": "center",
+          "prop": "trans_type",
+          "dict": {
+            "dictType": "CS_TRANS_TYPE",
+            "dictKey": [
+              "CS_TRANS_TYPE"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "label": "来源法人",
+          "align": "center",
+          "prop": "source_org_id"
+        },
+        {
+          "type": "string",
+          "label": "来源机构",
+          "align": "center",
+          "prop": "source_branch_id"
+        },
+        {
+          "type": "string",
+          "label": "来源人员",
+          "align": "center",
+          "prop": "source_collector",
+          "dict": {
+            "dictKey": [
+              "source_collector"
+            ],
+            "format": "value-label",
+            "labelField": "user_name",
+            "valueField": "user_id",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "cb0084",
+                "appId": "cbOnl"
+              }
+            }
+          }
+        },
+        {
+          "type": "string",
+          "label": "目的法人",
+          "align": "center",
+          "prop": "org_id"
+        },
+        {
+          "type": "string",
+          "label": "目的机构",
+          "align": "center",
+          "prop": "branch_id"
+        },
+        {
+          "type": "string",
+          "label": "目的人员",
+          "align": "center",
+          "prop": "target_collector",
+          "dict": {
+            "dictKey": [
+              "target_collector"
+            ],
+            "format": "value-label",
+            "labelField": "user_name",
+            "valueField": "user_id",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "cb0084",
+                "appId": "cbOnl"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

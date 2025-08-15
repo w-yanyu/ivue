@@ -1,0 +1,126 @@
+{
+  "module": "v-inputDataForm-btn",
+  "layout": {
+    "form": {
+      "doRequest": {
+        "url": "/WEB/user",
+        "method": "POST"
+      },
+      "controls": [
+        {
+          "userCode": {
+            "control": "text",
+            "label": "用户编码",
+            "required": true
+          },
+          "userName": {
+            "control": "text",
+            "label": "用户名称",
+            "required": true
+          }
+        },
+        {
+          "userPassword": {
+            "control": "text",
+            "label": "用户密码",
+            "value": "888888",
+            "required": true
+          },
+          "employeeName": {
+            "control": "lookup",
+            "label": "雇员",
+            "keyField": [
+              "employeeCode"
+            ],
+            "toRequest": {
+              "url": "/views/risk/web/user/employee-lookup.json",
+              "method": "GET"
+            },
+            "props": {
+            }
+          }
+        },
+        {
+          "orgCode": {
+            "control": "select",
+            "label": "机构",
+            "dict": {
+              "dictType": "WEB",
+              "dictKey": [],
+              "labelField": "orgName",
+              "valueField": "orgCode",
+              "doRequest": {
+                "url": "/WEB/organization/list",
+                "method": "get"
+              }
+            },
+            "required": true
+          },
+          "skinCode": {
+            "control": "select",
+            "label": "皮肤样式",
+            "dict": {
+              "dictType": "WEB",
+              "dictKey": [
+                "WEB",
+                "skinType"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictCode",
+              "doRequest": {
+                "url": "/WEB/dict/common",
+                "method": "post"
+              }
+            }
+          }
+        },
+        {
+          "status": {
+            "control": "select",
+            "label": "用户状态",
+            "value": "A",
+            "dict": {
+              "dictType": "WEB",
+              "dictKey": [
+                "WEB",
+                "user-status"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictCode",
+              "doRequest": {
+                "url": "/WEB/dict/common",
+                "method": "post"
+              }
+            }
+          },
+          "enable": {
+            "control": "radio",
+            "label": "是否有效",
+            "value": "1",
+            "dict": {
+              "dictType": "WEB",
+              "dictKey": [
+                "WEB",
+                "boolean"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictCode",
+              "doRequest": {
+                "url": "/WEB/dict/common",
+                "method": "post"
+              }
+            },
+            "required": true
+          }
+        },
+        {
+          "description": {
+            "control": "textarea",
+            "span": 24,
+            "label": "备注"
+          }
+        }
+      ]
+    }
+  }
+}

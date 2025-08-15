@@ -1,0 +1,152 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "scope": "strForm",
+      "initRequest": "${{params}}",
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "icon": "",
+          "doRequest": {
+            "url": "/SUMP/call/RPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "ln3971"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "smilr_cr_card_loan_acct_num": {
+            "control": "string",
+            "label": "类信用卡贷款账号",
+            "width": "100px",
+            "value": "${{params.smilr_cr_card_loan_acct_num}}"
+          },
+          "cust_num": {
+            "control": "string",
+            "label": "客户号",
+            "width": "100px",
+            "value": "${{params.cust_num}}"
+          }
+        },
+        {
+          "cust_nm": {
+            "control": "string",
+            "label": "客户名称",
+            "width": "100px",
+            "value": "${{params.cust_nm}}"
+          },
+          "cnsp_prod_code": {
+            "control": "lookup",
+            "label": "消费产品代码",
+            "width": "100px",
+            "value": "${{params.cnsp_prod_code}}",
+            "edit": true,
+            "keyField": {
+              "cnsp_prod_code": "prod_code"
+            },
+            "toRequest": {
+              "url": "/views/product/productModel/prod_list_qry.json",
+              "method": "get"
+            },
+            "props": {
+              "title": "选择产品",
+              "width": "75%"
+            },
+            "format": "label"
+          }
+        },
+        {
+          "ccy_code_num": {
+            "label": "货币代号",
+            "control": "select",
+            "width": "100px",
+            "value": "${{params.ccy_code_num}}",
+            "dict": {
+              "dictType": "MS_CURRENCY",
+              "dictKey": [
+                "MS_CURRENCY"
+              ],
+              "format": "label"
+            }
+          },
+          "cnsp_amt": {
+            "label": "消费金额",
+            "control": "currency",
+            "width": "100px",
+            "format": "label",
+            "value": "${{params.basic_lmt}}",
+            "rules": [
+              {
+                "expression": "${{form.istlmt_min_amt_rstct}} >=  0  ",
+                "message": "分期最高金额限制不能小于零"
+              }
+            ]
+          }
+        },
+        {
+          "rpymt_acct_num": {
+            "control": "text",
+            "label": "还款账号",
+            "width": "100px",
+            "value": "${{params.rpymt_acct_num}}"
+          },
+          "rpymt_sub_acct_serl_num": {
+            "control": "text",
+            "label": "还款子账户序号",
+            "width": "100px",
+            "value": "${{params.rpymt_sub_acct_serl_num}}"
+          }
+        },
+        {
+          "loan_pstg_acct_num": {
+            "control": "text",
+            "label": "贷款入账账号",
+            "width": "100px",
+            "value": "${{params.loan_pstg_acct_num}}"
+          },
+          "loan_pstg_sub_acct_serl_num": {
+            "control": "text",
+            "label": "贷款入账子账户序号",
+            "width": "100px",
+            "value": "${{params.loan_pstg_sub_acct_serl_num}}"
+          }
+        },
+        {
+          "oprtg_org": {
+            "control": "hidden",
+            "label": "营业机构",
+            "width": "100px",
+            "value": "${{params.oprtg_org}}"
+          },
+          "acctg_org": {
+            "control": "hidden",
+            "label": "账务机构",
+            "width": "100px",
+            "value": "${{params.acctg_org}}"
+          }
+        },
+        {
+          "smilr_cr_card_acct_ste": {
+            "control": "select",
+            "label": "类信用卡账户状态",
+            "width": "100px",
+            "value": "${{params.smilr_cr_card_acct_ste}}",
+            "disabled": true,
+            "dict": {
+              "dictType": "E_SMILR_CR_CARD_ACCT_STE",
+              "dictKey": [
+                "E_SMILR_CR_CARD_ACCT_STE"
+              ],
+              "format": "label"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,129 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "新增",
+          "toRequest": {
+            "url": "/views/pd/prodRuleInfoCheck/prod_ruleInfo_check_add.json",
+            "method": "get",
+            "params": {
+              "sale_prod_cd": "${{params.sale_prod_cd}}",
+              "prod_version": "${{params.prod_version}}",
+              "busi_seq": "${{params.busi_seq}}",
+              "check_control_type": "${{params.check_control_type}}",
+              "apply_type": "${{params.apply_type}}"
+            }
+          },
+          "props": {
+            "title": "可售产品合规信息检查新增",
+            "width": "65%"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "pd0291",
+          "sale_prod_cd": "${{params.sale_prod_cd}}",
+          "prod_version": "${{params.prod_version}}",
+          "check_control_type": "${{params.check_control_type}}",
+          "apply_type": "${{params.apply_type}}"
+        }
+      },
+      "pagination": {
+        "pageSizes": [
+          10,
+          15,
+          20
+        ],
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "type": "index",
+          "align": "center"
+        },
+        {
+          "label": "规则编号",
+          "prop": "rule_id",
+          "align": "center"
+        },
+        {
+          "label": "规则代码",
+          "prop": "rule_code",
+          "align": "center"
+        },
+        {
+          "label": "规则名称",
+          "prop": "rule_name",
+          "align": "center"
+        },
+        {
+          "label": "规则类型",
+          "prop": "rule_type",
+          "align": "center",
+          "dict": {
+            "dictType": "PD_E_RULE_TYPE",
+            "dictKey": [
+              "PD_E_RULE_TYPE"
+            ]
+          }
+        },
+        {
+          "label": "审批类型",
+          "prop": "appro_type",
+          "align": "center",
+          "dict": {
+            "dictType": "PD_E_APPRO_ROUTE_TYPE",
+            "dictKey": [
+              "PD_E_APPRO_ROUTE_TYPE"
+            ]
+          }
+        },
+        {
+          "label": "操作",
+          "width": "150px",
+          "align": "center",
+          "fixed": "right",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/pd/prodRuleInfoCheck/detail/prod_ruleInfo_check_detail.json",
+                "method": "get",
+                "params": {}
+              },
+              "props": {
+                "title": "可售产品合规信息检查详情",
+                "width": "80%"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "pd0292"
+                }
+              },
+              "eventAfter": {
+                "doParentCallback": true
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

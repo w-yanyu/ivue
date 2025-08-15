@@ -1,0 +1,85 @@
+{
+  "module": "v-search-editableDataGrid",
+  "layout": {
+    "datagrid": {
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ar1201",
+          "apply_no": "${{params.apply_no}}"
+        }
+      },
+      "pagination": {
+        "show": true,
+        "pageSizes": [
+          50,
+          100,
+          150,
+          200
+        ],
+        "pageSize": 50
+      },
+      "thead": [
+        {
+          "label": "序号",
+          "type": "index",
+          "align": "center"
+        },
+        {
+          "type":"string",
+          "label": "核实项代码",
+          "prop": "verify_cd",
+          "align": "center",
+          "width": "200px"
+        },
+        {
+          "type":"string",
+          "label": "核实项描述",
+          "prop": "verify_desc",
+          "align": "center"
+        },
+        {
+          "type":"select",
+          "label": "是否必需",
+          "disabled": true,
+          "prop": "is_must",
+          "align": "center",
+          "width": "200px",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "附件上传",
+              "toRequest": {
+                "url": "/views/icms/verifyManager/applyVerify/file_manage.json",
+                "method": "POST",
+                "params": {
+                  "doc_no": "${{current.verify_cd}}",
+                  "appl_id": "${{current.appl_id}}",
+                  "busi_mode": "1"
+                }
+              },
+              "props": {
+                "width": "65%",
+                "title": "核实项管理"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

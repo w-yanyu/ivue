@@ -1,0 +1,117 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "initRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "ct2402",
+                  "appId":"${{params.appId}}",
+                  "dimension_name":"${{params.dimension_name}}",
+                  "dimension_type":"${{params.dimension_type}}",
+                  "dimension_busi_type":"${{params.dimension_busi_type}}",
+                  "achive_type":"${{params.achive_type}}",
+                  "service_path":"${{params.service_path}}",
+                  "belonging_table":"${{params.belonging_table}}",
+                  "query_condition":"${{params.query_condition}}"
+                }
+              },
+            "btns": []
+              
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "label": "新增",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/ismt/ct/busiAuth/authp_dimension/authp_dimension_param_add.json",
+                        "params": {
+                            "dimension_code": "${{params.dimension_code}}",
+                            "appId":"${{params.appId}}"
+                        }
+                    },
+                    "props": {
+                        "title": "新增业务指标参数"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ct2428",
+                    "dimension_code": "${{params.dimension_code}}",
+                    "appId":"${{params.appId}}"
+                }
+            },
+            "pagination": {
+                "show": false,
+                "pageSize": 10
+            },
+            "thead": [
+                {
+                    "label": "字段代码",
+                    "prop": "field_code"
+                },
+                {
+                    "label": "字段名",
+                    "prop": "field_name"
+                },
+                {
+                    "label": "返回值类型",
+                    "prop": "retrun_value_type",
+                    "dict": {
+                      "dictType": "CT_E_RESULT_TYPE",
+                      "dictKey": [
+                          "CT_E_RESULT_TYPE"
+                      ],
+                      "format": "label"
+                    }
+                },
+                {
+                    "label": "操作",
+                    "width": 150,
+                    "align":"center",
+                    "fixed": "right",
+                    "btns": [
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/ismt/ct/busiAuth/authp_dimension/authp_dimension_param_update.json",
+                                "method": "GET",
+                                "params":{
+                                    "appId":"${{params.appId}}"
+                                }
+                            },
+                            "props": {
+                                "title": "业务指标参数维护"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "删除",
+                            "toRequest": {
+                                "url": "/views/ismt/ct/busiAuth/authp_dimension/authp_dimension_param_del.json",
+                                "method": "GET",
+                                "params":{
+                                    "appId":"${{params.appId}}"
+                                }
+                            },
+                            "props": {
+                                "title": "删除业务指标参数"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+  }

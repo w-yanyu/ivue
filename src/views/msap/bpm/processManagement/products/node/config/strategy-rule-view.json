@@ -1,0 +1,85 @@
+{
+  "module": "v-form-editableDataGrid-btn",
+  "layout": {
+    "form": {},
+    "toolbar": {
+      "btns": [
+      ]
+    },
+    "datagrid": {
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+
+        "method": "POST",
+        "params": {
+          "wf_prod_no": "${{params.wf_prod_no}}",
+          "task_define_id": "${{params.task_define_id}}",
+          "wf_task_no": "${{params.wf_task_no}}",
+          "bpm_version": "${{params.bpm_version}}",
+          "servicecode": "bpm5009",
+          "appId": "${{params.appId}}"
+        }
+      },
+      "pagination": {
+        "show": false
+      },
+      "allData": true,
+      "thead": [
+        {
+          "type": "selection",
+          "align": "center",
+          "width": "55",
+          "fixed": "left",
+          "show": {
+            "prop": "changkuan",
+            "is": ["0"]
+          }
+        },
+        {
+          "prop": "route_id",
+          "type": "string",
+          "label": "序号"
+        },
+        {
+          "prop": "next_task_define_name",
+          "type": "string",
+          "label": "下一节点名称"
+        },
+        {
+          "prop": "policy_rule_config",
+          "type": "string",
+          "label": "配置规则",
+          "333keyField": {
+            "policy_rule_config": "policy_id"
+          },
+          "toRequest": {
+            "url": "/views/msap/bpm/processManagement/products/node/config/strategy-rule-lookup.json",
+            "method": "post",
+            "params": {
+              "wf_task_no": "${{params.wf_task_no}}",
+              "appId": "${{params.appId}}"
+            }
+          },
+          "props": {
+            "title": "选择规则"
+          }
+        },
+        {
+          "prop": "is_def_flow",
+          "type": "string",
+          "label": "是否默认路线",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": ["MS_E_YESORNO"],
+            "format": "value-label"
+          }
+        },
+        {
+          "prop": "check_seq",
+          "type": "string",
+          "label": "校验序号"
+        }
+      ]
+    }
+  }
+}

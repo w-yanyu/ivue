@@ -1,0 +1,105 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "postid": {
+            "label": "岗位",
+            "control": "remoteSelect",
+            "valueField": "postid",
+            "labelField": "postspecies",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "post",
+              "params": {
+                "servicecode": "selmateriaicf",
+                "typeofdate": "GW",
+                "isparentnode": "Y",
+                "length": 100
+              }
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "custom",
+          "target": "dialog",
+          "label": "岗位笔数配置",
+          "toRequest": {
+            "url": "/views/mc/postnumcf/postnum_add.json",
+            "method": "POST"
+          }
+
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "selPostNumcfg"
+        }
+      },
+      "thead": [
+        {
+          "label": "序号",
+          "type": "index",
+          "align": "center"
+        },
+        {
+          "label": "岗位编号",
+          "prop": "postid",
+          "align": "center"
+        },
+        {
+          "label": "岗位名称",
+          "prop": "postna",
+          "align": "center"
+        },
+        {
+          "label": "岗位领取案件笔数",
+          "prop": "postnum",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "align": "center",
+          "btns": [
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "postNumcfg",
+                  "delDateType": "D"
+                }
+              }
+            },
+            {
+              "type": "edit",
+              "label": "修改",
+              "toRequest": {
+                "url": "/views/mc/postnumcf/postnum_upda.json",
+                "method": "post"
+              },
+              "props": {
+                "width": "65%",
+                "title": "修改"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

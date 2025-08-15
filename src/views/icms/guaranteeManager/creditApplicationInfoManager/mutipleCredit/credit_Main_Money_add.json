@@ -1,0 +1,225 @@
+{
+  "module": "v-form-btn-dynamic",
+  "layout": {
+    "form": {
+      "formSetTitle": "授信产品配置",
+      "formResultTitle": "适用产品选择",
+      "scope": "formData",
+      "controls": [
+        {
+          "prod_name": {
+            "label": "授信产品",
+            "control": "lookup",
+            "width": "130px",
+            "span": 7,
+            "edit": true,
+            "keyField": {
+              "loan_prod_cd": "sale_prod_cd",
+              "prod_name": "sale_prod_name",
+              "prod_version": "prod_version"
+            },
+            "toRequest": {
+              "url": "/views/icms/guaranteeManager/creditApplicationInfoManager/mutipleCredit/product_lookup_lists.json",
+              "method": "post",
+              "params": {
+                "appl_id": "${{params.apply_no}}",
+                "credit_prod_cd": "${{params.credit_prod_cd}}",
+                "cust_no": "${{params.cust_no}}"
+              }
+            },
+            "props": {
+              "width": "80%",
+              "title": "选择授信产品"
+            },
+            "format": "label",
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择业务产品"
+              }
+            ]
+          },
+          "loan_prod_cd": {
+            "label": "产品编号",
+            "control": "hidden",
+            "width": "130px",
+            "format": "label"
+          },
+          "prod_version": {
+            "label": "产品版本",
+            "control": "hidden",
+            "width": "130px",
+            "format": "label"
+          },
+          "base_ccy": {
+            "control": "select",
+            "label": "基准币种",
+            "width": "130px",
+            "disabled": true,
+            "span": 7,
+            "dict": {
+              "dictType": "MS_CURRENCY",
+              "dictKey": [
+                "MS_CURRENCY"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择授信币种"
+              }
+            ],
+            "value": "156"
+          },
+          "ccy_code": {
+            "control": "select",
+            "label": "授信币种",
+            "width": "130px",
+             
+            "span": 7,
+            "dict": {
+              "dictType": "MS_CURRENCY",
+              "dictKey": [
+                "MS_CURRENCY"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择授信币种"
+              }
+            ] 
+          },
+          "exchange_rate": {
+            "control": "currency",
+            "label": "汇率",
+            "width": "130px",
+            "value": 1,
+            "disabled": true,
+            "span": 7,
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择汇率"
+              }
+            ]
+          },
+          "cycling_flag": {
+            "control": "select",
+            "label": "是否可循环使用金额",
+            "width": "130px",
+            "span": 7,
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择是否可循环使用金额"
+              }
+            ]
+          },
+          "credit_term": {
+            "control": "text",
+            "label": "业务期限(月)",
+            "width": "130px",
+            "span": 7,
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择业务期限(月)"
+              }
+            ]
+          },
+          "busi_assign_amt": {
+            "control": "currency",
+            "label": "业务授信分配金额",
+            "width": "130px",
+            "span": 7,
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择业务授信分配金额"
+              }
+            ],
+            "align": "left",
+            "format":{
+              "thousand": ","
+            }
+          },
+          "base_busi_assign_amt": {
+            "control": "currency",
+            "label": "业务授信分配金额(折基准币种)",
+            "width": "130px",
+            "span": 7,
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择业务授信分配金额(折基准币种)"
+              }
+            ],
+            "compute": "${{formData.busi_assign_amt}}*${{formData.exchange_rate}}",
+            "align": "left",
+            "format":{
+              "thousand": ","
+            }
+          },
+          "remark": {
+            "label": "备注",
+            "control": "textarea",
+            "width": "130px",
+            "span": 21,
+            "autosize": {
+              "minRows": 4
+            },
+            "rules": [
+              {
+                "max": "200",
+                "message": "长度不能超过200个字符"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "doRequest": {
+            "url": "/SUMP/call/RPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "ar0781",
+              "apply_no": "${{params.apply_no}}",
+              "cust_no": "${{params.cust_no}}"
+            }
+          },
+          "toRequest": {
+            "url": "@creditMainSaleProdRela",
+            "method": "get",
+            "params": {
+              "credit_prod_cd": "${{formData.loan_prod_cd}}",
+              "cust_no": "${{params.cust_no}}",
+              "apply_no": "${{params.apply_no}}",
+              "ccy_code": "${{formData.ccy_code}}",
+              "prod_version": "${{formData.prod_version}}"
+            }
+          }
+        },
+        {
+          "type": "reset",
+          "btnStyle": "success",
+          "label": "清空"
+        }
+      ]
+    }
+  }
+}

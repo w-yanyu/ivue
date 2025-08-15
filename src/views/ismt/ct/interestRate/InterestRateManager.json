@@ -1,0 +1,136 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "interest_rate_code": {
+                        "control": "text",
+                        "label": "利率代码",
+                        "rules": [
+                            {
+                                "max": 10,
+                                "message": "长度不能超过10个字符"
+                            }
+                        ]
+                    },
+                    "interest_rate_type": {
+                        "control": "select",
+                        "label": "利率类型",
+                        "dict": {
+                            "dictType": "CT_E_INTEREST_RATE_TYPE",
+                            "dictKey": [
+                                "CT_E_INTEREST_RATE_TYPE"
+                            ],
+                            "format": "label"
+                        }
+                    }
+                },
+                {
+                    "interest_rate_name": {
+                        "control": "text",
+                        "label": "利率名称",
+                        "rules": [
+                            {
+                                "max": 32,
+                                "message": "长度不能超过32个字符"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "target": "dialog",
+                    "label": "新增",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/ismt/ct/interestRate/BasicInterestRateManagement/BasicInterestRateManagement-add.json"
+                    },
+                    "props": {
+                        "title": "利率信息新增",
+                        "width": "80%"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ct3255"
+                }
+            },
+            "pagination": {
+                "show": true
+            },
+            "thead": [
+                {
+                    "type": "index"
+                },
+                {
+                    "label": "利率代码",
+                    "prop": "interest_rate_code"
+                },
+                {
+                    "label": "利率名称",
+                    "prop": "interest_rate_name"
+                },
+                
+                {
+                    "label": "利率类型",
+                    "prop": "interest_rate_type",
+                    "dict": {
+                        "dictType": "CT_E_INTEREST_RATE_TYPE",
+                        "dictKey": [
+                            "CT_E_INTEREST_RATE_TYPE"
+                        ],
+                        "format": "value-label"
+                    }
+                },
+                {
+                    "label": "利率种类",
+                    "prop": "interest_rate_category",
+                    "dict": {
+                        "dictType": "CT_E_INTEREST_RATE_CATEGORY",
+                        "dictKey": [
+                            "CT_E_INTEREST_RATE_CATEGORY"
+                        ],
+                        "format": "value-label"
+                    }
+                },
+                
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 220,
+                    "align": "center",
+                    "btns": [
+                        {
+                            "type": "edit",
+                            "label": "利率明细",
+                            "toRequest": {
+                                "url": "/views/ismt/ct/interestRate/BasicInterestRateManagement/BasicInterestRateManagement.json",
+                                "method": "GET",
+                                "params": {
+                                    
+                                  }
+                                
+                            },
+                            "props": {
+                                "title": "利率明细",
+                                "width": "80%"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

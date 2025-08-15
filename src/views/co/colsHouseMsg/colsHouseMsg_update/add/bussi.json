@@ -1,0 +1,104 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [{
+                "partner_no": {
+                    "control": "text",
+                    "label": "商户编号",
+                    "rules": [{
+                        "max": 30,
+                        "message": "长度不能超过30个字符"
+                    }]
+                }
+            }]
+        },
+        "toolbar": {
+            "btns": [{
+                    "type": "custom",
+                    "icon": "el-icon-circle-check",
+                    "target": "dialog",
+                    "label": "关联",
+                    "eventAfter": {
+                        "doParentCallback": true
+                    },
+                    "doRequest": {
+                        "method": "POST",
+                        "url": "/SUMP/call/RPCCall",
+                        "params": {
+                            "house_id":"${{params.house_id}}",
+                            "house_name": "${{params.house_name}}",
+                            "list": "${{current.selectedData}}",
+                            "servicecode": "co5005"
+                        }
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "pt0900"
+                }
+            },
+            "thead": [{
+                    "type": "selection",
+                    "width": "55"
+                },
+                {
+                    "type": "index",
+                    "label": "序号"
+                },
+                {
+                    "label": "商户编号",
+                    "prop": "partner_no",
+                    "align": "center"
+                },
+                {
+                    "label": "商户名称",
+                    "prop": "partner_name",
+                    "align": "center"
+                },
+                {
+                    "label": "联系方式",
+                    "prop": "contact_info",
+                    "align": "center"
+                },
+              {
+                "label": "收款账号",
+                "prop": "acct_num",
+                "align": "center"
+              },
+              {
+                "label": "收款账号名",
+                "prop": "acct_nm",
+                "align": "center"
+              },
+              {
+                "label": "开户行",
+                "prop": "open_acct_bank",
+                "align": "center"
+              },
+                {
+                    "label": "商户类型",
+                    "prop": "business_tp",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "PT_E_BUSINESS_TYPE",
+                        "dictKey": [
+                            "PT_E_BUSINESS_TYPE"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                }
+
+
+            ]
+        }
+    }
+}

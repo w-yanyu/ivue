@@ -1,0 +1,146 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "添加",
+          "icon": "el-icon-tickets",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "pd1562",
+              "sale_prod_cd": "${{params.sale_prod_cd}}",
+              "prod_version": "${{params.prod_version}}"
+            },
+            "eventAfter": {
+              "doLastCallback": true,
+              "doParentCallback": true
+            }
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pd1542",
+          "download_link": "01",
+          "sale_prod_cd": "${{params.sale_prod_cd}}",
+          "prod_version": "${{params.prod_version}}"
+        }
+      },
+      "thead": [
+        {
+          "type": "selection",
+          "width": "55"
+        },
+        {
+          "type": "string",
+          "label": "贴源文件编码",
+          "prop": "post_source_file_cd",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "贴源文件描述",
+          "prop": "post_source_file_desc",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "下载协议类型",
+          "prop": "download_protocol_type",
+          "align": "center",
+          "dict": {
+            "dictType": "PD_E_FILE_TRANS_PROTOCOL_TYPE",
+            "dictKey": [
+              "PD_E_FILE_TRANS_PROTOCOL_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "string",
+          "label": "文件服务器IP地址",
+          "prop": "file_sys_ip",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "文件服务器用户名",
+          "prop": "sys_user",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "文件服务器密码",
+          "prop": "sys_password",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "源文件类型",
+          "prop": "source_file_type",
+          "align": "center",
+          "dict": {
+            "dictType": "PD_E_SOURCE_FILE_TYPE",
+            "dictKey": [
+              "PD_E_SOURCE_FILE_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "string",
+          "label": "贴源文件远程路径",
+          "prop": "source_file_remote_path",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "贴源文件名",
+          "prop": "source_file_name",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "贴源本地存放路径",
+          "prop": "source_file_local_path",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "fixed": "right",
+          "width": "200px",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/pd/prod/templatePage/fileDownloadConfig/fileDownloadConfig_info.json",
+                "method": "GET",
+                "params": {
+                  "sale_prod_cd": "${{params.sale_prod_cd}}",
+                  "prod_version": "${{params.prod_version}}",
+                  "apply_type": "${{params.apply_type}}"
+                }
+              },
+              "props": {
+                "width": "60%",
+                "title": "文件下载配置详情"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

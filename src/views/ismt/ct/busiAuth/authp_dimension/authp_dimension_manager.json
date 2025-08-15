@@ -1,0 +1,170 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+      "form": {
+          "doRequest": {
+              "url": "",
+              "method": "POST",
+              "params": {}
+          },
+          "controls": [
+              {
+                "appId": {
+                    "control": "select",
+                    "label": "业务模块",
+                    "selectFirstValue":true,
+                    "dict": {
+                        "dictType": "MS_APPID",
+                        "dictKey": [
+                            "MS_APPID"
+                        ],
+                        "format": "value-label"
+                    },
+                    "rules": [
+                        {
+                            "required": true,
+                            "message": "请选择业务模块"
+                        }]
+                }
+              },
+              {
+                "dimension_code": {
+                    "control": "text",
+                    "label": "业务指标编码",
+                    "rules": [
+                        {
+                            "max": 64,
+                            "message": "长度不能超过64个字符"
+                        }
+                    ]
+                },
+                "dimension_name": {
+                    "control": "text",
+                    "label": "业务指标名称",
+                    "rules": [
+                        {
+                            "max": 500,
+                            "message": "长度不能超过500个字符"
+                        }
+                    ]
+                }
+              }
+          ]
+      },
+      "toolbar": {
+          "btns": [
+              {
+                  "type": "add",
+                  "target": "dialog",
+                  "label": "新增",
+                  "toRequest": {
+                      "method": "GET",
+                      "url": "/views/ismt/ct/busiAuth/authp_dimension/authp_dimension_steps.json",
+                      "params": {
+                        "appId":"${{form.appId}}"
+                      }
+                  },
+                  "props": {
+                      "title": "业务指标定义新增"
+                  }
+              }
+          ]
+      },
+      "datagrid": {
+          "scope": "searchTable",
+          "isInitSearch": false,
+          "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                  "servicecode": "ct2404",
+                  "appId":"${{form.appId}}"
+              }
+          },
+          "pagination": {
+              "show": true,
+              "pageSize": 10
+          },
+          "thead": [
+              {
+                  "type": "index"
+              },
+              {
+                  "label": "业务指标编码",
+                  "prop": "dimension_code"
+              },
+              {
+                  "label": "业务指标名称",
+                  "prop": "dimension_name"
+              },            
+              {
+                  "prop": "achive_type",
+                  "label": "获取方式",
+                  "dict": {
+                      "dictType": "CT_E_MANNER",
+                      "dictKey": [
+                          "CT_E_MANNER"
+                      ],
+                      "format": "label"
+                  }
+              },
+              {
+                  "label": "服务路径",
+                  "prop": "service_path"
+              },
+              {
+                "label": "所属表",
+                "prop": "belonging_table"
+              },
+              {
+                "label": "查询条件",
+                "prop": "query_condition"
+              },
+              {
+                  "label": "操作",
+                  "width": 150,
+                  "align":"center",
+                  "fixed": "right",
+                  "btns": [
+                      {
+                          "type": "edit",
+                          "label": "维护",
+                          "toRequest": {
+                              "url": "/views/ismt/ct/busiAuth/authp_dimension/authp_dimension_steps_update.json",
+                              "method": "GET",
+                              "params": {
+                                "appId":"${{form.appId}}",
+                                "dimension_code":"${{current.dimension_code}}",
+                                "dimension_name":"${{current.dimension_name}}",
+                                "dimension_type":"${{current.dimension_type}}",
+                                "dimension_busi_type":"${{current.dimension_busi_type}}",
+                                "achive_type":"${{current.achive_type}}",
+                                "service_path":"${{current.service_path}}",
+                                "belonging_table":"${{current.belonging_table}}",
+                                "query_condition":"${{current.query_condition}}"
+                              }
+                          },
+                          "props": {
+                              "title": "业务指标定义信息维护"
+                          }
+                      },
+                      {
+                          "type": "edit",
+                          "label": "删除",
+                          "toRequest": {
+                              "url": "/views/ismt/ct/busiAuth/authp_dimension/authp_dimension_delete.json",
+                              "method": "GET",
+                              "params": {
+                                "appId":"${{form.appId}}"
+                              }
+                          },
+                          "props": {
+                              "title": "业务指标定义信息删除"
+                          }
+                      }
+                  ]
+              }
+          ]
+      }
+  }
+}

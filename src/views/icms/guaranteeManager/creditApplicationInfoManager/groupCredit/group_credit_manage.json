@@ -1,0 +1,146 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ar0848",
+          "apply_no": "${{params.apply_no}}"
+        }
+      },
+      "thead": [
+        {
+          "type": "string",
+          "label": "集团成员客户编号",
+          "prop": "cust_no",
+          "align": "center",
+          "width": "150px"
+        },
+        {
+          "type": "string",
+          "label": "集团成员名称",
+          "prop": "cust_name",
+          "align": "center",
+          "width": "250px"
+        },
+        {
+          "type": "string",
+          "label": "币种",
+          "prop": "ccy_code",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_CURRENCY",
+            "dictKey": [
+              "MS_CURRENCY"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "string",
+          "label": "汇率",
+          "prop": "exchange_rate",
+          "align": "center",
+          "format": {
+            "thousand": ",",
+            "decimal": "2"
+          }
+        },
+        {
+          "type": "string",
+          "label": "基准币种",
+          "prop": "base_ccy",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_CURRENCY",
+            "dictKey": [
+              "MS_CURRENCY"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "string",
+          "label": "风险限额分配金额(元)",
+          "prop": "risk_assign_amt",
+          "align": "center",
+          "format": {
+            "thousand": ",",
+            "decimal": "2"
+          }
+        },
+        {
+          "type": "string",
+          "label": "业务限额分配金额(元)",
+          "prop": "busi_assign_amt",
+          "align": "center",
+          "format": {
+            "thousand": ",",
+            "decimal": "2"
+          }
+        },
+        {
+          "type": "string",
+          "label": "循环标志",
+          "prop": "cycling_flag",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "width": "120px",
+          "fixed": "right",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/icms/guaranteeManager/creditApplicationInfoManager/groupCredit/group_credit_view.json",
+                "method": "GET",
+                "params": {
+                  "apply_no": "${{params.apply_no}}",
+                  "cust_no": "${{params.cust_no}}"
+                }
+              },
+              "props": {
+                "width": "60%",
+                "title": "集团授信详情"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "ar0859"
+                }
+              },
+              "confirm": {
+                "title": "提示信息",
+                "msg": "确定删除该信息吗？",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              },
+              "show": {
+                "expression": "'${{params.page_type}}' === 'edit'"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

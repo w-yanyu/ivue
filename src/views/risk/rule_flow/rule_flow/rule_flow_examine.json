@@ -1,0 +1,170 @@
+{
+  "module": "v-search-btn-datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "flowCode": {
+            "label": "规则流代码",
+            "control": "text",
+            "width":"auto",
+            "span": 8
+          },
+          "flowName": {
+            "label": "规则流名称",
+            "control": "text",
+            "width":"auto",
+            "span": 8
+          },
+          "reviewStatus": {
+            "label": "审核状态",
+            "control": "select",
+            "dict": {
+              "dictType": "DECI_E_SCORE_REVIEW_STATUS",
+              "dictKey": [
+                  "DECI_E_SCORE_REVIEW_STATUS"
+              ],
+              "format": "label"
+          },
+          "width":"auto",
+            "span": 8
+          }
+        },{
+          "riskOperationType": {
+            "label": "操作类型",
+            "control": "select",
+            "dict": {
+              "dictType": "DECI_E_RISK_OPERATION_TYPE",
+              "dictKey": [
+                  "DECI_E_RISK_OPERATION_TYPE"
+              ],
+              "format": "label"
+          },
+          "width":"auto",
+            "span": 8
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": []
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "deci010716"
+        }
+      },
+      "thead": [
+        {
+          "type": "index",
+          "label": "序号",
+          "align": "center"
+      },
+        {
+          "label": "规则流代码",
+          "prop": "flowCode"
+        },
+        {
+          "label": "规则流名称",
+          "prop": "flowNameAfter"
+        },
+        {
+          "label": "操作类型",
+          "prop": "riskOperationType",
+          "dict": {
+            "dictType": "DECI_E_RISK_OPERATION_TYPE",
+            "dictKey": [
+                "DECI_E_RISK_OPERATION_TYPE"
+            ],
+            "format": "label"
+        }
+        },
+        {
+          "label": "审核状态",
+          "prop": "reviewStatus",
+          "dict": {
+            "dictType": "DECI_E_SCORE_REVIEW_STATUS",
+            "dictKey": [
+                "DECI_E_SCORE_REVIEW_STATUS"
+            ],
+            "format": "label"
+        }
+        },
+        {
+          "label": "申请人",
+          "prop": "applyUserName"
+        },
+        {
+          "label": "申请时间",
+          "prop": "applyTime"
+        },
+        {
+          "label": "操作",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "审核",
+              "authId": "",
+              "toRequest": {
+                "url": "@RuleFlowReview1",
+                "method": "get",
+                "params": {
+                  "isReview": true,
+                  "isCk":"1"
+                }
+              },
+              "props": {
+                "width": "90%",
+                "height": "85%"
+              },
+              "show": {
+                "expression": "'${{current.reviewStatus}}'=== 'C'"
+              }
+            },
+            {
+              "type": "look",
+              "label": "查看",
+              "authId": "",
+              "toRequest": {
+                "url": "@RuleFlowReview1",
+                "method": "get",
+                "params": {
+                  "isReview": false,
+                  "isCk":"1"
+                }
+              },
+              "props": {
+                "width": "90%",
+                "height": "85%",
+                "top": "4vh"
+              }
+            },
+            {
+              "type": "openVerify",
+              "label": "测试结果",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "deci010632",
+                  "rule_code": "${{current.flowCode}}"
+                }
+              },
+              "toRequest": {
+                "url": "/views/risk/rule_flow/rule_flow/rule_flow_result.json",
+                "method": "get"
+              },
+              "props": {
+                "width": "70%"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

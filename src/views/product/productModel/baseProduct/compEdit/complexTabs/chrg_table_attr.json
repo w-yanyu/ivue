@@ -1,0 +1,117 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "label": "新增",
+                    "toRequest": {
+                      "url": "/views/product/productModel/baseProduct/compEdit/tabs/klnf_chrg_evt_defn_add.json",
+                      "method": "POST",
+                      "params": {
+                        "prod_code": "${{params.prod_code}}"
+                      }
+                    },
+                    "props": {
+                      "width": "70%",
+                      "title": "贷款产品收费事件新增"
+                    }
+                  }
+
+            ]},
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "ln3280",
+                  "prod_code":"${{params.prod_code}}",
+                  "outlistid": "lstklnf_chrg_evt_defn"
+                }
+            },
+            "thead": [
+              {
+                "label": "收费事件",
+                "prop": "chrg_evt",
+                "type": "string",
+                "align": "center"
+              },
+              {
+                "label": "收费事件名称",
+                "prop": "chrg_evt_nm",
+                "type": "string",
+                "align": "center"
+              },
+              {
+                "label": "收费种类",
+                "prop": "chrg_catg",
+                "type": "string",
+                "align": "center"
+              },
+              {
+                "label": "收费代码",
+                "prop": "chrg_code",
+                "type": "string",
+                "align": "center"
+                
+              },
+              {
+                "label": "收费代码名称",
+                "prop": "chrg_code_nm",
+                "type": "string",
+                "align": "center"
+                
+              },
+              {
+                "label": "收费金额",
+                "prop": "chrg_amt",
+                "type": "string",
+                "align": "center"
+                
+              },
+              {
+                "label": "操作",
+                "fixed": "right",
+                "width": 200,
+                "align": "center",
+                "btns": [
+                  {
+                    "type": "edit",
+                    "label": "维护",
+                    "toRequest": {
+                      "url": "/views/product/productModel/baseProduct/compEdit/tabs/klnf_chrg_evt_defn_edit.json",
+                      "method": "POST"
+                    },
+                    "props": {
+                      "width": "70%",
+                      "title": "贷款产品收费事件维护"
+                    }
+                  },
+                  {
+                    "type": "custom",
+                    "label": "删除",
+                    "doRequest": {
+                      "url": "/SUMP/icmcall/icmRPCCall",
+                      "method": "POST",
+                      "params": {
+                        "servicecode": ""
+                      }
+                    },
+                    "confirm": {
+                      "title": "确定删除",
+                      "confirmButtonText": "确定",
+                      "cancelButtonText": "取消"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+    }
+}

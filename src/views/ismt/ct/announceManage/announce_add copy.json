@@ -1,0 +1,212 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "btns": [
+                {
+                    "type": "submit",
+                    "label": "提交",
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "ct2332"
+                        }
+                    }
+                }
+            ],
+
+            "controls": [
+                {
+                    "announce_title": {
+                        "control": "text",
+                        "align": "center",
+                        "label": "公告标题",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入公告标题"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "announce_type": {
+                        "control": "select",
+                        "align": "center",
+                        "disabled":false,
+                        "label": "公告类型",
+                        "dict": {
+                        "dictType": "CT_E_ANNOUNCETYPE",
+                        "dictKey": [
+                            "CT_E_ANNOUNCETYPE"
+                        ],
+                        "format": "label"
+
+                        },
+                        "rules": [
+                            {
+                                "required": true
+                            }
+                        ]
+                    }
+                },
+                {
+                    "announce_content": {
+                        "control": "textarea",
+                        "align": "center",
+                        "label": "公告内容",
+                        "rows": 10,
+                        "span": 20,
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "公告内容"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "announce_file_path": {
+                        "control": "text",
+                        "align": "center",
+                        "label": "附件路径"
+                    }
+                },
+                {
+                    "publish_status": {
+                      "control": "select",
+                      "label": "发布状态",
+                      "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                            "MS_E_YESORNO"
+                        ],
+                        "format": "value-label"
+                      },
+                      "rules": [
+                          {
+                              "required": true,
+                              "message": "请输入生效日期"
+                          }
+                      ]
+                    }
+                },
+                {
+                    "effect_date": {
+                        "control": "dateTimePicker",
+                        "align": "center",
+                        "label": "生效日期",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入生效日期"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "expiry_date": {
+                        "control": "dateTimePicker",
+                        "label": "失效日期",
+                        "align": "center",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入失效日期"
+                            }
+                        ]
+                    }
+                },{
+                    "notitp": {
+                        "control": "select",
+                        "label": "通知对象",
+                        "multiple": false,
+                        "collapseTags": true,
+                        "options": [
+                            {
+                                "label": "通知操作员",
+                                "value": "1"
+                            },
+                            {
+                                "label": "通知角色下所有操作员",
+                                "value": "2"
+                            }
+                          ],
+                          "showItem": {
+                            "1": [
+                                "user_id"
+                            ],
+                            "2": [
+                                "role_id"
+                            ]
+                        },
+                        "events": {
+                                "condition": {
+                                    "1": {
+                                        "control": {
+                                            "user_id": {
+                                                "rules": [
+                                                    {
+                                                        "required": true,
+                                                        "message": "请选择操作员"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "2": {
+                                        "control": {
+                                            "role_id": {
+                                                "rules": [
+                                                    {
+                                                        "required": true,
+                                                        "message": "请选择角色编号"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                },{
+                    "user_id": {
+                        "label": "选择操作员编号",
+                        "control": "lookup",
+                        "multiple": true,
+                        "initShow": false,
+                        "keyField": {
+                            "user_id": "user_id"
+                        },
+                        "toRequest": {
+                            "url": "/views/ismt/ct/announceManage/operator_query.json",
+                            "method": "post"
+                        },
+                        "props": {
+                            "width": "85%",
+                            "title": "操作员编号查询"
+                        }
+                    },
+                    "role_id": {
+                        "control": "lookup",
+                        "label": "选择角色编号",
+                        "initShow": false,
+                        "multiple": true,
+                        "keyField": {
+                            "role_id": "role_id"
+                        },
+                        "toRequest": {
+                            "url": "/views/ismt/ct/announceManage/role_query.json",
+                            "method": "post"
+                        },
+                        "props": {
+                            "width": "85%",
+                            "title": "操作员编号查询"
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

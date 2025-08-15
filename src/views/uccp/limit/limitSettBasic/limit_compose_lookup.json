@@ -1,0 +1,135 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "initRequest": "${{params}}",
+            "controls": [
+                {
+                    "limit_component_name": {
+                        "label": "限额维度部件名称",
+                        "control": "text"
+                    },
+                    "limit_component_type": {
+                        "label": "部件适用限额类型",
+                        "control": "select",
+                        "disabled":"true",
+                        "align": "center",
+                        "dict": {
+                            "dictType": "UCCP_E_COMPONENT_TYPE",
+                            "dictKey": [
+                                "UCCP_E_COMPONENT_TYPE"
+                            ],
+                            "format": "label"
+                        }
+                    },
+                    "limit_control_way": {
+                        "label": "控制方式可选项",
+                        "control": "select",
+                        "#multiple":true,
+                        "align": "center",
+                        "dict": {
+                            "dictType": "UCCP_E_LIMIT_CONTORL_WAY",
+                            "dictKey": [
+                                "UCCP_E_LIMIT_CONTORL_WAY"
+                            ],
+                            "format": "label"
+                        }
+                    },
+                    "limit_manage_way": {
+                        "label": "管控措施可选项",
+                        "control": "select",
+                        "#multiple":true,
+                        "align": "center",
+                        "dict": {
+                            "dictType": "UCCP_E_LIMIT_MANAGE_WAY",
+                            "dictKey": [
+                                "UCCP_E_LIMIT_MANAGE_WAY"
+                            ],
+                            "format": "label"
+                        }
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            
+        },
+        "datagrid": {
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "uccp5005",
+                    "valid_flag":"1",
+                    "limit_component_type":"${{params.limit_component_type}}"
+                }
+            },
+            "thead": [
+                {
+                    "label": "限额维度部件名称",
+                    "prop": "limit_component_name",
+                    "align": "center"
+                },
+                {
+                    "label": "部件适用限额类型",
+                    "prop": "limit_component_type",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "UCCP_E_COMPONENT_TYPE",
+                        "dictKey": [
+                            "UCCP_E_COMPONENT_TYPE"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "控制方式可选项",
+                    "prop": "limit_control_way_en",
+                    "align": "center"
+                   
+                },
+                {
+                    "label": "管控措施可选项",
+                    "prop": "limit_manage_way_en",
+                    
+                    "align": "center"
+                    
+                },
+                {
+                    "label": "有效标识",
+                    "prop": "valid_flag",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "UCCP_E_VALID_FLAG",
+                        "dictKey": [
+                            "UCCP_E_VALID_FLAG"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 80,
+                    "align": "center",
+                    "btns": [
+                       
+                        {
+                            "type": "bringback",
+                            "label": "选择",
+                            "doRequest": {
+                                "url": "/SUMP/call/RPCCall",
+                                "method": "GET",
+                                "params": {}
+                            } 
+                        
+                        } 
+                        
+                    ]
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,58 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "btns": [{
+        "type": "submit",
+        "label": "提交",
+        "icon": "",
+        "doRequest": {
+          "url": "/SUMP/call/RPCCall",
+          "method": "POST",
+          "params": {
+            "servicecode": "ct2061"
+          }
+        }
+      }],
+      "controls": [{
+        "role_id": {
+          "control": "text",
+          "label": "角色ID",
+          "span": 24,
+          "value": "${{params.role_id}}",
+          "width": "120px",
+          "disabled": true
+
+        }
+      },
+        {
+          "submitData": {
+            "control": "lookup",
+            "label": "菜单选择",
+            "span": 24,
+            "width": "120px",
+            "multiple": true,
+            "rules": [{
+              "required": true,
+              "message": "请选择菜单"
+            }],
+            "keyField": {
+              "submitData": "menu_id"
+            },
+            "toRequest": {
+              "url": "/views/ismt/ct/roleManager/role_menu_tree.json",
+              "method": "post",
+              "params": {
+                "role_id": "${{form.role_id}}"
+              }
+            },
+            "props": {
+              "title": "菜单选择"
+            },
+            "format": "label"
+          }
+        }
+      ]
+    }
+  }
+}

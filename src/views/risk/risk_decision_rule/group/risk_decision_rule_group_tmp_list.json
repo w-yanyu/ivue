@@ -1,0 +1,214 @@
+{
+  "module": "v-search-btn-datagrid",
+  "pageId": "risk_general_rule_group",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "groupCode": {
+            "label": "规则组代码",
+            "control": "text",
+            "span": 8,
+            "width":"auto",
+            "align": "left",
+            "rules": [
+              {
+                "message": "字段长度超限",
+                "max": 40
+              }
+            ]
+          },
+          "groupName": {
+            "label": "规则组名称",
+            "width":"auto",
+            "control": "text",
+            "span": 8,
+            "rules": [
+              {
+                "message": "字段长度超限",
+                "max": 100
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "新增",
+          "authId": "general_rule_group_add_btn",
+          "toRequest": {
+            "###url": "/views/risk/risk_decision_rule/group/risk_decision_rule_group_add.json",
+            "url": "@riskDecisionRuleGroupAdd",
+            "method": "get",
+            "params": {}
+          },
+          "props": {
+            "width": "70%",
+            "title": "新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "deci010609",
+          "isList": true
+        }
+      },
+      "pagination": {
+        "hideOnSinglePage": false,
+        "show": true,
+        "pageSizes": [
+          10,
+          15,
+          20
+        ],
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "label": "序号",
+          "type": "index"
+        },
+        {
+          "label": "规则组代码",
+          "prop": "groupCode"
+        },
+        {
+          "label": "规则组名称",
+          "prop": "groupName"
+        },
+        {
+          "label": "操作类型",
+          "prop": "riskOperationType",
+          "dict": {
+            "dictType": "operationType2",
+            "dictKey": [],
+            "format": "label",
+            "doRequest": {
+              "url": "/views/risk/dictdata/operationType2.json",
+              "method": "get"
+            }
+          }
+        },
+        {
+          "label": "规则组状态",
+          "prop": "groupStatus",
+          "dict": {
+            "dictType": "riskStatus",
+            "dictKey": [],
+            "format": "label",
+            "doRequest": {
+              "url": "/views/risk/dictdata/riskStatus.json",
+              "method": "get"
+            }
+          }
+        },
+        {
+          "label": "备注",
+          "prop": "description"
+        },
+        {
+          "label": "最新维护时间",
+          "prop": "updateTime"
+        },
+        {
+          "label": "操作",
+          "width": "200px",
+          "btns": [
+            {
+              "type": "look",
+              "label": "查看",
+              "authId": "general_rule_group_vie_btn",
+              "toRequest": {
+                "url": "/views/risk/risk_decision_rule/group/risk_decision_rule_group_tabs2.json",
+                "method": "get"
+              },
+              "props": {
+                "title": "查看",
+                "width": "80%"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "authId": "general_rule_group_edt_btn",
+              "toRequest": {
+                "##url": "@riskDecisionRuleGroupEdit",
+                "url": "/views/risk/risk_decision_rule/group/risk_decision_rule_group_tabs.json",
+                "method": "get"
+              },
+              "props": {
+                "title": "维护",
+                "width": "80%",
+                "###height": "60%"
+              },
+              "show": {
+                "expression": "'${{current.riskOperationType}}'!== 'S' && '${{current.riskOperationType}}' !== 'D'"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "authId": "general_rule_group_edt_btn",
+              "toRequest": {
+                "#url": "@riskDecisionRuleGroupEdit",
+                "url": "@decisonRuleGroupVersionBack",
+                "method": "get"
+              },
+              "props": {
+                "title": "维护",
+                "width": "80%",
+                "###height": "60%"
+              },
+              "show": {
+                "expression": "'${{current.riskOperationType}}'==='S'"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "authId": "general_rule_group_del_btn",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "deci010614"
+                }
+              }
+            },
+            {
+              "type": "custom",
+              "label": "提交审核",
+              "#authId": "general_rule_review_btn",
+              "#icon": "el-icon-edit",
+              "toRequest": {
+                "url": "/views/risk/risk_decision_rule/group/risk_decision_rule_group_tmp_review.json",
+                "method": "get",
+                "params": {
+                  "groupCode":"${{current.groupCode}}",
+                  "groupName":"${{current.groupName}}",
+                  "groupId":"${{current.groupId}}",
+                  "riskOperationType":"${{current.riskOperationType}}"
+                }
+              },
+              "props": {
+                "width": "40%"
+              },
+              "show": {
+                "expression": "true"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

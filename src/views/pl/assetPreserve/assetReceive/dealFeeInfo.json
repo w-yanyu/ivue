@@ -1,0 +1,134 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/pl/assetPreserve/assetReceive/feeInfoAdd.json",
+            "params": {
+              "apply_no":"${{params.apply_no}}"
+            }
+          },
+          "props": {
+            "width": "65%",
+            "title":  "费用信息新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pl0275",
+          "apply_no":"${{params.apply_no}}"
+        }
+      },
+      "thead": [
+        {
+          "label": "费用类别",
+          "prop": "fee_tp",
+          "align": "center",
+          "dict": {
+            "dictType": "PL_E_FEE_TP",
+            "dictKey": [
+              "PL_E_FEE_TP"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "label": "处理日期",
+          "prop": "deal_dt",
+          "align": "center"
+        },
+        {
+          "label": "费用合计",
+          "prop": "sum_fee",
+          "align": "center",
+          "format":{
+            "thousand": ",",
+            "decimal": 3
+          }
+        },
+        {
+          "label": "费用合计",
+          "prop": "sum_fee",
+          "align": "center",
+          "format":{
+            "thousand": ",",
+            "decimal": 3
+          }
+        },
+        {
+          "label": "费用挂账账号",
+          "prop": "fee_susps_acct_num",
+          "align": "center"
+        },
+        {
+          "label": "费用挂账账号子序号",
+          "prop": "fee_susps_sub_acct_serl_num",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "align":"center",
+          "fixed": "right",
+          "width": 200,
+          "btns": [
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/pl/assetPreserve/assetReceive/feeInfoUpd.json",
+                "method": "Get"
+              },
+              "props": {
+                "width": "65%",
+                "title":  "费用信息维护"
+              }
+            },
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/pl/assetPreserve/assetReceive/feeInfoDetail.json",
+                "method": "Get"
+              },
+              "props": {
+                "width": "65%",
+                "title":  "详情"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "pl0274"
+                }
+              },
+              "confirm": {
+                "title": "确定删除",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            }
+          ]
+        }
+
+      ]
+    }
+  }
+}

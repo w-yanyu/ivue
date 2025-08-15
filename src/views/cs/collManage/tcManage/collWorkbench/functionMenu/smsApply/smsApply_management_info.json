@@ -1,0 +1,108 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "toolbar": {
+      "btns": []
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "cb0118",
+          "case_id": "${{params.case_id}}"
+        }
+      },
+      "thead": [
+        {
+          "type": "string",
+          "label": "短信模版",
+          "align": "center",
+          "prop": "template_code"
+        },
+        {
+          "type": "string",
+          "label": "手机号码",
+          "align": "center",
+          "prop": "phone_no"
+        },
+        {
+          "type": "string",
+          "label": "短信内容",
+          "align": "center",
+          "prop": "sms_content"
+        },
+        {
+          "type": "string",
+          "label": "申请人",
+          "align": "center",
+          "prop": "apply_user"
+        },
+        {
+          "type": "string",
+          "label": "申请时间",
+          "align": "center",
+          "prop": "apply_time"
+        },
+        {
+          "type": "string",
+          "label": "审核状态",
+          "align": "center",
+          "prop": "approval_status",
+          "dict": {
+            "dictType": "CS_E_CHECK_STATUS",
+            "dictKey": [
+              "CS_E_CHECK_STATUS"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "label": "审核人",
+          "align": "center",
+          "prop": "approval_user"
+        },
+        {
+          "type": "string",
+          "label": "审核时间",
+          "align": "center",
+          "prop": "approval_time"
+        },
+        {
+          "type": "string",
+          "label": "审核说明",
+          "align": "center",
+          "prop": "approval_desc"
+        },
+        {
+          "label": "操作",
+          "fixed": "left",
+          "align": "center",
+          "width": "180px",
+          "btns": [
+            {
+              "type": "delete",
+              "label": "撤回",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "pl1503",
+                  "apply_id": "${{current.apply_id}}"
+                }
+              },
+              "show": {
+                "prop": "approval_status",
+                "is": [
+                  "NC"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

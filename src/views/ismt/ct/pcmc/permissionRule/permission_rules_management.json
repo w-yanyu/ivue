@@ -1,0 +1,174 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "rule_type": {
+            "control": "select",
+            "label": "规则类型",
+            "dict": {
+              "format": "label",
+              "dictKey": ["CT_RULE_TYPE"],
+              "dictType": "CT_RULE_TYPE"
+            }
+          },
+          "rule_name": {
+            "control": "text",
+            "label": "规则名称",
+            "rules": [
+              {
+                "max": 10,
+                "message": "长度不能超过10个字符"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/ismt/ct/pcmc/permissionRule/permission_rules_add.json",
+            "params": {}
+          },
+          "props": {
+            "title": "规则新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ct3310"
+        }
+      },
+      "pagination": {
+        "show": true,
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "type": "index"
+        },
+        {
+          "label": "规则名称",
+          "prop": "rule_name",
+          "align": "center"
+        },
+        {
+          "label": "规则类型",
+          "prop": "rule_type",
+          "align": "center",
+          "dict": {
+            "dictType": "CT_RULE_TYPE",
+            "dictKey": ["CT_RULE_TYPE"],
+            "format": "label"
+          }
+        },
+
+        {
+          "label": "规则列",
+          "prop": "rule_column",
+          "align": "center",
+          "dict": {
+            "dictKey": [
+              "rule_column"
+            ],
+            "format": "label",
+            "labelField": "domain_name",
+            "valueField": "domain_code",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct3302",
+                "domainName": "",
+                "domainCode": ""
+              }
+            }
+          }
+        },
+        {
+          "label": "说明",
+          "prop": "interest_rate_desc",
+          "align": "center"
+        },
+        {
+          "label": "规则ID",
+          "prop": "rule_id",
+          "align": "center",
+          "isShow": false
+        },
+        {
+          "label": "列条件",
+          "prop": "column_operator",
+          "align": "center",
+          "isShow": false,
+          "dict": {
+            "format": "label",
+            "dictKey": ["CT_COLUMN_OPERATOR"],
+            "dictType": "CT_COLUMN_OPERATOR"
+          }
+        },
+        {
+          "label": "值集",
+          "prop": "dict_type",
+          "align": "center",
+          "isShow": false
+        },
+        {
+          "label": "关联下级",
+          "prop": "related_below",
+          "align": "center",
+          "isShow": false
+        },
+        {
+          "label": "规则值",
+          "prop": "rule_value",
+          "align": "center",
+          "isShow": false
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "align": "center",
+          "width": 150,
+          "btns": [
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/ismt/ct/pcmc/permissionRule/permission_rules_edit.json",
+                "method": "POST"
+              },
+              "props": {
+                "title": "规则维护"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "ct3312"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

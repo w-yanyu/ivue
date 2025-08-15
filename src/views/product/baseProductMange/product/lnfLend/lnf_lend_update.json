@@ -1,0 +1,173 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/product/baseProductMange/product/lnfLend/lnf_lend_add.json",
+            "params": {
+              "prodcd": "${{params.prodcd}}"
+            }
+          },
+          "props": {
+            "width": "70%",
+            "title": "新增产品放款属性"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "CORELNTS9016",
+          "prodcd": "${{params.prodcd}}"
+        }
+      },
+      "thead": [
+        {
+          "label": "产品代码",
+          "prop": "prodcd"
+        },
+        {
+          "label": "货币代号",
+          "prop": "crcycd",
+          "dict": {
+            "dictType": "MS_CURRENCY",
+            "dictKey": [
+              "MS_CURRENCY"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "单笔放款最大金额",
+          "prop": "mxtlam"
+        },
+        {
+          "label": "单笔放款最小金额",
+          "prop": "mntlam"
+        },
+        {
+          "label": "单笔放款最长贷款期限",
+          "prop": "mxterm"
+        },
+        {
+          "label": "单笔放款最短贷款期限",
+          "prop": "mnterm"
+        },
+        {
+          "label": "放款类型",
+          "prop": "lendmd",
+          "dict": {
+            "dictType": "E_LENDMD",
+            "dictKey": [
+              "E_LENDMD"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "放款资金来源类型",
+          "prop": "fundsr",
+          "dict": {
+            "dictType": "E_FUNDSR",
+            "dictKey": [
+              "E_FUNDSR"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "支付方式",
+          "prop": "fundmd",
+          "dict": {
+            "dictType": "E_FUNDMD",
+            "dictKey": [
+              "E_FUNDMD"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "自主支付卡类型",
+          "prop": "bchlty",
+          "dict": {
+            "dictType": "E_BCHLTY",
+            "dictKey": [
+              "E_BCHLTY"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "最大放款次数",
+          "prop": "mxtmes"
+        },
+        {
+          "label": "每日最大放款次数",
+          "prop": "contsm",
+          "width": "200px"
+        },
+        {
+          "label": "首次动用有效期限（天）",
+          "prop": "vadays"
+        },
+        {
+          "label": "自动放款标志",
+          "prop": "isauld",
+          "dict": {
+            "dictType": "E_ISAULD",
+            "dictKey": [
+              "E_ISAULD"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "修改",
+              "toRequest": {
+                "url": "/views/product/baseProductMange/product/lnfLend/lnf_lend_update_sub.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "70%",
+                "title": "修改产品放款属性"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "CORELNTS9018"
+                }
+              },
+              "confirm": {
+                "title": "确定删除",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

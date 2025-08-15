@@ -1,0 +1,107 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "template_id": {
+            "label": "模板编号",
+            "control": "text"
+          },
+          "template_name": {
+            "label": "模板名称",
+            "control": "text"
+          }
+        },
+        {
+          "prod_type": {
+            "control": "remoteSelect",
+            "label": "产品类型",
+            "value": "LOAN",
+            "labelField": "title",
+            "valueField": "id",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "exclude": [
+                "CL",
+                "V"
+              ],
+              "params": {
+                "servicecode": "pd0144",
+                "grupno": "0006",
+                "pid": "KSCP"
+              }
+            },
+            "format": "label",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+    },
+    "datagrid": {
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "pd0111",
+          "cust_class_list": "${{params.cust_class_list}}"
+        }
+      },
+      "thead": [
+        {
+          "label": "模板编号",
+          "prop": "template_id",
+          "align": "center"
+        },
+        {
+          "label": "模板名称",
+          "prop": "template_name",
+          "align": "center"
+        },
+        {
+          "label": "模板版本",
+          "prop": "prod_version",
+          "align": "center"
+        },
+        {
+          "label": "产品类型",
+          "prop": "prod_type_name",
+          "align": "center",
+          "labelField": "title"
+        },
+        {
+          "type": "string",
+          "label": "适用客户类型",
+          "prop": "cust_class",
+          "align": "center",
+          "dict": {
+            "dictType": "PD_E_CUST_CLASS",
+            "dictKey": [
+              "PD_E_CUST_CLASS"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "btns": [
+              {
+                  "type": "bringback",
+                  "label": "选择"
+              }
+          ]
+      }
+      ]
+    }
+  }
+}

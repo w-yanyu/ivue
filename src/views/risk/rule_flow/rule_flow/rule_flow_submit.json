@@ -1,0 +1,98 @@
+{
+  "module": "v-inputDataForm-btn",
+  "layout": {
+    "form": {
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "deci010706",
+          "flowCode":"${{params.flowCode}}"
+        }
+      },
+
+      "btns": [
+        {
+          "type": "close",
+          "label": "取消"
+        },
+        {
+          "type": "submit",
+          "target": "addlog",
+          "label": "确定",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "deci010710"
+            }
+          }
+        }
+      ],
+
+      "controls": [
+        {
+          "flowCode": {
+            "label": "规则流代码",
+            "control": "text",
+            "width":"auto",
+            "span": 24,
+            "disabled": true,
+            "rules": [
+              {
+                "required": true,
+                "message": "请正确输入",
+                "max": 64
+              }
+            ]
+          }
+        },
+        {
+          "flowName": {
+            "label": "规则流名称",
+            "control": "text",
+            "width":"auto",
+            "span": 24,
+            "disabled": true,
+            "rules": [
+              {
+                "required": true,
+                "message": "请正确输入",
+                "max": 125
+              },
+              {
+                "required": true,
+                "pattern": "^[\u4E00-\u9FA5A_Za-z0-z0-9]+$",
+                "message": "仅可为字母、数字、文字及相关的组合"
+              }
+            ]
+          }
+        },
+        {
+          "riskOperationType": {
+            "label": "操作类型",
+            "control": "select",
+            "width":"auto",
+            "span": 24,
+            "disabled": true,
+            "dict": {
+              "dictType": "DECI_E_RISK_OPERATION_TYPE",
+              "dictKey": [
+                "DECI_E_RISK_OPERATION_TYPE"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": false,
+                "message": "请正确输入",
+                "max": 128
+              }
+            ]
+
+          }
+        }
+      ]
+    }
+  }
+}

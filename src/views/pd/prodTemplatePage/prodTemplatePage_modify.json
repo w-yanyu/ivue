@@ -1,0 +1,191 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "scope": "templateScope",
+      "initRequest": "${{params}}",
+      "initDataOnce": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "pd0122"
+        }
+      },
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交"
+        }
+      ],
+      "controls": [
+        {
+          "page_template_no": {
+            "width": "180px",
+            "control": "string",
+            "label": "页面模板编号",
+            "rules": [
+              {
+                "required": true,
+                "message": "必填项"
+              }
+            ]
+          },
+          "page_template_name": {
+            "width": "180px",
+            "control": "text",
+            "label": "页面模板名称",
+            "rules": [
+              {
+                "required": true,
+                "message": "必填项"
+              }
+            ]
+          }
+        },
+        {
+          "prod_type": {
+            "width": "180px",
+            "label": "产品类型",
+            "control": "remoteSelect",
+            "labelField": "title",
+            "valueField": "id",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "pd0144",
+                "grupno": "0006",
+                "pid": "KSCP"
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "必填项"
+              }
+            ]
+          },
+          "apply_type": {
+            "width": "180px",
+            "label": "申请类型",
+            "control": "remoteSelect",
+            "labelField": "title",
+            "valueField": "id",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "pd0144",
+                "grupno": "0006",
+                "pid": "${{templateScope.prod_type}}"
+              }
+            },
+            "format": "label",
+            "rules": [
+              {
+                "required": true,
+                "message": "必填项"
+              }
+            ]
+          }
+        },
+        {
+          "must_flag": {
+            "width": "180px",
+            "control": "select",
+            "label": "是否必须",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label-value"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "必填项"
+              }
+            ]
+          },
+          "valid_flag": {
+            "width": "180px",
+            "control": "select",
+            "label": "是否有效",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label-value"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "必填项"
+              }
+            ]
+          }
+        },{
+          "sort_no":{
+            "width": "180px",
+            "control": "text",
+            "label": "优先级序号",
+            "rules": [
+              {
+                "required": true,
+                "message": "必填项"
+              },{
+                "type":"number",
+                "message":"请输入整数"
+              }
+            ]
+          }
+        },
+        {
+          "add_path": {
+            "control": "text",
+            "width": "180px",
+            "span": 24,
+            "label": "新增页面路径",
+            "rules": [
+              {
+                "required": true,
+                "message": "必填项"
+              }
+            ]
+          }
+        },
+        {
+          "modify_path": {
+            "control": "text",
+            "width": "180px",
+            "span": 24,
+            "label": "维护页面路径",
+            "rules": [
+              {
+                "required": true,
+                "message": "必填项"
+              }
+            ]
+          }
+        },
+        {
+          "detail_path": {
+            "control": "text",
+            "width": "180px",
+            "span": 24,
+            "label": "详情页面路径",
+            "rules": [
+              {
+                "required": true,
+                "message": "必填项"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

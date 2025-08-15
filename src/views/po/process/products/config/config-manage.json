@@ -1,0 +1,126 @@
+{
+  "module": "v-form-editableDataGrid-btn",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "wfprod_cd": {
+            "control": "string",
+            "label": "流程产品编号",
+            "width": "130px",
+            "value": "${{params.wfprod_cd}}",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入流程产品编号"
+              }
+            ]
+          },
+          "wfprod_na": {
+            "control": "text",
+            "label": "流程产品名称",
+            "value": "${{params.wfprod_name}}",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入流程产品名称"
+              },
+              {
+                "max": 128,
+                "message": "长度不能超过128个字符"
+              }
+            ]
+          },
+          "wfprod_tp": {
+            "control": "select",
+            "label": "流程产品类型",
+            "width": "130px",
+            "value": "${{params.wfprod_tp}}",
+            "dict": {
+              "dictType": "BPM_E_WFPDTP",
+              "dictKey": [
+                "BPM_E_WFPDTP"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择流程产品类型"
+              }
+            ]
+          },
+          "wfprod_st": {
+            "control": "select",
+            "label": "流程产品状态",
+            "width": "130px",
+            "value": "02",
+            "dict": {
+              "dictType": "BPM_E_WFPDST",
+              "dictKey": [
+                "BPM_E_WFPDST"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择流程产品状态"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "配置机构",
+          "toRequest": {
+            "url": "/views/po/process/products/config/config-add.json",
+            "method": "GET",
+            "params": {
+              "wfprod_cd": "${{form.wfprod_cd}}",
+              "wfprod_name": "${{form.wfprod_na}}",
+              "wfprod_st": "${{form.wfprod_st}}",
+              "wfprod_tp": "${{form.wfprod_tp}}"
+            }
+          },
+          "props": {
+            "title": "配置机构信息"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "pagination": {
+        "show": false
+      },
+      "doRequest": {
+        "url":"/SUMP/icmcall/icmRPCCall",
+        "method":"POST",
+        "params": {
+          "servicecode": "brccfg",
+          "yewuid": "${{params.wfprod_cd}}",
+          "yewutp": "${{params.wfprod_tp}}"
+        }
+      },
+      "thead": [
+        {
+          "type": "string",
+          "prop": "brchcd",
+          "label": "机构号",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "prop": "orgnam",
+          "label": "机构名称",
+          "align": "center"
+        }
+      ]
+    }
+  }
+}

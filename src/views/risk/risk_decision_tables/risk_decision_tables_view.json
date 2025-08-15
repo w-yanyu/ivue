@@ -1,0 +1,117 @@
+{
+  "module": "v-realonlyForm-btn",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "deci_tables_code": {
+            "label": "决策表代码",
+            "width":"auto",
+            "control": "string",
+            "span": 12
+          },"deci_tables_name": {
+            "label": "决策表名称",
+            "width":"auto",
+            "control": "string",
+            "span": 12
+          }
+        },
+        {
+          "branch_id": {
+            "label": "机构名称",
+            "width":"auto",
+            "control": "string",
+            "span": 12,
+            "disabled": true,
+            "dict": {
+              "dictType": "DECI_E_BRANCH_MARK",
+              "dictKey": [
+                "DECI_E_BRANCH_MARK"
+              ],
+              "format": "label"
+            }
+          },
+          "busi_version": {
+            "label": "版本号",
+            "width":"auto",
+            "control": "string",
+            "span": 12,
+            "disabled": true
+          }
+        },
+        {
+          "service_object": {
+            "label": "服务对象",
+            "width":"auto",
+            "control": "string",
+            "span": 12,
+            "disabled": true
+          },
+          "apply_user": {
+            "label": "最新维护人",
+            "width":"auto",
+            "control": "string",
+            "span": 12,
+            "dict": {
+              "dictType":"deciOnl",
+                "dictKey": [],
+                "format": "label",
+                "labelField": "user_name",
+                "valueField": "user_id",
+                "doRequest": {
+                    "url": "/SUMP/icmcall/icmRPCCall",
+                    "method": "POST",
+                    "params": {
+                      "length":1000,
+                      "start":1,
+                        "servicecode": "ct2503"
+                    }
+                }
+            }
+          }
+        },
+        {
+          "apply_time": {
+            "label": "最新维护时间",
+            "width":"auto",
+            "control": "string",
+            "type": "dateTimePicker",
+            "span": 12,
+            "#format": "yyyy-MM-dd HH:mm:ss"
+          }
+        },
+        {
+          "deci_tables_describe": {
+            "label": "备注",
+            "width":"auto",
+            "control": "textarea",
+            "disabled":true,
+            "rows": 2,
+            "span": 24
+          }
+        },
+        {
+          "allData": {
+            "label": "决策表配置",
+            "width": "auto",
+            "initShow": true,
+            "disabled":true,
+            "span": 24,
+            "control": "dynamic",
+            "toRequest": {
+              "url": "@dynamicEditTable",
+              "params": {
+                "deci_tables_code": "${{params.deci_tables_code}}",
+                "showButton":false,
+                "lookView":"main"
+              }
+            },
+            "props": {}
+          }
+        }
+      ],
+      "initRequest": "${{params}}"
+
+    }
+  }
+}

@@ -1,0 +1,130 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "toolbar": {
+            "btns": [{
+                "type": "add",
+                "target": "dialog",
+                "label": "新增",
+                "toRequest": {
+                    "method": "POST",
+                    "url": "/views/us/entManager/custfinanceManager/corpSectManager/corpSect_add.json",
+                    "params": {
+                        "cust_no": "${{params.cust_no}}"
+                    }
+                },
+                "show": {
+                    "expression": "'${{params.show_flash}}' == '1'"
+                },
+                "props": {
+                    "width": "80%",
+                    "title": "股票信息新增"
+                }
+            }]
+        },
+        "datagrid": {
+            "isInitSearch": true,
+            "scope": "searchTable",
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "us0310",
+                    "cust_no": "${{params.cust_no}}"
+                }
+            },
+            "thead": [{
+                    "label": "序号",
+                    "type": "index",
+                    "align": "center"
+                },
+                {
+                    "label": "证券简称",
+                    "prop": "security_name",
+                    "align": "center"
+                },
+                {
+                    "label": "证券类别",
+                    "prop": "security_type",
+                    "align": "center"
+                },
+                {
+                    "label": "证券代码",
+                    "prop": "security_code",
+                    "align": "center"
+                },
+                {
+                    "label": "上市日期",
+                    "prop": "list_date",
+                    "align": "center"
+                },
+                {
+                    "label": "发行价",
+                    "prop": "issue_price",
+                    "align": "center"
+                },
+                {
+                    "label": "发行量",
+                    "prop": "issue_amt",
+                    "align": "center"
+                },
+                {
+                    "label": "预期投资收益率",
+                    "prop": "return_investment",
+                    "align": "center"
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 200,
+                    "align": "center",
+                    "btns": [{
+                            "type": "edit",
+                            "label": "详情",
+                            "toRequest": {
+                                "url": "/views/us/entManager/custfinanceManager/corpSectManager/corpSect_info.json",
+                                "method": "post"
+                            },
+                            "props": {
+                                "width": "80%",
+                                "title": "股票信息详情"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/us/entManager/custfinanceManager/corpSectManager/corpSect_update.json",
+                                "method": "post"
+                            },
+                            "show": {
+                                "expression": "'${{params.show_flash}}' == '1'"
+                            },
+                            "props": {
+                                "width": "80%",
+                                "title": "股票信息维护"
+                            }
+                        },
+                        {
+                            "type": "delete",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "post",
+                                "params": {
+                                    "servicecode": "us0313"
+                                }
+                            },
+                            "show": {
+                                "expression": "'${{params.show_flash}}' == '1'"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "pagination": {
+                "show": true
+            }
+        }
+    }
+}

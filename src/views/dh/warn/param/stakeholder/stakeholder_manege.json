@@ -1,0 +1,175 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "trxn_type": {
+            "label": "交易类别",
+            "control": "select",
+            "dict": {
+              "dictType": "E_WATRANTYPE",
+              "dictKey": [
+                "E_WATRANTYPE"
+              ],
+              "format": "value-label"
+            }
+          },
+          "userid": {
+            "label": "用户ID",
+            "control": "lookup",
+            "edit": true,
+            "keyField": {
+              "data_update_name": "user_name",
+              "userid": "user_id"
+            },
+            "toRequest": {
+              "url": "/views/dh/transfer/handover/custManager.json",
+              "method": "post"
+            },
+            "props": {
+              "title": "选择操作人"
+            },
+            "format": "label"
+          }
+        },
+        {
+          "validity": {
+            "label": "是否有效",
+            "control": "select",
+            "prop": "validity",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            }
+          }
+        },
+        {
+          "data_update_user": {
+            "label": "操作人",
+            "control": "hidden"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "新增",
+          "toRequest": {
+            "url": "/views/dh/warn/param/stakeholder/stakeholder_add.json",
+            "method": "get",
+            "params": {}
+          },
+          "props": {
+            "title": "预警干系人管理新增",
+            "width": "75%"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "wa1601"
+        }
+      },
+      "thead": [
+        {
+          "label": "序号",
+          "type": "index"
+        },
+        {
+          "label": "交易类别",
+          "prop": "trxn_type",
+          "align": "center",
+          "dict": {
+            "dictType": "E_WATRANTYPE",
+            "dictKey": [
+              "E_WATRANTYPE"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "label": "用户ID",
+          "prop": "userid",
+          "align": "center"
+        },
+        {
+          "label": "是否有效",
+          "align": "center",
+          "prop": "validity",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作日期",
+          "prop": "date_update_time",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 180,
+          "align": "center",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/dh/warn/param/stakeholder/stakeholder_detalis.json",
+                "method": "get",
+                "params": {}
+              },
+              "props": {
+                "title": "预警干系人管理详情",
+                "width": "75%"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/dh/warn/param/stakeholder/stakeholder_modify.json",
+                "method": "get",
+                "params": {}
+              },
+              "props": {
+                "title": "预警干系人管理维护",
+                "width": "75%"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "wa1602",
+                  "trxn_type": "${{current.trxn_type}}",
+                  "userid": "${{current.userid}}",
+                  "trantp": "DELETE"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

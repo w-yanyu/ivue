@@ -1,0 +1,128 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "target": "dialog",
+                    "label": "新增",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/product/productModel/baseProduct/update/product_cpkz_add.json",
+                        "params": {
+                            "prod_code": "${{params.prod_code}}",
+                            "prod_nm": "${{params.prod_nm}}",
+                            "eff_dt": "${{params.eff_dt}}",
+                            "invld_dt": "${{params.invld_dt}}",
+                            "prod_grp_code": "${{params.prod_grp_code}}",
+                            "prod_grp_nm": "${{params.prod_grp_nm}}",
+                            "prod_tplt_code": "${{params.prod_tplt_code}}"
+                        }
+                    },
+                    "props": {
+                        "title": "控制信息新增"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ln3271",
+                    "prod_code": "${{params.prod_code}}",
+                    "outlistid": "lstklnf_dflt_ctrl"
+                }
+            },
+            "pagination": {
+                "show":false
+            },
+            "thead": [
+                {
+                    "label": "产品级表名",
+                    "prop": "prod_lv_tab_nm",
+                    "align": "center",
+                    "type": "text"
+                },
+                {
+                    "label": "产品级字段",
+                    "prop": "prod_lv_fld",
+                    "align": "center",
+                    "type": "text"
+                },
+                {
+                    "label": "产品级字段描述",
+                    "prop": "prod_lv_fld_dsc",
+                    "align": "center",
+                    "type": "text"
+                },
+                {
+                    "label": "账户级表名",
+                    "prop": "acct_lv_tab_nm",
+                    "align": "center",
+                    "type": "text"
+                },
+                {
+                    "label": "账户级字段",
+                    "prop": "acct_lv_fld",
+                    "align": "center",
+                    "type": "text"
+                },
+                {
+                    "label": "账户级字段描述",
+                    "prop": "acct_lv_fld_dsc",
+                    "align": "center",
+                    "type": "text"
+                },
+                {
+                    "label": "账户修改规则",
+                    "prop": "acct_mod_rule",
+                    "align": "center",
+                    "type": "select",
+                    "dict": {
+                        "dictType": "LN_E_ACCT_MOD_RULE",
+                        "dictKey": [
+                            "LN_E_ACCT_MOD_RULE"
+                        ],
+                        "format": "label-value"
+                    }
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 130,
+                    "align": "center",
+                    "btns": [
+                        {
+                            "type": "custom",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "syln3273",
+                                    "prod_code": "${{params.prod_code}}",
+                                    "prod_nm": "${{params.prod_nm}}",
+                                    "eff_dt": "${{params.eff_dt}}",
+                                    "invld_dt": "${{params.invld_dt}}",
+                                    "prod_grp_code": "${{params.prod_grp_code}}",
+                                    "prod_grp_nm": "${{params.prod_grp_nm}}",
+                                    "prod_tplt_code": "${{params.prod_tplt_code}}",
+                                    "operation": 2
+                                }
+                            },
+                            "confirm": {
+                                "title": "确定删除",
+                                "confirmButtonText": "确定",
+                                "cancelButtonText": "取消"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

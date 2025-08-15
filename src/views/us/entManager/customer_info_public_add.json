@@ -1,0 +1,280 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "icon": "",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "us0202"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "file": {
+            "doRequest": {
+              "url": "/SUMP/rest/recognize/uploadAndGet",
+              "method": "post",
+              "params": {
+                "appId": "icmsOnl",
+                "servicecode": "ct2558"
+              },
+              "resultSet": {
+                "cust_name": "enterpriseName",
+                "cert_no": "creditCode",
+                "cert_day": "opFrom",
+                "card_end_day": "opPeriod",
+                "issuing_addr": "address",
+                "cert_type": "cert_type",
+                "doc_path": "docPath",
+                "doc_path": "docPath",
+                "org_name": "legalName"
+              }
+            },
+            "width": "130px",
+            "control": "file",
+            "limit": 1,
+            "limitSize": 10,
+            "label": "上传营业执照",
+            "btnLable": "请选择营业执照图片"
+          }
+        },
+        {
+          "org_name": {
+            "control": "hidden",
+            "label": "法人名称"
+          },
+          "doc_path": {
+            "control": "hidden",
+            "label": "文件路径"
+          },
+          "doc_name": {
+            "control": "hidden",
+            "label": "文件名称"
+
+          },
+          "cust_name": {
+            "control": "text",
+            "label": "客户名称",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入客户名称"
+              },
+              {
+                "max": 200,
+                "message": "长度不能超过200个字符"
+              }
+            ]
+          },
+          "country_code": {
+            "control": "select",
+            "label": "国籍",
+            "width": "130px",
+            "dict": {
+              "dictType": "US_E_INCTRY",
+              "dictKey": [
+                "US_E_INCTRY"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择国籍"
+              }
+            ]
+          }
+        },
+        {
+          "cust_befor_name": {
+            "control": "text",
+            "label": "客户曾用名",
+            "width": "130px",
+            "rules": [
+              {
+                "required": false,
+                "message": "请输入客户曾用名"
+              },
+              {
+                "max": 80,
+                "message": "长度不能超过80个字符"
+              }
+            ]
+          },
+          "cust_english_name": {
+            "control": "text",
+            "label": "客户英文名称",
+            "width": "130px",
+            "rules": [
+              {
+                "required": false,
+                "message": "请输入客户英文名称"
+              },
+              {
+                "max": 80,
+                "message": "长度不能超过80个字符"
+              }
+            ]
+          }
+        },
+        {
+          "cert_type": {
+            "control": "select",
+            "label": "证件类型",
+            "width": "130px",
+            "dict": {
+              "dictType": "US_E_PUB_CRET_TYPE",
+              "dictKey": [
+                "US_E_PUB_CRET_TYPE"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择证件类型"
+              }
+            ]
+          },
+          "cert_no": {
+            "control": "text",
+            "label": "证件号码",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入证件号码"
+              },
+              {
+                "max": 30,
+                "message": "长度不能超过30个字符"
+              }
+            ]
+          }
+        },
+        {
+          "cert_day": {
+            "label": "证件签发日期",
+            "width": "130px",
+            "control": "dateTimePicker",
+            "editable": true,
+            "format": "yyyyMMdd",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入证件签发日期"
+              }
+            ]
+          },
+          "card_end_day": {
+            "label": "证件到期日期",
+            "width": "130px",
+            "control": "dateTimePicker",
+            "editable": true,
+            "format": "yyyyMMdd",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入证件到期日期"
+              }
+            ],
+            "disabledDate": {
+              "startRange": "${{formData.cardsday}}",
+              "endRange": "3000-01-01"
+            }
+          }
+        },
+        {
+          "issuing_addr": {
+            "control": "areaCascade",
+            "title": "请选择注册地址",
+            "label": "注册地址",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入注册地址"
+              },
+              {
+                "max": 80,
+                "message": "长度不能超过80个字符"
+              }
+            ]
+          },
+          "cust_type": {
+            "control": "select",
+            "label": "客户类型",
+            "width": "130px",
+            "dict": {
+                "dictType": "US_E_CUST_TYPE_PUB",
+                "dictKey": [
+                    "US_E_CUST_TYPE_PUB"
+                ],
+                "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择客户类型"
+              }
+            ]
+          }
+        },
+        {
+          "org_code": {
+            "control": "text",
+            "label": "组织机构代码",
+            "width": "130px",
+            "rules": [
+              {
+                "max": 30,
+                "message": "长度不能超过30个字符"
+              }
+            ]
+          },
+          "credit_org_code": {
+            "control": "text",
+            "label": "机构信用代码",
+            "width": "130px",
+            "rules": [
+              {
+                "max": 30,
+                "message": "长度不能超过20个字符"
+              }
+            ]
+          }
+        },
+        {
+          "cust_nature": {
+            "control": "select",
+            "label": "客户性质",
+            "width": "130px",
+            "dict": {
+              "dictType": "US_E_LEGAL_CUST_PROPERTY",
+              "dictKey": [
+                "US_E_LEGAL_CUST_PROPERTY"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择客户性质"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

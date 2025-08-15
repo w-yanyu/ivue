@@ -1,0 +1,130 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "scheme_name": {
+            "label": "案件分配方案名称",
+            "control": "text"
+          },
+          
+          "assigned_style": {
+            "control": "select",
+            "label": "预警案件分配类型",
+            "dict": {
+              "dictType": "E_ASSIGNED_STYLE",
+              "dictKey": [
+                "E_ASSIGNED_STYLE"
+              ],
+              "format": "label"
+            }
+          },
+          "is_valid": {
+            "control": "select",
+            "label": "是否有效",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": []
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "wa1201"
+        }
+      },
+      "thead": [
+        {
+          "label": "序号",
+          "type": "index"
+        },
+        {
+          "label": "案件分配方案编号",
+          "prop": "scheme_id",
+          "align": "center"
+        },
+        {
+          "label": "案件分配方案名称",
+          "prop": "scheme_name",
+          "align": "center"
+        },
+        {
+          "label": "预警案件分配类型",
+          "align": "center",
+          "prop": "assigned_style",
+          "dict": {
+            "dictType": "E_ASSIGNED_STYLE",
+            "dictKey": [
+              "E_ASSIGNED_STYLE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "是否有效",
+          "align": "center",
+          "prop": "is_valid",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "维护",
+              "show": {
+                "expression": "'${{current.assigned_style}}' === 'L'"
+              },
+              "toRequest": {
+                "url": "/views/dh/warn/param/assign/scheme_modify_tc.json.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "80%",
+                "title": "分配方案策略维护"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "show": {
+                "expression": "'${{current.assigned_style}}' !== 'L'"
+              },
+              "toRequest": {
+                "url": "/views/dh/warn/param/assign/scheme_modify.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "80%",
+                "title": "分配方案策略维护"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

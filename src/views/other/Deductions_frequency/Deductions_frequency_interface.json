@@ -1,0 +1,141 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "prodcd": {
+            "control": "text",
+            "label": "产品代码",
+            "rules": [
+              {
+                "max": 32,
+                "message": "产品码长度不能超过32个字符"
+              },
+              {
+                "required": true,
+                "message": "产品码不能为空"
+              }
+            ]
+          },
+          "decatp": {
+            "control": "select",
+            "label": "扣款卡类别",
+            "align": "center",
+            "dict": {
+              "dictType": "E_DECATP",
+              "dictKey": [
+                "E_DECATP"
+              ],
+              "format": "label"
+            }
+          }
+        },
+        {
+          "delost": {
+            "control": "select",
+            "label": "扣款借据状态",
+            "align": "center",
+            "dict": {
+              "dictType": "E_DELOST",
+              "dictKey": [
+                "E_DELOST"
+              ],
+              "format": "label"
+            }
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "CORELNTS2108",
+          "prodcd": "${{current.prodcd}}"
+        }
+      },
+      "thead": [
+        {
+          "type": "index",
+          "label": "序号",
+          "prop": "#",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "产品代码",
+          "prop": "prodcd",
+          "align": "center"
+        },
+        {
+          "type": "select",
+          "label": "扣款卡类别",
+          "prop": "decatp",
+          "align": "center",
+          "dict": {
+            "dictType": "E_DECATP",
+            "dictKey": [
+              "E_DECATP"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "select",
+          "label": "扣款借据状态",
+          "prop": "delost",
+          "align": "center",
+          "dict": {
+            "dictType": "E_DELOST",
+            "dictKey": [
+              "E_DELOST"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "string",
+          "label": "扣款频率类型",
+          "prop": "defreq",
+          "align": "center",
+          "dict": {
+            "dictType": "E_DEFREQ",
+            "dictKey": [
+              "E_DEFREQ"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "string",
+          "label": "固定日",
+          "prop": "fixday",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": "200px",
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/other/Deductions_frequency/Deductions_frequency_upt.json",
+                "method": "GET"
+              },
+              "props": {
+                "title": "扣款频率维护"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

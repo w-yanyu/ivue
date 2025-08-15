@@ -1,0 +1,260 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initDataOnce": true,
+      "initRequest": "${{params}}",
+      "btns": [
+        {
+          "type": "submit",
+          "label": "保存",
+          "icon": "",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "ar4001"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "file": {
+            "doRequest": {
+              "url": "/SUMP/rest/recognize/uploadAndGet",
+              "method": "post",
+              "params": {
+                "appId": "icmsOnl",
+                "servicecode": "ct2556"
+              },
+              "resultSet": {
+                "certconf_id": "certificationNo",
+                "issue_date": "certificateDate",
+                "vehicle_manuf": "manufacturer",
+                "vehicle_brand": "carBrand",
+                "vehicle_model": "carModel",
+                "vehicle_number": "vinNo",
+                "vehicle_color": "carColor",
+                "engine_number": "engineNo",
+                "manuf_date": "manufactureDate",
+                "is_open_api":"is_open_api"
+              }
+            },
+            "width": "280px",
+            "control": "file",
+            "limit": 1,
+            "limitSize": 10,
+            "label": "识别汽车合格证图片",
+            "btnLable": "请选择汽车合格证图片"
+          }
+        },
+        {
+          "is_open_api": {
+            "control": "hidden",
+            "label": "api",
+            "events": {
+              "condition": {
+                "0": {
+                  "control": {
+                    "certconf_id": {
+                      "disabled": false
+                    },
+                    "issue_date": {
+                      "disabled": false
+                    },
+                    "vehicle_manuf": {
+                      "disabled": false
+                    },
+                    "vehicle_brand": {
+                      "disabled": false
+                    },
+                    "vehicle_model": {
+                      "disabled": false
+                    },
+                    "vehicle_number": {
+                      "disabled": false
+                    },
+                    "vehicle_color": {
+                      "disabled": false
+                    },
+                    "engine_number": {
+                      "disabled": false
+                    },
+                    "manuf_date": {
+                      "disabled": false
+                    }
+                }
+                }
+              }
+            }
+          }
+        },
+        {
+          "certconf_id": {
+            "control": "text",
+            "label": "合格证编号",
+            "width": "50%",
+            "disabled": true,
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入合格证编号"
+              }
+            ]
+          },
+          "issue_date": {
+            "control": "text",
+            "disabled": true,
+            "label": "发证日期",
+            "width": "50%",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入发证日期"
+              }
+            ]
+            
+          }
+        },
+        {
+          "vehicle_manuf": {
+            "control": "text",
+            "disabled": true,
+            "label": "车辆制造商",
+            "width": "50%",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入车辆制造商"
+              }
+            ]
+          },
+          "vehicle_brand": {
+            "control": "text",
+            "disabled": true,
+            "label": "车辆品牌",
+            "width": "50%",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入车辆品牌"
+              }
+            ]
+          }
+        },
+        {
+          "vehicle_model": {
+            "control": "text",
+            "disabled": true,
+            "label": "车辆型号",
+            "width": "50%",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入车辆型号"
+              }
+            ]
+          },
+          "vehicle_number": {
+            "label": "车辆识别号/车架号",
+            "disabled": true,
+            "control": "text",
+            "width": "50%",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入车架号"
+              }
+            ]
+          }
+        },
+        {
+          "vehicle_color": {
+            "control": "text",
+            "disabled": true,
+            "label": "车身颜色",
+            "width": "50%",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入车身颜色"
+              }
+            ]
+          },
+          "engine_number": {
+            "control": "text",
+            "disabled": true,
+            "label": "发动机编号",
+            "width": "50%",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入发动机编号"
+              }
+            ]
+          }
+        },
+        {
+          "manuf_date": {
+            "control": "text",
+            "disabled": true,
+            "label": "车辆制造日期",
+            "width": "50%",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入车辆制造日期"
+              }
+            ]
+          },
+          "cert_status": {
+            "control": "select",
+            "disabled": true,
+            "label": "合格证状态",
+            "width": "50%",
+            "dict": {
+              "dictType": "AR_E_CERT_STATUS",
+              "dictKey": [
+                "AR_E_CERT_STATUS"
+              ],
+              "format": "label"
+            },
+            "value":"1"
+          }
+        },
+        {
+          "cert_keep_date": {
+            "control": "dateTimePicker",
+             "format": "yyyyMMdd",
+            "label": "合格证保管时间",
+            "width": "50%",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入车辆制造日期"
+              }
+            ]
+          },
+          "cert_receiver": {
+            "control": "lookup",
+            "label": "合格证保管接收人",
+            "keyField": {
+              "cert_receiver": "user_name"
+            },
+            "toRequest": {
+              "url": "/views/ce/paramManage/assign/collTeam/user_manager_lookup.json",
+              "method": "get"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入合格证保管接收人"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

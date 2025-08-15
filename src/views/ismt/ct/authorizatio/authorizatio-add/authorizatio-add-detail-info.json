@@ -1,0 +1,143 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "initRequest": "${{params}}",
+            "bringBack": true,
+            "btns": [
+                {
+                    "type": "submit",
+                    "label": "提交",
+                    "icon": "",
+                    "doRequest": {
+                        "url": "",
+                        "method": "",
+                        "params": {}
+                    }
+                }
+            ],
+            "controls": [
+                {
+                    "operater_ind": {
+                        "label": "操作",
+                        "width": "150px",
+                        "control": "string",
+                        "dict": {
+                            "dictType": "E_DATAOPERATE",
+                            "dictKey": [
+                                "E_DATAOPERATE"
+                            ],
+                            "format": "label"
+                        },
+                        "value": "A"
+                    },
+                    "role_id": {
+                        "control": "lookup",
+                        "label": "角色ID",
+                        "width": "150px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入角色ID"
+                            },
+                            {
+                                "max": 10,
+                                "message": "长度不能超过10个字符"
+                            }
+                        ],
+                        "keyField": {
+                            "role_id": "role_id"
+                        },
+                        "toRequest": {
+                            "url": "/views/ismt/ct/roleManager/role-manager_lookup.json",
+                            "method": "post",
+                            "params": "${{form.role_id}}"
+                        },
+                        "props": {
+                            "title": "角色ID查询"
+                        },
+                        "format": "label"
+                    }
+                },
+                {
+                    "auth_id": {
+                        "control": "string",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入授权ID"
+                            },
+                            {
+                                "max": 32,
+                                "message": "长度不能超过32个字符"
+                            }
+                        ],
+                        "label": "授权ID",
+                        "width": "150px"
+                    },
+                    "auth_ccy": {
+                        "control": "select",
+                        "label": "授权币种",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入授权币种"
+                            }
+                        ],
+                        "width": "150px",
+                        "dict": {
+                            "format": "label",
+                            "dictKey": [
+                                "MS_CURRENCY"
+                            ],
+                            "dictType": "MS_CURRENCY"
+                        },
+                        "format": "label"
+                    }
+                },
+                {
+                    "cash_max_limit_amt": {
+                        "control": "currency",
+                        "label": "现金最大授权金额",
+                        "width": "150px",
+                        "value": "0",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入现金最大授权金额"
+                            },
+                            {
+                                "expression":"'${{formData.cash_max_limit_amt}}'.length < 19",
+                                "message": "长度不能超过19个字符"
+                            },
+                            {
+                                "pattern": "^\\d+(\\.{0,1}[\\d]{2}){0,1}$",
+                                "message": "请输入大于或等于零的数值"
+                            }
+                        ]
+                    },
+                    "trxn_max_limit_amt": {
+                        "control": "currency",
+                        "label": "转账最大授权金额",
+                        "value": "0",
+                        "width": "150px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入转账最大授权金额"
+                            },
+                            {
+                                "expression":"'${{formData.trxn_max_limit_amt}}'.length < 19",
+                                "message": "长度不能超过19个字符"
+                            },
+                            {
+                                "pattern": "^\\d+(\\.{0,1}[\\d]{2}){0,1}$",
+                                "message": "请输入大于或等于零的数值"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    }
+}

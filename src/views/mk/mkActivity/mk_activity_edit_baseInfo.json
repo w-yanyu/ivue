@@ -1,0 +1,201 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "scope": "templateScope",
+            "#initRequest":"${{params}}",
+            "initDataOnce":true,
+            "initRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "mk0030",
+                  "active_id": "${{params.active_id}}"
+                }
+            },
+            
+            
+
+
+            "controls": [
+                {                    
+                    "active_id": {
+                        "control": "text",
+                        "label": "活动编号",
+                        "width": "130px",
+                        "disabled": true,
+                        "rules": [{
+                            "required": true
+                        }]
+                    },
+                    "active_name": {
+                        "control": "text",
+                        "label": "活动名称",
+                        "width": "130px",
+                        "disabled": false,
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入活动名称"
+                            },
+                            {
+                                "max": 500,
+                                "message": "长度不能超过500个字符"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "start_date": {
+                        "control": "dateTimePicker",
+                        "rules": [
+                            {
+                                "required": "true",
+                                "message": "请输入开始日期"
+                            }
+                        ],
+                        "label": "开始日期",
+                        "width": "130px",
+                        "type": "date",
+                        "editable": true,
+                        "endPlaceholder": "选择开始日期",
+                        "unlinkPanels": true,
+                        "format": "yyyyMMdd",
+                        "disabledDate": {
+                            "startRange": "19000101",
+                            "endRange": "30000101"
+                        }
+                    },
+                    "end_date": {
+                        "control": "dateTimePicker",
+                        "rules": [
+                            {
+                                "required": "true",
+                                "message": "请输入结束日期"
+                            }
+                        ],
+                        "label": "结束日期",
+                        "type": "date",
+                        "editable": true,
+                        "width": "130px",
+                        "endPlaceholder": "选择结束日期",
+                        "unlinkPanels": true,
+                        "format": "yyyyMMdd",
+                        "disabledDate": {
+                            "startRange": "19000101",
+                            "endRange": "30000101"
+                        }
+                    }
+                },
+                {
+                    "active_topic": {
+                        "control": "textarea",
+                        "label": "活动主题",
+                        "width": "130px",
+                        "rules": [
+                          {
+                            "required": false,
+                            "message": "请输入活动主题"
+                          },
+                          {
+                            "max": 200,
+                            "message": "长度不能超过200个字符"
+                          }
+                        ],
+                        "maxlength": 200,
+                        "showWordLimit": true,
+                        "rows": 2,
+                        "#span": 20
+                      },"active_sects": {
+                        "label": "负责部门",
+                        "width": "130px",
+                        "rules": [
+                            {
+                                "required": false,
+                                "message": "请输入负责部门"
+                            },
+                            {
+                                "max": 100,
+                                "message": "长度不能超过100个字符"
+                            }
+                        ],
+                        "control": "remoteSelect",
+                        "labelField": "branch_name",
+                        "valueField": "branch_id",
+                        "doRequest": {
+                            "url": "/SUMP/call/RPCCall",
+                            "method": "POST",
+                            "params": {
+                            "servicecode": "ct2155",
+                            "page_id": "/views/ismt/ct/branch/brannch-info-manager.json"
+                            }
+                        }
+                    }
+                },
+                {
+                    "#branch_id": {
+                        "#control": "lookup",
+                        "#edit": false,
+                        "#label": "负责机构",
+                        "#prop": "branch_id",
+                        "#width": "130px",
+                        "#rules": [
+                            {
+                                "required": true,
+                                "message": "请输入机构号"
+                            },
+                            {
+                                "max": 10,
+                                "message": "长度不能超过10个字符"
+                            }
+                        ],
+                        "#keyField": {
+                            "branch_id": "branch_id",
+                            "org_id":"org_id",
+                            "branch_name": "branch_name"
+                        },
+                        "#toRequest": {
+                            "url": "@UserBranchTreeManager",
+                            "method": "post",
+                            "params": {}
+                        },
+                        "#props": {
+                            "title": "机构信息查询"
+                        }
+                    }
+                },{
+                    "template_name": {
+                        "control": "lookup",
+                        "keyField": {
+                            "template_name": "template_name",
+                            "template_id": "template_id"
+                        },
+                        "toRequest": {
+                            "url": "/views/mk/mkActivity/mk_lookup_message_template.json",
+                            "method": "post"
+                        },
+                        "props": {
+                            "title": "请选择"
+                        },
+                          "width": "130px",
+                        "label": "消息模板"
+                    },
+                    "template_id": {
+                        "control": "hidden",
+                        "label": "模板编号"
+                      }
+                },
+                {
+                    "active_count":{
+                        "control":"hidden",
+                        "label":"活动数量"
+                    },
+                    "active_amt":{
+                        "control":"hidden",
+                        "label":"活动金额"
+                    }
+                }
+            ]
+        }
+    }
+}

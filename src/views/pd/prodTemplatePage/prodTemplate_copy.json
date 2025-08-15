@@ -1,0 +1,101 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "scope": "templateScope",
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "pd0124"
+        }
+      },
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交"
+        }
+      ],
+      "controls": [
+        {
+          "prod_type": {
+            "width": "180px",
+            "control": "string",
+            "label": "原产品类型",
+            "value": "${{params.prod_type}}"
+          },
+          "apply_type": {
+            "width": "180px",
+            "label": "申请类型",
+            "control": "remoteSelect",
+            "labelField": "title",
+            "valueField": "id",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "pd0144",
+                "grupno": "0006",
+                "pid": "${{templateScope.prod_type}}"
+              }
+            },
+            "format": "label",
+            "rules": [
+              {
+                "required": true,
+                "message": "必填项"
+              }
+            ]
+          }
+        },
+        {
+          "prod_type_new": {
+            "width": "180px",
+            "label": "产品类型",
+            "control": "remoteSelect",
+            "labelField": "title",
+            "valueField": "id",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "pd0144",
+                "grupno": "0006",
+                "pid": "KSCP"
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "必填项"
+              }
+            ]
+          },
+          "apply_type_new": {
+            "width": "180px",
+            "label": "申请类型",
+            "control": "remoteSelect",
+            "labelField": "title",
+            "valueField": "id",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "pd0144",
+                "grupno": "0006",
+                "pid": "${{templateScope.prod_type_new}}"
+              }
+            },
+            "format": "label",
+            "rules": [
+              {
+                "required": true,
+                "message": "必填项"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

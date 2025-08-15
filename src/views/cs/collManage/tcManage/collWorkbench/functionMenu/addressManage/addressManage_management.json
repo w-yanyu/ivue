@@ -1,0 +1,142 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "toolbar": {
+      "btns": [
+        {
+          "type": "edit",
+          "label": "新增",
+          "icon": "el-icon-tickets",
+          "target": "dialog",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/cs/collManage/tcManage/collWorkbench/functionMenu/addressManage/addressManage_management_add.json",
+            "params": {
+              "case_id": "${{params.case_id}}",
+              "case_no": "${{params.case_no}}",
+              "cust_id": "${{params.cust_id}}",
+              "org_id": "${{params.org_id}}",
+              "oa_org_id": "${{params.oa_org_id}}"
+            }
+          },
+          "props": {
+            "title": "新增地址信息",
+            "width": "60%"
+          }
+        },
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "失联修复"
+        },
+        {
+          "type": "close",
+          "label": "返回"
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "cb0094",
+          "case_id": "${{params.case_id}}",
+          "case_no": "${{params.case_no}}",
+          "cust_id": "${{params.cust_id}}",
+          "org_id": "${{params.org_id}}",
+          "oa_org_id": "${{params.oa_org_id}}"
+        }
+      },
+      "thead": [
+        {
+          "type": "string",
+          "label": "联系人姓名",
+          "align": "center",
+          "prop": "relation_cust_name"
+        },
+        {
+          "type": "string",
+          "label": "客户关系",
+          "align": "center",
+          "prop": "relationship",
+          "dict": {
+            "dictType": "CS_E_RELATIONSHIP",
+            "dictKey": [
+              "CS_E_RELATIONSHIP"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "label": "地址类型",
+          "align": "center",
+          "prop": "address_type",
+          "dict": {
+            "dictType": "CS_E_ADDRESS_TYPE",
+            "dictKey": [
+              "CS_E_ADDRESS_TYPE"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "label": "地址",
+          "align": "center",
+          "prop": "address"
+        },
+        {
+          "type": "string",
+          "label": "邮编",
+          "align": "center",
+          "prop": "postal_code"
+        },
+        {
+          "type": "string",
+          "label": "是否有效",
+          "align": "center",
+          "prop": "is_valid",
+          "dict": {
+            "dictType": "CS_E_YESORNO",
+            "dictKey": [
+              "CS_E_YESORNO"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "label": "备注",
+          "align": "center",
+          "prop": "remark"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/cs/collManage/tcManage/collWorkbench/functionMenu/addressManage/addressManage_management_modify.json",
+                "method": "POST",
+                "params": {
+                  "case_id": "${{params.case_id}}",
+                  "relation_cust_id": "${{current.relation_cust_id}}"
+                }
+              },
+              "props": {
+                "title": "联系人地址维护",
+                "width": "80%"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

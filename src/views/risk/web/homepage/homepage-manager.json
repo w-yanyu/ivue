@@ -1,0 +1,136 @@
+{
+  "module": "v-search-btn-datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "homePageCode": {
+            "control": "text",
+            "label": "首页编码",
+            "span": 12
+          },
+          "homePageName": {
+            "control": "text",
+            "label": "首页名称",
+            "span": 12
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "navTab",
+          "label": "新增",
+          "toRequest": {
+            "url": "/views/risk/web/homepage/homepage-add.json",
+            "method": "GET"
+          },
+          "props": {
+            "width": "65%",
+            "title": "新增首页"
+          }
+        },
+        {
+          "type": "delete",
+          "label": "删除",
+          "icon": "el-icon-close",
+          "doRequest": {
+            "url": "/WEB/homepage/batch",
+            "method": "DELETE"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "doRequest": {
+        "url": "/WEB/homepage/page",
+        "method": "get"
+      },
+      "pagination": {
+        "pageSizes": [
+          10,
+          15,
+          20,
+          50,
+          100
+        ],
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "width": "55",
+          "type": "selection"
+        },
+        {
+          "type": "index",
+          "label": "序号"
+        },
+        {
+          "label": "首页编码",
+          "prop": "homePageCode"
+        },
+        {
+          "label": "首页名称",
+          "prop": "homePageName"
+        },
+        {
+          "label": "所属应用",
+          "prop": "application",
+          "dict": {
+            "dictType": "WEB",
+            "dictKey": [
+              "homepage",
+              "application"
+            ],
+            "labelField": "appName",
+            "valueField": "appCode",
+            "doRequest": {
+              "url": "/WEB/application/list",
+              "method": "GET"
+            }
+          }
+        },
+        {
+          "label": "操作",
+          "width": "220",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "配置",
+              "toRequest": {
+                "url": "/views/risk/web/homepage/homepage-setting.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "65%",
+                "title": "配置首页"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "编辑",
+              "toRequest": {
+                "url": "/views/risk/web/homepage/homepage-update.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "65%",
+                "title": "编辑"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/WEB/homepage",
+                "method": "DELETE"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

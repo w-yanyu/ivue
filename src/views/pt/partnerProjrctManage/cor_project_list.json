@@ -1,0 +1,174 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "scope": "strForm",
+      "controls":
+      [
+        {
+          "part_project_no": {
+            "control": "text",
+            "label":  "合作项目编号",
+            "span": 8
+          },
+          "part_project_name": {
+            "control": "text",
+            "label": "合作项目名称",
+            "span": 8
+          },
+          "part_project_type": {
+            "control": "select",
+            "span": 8,
+            "label": "合作项目类型",
+            "dict": {
+              "dictType": "PT_E_PART_PROJECT_TYPE",
+              "dictKey": [
+                "PT_E_PART_PROJECT_TYPE"
+              ],
+              "format": "label"
+            }
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "pt0321"
+        }
+      },
+      "thead": [
+        {
+          "type": "index",
+          "label": "序号"
+        },
+        {
+          "label": "合作项目编号",
+          "prop": "part_project_no"
+        },
+        {
+          "label": "合作项目名称",
+          "prop": "part_project_name"
+        },
+        {
+          "label":  "合作项目描述",
+          "prop": "part_project_describe"
+        },
+        {
+          "label": "合作项目类型",
+          "prop": "part_project_type",
+          "dict": {
+            "dictType": "PT_E_PART_PROJECT_TYPE",
+            "dictKey": ["PT_E_PART_PROJECT_TYPE"],
+            "format": "label"
+          }
+
+        },
+        {
+          "label":  "项目生效日期",
+          "prop": "effect_date"
+        },
+        {
+          "label":  "项目失效日期",
+          "prop": "expiry_date"
+        },
+        {
+          "label": "项目版本",
+          "prop": "version"
+        },
+        {
+          "type": "string",
+          "label": "所属法人",
+          "prop": "org_id",
+          "align": "center"         
+        },         
+        {
+          "label": "操作",
+          "width": "260px",
+          "fixed": "right",
+          "btns": [
+            {
+              "type": "custom",
+              "label":  "项目变更",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "pt0322",
+                  "user_name": " $g{{user_info.userName}}"
+                },
+                "condition": {
+                  "switch": {
+                    "$default": {
+                      "toRequest": {
+                        "url": "/views/pt/pt_workbench/workbench_main_tabs.json",
+                        "method": "POST",
+                        "target": "navTab",
+                        "props":{
+                          "title": "工作台首页"
+                        }
+                      }
+
+                    },
+                    "200": {
+                      "toRequest": {
+                        "url": "/views/pt/pt_workbench/workbench_main_tabs.json",
+                        "target": "navTab",
+                        "method": "POST",
+                        "props":{
+                          "title": "工作台首页"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "confirm": {
+                "title": "确定变更",
+                "msg":"请确认是否变更？确定后请前往“伙伴审批工作台”继续处理！",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            },
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "@projectAddLayout",
+                "method": "GET",
+                "params": {
+                  "tranType": "detail",
+                  "part_project_no": "${{current.part_project_no}}",
+                  "project_template_no":"${{current.project_template_no}}",
+                  "version": "${{current.version}}"
+                }
+              },
+              "props": {
+                "width": "65%",
+                "title":  "查看详情"
+              }
+            },
+
+            {
+              "type": "look",
+              "label": "历史记录",
+              "toRequest": {
+                "url": "/views/pt/parthist/cor_project_list_hist.json",
+                "method": "GET",
+                "params": {
+                  "part_project_no": "${{current.part_project_no}}"
+                }
+              },
+              "props": {
+                "width": "75%",
+                "title":  "历史记录"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,181 @@
+{
+  "module": "d-steps",
+  "layout": {
+    "steps": {
+      "scope": "formObj",
+      "direction": "horizontal",
+      "alignCenter": true,
+      "finishStatus": "success",
+      "simpleType": false,
+      "nextStepType": "validate",
+      "list": [
+        {
+          "scope": "step1",
+          "title": "授权体系修改",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "url": "/views/ismt/ct/busiAuth/authp_system/authp_system_update.json",
+            "params": {
+              "authp_system_code": "${{params.authp_system_code}}",
+              "auth_version": "${{params.auth_version}}",
+              "authp_system_name": "${{params.authp_system_name}}",
+              "dimension_busi_type": "${{params.dimension_busi_type}}",
+              "authp_system_status": "${{params.authp_system_status}}",
+              "all_exe_flag": "${{params.all_exe_flag}}",
+              "effect_date": "${{params.effect_date}}",
+              "invalid_date": "${{params.invalid_date}}",
+              "appId": "${{params.appId}}"
+            },
+            "method": "get"
+          },
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "ct2406",
+              "appId": "${{params.appId}}"
+            }
+          }
+        },
+        {
+          "scope": "step2",
+          "title": "角色关联",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "url": "/views/ismt/ct/busiAuth/authp_rule/role_manager.json",
+            "params": {
+              "authp_system_code": "${{formObj.step1.authp_system_code}}",
+              "auth_version": "${{params.auth_version}}",
+              "appId": "${{params.appId}}"
+            },
+            "method": "get"
+          },
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "ct2431",
+              "authp_system_code": "${{formObj.step1.authp_system_code}}",
+              "auth_version": "${{params.auth_version}}",
+              "appId": "${{params.appId}}"
+            }
+          }
+        },
+        {
+          "scope": "step3",
+          "title": "适用机构配置",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "url": "/views/ismt/ct/busiAuth/authp_rule/branch_main.json",
+            "params": {
+              "authp_system_code": "${{formObj.step1.authp_system_code}}",
+              "auth_version": "${{params.auth_version}}",
+              "appId": "${{params.appId}}"
+            },
+            "method": "get"
+          },
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "ct2418",
+              "authp_system_code": "${{formObj.step1.authp_system_code}}",
+              "auth_version": "${{params.auth_version}}",
+              "appId": "${{params.appId}}"
+            }
+          }
+        },
+        {
+          "scope": "step4",
+          "title": "关联业务指标",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "url": "/views/ismt/ct/busiAuth/authp_system/authp_system_param.json",
+            "params": {
+              "authp_system_code": "${{formObj.step1.authp_system_code}}",
+              "auth_version": "${{params.auth_version}}",
+              "appId": "${{params.appId}}"
+            },
+            "method": "get"
+          },
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "ct2434",
+              "authp_system_code": "${{formObj.step1.authp_system_code}}",
+              "auth_version": "${{params.auth_version}}",
+              "appId": "${{params.appId}}"
+            }
+          }
+        },
+        {
+          "scope": "step5",
+          "title": "授权详情配置",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "url": "/views/ismt/ct/busiAuth/authp_system/auth_tree.json",
+            "params": {
+              "authp_system_code": "${{formObj.step1.authp_system_code}}",
+              "auth_version": "${{params.auth_version}}",
+              "authp_system_name": "${{formObj.step1.authp_system_name}}",
+              "appId": "${{params.appId}}"
+            },
+            "method": "get"
+          },
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "ct2406",
+              "appId":"${{params.appId}}",
+              "authp_system_code": "${{formObj.step1.authp_system_code}}",
+              "authp_system_name": "${{formObj.step1.authp_system_name}}",
+              "dimension_busi_type": "${{formObj.step1.dimension_busi_type}}",
+              "effect_date": "${{formObj.step1.effect_date}}",
+              "invalid_date": "${{formObj.step1.invalid_date}}",
+              "all_exe_flag": "${{formObj.step1.all_exe_flag}}",
+              "auth_version": "${{params.auth_version}}",
+              "authp_system_status" : "4"
+            }
+          }
+        },
+        {
+          "scope": "step6",
+          "title": "授权流程审核",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "url": "/views/ismt/ct/busiAuth/authp_system/review/authp_system_submmit.json",
+            "params": {
+              "authp_system_code": "${{formObj.step1.authp_system_code}}",
+              "authp_system_name": "${{formObj.step1.authp_system_name}}",
+              "auth_version": "${{params.auth_version}}",
+              "appId": "${{params.appId}}",
+              "dimension_busi_type": "${{params.dimension_busi_type}}",
+              "effect_date": "${{params.effect_date}}",
+              "invalid_date": "${{params.invalid_date}}",
+              "all_exe_flag": "${{params.all_exe_flag}}"
+            },
+            "method": "get"
+          },
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "ct2406",
+              "appId":"${{params.appId}}",
+              "authp_system_code": "${{formObj.step1.authp_system_code}}",
+              "authp_system_name": "${{formObj.step1.authp_system_name}}",
+              "auth_version": "${{formObj.step1.auth_version}}",
+              "authp_system_status" : "4",
+              "dimension_busi_type": "${{formObj.step1.dimension_busi_type}}",
+              "effect_date": "${{formObj.step1.effect_date}}",
+              "invalid_date": "${{formObj.step1.invalid_date}}",
+              "all_exe_flag": "${{formObj.step1.all_exe_flag}}"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

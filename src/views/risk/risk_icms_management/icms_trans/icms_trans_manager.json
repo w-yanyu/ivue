@@ -1,0 +1,218 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "daterange": {
+            "control": "dateTimePicker",
+            "label": "进件起止时间",
+            "type": "daterange",
+            "unlinkPanels": true,
+            "valueFormat": "yyyyMMdd",
+            "startPlaceholder": "请选择开始时间",
+            "endPlaceholder": "请选择结束时间",
+            "startField": "start_date",
+            "endField": "end_date"
+          },
+          "apply_no": {
+            "control": "text",
+            "label": "进件单号"
+          },
+          "scene_type": {
+            "control": "select",
+            "label": "业务场景",
+            "dict": {
+              "dictType": "DECI_E_SCENE_TYPE",
+              "dictKey": [
+                "DECI_E_SCENE_TYPE"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId"
+            }
+          },
+          "cust_name": {
+            "control": "text",
+            "label": "客户名称"
+          },
+          "cert_type": {
+            "label": "证件类型",
+            "control": "select",
+            "dict": {
+              "dictType": "MS_E_CRET_TYPE",
+              "dictKey": [
+                "MS_E_CRET_TYPE"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId"
+            }
+          },
+          "cert_no": {
+            "control": "text",
+            "label": "证件号码"
+          },
+          "mobile_no": {
+            "control": "text",
+            "label": "手机号码"
+          },
+          "status": {
+            "label": "状态",
+            "control": "select",
+            "options":[
+              {
+                "label": "执行中",
+                "value": "1"
+              },
+              {
+                "label": "异常",
+                "value": "2"
+              },
+              {
+                "label": "通过",
+                "value": "3"
+              },
+              {
+                "label": "拒绝",
+                "value": "4"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "deci050108"
+        }
+      },
+      "thead": [
+        {
+          "type": "index",
+          "align": "center"
+        },
+        {
+          "label": "进件单号",
+          "prop": "apply_no",
+          "align": "center"
+        },
+        {
+          "label": "业务场景",
+          "prop": "scene_type",
+          "align": "center",
+          "dict": {
+            "dictType": "DECI_E_SCENE_TYPE",
+            "dictKey": [
+              "DECI_E_SCENE_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "客户名称",
+          "prop": "cust_name",
+          "align": "center"
+        },
+        {
+          "label": "证件类型",
+          "prop": "cert_type",
+          "align": "center",
+          "dict": {
+            "dictType": "CS_E_CERT_TYPE",
+            "dictKey": [
+              "CS_E_CERT_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "证件号码",
+          "align": "center",
+          "prop": "cert_no"
+        },
+        {
+          "label": "手机号码",
+          "align": "center",
+          "prop": "mobile_no"
+        },
+        {
+          "label": "产品编号",
+          "align": "center",
+          "prop": "prod_code"
+        },
+        {
+          "label": "产品名称",
+          "align": "center",
+          "prop": "prod_name"
+        },
+        {
+          "label": "渠道编号",
+          "align": "center",
+          "prop": "channel_no"
+        },
+        {
+          "label": "渠道名称",
+          "align": "center",
+          "prop": "channel_name"
+        },
+        {
+          "label": "进件时间",
+          "align": "center",
+          "prop": "start_time"
+        },
+        {
+          "label": "结束时间",
+          "align": "center",
+          "prop": "end_time"
+        },
+        {
+          "label": "状态",
+          "align": "center",
+          "prop": "status"
+        },
+        {
+          "label": "异常原因",
+          "align": "center",
+          "prop": "abnormal_cause"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align": "center",
+          "btns": [
+            {
+              "type": "look",
+              "label": "进件详情",
+              "toRequest": {
+                "url": "/views/risk/risk_icms_management/icms_trans/icms_trans_detail.json",
+                "method": "POST"
+              },
+              "props": {
+                "title": "进件详情",
+                "width": "50%"
+              }
+            },
+            {
+              "type": "look",
+              "label": "链路详情",
+              "toRequest": {
+                "url": "/views/risk/risk_icms_management/icms_trans/link_info_step.json",
+                "method": "POST"
+              },
+              "props": {
+                "title": "链路详情",
+                "width": "90%",
+                "top": "4vh"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

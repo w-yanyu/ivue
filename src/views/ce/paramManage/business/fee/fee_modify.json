@@ -1,0 +1,159 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "scope":"formData",
+            "initRequest": "${{params}}",
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+
+                "method": "POST",
+                "params": {
+                    "servicecode": "ce0082",
+                    "coll_kind":"02"
+                }
+            },
+            "btns": [
+                {
+                    "type": "submit",
+                    "label": "提交",
+                    "icon": "el-icon-tickets"
+                }
+            ],
+            "controls": [
+                {
+                  "fee_id": {
+                    "control": "hidden"
+                  }
+                },
+                {
+                    "fee_type": {
+                        "control": "select",
+                        "label": "费率类型",
+                        "disabled":true,
+                        "default":"OA",
+                        "width": "130px",
+                        "dict": {
+                          "dictType": "CE_FEE_TYPE",
+                          "dictKey": [
+                            "CE_FEE_TYPE"
+                          ],
+                          "format": "value-label"
+                        },
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入"
+                            }
+                        ]
+                    },
+                    "fee_code": {
+                        "control": "text",
+                        "label": "费率代码",
+                        "disabled":true,
+                        "width": "130px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入"
+                            },
+                            {
+                                "max": 30,
+                                "message": "最多可以输入 30 个字节"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "feerate_catg": {
+                        "control": "select",
+                        "label": "费率类别",
+                        "default":"A",
+                        "width": "130px",
+                        "dict": {
+                          "dictType": "CE_FEERATE_CATG",
+                          "dictKey": [
+                            "CE_FEERATE_CATG"
+                          ],
+                          "format": "value-label"
+                        },
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入"
+                            }
+                        ]
+                    },
+                    "stage_interpretation": {
+                        "control": "select",
+                        "label": "阶段释义",
+                        "disabled":true,
+                        "default":"A3",
+                        "width": "130px",
+                        "dict": {
+                          "dictType": "CE_STAGE_INTERPRETATION",
+                          "dictKey": [
+                            "CE_STAGE_INTERPRETATION"
+                          ],
+                          "format": "value-label"
+                        },
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "principal_rate": {
+                        "control": "inputNumber",
+                        "label": "本金费率(%)",
+                        "width": "130px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入"
+                            },
+                            {
+                                "expression":"'${{formData.principal_rate}}'.length <= 21",
+                                "message":"最多可以输入 21 个字节"
+                            }
+                        ]
+                    },
+                    "lev_rate": {
+                        "control": "inputNumber",
+                        "label": "利费费率(%)",
+                        "width": "130px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入"
+                            },
+                            {
+                                "expression":"'${{formData.lev_rate}}'.length <= 21",
+                                "message":"最多可以输入 21 个字节"
+                            }
+                        ]
+                    }
+                },
+                {
+                "hands": {
+                  "control": "inputNumber",
+                  "width": "130px",
+                  "label": "手别",
+                  "min": 0,
+                  "step": 1,
+                  "max": 10,
+                  "rules": [
+                    {
+                      "required": true,
+                      "message": "请输入"
+                    }
+                  ]
+                }
+              }
+            ]
+        }
+    }
+}

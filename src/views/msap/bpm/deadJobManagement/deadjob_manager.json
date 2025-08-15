@@ -1,0 +1,144 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "appId": {
+                        "control": "select",
+                        "label": "业务模块",
+                        "selectFirstValue":true,
+                        "dict": {
+                            "dictType": "MS_APPID",
+                            "dictKey": [
+                                "MS_APPID"
+                            ],
+                            "format": "value-label"
+                        },
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请选择业务模块"
+                            }]
+                    }
+                },
+                {
+                    "appl_id": {
+                        "control": "text",
+                        "label": "申请书编号"
+                     }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "edit",
+                    "label": "触发异步唤醒",
+                    "doRequest": {
+                        "method": "POST",
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "params": {
+                            "servicecode":"bpm1008",
+                            "appId":"icmsOnl",
+                            "is_triggered_full": "0"
+                        },
+                        "confirm":{
+                            "title":"提示信息"
+                        }
+                    },
+                    "confirm":{
+                        "title":"提示信息",
+                        "msg":"确认要触发异步唤醒吗？",
+                        "confirmButtonText":"确定",
+                        "cancelButtonText":"取消"
+                      }
+                },
+                {
+                    "type": "edit",
+                    "label": "全选触发异步唤醒",
+                    "doRequest": {
+                        "method": "POST",
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "params": {
+                            "servicecode":"bpm1008",
+                            "appId":"icmsOnl",
+                            "is_triggered_full": "1"
+                        }
+                    },
+                    "confirm":{
+                        "title":"提示信息",
+                        "msg":"确认要全选触发异步唤醒吗？",
+                        "confirmButtonText":"确定",
+                        "cancelButtonText":"取消"
+                      }
+                }
+            ]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": false,
+            "doRequest": {  
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "bpm1007",
+                    "appId":"${{form.appId}}"
+                }
+            },
+            "pagination": {
+                "show": true,
+                "pageSize": 10
+            },
+            "thead": [
+                {
+                    "type": "selection",
+                    "align": "center",
+                    "width": "55",
+                    "fixed": "left"
+                },
+                {
+                  "label": "申请书编号",
+                  "prop": "appl_id"
+                },
+                {
+                    "prop": "cutask",
+                    "label": "当前节点"
+                },
+                {
+                    "label": "任务id",
+                    "prop": "job_id"
+                },
+                {
+                    "label": "客户名称",
+                    "prop": "cust_name"
+                },
+                {
+                   "label": "异常信息",
+                   "prop": "expmsg"
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 200,
+                    "align":"center",
+                    "btns": [
+                        {
+                            "type": "delete",
+                            "label": "作废",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "post",
+                                "params": {
+                                    "servicecode": "bpm1009",
+                                    "appId":"${{form.appId}}"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+  }
+  

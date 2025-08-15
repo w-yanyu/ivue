@@ -1,0 +1,83 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": "${{params}}",
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pd1527"
+        }
+      },
+      "controls": [
+        {
+          "sale_prod_cd": {
+            "label": "可售产品编号",
+            "control": "hidden"
+          },
+          "prod_version": {
+            "label": "产品版本",
+            "control": "hidden"
+          },
+          "apply_type": {
+            "label": "申请类型",
+            "control": "hidden"
+          },
+          "pre_table_name": {
+            "label": "处理表名",
+            "control": "text",
+            "span": 12,
+            "width": "140px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入处理表名"
+              }
+            ]
+          },
+          "table_name_desc": {
+            "label": "处理表注释",
+            "control": "text",
+            "span": 12,
+            "width": "140px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入处理表名"
+              }
+            ]
+          },
+          "tran_code": {
+            "label": "批量交易码",
+            "control": "lookup",
+            "span": 12,
+            "width": "140px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入批量交易码"
+              }
+            ],
+            "keyField": {
+              "tran_code": "tran_code"
+            },
+            "toRequest": {
+              "url": "/views/pd/prod/templatePage/batchTranConfig/batchTranConfig_manage_lookup.json",
+              "method": "get",
+              "params": {
+                "sale_prod_cd": "${{params.sale_prod_cd}}",
+                "prod_version": "${{params.prod_version}}",
+                "apply_type": "${{params.apply_type}}"
+              }
+            },
+            "props": {
+              "title": "选择批量交易",
+              "width": "75%"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

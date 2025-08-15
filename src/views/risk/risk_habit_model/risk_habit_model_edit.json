@@ -1,0 +1,101 @@
+{
+  "module": "v-inputDataForm-btn",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "habitModelId": {
+            "label": "行为模型ID",
+            "control": "string",
+            "span": 12,
+            "rules": [
+              {
+                "required": true,
+                "message": "请正确输入"
+              }
+            ]
+          },
+          "habitModelName": {
+            "label": "行为模型名称",
+            "control": "text",
+            "span": 12,
+            "rules": [
+              {
+                "required": true,
+                "max": 100,
+                "message": "请正确输入"
+              }
+            ]
+          }
+        },
+        {
+          "referenceStatisticCode": {
+            "label": "关联统计代码",
+            "control": "select",
+            "span": 12,
+            "dict": {
+              "dictType": "risk-indicator-statistic",
+              "dictKey": [],
+              "format": "value-label",
+              "doRequest": {
+                "url": "/API/risk-management-service/combobox-select/risk-indicator-statistic/Batch",
+                "method": "POST"
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "该控件必填"
+              }
+            ]
+          },
+          "thresholdType": {
+            "label": "习惯阀值类型",
+            "control": "select",
+            "span": 12,
+            "dict": {
+              "dictType": "thresholdType",
+              "dictKey": [],
+              "format": "value-label",
+              "doRequest": {
+                "url": "/views/risk/dictdata/thresholdType.json",
+                "method": "get"
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "该控件必填"
+              }
+            ]
+          }
+        },
+        {
+          "threshold": {
+            "label": "习惯阀值",
+            "control": "text",
+            "span": 12,
+            "rules": [
+              {
+                "required": true,
+                "pattern": "^(([1-9][0-9]*)|(([0]\\.\\d{1,2}|[1-9][0-9]*\\.\\d{1,2})))$",
+                "message": "请正确输入"
+              }
+            ]
+          }
+        }
+      ],
+      "initRequest": {
+        "url": "/API/risk-management-service/risk-habit-model/selectByPrimaryKey",
+        "method": "post"
+      },
+      "doRequest": {
+        "url": "/API/risk-management-service/risk-habit-model/updateByPrimaryKey",
+        "method": "post",
+        "params":{
+          "updateUser": "$g{{user_info.userCode}}"
+        }
+      }
+    }
+  }
+}

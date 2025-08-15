@@ -1,0 +1,389 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+          "foldLineNumber": 3,
+            "scope": "formData",
+            "controls": [
+                {
+                    "branch_org": {
+                      "control": "remoteSelect",
+                      "label": "机构",
+                      "labelField": "branch_name",
+                      "valueField": "branch_id",
+                      "doRequest": {
+                        "url": "/SUMP/call/RPCCall",
+                        "method": "POST",
+                        "params": {
+                          "servicecode": "ct2173"
+                        }
+                      },
+                      "format": "label"
+                    },
+                    "cust_name": {
+                        "control": "text",
+                        "label": "客户姓名"
+                    }
+                },
+                {
+                    "id_no": {
+                        "control": "text",
+                        "label": "证件号码"
+                    },
+                    "cust_id": {
+                        "control": "text",
+                        "label": "客户编号"
+                    }
+                },
+                {
+                    "duebill_no": {
+                        "control": "text",
+                        "label": "借据号"
+                    },
+                    "function_cd": {
+                        "control": "remoteSelect",
+                        "label": "逾期阶段",
+                        "labelField": "function_name",
+                        "valueField": "function_cd",
+                        "doRequest": {
+                            "url": "/SUMP/icmcall/icmRPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "pl0412"
+                            }
+                        },
+                        "format": "label"
+                    }
+                },
+                {
+                    "start_day": {
+                        "control": "inputNumber",
+                        "label": "逾期天数开始值"
+                    },
+                    "end_day": {
+                        "control": "inputNumber",
+                        "label": "逾期天数结束值"
+                    }
+                },
+                {
+                    "queue_cd": {
+                        "control": "remoteSelect",
+                        "label": "队列名称",
+                        "labelField": "queue_name",
+                        "valueField": "queue_cd",
+                        "doRequest": {
+                            "url": "/SUMP/icmcall/icmRPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "pl0402"
+                            }
+                        },
+                        "format": "label"
+                    },
+                    "status_cd": {
+                        "control": "remoteSelect",
+                        "label": "案件状态",
+                        "labelField": "status_name",
+                        "valueField": "status_cd",
+                        "doRequest": {
+                            "url": "/SUMP/icmcall/icmRPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "pl0411"
+                            }
+                        },
+                        "format": "label"
+                    }
+                },
+                {
+                    "oa_hands": {
+                        "control": "inputNumber",
+                        "label": "手別"
+                    },
+                    "location_cd": {
+                        "control": "remoteSelect",
+                        "label": "案件类型",
+                        "labelField": "location_name",
+                        "valueField": "location_cd",
+                        "doRequest": {
+                            "url": "/SUMP/icmcall/icmRPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "pl0410"
+                            }
+                        },
+                        "format": "label"
+                    }
+                },
+                {
+                    "ovd_amt_total_1": {
+                        "control": "inputNumber",
+                        "label": "欠款金额区间开始值"
+                    },
+                    "ovd_amt_total_2": {
+                        "control": "inputNumber",
+                        "label": "欠款金额区间结束值"
+                    }
+                },
+                {
+                    "collect_date_1": {
+                        "control": "inputNumber",
+                        "label": "入催天数区间开始值"
+                    },
+                    "collect_date_2": {
+                        "control": "inputNumber",
+                        "label": "入催天数区间结束值"
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "custom",
+                    "icon": "el-icon-edit",
+                    "target": "dialog",
+                    "checkCountMin":1,
+                    "label": "人工分配",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/pl/collManage/oaManage/oaAssign/oaAssign_artificial.json"
+                    }
+                },
+                {
+                    "type": "custom",
+                    "icon": "el-icon-bell",
+                    "target": "dialog",
+                    "checkCountMin":1,
+                    "label": "自动分配",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/pl/collManage/oaManage/oaAssign/oaAssign_auto.json"
+                    }
+                },
+                {
+                    "type": "delete",
+                    "icon": "el-icon-back",
+                    "checkCountMin":1,
+                    "label": "委外退案",
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "pl4561",
+                            "case_id": ""
+                        }
+                    },
+                    "confirm": {
+                        "title": "委外退案提醒",
+                        "msg": "确定将案件退案，退出委外队列？",
+                        "confirmButtonText": "确定",
+                        "cancelButtonText": "取消"
+                    }
+                }
+            ]
+        },
+
+        "datagrid": {
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "pl4560"
+                }
+            },
+            "thead": [
+                {
+                    "type": "selection",
+                    "align":"center",
+                    "width": "55",
+                    "fixed": "left"
+                },
+                {
+                  "type": "string",
+                  "align": "center",
+                  "width": "100",
+                  "label": "机构",
+                  "prop": "branch_org",
+                  "dict": {
+                    "dictKey": [
+                      "branch_org"
+                    ],
+                    "format": "label",
+                    "labelField": "branch_name",
+                    "valueField": "branch_id",
+                    "doRequest": {
+                      "url": "/SUMP/call/RPCCall",
+                      "method": "POST",
+                      "params": {
+                        "servicecode": "ct2173"
+                      }
+                    }
+                  }
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                     "width":"180px",
+                    "label": "客户编号",
+                    "prop": "case_id"
+
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                     "width":"150px",
+                    "label": "客户姓名",
+                    "prop": "cust_name"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                     "width":"100px",
+                    "label": "证件类型",
+                    "prop": "id_type",
+                    "dict":{
+                        "dictKey": [
+                            "id_type"
+                        ],
+                        "format": "label",
+                        "labelField": "drop_list_desc",
+                        "valueField": "drop_list_value",
+                        "doRequest": {
+                            "url": "/SUMP/icmcall/icmRPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode":"ap1071",
+                                "drop_list_type": "CertType"
+                            }
+                        }
+                    }
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                     "width":"180px",
+                    "label": "证件号码",
+                    "prop": "id_no"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                     "width":"100px",
+                    "label": "逾期阶段",
+                    "prop": "pre_function",
+                    "dict":{
+                        "dictKey": [
+                            "pre_function"
+                        ],
+                        "format": "label",
+                        "labelField": "function_name",
+                        "valueField": "function_cd",
+                        "doRequest": {
+                            "url": "/SUMP/icmcall/icmRPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode":"pl0412"
+                            }
+                        }
+                    }
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                     "width":"100px",
+                    "label": "逾期金额",
+                    "prop": "over_due_amt"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                     "width":"100px",
+                    "label": "逾期天数",
+                    "prop": "over_due_day"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                     "width":"50px",
+                    "label": "手别",
+                    "prop": "oa_hands"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                     "width":"100px",
+                    "label": "案件分类",
+                    "prop": "location_cd",
+                    "dict":{
+                        "dictKey": [
+                            "location_cd"
+                        ],
+                        "format": "label",
+                        "labelField": "location_name",
+                        "valueField": "location_cd",
+                        "doRequest": {
+                            "url": "/SUMP/icmcall/icmRPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode":"pl0410"
+                            }
+                        }
+                    }
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                     "width":"100px",
+                    "label": "案件状态",
+                    "prop": "status_cd",
+                    "dict":{
+                        "dictKey": [
+                            "status_cd"
+                        ],
+                        "format": "label",
+                        "labelField": "status_name",
+                        "valueField": "status_cd",
+                        "doRequest": {
+                            "url": "/SUMP/icmcall/icmRPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode":"pl0411"
+                            }
+                        }
+                    }
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width": "150",
+                    "label": "队列名称",
+                    "prop": "queue_cd",
+                    "dict":{
+                      "dictKey": [
+                        "queue_cd"
+                      ],
+                      "format": "label",
+                      "labelField": "queue_name",
+                      "valueField": "queue_cd",
+                      "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                          "servicecode":"pl0402"
+                        }
+                      }
+                    }
+                },
+                {
+                  "type": "string",
+                  "align": "center",
+                  "width": "120",
+                  "label": "入催日期",
+                  "prop": "collect_date"
+                }
+            ]
+        }
+    }
+}

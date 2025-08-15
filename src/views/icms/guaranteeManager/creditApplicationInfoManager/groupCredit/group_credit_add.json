@@ -1,0 +1,170 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "btns": [
+        {
+          "type": "submit",
+          "label": "保存",
+          "doRequest": {
+            "url": "/SUMP/call/RPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "ar0849",
+              "apply_no": "${{params.apply_no}}",
+              "cust_no": "${{params.cust_no}}",
+              "cl_prod_cd": "${{params.credit_prod_cd}}",
+              "group_cust_no": "${{params.cust_no}}"
+            }
+          }
+        }
+      ],
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "ar0850",
+          "cust_no": "${{params.cust_no}}",
+          "apply_no": "${{params.apply_no}}",
+
+          "cust_name": "${{params.cust_name}}",
+          "base_ccy": "${{params.base_ccy}}",
+          "ccy_code": "${{params.ccy_code}}",
+          "exchange_rate": "${{params.exchange_rate}}"
+        }
+      },
+      "controls": [
+        {
+          "cust_name": {
+            "label": "集团子公司",
+            "control": "text",
+            "width": "130px",
+            "span": 7,
+            "disabled": true
+          },
+          "base_ccy": {
+            "control": "select",
+            "label": "基准币种",
+            "width": "130px",
+            "disabled": true,
+            "span": 7,
+            "dict": {
+              "dictType": "MS_CURRENCY",
+              "dictKey": [
+                "MS_CURRENCY"
+              ],
+              "format": "label"
+            }
+          },
+          "ccy_code": {
+            "control": "select",
+            "label": "授信币种",
+            "width": "130px",
+            "disabled": true,
+            "span": 7,
+            "dict": {
+              "dictType": "MS_CURRENCY",
+              "dictKey": [
+                "MS_CURRENCY"
+              ],
+              "format": "label"
+            }
+          },
+          "exchange_rate": {
+            "align": "left",
+            "control": "currency",
+            "label": "汇率",
+            "width": "130px",
+            "disabled": true,
+            "span": 7
+          },
+          "credit_term": {
+            "label": "授信期限(月)",
+            "control": "text",
+            "width": "130px",
+            "span": 7,
+            "rules": [
+              {
+                "required": false,
+                "message": "请输入授信期限"
+              }
+            ]
+          },
+          "cycling_flag": {
+            "control": "select",
+            "label": "是否可循环使用金额",
+            "width": "130px",
+            "span": 7,
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择是否可循环使用金额"
+              }
+            ],
+            "align": "left",
+            "format": {
+              "thousand": ","
+            }
+          },
+          "busi_assign_amt": {
+            "control": "currency",
+            "label": "业务授信分配金额",
+            "width": "130px",
+            "span": 7,
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择业务授信分配金额"
+              }
+            ],
+            "align": "left",
+            "format": {
+              "thousand": ","
+            }
+          },
+          "base_busi_assign_amt": {
+            "control": "currency",
+            "label": "业务授信分配金额(折基准币种)",
+            "width": "130px",
+            "disabled": true,
+            "span": 7,
+            "rules": [
+              {
+                "required": false,
+                "message": "请选择业务授信分配金额(折基准币种)"
+              }
+            ],
+            "compute": "${{formData.busi_assign_amt}}*${{formData.exchange_rate}}",
+            "align": "left",
+            "format": {
+              "thousand": ","
+            }
+          },
+          "remark": {
+            "label": "备注",
+            "control": "textarea",
+            "width": "130px",
+            "span": 21,
+            "autosize": {
+              "minRows": 4
+            },
+            "rules": [
+              {
+                "max": "200",
+                "message": "长度不能超过200个字符"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

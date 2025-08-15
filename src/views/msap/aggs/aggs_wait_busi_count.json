@@ -1,0 +1,74 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+   
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "aggs0004",
+          "sizePage": 10,
+          "appId": "aggsOnl"
+        }
+      },
+      "pagination": {
+        "show": false
+      },
+      "thead": [              
+        {
+          "label": "业务类型",
+          "prop": "busi_type",
+          "align": "center",
+          "dict": {
+            "dictType": "AGGS_BUSI_TYPE",
+            "dictKey": [
+              "AGGS_BUSI_TYPE"
+            ],
+            "format": "label"
+          },
+          "btns": [
+            {
+              "type": "look",
+              "toRequest": {
+                "url": "/views/msap/aggs/aggs_wait_todo_by_count.json",
+                "target": "dialog",
+                "method": "POST",
+                "params": {
+                  "busi_type": "${{current.busi_type}}",
+                  "source_system": "${{current.source_system}}"
+                }
+              },
+              "props": {
+                "width": "80%",
+                "title": "待办事项"
+              }
+            }
+          ]
+        },       
+        {
+          "label": "来源模块",
+          "prop": "source_system",
+          "align": "center",
+          "dict": {
+            "dictType": "AGGS_SYSTEM_TYPE",
+            "dictKey": [
+              "AGGS_SYSTEM_TYPE"
+            ],
+            "format": "label"
+          }
+          
+        },
+        {
+          "label": "数量",
+          "prop": "count",
+          "align": "right"
+
+        }
+        
+      ]
+    }
+  }
+}

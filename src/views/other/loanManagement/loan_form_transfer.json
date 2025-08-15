@@ -1,0 +1,305 @@
+{
+	"module":"v_inputDataForm_btn",
+	"layout":{
+		"form":{
+			"doRequest":{
+				"url":"/SUMP/icmcall/icmRPCCall",
+				"method":"POST",
+				"params":{
+					"servicecode":"CORELNTS9069",
+					"page_id":"/views/other/loanManagement/loan_form_transfer.json"
+				}
+			},
+			"btns":[
+				{
+					"type":"submit",
+					"label":"确认形态转移"
+				},
+				{
+					"type":"reset",
+					"label":"重置"
+				}
+			],
+			"btnPosition":"center",
+			"controlsGroup":[
+				{
+					"title":"贷款账户相关信息.",
+					"tooltip":"",
+					"titleIcon":"",
+					"showHint":"",
+                    "accordion":false,
+					"expand":true,
+					"controls":[
+						{
+							"lncfno":{
+								"label":"借据号",
+								"control":"text",
+                                "name":"lncfno",
+								"edit":"true",
+								"multiple":false,
+								"rules":[
+									{
+										"required":true,
+										"message":"请填写借据号"
+									},
+									{
+										"max":50,
+										"message":"长度不能超过50个字符"
+									}
+								],
+								"events":{
+									"doRequest":{
+										"url":"/SUMP/icmcall/icmRPCCall/",
+										"method":"POST",
+										"params":{
+											"servicecode":"CORELNTS9076",
+											"lncfno":"${{form.lncfno}}",
+											"acctno":"${{form.lncfno}}"
+										},
+										"resultSet":{
+											"acctno":"acctno",
+											"lncfno":"lncfno",
+											"custno":"custno",
+											"acctna":"acctna",
+											"prodcd":"prodcd",
+											"initdt":"initdt",
+											"instdt":"instdt",
+											"matudt":"matudt",
+											"termfm":"termfm",
+											"orclst":"clssst",
+											"prlntg":"prlntg",
+											"acctst":"acctst",
+											"crcycd":"crcycd",
+											"lnnpbl":"lnnpbl",
+											"lnopbl":"lnopbl",
+											"lndpbl":"lndpbl",
+											"lnbpbl":"lnbpbl",
+											"hxxxpr":"hxxxpr"
+										}
+									}
+								}
+                            },
+                            
+							"clssst":{
+								"label":"贷款形态转移",
+								"control":"select",
+								"name":"clssst",
+								"multiple":false,
+								"dict":{
+									"dictType":"E_CLSSST",
+									"dictKey":[
+										"E_CLSSST"
+									],
+									"format":"label"
+								},
+								"rules":[
+									{
+										"required":true,
+										"message":"请选择贷款形态"
+									}
+								]
+							}
+                        },
+                        {
+							"acctno":{
+								"label":"贷款账号",
+								"control":"text",
+								"name":"acctno",
+								"multiple":false,
+								"disabled":true,
+								"rules":[
+									{
+										"required":false
+									}
+								]
+                            },
+                            "lncfno":{
+								"label":"贷款借据号",
+								"control":"text",
+								"name":"lncfno",
+								"multiple":false,
+								"disabled":true,
+								"rules":[
+									{
+										"required":false
+									}
+								]
+							}
+                        },
+						{
+							"custno":{
+								"label":"客户号",
+								"control":"text",
+								"name":"custno",
+								"multiple":false,
+								"disabled":true,
+								"rules":[
+									{
+										"required":false
+									}
+								]
+                            },
+                            "acctna":{
+								"label":"客户名称",
+								"control":"text",
+								"name":"acctna",
+								"multiple":false,
+								"disabled":true,
+								"rules":[
+									{
+										"required":false
+									},
+									{
+										"max":100,
+										"message":"长度不能超过100个字符"
+									}
+								]
+							}
+						},
+						{
+							"prodcd":{
+								"label":"产品代码",
+								"control":"text",
+								"name":"prodcd",
+								"multiple":false,
+								"disabled":true
+							},
+							"initdt":{
+								"label":"开户日期",
+								"control":"dateTimePicker",
+								"name":"initdt",
+								"placeholder":" ",
+								"multiple":false,
+								"disabled":true								
+							}
+						},
+						{
+							"instdt":{
+								"label":"起息日期",
+								"control":"dateTimePicker",
+								"name":"instdt",
+								"placeholder":" ",
+								"multiple":false,
+								"disabled":true
+                            },
+                            "matudt":{
+								"label":"起息日期",
+								"control":"dateTimePicker",
+								"name":"matudt",
+								"placeholder":" ",
+								"multiple":false,
+								"disabled":true
+							}
+                        },
+                        {
+                            "termfm":{
+								"label":"贷款期限",
+								"control":"text",
+								"name":"termfm",
+								"multiple":false,
+								"disabled":true
+                            },
+                            "orclst":{
+								"label":"贷款形态",
+								"control":"select",
+								"name":"clssst",
+								"disabled":true,
+								"dict": {
+									"dictType": "E_CLSSST",
+									"dictKey": [
+										"E_PRLNTG"
+									],
+									"format": "label"
+								}
+								
+							} 
+                        },
+                        {
+                            "prlntg": {
+								"control": "select",
+								"label": "应计非应计状态",
+								"disabled":true,
+								"dict": {
+									"dictType": "E_PRLNTG",
+									"dictKey": [
+										"E_PRLNTG"
+									],
+									"format": "label"
+								}
+							},
+                            "acctst":{
+								"label":"贷款账户状态",
+								"control":"select",
+								"disabled":true,
+								"dict": {
+									"dictType": "E_LNCFST",
+									"dictKey": [
+										"E_LNCFST"
+									],
+									"format": "label"
+								}
+							} 
+							
+                        },
+                        {
+							"crcycd":{
+								"label":"货币代号",
+								"control":"select",
+								"disabled":true,
+								"dict": {
+									"dictType": "E_CRCYCD_JL",
+									"dictKey": [
+										"E_CRCYCD_JL"
+									],
+									"format": "label"
+								}
+							},
+                            "lnnpbl":{
+								"label":"正常本金",
+								"control":"text",
+								"name":"lnnpbl",
+								"multiple":false,
+								"disabled":true
+							} 
+                        },
+                        {
+                            "lnopbl":{
+								"label":"逾期本金",
+								"control":"text",
+								"name":"lnopbl",
+								"multiple":false,
+								"disabled":true
+                            } ,
+                            "lndpbl":{
+								"label":"呆滞本金",
+								"control":"text",
+								"name":"lndpbl",
+								"multiple":false,
+								"disabled":true
+							} 
+
+                        },
+                        {
+                            "lnbpbl":{
+								"label":"呆账本金",
+								"control":"text",
+								"name":"lnbpbl",
+								"multiple":false,
+								"disabled":true
+                            } ,
+                            "hxxxpr":{
+								"label":"核销本金",
+								"control":"text",
+								"name":"hxxxpr",
+								"multiple":false,
+								"disabled":true
+							} 
+
+						}
+
+					]
+				}
+			]
+		}
+	}
+}

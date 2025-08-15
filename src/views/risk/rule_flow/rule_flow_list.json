@@ -1,0 +1,271 @@
+{
+  "module": "v-search-btn-datagrid",
+  "pageId": "rule_flow",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "flow_code": {
+            "label": "规则流代码",
+            "control": "text",
+            "span": 8,
+            "width": "auto"
+          },
+          "flow_name": {
+            "label": "规则流名称",
+            "control": "text",
+            "width": "auto",
+            "span": 8
+          },
+          "branch_id": {
+            "label": "机构名称",
+              "control": "remoteSelect",
+              "labelField": "branch_name",
+              "valueField": "branch_id",
+              "searchField":"branch_name",
+              "span": 6,
+              "value": "$g{{user_info.branch_id}}",
+              "width": "auto",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "ct2191"
+                }
+            },
+            "format": "label"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "deci010704"
+        }
+      },
+      "thead": [
+        {
+          "type": "index",
+          "label": "序号",
+          "align": "center"
+      },
+        {
+          "label": "规则流代码",
+          "prop": "flowCode"
+        },
+        {
+          "label": "规则流名称",
+          "prop": "flowName"
+        },
+        {
+          "label": "机构名称",
+          "prop": "branchId",
+          "dict": {
+            "dictType": "DECI_E_BRANCH_MARK",
+            "dictKey": [
+              "DECI_E_BRANCH_MARK"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "版本号",
+          "prop": "currVersion"
+        },
+        {
+          "label": "服务对象",
+          "prop": "serviceObject"
+        },
+        {
+          "label": "备注",
+          "prop": "flow_description"
+        },
+        {
+          "label": "最新维护人",
+          "prop": "applyUser",
+          "dict": {
+            "dictType":"deciOnl",
+              "dictKey": [],
+              "format": "label",
+              "labelField": "user_name",
+              "valueField": "user_id",
+              "doRequest": {
+                  "url": "/SUMP/icmcall/icmRPCCall",
+                  "method": "POST",
+                  "params": {
+                    "length":1000,
+                    "start":1,
+                      "servicecode": "ct2503"
+                  }
+              }
+          }
+        },
+        {
+          "label": "最新维护时间",
+          "prop": "applyTime"
+        },
+        {
+          "label": "操作",
+          "width": "200px",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "查看",
+              "authId": "rule_flow_edt_btn",
+              "toRequest": {
+                "url": "/views/risk/rule_flow/rule_flow_edit.json",
+                "method": "get"
+              },
+              "props": {
+                "width": "60%"
+              }
+            },
+             {
+              "type": "edit",
+              "label": "流程查看",
+              "authId": "rule_flow_edt_btn",
+              "toRequest": {
+                "url": "@ruleFlowBpmn",
+                "method": "get",
+                "props": {
+                  "width": "85%",
+                  "height": "85%"
+                },
+                "params": {
+                  "onlyRead": true,
+                  "isCk":"1"
+                }
+              },
+              "props": {
+                "width": "85%",
+                "height": "85%"
+              },
+              "#toRequest": {
+                "#url": "/views/risk/rule_flow/rule_flow/rule_flow_edit_view.json"
+              },
+              "show": {
+                "expression": "true"
+              }
+            },
+            {
+              "type": "confirmIncreaseBtn",
+              "label": "变更",
+              "authId": "rule_flow_edt_btn",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "deci010711",
+                  "flow_code": "${{current.flowCode}}",
+                  "risk_operation_type":"U"
+                }
+              },
+              "confirm": {
+                "title": "提示信息",
+                "msgTemplate":"是否对“${{current.flowCode}}”“${{current.flowName}}”发起变更？",
+                "msg": "",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              },
+              "show": {
+                "expression": "'${{current.branchId}}' == '$g{{user_info.branch_id}}'"
+              }
+            },
+
+            {
+              "type": "confirmIncreaseBtn",
+              "label": "版本切换",
+              "authId": "rule_flow_edt_btn",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "deci010711",
+                  "flow_code": "${{current.flowCode}}",
+                  "risk_operation_type":"S"
+                }
+              },
+              "confirm": {
+                "title": "提示信息",
+                "msgTemplate":"是否对“${{current.flowCode}}”“${{current.flowName}}”发起版本切换？",
+                "msg": "",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              },
+              "show": {
+                "expression": "'${{current.branchId}}' == '$g{{user_info.branch_id}}'"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "复制",
+              "authId": "rule_flow_edt_btn",
+              "toRequest": {
+                "url": "/views/risk/rule_flow/rule_flow/rule_flow_copy.json",
+                "method": "get"
+              },
+              "props": {
+                "width": "80%",
+                "flow_id":"${{current.flowId}}"
+              },
+              "show": {
+                "expression": "'${{current.branchId}}' == '$g{{user_info.branch_id}}'"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "删除",
+              "authId": "rule_flow_edt_btn",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "deci010711",
+                  "flow_code": "${{current.flowCode}}",
+                  "risk_operation_type":"D"
+                }
+              },
+              "confirm": {
+                "title": "提示信息",
+                "msg": "请确认是否执行删除操作？",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              },
+              "show": {
+                "expression": "'${{current.branchId}}' == '$g{{user_info.branch_id}}'"
+              }
+            },
+
+            {
+              "#type": "edit",
+              "#label": "流程查看",
+              "#authId": "rule_flow_fedt_btn",
+              "#toRequest": {
+                "url": "@ruleFlowBpmn",
+                "method": "post",
+                "params": {
+                  "onlyRead":true
+                }
+              },
+              "#props": {
+                "width": "85%",
+                "height": "85%"
+              },
+              "#show": {
+                "#expression": "'${{current.branchId}}' == '$g{{user_info.branch_id}}'"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

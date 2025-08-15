@@ -1,0 +1,157 @@
+{
+    "module": "v-form-editableDataGrid-btn",
+    "layout": {
+        "form": {
+            "scope": "formData",
+            "controls": [{
+                    "metric_id": {
+                        "control": "text",
+                        "label": "指标编码",
+                        "rules": [{
+                            "required": true,
+                            "message": "请输入"
+                        }]
+                    },
+                    "weight": {
+                        "control": "text",
+                        "label": "权重(%)",
+                        "rules": [{
+                            "required": true,
+                            "message": "请输入"
+                        }]
+                    }
+                },
+                {
+                    "metric_type": {
+                        "control": "select",
+                        "label": "指标类型",
+                        "dict": {
+                            "dictType": "CR_E_UNFINCL_METRIC_TYPE",
+                            "dictKey": [
+                                "CR_E_UNFINCL_METRIC_TYPE"
+                            ],
+                            "format": "label"
+                        },
+                        "rules": [{
+                            "required": true,
+                            "message": "请选择"
+                        }]
+                    },
+                    "metric_name": {
+                        "control": "text",
+                        "label": "指标名称",
+                        "rules": [{
+                            "required": true,
+                            "message": "请输入"
+                        }]
+                    }
+                },
+                {
+                    "is_valid": {
+                        "label": "状态",
+                        "control": "select",
+                        "dict": {
+                            "dictType": "MS_E_YESORNO",
+                            "dictKey": [
+                                "MS_E_YESORNO"
+                            ],
+                            "format": "label"
+                        },
+                        "rules": [{
+                            "required": true,
+                            "message": "请选择"
+                        }]
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [{
+                    "type": "add",
+                    "label": "新增",
+                    "icon": "el-icon-plus"
+                },
+                {
+                    "type": "batchDelete",
+                    "label": "删除",
+                    "icon": "el-icon-close"
+                }
+            ]
+        },
+        "datagrid": {
+            "name": "scheme",
+            "pagination": {
+                "show": false
+            },
+            "allData": true,
+            "thead": [{
+                    "type": "selection",
+                    "align": "center",
+                    "width": "55",
+                    "fixed": "left",
+                    "show": {
+                        "prop": "changkuan",
+                        "is": [
+                            "0"
+                        ]
+                    }
+                },
+                {
+                    "prop": "domain_key",
+                    "type": "text",
+                    "align": "center",
+                    "label": "评级指标域值",
+                    "rules": [{
+                        "required": true,
+                        "message": "请输入"
+                    }]
+                },
+                {
+                    "prop": "domain_name",
+                    "type": "text",
+                    "align": "center",
+                    "label": "评级指标域名称",
+                    "rules": [{
+                        "required": true,
+                        "message": "请输入"
+                    }]
+                },
+                {
+                    "prop": "domain_index",
+                    "type": "text",
+                    "align": "center",
+                    "label": "显示顺序",
+                    "rules": [{
+                        "required": true,
+                        "message": "请输入"
+                    }]
+                },
+                {
+                    "label": "操作",
+                    "btns": [{
+                        "type": "delete",
+                        "label": "删除",
+                        "align": "center",
+                        "icon": "el-icon-close"
+                    }]
+                }
+            ]
+        },
+        "footer": {
+            "btns": [{
+                "type": "submit",
+                "label": "保存",
+                "icon": "el-icon-tickets",
+                "doRequest": {
+                    "url": "/SUMP/icmcall/icmRPCCall",
+                    "method": "POST",
+                    "params": {
+                        "servicecode": "cr0072",
+                        "temp_id": "${{params.temp_id}}",
+                        "metric_kind": "2"
+                    }
+                }
+            }]
+        }
+    }
+}

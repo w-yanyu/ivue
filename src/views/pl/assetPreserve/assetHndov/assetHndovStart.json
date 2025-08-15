@@ -1,0 +1,66 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+      "form": {
+        "name": "detail",
+        "initRequest": "${{params}}",
+        "btns": [
+          {
+
+
+          }
+        ],
+        "controls": [
+          {
+            "start_oprtr": {
+              "label": "申请人",
+              "control": "string",
+              "value": "$g{{user_info.userCode}}",
+              "rules": [
+                {
+                  "required": true,
+                  "message": "申请人不能为空"
+                }
+              ]
+            }
+          },
+          {
+            "actvn_org": {
+              "label": "申请机构",
+              "control": "string",
+              "value": "$g{{user_info.branch_id}}",
+              "rules": [
+                {
+                  "required": true,
+                  "message": "申请机构不能为空"
+                }
+              ]
+            }
+          },
+          {
+            "toDbsx": {
+              "span": 24,
+              "unFieldList": [
+                "apply_type",
+                "busi_type"
+              ],
+              "control": "dynamic",
+              "#isShowChildrenForm": false,
+              "toRequest": {
+                "method": "GET",
+                "url": "@FlowSubmitBtn",
+                "params": {
+                  "appId": "plOnl",
+                  "servicecode": "pl0250",
+                  "start_oprtr": "$g{{user_info.userCode}}",
+                  "actvn_org": "$g{{user_info.branch_id}}",
+                  "finalUrl": "views/pl/workbench/workbench_wait_todo_view.json",
+                  "trans_type": "ADD"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  }

@@ -1,0 +1,69 @@
+{
+    "module": "v-inputDataForm-btn",
+    "layout": {
+        "form": {
+          "#initRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "cb0256",
+              "case_id": "${{params.case_id}}"
+            }
+          },
+            "btns": [
+              {
+                "type": "submit",
+                "target": "dialog",
+                "label": "申请",
+                "doRequest": {
+                  "url": "/SUMP/icmcall/icmRPCCall",
+                  "method": "POST",
+                  "params": {
+                    "servicecode": "cb0353",
+                    "case_id":"${{params.case_id}}",
+                    "apply_reason":"${{form.apply_reason}}",
+                    "account_balance": "${{form.account_balance}}"
+                  }
+                }
+              },
+              {
+                "type": "close",
+                "label": "返回"
+              }
+            ],
+            "controls": [
+              {
+                "function_cd":{
+                  "control":"hidden"
+                },
+                "account_balance": {
+                  "control": "text",
+                  "inputWidth": "200px",
+                  "disabled": true,
+                  "label": "账户可用余额",
+                  "rules": [
+                    {
+                      "required": false,
+                      "message": "请输入"
+                    }
+                  ]
+                }
+              },
+              {
+                "apply_reason": {
+                  "control": "textarea",
+                  "span": 18,
+                  "rows":"6",
+                  "label": "申请原因",
+                  "rules": [
+                    {
+                      "required": true,
+                      "message": "请输入"
+                    }
+                  ]
+                }
+              }
+            ]
+        }
+    }
+}

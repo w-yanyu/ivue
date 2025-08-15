@@ -1,0 +1,141 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "archive_no": {
+                        "control": "text",
+                        "label": "归档编号",
+                        "rules": [
+                            {
+                                "max": 10,
+                                "message": "长度不能超过10个字符"
+                            }
+                        ]
+                    },
+                    "enrollment_type": {
+                        "control": "text",
+                        "label": "入册类型",
+                        "rules": [
+                            {
+                                "max": 10,
+                                "message": "长度不能超过10个字符"
+                            }
+                        ]
+                    },
+                    "cust_name": {
+                        "control": "text",
+                        "label": "客户名称",
+                        "rules": [
+                            {
+                                "max": 32,
+                                "message": "长度不能超过32个字符"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "target": "dialog",
+                    "label": "档案清单",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/pl/archivesmgement/putaway/recordlist.json"
+                    },
+                    "props": {
+                        "title": "档案清单",
+                        "width": "80%"
+                    }
+                },
+                {
+                    "type": "add",
+                    "target": "dialog",
+                    "label": "上架",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/pl/archivesmgement/putaway/putaway.json"
+                    },
+                    "props": {
+                        "title": "上架信息",
+                        "width":"80%"
+                    }
+                },
+                {
+                    "type": "submit",
+                    "target": "dialog",
+                    "label": "取消上架",
+                    "doRequest": {
+                        "url": "/SUMP/call/RPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "",
+                            "bind_default_menu_ind": "1",
+                            "system_id": ""
+                        }
+                    },
+                    "props": {
+                        "title": ""
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": ""
+                }
+            },
+            "pagination": {
+                "show": true
+            },
+            "thead": [
+                {
+                    "type": "index"
+                },
+                {
+                    "label": "客户名称",
+                    "prop": "cust_name"
+                },
+                {
+                    "label": "归档编号",
+                    "prop": "archive_no"
+                },
+                {
+                    "label": "归档顺序号",
+                    "prop": "archives_seq_no"
+                },
+                {
+                    "label": "入册类型",
+                    "prop": "enrollment_type"
+                },
+                {
+                    "label": "归档日期",
+                    "prop": "archive_date",
+                    "dict": {
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "归档人员",
+                    "prop": "archive_person",
+                    "dict": {
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "归档机构",
+                    "prop": "archive_org"
+                }
+            ]
+        }
+    }
+}

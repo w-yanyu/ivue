@@ -1,0 +1,482 @@
+{
+  "module": "v-inputDataForm-btn",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "cb0171",
+              "appId": "cbOnl"
+            }
+          }
+        },
+        {
+          "type": "close",
+          "label": "取消"
+        }
+      ],
+      "controlsGroup": [
+        {
+          "title": "工单信息",
+          "tooltip": "",
+          "titleIcon": "",
+          "showHint": "",
+          "accordion": false,
+          "expand": true,
+          "controls": [
+            {
+              "work_order_type": {
+                "control": "select",
+                "label": "工单类别",
+                "dict": {
+                  "dictType": "CS_ORDER_TYPE",
+                  "dictKey": [
+                    "CS_ORDER_TYPE"
+                  ],
+                  "format": "value-label",
+                  "events": {
+                    "emit": [
+                      "template_name"
+                    ]
+                  }
+                }
+              },
+              "template_name": {
+                "control": "lookup",
+                "edit": false,
+                "label": "模板编号",
+                "required": true,
+                "keyField": {
+                  "wf_prod_no": "wf_prod_no",
+                  "wf_prod_name": "wf_prod_name",
+                  "template_id": "template_id",
+                  "order_type1": "work_order_type"
+                },
+                "toRequest": {
+                  "url": "/views/cs/generalManage/workOrderManage/orderMnt/template_query_lookup.json",
+                  "method": "post",
+                  "params": {
+                    "work_order_type": "${{formData.work_order_type}}"
+                  }
+                },
+                "props": {
+                  "width": "55%",
+                  "title": "查询模板"
+                }
+              },
+              "order_type1": {
+                "initShow": false,
+                "control": "string",
+                "label": "工单类型",
+                "disabled": true,
+                "showItem": {
+                  "1": [
+                    "complaint_user_name",
+                    "complaint_user_phone",
+                    "complaint_content"
+                  ],
+                  "2": [
+                    "consultation_content"
+                  ],
+                  "3": []
+                }
+              }
+            },
+            {
+              "wf_prod_no": {
+                "control": "string",
+                "disabled": true,
+                "label": "流程产品编号"
+              },
+              "wf_prod_name": {
+                "control": "string",
+                "disabled": true,
+                "label": "流程产品名称"
+              }
+            },
+            {
+              "create_user": {
+                "hidden": true,
+                "label": "提单人",
+                "control": "remoteSelect",
+                "labelField": "user_name",
+                "valueField": "user_id",
+                "doRequest": {
+                  "url": "/SUMP/rest/auth/userManager",
+                  "method": "POST",
+                  "params": {
+                    "servicecode": "ct2002",
+                    "brch_relation_code": "01"
+                  }
+                },
+                "format": "value-label"
+              },
+              "work_order_priority": {
+                "control": "select",
+                "label": "优先级",
+                "dict": {
+                  "dictType": "CS_ORDER_PRIORITY",
+                  "dictKey": [
+                    "CS_ORDER_PRIORITY"
+                  ],
+                  "format": "value-label"
+                }
+              },
+              "end_date": {
+                "control": "dateTimePicker",
+                "disabledDate": "dateBefore",
+                "label": "截止日期",
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请选择"
+                  }
+                ]
+              },
+              "copy_user": {
+                "hidden": true,
+                "label": "抄送人",
+                "control": "remoteSelect",
+                "labelField": "user_name",
+                "valueField": "user_id",
+                "doRequest": {
+                  "url": "/SUMP/rest/auth/userManager",
+                  "method": "POST",
+                  "params": {
+                    "servicecode": "ct2002",
+                    "brch_relation_code": "01"
+                  }
+                },
+                "format": "value-label"
+              },
+              "case_id": {
+                "control": "lookup",
+                "edit": false,
+                "label": "关联案件",
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请选择案件"
+                  }
+                ],
+                "keyField": {
+                  "case_id": "case_id",
+                  "case_no": "case_no",
+                  "cust_id": "cust_id",
+                  "org_id": "org_id",
+                  "oa_org_id": "oa_org_id"
+                },
+                "toRequest": {
+                  "url": "/views/cs/generalManage/workOrderManage/orderMnt/case_query_lookup.json",
+                  "method": "post"
+                },
+                "props": {
+                  "width": "55%",
+                  "title": "查询案件"
+                },
+                "events": {
+                  "doRequest": {
+                    "url": "/SUMP/call/RPCCall",
+                    "method": "post",
+                    "params": {
+                      "servicecode": "cb0096",
+                      "case_id": "${{formData.case_id}}",
+                      "case_no": "${{formData.case_no}}",
+                      "cust_id": "${{formData.cust_id}}",
+                      "org_id": "${{formData.org_id}}",
+                      "oa_org_id": "${{formData.oa_org_id}}"
+                    },
+                    "resultSet": {
+                      "cust_name": "cust_name",
+                      "cert_no": "cert_no",
+                      "loan_amount": "loan_amount",
+                      "overdue_amount": "overdue_amount",
+                      "overdue_principal": "overdue_principal",
+                      "overdue_interest": "overdue_interest",
+                      "overdue_penalty_interest": "overdue_penalty_interest",
+                      "overdue_fee": "overdue_fee",
+                      "overdue_days": "overdue_days",
+                      "total_debt_period": "total_debt_period",
+                      "outsourcing_org_name": "outsourcing_org_name",
+                      "collector": "collector",
+                      "depute_date": "depute_date",
+                      "phone_status": "phone_status",
+                      "coll_result": "coll_result",
+                      "customer_portrait": "customer_portrait",
+                      "case_score": "case_score",
+                      "is_merger_loan": "is_merger_loan"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "complaint_user_name": {
+                "initShow": false,
+                "control": "text",
+                "label": "投诉人姓名",
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请输入投诉人姓名"
+                  }
+                ]
+              },
+              "complaint_user_phone": {
+                "initShow": false,
+                "control": "text",
+                "label": "投诉人电话",
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请输入投诉人电话"
+                  },
+                  {
+                    "message": "手机号码必须为数字",
+                    "type": "number"
+                  },
+                  {
+                    "message": "手机号码不应超过11位",
+                    "min": 0,
+                    "max": 11
+                  }
+                ]
+              }
+            },
+            {
+              "complaint_content": {
+                "initShow": false,
+                "control": "textarea",
+                "rows": "6",
+                "label": "投诉内容",
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请输入投诉人电话"
+                  }
+                ]
+              }
+            },
+            {
+              "consultation_content": {
+                "initShow": false,
+                "control": "textarea",
+                "rows": "2",
+                "label": "咨询内容",
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请输入咨询内容"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "title": "提醒信息",
+          "tooltip": "",
+          "titleIcon": "",
+          "showHint": "",
+          "accordion": false,
+          "expand": true,
+          "controls": [
+            {
+              "reminder_time": {
+                "control": "dateTimePicker",
+                "label": "提醒时间",
+                "disabledDate": "dateBefore",
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请选择"
+                  }
+                ]
+              },
+              "reminder_type": {
+                "control": "select",
+                "label": "提醒方式",
+                "dict": {
+                  "dictType": "CS_REMINDER_TYPE",
+                  "dictKey": [
+                    "CS_REMINDER_TYPE"
+                  ],
+                  "format": "value-label"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "title": "案件信息",
+          "tooltip": "",
+          "titleIcon": "",
+          "showHint": "",
+          "accordion": false,
+          "expand": true,
+          "controls": [
+            {
+              "template_id": {
+                "control": "hidden"
+              },
+              "case_no": {
+                "control": "hidden"
+              },
+              "org_id": {
+                "control": "hidden"
+              },
+              "oa_org_id": {
+                "control": "hidden"
+              },
+              "cust_id": {
+                "control": "string",
+                "label": "客户编号"
+              },
+              "cust_name": {
+                "control": "string",
+                "label": "客户姓名"
+              },
+              "cert_no": {
+                "control": "string",
+                "label": "证件号码"
+              },
+              "loan_amount": {
+                "control": "string",
+                "disabled": true,
+                "label": "贷款金额",
+                "format": {
+                  "decimal": "2"
+                }
+              },
+              "overdue_amount": {
+                "control": "string",
+                "disabled": true,
+                "label": "逾期金额",
+                "format": {
+                  "decimal": "2"
+                }
+              },
+              "overdue_principal": {
+                "control": "string",
+                "disabled": true,
+                "label": "逾期本金",
+                "format": {
+                  "decimal": "2"
+                }
+              },
+              "overdue_interest": {
+                "control": "string",
+                "disabled": true,
+                "label": "逾期利息",
+                "format": {
+                  "decimal": "2"
+                }
+              },
+              "overdue_penalty_interest": {
+                "control": "string",
+                "disabled": true,
+                "label": "逾期罚息",
+                "format": {
+                  "decimal": "2"
+                }
+              },
+              "overdue_fee": {
+                "control": "string",
+                "disabled": true,
+                "label": "逾期费用",
+                "format": {
+                  "decimal": "2"
+                }
+              },
+              "overdue_days": {
+                "control": "string",
+                "label": "逾期天数"
+              },
+              "total_debt_period": {
+                "control": "string",
+                "label": "逾期期数"
+              },
+              "case_hands": {
+                "control": "string",
+                "label": "手别"
+              },
+              "billing_date": {
+                "control": "string",
+                "label": "账单日"
+              },
+              "outsourcing_org_name": {
+                "control": "string",
+                "label": "委外公司"
+              },
+              "collector": {
+                "control": "string",
+                "label": "催收员"
+              },
+              "depute_date": {
+                "control": "string",
+                "label": "委托时间"
+              },
+              "phone_status": {
+                "control": "string",
+                "label": "最近电话状态",
+                "dict": {
+                  "dictType": "CS_E_PHONE_STATUS",
+                  "dictKey": [
+                    "CS_E_PHONE_STATUS"
+                  ],
+                  "format": "value-label"
+                }
+              },
+              "coll_result": {
+                "control": "string",
+                "label": "最近催收结果",
+                "dict": {
+                  "dictKey": [
+                    "coll_result"
+                  ],
+                  "format": "value-label",
+                  "labelField": "coll_result_name",
+                  "valueField": "coll_result_code",
+                  "doRequest": {
+                    "url": "/SUMP/icmcall/icmRPCCall",
+                    "method": "POST",
+                    "params": {
+                      "servicecode": "cb0087",
+                      "is_valid": "Y",
+                      "appId": "cbOnl"
+                    }
+                  }
+                }
+              },
+              "customer_portrait": {
+                "control": "string",
+                "label": "客户画像"
+              },
+              "case_score": {
+                "control": "string",
+                "label": "案件评分"
+              },
+              "is_merger_loan": {
+                "control": "string",
+                "label": "是否逾期多笔",
+                "dict": {
+                  "dictType": "CS_E_YESORNO",
+                  "dictKey": [
+                    "CS_E_YESORNO"
+                  ],
+                  "format": "value-label"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,136 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+      "form": {
+          "doRequest": {
+              "url": "",
+              "method": "POST",
+              "params": {}
+          },
+          "btns": [],
+          "controls": []
+      },
+      "toolbar": {
+          "btns": [
+              
+          ]
+      },
+     "datagrid": {
+          "scope": "searchTable",
+          "isInitSearch": true,
+          "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                  "servicecode": "ct2408",
+                  "authp_system_code":"${{params.authp_system_code}}",
+                  "appId":"${{params.appId}}"
+              }
+          },
+          "pagination": {
+              "show": true,
+              "pageSize": 10
+          },
+          "thead": [
+              {
+                  "type": "index"
+              },
+              {
+                  "label": "授权体系编号",
+                  "prop": "authp_system_code"
+              },
+              {
+                "label": "授权体系版本",
+                "prop": "auth_version"
+                },
+              {
+                  "label": "授权体系名称",
+                  "prop": "authp_system_name"
+              },
+              {
+                  "label": "授权类型",
+                  "prop": "dimension_busi_type_en"                  
+              },
+              {
+                "label": "状态",
+                "prop": "authp_system_status",
+                "dict": {
+                    "dictType": "CT_E_AUTH_STATUS",
+                    "format": "label",
+                    "dictKey": [
+                        "CT_E_AUTH_STATUS"
+                    ]
+                },
+                "format": "label"
+              },
+              {
+                "label": "是否全部执行标识",
+                "prop": "all_exe_flag",
+                "dict": {
+                    "format": "label",
+                    "dictKey": [
+                        "MS_E_YESORNO"
+                    ],
+                    "dictType": "MS_E_YESORNO"
+                },
+                "format": "label"
+              },
+              {
+                  "prop": "effect_date",
+                  "label": "生效日期"
+              },
+              {
+                  "label": "失效日期",
+                  "prop": "invalid_date"
+              },
+              {
+                  "label": "操作",
+                  "width": 200,
+                  "align":"center",
+                  "fixed": "right",
+                  "btns": [
+                      {
+                        "type": "edit",
+                        "label": "详情",
+                        "toRequest": {
+                            "url": "/views/ismt/ct/busiAuth/authp_system/authp_system_detail_steps.json",
+                            "method": "GET",
+                            "params": {
+                                "appId":"${{params.appId}}"
+                            }
+                        },
+                        "props": {
+                            "title": "授权体系信息详情",
+                            "width":"80%"
+                        }
+                      },
+                      {
+                        "type": "custom",
+                        "label": "切换",
+                        "doRequest": {
+                          "url": "/SUMP/call/RPCCall",
+                          "method": "POST",
+                          "params": {
+                            "servicecode": "ct2440",
+                            "appId":"${{params.appId}}"
+                          }
+                        },
+                        "show": {
+                            "expression": "'${{current.authp_system_status}}' == '1'"
+                        },
+                        "confirm": {
+                          "title": "提示信息",
+                          "msg": "确认切换版本吗？",
+                          "confirmButtonText": "确定",
+                          "cancelButtonText": "取消"
+                        },
+                        "eventAfter": {
+                          "doParentCallback": true
+                        }
+                      }
+                  ]
+              }
+          ]
+      }
+  }
+}

@@ -1,0 +1,176 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/product/baseProductMange/product/lnfDtit/lnf_dtit_add.json",
+            "params": {
+              "prodcd": "${{params.prodcd}}"
+            }
+          },
+          "props": {
+            "width": "70%",
+            "title": "新增核算属性"
+          }
+        }
+      ]
+    },
+    "initRequest": "${{params.isqzsq}}",
+    "datagrid": {
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "CORELNTS9035",
+          "prodcd": "${{params.prodcd}}"
+        }
+      },
+      "thead": [
+        {
+          "label": "产品代码",
+          "prop": "prodcd",
+          "align": "center"
+        },
+        {
+          "label": "货币代号",
+          "prop": "crcycd",
+          "dict": {
+            "dictType": "MS_CURRENCY",
+            "dictKey": [
+              "MS_CURRENCY"
+            ],
+            "format": "label"
+          },
+          "align": "center"
+        },
+        {
+          "label": "按一逾两呆核算",
+          "prop": "clssfg",
+          "dict": {
+            "dictType": "E_CLSSFG",
+            "dictKey": [
+              "E_CLSSFG"
+            ],
+            "format": "label"
+          },
+          "align": "center"
+        },
+        {
+          "label": "自动形态转移",
+          "prop": "isauto",
+          "dict": {
+            "dictType": "E_ISAUTO",
+            "dictKey": [
+              "E_ISAUTO"
+            ],
+            "format": "label"
+          },
+          "align": "center"
+        },
+        {
+          "label": "应计非应计核算",
+          "prop": "prlnfg",
+          "dict": {
+            "dictType": "E_PRLNFG",
+            "dictKey": [
+              "E_PRLNFG"
+            ],
+            "format": "label"
+          },
+          "align": "center"
+        },
+        {
+          "label": "贷款形态分科目核算",
+          "prop": "dtitfg",
+          "dict": {
+            "dictType": "E_DTITFG",
+            "dictKey": [
+              "E_DTITFG"
+            ],
+            "format": "label"
+          },
+          "align": "center"
+        },
+        {
+          "label": "利息转出规则",
+          "prop": "inottp",
+          "dict": {
+            "dictType": "E_INOTTP",
+            "dictKey": [
+              "E_INOTTP"
+            ],
+            "format": "label"
+          },
+          "align": "center"
+        },
+        {
+          "label": "利息转回规则",
+          "prop": "inintp",
+          "dict": {
+            "dictType": "E_ININTP",
+            "dictKey": [
+              "E_ININTP"
+            ],
+            "format": "label"
+          },
+          "align": "center"
+        },
+        {
+          "label": "转表外是否强制缩期",
+          "prop": "isqzsq",
+          "align": "center",
+          "dict": {
+            "dictType": "E_YES___",
+            "dictKey": [
+              "E_YES___"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "修改",
+              "toRequest": {
+                "url": "/views/product/baseProductMange/product/lnfDtit/lnf_dtit_update_sub.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "70%",
+                "title": "修改产品核算属性"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "CORELNTS9037"
+                }
+              },
+              "confirm": {
+                "title": "确定删除",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

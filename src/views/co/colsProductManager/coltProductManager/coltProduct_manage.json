@@ -1,0 +1,156 @@
+{
+    "module": "lr-tree-dynamic",
+    "layout": {
+        "tree": {
+            "title": "抵质押产品设置",
+            "lazy": false,
+            "idField": "tree_id",
+            "pIdField": "tree_pid",
+            "labelField": "tree_title",
+            "isLeafField": "tree_is_leaf",
+            "nodeTypeField": "tree_type",
+            "initRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "co1011"
+                }
+            },
+            "root": {
+                "rootNode": {
+                    "name": "抵质押产品",
+                    "value": "-1"
+                }
+
+            },
+            "rootTypes": [
+                "dept"
+            ],
+            "nodeTypes": {
+                "dept": {
+                    "children": [
+                        "dept"
+                    ],
+                    "contextMenu": [
+                        {
+                            "type": "add",
+                            "label": "新增",
+                            "childNodeType": "dept",
+                            "icon": "el-icon-circle-plus-outline",
+                            "toRequest": {
+                                "url": "/views/co/colsProductManager/coltProductManager/coltType_add.json",
+                                "method": "get",
+                                "params": {
+                                    "tree_id": "${{current.tree_id}}"
+                                }
+                            },
+
+                            "props": {
+                                "width": "80%",
+                                "title": "新增抵质押产品"
+                            },
+                            "eventAfter": {
+                                "callback": "renderTree"
+                            }
+                        },
+                        {
+                            "type": "divider"
+                        }
+                    ]
+                },
+                "coltType": {
+                    "children": [
+                        "coltType"
+                    ],
+                    "toRequest": {
+                        "url": "/views/co/colsProductManager/coltProductManager/coltType_detail.json",
+                        "params": {
+                          "tree_id": "${{current.tree_id}}",
+                          "method": "post"
+                        }
+                      },
+                    "contextMenu": [
+                        {
+                            "type": "add",
+                            "label": "新增",
+                            "childNodeType": "coltType",
+                            "icon": "el-icon-circle-plus-outline",
+                            "toRequest": {
+                                "url": "/views/co/colsProductManager/coltProductManager/coltProd_add.json",
+                                "method": "get",
+                                "params": {
+                                    "tree_id":"${{current.tree_id}}"
+                                }
+                            },
+                            "props": {
+                                "width": "80%",
+                                "title": "新增抵质押产品"
+                            },"eventAfter": {
+                                "callback": "renderTree"
+                            }
+                        },
+                        {
+                            "type": "divider"
+                        },
+                        {
+                            "type": "delete",
+                            "label": "删除",
+                            "childNodeType": "coltType",
+                            "icon": "el-icon-remove-outline",
+                            "doRequest": {
+                                "url": "/SUMP/call/RPCCall",
+                                "method": "DELETE",
+                                "params": {
+                                    "servicecode": "co1020",
+                                    "tran_type":"3",
+                                        "colt_type":"${{current.tree_id}}"
+
+                                }
+                            },"eventAfter": {
+                                "callback": "renderTree"
+                            }
+                        }
+                    ]
+                },
+                "coltProd": {
+                    "children": [
+                        "coltProd"
+                    ],
+                    "toRequest": {
+                        "url": "/views/co/colsProductManager/coltProductManager/coltProd_detail.json",
+                        "method": "post",
+                        "params": {
+                          "tree_id": "${{current.tree_id}}"
+                        }
+                      },
+                    "contextMenu": [
+
+                        {
+                            "type": "divider"
+                        },
+                        {
+                            "type": "delete",
+                            "label": "删除",
+                            "childNodeType": "coltType",
+                            "icon": "el-icon-remove-outline",
+                            "doRequest": {
+                                "url": "/SUMP/call/RPCCall",
+                                "method": "DELETE",
+                                "params": {
+                                    "servicecode": "co1007",
+                                    "tran_type":"3",
+                                    "detail": {
+                                        "colt_prod_cd":"${{current.tree_id}}"
+                                    }
+
+                                }
+                            },"eventAfter": {
+                                "callback": "renderTree"
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,197 @@
+{
+    "module": "v-realonlyForm-btn",
+    "layout": {
+      "form": {
+        "initRequest": "${{params}}",
+        "controls": [
+          {
+            "quality_serial_no": {
+                "control": "string",
+                "label": "质检内容序号",
+                "width": "130px"
+              },
+            "case_id": {
+                "control": "string",
+                "label": "案件编号",
+                "width": "130px"
+              }
+          },
+          {
+            "batch_no": {
+                "control": "string",
+                "label": "分案批次号",
+                "width": "130px"
+              },
+            "record_serial_no": {
+                "control": "string",
+                "label": "催记流水号",
+                "width": "130px"
+              }
+          },
+          {
+            "cust_name": {
+              "control": "string",
+              "label": "客户姓名",
+              "width": "130px"
+            },
+            "relation_cust_name": {
+                "control": "string",
+                "label": "联系人姓名",
+                "width": "130px"
+              }
+
+          },
+          {
+            "relationship": {
+              "control": "select",
+              "label": "联系人关系",
+              "width": "130px",
+              "disabled": true,
+              "selectFirstValue": false,
+              "dict": {
+                "dictType": "CS_QUALITY_CUST_RELATION",
+                "dictKey": [
+                  "CS_QUALITY_CUST_RELATION"
+                ],
+                "format": "value-label"
+              }
+            },
+            "phone_or_email": {
+                "control": "string",
+                "label": "联系人号码",
+                "width": "130px"
+              }
+          },
+          {
+            "outsourcing_org_id": {
+              "hidden": true,
+              "label": "委外公司",
+              "disabled": true,
+              "width": "130px",
+              "control": "remoteSelect",
+              "labelField": "outsourcing_org_name",
+              "valueField": "outsourcing_org_id",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "cb0052",
+                  "org_id": "$g{{user_info.org_id}}"
+                }
+              },
+              "events": {
+                "emit": [
+                  "operation"
+                ]
+              },
+              "format": "value-label"
+            },
+            "branch_id": {
+              "control": "string",
+              "label": "贷款机构",
+              "width": "130px"
+            }
+          },
+          {
+            "loan_prod_cd": {
+                "control": "string",
+                "label": "贷款产品",
+                "width": "130px"
+              },
+            "coll_team": {
+                "control": "string",
+                "label": "催收组",
+                "width": "130px"
+              },
+            "collector": {
+                "hidden": true,
+                "label": "催收员",
+                "disabled": true,
+                "width": "130px",
+                "control": "remoteSelect",
+                "labelField": "collector_name",
+                "valueField": "collector",
+                "doRequest": {
+                  "url": "/SUMP/icmcall/icmRPCCall",
+                  "method": "POST",
+                  "params": {
+                    "servicecode": "cb0043",
+                    "coll_team":"${{current.coll_team}}"
+                  }
+                },
+                "events": {
+                  "emit": [
+                    "operation"
+                  ]
+                },
+                "format": "value-label"
+              },
+              "today_record_num": {
+                "control": "string",
+                "label": "当日第几次催收",
+                "width": "130px"
+              }
+          },
+          {
+
+          },
+          {
+            "start_time": {
+              "label": "起始时间",
+              "width": "130px",
+              "control": "string",
+              "type": "dateTimePicker",
+              "span": 12,
+              "format": "yyyy-MM-dd HH:mm:ss"
+            },
+            "end_time": {
+              "label": "结束时间",
+              "width": "130px",
+              "control": "string",
+              "type": "dateTimePicker",
+              "span": 12,
+              "format": "yyyy-MM-dd HH:mm:ss"
+            }
+          },
+          {
+            "quality_content_type": {
+              "control": "select",
+              "label": "质检内容类型",
+              "width": "130px",
+              "disabled": true,
+              "selectFirstValue": false,
+              "dict": {
+                "dictType": "CS_QUALITY_CONTENT_TYPE",
+                "dictKey": [
+                  "CS_QUALITY_CONTENT_TYPE"
+                ],
+                "format": "value-label"
+              }
+            },
+            "initiater_type": {
+              "control": "select",
+              "label": "发起方类型",
+              "width": "130px",
+              "disabled": true,
+              "selectFirstValue": false,
+              "dict": {
+                "dictType": "CS_INITIATER_TYPE",
+                "dictKey": [
+                  "CS_INITIATER_TYPE"
+                ],
+                "format": "value-label"
+              }
+            }
+          },
+          {
+            "duration": {
+                "control": "string",
+                "label": "时长",
+                "width": "130px"
+              }
+
+          }
+        ]
+      }
+    }
+  }

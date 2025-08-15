@@ -1,0 +1,74 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "initReqeust": "${{params}}",
+    "alert": {
+      "title": "说明",
+      "description": [
+        "确定发起变更么?变更后不可退回!"
+      ],
+      "listStyle": "disc"
+    },
+    "form": {
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "qrexit",
+          "belorg": "${{params.belorg}}"
+        }
+      },
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "seqnum":"${{params.seqnum}}",
+          "servicecode": "upopst"
+        }
+      },
+      "btns": [
+        {
+          "type": "submit",
+          "label": "确定",
+          "icon": ""
+        }
+      ],
+      "controls": [
+        {
+          "ofpacd": {
+            "control": "string",
+            "label": "合作方编号",
+            "width": "160px",
+            "rules": [
+              {
+                "max": 30,
+                "message": "长度不能超过30个字符"
+              },
+              {
+                "required": false,
+                "message": "请输入合作方编号"
+              }
+            ]
+          }
+        },
+        {
+          "belorg": {
+            "control": "string",
+            "label": "商户所属机构",
+            "width": "160px",
+            "rules": [
+              {
+                "max": 80,
+                "message": "长度不能超过80个字符"
+              },
+              {
+                "required": false,
+                "message": "请输入商户所属机构"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

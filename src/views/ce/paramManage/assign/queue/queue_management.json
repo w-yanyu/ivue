@@ -1,0 +1,187 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "scope": "formData",
+            "controls": [
+                {
+                    "queue_code": {
+                        "control": "text",
+                        "label": "队列代码"
+                    },
+                    "queue_name": {
+                        "control": "text",
+                        "label": "队列名称"
+                    },
+                    "queue_desc": {
+                        "control": "text",
+                        "label": "队列描述"
+                    },
+                    "collection_type": {
+                        "control": "select",
+                        "label": "渠道类型",
+                        "dict": {
+                          "dictType": "CE_COLL_TYPE",
+                          "dictKey": [
+                            "CE_COLL_TYPE"
+                          ],
+                          "format": "value-label"
+                        }
+                    }
+                },
+                {
+                    "queue_type": {
+                        "control": "select",
+                        "label": "队列类型",
+                        "dict": {
+                          "dictType": "CE_QUEUE_TYPE",
+                          "dictKey": [
+                            "CE_QUEUE_TYPE"
+                          ],
+                          "format": "value-label"
+                        }
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "icon": "el-icon-circle-plus",
+                    "target": "dialog",
+                    "label": "新增",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/ce/paramManage/assign/queue/queue_add.json"
+                    },
+                    "props": {
+                        "title": "新增催收队列定义"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ce0054",
+                    "coll_kind":"02"
+                }
+            },
+            "thead": [
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "队列代码",
+                    "prop": "queue_code"
+
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "队列名称",
+                    "prop": "queue_name"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "队列描述",
+                    "prop": "queue_desc"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "渠道类型",
+                    "prop": "collection_type",
+                    "dict": {
+                      "dictType": "CE_COLL_TYPE",
+                      "dictKey": [
+                        "CE_COLL_TYPE"
+                      ],
+                      "format": "value-label"
+                    }
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "队列类型",
+                    "prop": "queue_type",
+                    "dict": {
+                      "dictType": "CE_QUEUE_TYPE",
+                      "dictKey": [
+                        "CE_QUEUE_TYPE"
+                      ],
+                      "format": "value-label"
+                    }
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "优先级",
+                    "prop": "priority"
+                },
+
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "是否启用",
+                    "prop": "is_valid",
+                    "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                            "MS_E_YESORNO"
+                        ],
+                        "format": "value-label"
+                    }
+                },
+
+                {
+                    "label": "操作",
+                    "align":"center",
+                    "fixed": "right",
+                    "width": "150%",
+                    "btns": [
+                        {
+                            "type":"look",
+                            "label":"详情",
+                            "toRequest":{
+                                "url":"/views/ce/paramManage/assign/queue/queue_info.json",
+                                "method":"POST"
+                            },
+                            "props":{
+                                "title":"催收队列定义详情"
+                            }
+                        },
+
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/ce/paramManage/assign/queue/queue_modify.json",
+                                "method": "POST"
+                            },
+                            "props": {
+                                "title": "催收队列定义维护"
+                            }
+                        },
+                        {
+                            "type": "delete",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/call/RPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "ce0051",
+                                    "coll_kind":"02"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

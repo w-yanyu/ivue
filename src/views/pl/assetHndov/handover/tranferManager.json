@@ -1,0 +1,69 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "btns": [
+        {
+          "type": "submit",
+          "label": "保存",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "pl0019",
+              "list": "${{params.selectedData}}",
+              "apply_no": "${{params.apply_no}}"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "new_usr_nm": {
+            "label": "选择移交的客户经理",
+            "control": "lookup",
+            "edit": true,
+            "width": "130px",
+            "span":"10",
+            "keyField": {
+              "new_usr_nm": "user_name",
+              "new_usr_num": "user_id",
+              "new_org_num": "branch_id"
+            },
+            "toRequest": {
+              "url": "/views/pl/assetHndov/handover/custManager.json",
+              "method": "post",
+              "params":{
+                "branch_within": "${{params.branch_within}}"
+              }
+            },
+            "props": {
+              "title": "选择移交的客户经理",
+              "width": "65%"
+            },
+            "format": "label"
+
+        },
+
+          "new_org_num": {
+            "control": "text",
+            "label": "机构编号",
+            "width": "130px",
+            "disabled": true,
+            "span":"10"
+          } },
+        {
+          "new_usr_num": {
+            "control": "hidden",
+            "label": "新客户经理编号",
+            "width": "130px",
+            "span":"10"
+          }
+        }
+
+      ]
+    }
+  }
+}
+

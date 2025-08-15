@@ -1,0 +1,334 @@
+{
+    "module": "v-inputDataForm-btn",
+    "layout": {
+        "form": {
+            "initRequest": "${{params}}",
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "us0930"
+                   
+                }
+            },
+            "controls": [{
+                    "tplt_name": {
+                        "control": "lookup",
+                        "edit": true,
+                        "width": "10px",
+                        "label": "选择报表模板",
+                        "keyField": {
+                            "item_name": "item_name",
+                            "tplt_id": "tplt_id",
+                            "indu_type": "indu_type",
+                            "rpt_type": "rpt_type"
+                        },
+                        "toRequest": {
+                            "url": "/views/us/financialManager/reportTpltManager/reportTplt_lookup2.json",
+                            "method": "get",
+                            "params": {
+                                "rpt_type": "${{params.rpt_type}}",
+                                "is_halt_flag": "0"
+
+
+                            }
+                        },
+                        "props": {
+                            "title": "选择报表模板",
+                            "width": "80%"
+                        },
+                        "rules": [{
+                            "required": true,
+                            "message": "报表模板不能为空!"
+                        }]
+                    },
+                    "tplt_id": {
+                        "control": "hidden",
+                        "label": "报表模板ID",
+                        "width": "10px"
+                    },
+                    "cust_no": {
+                        "control": "hidden",
+                        "label": "客户编号",
+                        "width": "10px",
+                        "disabled": true
+                    },
+                    "indu_type": {
+                        "control": "select",
+                        "label": "报表行业类型",
+                        "width": "10px",
+                        "align": "center",
+                        "dict": {
+                            "dictType": "US_E_INDU_TYPE",
+                            "dictKey": [
+                                "US_E_INDU_TYPE"
+                            ],
+                            "format": "label"
+                        },
+                        "disabled": true,
+                        "rules": [{
+                            "required": true,
+                            "message": "请选择报表行业类型"
+                        }],
+                        "showItem": {
+                            "00": ["selt_data_id"],
+                            "01": ["selt_data_id"],
+                            "07": ["selt_data_id"]
+                        }
+                    }
+                },
+                {
+                    "rpt_type": {
+                        "control": "select",
+                        "width": "10px",
+                        "label": "报表类型",
+                        "align": "center",
+                        "value": "${{params.rpt_type}}",
+                        "disabled": true,
+                        "dict": {
+                            "dictType": "US_E_RPT_TYPE",
+                            "dictKey": [
+                                "US_E_RPT_TYPE"
+                            ],
+                            "format": "label"
+                        }
+                    },
+                    "rpt_perd_type": {
+                        "control": "select",
+                        "width": "10px",
+                        "label": "报表期限类型",
+                        "align": "center",
+                        "dict": {
+                            "dictType": "US_E_RPT_PERD_TYPE",
+                            "dictKey": [
+                                "US_E_RPT_PERD_TYPE"
+                            ],
+                            "format": "label"
+                        },
+                        "showItem": {
+                            "M": ["month"],
+                            "Q": ["quar"],
+                            "S": ["halfy"],
+                            "Y": ["oyear"]
+                        },
+                        "rules": [{
+                            "required": true,
+                            "message": "请选择报表期限类型"
+                        }]
+                    }
+                },
+                {
+                    "rep_year": {
+                        "control": "dateTimePicker",
+                        "width": "10px",
+                        "type": "year",
+                        "label": "年份",
+                        "rules": [{
+                            "required": true,
+                            "message": "请选择年份"
+                        }]
+                    },
+                    "month": {
+                        "control": "select",
+                        "width": "10px",
+                        "label": "月份选择",
+                        "align": "center",
+                        "dict": {
+                            "dictType": "US_E_MONTH",
+                            "dictKey": [
+                                "US_E_MONTH"
+                            ],
+                            "format": "label"
+                        },
+                        "rules": [{
+                            "required": true,
+                            "message": "请选择月份"
+                        }]
+                    },
+                    "quar": {
+                        "control": "select",
+                        "width": "10px",
+                        "label": "季度选择",
+                        "align": "center",
+                        "dict": {
+                            "dictType": "US_E_QUAR",
+                            "dictKey": [
+                                "US_E_QUAR"
+                            ],
+                            "format": "label"
+                        },
+                        "rules": [{
+                            "required": true,
+                            "message": "请选择季度"
+                        }]
+                    },
+                    "halfy": {
+                        "control": "select",
+                        "width": "10px",
+                        "label": "半年选择",
+                        "align": "center",
+                        "dict": {
+                            "dictType": "US_E_HALFY",
+                            "dictKey": [
+                                "US_E_HALFY"
+                            ],
+                            "format": "label"
+                        },
+                        "rules": [{
+                            "required": true,
+                            "message": "请选择上/下半年"
+                        }]
+                    },
+                    "oyear": {
+                        "control": "select",
+                        "width": "10px",
+                        "label": "年度选择",
+                        "align": "center",
+                        "dict": {
+                            "dictType": "US_E_OYEAR",
+                            "dictKey": [
+                                "US_E_OYEAR"
+                            ],
+                            "format": "label"
+                        },
+                        "rules": [{
+                            "required": true,
+                            "message": "请选择年度"
+                        }]
+                    }
+                },
+                {
+                    "is_check_flag": {
+                        "control": "select",
+                        "width": "10px",
+                        "label": "是否审计",
+                        "align": "center",
+                        "dict": {
+                            "dictType": "MS_E_YESORNO",
+                            "dictKey": [
+                                "MS_E_YESORNO"
+                            ],
+                            "format": "label"
+                        },
+                        "rules": [{
+                            "required": true,
+                            "message": "请选择是否审计"
+                        }]
+                    },
+                    "unit_way": {
+                        "control": "select",
+                        "width": "10px",
+                        "label": "报表合并口径",
+                        "align": "center",
+                        "dict": {
+                            "dictType": "US_E_UNIT_WAY",
+                            "dictKey": [
+                                "US_E_UNIT_WAY"
+                            ],
+                            "format": "label"
+                        },
+                        "rules": [{
+                            "required": true,
+                            "message": "请选择报表合并口径"
+                        }]
+                    }
+                },
+                {
+                    "is_unit_flag": {
+                        "control": "select",
+                        "label": "是否合并报表",
+                        "width": "10px",
+                        "align": "center",
+                        "dict": {
+                            "dictType": "MS_E_YESORNO",
+                            "dictKey": [
+                                "MS_E_YESORNO"
+                            ],
+                            "format": "label"
+                        },
+                        "rules": [{
+                            "required": true,
+                            "message": "请选择报表合并口径"
+                        }]
+                    },
+                    "is_new_to_old": {
+                        "control": "select",
+                        "width": "10px",
+                        "label": "是否新报表转旧报表",
+                        "align": "center",
+                        "dict": {
+                            "dictType": "MS_E_YESORNO",
+                            "dictKey": [
+                                "MS_E_YESORNO"
+                            ],
+                            "format": "label"
+                        },
+                        "showItem": {
+                            "1": [
+                                "selt_data_id"
+                            ]
+                        },
+                        "events": {
+                            "condition": {
+                                "1": {
+                                    "control": {
+                                        "selt_data_id": {
+                                            "rules": [{
+                                                "required": true,
+                                                "message": "参考报表不能为空!"
+                                            }]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    "selt_data_id": {
+                        "initShow": false,
+                        "control": "lookup",
+                        "edit": true,
+                        "width": "10px",
+                        "label": "选择参考报表",
+                        "keyField": {
+                            "selt_data_id": "data_id"
+                        },
+                        "toRequest": {
+                            "url": "/views/us/financialManager/custReportDataManager/history_table_list.json",
+                            "method": "get",
+                            "params": {
+                                "rpt_type": "${{params.rpt_type}}",
+                                "cust_no": "${{params.cust_no}}",
+                                "tplt_id": "${{form.tplt_id}}"
+                            }
+                        },
+                        "props": {
+                            "title": "选择历史财务报表",
+                            "width": "80%"
+                        },
+                        "rules": [{
+                            "required": false,
+                            "message": "参考报表不能为空!"
+                        }]
+                    }
+                },
+                {
+                    "remark": {
+                        "label": "备注",
+                        "control": "textarea",
+                        "width": "10px",
+                        "span": "24",
+                        "autosize": {
+                            "minRows": 4
+                        },
+                        "rules": [{
+                            "max": "200",
+                            "message": "长度不能超过200个字符"
+                        }]
+                    }
+                }
+            ]
+        }
+    }
+}

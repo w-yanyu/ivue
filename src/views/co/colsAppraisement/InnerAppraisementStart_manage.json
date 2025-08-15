@@ -1,0 +1,80 @@
+{
+    "module": "v-inputDataForm-btn",
+    "layout": {
+        "form": {
+            "scope": "formData",
+            "btns": [],
+            "controls": [{
+                    "custId": {
+                        "control": "hidden",
+                        "label": "客户id",
+                        "#span": 12,
+                        "width": "10px"
+                    },               
+                    "custna": {
+                        "control": "lookup",
+                        "label": "客户名称",
+                        "#span": 12,
+                        "edit": false,
+                        "width": "10px",
+                        "keyField": {
+                            "custId": "custid",
+                            "custna": "custna"
+                        },
+                        "toRequest": {
+                            "url": "/views/cols/colsEntryManage/customer_lookup.json",
+                            "method": "get",
+                            "params":{
+                                "indvfg":"N"
+                            }
+                        },
+                        "props": {
+                            "title": "查询关联客户名称"
+                        },
+                        "format": "label",
+                        "rules": [{
+                            "required": true,
+                            "message": "请选择客户名称"
+                        }]
+                    },
+                    "colt_no": {
+                        "control": "lookup",
+                        "#span": 12,
+                        "label": "押品编号",
+                        "width": "10px",
+                        "edit": false,
+                        "keyField": {
+                            "colt_no": "colt_no"
+                        },
+                        "toRequest": {
+                            "url": "/views/cols/colsAppraisement/cobColt.json",
+                            "method": "get",
+                            "params": {
+                                "custid": "${{formData.custId}}"
+                            }
+                        },
+                        "props": {
+                            "title": "选择押品编号"
+                        },
+                        "format": "label",
+                        "rules": [{
+                            "required": true,
+                            "message": "请选择押品编号"
+                        }]
+                    }
+                },
+                {
+                    "toDbsx": {
+                        "span": 24,
+                        "control": "dynamic",
+                        "#isShowChildrenForm": false,
+                        "toRequest": {
+                            "method": "GET",
+                            "url": "@OutSubmitBtn"
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

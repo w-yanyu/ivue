@@ -1,0 +1,272 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "foldLineNumber": 3,
+      "controls": [
+        {
+          "appId": {
+            "control": "select",
+            "label": {
+              "default": "业务模块",
+              "i18n": "K0001.Business-Module"
+            },
+            "value": "cbOnl",
+            "disabled": true,
+            "dict": {
+              "dictType": "MS_APPID",
+              "dictKey": [
+                "MS_APPID"
+              ],
+              "format": "value-label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择业务模块"
+              }
+            ]
+          },
+          "appl_id": {
+            "control": "text",
+            "label": "申请编号"
+          }
+        },
+        {
+          "appl_start_date": {
+            "control": "dateTimePicker",
+            "label": {
+              "default": "进件日期",
+              "i18n": "K0001.Incoming-date"
+            }
+          },
+          "appl_end_date": {
+            "control": "dateTimePicker",
+            "label": {
+              "default": "进件截止日期",
+              "i18n": "K0001.Incoming-deadline"
+            }
+          }
+        },
+        {
+          "cust_id": {
+            "control": "text",
+            "label": "客户编号",
+            "rules": [
+              {
+                "max": 18,
+                "message": "长度不能超过18个字符"
+              }
+            ]
+          },
+          "cust_name": {
+            "control": "text",
+            "label": {
+              "default": "申请人姓名",
+              "i18n": "K0001.Applicant-name"
+            },
+            "rules": [
+              {
+                "max": 18,
+                "message": "长度不能超过18个字符"
+              }
+            ]
+          }
+        },
+        {
+          "cert_type": {
+            "control": "hidden",
+            "label": "证件类型",
+            "dict": {
+              "dictType": "MS_E_CRET_TYPE",
+              "dictKey": [
+                "MS_E_CRET_TYPE"
+              ],
+              "format": "value-label"
+            }
+          },
+          "cert_no": {
+            "control": "hidden",
+            "label": "证件号码"
+          }
+        },
+        {
+          "mobile_no": {
+            "control": "hidden",
+            "label": "手机号码",
+            "rules": [
+              {
+                "max": 11,
+                "message": "长度不能超过11个字符"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "bpm1013",
+          "sizePage": 10,
+          "appId": "${{form.appId}}",
+          "qryInfo": {
+            "user_id": "$g{{user_info.userCode}}"
+          }
+        }
+      },
+      "thead": [
+        {
+          "label": "序号",
+          "type": "index"
+        },
+        {
+          "label": "申请编号",
+          "prop": "appl_id",
+          "width": 200,
+          "align": "center"
+        },
+        {
+          "label": {
+            "default": "申请人姓名",
+            "i18n": "K0001.Applicant-name"
+          },
+          "prop": "cust_name",
+          "align": "center",
+          "width": 150
+        },
+        {
+          "label": "流程产品关联模型",
+          "prop": "prod_name",
+          "width": 200,
+          "align": "center"
+        },
+        {
+          "label": {
+            "default": "进件日期",
+            "i18n": "K0001.Incoming-date"
+          },
+          "prop": "system_date",
+          "align": "center",
+          "width": 100
+        },
+        {
+          "label": {
+            "default": "当前节点",
+            "i18n": "K0001.current-node"
+          },
+          "prop": "task_define_name",
+          "align": "center"
+        },
+        {
+          "label": "处理状态",
+          "prop": "appl_state",
+          "align": "center",
+          "dict": {
+            "dictType": "CT_E_APPLST",
+            "dictKey": [
+              "CT_E_APPLST"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "label": {
+            "default": "当前处理用户名称",
+            "i18n": "K0001.Current-processing-user-name"
+          },
+          "prop": "user_name",
+          "value": "${{current.cur_user_id}}-${{current.user_name}}",
+          "align": "center"
+        },
+        {
+          "label": {
+            "default": "当前处理角色名称",
+            "i18n": "K0001.Current-processing-role-name"
+          },
+          "prop": "role_name",
+          "value": "${{current.cur_wfrl_id}}-${{current.role_name}}",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 180,
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "详情",
+              "toRequest": {
+                "url": "@CommAlreadyDoDetail",
+                "method": "GET",
+                "target": "navTab",
+                "params": {
+                  "frame_cd": "${{current.task_url2}}",
+                  "cust_name": "${{current.cust_name}}",
+                  "appl_state": "${{current.appl_state}}",
+                  "appl_date": "${{current.system_date}}",
+                  "task_inst_id": "${{current.task_inst_id}}",
+                  "appId": "${{form.appId}}",
+                  "wf_inst_id": "${{current.wf_inst_id}}",
+                  "cust_no": "${{current.cust_id}}"
+                }
+              },
+              "props": {
+                "title": "已办事项详情"
+              }
+            },
+            {
+              "type": "edit",
+              "label": {
+                "default": "流程跟踪",
+                "i18n": "K0001.Process-tracking"
+              },
+              "toRequest": {
+                "url": "@ProcessImgView",
+                "method": "GET",
+                "params": {
+                  "appId": "${{form.appId}}",
+                  "from": "doneList"
+                }
+              },
+              "props": {
+                "width": "1200px",
+                "title": "流程跟踪图"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "撤回",
+              "show": {
+                "prop": "bpm_recallable",
+                "is": [
+                  "1"
+                ]
+              },
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "bpm1017",
+                  "appId": "${{form.appId}}",
+                  "wf_inst_id": "${{current.wf_inst_id}}"
+                }
+              },
+              "confirm": {
+                "title": "提示信息",
+                "msg": "确认要撤回吗？",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

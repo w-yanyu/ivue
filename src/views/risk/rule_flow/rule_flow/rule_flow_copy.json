@@ -1,0 +1,70 @@
+{
+  "module": "v-inputDataForm-btn",
+  "layout": {
+    "form": {
+      "###initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "deci010707"
+        }
+      },
+      "controls": [
+        {
+          "flowCode": {
+            "label": "规则流代码",
+            "control": "text",
+            "span": 12,
+            "disabled": false,
+            "rules": [
+              {
+                "required": true,
+                "message": "请正确输入",
+                "max": 64
+              }
+            ]
+          },
+          "flowName": {
+            "label": "规则流名称",
+            "control": "text",
+            "span": 12,
+            "rules": [
+              {
+                "required": true,
+                "pattern": "^[a-z0-9A-Z\u4e00-\u9fa5]+$",
+                "message": "仅可为字母、数字、文字及相关组合",
+                "max": 125
+              }
+            ]
+          }
+        },
+        {
+          "flowDescription": {
+            "label": "规则流描述",
+            "control": "textarea",
+            "span": 24,
+            "rows": 5,
+            "showWordLimit": 200,
+            "maxlength": 200,
+            "rules": [
+              {
+                "required": false,
+                "message": "请正确输入",
+                "max": 200
+              }
+            ]
+          }
+        }
+      ],
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "deci010711",
+          "flow_id":"${{params.flowId}}",
+          "risk_operation_type":"C"
+        }
+      }
+    }
+  }
+}

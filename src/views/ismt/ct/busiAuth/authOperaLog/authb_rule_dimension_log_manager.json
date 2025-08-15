@@ -1,0 +1,140 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "initRequest": "${{params}}",
+            "btns":[],
+            "controls": [
+                {
+                    "authp_system_log_id": {
+                        "control": "string",
+                        "label": "业务授权日志编号"
+                     },
+                     "busi_seq": {
+                        "control": "string",
+                        "label": "业务流水"
+                     },
+                     "authp_system_code": {
+                        "control": "string",
+                        "label": "授权体系编号"
+                     },
+                     "authp_system_name": {
+                        "control": "string",
+                        "label": "授权体系名称"
+                     },
+                     "authp_type": {
+                        "control": "string",
+                        "label": "授权类型",
+                        "dict": {
+                            "dictType": "CT_E_APPL_TYPE",
+                            "dictKey": [
+                                "CT_E_APPL_TYPE"
+                            ],
+                            "format": "label"
+                        }
+                     },
+                     "role_name": {
+                        "control": "string",
+                        "label": "关联审批角色姓名"
+                     },
+                     "system_date": {
+                        "control": "string",
+                        "label": "交易日期"
+                     },
+                     "auth_check_result": {
+                        "control": "string",
+                        "label": "授权校验结果",
+                        "dict": {
+                            "dictType": "CT_E_AUTH_CHEK_RESULT",
+                            "dictKey": [
+                                "CT_E_AUTH_CHEK_RESULT"
+                            ],
+                            "format": "label"
+                        }
+                     },
+                     "error_text": {
+                        "control": "textarea",
+                        "label": "错误信息",
+                        "span": 24,
+                        "disabled": true
+                     }
+                }
+            ]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": true,
+            "##fieldPath": "list01",
+            "doRequest": {  
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ct2424",
+                    "appId":"${{params.appId}}"
+                }
+            },
+            "pagination": {
+                "show": false
+            },
+            "thead": [
+                {
+                    "type": "index"
+                },
+                {
+                  "label": "规则编号",
+                  "prop": "authp_rule_code"
+                },
+                {
+                    "prop": "dimension_code",
+                    "label": "业务指标编码"
+                },
+                {
+                    "label": "业务指标名称",
+                    "prop": "dimension_name"
+                },
+                {
+                    "label": "字段名",
+                    "prop": "field_name"
+                },
+                {
+                    "label": "字段值",
+                    "prop": "field_value"
+                },
+                {
+                    "label": "授权校验结果",
+                    "prop": "auth_check_result",
+                     "dict": {
+                        "dictType": "CT_E_AUTH_CHEK_RESULT",
+                        "dictKey": [
+                            "CT_E_AUTH_CHEK_RESULT"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                   "label": "操作模式",
+                   "prop": "opt_type",
+                   "dict": {
+                    "format": "label",
+                    "dictKey": [
+                        "CT_E_OPERATE_MODE"
+                    ],
+                    "dictType": "CT_E_OPERATE_MODE"
+                }
+                },
+                {
+                   "label": "最大值",
+                   "prop": "max_value"
+                },
+                {
+                   "label": "最小值",
+                   "prop": "min_value"
+                },
+                {
+                    "label": "字符值",
+                    "prop": "string_value"
+                }
+            ]
+        }
+    }
+  }

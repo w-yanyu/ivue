@@ -1,0 +1,218 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "loan_due_bill_num": {
+            "control": "text",
+            "label": "借据号",
+            "rules": [
+              {
+                "max": 80,
+                "message": "长度不能超过80个字符"
+              }
+            ]
+          },
+          "cust_name": {
+            "control": "text",
+            "label": "客户名称"
+          }
+        },{
+          "new_usr_num": {
+            "control": "text",
+            "label": "资产负责人编号",
+            "rules": [
+              {
+                "max": 80,
+                "message": "长度不能超过80个字符"
+              }
+            ]
+          },
+          "new_usr_nm": {
+            "control": "text",
+            "label": "资产负责人名称"
+          }
+        }
+      ]
+    }, 
+    "toolbar": {
+      "btns":[
+        {
+          "type": "custom",
+          "#icon": "el-icon-edit",
+          "target": "dialog",
+          "label": "资产分发",
+          "checkCountMin": 1,
+          "toRequest": {
+              "method": "GET",
+              "url": "/views/pl/assetPreservationLedger/assetPreservationLedger_review.json"
+          },
+          "props": {
+            "title": "资产分发",
+            "width": "80%"
+          }
+      }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pl0298"
+        }
+      },
+      "thead": [
+        {
+          "type": "selection",
+          "width": "55"
+        },
+        {
+          "type": "index",
+          "label": "序号"
+        },
+        {
+          "label": "借据号",
+          "prop": "loan_no",
+          "align": "center"
+        },
+        {
+          "label": "客户名称",
+          "prop": "cust_nm",
+          "align": "center"
+        },
+        {
+          "label": "机构号名",
+          "value": "资产保全部",
+          "prop": "new_org_nm",
+          "align": "center"
+        },
+        {
+          "label": "贷款期限",
+          "prop": "loan_matu",
+          "align": "center"
+        },
+        {
+          "label": "贷款形态",
+          "prop": "loan_form",
+          "align": "center",
+          "dict": {
+            "dictType": "PL_E_CLSSST",
+            "dictKey": [
+              "PL_E_CLSSST"
+            ],
+            "labelField": "dictName",
+            "valueField": "dictId"
+          }
+        },
+        {
+          "label": "贷款账户状态",
+          "prop": "loan_acct_ste",
+          "align": "center",
+          "dict": {
+            "dictType": "PL_E_ACCTST",
+            "dictKey": [
+              "PL_E_ACCTST"
+            ],
+            "labelField": "dictName",
+            "valueField": "dictId"
+          }
+        },
+        {
+          "label": "资产移交方式",
+          "prop": "hndov_way",
+          "align": "center",
+          "dict": {
+            "dictType": "PL_E_HNDOV_WAY",
+            "dictKey": [
+              "PL_E_HNDOV_WAY"
+            ],
+            "labelField": "dictName",
+            "valueField": "dictId"
+          }
+        },
+        {
+          "label": "资产负责人编号",
+          "prop": "new_usr_num",
+          "align": "center"
+        },
+        {
+          "label": "资产负责人名称",
+          "prop": "new_usr_nm",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": "300px",
+          "align": "center",
+          "btns": [
+            {
+              "type": "look",
+              "label": "资产详情",
+              "toRequest": {
+                "url": "/views/pl/assetPreservationLedger/assetPreservationLedger_tabs.json",
+                "method": "POST",
+                "params": {
+                  "loan_due_bill_num": "${{current.loan_no}}"
+                }
+              },
+              "props": {
+                "width": "80%",
+                "title": "资产详情"
+              }
+            },
+            {
+              "type": "look",
+              "label": "移交历史",
+              "toRequest": {
+                "url": "/views/pl/assetPreservationLedger/assetHandover/assetHandover_list.json",
+                "method": "POST",
+                "params": {
+                  "loan_no": "${{current.loan_no}}"
+                }
+              },
+              "props": {
+                "width": "80%",
+                "title": "移交历史"
+              }
+            },
+            {
+              "type": "look",
+              "label": "责任认定",
+              "toRequest": {
+                "url": "@dutyAfirmInfo",
+                "method": "POST",
+                "params": {
+                  "loan_no": "${{current.loan_no}}"
+                }
+              },
+              "props": {
+                "width": "80%",
+                "title": "责任认定"
+              }
+            },
+            {
+              "type": "look",
+              "label": "处置历史",
+              "toRequest": {
+                "url": "/views/pl/assetPreservationLedger/disposalPlan/disposalPlan_info.json",
+                "method": "POST",
+                "params": {
+                  "loan_no": "${{current.loan_no}}"
+                }
+              },
+              "props": {
+                "width": "80%",
+                "title": "处置历史"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

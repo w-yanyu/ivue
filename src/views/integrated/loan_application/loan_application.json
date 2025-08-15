@@ -1,0 +1,217 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "foldLineNumber":2,
+      "controls": [
+        {
+          "crdtcd": {
+            "label": "产品编号",
+            "control": "remoteSelect",
+            "valueField": "crdtcd",
+            "labelField": "prodna",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "post",
+              "params": {
+                "servicecode": "AS_ICMS_PD_QRPDLS",
+                "length": 100
+              }
+            }
+          },
+          "applid": {
+            "control": "text",
+            "label": "申请号"
+          }
+        },
+        {
+          "applst": {
+            "control": "select",
+            "label": "申请状态",
+            "dict": {
+              "dictKey": [
+                "E_SXAPPLST"
+              ],
+              "dictType": "E_SXAPPLST",
+              "format": "label"
+            }
+          },
+          "idtfno": {
+            "control": "text",
+            "label": "证件号码",
+            "rules": [
+              {
+                "max": 20,
+                "message": "长度不能超过20个字符"
+              }
+            ]
+          }
+        },
+        {
+          "appldtstr": {
+            "control": "dateTimePicker",
+            "label": "申请放款起始日期",
+            "edit": false,
+            "format": "yyyyMMdd"
+          },
+          "appldtend": {
+            "control": "dateTimePicker",
+            "label": "申请放款截至日期",
+            "edit": false,
+            "format": "yyyyMMdd"
+          }
+        },
+        {
+          "idtftp": {
+            "label": "证件类型",
+            "control": "select",
+            "dict": {
+              "dictKey": [
+                "E_IDTFTR"
+              ],
+              "dictType": "E_IDTFTR",
+              "format": "label"
+            }
+          },
+          "custna": {
+            "control": "text",
+            "label": "客户名称"
+          }
+        },
+        {
+          "channel": {
+            "control": "text",
+            "label": "渠道"
+          },
+          "mobino": {
+            "control": "text",
+            "label": "手机号",
+            "rules": [
+              {
+                "max": 11,
+                "message": "手机号码为11位"
+              }
+            ]
+          }
+        
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ICMSLNTS0085"
+        }
+      },
+      "thead": [
+        {
+          "label": "序号",
+          "prop" :  "rownum",
+          "align":"center",
+          "width": "70px"
+        },
+        {
+          "label": "客户名称",
+          "prop": "custna",
+          "align":"center"
+        },
+        {
+          "label": "证件类型",
+          "prop": "idtftp",
+          "align":"center",
+          "dict": {
+            "dictType": "E_IDTFTP",
+            "dictKey": [
+              "E_IDTFTP"
+            ],
+            "labelField":"dictName",
+            "valueField":"dictId"
+          }
+        },
+        {
+          "label": "证件号码",
+          "prop": "idtfno",
+          "align":"center"
+        },
+
+
+        {
+          "label": "产品名称",
+          "prop": "prodna",
+          "align":"center"
+        },
+        {
+          "label": "渠道",
+          "prop": "channel",
+          "align":"center"
+        },
+        {
+          "label": "申请单号",
+          "prop": "applid",
+          "align":"center"
+        },
+        {
+          "label": "申请放款金额(元)",
+          "prop": "applam",
+          "align":"center"
+        },
+        {
+          "label": "申请放款时间",
+          "prop": "appldt",
+          "align":"center"
+        },
+        {
+          "label": "申请状态",
+          "prop": "applst",
+          "align":"center",
+          "dict": {
+            "dictKey": [
+              "E_SXAPPLST"
+            ],
+            "dictType": "E_SXAPPLST",
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "align":"center",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/integrated/loan_application/loan_application_tag.json",
+                "method": "POST"
+              },
+              "props": {
+                "title": "信息详情",
+                "width": "1000px"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "流程跟踪",
+              "toRequest": {
+                "url": "@ProcessImgView",
+                "method": "GET",
+                "params": {
+                  "from": "doneList"
+                }
+              },
+              "props": {
+                "width": "1200px",
+                "title": "流程跟踪图"
+              }
+            }
+
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,100 @@
+{
+  "module": "lr_transferTable",
+  "layout": {
+    "transfer": {
+      "height":"500px",
+      "left": {
+        "filterable":false,
+        "title": "催收标识列表",
+        "placeholder": "请输入催收标识代码",
+        "query":["mark_code","mark_name"],
+        "btn":{
+          "label": "授权",
+          "doRequest": {
+            "url":"/SUMP/icmcall/icmRPCCall",
+            "method":"post",
+            "params":{
+              "servicecode": "cb0032",
+              "appId": "cbOnl",
+              "mark_code": "${{params.mark_code}}",
+              "mark_name": "${{params.mark_name}}",
+              "org_id": "${{params.org_id}}"
+            }
+          }
+        },
+        "datagrid": {
+          "scope": "left",
+          "doRequest": {
+            "url":"/SUMP/icmcall/icmRPCCall",
+            "method":"POST",
+            "params": {
+              "servicecode":"cb0031",
+              "appId": "cbOnl"
+            }
+          },
+          "checked":"checked",
+          "pagination": {
+            "show":false
+          },
+          "thead": [
+            {
+              "prop": "mark_code",
+              "label": "催收标识代码"
+            },
+            {
+              "prop": "mark_name",
+              "label": "催收标识名称"
+            }
+          ]
+        }
+      },
+      "right": {
+        "filterable":false,
+        "title":"已选催收标识",
+        "placeholder": "请输入催收标识名称",
+        "btn":{
+          "label":"取消授权",
+          "doRequest": {
+            "url":"/SUMP/icmcall/icmRPCCall",
+            "method":"post",
+            "params":{
+              "servicecode": "cb0033",
+              "appId": "cbOnl",
+              "mark_code": "${{params.mark_code}}",
+              "org_id": "${{params.org_id}}"
+            }
+          }
+        },
+        "datagrid": {
+          "scope": "right",
+          "doRequest": {
+            "url":"/SUMP/icmcall/icmRPCCall",
+            "method":"POST",
+            "params": {
+              "servicecode": "cb0030",
+              "appId": "cbOnl",
+              "org_id": "${{params.org_id}}"
+            }
+          },
+          "pagination": {
+            "show":false
+          },
+          "thead": [
+            {
+              "prop": "org_id",
+              "label": "法人代码"
+            },
+            {
+              "prop": "mark_code",
+              "label": "催收标识代码"
+            },
+            {
+              "prop": "mark_name",
+              "label": "催收标识名称"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

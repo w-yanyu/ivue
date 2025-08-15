@@ -1,0 +1,120 @@
+
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "branch": {
+            "control": "remoteSelect",
+            "label": "区域中心",
+            "labelField": "brachName",
+            "valueField": "branchNo",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "RLMSPLTS1068"
+              }
+            },
+            "format": "label"
+          },
+
+          "org_type": {
+            "control": "select",
+            "label": "合作机构类型",
+            "dict": {
+              "dictType": "E_ORG_TYPE",
+              "dictKey": [
+                  "E_ORG_TYPE"
+              ],
+              "format": "label"
+          }
+          },
+          "oa_org_name": {
+            "control": "text",
+            "label": "公司名称",
+            "rules": [
+              {
+                "max": 80,
+                "message": "长度不能超过80个字符"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {},
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "RLMSBPMTS0090"
+        }
+      },
+      "thead": [
+        {
+          "type": "string",
+          "label": "区域中心",
+          "prop": "branch_name",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "合作机构类型",
+          "prop": "org_type",
+          "align": "center",
+          "dict": {
+            "dictType": "E_ORG_TYPE",
+            "dictKey": [
+                "E_ORG_TYPE"
+            ],
+            "format": "label"
+        }
+        },
+        {
+          "type": "string",
+          "label": "公司名称",
+          "prop": "oa_org_name",
+          "align": "center"
+        },
+
+        {
+          "label": "操作",
+          "fixed": "right",
+          "align": "center",
+          "btns": [
+            {
+              "type": "custom",
+              "label": "外包商信息修改",
+              "disabled" : "'${{current.is_curr_areacenter}}' === 'false'",
+              "toRequest": {
+                "url": "@outsourcerConfirmxxxg",
+                "method": "POST"
+              },
+              "props": {
+                "width": "80%",
+                "title": "外包商信息修改"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "工商信息变更",
+              "disabled" : "'${{current.is_curr_areacenter}}' === 'false'",
+              "toRequest": {
+                "url": "@OutSoucInfoManagexxbg",
+                "method": "POST"
+              },
+              "props": {
+                "width": "80%",
+                "title": "工商信息变更"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

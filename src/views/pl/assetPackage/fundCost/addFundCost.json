@@ -1,0 +1,123 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+      "form": {
+          "btns": [
+              {
+                  "type": "submit",
+                  "label": "提交",
+                  "icon": "",
+                  "doRequest": {
+                      "url": "/SUMP/icmcall/icmRPCCall",
+                      "method": "POST",
+                      "params": {
+                          "servicecode": "pl0709"
+                      }
+                  }
+              }
+          ],
+          "controls": [
+              {
+                "cost_type": {
+                  "label": "资金成本类型",
+                  "control": "select",
+                  "multiple": false,
+                  "dict": {
+                    "dictKey": [
+                      "PL_E_FUND_COST_TYPE"
+                    ],
+                    "dictType": "PL_E_FUND_COST_TYPE",
+                    "format": "label"
+                  },
+                  "rules": [
+                    {
+                      "required": true,
+                      "message":"请选择资金成本类型"  
+                    }
+                  ],
+                  "showItem": {
+                    "0":["prod_no","prod_name"]
+                  }
+                },             
+                  "offer_dt": {
+                    "label": "报价日期",
+                    "control": "dateTimePicker",
+                      "type": "date",
+            
+                      "format":"yyyyMMdd",                   
+                      "rules": [
+                          {
+                              "required": true,
+                              "message":"报价日期"
+                          },
+                          {
+                            "max": 8,
+                            "message": "长度不能超过8个字符"
+                          }
+                      ]
+                  },
+                  "channel_id": {
+                    "label": "渠道",
+                    "control": "select",
+                    "multiple": false,
+                    "dict": {
+                      "dictKey": [
+                        "PL_E_FUND_CHANNEL"
+                      ],
+                      "dictType": "PL_E_FUND_CHANNEL",
+                      "format": "label"
+                    }
+                  },    
+                  "term_day": {
+                    "label": "期限(天)",
+                    "control": "inputNumber",
+                    "precision":0,
+                    "rules": [                       
+                        {
+                          "pattern": "^[1-9]\\d*|0$",
+                          "message": "请输入正整数！"
+                        }
+                    ]      
+                },
+                  "prod_no": {
+                    "control": "lookup",
+                        "label": "可售产品",                      
+                        "edit": true,                       
+                        "keyField": {
+                            "prod_name": "sale_prod_name",
+                            "prod_no": "sale_prod_cd"
+                        },
+                        "toRequest": {
+                            "url": "/views/icms/flowStart/noncredit_sell_product_lookup_by_param.json",
+                            "method": "get",
+                            "params": {                            
+                              "prod_type":"LOAN"                        
+                            }
+                            
+                        },
+                        "props": {
+                            "title": "选择产品",
+                            "width": "60%"
+                        }
+                },  
+                "prod_name": {
+                  "label": "产品名称",
+                  "control": "text",
+                  "disabled":true
+              },
+                "fund_cost": {
+                    "label": "资金成本",
+                    "control": "inputNumber",
+                    "precision":2,
+                    "rules": [
+                        {
+                            "required": true,
+                            "message":"资金成本"
+                        }
+                    ]
+                    }                             
+               }
+          ]
+      }
+  }
+}

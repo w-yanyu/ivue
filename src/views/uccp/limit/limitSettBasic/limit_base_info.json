@@ -1,0 +1,69 @@
+{
+    "module": "v-inputDataForm-btn",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "norm_name": {
+                        "label": "限额名称",
+                        "keyField":{
+                            "norm_name": "norm_name"
+                          },
+                        "control": "text",
+                        "rules": [
+                            {
+                              "required": true,
+                              "message": "请输入"
+                            },
+                            {
+                              "expression": "'${{form.priority}}'.length < 51",
+                              "message": "最多可以输入50个汉字"
+                            }
+                          ]
+                    },
+
+                    "limit_component_name": {
+                        "label": "限额维度部件名称",
+                        "control": "lookup",
+                        "keyField":{
+                            "limit_component_code": "limit_component_code",
+                            "limit_component_type":"limit_component_type"
+                          },
+                          "toRequest": {
+                            "url": "/views/uccp/limit/limitSettBasic/limit_compose_lookup.json",
+                            "method": "post",
+                            "params": {
+                                "limit_component_type": "${{params.limit_component_type}}"
+                            }
+                          },
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "请选择限额维度部件"
+                            }
+                          ]
+                    },
+
+                    "limit_component_code": {
+                        "label": "限额维度部件编号",
+                        "control": "string"
+                    },
+
+                    "limit_component_type": {
+                        "label": "部件适用限额类型",
+                        "control": "select",
+                        "disabled":"true",
+                        "align": "center",
+                        "dict": {
+                            "dictType": "UCCP_E_COMPONENT_TYPE",
+                            "dictKey": [
+                                "UCCP_E_COMPONENT_TYPE"
+                            ],
+                            "format": "label"
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

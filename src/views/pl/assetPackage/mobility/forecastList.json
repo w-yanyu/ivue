@@ -1,0 +1,122 @@
+{
+    "module": "v_search_editableDataGrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "start_date": {
+                        "label": "最小日期",
+                        "control": "dateTimePicker",
+                        "type": "date",
+                        "format": "yyyyMMdd"
+                    },
+                    "end_date": {
+                        "label": "最大日期",
+                        "control": "dateTimePicker",
+                        "type": "date",
+                        "format": "yyyyMMdd"
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "save",
+                    "label": "保存",
+                    "icon": "el-icon-tickets",
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "pl0728",
+                            "operation_date": "${{form.operation_date}}",
+                            "plan_income": "${{form.plan_income}}",
+                            "plan_out": "${{form.plan_out}}",
+                            "gap_amt": "${{form.gap_amt}}"
+                        }
+                    }
+                },
+                {
+                    "type": "edit",
+                    "label": "查看走势图",
+                    "icon": "el-icon-data-analysis",
+                    "toRequest": {
+                        "url": "@froecastChart",
+                        "method": "POST",
+                        "params":{
+                            "start_date": "${{form.start_date}}",
+                            "end_date": "${{form.end_date}}"
+                        }
+                    }
+                },
+                {
+                    "type": "edit",
+                    "label": "缺口预测",
+                    "icon": "el-icon-data-analysis",
+                    "toRequest": {
+                        "url": "/views/pl/assetPackage/mobility/mobilityForecast.json",
+                        "method": "POST"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": false,
+            "##fieldPath": "list01",
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "pl0726",
+                    "start_date": "${{form.start_date}}",
+                    "end_date": "${{form.end_date}}"
+                }
+            },
+            "pagination": {
+                "show": true,
+                "pageSizes": [
+                    10,
+                    20,
+                    30,
+                    50
+                ],
+                "pageSize": 10
+            },
+            "thead": [
+                {
+                    "type": "selection",
+                    "align": "center"
+                },
+                {
+                    "label": "数据日期",
+                    "type": "string",
+                    "prop": "operation_date"
+                },
+                {
+                    "label": "计划入金",
+                    "type": "string",
+                    "prop": "plan_income"
+                },
+                {
+                    "label": "计划出金",
+                    "type": "text",
+                    "prop": "plan_out",
+                    "rules": [
+                        {
+                            "max": 16,
+                            "pattern": "^[0-9]+(\\.[0-9]{1,2})?$",
+                            "message": "请输入两位小数以内数字,长度不能超过16个字符"
+                        }
+                    ]
+                },
+                {
+                    "label": "缺口金额",
+                    "type": "string",
+                    "prop": "gap_amt"
+                }
+            ]
+        }
+    }
+}

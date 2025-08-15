@@ -1,0 +1,136 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/ce/collManage/tcManage/collWorkbench/functionMenu/phoneManage/phoneManage_management_add.json",
+            "params": {
+              "case_no": "${{params.case_no}}"
+            }
+          },
+          "props": {
+            "title": "新增联系人电话信息",
+            "width": "80%"
+          }
+        },
+        {
+          "type": "close",
+          "label": "返回"
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ce3520",
+          "case_no": "${{params.case_no}}"
+        }
+      },
+      "thead": [
+        {
+          "type": "string",
+          "label": "联系人姓名",
+          "align": "center",
+          "prop": "linkman"
+        },
+        {
+          "type": "string",
+          "label": "客户关系",
+          "align": "center",
+          "prop": "relationship",
+          "dict": {
+            "dictType": "CE_E_RELATIONSHIP",
+            "dictKey": [
+              "CE_E_RELATIONSHIP"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type":"string",
+          "label": "电话类型",
+          "align":"center",
+          "prop": "tele_type",
+          "dict": {
+            "dictType": "CE_TELE_TYPE",
+            "dictKey": [
+              "CE_TELE_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "string",
+          "label": "电话号码",
+          "align": "center",
+          "prop": "tel_no"
+        },
+        {
+          "type": "string",
+          "label": "系统类型",
+          "align": "center",
+          "prop": "reg_type",
+          "dict": {
+            "dictType": "CE_E_REG_TYPE",
+            "dictKey": [
+              "CE_E_REG_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "string",
+          "label": "是否有效",
+          "align": "center",
+          "prop": "is_valid",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "textarea",
+          "label": "备注",
+          "align": "center",
+          "prop": "remark"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/ce/collManage/tcManage/collWorkbench/functionMenu/phoneManage/phoneManage_management_modify.json",
+                "method": "POST",
+                "params": {
+                  "case_no": "${{params.case_no}}",
+                  "contact_id": "${{current.contact_id}}"
+                }
+              },
+              "props": {
+                "title": "联系人电话维护",
+                "width": "80%"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

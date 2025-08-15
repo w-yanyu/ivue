@@ -1,0 +1,183 @@
+{
+    "module": "v_search_editableDataGrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "start_date": {
+                        "label": "最小日期",
+                        "control": "dateTimePicker",
+                        
+                        "format": "yyyyMMdd"
+                    },
+                    "end_date": {
+                        "label": "最大日期",
+                        "control": "dateTimePicker",
+                        
+                        "format": "yyyyMMdd"
+                    },
+                    "fund_type": {
+                        "label": "资金出入类型",
+                        "control": "select",
+                        "dict": {
+                            "format": "label",
+                            "dictKey": [
+                                "PL_E_FUND_TYPE"
+                            ],
+                            "dictType": "PL_E_FUND_TYPE"
+                        }
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "label": "新增",
+                    "icon": "el-icon-plus"
+                },
+                {
+                    "type": "batchDelete",
+                    "label": "批量删除",
+                    "icon": "el-icon-close"
+                },
+                {
+                    "type": "save",
+                    "label": "保存",
+                    "icon": "el-icon-tickets",
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "pl0731",
+                            "operation_date": "${{form.operation_date}}",
+                            "fund_type": "${{form.fund_type}}",
+                            "fund_income_source": "${{form.fund_income_source}}",
+                            "fund_amt": "${{form.fund_amt}}"
+                        }
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": false,
+            "##fieldPath": "list01",
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "pl0730",
+                    "start_date": "${{form.start_date}}",
+                    "end_date": "${{form.end_date}}",
+                    "fund_type": "${{form.fund_type}}"
+                }
+            },
+            "allData": true,
+            "pagination": {
+                "show": true,
+                "pageSizes": [
+                    10,
+                    20,
+                    30,
+                    50
+                ],
+                "pageSize": 10
+            },
+            "thead": [
+                {
+                    "type": "selection",
+                    "align": "center"
+                },
+                {
+                    "label": "数据日期",
+                    "prop": "operation_date",                    
+                    "type": "dateTimePicker",
+                    "format": "yyyyMMdd",
+                    "rules": [
+                        {
+                            "required": true,
+                            "message": "数据日期"
+                        },
+                        {
+                            "max": 8,
+                            "message": "长度不能超过8个字符"
+                        }
+                    ]
+                },
+                {
+                    "label": "资金出入类型",
+                    "prop": "fund_type",
+                    "type": "select",
+                    "dict": {
+                        "format": "label",
+                        "dictKey": [
+                            "PL_E_FUND_TYPE"
+                        ],
+                        "dictType": "PL_E_FUND_TYPE"
+                    },
+                    "rules": [
+                        {
+                            "required": true,
+                            "message": "请选择资金出入类型"
+                        }
+                    ]
+                },
+                {
+                    "label": "入金来源出金出处",
+                    "prop": "fund_income_source",
+                    "type": "select",
+                    "dict": {
+                        "format": "label",
+                        "dictKey": [
+                            "PL_E_FUND_INCOME_SOURSE"
+                        ],
+                        "dictType": "PL_E_FUND_INCOME_SOURSE"
+                    },
+                    "rules": [
+                        {
+                            "required": true,
+                            "message": "请选择入金来源出金出处"
+                        }
+                    ]
+                },
+                {
+                    "label": "金额",
+                    "type":"text",
+                    "prop": "fund_amt",
+                    "rules": [
+                        {
+                            "max": 16,
+                            "pattern": "^[0-9]+(\\.[0-9]{1,2})?$",
+                            "message": "请输入两位小数以内数字,长度不能超过16个字符"
+                        }
+                    ]
+                },
+                {
+                    "label": "操作",
+                    "width": "280px",
+                    "btns": [
+                        {
+                            "type": "delete",
+                            "label": "删除",
+                            "icon": "el-icon-close"
+                        },
+                        {
+                            "type": "up",
+                            "label": "",
+                            "icon": "el-icon-arrow-up",
+                            "notBtn": true
+                        },
+                        {
+                            "type": "down",
+                            "label": "",
+                            "icon": "el-icon-arrow-down",
+                            "notBtn": true
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

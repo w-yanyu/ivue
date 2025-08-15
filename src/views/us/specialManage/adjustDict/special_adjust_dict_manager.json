@@ -1,0 +1,183 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "field_no": {
+            "label": "字段编号",
+            "control": "text",
+            "rules": [
+              {
+                "required": false,
+                "message": "请输入字段编号"
+              }
+            ]
+          },
+          "field_name": {
+            "label": "字段",
+            "control": "text",
+            "rules": [
+              {
+                "required": false,
+                "message": "请输入字段"
+              }
+            ]
+          },
+          "field_desc": {
+            "label": "字段描述",
+            "control": "text",
+            "rules": [
+              {
+                "required": false,
+                "message": "请输入字段描述"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/us/specialManage/adjustDict/special_adjust_dict_add.json",
+            "params": {
+            }
+          },
+          "props": {
+            "title": "特殊项调整字典新增",
+            "width": "75%"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "us0404"
+        }
+      },
+      "thead": [
+        {
+          "type": "index",
+          "width": 50,
+          "label": "序号"
+        },
+        {
+          "label": "字段编号",
+          "prop": "field_no",
+          "align": "center",
+          "type": "leaf"
+        },
+        {
+          "label": "字段",
+          "prop": "field_name",
+          "align": "center",
+          "type": "leaf"
+        },
+        {
+          "label": "字段描述",
+          "prop": "field_desc",
+          "align": "center",
+          "type": "leaf"
+        },
+        {
+          "label": "字段提示",
+          "prop": "field_msg",
+          "align": "center",
+          "type": "leaf"
+        },
+        {
+          "label": "表单字段类型",
+          "prop": "form_type",
+          "align": "center",
+          "type": "leaf",
+          "dict": {
+            "dictType": "US_E_FORM_TYPE",
+            "dictKey": [
+              "US_E_FORM_TYPE"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "label": "枚举类型",
+          "prop": "enum_type",
+          "align": "center",
+          "type": "leaf"
+        },
+        {
+          "label": "数据类型",
+          "prop": "data_type",
+          "align": "center",
+          "type": "leaf",
+          "dict": {
+            "dictType": "US_E_DATA_TYPE",
+            "dictKey": [
+              "US_E_DATA_TYPE"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/us/specialManage/adjustDict/special_adjust_dict_query.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "75%",
+                "title": "特殊项调整字典详情"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/us/specialManage/adjustDict/special_adjust_dict_modify.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "75%",
+                "title": "特殊项调整字典维护"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "us0403",
+                  "trantp": "DELETE"
+                }
+              },
+              "confirm": {
+                "title": "确定删除",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

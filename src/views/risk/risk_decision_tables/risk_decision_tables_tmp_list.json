@@ -1,0 +1,207 @@
+{
+  "module": "v-search-btn-datagrid",
+  "pageId": "rule_tree",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "deci_tables_code": {
+            "label": "决策表代码",
+            "control": "text",
+            "span": 8,
+            "width": "auto",
+            "rules": [
+              {
+                "message": "字段长度超限",
+                "max": 40
+              }
+            ]
+          },
+          "deci_tables_name": {
+            "label": "决策表名称",
+            "control": "text",
+            "span": 8,
+            "width": "auto",
+            "rules": [
+              {
+                "message": "字段长度超限",
+                "max": 40
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "新增",
+          "toRequest": {
+            "url": "/views/risk/risk_decision_tables/risk_decision_tables_add.json",
+            "method": "get",
+            "params": {}
+          },
+          "props": {
+            "width": "70%",
+            "title": "新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "deci020401"
+        }
+      },
+      "thead": [
+        {
+          "label": "序号",
+          "type": "index"
+        },
+        {
+          "label": "决策表代码",
+          "prop": "deci_tables_code"
+        },
+        {
+          "label": "决策表名称",
+          "prop": "deci_tables_name"
+        },
+        {
+          "label": "操作类型",
+          "prop": "deci_tables_operation_type",
+          "dict": {
+            "dictType": "DECI_E_RISK_OPERATION_TYPE",
+            "dictKey": [
+              "DECI_E_RISK_OPERATION_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "决策表状态",
+          "prop": "deci_tables_status",
+          "dict": {
+            "dictType": "riskStatus",
+            "dictKey": [],
+            "format": "label",
+            "doRequest": {
+              "url": "/views/risk/dictdata/riskStatus.json",
+              "method": "get"
+            }
+          }
+        },
+        {
+          "label": "备注",
+          "prop": "deci_tables_describe"
+        },
+        {
+          "label": "最新维护时间",
+          "prop": "data_update_time"
+        },
+        {
+          "label": "操作",
+          "width": "200px",
+          "btns": [
+            {
+              "type": "look",
+              "label": "查看",
+              "authId": "",
+              "toRequest": {
+                "url": "/views/risk/risk_decision_tables/risk_decision_tables_tmp_view.json",
+                "#url": "@rootRuleTreeTmpView",
+                "method": "get",
+                "props": {
+                  "width": "85%"
+                }
+              },
+              "props": {
+                "width": "85%"
+              }
+            },
+
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": { 
+                "url": "/views/risk/risk_decision_tables/risk_decision_tables_edit.json",
+                "method": "get"
+              },
+              "props": {
+                "width": "80%",
+                "message":"维护"
+              },
+              "show": {
+                "expression": "'${{current.deci_tables_operation_type}}'!== 'S' && '${{current.deci_tables_operation_type}}' !== 'D'"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "@deciTablesVersionBack",
+                "method": "get"
+              },
+              "props": {
+                "width": "80%"
+              },
+              "show": {
+                "expression": "'${{current.deci_tables_operation_type}}'==='S'"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "版本切换",
+              "toRequest": {
+                "url": "",
+                "method": "get"
+              },
+              "props": {
+              },
+              "show": {
+                "expression": "false"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "deci020405"
+                }
+              },
+              "show": {
+                "expression": "true"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "提交审核",
+              "toRequest": {
+                "url": "/views/risk/risk_decision_tables/risk_decision_tables_review.json",
+                "method": "get",
+                "params": {
+                  "deci_tables_code":"${{current.deci_tables_code}}",
+                  "deci_tables_name":"${{current.deci_tables_name}}",
+                  "deci_tables_operation_type":"${{current.deci_tables_operation_type}}"
+                }
+              },
+              "props": {
+                "width": "40%"
+              },
+              "show": {
+                "expression": "true"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

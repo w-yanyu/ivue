@@ -1,0 +1,109 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "matrix_number": {
+            "label": "矩阵编号",
+            "control": "text",
+            "rules": [
+              {
+              }
+            ]
+          },
+          "matrix_name": {
+            "label": "矩阵名称",
+            "control": "text",
+            "rules": [
+              {
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "props": {
+            "title": "新增",
+            "width": "1100px"
+          },
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/pl/LevelFiveClasf/add/prodTemplate_add.json"
+          }
+        }
+        
+
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pl0113"
+        }
+      },
+      "thead": [
+        {
+          "type": "index"
+        },
+        {
+          "prop": "matrix_number",
+          "label": "矩阵编号",
+          "align": "center"
+        },
+        {
+          "prop": "matrix_name",
+          "label": "矩阵名称",
+          "align": "center"
+        },
+        {
+          "prop": "matrix_describe",
+          "label": "矩阵描述",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": "200",
+          "align": "center",
+          "btns": [
+            {
+              "toRequest": {
+                "method": "POST",
+                "url": "/views/pl/LevelFiveClasf/add/prodTemplate_update.json"
+              },
+              "props": {
+                "label": "维护",
+                "width": "1100px"
+              },
+              "label": "维护",
+              "type": "edit"
+            },
+            {
+              "doRequest": {
+                "method": "POST",
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "params": {
+                  "servicecode": "pl0114",
+                  "method": "del"
+                }
+              },
+              "label": "删除",
+              "type": "delete"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,157 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "pbacctdt":{
+                        "label":"公账日期",
+                        "name":"pbacctdt",
+                        "span":8,
+                        "rules":[
+                            {
+                                "required":true
+                            }
+                        ],
+                        "control":"dateTimePicker"
+                        
+                    },
+                    "pbamount":{
+                        "label":"公账金额",
+                        "control":"currency",
+                        "name":"pbamount",
+                        "multiple":false,
+                        "span":8,
+                        "value":"",
+                        
+                        "decimal":2,
+                        "thousand":",",
+                        "max":21
+                    },
+                    "rpname":{
+                        "label":"存款人",
+                        "control":"text",
+                        "name":"rpname",
+                        "multiple":false,
+                        "span":8,
+                        "rules":[
+                            {
+                                "required":false
+                            }
+                        ]
+                    },
+                    "summary":{
+                        "label":"摘要",
+                        "control":"text",
+                        "name":"summary",
+                        "multiple":false,
+                        "span":8,
+                        "rules":[
+                            {
+                                "required":false
+                            }
+                        ]
+                    },
+                    "splssfql":{
+                        "label":"剩余金额是否清零",
+                        "control":"select",
+                        "name":"splssfql",
+                        "multiple":false,
+                        "value":"2",
+                        "span":8,
+                        "dict":{
+                            "dictType":"E_YES_CLEAR",
+                            "dictKey":[
+                                "E_YES_CLEAR"
+                            ],
+                            "format":"label"
+                        },
+                        "rules":[
+                            {
+                                "required":true,
+                                "message":"请选择剩余金额是否清零"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "foldLineNumber": 3
+        },
+        
+        "datagrid": {
+            "isInitSearch": false,
+            "scope": "searchTable",
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "AS_ICMS_CP_SEDTSR"
+                }
+            },
+            "thead": [
+                {
+                    "label": "操作",
+                    "fixed": "left",
+                    "btns": [
+                        {
+                            "type": "bringback",
+                            "label": "选择"
+                        }
+                    ]
+                },
+                {
+                    "label": "是否锁定",
+                    "prop": "dattyp",
+                    "type": "select",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "E_YES_LOCK",
+                        "dictKey": [
+                            "E_YES_LOCK"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "公账序号",
+                    "prop": "pbacctsq",
+                    "align": "center"
+                },
+                {
+                    "label": "还款/宕帐日期",
+                    "prop": "rpdzdt",
+                    "align": "center"
+                },
+                {
+                    "label": "付款人",
+                    "prop": "rpname",
+                    "align": "center"
+                },
+                {
+                    "label": "金额",
+                    "prop": "amount",
+                    "align": "center"
+                },
+                {
+                    "label": "摘要",
+                    "prop": "summary",
+                    "align": "center"
+                },
+                {
+                    "label": "剩余金额",
+                    "prop": "splsamt",
+                    "align": "center"
+                },
+                {
+                    "label": "备注",
+                    "prop": "pbacctremark",
+                    "align": "center"
+                }
+                
+            ],
+            "pagination": {
+                "show": true
+            }
+        }
+    }
+}

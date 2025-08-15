@@ -1,0 +1,234 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "foldLineNumber": 2,
+      "controls": [
+        {
+          "order_id": {
+            "span": 12,
+            "control": "text",
+            "label": "订单号",
+            "rules": [
+              {
+                "max": 64,
+                "message": "长度不能超过64个字符"
+              }
+            ]
+          },
+          "vehicle_number": {
+            "control": "text",
+            "span": 12,
+            "label": "车架号",
+            "format": "label",
+            "rules": [
+              {
+                "max": 80,
+                "message": "长度不能超过80个字符"
+              }
+            ]
+          }
+        },
+        {
+          "loan_no": {
+            "control": "text",
+            "span": 12,
+            "label": "借据号",
+            "format": "label",
+            "rules": [
+              {
+                "max": 32,
+                "message": "长度不能超过32个字符"
+              }
+            ]
+          },
+          "car_model_name": {
+            "control": "text",
+            "span": 12,
+            "label": "车型名称",
+            "format": "label",
+            "rules": [
+              {
+                "max": 32,
+                "message": "长度不能超过32个字符"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ar2012"
+        }
+      },
+      "thead": [
+        {
+          "type": "string",
+          "label": "订单号",
+          "width": "220px",
+          "prop": "order_id",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "车辆识别号/车架号",
+          "prop": "vehicle_number",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "发动机编号",
+          "prop": "engine_number",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "品牌名称",
+          "prop": "brand_name",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "车系名称",
+          "prop": "car_kind_name",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "车型名称",
+          "prop": "car_model_name",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "车身颜色",
+          "prop": "color",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "车辆制造日期",
+          "prop": "manuf_date",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "合格证编号",
+          "prop": "certconf_id",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "合格证签发日期",
+          "prop": "issue_date",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "借据号",
+          "width": "180px",
+          "prop": "loan_no",
+          "align": "center"
+        },{
+          "type": "string",
+          "label": "库存状态",
+          "width": "100px",
+          "prop": "inventory_status",
+          "dict":{
+						"dictType":"AR_E_INVENTORY_STATUS",
+						"dictKey":[
+							"AR_E_INVENTORY_STATUS"
+						],
+						"format":"label"
+					},
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "width": "200px",
+          "fixed": "right",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/icms/JhCarPurchManage/ArbCarPurch_info_view.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "70%",
+                "title": "详情"
+              }
+            }
+            ,
+            {
+              "type": "look",
+              "label": "合格证信息",
+              "toRequest": {
+                "url": "/views/icms/certconf/certconf_details.json",
+                "method": "POST",
+                "params": {
+                  "path": "${{current.certconf_id}}"
+                }
+              },
+              
+              "props": {
+                "width": "70%",
+                "title": "合格证信息"
+              }
+            },
+            {
+              "type": "look",
+              "label": "还款",
+              "toRequest": {
+                "target":"navTab",
+                "url": "@repaymentApply",
+                "method": "POST",
+                "params": {
+                  "reserve1": "${{current.loan_no}}"
+                }
+              }
+            },
+            {
+              "type": "look",
+              "label": "出库",
+              "toRequest": {
+                "url": "/views/icms/JhCarPurchManage/ArbCarPurch_outbound.json",
+                "method": "POST",
+                "params": {
+                  "order_id": "${{current.order_id}}"
+                }
+              },
+              "props": {
+                "width": "70%",
+                "title": "出库信息"
+              }
+            },
+            {
+              "type": "look",
+              "label": "临时移库",
+              "toRequest": {
+                "url": "/views/icms/JhCarPurchManage/ArbCarPurch_outbound_tmp.json",
+                "method": "POST",
+                "params": {
+                  "order_id": "${{current.order_id}}"
+                }
+              },
+              "props": {
+                "width": "70%",
+                "title": "临时移库信息"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

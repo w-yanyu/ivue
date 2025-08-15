@@ -1,0 +1,107 @@
+{
+  "module": "v-inputDataForm-btn",
+  "layout": {
+    "form": {
+      "initRequest": "${{params}}",
+      "controls": [
+        {
+          "investOwnerId": {
+            "control": "string",
+            "label": "案件信息ID",
+            "span": 12,
+            "rules": [
+              {
+                "required": true,
+                "message": "请正确输入"
+              }
+            ]
+          },
+          "investAction": {
+            "control": "select",
+            "label": "调查动作",
+            "span": 12,
+            "dict": {
+              "dictType": "investAction",
+              "dictKey": [],
+              "format": "value-label",
+              "doRequest": {
+                "url": "/views/risk/dictdata/investAction.json",
+                "method": "get"
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "该控件必填"
+              }
+            ]
+          }
+        },
+        {
+          "investOperator": {
+            "control": "text",
+            "label": "调查人员",
+            "span": 12,
+            "rules": [
+              {
+                "required": true,
+                "message": "请正确输入",
+                "max": 40
+              }
+            ]
+          },
+          "investAddress": {
+            "control": "text",
+            "label": "调查地点",
+            "span": 12,
+            "rules": [
+              {
+                "required": true,
+                "message": "请正确输入",
+                "max": 200
+              }
+            ]
+          }
+        },
+        {
+          "dateTime": {
+            "label": "调查时间",
+            "control": "dateTimePicker",
+            "type": "datetimerange",
+            "valueFormat": "timestamp",
+            "format": "yyyy-MM-dd HH:mm:ss",
+            "#disabledDate": {
+              "startRange": "$g{{user_info.tradeDate}}",
+              "endRange": "2099-01-01 00:00:00"
+            },
+            "startField": "investStartTime",
+            "endField": "investEndTime",
+            "span": 12
+          },
+          "investRemark": {
+            "control": "textarea",
+            "label": "备注",
+            "span": 12,
+            "rows": 1,
+            "rules": [
+              {
+                "required": true,
+                "message": "请正确输入",
+                "max": 500
+              }
+            ]
+          }
+        }
+      ],
+      "doRequest": {
+        "url": "/API/risk-management-service/risk-invest-information/add",
+        "method": "post",
+        "params": {
+          "investType": "02",
+          "createUser": "$g{{user_info.userCode}}",
+          "updateUser": "$g{{user_info.userCode}}"
+        }
+      }
+    }
+  }
+}

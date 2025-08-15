@@ -1,0 +1,62 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "btns": [],
+            "initRequest": "${{params}}",
+            "controls": [
+              {
+                "commission_settings":{
+                  "disabled":true,
+                  "control": "radio",
+                  "label": "提成设置",
+                  "options": [
+                    {
+                      "value": "open",
+                      "label": "开启"
+                    },
+                    {
+                      "value": "close",
+                      "label": "关闭"
+                    }
+                  ],
+                  "events": {
+                    "showItem":{
+                      "open":["commission_settings_open"],
+                      "close":["commission_settings_close"]
+                    }
+                  }
+                },
+                "commission_settings_open": {
+                  "span": 24,
+                  "allowCreate": true,
+                  "control": "dynamic",
+                  "toRequest":{
+                    "url":"/views/cs/compManage/contrManage/cmsnScheme/viewCmsn/headExp/commission_settings_open.json",
+                    "params": {
+                      "servicecode": "xxxxx",
+                      "appId": "cbOnl",
+                      "percentage_calculation_plan": "${{params.percentage_calculation_plan}}",
+                      "indicator_results": "${{params.indicator_results}}",
+                      "default_or_custom": "${{params.default_or_custom}}"
+                    }
+                  }
+                },
+                "commission_settings_close": {
+                  "span": 24,
+                  "allowCreate": true,
+                  "control": "dynamic",
+                  "label": "",
+                  "toRequest":{
+                    "url":"/views/cs/compManage/contrManage/cmsnScheme/viewCmsn/headExp/commission_settings_close.json",
+                    "params": {
+                      "servicecode": "xxxxx",
+                      "appId": "cbOnl"
+                    }
+                  }
+                }
+              }
+            ]
+        }
+    }
+}

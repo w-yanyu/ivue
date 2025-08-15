@@ -1,0 +1,195 @@
+{
+  "module": "v-realonlyForm-btn",
+  "layout": {
+    "form": {
+      "initRequest": "${{params}}",
+      "controls": [
+        {
+          "outsourcing_branch_id": {
+            "disabled": true,
+            "control": "remoteSelect",
+            "label": "委外公司机构号",
+            "labelField": "branch_name",
+            "valueField": "branch_id",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2142",
+                "org_id": "$g{{user_info.org_id}}"
+              }
+            },
+            "events": {
+              "emit": [
+                "outsourcing_org_name",
+                "outsourcing_org_id"
+              ]
+            },
+            "format": "value-label",
+            "rules": [
+              {
+                "message": "委外公司编号不能为空",
+                "required": true
+              }
+            ]
+          },
+          "outsourcing_org_name": {
+            "disabled": true,
+            "control": "remoteSelect",
+            "label": "委外公司名称",
+            "labelField": "branch_id",
+            "valueField": "branch_name",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2142",
+                "branch_id": "${{form.coll_branch_id}}"
+              }
+            },
+            "format": "value",
+            "rules": [
+              {
+                "message": "委外公司名称不能为空",
+                "required": true
+              }
+            ]
+          }
+        },
+        {
+          "outsourcing_org_type": {
+            "disabled": true,
+            "control": "select",
+            "label": "委外公司类型",
+            "selectFirstValue": false,
+            "dict": {
+              "dictType": "CS_ORGAN_TYPE",
+              "dictKey": [
+                "CS_ORGAN_TYPE"
+              ],
+              "format": "value-label",
+              "rules": [
+                {
+                  "required": true,
+                  "message": "请输入"
+                }
+              ]
+            }
+          },
+          "outsourcing_org_id": {
+            "disabled": true,
+            "control": "remoteSelect",
+            "label": "委外公司法人",
+            "labelField": "branch_id",
+            "valueField": "org_id",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2142",
+                "branch_id": "${{form.coll_branch_id}}"
+              }
+            },
+            "format": "value",
+            "rules": [
+              {
+                "message": "委外公司法人不能为空",
+                "required": true
+              }
+            ]
+          }
+        },
+        {
+          "postal_code": {
+            "control": "string",
+            "label": "邮编"
+          },
+          "address": {
+            "control": "string",
+            "label": "地址"
+          }
+        },
+        {
+          "phone_no": {
+            "control": "string",
+            "label": "电话号码",
+            "rules": [
+              {
+                "max": 30,
+                "message": "最多可以输入 30 个字节"
+              },
+              {
+                "pattern": "^1(3[0-9]|5[189]|8[6789])[0-9]{8}$",
+                "message": "电话号码格式错误"
+              }
+            ]
+          },
+          "fox": {
+            "control": "string",
+            "label": "传真",
+            "rules": [
+              {
+                "max": 20,
+                "message": "最多可以输入 20 个字节"
+              },
+              {
+                "pattern": "^[+]{0,1}(\\d){1,3}[ ]?([-]?((\\d)|[ ]){1,12})+$",
+                "message": "传真格式错误"
+              }
+            ]
+          }
+        },
+        {
+          "relation_cust_name": {
+            "control": "string",
+            "label": "联系人",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          },
+          "relation_phone_no": {
+            "control": "string",
+            "label": "联系电话",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              },
+              {
+                "max": 11,
+                "message": "最多可以输入 11 个字节"
+              },
+              {
+                "pattern": "^1(3[0-9]|5[189]|8[6789])[0-9]{8}$",
+                "message": "联系电话格式错误"
+              }
+            ]
+          }
+        },
+        {
+          "is_valid": {
+            "control": "string",
+            "label": "是否启用",
+            "default": "Y",
+            "dict": {
+              "dictType": "CS_E_YESORNO",
+              "dictKey": [
+                "CS_E_YESORNO"
+              ],
+              "format": "value-label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

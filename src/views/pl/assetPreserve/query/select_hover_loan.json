@@ -1,0 +1,107 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "foldLineNumber": 2,
+      "controls": [{
+        "loan_no": {
+          "span": 8,
+          "control": "text",
+          "label": "借据号",
+          "rules": [{
+            "max": 80,
+            "message": "长度不能超过80个字符"
+          }]
+        },
+        "cust_name": {
+          "span": 8,
+          "control": "text",
+          "label": "客户姓名"
+        }
+      }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pl0288"  ,
+          "disposal_plan": "${{params.disposal_plan}}",
+          "cust_no": "${{params.cust_no}}"
+
+        }
+      },
+      "thead": [{
+        "label": "操作",
+        "fixed": "left",
+        "align": "center",
+        "width": "160px",
+        "btns": [
+          {
+            "type": "bringback",
+            "label": "选择"
+          }
+        ]
+      },
+        {
+          "label": "借据号",
+          "prop": "loan_no",
+          "width": "200px"
+        },
+        {
+          "label": "客户姓名",
+          "prop": "cust_nm"
+        },
+        {
+          "label": "借据金额",
+          "prop": "due_bill_amt",
+          "format": {
+            "thousand": ",",
+            "decimal": 2
+          }
+        },
+        {
+          "label": "本金合计",
+          "prop": "prcpl_smtn",
+          "format": {
+            "thousand": ",",
+            "decimal": 2
+          }
+        },
+        {
+          "label": "利息合计",
+          "prop": "int_smtn",
+          "format": {
+            "thousand": ",",
+            "decimal": 2
+          }
+        },
+        {
+          "label": "贷款形态",
+          "prop": "loan_form",
+          "dict": {
+            "dictType": "PL_E_CLSSST",
+            "dictKey": [
+              "PL_E_CLSSST"
+            ],
+            "format": "label-value"
+          }
+        },
+        {
+          "label": "处置方式",
+          "prop": "disposal_plan",
+          "dict": {
+            "dictType": "PL_E_DISPAL_PLAN",
+            "dictKey": [
+              "PL_E_DISPAL_PLAN"
+            ],
+            "format": "label-value"
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,377 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "bpm4006",
+          "wf_prod_no": "${{params.wf_prod_no}}",
+          "task_define_id": "${{params.task_define_id}}",
+          "bpm_version": "${{params.bpm_version}}",
+          "appId":"${{params.appId}}"
+        }
+      },
+      "btns": [
+        {
+          "type": "edit",
+          "label": "维护",
+          "icon": "",
+          "toRequest": {
+            "url": "/views/msap/bpm/processManagement/products/participant/temp-view-modify.json",
+            "method": "POST",
+            "params": {
+              "wf_prod_no": "${{params.wf_prod_no}}",
+              "task_define_id": "${{params.task_define_id}}",
+              "bpm_version": "${{params.bpm_version}}",
+              "appId":"${{params.appId}}"
+            }
+          },
+          "show": {
+            "expression": "'${{params.isEdit}}' == 'true'"
+          },
+          "eventAfter": {
+            "callback": "resetCallback"
+          }
+        }
+      ],
+      "controls": [
+        {
+          "wf_prod_no": {
+            "control": "string",
+            "label": "流程产品编号",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true
+              }
+            ]
+          },
+          "wf_prod_name": {
+            "control": "string",
+            "label": "流程产品名称",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true
+              }
+            ]
+          },
+          "task_define_id": {
+            "control": "string",
+            "label": "节点id",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true
+              }
+            ]
+          },
+          "task_define_name": {
+            "control": "string",
+            "label": "节点名称",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true
+              }
+            ]
+          },
+          "task_type": {
+            "control": "select",
+            "label": "节点类型",
+            "width": "130px",
+            "selectFirstValue":"true",
+            "disabled":true,
+            "options":[
+              {
+                "label":"人工节点",
+                "value":"MANUAL"
+              }
+            ],
+            "#dict": {
+              "dictType": "BPM_E_TASK_TYPE",
+              "dictKey": [
+                "BPM_E_TASK_TYPE"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true
+              }
+            ]
+          },
+          "select_type": {
+            "initShow":true,
+            "control": "string",
+            "label": "处理方式",
+            "width": "130px",
+            "dict": {
+              "dictType": "BPM_E_SELECT_TYPE",
+              "dictKey": [
+                "BPM_E_SELECT_TYPE"
+              ],
+              "format": "value-label"
+            },
+            "showItem": {
+              "0": ["brch_type","wf_role_no","wf_role_name"],
+              "1": ["brch_type","wf_role_no","wf_role_name"],
+              "2": ["wf_role_no","brch_type","wf_role_name","complete_type","complete_precent","pass_precent","reject_one"],
+              "3": ["wf_role_no","brch_type","wf_role_name","complete_type","complete_precent","pass_precent","reject_one"],
+              "4": ["wf_role_no","brch_type","wf_role_name","auto_select_rule"]
+            },
+            "events": {
+              "condition": {
+                  "AUTO": {
+                      "control": {
+                          "task_user_id": {
+                              "disabled": true
+                          }
+                      },
+                      "brch_type": {
+                        "disabled": false,
+                        "rules": [
+                          {
+                            "required": true
+                          }
+                        ]
+                    }
+                  },
+                  "STARTER": {
+                    "control": {
+                        "brch_type": {
+                            "disabled": true,
+                            "rules": [
+                              {
+                                "required": false
+                              }
+                            ]
+                        },
+                        "task_user_id": {
+                          "disabled": true,
+                          "rules": [
+                            {
+                              "required": false
+                            }
+                          ]
+                      }
+
+                    }
+                  },
+                  "SELECT": {
+                    "control": {
+                        "wf_role_no": {
+                            "disabled": false,
+                            "rules": [
+                              {
+                                "required": true
+                              }
+                            ]
+                        }
+                    }
+                  }
+              }
+            },
+            "rules": [
+              {
+                "required": true
+              }
+            ]
+          },
+          "opinion_view_type": {
+            "control": "string",
+            "label": "审查意见查看模式",
+            "width": "130px",
+            "dict": {
+              "dictType": "BPM_E_OPINION_VIEW_TYPE",
+              "dictKey": [
+                "BPM_E_OPINION_VIEW_TYPE"
+              ],
+              "format": "value-label"
+            },
+            "rules": [
+              {
+                "required": true
+              }
+            ]
+          },
+          "brch_type": {
+            "initShow":true,
+            "control": "string",
+            "label": "机构类型",
+            "width": "130px",
+            "dict": {
+              "dictType": "BPM_E_BRCH_TYPE",
+              "dictKey": [
+                "BPM_E_BRCH_TYPE"
+              ],
+              "format": "value-label"
+            },
+            "showItem": {
+              "APPOINT":["filter_brch_ind","#branch_name"]
+            },
+            "rules": [
+              {
+                "required": true
+              }
+            ]
+          },
+          "filter_brch_ind": {
+            "initShow":false,
+            "label": "处理机构",
+            "width": "130px",
+            "control": "string",
+            "keyField": {
+                "filter_brch_ind": "branch_id",
+                "branch_name": "branch_name"
+            },
+            "toRequest": {
+                "url": "/views/ismt/ct/busiAuth/authOperaLog/branch-info-manager_lookup.json",
+                "method": "post"
+            },
+            "rules": [
+              {
+                "required": true
+              }
+            ]
+          },
+          "branch_name":{
+            "initShow":false,
+            "control": "string",
+            "label": "处理机构名称",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true
+              }
+            ]
+          },
+          "wf_role_no":{
+            "initShow":false,
+            "control": "string",
+            "label": "处理角色",
+            "width": "130px",
+            "rules": [
+              {
+                "required": false
+              }
+            ]
+          },
+          "wf_role_name":{
+            "initShow":false,
+            "control": "string",
+            "label": "处理角色名称",
+            "width": "130px",
+            "rules": [
+              {
+                "required": false
+              }
+            ]
+          },
+          
+          "complete_type": {
+            "initShow":false,
+            "control": "string",
+            "label": "会签完成类型",
+            "width": "130px",
+            "dict": {
+              "dictType": "BPM_E_COMPLETE_TYPE",
+              "dictKey": [
+                "BPM_E_COMPLETE_TYPE"
+              ]
+            }
+          },
+          "complete_precent": {
+            "initShow":true,
+            "control": "string",
+            "label": "完成百分比(%)",
+            "width": "130px",
+            "min": 0,
+            "max": 100,
+            "rules": [
+              {
+                "required": true
+              }
+            ]
+          },
+          "pass_precent": {
+            "initShow":false,
+            "control": "string",
+            "label": "通过百分比(%)",
+            "width": "130px",
+            "min": 0,
+            "max": 100,
+            "rules": [
+              {
+                "required": true
+              }
+            ]
+          },
+          "reject_one": {
+            "initShow":false,
+            "control": "string",
+            "label": "是否一票否决",
+            "width": "130px",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ]
+            },
+            "rules": [
+              {
+                "required": true
+              }
+            ]
+          },
+          "auto_select_rule": {
+            "initShow":false,
+            "control": "string",
+            "label": "自动选人策略",
+            "width": "130px",
+            "dict": {
+              "dictType": "BPM_E_AUTO_SELECT_RULE",
+              "dictKey": [
+                "BPM_E_AUTO_SELECT_RULE"
+              ],
+              "format": "value-label"
+            },
+            "events" : {
+              "showItem": {
+                "3" : ["service_impl"],
+                "$default" : []
+              }
+            },
+            "rules": [
+              {
+                "required": true
+              }
+            ]
+            
+          },
+          "service_impl": {
+            "initShow":false,
+            "control": "string",
+            "label": "服务实现方法绝对路径",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true
+              }
+            ]
+          },
+          "remark": {
+            "control": "textarea",
+            "disabled": true,
+            "label": "备注",
+            "width": "130px",
+            "maxlength": 500,
+            "showWordLimit": true
+          }
+        }
+      ]
+    }
+  }
+}

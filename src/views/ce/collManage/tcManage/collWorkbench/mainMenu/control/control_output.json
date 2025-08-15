@@ -1,0 +1,115 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "btns": [
+                {
+                    "type": "closeNavTab",
+                    "label": "申请",
+                    "doRequest": {
+                        "method": "POST",
+                        "url": "/SUMP/call/RPCCall",
+                        "params": {
+                            "servicecode":"ce3560",
+                            "assist_type":"01",
+                            "case_no":"${{params.case_no}}",
+                            "queue_code":"${{form.queue_code}}",
+                            "apply_reason":"${{form.apply_reason}}",
+                            "collection_type":"TC01"
+                        }
+                    },
+                    "eventAfter": {
+                        "doParentCallback": true
+                    }
+                },
+                {
+                    "type": "close",
+                    "label": "返回"
+                }
+            ],
+
+            "controls": [
+                {
+                    "now_queue":{
+                        "control": "remoteSelect",
+                        "label": "当前队列",
+                        "width": "180px",
+                        "align": "center",
+                        "span": "20",
+                        "rows": 6,
+                        "default":"${{params.queue_code}}",
+                        "disabled":true,
+                        "labelField": "queue_name",
+                        "valueField": "queue_code",
+                        "doRequest": {
+                            "url": "/SUMP/call/RPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "ce0402",
+                                "collection_type":"TC01",
+                                "queue_type":"C",
+                                "is_valid":"1"
+                            }
+                        },
+                        "format": "label",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message":"请输入"
+                            }
+                        ]
+                    },
+
+                    "queue_code":{
+                        "control": "remoteSelect",
+                        "label": "可转队列",
+                        "width": "180px",
+                        "align": "center",
+                        "span": "20",
+                        "rows": 6,
+                        "labelField": "queue_name",
+                        "valueField": "queue_code",
+                        "doRequest": {
+                            "url": "/SUMP/call/RPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "ce0402",
+                                "collection_type":"TC01",
+                                "queue_type":"C",
+                                "is_valid":"1"
+                            }
+                        },
+                        "format": "label",
+                        "rules": [
+                            {
+                                "expression" : "'${{form.queue_code}}' !== '${{form.now_queue}}'",
+                                "message":"不能转相同队列！"
+                            },
+                            {
+                                "required": true,
+                                "message":"请输入"
+                            }
+                        ]
+                    },
+
+                    "apply_reason": {
+                        "control": "textarea",
+                        "label": "转出原因",
+                        "width": "180px",
+                        "align": "center",
+                        "span": "20",
+                        "rows": 12,
+                        "placeholder":"请输入",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message":"请输入"
+                            }
+                        ]
+                    }
+
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,53 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "name": "detail",
+      "initRequest": "${{params}}",
+      "btns": [
+        {
+          "type": "submit",
+          "icon": "el-icon-check",
+          "label": "启动",
+          "doRequest": {
+            "method": "POST",
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "params": {
+              "servicecode": "pl0030",
+              "start_oprtr": "$g{{user_info.userCode}}",
+              "actvn_org": "$g{{user_info.branch_id}}"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "start_oprtr": {
+            "label": "申请人",
+            "control": "string",
+            "value": "$g{{user_info.userCode}}",
+            "rules": [
+              {
+                "required": true,
+                "message": "申请人不能为空"
+              }
+            ]
+          }
+        },
+        {
+          "actvn_org": {
+            "label": "申请机构",
+            "control": "string",
+            "value": "$g{{user_info.branch_id}}",
+            "rules": [
+              {
+                "required": true,
+                "message": "申请机构不能为空"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

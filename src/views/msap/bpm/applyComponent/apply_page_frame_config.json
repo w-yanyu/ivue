@@ -1,0 +1,164 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "prod_cd": {
+              "control": "text",
+              "label": "产品代码"
+          }
+        },{
+          "frame_cd": {
+            "label": "框架编号",  
+            "control": "text",
+            "rules": [
+              {
+                "max": 30,
+                "message": "长度不能超过30个字符"
+              }
+            ]
+          },
+          "frame_desc": {
+            "label": "框架名称",
+            "control": "text",
+            "rules": [
+              {
+                "max": 50,
+                "message": "长度不能超过50个字符"
+              }
+            ]
+          }
+        }
+      ],
+      "foldLineNumber": 3
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "POST",
+            "url": "/views/msap/bpm/applyComponent/apply_page_frame_config_add.json",
+            "params": {
+              "frame_cd":"${{current.frame_cd}}"
+            }
+          },
+          "props": {
+            "width": "65%",
+            "title": "授信申请组件配置信息录入"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "scope": "searchTable",
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "ar0130",
+          "frame_cd":"${{current.frame_cd}}"
+        }
+      },
+      "thead": [
+        {
+          "label": "序号",
+          "type": "index",
+          "align": "center"
+        },{
+          "label": "产品代码",
+          "prop": "prod_cd",
+          "align": "center"
+        },{
+          "label": "产品名称",
+          "prop": "prod_name",
+          "align": "center"
+        },{
+          "label": "申请类型",
+          "prop": "apply_type",
+          "align": "center"
+        },
+        {
+          "label": "框架编号",
+          "prop": "frame_cd",
+          "align": "center"
+        },
+        {
+          "label": "框架描述",
+          "prop": "frame_desc",
+          "align": "center"
+        },
+        {
+          "label": "是否生效",
+          "prop": "is_enabled",
+          "type": "select",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "节点配置",
+              "toRequest": {
+                "url": "/views/msap/bpm/applyComponent/apply_node_config.json",
+                "method": "post",
+                "params": {
+                  
+                }
+              },
+              "props": {
+                "width": "70%",
+                "title": "节点配置"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/msap/bpm/applyComponent/apply_page_frame_config_edit.json",
+                "method": "post",
+                "params": {
+                  
+                }
+              },
+              "props": {
+                "width": "65%",
+                "title": "页面框架基本信息维护"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "ar0129",
+                  "frame_cd":"${{current.frame_cd}}"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "pagination": {
+        "show": true
+      }
+    }
+  }
+}

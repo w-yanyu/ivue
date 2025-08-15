@@ -1,0 +1,254 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "controls": [
+        { 
+          "source_system": {
+            "control": "select",
+            "label": "业务模块",
+            "dict": {
+                "dictType": "MS_APPID",
+                "dictKey": [
+                    "MS_APPID"
+                ],
+                "format": "value-label"
+            },
+            "rules": [
+                {
+                    "message": "请选择业务模块"
+                }]
+          },
+          "trxn_code": {
+            "control": "text",
+            "label": "交易码"
+          },
+          "system_id": {
+            "control": "text",
+            "label": "系统ID"
+          },
+          "sub_system_id": {
+            "control": "text",
+            "label": "子系统ID"
+          },
+          "role_id": {
+            "control": "text",
+            "label": "复核角色ID"
+          },
+          "review_flag": {
+              "control": "select",
+                "label": "是否复核标志",
+                "selectFirstValue":false,
+                "dict": {
+                    "dictType": "MS_E_YESORNO",
+                    "dictKey": [
+                        "MS_E_YESORNO"
+                    ],
+                    "format": "value-label"
+                }
+          },
+          "登记报文标志": {
+            "control": "select",
+              "label": "登记报文标志",
+              "selectFirstValue":false,
+              "dict": {
+                "dictType": "MS_E_YESORNO",
+                "dictKey": [
+                    "MS_E_YESORNO"
+                ],
+                "format": "value-label"
+            }
+        }
+        }
+      ]
+    },
+
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "icon": "el-icon-circle-plus",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/msap/aggs/aggs_review/aggs_review_define_add.json",
+            "params": {
+              "appId":"${{formData.appId}}"
+            }
+          },
+          "props": {
+            "title": "新增交易复核表定义"
+          }
+        }
+      ]
+    },
+
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "aggs0303",
+          "appId":"aggsOnl"
+        }
+      },
+      "thead": [
+        {
+          "type":"string",
+          "label": "业务模块",
+          "align":"center",
+          "prop": "source_system"
+        },
+        {
+          "type":"string",
+          "label": "法人号",
+          "align":"center",
+          "prop": "org_id"
+        },
+        {
+          "type":"string",
+          "label": "交易码",
+          "align":"center",
+          "prop": "trxn_code"
+        },
+        {
+          "type":"string",
+          "label": "交易描述",
+          "align":"center",
+          "prop": "trxn_desc"
+        },
+        {
+          "type":"string",
+          "label": "系统ID",
+          "align":"center",
+          "prop": "system_id"
+        },
+        {
+          "type":"string",
+          "label": "子系统ID",
+          "align":"center",
+          "prop": "sub_system_id"
+        },
+        {
+          "type":"string",
+          "label": "角色ID",
+          "align":"center",
+          "prop": "role_id"
+        },
+        {
+          "type":"string",
+          "label": "是否复核标志",
+          "align":"center",
+          "prop": "review_flag",
+          "dict":{
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "value-label"
+
+          }
+        },
+        {
+          "type":"string",
+          "label": "登记报文标志",
+          "align":"center",
+          "prop": "register_msg_flag",
+          "dict":{
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "value-label"
+
+          }
+        },
+        {
+          "type":"string",
+          "label": "数据创建时间",
+          "align":"center",
+          "prop": "data_create_time"
+        },
+        {
+          "type":"string",
+          "label": "数据更新时间",
+          "align":"center",
+          "prop": "data_update_time"
+        },
+        {
+          "type":"string",
+          "label": "数据创建用户",
+          "align":"center",
+          "prop": "data_create_user"
+        },
+        {
+          "type":"string",
+          "label": "数据更新用户",
+          "align":"center",
+          "prop": "data_update_user"
+        },
+        {
+          "type":"string",
+          "label": "数据版本号",
+          "align":"center",
+          "prop": "data_version"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width":"200%",
+          "align":"center",
+          "btns": [
+            {
+              "type":"look",
+              "label":"详情",
+              "toRequest":{
+                "url":"/views/msap/aggs/aggs_review/aggs_review_define_info.json",
+                "method":"POST"
+              },
+              "props":{
+                "width": "70%",
+                "title":"交易复核表定义详情"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/msap/aggs/aggs_review/aggs_review_define_modify.json",
+                "method": "POST",
+                "params": {
+                  "width": "70%",
+                  "appId":"${{current.source_system}}"
+                }
+              },
+              "props": {
+                "title": "交易复核定义维护"
+              }
+            },
+            {
+                "type": "look",
+                "label": "删除",
+                "doRequest": {
+                    "url": "/SUMP/icmcall/icmRPCCall",
+                    "method": "POST",
+                    "params": {
+                        "servicecode": "ms0064",
+                        "appId":"${{current.source_system}}"
+                    }
+                },
+                "confirm": {
+                    "title": "确定删除",
+                    "confirmButtonText": "确定",
+                    "cancelButtonText": "取消"
+                }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

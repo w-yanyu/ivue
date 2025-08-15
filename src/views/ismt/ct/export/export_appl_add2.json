@@ -1,0 +1,129 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+      "form": {
+          "initRequest": "${{params}}",
+          "doRequest": {
+              "url": "",
+              "method": "POST",
+              "params": {}
+          },
+          "controls": [
+              {
+                  "eng_name": {
+                      "control": "text",
+                      "label": "字段英文名称",
+                      "rules": [
+                          {
+                              "max": 60,
+                              "message": "长度不能超过60个字符"
+                          }
+                      ]
+                  },
+                  "show_name": {
+                      "control": "text",
+                      "label": "导出展示名称",
+                      "rules": [
+                          {
+                              "max": 60,
+                              "message": "长度不能超过60个字符"
+                          }
+                      ]
+                  }
+              }
+          ]
+      },
+      "toolbar": {
+          "btns": [
+              {
+                  "type": "add",
+                  "target": "dialog",
+                  "label": "新增",
+                  "toRequest": {
+                      "method": "GET",
+                      "url": "/views/ismt/ct/export/export_fieldDefineBusi_add.json",
+                      "params": {
+                          "record_no" : "${{params.record_no}}"
+                      }
+                  },
+                  "props": {
+                      "title": "新增业务人员定制智能业务数据导出范围信息"
+                  }
+              }
+          ]
+      },
+      "datagrid": {
+          "scope": "searchTable",
+          "isInitSearch": true,
+          "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                  "servicecode": "ct4110",
+                  "appId":"deciOnl",
+                  "record_no" : "${{params.record_no}}"
+              }
+          },
+          "pagination": {
+              "show": true,
+              "pageSize": 10
+          },
+          "thead": [
+              {
+                  "type": "index"
+              },
+              {
+                  "label": "记录编号",
+                  "prop": "record_no"
+              },
+              {
+                  "label": "字段英文名称",
+                  "prop": "eng_name"
+              },
+              {
+                "label": "导出展示名称",
+                "prop": "show_name"
+              },
+              {
+                  "label": "操作",
+                  "width": 120,
+                  "align":"center",
+                  "fixed": "right",
+                  "btns": [
+                      {
+                          "type": "edit",
+                          "label": "维护",
+                          "toRequest": {
+                              "url": "/views/ismt/ct/export/export_fieldDefineBusi_upd.json",
+                              "method": "GET",
+                              "params": {
+                                  "flag": "UPD"
+                              }
+                          },
+                          "props": {
+                              "title": "业务人员定制智能业务数据导出范围信息维护"
+                          }
+                      },
+                      {
+                          "type": "edit",
+                          "label": "删除",
+                          "doRequest": {
+                              "url": "/SUMP/icmcall/icmRPCCall",
+                              "method": "post",
+                              "params": {
+                                  "servicecode": "ct4111"
+                              }
+                          },
+                          "confirm": {
+                              "title": "提醒",
+                              "msg": "确定删除该记录？",
+                              "confirmButtonText": "确定",
+                              "cancelButtonText": "取消"
+                            }
+                      }
+                  ]
+              }
+          ]
+      }
+  }
+}

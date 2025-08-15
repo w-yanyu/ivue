@@ -1,0 +1,139 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "label": "上传证据材料",
+                    "toRequest": {
+                        "method": "get",
+                        "url": "/views/cs/collManage/tcManage/collWorkbench/functionMenu/litigation/litigation_evidence_upload.json",
+                        "params": {
+                            "case_id": "${{params.case_id}}",
+                            "case_no": "${{params.case_no}}",
+                            "cust_id": "${{params.cust_id}}",
+                            "org_id": "${{params.org_id}}",
+                            "oa_org_id": "${{params.oa_org_id}}"
+                        }
+                    },
+                    "props": {
+                        "width": "60%",
+                        "title": "上传证据材料"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "cb0296",
+                    "case_id": "${{params.case_id}}"
+                }
+            },
+            "thead": [
+                {
+                    "type": "string",
+                    "label": "流水号",
+                    "align": "center",
+                    "prop": "serial_no"
+                },
+                {
+                    "type": "string",
+                    "label": "法诉阶段编号",
+                    "align": "center",
+                    "prop": "litigation_stage_code"
+                },
+                {
+                    "type": "string",
+                    "label": "法诉阶段名称",
+                    "align": "center",
+                    "prop": "stage_name"
+                },
+                {
+                    "type": "string",
+                    "label": "上级法诉阶段编号",
+                    "align": "center",
+                    "prop": "litigation_parent_stage_code"
+                },
+                {
+                    "type": "string",
+                    "label": "上级法诉阶段名称",
+                    "align": "center",
+                    "prop": "parent_stage_name"
+                },
+                {
+                    "type": "string",
+                    "label": "文件名称",
+                    "align": "center",
+                    "prop": "file_name"
+                },
+                {
+                    "type": "string",
+                    "label": "备注",
+                    "align": "center",
+                    "prop": "remark"
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "align": "center",
+                    "width": "150%",
+                    "btns": [
+                        {
+                            "type": "custom",
+                            "label": "查看",
+                            "toRequest": {
+                              "url": "@lookInterviewImageBtn",
+                              "params": {
+                                "file_url": "${{current.file_url}}"
+                              }
+                            },
+                            "props": {
+                              "width": "90%",
+                              "height": "90%",
+                              "title": "查看"
+                            }
+                          },
+                        {
+                            "type": "export",
+                            "label": "下载",
+                            "doRequest": {
+                                "url": "/SUMP/minioCall/download",
+                                "method": "GET",
+                                "params": {
+                                    "path": "${{current.file_url}}",
+                                    "fileName": "${{current.file_name}}"
+                                }
+                            },
+                            "eventAfter": {
+                                "doParentCallback": true
+                            }
+                        },
+                        {
+                            "type": "delete",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "cb0298",
+                                    "serial_no": "${{current.serial_no}}"
+                                }
+                            },
+                            "confirm": {
+                                "title": "提示信息",
+                                "msg": "确认删除吗？",
+                                "confirmButtonText": "确定",
+                                "cancelButtonText": "取消"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

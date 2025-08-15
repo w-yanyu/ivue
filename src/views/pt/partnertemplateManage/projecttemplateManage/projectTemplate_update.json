@@ -1,0 +1,156 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initDataOnce": true,
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pt0094",
+          "project_template_no": "${{params.project_template_no}}",
+          "version": "${{params.version}}"
+        }
+      },
+      "controls": [
+        {
+          "project_template_no": {
+            "control": "text",
+            "label": "项目模版编号",
+            "width": "130px",
+            "disabled": true
+          },
+          "project_mould_name": {
+            "disabled": false,
+            "control": "text",
+            "label": "项目模版名称",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入项目模版名称"
+              }
+            ]
+          }
+        },
+        {
+          "part_project_type": {
+            "control": "select",
+            "label": "合作项目类型",
+            "width": "130px",
+            "dict": {
+              "dictType": "PT_E_PART_PROJECT_TYPE",
+              "dictKey": [
+                "PT_E_PART_PROJECT_TYPE"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择合作项目类型"
+              }
+            ]
+          },
+          "project_section": {
+            "control": "text",
+            "label": "项目模版管理部门",
+            "width": "130px",
+            "disabled": false
+          }
+        },
+        {
+          "effective_date": {
+            "control": "dateTimePicker",
+            "label": "生效日期",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入生效日期"
+              }
+            ]
+          },
+          "expiry_date": {
+            "control": "dateTimePicker",
+            "label": "失效日期",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入失效日期"
+              }
+            ]
+          }
+        },
+        {
+          "check_filelist_nm": {
+            "control": "lookup",
+            "label": "资料检查列表名称",
+            "edit": false,
+            "width": "130px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入可售产品编号"
+              },
+              {
+                "max": 80,
+                "message": "长度不能超过80个字符"
+              }
+            ],
+            "keyField": {
+              "data_list_no": "doc_check_list_no",
+              "check_filelist_nm": "doc_check_list_desc"
+            },
+            "toRequest": {
+              "url": "/views/pd/prod/templatePage/process/childPage/docChecklist_lookup.json",
+              "method": "post"
+            },
+            "props": {
+              "title": "选择资料检查列表"
+            }
+          },
+          "data_list_no": {
+            "control": "hidden",
+            "label": "资料检查列表编号",
+            "width": "130px",
+            "disabled": true,
+            "rules": [
+              {
+                "required": true,
+                "message": "资料检查列表编号!"
+              }
+            ]
+          }
+        },
+        {
+          "project_mould_describe": {
+            "label": "项目模版描述",
+            "control": "textarea",
+            "width": "130px",
+            "span": "24",
+            "autosize": {
+              "minRows": 4
+            },
+            "rules": [
+              {
+                "required": false,
+                "message": "请输入模版描述"
+              },
+              {
+                "required": false,
+                "max": 200,
+                "message": "长度不能超过200个字符"
+              }
+            ]
+          },
+          "version": {
+            "control": "hidden",
+            "label": "版本号"
+          }
+        }
+      ]
+    }
+  }
+}

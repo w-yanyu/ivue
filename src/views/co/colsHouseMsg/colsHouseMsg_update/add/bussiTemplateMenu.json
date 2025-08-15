@@ -1,0 +1,90 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/co/colsHouseMsg/colsHouseMsg_update/add/bussi.json",
+            "params": {
+              "house_id":"${{params.house_id}}",
+              "house_name": "${{params.house_name}}"
+            }
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "co5001",
+          "house_id":"${{params.house_id}}"
+        }
+      },
+      "thead": [
+
+        {
+          "prop": "house_id",
+          "label": "楼盘编号",
+          "align": "center"
+        },
+        {
+          "prop": "house_name",
+          "label": "楼盘名称",
+          "align": "center"
+        },
+        {
+          "prop": "partner_no",
+          "label": "合作商编号",
+          "align": "center"
+        },
+        {
+          "prop": "partner_name",
+          "label": "合作商名称",
+          "align": "center"
+        },
+        {
+          "label": "商户类型",
+          "prop": "business_tp",
+          "align": "center",
+          "dict": {
+            "dictType": "PT_E_BUSINESS_TYPE",
+            "dictKey": [
+              "PT_E_BUSINESS_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": "200",
+          "align": "center",
+          "btns": [
+            {
+              "doRequest": {
+                "method": "POST",
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "params": {
+                  "servicecode": "co5002",
+                  "method": "del"
+                }
+              },
+              "label": "删除",
+              "type": "delete"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

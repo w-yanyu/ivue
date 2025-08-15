@@ -1,0 +1,202 @@
+{
+  "module": "v-search-btn-datagrid",
+  "pageId": "risk_rule_handler",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "handlerCode": {
+            "label": "处置措施代码",
+            "control": "text",
+            "span": 8,
+            "rules": [
+              {
+                "message": "字段长度超限",
+                "max": 20
+              }
+            ]
+          },
+          "handlerName": {
+            "label": "处置措施名称",
+            "control": "text",
+            "span": 8,
+            "rules": [
+              {
+                "message": "字段长度超限",
+                "max": 100
+              }
+            ]
+          },
+          "handlerType": {
+            "label": "处置措施类型",
+            "control": "select",
+            "span": 8,
+            "dict": {
+              "dictType": "handlerType",
+              "dictKey": [],
+              "format": "value-label",
+              "doRequest": {
+                "url": "/views/risk/dictdata/handlerType.json",
+                "method": "get"
+              }
+            }
+          }
+        },
+        {
+          "controlDimension": {
+            "label": "管控维度",
+            "control": "select",
+            "span": 8,
+            "dict": {
+              "dictType": "indicatorDimension",
+              "dictKey": [],
+              "format": "value-label",
+              "doRequest": {
+                "url": "/views/risk/dictdata/indicatorDimension.json",
+                "method": "get"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "新增",
+          "authId": "rule_handler_add_btn",
+          "toRequest": {
+            "url": "/views/risk/risk_rule_handler/risk_rule_handler_add.json",
+            "method": "get",
+            "params": {}
+          },
+          "props": {
+            "width": "70%",
+            "title": "新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/API/risk-management-service/risk-rule-handler/page-select",
+        "method": "post"
+      },
+      "thead": [
+        {
+          "label": "处置措施代码",
+          "prop": "handlerCode"
+        },
+        {
+          "label": "处置措施名称",
+          "prop": "handlerName"
+        },
+        {
+          "label": "处置措施类型",
+          "prop": "handlerType",
+          "dict": {
+            "dictType": "handlerType",
+            "dictKey": [],
+            "doRequest": {
+              "url": "/views/risk/dictdata/handlerType.json",
+              "method": "get"
+            }
+          }
+        },
+        {
+          "label": "管控时间单位默认值",
+          "prop": "controlUnit",
+          "dict": {
+            "dictType": "controlUnit",
+            "dictKey": [],
+            "doRequest": {
+              "url": "/views/risk/dictdata/controlUnit.json",
+              "method": "get"
+            }
+          }
+        },
+        {
+          "label": "管控时间数值默认值",
+          "prop": "controlNumber"
+        },
+        {
+          "label": "管控指标代码",
+          "prop": "indicatorCode"
+        },
+        {
+          "label": "管控指标名称",
+          "prop": "indicatorName"
+        },
+        {
+          "label": "管控维度",
+          "prop": "controlDimension",
+          "dict": {
+            "dictType": "indicatorDimension",
+            "dictKey": [],
+            "doRequest": {
+              "url": "/views/risk/dictdata/indicatorDimension.json",
+              "method": "get"
+            }
+          }
+        },
+        {
+          "label": "优先级",
+          "prop": "priority"
+        },
+        {
+          "label": "警报队列",
+          "prop": "alertQueueId",
+          "dict": {
+            "dictType": "risk-alert-queue",
+            "dictKey": [],
+            "doRequest": {
+                "url": "/API/risk-management-service/combobox-select/risk-alert-queue",
+                "params": {},
+                "method": "POST"
+            }
+          }
+        },
+        {
+          "label": "操作",
+          "width": "150px",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "编缉",
+              "authId": "rule_handler_upd_btn",
+              "toRequest": {
+                "url": "/views/risk/risk_rule_handler/risk_rule_handler_edit.json",
+                "method": "get"
+              },
+              "props": {
+                "width": "70%"
+              }
+            },
+            {
+              "type": "look",
+              "label": "查看",
+              "toRequest": {
+                "url": "/views/risk/risk_rule_handler/risk_rule_handler_view.json",
+                "method": "get"
+              },
+              "props": {
+                "width": "70%"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "authId": "rule_handler_del_btn",
+              "doRequest": {
+                "url": "/API/risk-management-service/risk-rule-handler/delete",
+                "method": "post"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

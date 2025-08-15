@@ -1,0 +1,286 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "initRequest": "${{params}}",
+      "controls": [
+        {
+          "part_no": {
+            "control": "text",
+            "label": "合作方编号"
+
+          },
+          "cust_no": {
+            "control": "text",
+            "label": "客户编号"
+          }
+        },
+        {
+          "center_name": {
+            "control": "text",
+            "label": "合作方名称"
+          },
+          "center_cert_type": {
+            "control": "select",
+            "label": "合作方证件类型",
+             "dict": {
+               "dictType": "MS_E_CRET_TYPE",
+               "dictKey": [
+                 "MS_E_CRET_TYPE"
+               ],
+               "format": "label"
+             }
+          }
+        },
+        {
+          "center_cert_no": {
+            "control": "text",
+            "label": "合作方证件号码"
+
+          },
+          "center_status": {
+            "control": "select",
+            "label": "合作方状态",
+             "dict": {
+               "dictType": "PT_E_CENTER_STATUS",
+               "dictKey": [
+                 "PT_E_CENTER_STATUS"
+               ],
+               "format": "label"
+             }
+          }
+
+        },
+        {
+          "warn_status": {
+            "control": "select",
+            "label": "预警状态",
+             "dict": {
+               "dictType": "PT_E_WARN_STATUS",
+               "dictKey": [
+                 "PT_E_WARN_STATUS"
+               ],
+               "format": "label"
+             }
+          }
+        }
+
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "###url": "/views/pt/partnerManage/menu/Template_add.json",
+            "url" : "/views/pt/partnerManage/ptPartner_add.json"
+          },
+          
+          "props": {
+            "title": "新增合作方",
+            "width": "80%"
+          }
+
+        }
+
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pt0045",
+          "page_id": "/views/pt/partnerManage/ptPartner_list.json"
+        }
+      },
+      "thead": [
+        {
+          "type": "index"
+        },
+        {
+          "label": "合作方编号",
+          "prop": "part_no",
+          "align":"center"
+        },
+        {
+          "label": "客户编号",
+          "prop": "cust_no",
+          "align":"center"
+        },
+        {
+          "label": "合作方证件类型",
+          "prop": "center_cert_type",
+          "align":"center",
+          "dict": {
+            "dictType": "US_E_PUB_CRET_TYPE",
+            "dictKey": [
+              "US_E_PUB_CRET_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "合作方证件号码",
+          "prop": "center_cert_no",
+          "align":"center"
+        },
+        {
+          "label": "合作方名称",
+          "prop": "center_name",
+          "align":"center"
+        },
+        {
+          "label": "合作方品牌",
+          "prop": "center_brand",
+          "align":"center"
+        },
+        {
+          "label": "合作方状态",
+          "prop": "center_status",
+          "align":"center",
+          "dict": {
+            "dictType": "PT_E_CENTER_STATUS",
+            "dictKey": [
+              "PT_E_CENTER_STATUS"
+            ],
+            "format": "label"
+          }
+        },
+
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align":"center",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/pt/partnerManage/tab_detail/tab_detail_see.json",
+                "method": "GET",
+                "params": {
+                  "part_no": "${{current.part_no}}",
+                  "center_object_type":"${{current.center_object_type}}",
+                  "cust_no":"${{current.cust_no}}",
+                  "center_cert_type":"${{current.center_cert_type}}",
+                  "center_cert_no":"${{current.center_cert_no}}",
+                  "center_name":"${{current.center_name}}",
+                  "center_brand":"${{current.center_brand}}",
+                  "center_status":"${{current.center_status}}",
+                  "warn_status":"${{current.warn_status}}",
+                  "start_date":"${{current.start_date}}",
+                  "take_effect_date":"${{current.take_effect_date}}",
+                  "invalid_date":"${{current.invalid_date}}",
+                  "show_flash":"0"
+                }
+              },
+              "props": {
+                "width": "80%",
+                "title": "合作方详情"
+              }
+            },
+            {
+              "####type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/pt/partnerManage/menu/Template_update.json",
+                
+                "method": "POST"
+
+              },
+              "props": {
+                "title": "合作方维护",
+                "width": "100%"
+              }
+            },
+            {
+              "####type": "custom",
+              "label":  "合作方变更",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "pt0044",
+                  "wf_prod_no":"${{params.wf_prod_no}}",
+                  "user_name": " $g{{user_info.userName}}"
+                },
+                "condition": {
+                  "switch": {
+                    "$default": {
+                      "toRequest": {
+                        "url": "/views/pt/pt_workbench/workbench_main_tabs.json",
+                        "method": "POST",
+                        "target": "navTab",
+                        "props":{
+                          "title": "工作台首页"
+                        }
+                      }
+                      
+                    },
+                    "200": {
+                      "toRequest": {
+                        "url": "/views/pt/pt_workbench/workbench_main_tabs.json",
+                        "target": "navTab",
+                        "method": "POST",
+                        "props":{
+                          "title": "工作台首页"
+                        }    
+                      }
+                    }
+                  }
+                }
+              },
+              "confirm": {
+                "title": "确定变更",
+                "msg":"请确认是否变更？  确定后请前往“伙伴审批工作台”继续处理！",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              },
+              "show": {
+                "expression": "'${{current.approve_status}}'== '02'"
+              }
+            },
+            
+            {
+              "###type": "look",
+              "label": "历史",
+              "toRequest": {
+                "url": "/views/pt/partnerManage/ptPartner_history_info.json",
+                "method": "POST",
+                "params": {
+                  "part_no": "${{current.part_no}}"
+                }
+              },
+              "props": {
+                "width": "80%",
+                "title": "合作方维护历史"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "pt0043"
+                }
+              },
+              "show": {
+                "expression": "'${{current.approve_status}}'== '03'"
+              }
+            }
+
+          ]
+        }
+      ]
+    }
+  }
+}

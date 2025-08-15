@@ -1,0 +1,264 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "foldLineNumber": 3,
+      "controls": [
+        {
+          "appl_id": {
+            "control": "text",
+            "label": "申请编号"
+          },
+          "mobile_no": {
+            "control": "text",
+            "label": "手机号码"
+          }
+        },
+        {
+          "cust_no": {
+            "control": "text",
+            "label": "客户编号",
+            "rules": [
+              {
+                "max": 18,
+                "message": "长度不能超过18个字符"
+              }
+            ]
+          },
+          "cust_name": {
+            "control": "text",
+            "label": {
+              "default": "申请人姓名",
+              "i18n": "K0001.Applicant-name"
+            },
+            "rules": [
+              {
+                "max": 18,
+                "message": "长度不能超过18个字符"
+              }
+            ]
+          }
+        },
+        {
+          "appl_start_date": {
+            "control": "dateTimePicker",
+            "label": {
+              "default": "进件日期",
+              "i18n": "K0001.Incoming-date"
+            }
+          },
+          "appl_end_date": {
+            "control": "dateTimePicker",
+            "label": {
+              "default": "进件截止日期",
+              "i18n": "K0001.Incoming-deadline"
+            }
+          }
+        },
+        {
+          "cert_type": {
+            "control": "select",
+            "label": "证件类型",
+            "dict": {
+              "dictType": "MS_E_CRET_TYPE",
+              "dictKey": [
+                "MS_E_CRET_TYPE"
+              ],
+              "format": "label"
+            }
+          },
+          "cert_no": {
+            "control": "text",
+            "label": "证件号码"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "aggs0005",
+          "sizePage": 10,
+          "appId": "aggsOnl"
+        }
+      },
+      "thead": [
+        {
+          "label": "申请编号",
+          "prop": "appl_id",
+          "width": 200,
+          "align": "center"
+        },
+        {
+          "label": "业务类型",
+          "prop": "busi_type",
+          "width": 100,
+          "align": "center",
+          "dict": {
+            "dictType": "AGGS_BUSI_TYPE",
+            "dictKey": [
+              "AGGS_BUSI_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "流程产品名称",
+          "prop": "wf_prod_name",
+          "width": 200
+        },
+        {
+          "label": {
+            "default": "申请人姓名",
+            "i18n": "K0001.Applicant-name"
+          },
+          "prop": "cust_name",
+          "align": "center",
+          "width": 150
+        },
+     
+        {
+          "label": "证件号码",
+          "prop": "cert_no",
+          "width": 200,
+          "align": "center"
+        },
+        {
+          "label": "产品名称",
+          "prop": "prod_name",
+          "width": 200,
+          "align": "center"
+        },
+        {
+          "label": {
+            "default": "进件日期",
+            "i18n": "K0001.Incoming-date"
+          },
+          "prop": "system_date",
+          "align": "center",
+          "width": 100
+        },
+        {
+          "label": {
+            "default": "处理节点",
+            "i18n": "K0001.deal-node"
+          },
+          "prop": "task_define_name",
+          "align": "center"
+        },
+        {
+          "label": "处理状态",
+          "prop": "appl_state",
+          "align": "center",
+          "dict": {
+            "dictType": "CT_E_APPLST",
+            "dictKey": [
+              "CT_E_APPLST"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": {
+            "default": "处理用户名称",
+            "i18n": "K0001.Processing-user-name"
+          },
+          "prop": "user_name",
+          "value": "${{current.cur_user_id}}-${{current.user_name}}",
+          "align": "center"
+        },
+        {
+          "label": {
+            "default": "处理角色名称",
+            "i18n": "K0001.Processing-role-name"
+          },
+          "prop": "role_name",
+          "value": "${{current.cur_wfrl_id}}-${{current.role_name}}",
+          "align": "center"
+        },
+        {
+          "label": "进入节点时间",
+          "prop": "start_time",
+          "align": "center"
+        },
+        {
+          "label": "节点处理时间",
+          "prop": "end_time",
+          "align": "center"
+        },
+        {
+          "label": "耗时",
+          "prop": "cost_time",
+          "align": "center"
+        },
+        {
+          "label": "来源模块",
+          "prop": "source_system",
+          "width": 100,
+          "align": "center",
+          "dict": {
+            "dictType": "AGGS_SYSTEM_TYPE",
+            "dictKey": [
+              "AGGS_SYSTEM_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 180,
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "详情",
+              "toRequest": {
+                "url": "@CommAlreadyDoDetail",
+                "method": "GET",
+                "target": "navTab",
+                "params": {
+                  "frame_cd": "${{current.view_frame}}",
+                  "cust_name": "${{current.cust_name}}",
+                  "appl_state": "${{current.appl_state}}",
+                  "appl_date": "${{current.system_date}}",
+                  "task_inst_id": "${{current.task_inst_id}}",
+                  "appId": "${{current.source_system}}Onl",
+                  "wf_inst_id": "${{current.wf_inst_id}}",
+                  "cust_no": "${{current.cust_no}}",
+                  "cust_id": "${{current.cust_no}}"
+                }
+              },
+              "props": {
+                "title": "已办事项详情"
+              }
+            },
+            {
+              "type": "edit",
+              "label": {
+                "default": "流程跟踪",
+                "i18n": "K0001.Process-tracking"
+              },
+              "toRequest": {
+                "url": "@ProcessImgView",
+                "method": "GET",
+                "params": {
+                  "appId": "${{current.source_system}}Onl",
+                  "from": "doneList"
+                }
+              },
+              "props": {
+                "width": "1200px",
+                "title": "流程跟踪图"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

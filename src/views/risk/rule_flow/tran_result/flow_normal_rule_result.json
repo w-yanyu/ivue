@@ -1,0 +1,76 @@
+{
+  "module": "v-search-btn-datagrid",
+  "layout": {
+    "form": {
+      "btns": [],
+      "controls": []
+    },
+    "datagrid": {
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/riskController/riskCall",
+        "method": "POST",
+        "params": {
+          "trxnSeq": "${{params.trxnSeq}}",
+          "servicecode": "risk-management-service/risk-normal-rule-result/page-select",
+          "appId": "risk-management-service",
+          "isList": true
+        }
+      },
+      "pagination": {
+        "hideOnSinglePage": false,
+        "show": true,
+        "pageSizes": [10, 15, 20, 50, 100],
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "label": "流水号",
+          "prop": "trxnSeq"
+        },
+        {
+          "label": "规则Id",
+          "prop": "ruleId"
+        },
+        {
+          "label": "规则代码",
+          "prop": "ruleCode"
+        },
+        {
+          "label": "规则名称",
+          "prop": "ruleName"
+        },
+        {
+          "label": "是否命中",
+          "prop": "hitFlag",
+          "dict": {
+            "dictType": "hitFlag",
+            "dictKey": [],
+            "doRequest": {
+              "url": "/views/risk/dictdata/hitFlag.json",
+              "method": "get"
+            }
+          }
+        },
+        {
+          "label": "操作",
+          "width": "150px",
+          "align": "center",
+          "btns": [
+            {
+              "type": "look",
+              "label": "动作查看",
+              "toRequest": {
+                "url": "/views/risk/risk_decision_rule/risk_decision_rule_action_result.json",
+                "method": "get"
+              },
+              "props": {
+                "width": "70%"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,87 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "datagrid": {
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "cb0279",
+                    "case_no": "${{params.case_no}}"
+                }
+            },
+            "thead": [
+                {
+                    "type": "string",
+                    "align": "center",
+                    "label": "案件批次号",
+                    "prop": "batch_no"
+                },
+                {
+                    "type": "string",
+                    "align": "center",
+                    "label": "案件编号",
+                    "prop": "case_id"
+                },
+                {
+                    "type": "string",
+                    "align": "center",
+                    "label": "队列名称",
+                    "prop": "queue_code",
+                    "dict": {
+                        "dictKey": [
+                            "queue_code"
+                        ],
+                        "format": "value-label",
+                        "labelField": "queue_name",
+                        "valueField": "queue_code",
+                        "doRequest": {
+                            "url": "/SUMP/icmcall/icmRPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "cb0082"
+                            }
+                        },
+                        "resultSet": {
+                            "queue_type": "queue_type"
+                        }
+                    }
+                },
+                {
+                    "type": "string",
+                    "label": "入列时间",
+                    "align": "center",
+                    "prop": "in_queue_time"
+                },
+                {
+                    "type": "string",
+                    "label": "出列时间",
+                    "align": "center",
+                    "prop": "out_queue_time"
+                },
+                {
+                    "type": "string",
+                    "label": "操作人",
+                    "align": "center",
+                    "prop": "data_update_user",
+                    "dict": {
+                        "dictKey": [
+                            "data_update_user"
+                        ],
+                        "format": "value-label",
+                        "labelField": "user_name",
+                        "valueField": "user_id",
+                        "doRequest": {
+                            "url": "/SUMP/icmcall/icmRPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "cb0084"
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,332 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "ar1611",
+          "apply_no": "${{params.apply_no}}"
+        }
+      },
+      "btns": [
+        {
+          "label": "提交",
+          "type": "submit",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "post",
+            "params": {
+              "servicecode": "ar1610",
+              "apply_no": "${{params.apply_no}}"
+            }
+          },
+          "eventAfter": {
+            "doLastCallback": false
+          }
+        }
+      ],
+      "controls": [
+        {
+          "apply_no": {
+            "control": "hidden",
+            "label": "申请号"
+          },
+          "oprt_entity_name": {
+            "control": "text",
+            "label": "经营主体名称",
+            "span": 8,
+            "disabled": true
+          },
+          "oprt_entity_type": {
+            "control": "select",
+            "label": "经营主体类型",
+            "dict": {
+              "dictType": "AR_E_OPRT_ENTITY_TYPE",
+              "dictKey": [
+                "AR_E_OPRT_ENTITY_TYPE"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId",
+              "format": "label"
+            },
+            "span": 8,
+            "disabled": false,
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "agric_loan_use": {
+            "control": "hidden",
+            "label": "农业贷款用途",
+            "dict": {
+              "dictType": "AR_E_AGRIC_LOAN_USE",
+              "dictKey": [
+                "AR_E_AGRIC_LOAN_USE"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId",
+              "format": "label"
+            },
+            "span": 8,
+            "disabled": false,
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "is_poverty": {
+            "control": "select",
+            "label": "是否贫困地区",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId",
+              "format": "label"
+            },
+            "span": 8,
+            "disabled": false,
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "agric_oprt_project": {
+            "control": "text",
+            "label": "农业经营项目",
+            "span": 8,
+            "disabled": false,
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必填项"
+              },
+              {
+                "max": 64,
+                "message": "长度不能超过64个字符"
+              }
+            ]
+          },
+          "agric_oprt_scale": {
+            "control": "select",
+            "label": "农业经营规模",
+            "span": 8,
+            "disabled": false,
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必填项"
+              }
+            ],
+            "dict": {
+              "dictType": "AR_E_AGRIC_OPRT_SCALE",
+              "dictKey": [
+                "AR_E_AGRIC_OPRT_SCALE"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId",
+              "format": "label"
+            }
+          },
+          "agric_oprt_years": {
+            "control": "text",
+            "label": "农业经营年限(年)",
+            "span": 8,
+            "disabled": false,
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必填项"
+              },
+              {
+                "pattern": "^[0-9]*$",
+                "message": "格式错误，请输入数字！"
+              }
+            ]
+          },
+          "agric_oprt_area": {
+            "control": "text",
+            "label": "农业经营场地面积(亩)",
+            "span": 8,
+            "disabled": false,
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必填项"
+              },
+              {
+                "max": 18,
+                "message": "长度不能超过18个字符"
+              }
+            ]
+          },
+          "owned_land_area": {
+            "control": "text",
+            "label": "自有土地面积(亩)",
+            "span": 8,
+            "disabled": false,
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必填项"
+              },
+              {
+                "max": 18,
+                "message": "长度不能超过18个字符"
+              }
+            ]
+          },
+          "lease_land_area": {
+            "control": "text",
+            "label": "租赁土地面积(亩)",
+            "span": 8,
+            "compute": "${{form.agric_oprt_area}}-${{form.owned_land_area}}",
+            "disabled": true,
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              },
+              {
+                "max": 18,
+                "message": "长度不能超过18个字符"
+              }
+            ]
+          },
+          "lease_land_val": {
+            "control": "currency",
+            "align": "left",
+            "label": "租赁土地价格(元/亩)",
+            "span": 8,
+            "disabled": false,
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必填项"
+              }
+            ],
+            "format":{
+              "thousand": ","
+              
+            } 
+          },
+          "busy_hire": {
+            "control": "text",
+            "label": "忙时雇佣人员(人)",
+            "span": 8,
+            "disabled": false,
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必填项"
+              },
+              {
+                "pattern": "^[0-9]*$",
+                "message": "格式错误，请输入数字！"
+              }
+            ]
+          },
+          "lease_land_years": {
+            "control": "text",
+            "label": "租赁土地年限(年)",
+            "span": 8,
+            "disabled": false,
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必填项"
+              },
+              {
+                "pattern": "^[0-9]*$",
+                "message": "格式错误，请输入数字！"
+              }
+            ]
+          },
+          "last_year_sale_incm": {
+            "control": "currency",
+            "align": "left",
+            "label": "上一年度销售收入(万元)",
+            "span": 8,
+            "disabled": false,
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必填项"
+              }
+            ],
+            "format":{
+              "thousand": ","
+              
+            } 
+          },
+          "last_year_oprt_profit": {
+            "control": "currency",
+            "align": "left",
+            "label": "上一年度经营净利润(万元)",
+            "span": 8,
+            "disabled": false,
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必填项"
+              }
+            ],
+            "format":{
+              "thousand": ","
+              
+            } 
+          },
+          "agric_implements": {
+            "control": "select",
+            "label": "农机具情况",
+            "span": 8,
+            "disabled": false,
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必填项"
+              }
+            ],
+            "dict": {
+              "dictType": "AR_E_AGRIC_IMPLEMENTS",
+              "dictKey": [
+                "AR_E_AGRIC_IMPLEMENTS"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId",
+              "format": "label"
+            }
+          },
+          "join_other_project": {
+            "control": "textarea",
+            "label": "本人控制或参与投资、经营的其他经营项目",
+            "span": 24,
+            "rows": 4,
+            "disabled": false,
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              },
+              {
+                "max": "100",
+                "message": "长度不能超过100个字符"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

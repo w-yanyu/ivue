@@ -1,0 +1,129 @@
+<template>
+  <div class="account_additional_info_type1_container">
+    <div
+      class="flex-column-center"
+      style="
+        width: 100%;
+        height: 36px;
+        border-top: 1px solid #ebeef5;
+        border-left: 1px solid #ebeef5;
+        border-right: 1px solid #ebeef5;
+        margin: 0 12px;
+      "
+    >
+      <span style="line-height: 23px; text-align: center; font-weight: normal">
+        {{ tip }}
+      </span>
+    </div>
+    <el-table :data="tableData" border style="width: 100%">
+      <el-table-column prop="account_status" align="center" :formatter="formatAccountStatus" label="账户状态">
+      </el-table-column>
+      <el-table-column prop="balance" align="center" label="余额">
+      </el-table-column>
+      <el-table-column prop="used_amount" align="center" label="已用额度">
+      </el-table-column>
+      <el-table-column prop="unbilled_instalment_balance" align="center" label="未出单的大额专项分期余额">
+      </el-table-column>
+      <el-table-column prop="remain_payment_cyc" align="center" label="剩余分期期数">
+      </el-table-column>
+      <el-table-column prop="latest_6month_used_avg_amount" align="center" label="最近6个月平均使用额度">
+      </el-table-column>
+      <el-table-column prop="used_highest_amount" align="center" label="最大使用额度">
+      </el-table-column>
+    </el-table>
+    <el-table :data="tableData" border style="width: 100%">
+      <el-table-column prop="scheduled_payment_date" align="center" label="账单日">
+      </el-table-column>
+      <el-table-column
+        prop="scheduled_payment_amount"
+        align="center"
+        label="本月应还款"
+      >
+      </el-table-column>
+      <el-table-column
+        prop="actual_payment_amount"
+        align="center"
+        label="本月实还款"
+      >
+      </el-table-column>
+      <el-table-column
+        prop="recent_pay_date"
+        align="center"
+        label="最近一次还款日期"
+      >
+      </el-table-column>
+      <el-table-column
+        prop="currover_due_cyc"
+        align="center"
+        label="当前逾期期数"
+      >
+      </el-table-column>
+      <el-table-column
+        prop="currover_due_amount"
+        align="center"
+        label="当前逾期总额"
+      >
+      </el-table-column>
+    </el-table>
+  </div>
+</template>
+<script>
+import { formatDate } from "./utils";
+
+/**
+ * 单个账户表现信息
+ * 只适用于账户状态为银行止付、正常、司法追偿
+ * TODO 上下两层UI存在中间纵轴对不齐问题，Table组件样式处理问题。后期调整。
+ * TODO 部分字段缺失
+ */
+export default {
+  name: "AccountAdditionalInfoType5",
+  props: {
+    tableData: {
+      type: Array,
+      default() {
+        return [];
+      },
+    },
+    dictionaries: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
+  },
+  data() {
+    return {
+      tip: "",
+    };
+  },
+  components: {},
+  created() {
+    this.tip = "截至" + formatDate(3, this.tableData[0].report_date);
+  },
+  methods: {
+    formatAccountStatus(row,column){
+         let name = row[column.property];
+            let data = row[column.property];
+            this.dictionaries['E_C_ACCOUNT_STATUS_D1R1R4'].forEach(function(item,index){
+                if(data == item.dictId){
+                    name = item.dictName;
+                }
+            })
+            return name;
+		},
+  },
+};
+</script>
+<style lang="css" scoped>
+* {
+  box-sizing: border-box;
+}
+
+.flex-column-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+</style>

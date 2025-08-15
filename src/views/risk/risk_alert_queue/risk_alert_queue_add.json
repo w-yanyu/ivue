@@ -1,0 +1,91 @@
+{
+    "module": "v-inputDataForm-btn",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "queueId": {
+                        "label": "队列ID",
+                        "control": "text",
+                        "span": 12,
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请正确输入",
+                                "max": 20
+                            }
+                        ]
+                    },
+                    "queueName": {
+                        "label": "队列名称",
+                        "control": "text",
+                        "span": 12,
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请正确输入",
+                                "max": 60
+                            }
+                        ]
+                    }
+                },
+                {
+                    "priority": {
+                        "label": "优先级",
+                        "control": "currency",
+                        "span": 12,
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请正确输入"
+                            }
+                        ],
+                        "decimal": "0"
+                    },
+                    "status": {
+                        "label": "状态",
+                        "control": "select",
+                        "span": 12,
+                        "dict": {
+                            "dictType": "alertQueueStatus",
+                            "dictKey": [],
+                            "format": "value-label",
+                            "doRequest": {
+                                "url": "/views/risk/dictdata/alertQueueStatus.json",
+                                "method": "get"
+                            }
+                        },
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "该控件必填"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "remark": {
+                        "label": "备注",
+                        "control": "textarea",
+                        "span": 24,
+                        "rows": 1,
+                        "rules": [
+                            {
+                                "message": "请正确输入",
+                                "max": 500
+                            }
+                        ]
+                    }
+                }
+            ],
+            "doRequest": {
+                "url": "/API/risk-management-service/risk-alert-queue/add",
+                "method": "POST",
+                "params": {
+                    "createUser": "$g{{user_info.userCode}}",
+                    "updateUser": "$g{{user_info.userCode}}"
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,199 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [{
+                "cust_nm": {
+                    "control": "lookup",
+                    "edit": true,
+                    "label": "客户名称",
+                    "span": 10,
+                    "keyField": {
+                        "cust_nm": "cust_name"
+                    },
+                    "toRequest": {
+                        "url": "/views/pl/assetPreserve/assetHndov/useinfo.json",
+                        "method": "GET",
+                        "params": {
+                            "indvfg": "Y",
+                            "statss": "Y"
+                        }
+                    },
+                    "events": {
+                        "set": {
+                            "temp_name": ""
+                        }
+                    },
+                    "format": "label",
+                    "rules": [{
+                        "required": false,
+                        "message": "请选择"
+                    }]
+                },
+                "loan_due_bill_num": {
+                    "control": "text",
+                    "label": "借据号",
+                    "rules": [{
+                        "max": 80,
+                        "message": "长度不能超过80个字符"
+                    }]
+                }
+            }]
+        },
+        "toolbar": {
+            "btns": [{
+                "type": "custom",
+                "icon": "el-icon-edit",
+                "label": "移入",
+               "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "pl0251",
+                  "list": "${{current.selectedData}}",
+                  "apply_no": "${{params.apply_no}}",
+                  "hndov_way":"1"
+                }
+              },
+              "confirm": {
+                "title": "提示信息",
+                "msg": "确定移入？",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              },
+              "eventAfter": {
+                "doParentCallback": true,
+                "callback": "addCallback"
+              }
+            }]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "syln0002",
+                  "outlistid":"lnCpstnQryType"
+                }
+              },
+            "thead": [
+              {
+                "type": "selection",
+                "width": "55"
+              },
+                {
+                  "label": "序号",
+                  "type": "index",
+                  "align": "center"
+                },
+                {
+                  "align": "center",
+                  "label": "客户名称",
+                  "width":"100",
+                  "prop": "cust_nm"
+                },
+                {
+                  "align": "center",
+                  "width":"220",
+                  "label": "借据号",
+                  "prop": "loan_due_bill_num"
+                },{
+                  "align": "center",
+                  "width":"220",
+                  "label": "合同编号",
+                  "prop": "ctrct_num"
+                },{
+                  "align": "center",
+                  "width":"220",
+                  "label": "客户号",
+                  "prop": "cust_num"
+                },
+                {
+                  "align": "center",
+                  "label": "可售产品编号",
+                  "prop": "slbl_prod_code"
+                },
+                {
+                  "align": "center",
+                  "label": "产品名称",
+                  "width":"120",
+                  "prop": "prod_nm"
+                },
+                {
+                  "align": "center",
+                  "label": "放款日期",
+                  "prop": "open_acct_dt"
+                },
+                {
+                  "align": "center",
+                  "label": "到期日期",
+                  "prop": "matu_dt"
+                },
+                {
+                  "align": "center",
+                  "label": "借据金额(元)",
+                  "prop": "due_bill_amt"
+                },
+                {
+                  "align": "center",
+                  "label": "合同金额(元)",
+                  "prop": "ctrct_amt"
+                },
+                {
+                  "align": "center",
+                  "label": "账务机构",
+                  "prop": "acctg_org"
+                },
+                
+                {
+                  "align": "center",
+                  "label": "贷款形态",
+                  "prop": "loan_form",
+                  "dict": {
+                    "dictType": "LN_E_LOAN_FORM",
+                    "dictKey": [
+                      "LN_E_LOAN_FORM"
+                    ],
+                    "format": "label"
+                  }
+                },
+                {
+                  "align": "center",
+                  "label": "贷款账户状态",
+                  "prop": "loan_acct_ste",
+                  "dict": {
+                    "dictType": "LN_E_LOAN_ACCT_STE",
+                    "dictKey": [
+                      "LN_E_LOAN_ACCT_STE"
+                    ],
+                    "format": "label"
+                  }
+                },
+                {
+                  "label": "操作",
+                  "fixed": "right",
+                  "align": "center",
+                  "btns": [
+                    {
+                      "type": "look",
+                      "label": "详情",
+                      "toRequest": {
+                        "url": "/views/integrated/loanInfo/loan_info_tabs.json",
+                        "method": "POST",
+                        "params": {
+                          "loan_due_bill_num":"${{current.loan_due_bill_num}}"
+                        }
+                      },
+                      "props": {
+                        "width": "80%",
+                        "title": "借据信息详情"
+                      }
+                    }
+                  ]
+                }
+              ]
+        }
+    }
+}

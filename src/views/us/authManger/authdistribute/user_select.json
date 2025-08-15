@@ -1,0 +1,115 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "cust_name": {
+                        "control": "text",
+                        "label": "客户姓名",
+                        "rules": [
+                            {
+                                "max": 50,
+                                "message": "长度不能超50个字符"
+                            }
+                        ]
+                    },
+                    "cust_type": {
+                        "control": "select",
+                        "dict": {
+                            "dictType": "US_E_CUST_TYPE",
+                            "dictKey": [
+                                "US_E_CUST_TYPE"
+                            ],
+                            "format": "label"
+                        },
+                        "label": "客户类别"
+                    }
+                },
+                {
+                    "cert_type": {
+                        "control": "select",
+                        "dict": {
+                            "dictType": "MS_E_CRET_TYPE",
+                            "dictKey": [
+                                "MS_E_CRET_TYPE"
+                            ],
+                            "format": "label"
+                        },
+                        "label": "证件类型"
+                    },
+                    "cert_no": {
+                        "control": "text",
+                        "label": "证件号码",
+                        "rules": [
+                            {
+                                "max": 32,
+                                "message": "长度不能超过32个字符"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "refreshDialog",
+                    "label": "新增选中客户",
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "us1304",
+                            "selectName": "authDistributeList",
+                            "batch_no": "${{params.batch_no}}"
+                        }
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "us0203"
+                }
+            },
+            "thead": [
+                {
+                    "type": "selection"
+                },
+                {
+                    "label": "客户号",
+                    "prop": "cust_no",
+                    "align": "center"
+                },
+                {
+                    "label": "客户名称",
+                    "prop": "cust_name",
+                    "align": "center"
+                },
+                {
+                    "label": "证件类型",
+                    "prop": "cert_type",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "MS_E_CRET_TYPE",
+                        "dictKey": [
+                            "MS_E_CRET_TYPE"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "证件号码",
+                    "prop": "cert_no",
+                    "align": "center"
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,138 @@
+{
+    "module": "v-inputDataForm-btn",
+    "layout": {
+        "form": {
+            "initRequest": "${{params}}",
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "us0035",
+                    "trantp": "INSERT",
+                    "cust_no": "${{params.cust_no}}"
+                }
+            },
+            "controls": [
+                {
+                    "cust_no": {
+                        "control": "hidden",
+                        "label": "当前客户编号",
+                        "width": "10px",
+                        "disabled": true
+                    },
+                    "start_date": {
+                        "control": "dateTimePicker",
+                        "label": "起始日期:",
+                        "width": "10px",
+                        "format": "yyyyMMdd",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请选择起始日期"
+                            }
+                        ]
+                    },
+                    "end_date_type": {
+                        "control": "select",
+                        "label": "到期日类型:",
+                        "width": "10px",
+                        "align": "center",
+                        "dict": {
+                            "dictType": "US_E_END_DATA_TYPE",
+                            "dictKey": [
+                                "US_E_END_DATA_TYPE"
+                            ],
+                            "format": "label"
+                        },
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请选择到期日类型"
+                            }
+                        ],
+                        "events": {
+                            "condition": {
+                                "1": {
+                                    "control": {
+                                        "end_date": {
+                                            "rules": [
+                                                {
+                                                    "required": false
+                                                }
+                                            ]
+                                        }
+                                    }
+                                },
+                                "2": {
+                                    "control": {
+                                        "end_date": {
+                                            "rules": [
+                                                {
+                                                    "required": true,
+                                                    "message": "请选择终止日期"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "end_date": {
+                        "control": "dateTimePicker",
+                        "label": "终止日期:",
+                        "width": "10px",
+                        "format": "yyyyMMdd"
+                    },
+                    "duty_type": {
+                        "control": "select",
+                        "label": "职务:",
+                        "width": "10px",
+                        "align": "center",
+                        "dict": {
+                            "dictType": "US_E_DUTY_TYPE",
+                            "dictKey": [
+                                "US_E_DUTY_TYPE"
+                            ],
+                            "format": "label"
+                        },
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请选择职务"
+                            }
+                        ]
+                    },
+                    "employer": {
+                        "control": "text",
+                        "label": "单位:",
+                        "width": "10px",
+                        "align": "center",
+                        "rules": [
+                            {
+                                "max": 100,
+                                "required": true,
+                                "message": "请输入单位"
+                            }
+                        ]
+                    },
+                    "remark": {
+                        "label": "备注",
+                        "control": "textarea",
+                        "width": "10px",
+                        "span": "24",
+                        "autosize": {
+                            "minRows": 4
+                        },
+                        "rules": [
+                            {
+                                "max": 100,
+                                "message": "长度不能超过100个字符"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    }
+}

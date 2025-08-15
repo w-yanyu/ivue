@@ -1,0 +1,213 @@
+{
+  "module": "v-form-btn-dynamic",
+  "layout": {
+    "form": {
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ar0744",
+          "apply_no": "${{params.apply_no}}"
+        }
+      },
+      "controls": [
+        {
+          "credit_apply_id": {
+            "control": "hidden",
+            "span": 8
+          },
+          "contract_no": {
+            "control": "text",
+            "label": "授信通知书编号",
+            "disabled": true,
+            "span": 10
+          },
+          "base_ccy": {
+            "control": "select",
+            "label": "基准币种",
+            "disabled": true,
+            "span": 10,
+            "dict": {
+              "dictType": "MS_CURRENCY",
+              "dictKey": [
+                "MS_CURRENCY"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId",
+              "format": "label"
+            },
+ "selectFirstValue": "true"
+          },
+          "apply_amt": {
+            "control": "currency",
+            "label": "授信金额",
+            "align": "left",
+            "disabled": true,
+            "span": 10,
+            "rules": [
+              {
+                "required": false,
+                "message": "请输入授信金额"
+              }
+            ],
+            "format": {
+              "thousand": ","
+            }
+          },
+          "ccy_code": {
+            "control": "select",
+            "label": "主授信币种",
+            "span": 10,
+            "disabled": true,
+            "dict": {
+              "dictType": "MS_CURRENCY",
+              "dictKey": [
+                "MS_CURRENCY"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId",
+              "format": "label"
+            }
+          },
+          "exchange_rate": {
+            "control": "text",
+            "label": "汇率",
+            "span": 10,
+            "disabled": true,
+            "value": "1.0"
+          },
+          "base_busi_amt": {
+            "control": "currency",
+            "align": "left",
+            "label": "授信金额(折基准币种)",
+            "span": 10,
+            "disabled": true,
+            "compute": "${{form.apply_amt}}*${{form.exchange_rate}}",
+            "rules": [
+              {
+                "message": "请输入授信总金额(折基准币种)",
+                "required": false
+              }
+            ],
+            "format": {
+              "thousand": ","
+            }
+          },
+          "effective_date": {
+            "control": "dateTimePicker",
+            "label": "生效日期",
+            "span": 10,
+            "disabled": true,
+            "rules": [
+              {
+                "message": "生效日期不能为空",
+                "required": false
+              }
+            ]
+          },
+          "appr_term": {
+            "control": "text",
+            "label": "期限(月)",
+            "span": 10,
+            "disabled": true,
+            "rules": [
+              {
+                "required": false,
+                "message": "请选择业务期限(月)"
+              }
+            ]
+          },
+          "loan_purpose_desc": {
+            "control": "text",
+            "label": "授信资金用途",
+            "span": 20,
+            "disabled": true
+          },
+          "line": {
+            "control": "divider",
+            "lineColor": "#1890ff",
+            "span": 24,
+            "width": "40px",
+            "contentPosition": "center",
+            "content": "业务产品信息"
+          },
+          "prod_name": {
+            "label": "业务产品",
+            "control": "text",
+            "span": 10,
+            "disabled": true
+          },
+          "loan_prod_cd": {
+            "label": "产品编号",
+            "control": "text",
+            "span": 10,
+            "disabled": true
+          },
+          "cycling_flag": {
+            "control": "select",
+            "label": "是否可循环使用金额",
+            "span": 10,
+            "disabled": true,
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": false,
+                "message": "请选择是否可循环使用金额"
+              }
+            ]
+          },
+          "credit_term": {
+            "control": "text",
+            "label": "业务期限(月)",
+            "span": 10,
+            "disabled": true,
+            "rules": [
+              {
+                "required": false,
+                "message": "请选择业务期限(月)"
+              }
+            ]
+          },
+          "avail_amt": {
+            "control": "currency",
+            "label": "业务授信分配金额",
+            "span": 10,
+            "disabled": true,
+            "rules": [
+              {
+                "required": false,
+                "message": "请选择业务授信分配金额"
+              }
+            ],
+            "align": "left",
+            "format": {
+              "thousand": ","
+            }
+          },
+          "avail_base_busi_oy_amt": {
+            "control": "currency",
+            "label": "业务授信分配金额(折基准币种)",
+            "span": 10,
+            "disabled": true,
+            "rules": [
+              {
+                "required": false,
+                "message": "请选择业务授信分配金额(折基准币种)"
+              }
+            ],
+            "align": "left",
+            "format": {
+              "thousand": ","
+            }
+          }
+        }
+      ]
+    }
+  }
+}

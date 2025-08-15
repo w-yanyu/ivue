@@ -1,0 +1,202 @@
+{
+    "module": "v-inputDataForm-btn",
+    "layout": {
+        "form": {
+            "scope": "myForm",
+            "initDataOnce": true,
+            "initRequest": "${{params}}",
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "us0127",
+                    "other_credit_seq_no": "${{params.other_credit_seq_no}}"
+                }
+            },
+            "controls": [{
+                    "cust_no": {
+                        "control": "text",
+                        "width": "10px",
+                        "label": "客户编号",
+                        "disabled": true
+                    },
+                    "bank_name": {
+                        "control": "text",
+                        "width": "10px",
+                        "label": "授信行名称",
+                        "rules": [{
+                                "max": 80,
+                                "message": "长度不能超过80个字符"
+                            },
+                            {
+                                "message": "请输入授信行名称",
+                                "required": true
+                            }
+                        ]
+                    },
+                    "loan_type": {
+                        "control": "text",
+                        "width": "10px",
+                        "label": "授信业务种类",
+                        "rules": [{
+                                "max": 100,
+                                "message": "长度不能超过100个字符"
+                            },
+                            {
+                                "message": "请输入授信业务种类",
+                                "required": true
+                            }
+                        ]
+                    },
+                    "contract_amt": {
+                        "control": "currency",
+                        "width": "10px",
+                        "label": "合同金额(元)",
+                        "rules": [{
+                            "required": true,
+                            "message": "请输入合同金额"
+                        }]
+                    },
+                    "ccy_code": {
+                        "control": "select",
+                        "width": "10px",
+                        "label": "授信币种",
+                        "disabled": "true",
+                        "rules": [{
+                                "max": 3,
+                                "message": "长度不能超过3个字符"
+                            },
+                            {
+                                "required": true,
+                                "message": "请选择币种"
+                            }
+                        ],
+                        "dict": {
+                            "dictType": "MS_CURRENCY",
+                            "dictKey": [
+                                "MS_CURRENCY"
+                            ],
+                            "format": "label"
+                        },
+                        "value": "CNY"
+                    },
+                    "credit_balance": {
+                        "control": "currency",
+                        "width": "10px",
+                        "label": "授信余额(元)",
+                        "rules": [{
+                            "required": true,
+                            "message": "请输入授信余额"
+                        }]
+                    },
+                    "guar_type": {
+                        "control": "select",
+                        "width": "10px",
+                        "label": "担保方式",
+                        "align": "center",
+                        "dict": {
+                            "dictType": "MS_E_GUAR_TYPE",
+                            "dictKey": [
+                                "MS_E_GUAR_TYPE"
+                            ],
+                            "format": "label"
+                        },
+                        "rules": [{
+                            "required": true,
+                            "message": "请选择担保方式"
+                        }]
+                    },
+                    "start_date": {
+                        "control": "dateTimePicker",
+                        "width": "10px",
+                        "label": "授信开始日期",
+                        "rules": [{
+                            "required": false,
+                            "message": "请选择授信开始日期"
+                        }]
+                    },
+                    "credit_end_date": {
+                        "control": "dateTimePicker",
+                        "width": "10px",
+                        "label": "授信到期日期",
+                        "rules": [{
+                            "required": false,
+                            "message": "请选择授信到期日期"
+                        }],
+                        "disabledDate": {
+                            "startRange": "${{myForm.start_date}}",
+                            "endRange": "3000-01-01"
+                        }
+                    },
+                    "overdue_count": {
+                        "control": "currency",
+                        "decimal": "0",
+                        "width": "10px",
+                        "label": "逾期期数",
+                        "rules": [{
+                            "required": false,
+                            "message": "请输入逾期期数"
+                        }]
+                    },
+                    "overdue_amt": {
+                        "control": "currency",
+                        "width": "10px",
+                        "label": "本期逾期总额(元)",
+                        "rules": [{
+                            "required": false,
+                            "message": "请输入本期逾期总额(元)"
+                        }]
+                    },
+                    "max_overdue_count": {
+                        "control": "currency",
+                        "decimal": "0",
+                        "width": "10px",
+                        "label": "最高累计逾期期数",
+                        "rules": [{
+                            "required": false,
+                            "message": "请输入最高累计逾期期数"
+                        }]
+                    }
+                },
+                {
+                    "credit_purpose": {
+                        "control": "textarea",
+                        "width": "10px",
+                        "label": "授信用途",
+                        "span": 24,
+                        "autosize": {
+                            "minRows": 4
+                        },
+                        "rules": [{
+                                "max": 100,
+                                "message": "长度不能超过100个字符"
+                            },
+                            {
+                                "required": true,
+                                "message": "请输入授信用途"
+                            }
+                        ]
+                    },
+                    "reputation_status": {
+                        "control": "textarea",
+                        "label": "履约分析及信誉状况",
+                        "width": "10px",
+                        "span": 24,
+                        "autosize": {
+                            "minRows": 4
+                        },
+                        "rules": [{
+                                "max": 100,
+                                "message": "长度不能超过100个字符"
+                            },
+                            {
+                                "required": true,
+                                "message": "请输入履约分析及信誉状况"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    }
+}

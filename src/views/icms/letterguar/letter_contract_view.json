@@ -1,0 +1,455 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "ar1501",
+          "apply_no": "${{params.apply_no}}"
+        }
+      },
+      "btns": [
+        {
+          "label": "提交",
+          "type": "submit",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "post",
+            "params": {
+              "servicecode": "ar1502",
+              "apply_no": "${{params.apply_no}}"
+            }
+          },
+          "eventAfter": {
+            "doLastCallback": false
+          }
+        }
+      ],
+      "controls": [
+        {
+          "contract_no": {
+            "control": "string",
+            "label": "保函合同编号",
+            "span": 8,
+            "disabled": true
+          },
+          "cor_invest_name": {
+            "control": "string",
+            "label": "协办调查人名称",
+            "span": 8,
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "apply_date": {
+            "control": "string",
+            "format": "yyyy-MM-dd",
+            "valueFormat": "yyyyMMdd",
+            "label": "申请日期",
+            "span": 8,
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "start_date": {
+            "control": "string",
+            "format": "yyyy-MM-dd",
+            "valueFormat": "yyyyMMdd",
+            "label": "合同起始日期",
+            "span": 8,
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "matu_date": {
+            "control": "string",
+            "format": "yyyy-MM-dd",
+            "valueFormat": "yyyyMMdd",
+            "label": "合同到期日期",
+            "span": 8,
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "conver_base_ccy": {
+            "control": "string",
+            "label": "折算基准币种",
+            "span": 8,
+            "dict": {
+              "dictType": "MS_CURRENCY",
+              "dictKey": [
+                "MS_CURRENCY"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必填项"
+              }
+            ],
+            "value": "156",
+            "disabled": true
+          },
+          "apply_ccy": {
+            "control": "string",
+            "label": "申请币种",
+            "span": 8,
+            "dict": {
+              "dictType": "MS_CURRENCY",
+              "dictKey": [
+                "MS_CURRENCY"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "exch_rate": {
+            "control": "string",
+            "label": "汇率",
+            "span": 8,
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必填项"
+              }
+            ],
+            "value": "1.00"
+          },
+          "apply_amt": {
+            "control": "string",
+            "decimal": "2",
+            "label": "申请金额(元) ",
+            "span": 8,
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必填项"
+              }
+            ],
+            "align": "left",
+            "format":{
+              "thousand": ","
+            }  
+          },
+          "apply_base_amt": {
+            "control": "string",
+            "decimal": "2",
+            "label": "申请金额(折基准币种)",
+            "compute": "${{form.apply_amt}}*${{form.exch_rate}}",
+            "span": 8,
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必填项"
+              }
+            ],
+            "align": "left",
+            "format":{
+              "thousand": ","
+            }  
+          },
+          "apply_term": {
+            "control": "string",
+            "label": "申请期限(月)",
+            "span": 8,
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "margin_perc": {
+            "control": "string",
+            "label": "保证金比例(%)",
+            "span": 8,
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "margin_amt": {
+            "control": "string",
+            "decimal": "2",
+            "label": "保证金金额(元)",
+            "span": 8,
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必填项"
+              }
+            ],
+            "align": "left",
+            "format":{
+              "thousand": ","
+            }  
+          },
+          "settle_acct_no": {
+            "control": "string",
+            "label": "申请人结算账号",
+            "span": 8,
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "settle_acct_name": {
+            "control": "string",
+            "label": "申请人结算账号名称",
+            "span": 8,
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "settle_acct_branch": {
+            "control": "string",
+            "label": "申请人结算账号机构",
+            "span": 8,
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "bnf_name": {
+            "control": "string",
+            "label": "受益人",
+            "span": 8,
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "guar_contract_no": {
+            "control": "string",
+            "label": "被担保合同号",
+            "span": 8,
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "fee_rate": {
+            "control": "string",
+            "label": "费率(%)",
+            "span": 8,
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "handling_fee_income": {
+            "control": "string",
+            "decimal": "2",
+            "label": "手续费收入",
+            "span": 8,
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必填项"
+              }
+            ],
+            "format":{
+              "thousand":","
+            }
+          },
+          "advance_rate": {
+            "control": "string",
+            "label": "垫款利率(%)",
+            "span": 8,
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "breach_contract_fine": {
+            "control": "string",
+            "decimal": "2",
+            "label": "违约罚金",
+            "span": 8,
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必填项"
+              }
+            ],
+            "align": "left",
+            "format":{
+              "thousand": ","
+            }  
+          },
+          "penalty_interest_rate": {
+            "control": "string",
+            "label": "罚息利率(%)",
+            "span": 8,
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "guarantee_fee": {
+            "control": "string",
+            "decimal": "2",
+            "label": "收取担保费用",
+            "span": 8,
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必填项"
+              }
+            ],
+            "align": "left",
+            "format":{
+              "thousand": ","
+            }  
+          },
+          "is_independ_guar": {
+            "control": "string",
+            "label": "是否独立性保函",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            },
+            "span": 8,
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "is_allow_transfer": {
+            "control": "string",
+            "label": "是否可转让",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            },
+            "span": 8,
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "busi_tran_bank_no": {
+            "control": "string",
+            "label": "业务办理网点",
+            "span": 8,
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "letter_guar_eccect_condi": {
+            "label": "保函生效条件",
+            "control": "string",
+            "span": 24,
+            "autosize": {
+              "minRows": 3,
+              "maxRows": 5
+            },
+            "maxlength": 40,
+            "showWordLimit": true
+          },
+          "guar_contract_cont_desc": {
+            "label": "被担保合同内同描述",
+            "control": "string",
+            "span": 24,
+            "autosize": {
+              "minRows": 3,
+              "maxRows": 5
+            },
+            "maxlength": 40,
+            "showWordLimit": true
+          },
+          "guar_range": {
+            "label": "担保范围",
+            "control": "string",
+            "span": 24,
+            "autosize": {
+              "minRows": 3,
+              "maxRows": 5
+            },
+            "maxlength": 40,
+            "showWordLimit": true
+          },
+          "claim_condi_file_desc": {
+            "label": "索赔条件和文件描述",
+            "control": "string",
+            "span": 24,
+            "autosize": {
+              "minRows": 3,
+              "maxRows": 5
+            },
+            "maxlength": 40,
+            "showWordLimit": true
+          },
+          "other_agreed_matters": {
+            "label": "其他约定事项",
+            "control": "string",
+            "span": 24,
+            "autosize": {
+              "minRows": 3,
+              "maxRows": 5
+            },
+            "maxlength": 40,
+            "showWordLimit": true
+          },
+          "apply_no": {
+            "label": "申请号",
+            "control": "string",
+            "value": "${{params.apply_no}}"
+          }
+        }
+      ]
+    }
+  }
+}

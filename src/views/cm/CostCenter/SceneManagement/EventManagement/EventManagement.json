@@ -1,0 +1,103 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "evetna": {
+                        "control": "text",
+                        "label": "事件名称"
+                    },
+                    
+                    "evetcd": {
+                        "control": "text",
+                        "label": "事件编号"
+                    }
+                }
+               
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "target": "dialog",
+                    "label": "新增",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/cm/CostCenter/SceneManagement/EventManagement/EventManagement-add.json",
+                        "params": {
+                            
+                        }
+                    },
+                    "props": {
+                        "title": "新增事件定义"
+                    }
+                },
+                {
+                    "type": "export",
+                    "label": "导出",
+                    "doRequest": {
+                        "method": "",
+                        "url": ""
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "qrsedf"
+                }
+            },
+            "thead": [
+                {
+                    "label": "事件编号",
+                    "prop": "evetcd"
+                },
+                {
+                    "label": "事件名称",
+                    "prop": "evetna"
+                },
+                {
+                    "label": "备注",
+                    "prop": "remark"
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 200,
+                    "align": "center",
+                    "btns": [
+                        {
+                            "type": "edit",
+                            "label": "修改",
+                            "toRequest": {
+                                "url": "/views/cm/CostCenter/SceneManagement/EventManagement/EventManagement-update.json",
+                                "method": "GET"
+                            },
+                            "props": {
+                                "title": "修改事件定义"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "删除",
+                            "toRequest": {
+                                "url": "/views/cm/CostCenter/SceneManagement/EventManagement/EventManagement-delete.json",
+                                "method": "GET"
+                            },
+                            "props": {
+                                "title": "删除事件定义"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

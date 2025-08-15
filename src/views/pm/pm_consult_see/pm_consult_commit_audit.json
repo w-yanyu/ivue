@@ -1,0 +1,63 @@
+{
+  "module": "v-inputDataForm-btn",
+    "layout": {
+    "form": {
+      "scope": "templateScope",
+      "initDataOnce":true,
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "qrcoag",
+          "seqnum": "${{params.seqnum}}",
+          "type": 1
+        }
+      },
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "chagin",
+          "seqnum": "${{params.seqnum}}"
+        },
+        "condition":{
+          "switch":{
+            "200":{
+              "toRequest":{
+                "url":"/views/pm/pm_consult_see/pm_consult_see.json"
+              }
+            }
+          }
+        }
+      },
+      "btns":[
+        {
+          "type":"submit",
+          "label":"提交"
+        }
+      ],
+      "controls": [
+        {
+          "subtyp": {
+            "control": "select",
+            "label": "意见:",
+            "filterable": false,
+            "options": [
+              {
+                "label": "同意审核",
+                "value": "0"
+              }
+            ]
+          }
+        },
+        {
+          "reason": {
+            "control": "textarea",
+            "label": "文本域",
+            "placeholder":"请输入"
+          }
+        }
+      ]
+    }
+  }
+}

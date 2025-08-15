@@ -1,0 +1,108 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "新增",
+          "target": "dialog",
+          "toRequest": {
+            "method": "POST",
+            "url": "/views/ismt/ct/branch/branchRoleRole/branch_role_role_add.json",
+            "params": {
+              "branch_id": "${{params.branch_id}}",
+              "admin_role_id": "${{params.role_id}}"
+            },
+            "props": {
+              "width": "65%",
+              "title": "新增关联角色"
+            }
+          },
+          "props": {
+            "width": "80%"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "initRequest": "${{params}}",
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ct2184",
+          "branch_id": "${{params.branch_id}}",
+          "admin_role_id": "${{params.role_id}}"
+
+        }
+      },
+
+      "thead": [
+        {
+          "prop": "branch_id",
+          "label": "机构号",
+          "align": "center"
+        },
+        {
+          "label": "管理员角色id",
+          "prop": "admin_role_id",
+          "align": "center"
+        },
+        {
+          "label": "关联角色id",
+          "prop": "related_role_id",
+          "align": "center"
+        },
+        {
+          "label": "关联角色名称",
+          "prop": "role_name",
+          "align": "center"
+        },
+        {
+          "label": "关联角色类型",
+          "prop": "role_type",
+          "align": "center",
+          "dict": {
+            "dictType": "CT_E_ROLE_TYPE",
+            "dictKey": [
+              "CT_E_ROLE_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "关联角色查询权限",
+          "prop": "query_type",
+          "align": "center",
+          "dict": {
+            "dictType": "CT_E_QUERY_TYPE",
+            "dictKey": [
+              "CT_E_QUERY_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "btns": [
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "ct2183"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

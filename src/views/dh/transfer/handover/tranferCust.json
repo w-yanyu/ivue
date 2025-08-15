@@ -1,0 +1,141 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [{
+                "custid": {
+                    "control": "text",
+                    "label": "客户经理",
+                    "rules": [{
+                        "max": 30,
+                        "message": "长度不能超过30个字符"
+                    }]
+                },
+                "custna": {
+                    "control": "text",
+                    "label": "客户名称",
+                    "rules": [{
+                        "max": 80,
+                        "message": "长度不能超过80个字符"
+                    }]
+                },
+              "corgcd": {
+                "control": "lookup",
+                "label": "机构",
+                "edit": true,
+                "keyField": {
+                  "corgcd": "branch_id"
+                },
+                "toRequest": {
+                  "url": "@UserBranchTreeManager",
+                  "method": "post",
+                  "params": {}
+                },
+                "props": {
+                  "title": "机构信息查询"
+                }
+              }
+            }]
+        },
+        "toolbar": {
+            "btns": [{
+                "type": "custom",
+                "icon": "el-icon-edit",
+                "label": "移交",
+                "toRequest": {
+                    "url": "/views/dh/transfer/handover/tranferManager.json",
+                    "method": "GET",
+                    "params": {
+                        "appl_id": "${{params.applid}}"
+                    }
+                }
+            }]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "IUMSCUTS0004",
+                    "indvfg": "N",
+                    "page_id": "/views/ci/InformationManager/customer_info_manager.json"
+                }
+            },
+            "thead": [{
+                    "type": "selection",
+                    "width": "55"
+                },
+                {
+                    "type": "index",
+                    "label": "序号"
+                },
+                {
+                    "label": "客户编号",
+                    "prop": "custid",
+                    "align": "center"
+                },
+                {
+                    "label": "客户名称",
+                    "prop": "custna",
+                    "align": "center"
+                },
+                {
+                    "label": "组织机构代码",
+                    "prop": "corgcd",
+                    "align": "center"
+                },
+                {
+                    "label": "贷款卡编码",
+                    "prop": "culncd",
+                    "align": "center"
+                },
+                {
+                    "label": "客户性质",
+                    "prop": "cuprop",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "E_CUPROP",
+                        "dictKey": [
+                            "E_CUPROP"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "证件类型",
+                    "prop": "certtp",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "E_IDTFTP",
+                        "dictKey": [
+                            "E_IDTFTP"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "证件号码",
+                    "prop": "certno",
+                    "align": "center"
+                },
+                {
+                    "label": "是否有效",
+                    "prop": "statss",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "E_YES_",
+                        "dictKey": [
+                            "E_YES_"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                }
+            ]
+        }
+    }
+}

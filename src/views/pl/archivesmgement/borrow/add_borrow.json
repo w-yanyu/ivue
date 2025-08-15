@@ -1,0 +1,176 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "use_method": {
+                        "control": "select",
+                        "label": "利用方式",
+                        "rules": [
+                            {
+                                "required": true,
+                                "max": 10,
+                                "message": "请输入利用方式"
+                            }
+                        ]
+                    },
+                    "use_purpose": {
+                        "control": "select",
+                        "label": "利用目的",
+                        "rules": [
+                            {
+                                "required": true,
+                                "max": 10,
+                                "message": "请输入利用目的"
+                            }
+                        ]
+                    },
+                    "reason": {
+                        "control": "text",
+                        "label": "原因",
+                        "rules": [
+                            {
+                                "max": 32,
+                                "message": ""
+                            }
+                        ]
+                    },
+                    "expected_return_date": {
+                        "control": "dateTimePicker",
+                        "span": 10,
+                        "label": "预计归还时间",
+                        "placeholder": "请选择",
+                        "format": "yyyyMMdd",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请选择"
+                            }
+                        ]
+                    },
+                    "borrower": {
+                        "control": "text",
+                        "label": "借阅人",
+                        "rules": [
+                            {
+                                "max": 32,
+                                "message": "长度不能超过32个字符"
+                            }
+                        ]
+                    },
+                    "operation_person": {
+                        "control": "text",
+                        "label": "操作机构",
+                        "prop": "",
+                        "rules": [
+                            {
+                                "max": 32,
+                                "message": "长度不能超过32个字符"
+                            }
+                        ]
+                    },
+                    "operation_date": {
+                        "control": "dateTimePicker",
+                        "span": 10,
+                        "label": "操作日期",
+                        "placeholder": "请选择",
+                        "format": "yyyyMMdd",
+                        "prop":"",
+                        "disabled":true
+                    }
+                }
+            ],
+            "btns": [
+                {
+                    "type": "add",
+                    "target": "dialog",
+                    "label": "保存",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/pl/archivesmgement/borrow/borrowadd.json"
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "target": "dialog",
+                    "label": "引入",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/pl/archivesmgement/borrow/importbtn.json"
+                    },
+                    "props": {
+                        "title": "",
+                        "width": "80%"
+                    }
+                },
+                {
+                    "type": "add",
+                    "target": "dialog",
+                    "label": "明细",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/pl/archivesmgement/borrow/recordlist.json"
+                    },
+                    "props": {
+                        "title": "",
+                        "width": "80%"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": ""
+                }
+            },
+            "pagination": {
+                "show": true
+            },
+            "thead": [
+                {
+                    "type": "index"
+                },
+                {
+                    "label": "归档编号",
+                    "prop": "archive_no"
+                },
+                {
+                    "label": "借阅人",
+                    "prop": "borrower"
+                },
+                {
+                    "label": "申请日期",
+                    "prop": ""
+                },
+                {
+                    "label": "利用方式",
+                    "prop": "use_method"
+                },
+                {
+                    "label": "利用目的",
+                    "prop": "use_purpose",
+                    "dict": {
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "是否归还",
+                    "prop": "is_return"
+                },
+                {
+                    "label": "归还日期",
+                    "prop": "expected_return_date"
+                }
+            ]
+        }
+    }
+}

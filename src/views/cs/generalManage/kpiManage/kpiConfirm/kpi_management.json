@@ -1,0 +1,343 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "repayment_batch_number": {
+            "control": "text",
+            "label": "还款批次号"
+          },
+          "debtor_name": {
+            "control": "text",
+            "label": "债务人"
+          }
+        },
+        {
+          "payer": {
+            "control": "text",
+            "label": "还款人"
+          },
+          "oa_org_id": {
+            "label": "委外公司",
+            "control": "remoteSelect",
+            "labelField": "outsourcing_org_name",
+            "valueField": "outsourcing_org_id",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "cb0052",
+                "org_id": "$g{{user_info.org_id}}"
+              }
+            },
+            "format": "value-label"
+          }
+        },
+        {
+          "coll_team": {
+            "control": "inputTree",
+            "label": "催收组",
+            "idField": "coll_team",
+            "nodeTypeField": "type",
+            "pIdField": "parent_coll_team",
+            "labelField": "coll_team_name",
+            "events": {
+              "emit": [
+                "collector"
+              ]
+            },
+            "nodeTypes": {
+              "collTeam": {
+                "icon": "el-icon-news",
+                "children": [
+                  "collTeam"
+                ]
+              }
+            },
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "cb0041"
+              }
+            },
+            "format": "value-label"
+          },
+          "collector": {
+            "control": "remoteSelect",
+            "label": "催收员",
+            "labelField": "user_name",
+            "valueField": "user_id",
+            "lazy": true,
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "appId": "cbOnl",
+                "servicecode": "cb0084"
+              }
+            },
+            "format": "value-label"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "cb0327"
+        }
+      },
+      "thead": [
+        {
+          "type": "string",
+          "align": "center",
+          "label": "还款人",
+          "prop": "payer"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "还款时间",
+          "prop": "repayment_time"
+        },
+        {
+          "type": "currency",
+          "align": "center",
+          "label": "还款金额",
+          "prop": "repay_amt",
+          "format": {
+            "decimal": "2"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "还款方式",
+          "prop": "repayment_way",
+          "dict": {
+            "dictType": "CS_E_REPAYMENT_WAY",
+            "dictKey": [
+              "CS_E_REPAYMENT_WAY"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "收款银行",
+          "prop": "collection_bank"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "还款批次号",
+          "prop": "batch_no"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "案件编号",
+          "prop": "case_id"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "收款状态",
+          "prop": "collection_status",
+          "dict": {
+            "dictType": "CS_E_COLLECTION_STATUS",
+            "dictKey": [
+              "CS_E_COLLECTION_STATUS"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "实收时间",
+          "prop": "receiving_time"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "客户姓名",
+          "prop": "cust_name"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "委外公司",
+          "dict": {
+            "dictKey": [
+              "outsourcing_org_id"
+            ],
+            "labelField": "outsourcing_org_name",
+            "valueField": "outsourcing_org_id",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "cb0052",
+                "outsourcing_org_id": "${{current.oa_org_id}}"
+              }
+            },
+            "format": "value-label"
+          },
+          "prop": "oa_org_id"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "催收组",
+          "prop": "coll_team",
+          "dict": {
+            "dictKey": [
+              "coll_team"
+            ],
+            "format": "value-label",
+            "labelField": "coll_team_name",
+            "valueField": "coll_team",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "cb0041",
+                "appId": "cbOnl"
+              }
+            }
+          }
+        },
+        {
+          "type":"string",
+          "label": "催收员",
+          "align":"center",
+          "width":"180px",
+          "prop": "collector",
+          "dict":{
+              "dictKey": [
+                  "collector"
+              ],
+              "format": "value-label",
+              "labelField": "user_name",
+              "valueField": "user_id",
+              "doRequest": {
+                  "url": "/SUMP/icmcall/icmRPCCall",
+                  "method": "POST",
+                  "params": {
+                      "servicecode": "cb0084",
+                      "appId": "cbOnl"
+                  }
+              }
+          }
+      },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "认领状态",
+          "width": "120px",
+          "prop": "claim_status",
+          "dict": {
+            "dictType": "CS_E_CLAIM_STATUS",
+            "dictKey": [
+              "CS_E_CLAIM_STATUS"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "催收公司催收金额",
+          "format": {
+            "thousand": ","
+          },
+          "prop": "coll_contribution_amount"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "律师所催收金额",
+          "format": {
+            "thousand": ","
+          },
+          "prop": "law_contribution_amount"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "催收公司贡献比例(%)",
+          "prop": "coll_contribution_rate"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "律师所贡献比例(%)",
+          "prop": "law_contribution_rate"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "操作时间",
+          "prop": "oper_time"
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "fixed": "right",
+          "width": "220",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "业绩确认",
+              "disabled": "'${{current.claim_status}}' === '1005'",
+              "toRequest": {
+                "url": "/views/cs/generalManage/kpiManage/kpiConfirm/kpi_confirm.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "70%",
+                "title": "业绩确认"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "查看资产",
+              "toRequest": {
+                "url": "/views/cs/generalManage/kpiManage/kpiConfirm/detail/detail_info_tab.json",
+                "method": "POST",
+                "params": {
+                  "case_id": "${{current.case_id}}"
+                }
+              },
+              "props": {
+                "width": "70%",
+                "height": "80%",
+                "title": "详情"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "修改贡献比",
+              "disabled": "'${{current.claim_status}}' !== '1005'",
+              "toRequest": {
+                "url": "/views/cs/generalManage/kpiManage/kpiConfirm/kpi_confirm_update.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "70%",
+                "title": "修改贡献比"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

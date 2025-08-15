@@ -1,0 +1,108 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [{
+                "limit_no": {
+                    "control": "text",
+                    "label": "额度编号"
+                },
+                "contract_no": {
+                    "control": "text",
+                    "label": "合同编号"
+                }
+            }]
+        },
+        "toolbar": {
+            "btns": [{
+                "type": "add",
+                "target": "dialog",
+                "label": "新增",
+                "toRequest": {
+                    "method": "GET",
+                    "url": "/views/icms/flowStart/contract/privateContractStart/private_contract_flow_start.json"
+                },
+                "props": {
+                    "title": "新增个人贷款合同申请流程"
+                }
+            }]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ar0594"
+                }
+            },
+            "thead": [{
+                    "type": "index",
+                    "label": "序号"
+                },
+                {
+                    "label": "客户名称",
+                    "prop": "cust_name",
+                    "align": "center"
+                },
+                {
+                    "label": "额度编号",
+                    "prop": "limit_no",
+                    "align": "center"
+                },
+                {
+                    "label": "额度产品",
+                    "prop": "cl_prod_name",
+                    "align": "center"
+                },
+                {
+                    "label": "合同编号",
+                    "prop": "contract_no",
+                    "align": "center"
+                },
+                {
+                    "label": "审批状态",
+                    "prop": "apply_status",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "AR_E_APPLY_STATUS",
+                        "dictKey": [
+                            "AR_E_APPLY_STATUS"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 200,
+                    "align": "center",
+                    "btns": [{
+                        "type": "edit",
+                        "label": "详情",
+                        "toRequest": {
+                            "url": "@contractApplyDetail",
+                            "method": "GET",
+                            "target": "navTab",
+                            "params": {
+                                "frame_cd": "internationContract2",
+                                "cust_name": "${{current.cust_name}}",
+                                "appl_state": "${{current.appl_state}}",
+                                "appl_date": "${{current.appl_date}}",
+                                "appl_id": "${{current.appl_id}}",
+                                "task_inst_id": "${{current.task_inst_id}}",
+                                "wf_inst_id": "${{current.wf_inst_id}}",
+                                "wf_cur_status": "${{current.wf_cur_status}}",
+                                "appId": "icmsOnl"
+                            }
+                        },
+                        "props": {
+                            "title": "详情查看"
+                        }
+                    }]
+                }
+            ]
+        }
+    }
+}

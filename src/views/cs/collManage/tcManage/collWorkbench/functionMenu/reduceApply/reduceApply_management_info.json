@@ -1,0 +1,183 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "toolbar": {
+      "btns": []
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "cb0258",
+          "case_id":"${{params.case_id}}"
+        }
+      },
+      "thead": [
+        {
+          "type": "string",
+          "label": "客户姓名",
+          "align": "center",
+          "prop": "cust_name"
+        },
+        {
+          "type": "string",
+          "label": "减免方式",
+          "align": "center",
+          "prop": "reduce_mode",
+          "dict": {
+              "format": "value-label",
+              "dictType": "CS_REDUCE_MODE",
+              "dictKey": [
+                "CS_REDUCE_MODE"
+              ]
+            }
+        },
+        {
+          "type": "string",
+          "label": "减免类型",
+          "align": "center",
+          "prop": "reduce_type",
+          "dict": {
+              "format": "value-label",
+              "dictType": "CS_REDUCE_MODE",
+              "dictKey": [
+                "CS_REDUCE_MODE"
+              ]
+            }
+        },
+        {
+          "type": "string",
+          "label": "调整申请原因",
+          "align": "center",
+          "prop": "applt_reason",
+          "dict": {
+            "format": "value-label",
+            "dictType": "CS_APPLT_REASON",
+            "dictKey": [
+              "CS_APPLT_REASON"
+            ]
+          }
+        },
+        {
+          "type": "string",
+          "label": "客户申请减免时间",
+          "align": "center",
+          "prop": "cust_apply_time"
+        },
+        {
+          "type": "string",
+          "label": "减免本金",
+          "align": "center",
+          "prop": "reduce_principal"
+        },
+        {
+          "type": "string",
+          "label": "减免利息",
+          "align": "center",
+          "prop": "reduce_interest"
+        },
+        {
+          "type": "string",
+          "label": "减免罚息",
+          "align": "center",
+          "prop": "reduce_default_interest"
+        },
+        {
+          "type": "string",
+          "label": "减免费用",
+          "align": "center",
+          "prop": "reduce_cost"
+        },
+        {
+          "type": "string",
+          "label": "减免总金额",
+          "align": "center",
+          "prop": "reduce_total_amount"
+        },
+        {
+          "type": "string",
+          "label": "备注",
+          "align": "center",
+          "prop": "remark"
+        },
+        {
+          "type": "string",
+          "label": "申请人",
+          "align": "center",
+          "prop": "apply_user"
+        },
+        {
+          "type": "string",
+          "label": "申请时间",
+          "align": "center",
+          "prop": "apply_time"
+        },
+        {
+          "type": "string",
+          "label": "审核状态",
+          "align": "center",
+          "prop": "approval_status",
+          "dict": {
+            "dictType": "CS_E_CHECK_STATUS",
+            "dictKey": [
+              "CS_E_CHECK_STATUS"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "label": "审核人",
+          "align": "center",
+          "prop": "approval_user"
+        },
+        {
+          "type": "string",
+          "label": "审核时间",
+          "align": "center",
+          "prop": "approval_time"
+        },
+        {
+          "type": "string",
+          "label": "审核说明",
+          "align": "center",
+          "prop": "approval_desc"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "align": "center",
+          "btns": [
+            {
+              "type": "delete",
+              "label": "撤回",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "params": {
+                  "servicecode": "cb0274",
+                  "params": {
+                    "apply_id": "${{current.apply_id}}"
+                }
+                }
+              },
+              "show": {
+                "prop": "approval_status",
+                "is": [
+                  "NC"
+                ]
+              },
+              "confirm":{
+                "title":"提示信息",
+                "msg":"确定撤回减免申请吗？",
+                "confirmButtonText":"确定",
+                "cancelButtonText":"取消"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

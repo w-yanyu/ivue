@@ -1,0 +1,237 @@
+{
+  "module": "v-search-btn-datagrid",
+  "pageId": "risk_general_rule",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "ruleCode": {
+            "label": "规则代码",
+            "width": "auto",
+            "control": "text",
+            "span": 8,
+            "rules": [
+              {
+                "message": "字段长度超限",
+                "max": 40
+              }
+            ]
+          },
+          "ruleName": {
+            "label": "规则名称",
+            "width": "auto",
+            "control": "text",
+            "span": 8,
+            "rules": [
+              {
+                "message": "字段长度超限",
+                "max": 100
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "新增",
+          "authId": "general_rule_add_btn",
+          "toRequest": {
+            "##url": "@riskDecisonRule",
+            "url": "@decisionRuleEdit",
+            "method": "get",
+            "params": {}
+          },
+          "props": {
+            "width": "85%",
+            "title": "新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "deci010601",
+          "isList": true
+        }
+      },
+      "pagination": {
+        "hideOnSinglePage": false,
+        "show": true,
+        "pageSizes": [
+          10,
+          15,
+          20
+        ],
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "label": "序号",
+          "type": "index"
+        },
+        {
+          "label": "规则代码",
+          "width": "150px",
+          "prop": "ruleCode"
+        },
+        {
+          "label": "规则名称",
+          "prop": "ruleName"
+        },
+        {
+          "label": "操作类型",
+          "prop": "riskOperationType",
+          "dict": {
+            "dictType": "operationType2",
+            "dictKey": [],
+            "format": "label",
+            "doRequest": {
+              "url": "/views/risk/dictdata/operationType2.json",
+              "method": "get"
+            }
+          }
+        },
+        {
+          "label": "规则状态",
+          "prop": "ruleStatus",
+          "dict": {
+            "dictType": "riskStatus",
+            "dictKey": [],
+            "format": "label",
+            "doRequest": {
+              "url": "/views/risk/dictdata/riskStatus.json",
+              "method": "get"
+            }
+          }
+        },
+        {
+          "label": "备注",
+          "prop": "description"
+        },
+        {
+          "label": "最新维护时间",
+          "prop": "updateTime"
+        },
+        {
+          "label": "操作",
+          "width": "200px",
+          "align": "left",
+          "btns": [
+            {
+              "type": "look",
+              "label": "查看",
+              "authId": "general_rule_vie_btn",
+              "toRequest": {
+                "url": "@riskDecisonRuleTmpView",
+                "method": "get"
+              },
+              "props": {
+                "width": "85%"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "authId": "general_rule_edt_btn",
+              "toRequest": {
+                "##url": "@riskDecisonRule",
+                "url": "@decisionRuleEdit",
+                "method": "get"
+              },
+              "props": {
+                "width": "85%"
+              },
+              "show": {
+                "expression": "'${{current.riskOperationType}}'!== 'S' && '${{current.riskOperationType}}' !== 'D'"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "#authId": "general_rule_back_btn",
+              "#icon": "el-icon-delete",
+              "toRequest": {
+                "url": "@decisonRuleVersionBack",
+                "method": "get",
+                "params": {}
+              },
+              "props": {
+                "width": "60%"
+              },
+              "show": {
+                "expression": "'${{current.riskOperationType}}'==='S'"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "authId": "general_rule_del_btn",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "deci010606"
+                }
+              },
+              "show": {
+                "expression": "'${{current.ruleStatus}}'!= 'D' && '${{current.ruleStatus}}'!='C'"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "提交审核",
+              "#authId": "general_rule_review_btn",
+              "#icon": "el-icon-edit",
+              "toRequest": {
+                "url": "/views/risk/risk_decision_rule/risk_decision_rule_tmp_review.json",
+                "method": "get",
+                "params": {
+                  "ruleCode":"${{current.ruleCode}}",
+                  "ruleName":"${{current.ruleName}}",
+                  "riskOperationType":"${{current.riskOperationType}}"
+                }
+              },
+              "props": {
+                "width": "40%"
+              },
+              "show": {
+                "expression": "true"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "还原",
+              "#authId": "general_rule_cancel_btn",
+              "#icon": "el-icon-delete",
+              "doRequest": {
+                "url": "/SUMP/riskController/riskCall",
+                "method": "post",
+                "params": {
+                  "scoreCardType": "1",
+                  "servicecode": "risk-management-service/risk-decision-rule/cancel",
+                  "appId": "risk-management-service"
+                }
+              },
+              "show": {
+                "expression": "false"
+              },
+              "confirm": {
+                "title": "提示信息",
+                "msg": "确定要还原至最新生效版本吗?",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

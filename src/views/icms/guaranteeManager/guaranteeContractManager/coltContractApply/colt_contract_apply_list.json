@@ -1,0 +1,182 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "toolbar": {
+            "btns": [
+              {
+                "type": "add",
+                "label": "新增",
+                "target": "dialog",
+                "toRequest": {
+                  "method": "GET",
+                  "url":"@ColtContractApplyAdd",
+                  "params":{
+                    "guar_type":"${{params.guar_type}}",
+                    "apply_no":"${{params.apply_no}}",
+                    "cust_no": "${{params.cust_id}}",
+                    "cust_name": "${{params.cust_name}}"
+                  }
+                },
+                "props": {
+                    "width": "80%",
+                    "title":"${{params.addTips}}"
+                },
+                "show": {
+                  "expression": "'${{params.pageType}}' != 'detail'"
+                }
+              },
+              {
+                "type": "add",
+                "label": "导入合同",
+                "target": "dialog",
+                "toRequest": {
+                  "method": "GET",
+                  "url":"/views/icms/guaranteeManager/guaranteeImport/colt_contract_Import_list.json",
+                  "params":{
+                    "apply_no":"${{params.apply_no}}",
+                    "cust_no": "${{params.cust_id}}",
+                    "cust_name": "${{params.cust_name}}",
+                    "guar_contract_type": "${{params.guar_contract_type}}"
+                  }
+                },
+                "props": {
+                    "width": "80%",
+                    "title":"${{params.importTips}}"
+                },
+                "show": {
+                  "expression": "'${{params.pageType}}' != 'detail'"
+                }
+              }
+            ]
+          },
+        "datagrid": {
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "isInitSearch": true,
+                "params":{
+                  "servicecode":"ar0364",
+                  "apply_no":"${{params.apply_no}}",
+                  "guar_type":"${{params.guar_type}}"
+                }
+            },
+            "thead": [
+                {
+                  "label": {
+                    "default": "合同申请号", 
+                     "i18n": "K0001.Contract-application-number"
+                                    },
+                    "prop": "colt_contract_no",
+                    "align": "center"
+                },
+                {
+                  "label": {
+                    "default": "担保规则", 
+                     "i18n": "K0001.Guarantee-rules"
+                                    },
+                    "prop": "guar_rule",
+                    "align": "center",
+                    "dict": {
+                      "dictType": "AR_E_GUAR_RULE",
+                      "dictKey": [
+                        "AR_E_GUAR_RULE"
+                      ],
+                      "labelField": "dictName",
+                      "valueField": "dictId"
+                    }
+                },
+                {
+                  "label": {
+                    "default": "合同签订日期", 
+                     "i18n": "K0001.Contract-signing-date"
+                                    },
+                    "prop": "sign_date",
+                    "align": "center"
+                },
+                {
+                  "label": {
+                    "default": "合同金额", 
+                     "i18n": "K0001.Contract-amount"
+                                    },
+                    "prop": "contract_amt",
+                    "align": "center",
+                    "format":{
+                      "thousand":","
+                    }
+                },
+                {
+                  "label": {
+                    "default": "本次使用金额", 
+                     "i18n": "K0001.Amount-used-this-time"
+                                    },
+                    "prop": "this_use_amt",
+                    "align": "center",
+                    "format":{
+                      "thousand":","
+                    }
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 160,
+                    "align": "center",
+                    "btns": [
+                      {
+                        "type": "look",
+                        "label": "详情",
+                        "toRequest": {
+                          "url": "/views/icms/guaranteeManager/guaranteeContractManager/coltContractApply/coltContractApplyDetail/colt_contract_apply_detail.json",
+                          "method": "get",
+                          "params":{
+
+                          }
+                        },
+                        "props": {
+                          "width": "75%",
+                          "title": "${{params.lookTips}}"
+                        }
+                      },
+                      {
+                        "type": "edit",
+                        "label": "维护",
+                        "toRequest": {
+                          "url":"@ColtContractApplyEdit"
+                        },
+                        "props": {
+                          "width": "75%",
+                          "title":"${{params.editTips}}"
+                        },
+                        "show": {
+                          "expression": "'${{params.pageType}}' != 'detail'"
+                        }
+                      },
+                      {   
+                        "old_data_flag": {
+                        "control": "hidden",
+                        "label": ""
+                      },
+                        "type": "delete",
+                        "label": "删除",
+                        "doRequest": {
+                          "url": "/SUMP/icmcall/icmRPCCall",
+                          "method": "POST",
+                          "params": {
+                            "servicecode": "ar0363"
+                            
+                          }
+                        },
+                        "confirm": {
+                          "title": "确定删除",
+                          "confirmButtonText": "确定",
+                          "cancelButtonText": "取消"
+                        },
+                        "show": {
+                          "expression": " '${{params.pageType}}' != 'detail' && '${{current.old_data_flag}}' !='1' "
+                        }
+                      }
+                    ]
+                  }
+            ]
+        }
+    }
+}

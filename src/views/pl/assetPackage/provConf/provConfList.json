@@ -1,0 +1,131 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "prvn_acrl_nm": {
+            "label": "拨备计提名称",
+            "control": "text",
+            "rules": [
+              {
+              }
+            ]
+          },
+          "five_class_classification": {
+            "label": "五级分类等级",
+            "control": "select",
+            "dict": {
+              "dictType": "PL_E_CLEVEL",
+              "dictKey": [
+                "PL_E_CLEVEL"
+              ],
+              "format": "label"
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/pl/assetPackage/provConf/addProvConf.json"
+          }
+        }
+
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pl0704"
+        }
+      },
+      "thead": [
+        {
+          "type": "index"
+        },
+        {
+          "prop": "prvn_acrl_code",
+          "label": "拨备计提代码",
+          "align": "center"
+        },
+        {
+          "prop": "prvn_acrl_nm",
+          "label": "拨备计提名称",
+          "align": "center"
+        },
+        {
+          "label": "五级分类级别",
+          "width": 120,
+          "align": "center",
+          "prop": "five_class_classification",
+          "dict": {
+            "dictType": "PL_E_CLEVEL",
+            "dictKey": [
+              "PL_E_CLEVEL"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "prop": "nrl_prvn_acrl_pcnt",
+          "label": "拨备计提比例(%)",
+          "align": "center"
+        },
+        {
+          "prop": "prvn_acrl_pcnt_upr_lmt",
+          "label": "拨备计提比例上限(%)",
+          "align": "center"
+        },
+        {
+          "prop": "ovdue_dys_upr_lmt",
+          "label": "逾期天数上限",
+          "align": "center"
+        },
+        {
+          "prop": "ovdue_dys_down_lmt",
+          "label": "逾期天数下限",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": "200",
+          "align": "center",
+          "btns": [
+            {
+              "toRequest": {
+                "method": "POST",
+                "url": "/views/pl/assetPackage/provConf/updProvConf.json"
+              },
+              "label": "维护",
+              "type": "edit"
+            },
+            {
+              "doRequest": {
+                "method": "POST",
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "params": {
+                  "servicecode": "pl0703",
+                  "method": "del"
+                }
+              },
+              "label": "删除",
+              "type": "delete"
+            }                      
+          ]
+        }
+      ]
+    }
+  }
+}

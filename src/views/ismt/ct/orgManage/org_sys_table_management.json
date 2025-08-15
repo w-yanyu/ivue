@@ -1,0 +1,152 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "controls": [
+        {
+          "table_name": {
+            "control": "text",
+            "label": "表名"
+          },
+          "system_id": {
+            "control": "text",
+            "label": "子系统号"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "icon": "el-icon-circle-plus",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/ismt/ct/orgManage/org_sys_table_add.json",
+            "params": {
+              "appId": "deciOnl"
+            }
+          },
+          "props": {
+            "title": "新增法人初始化配置表"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "ct2341"
+        }
+      },
+      "thead": [
+        {
+          "type": "string",
+          "label": "表名",
+          "align": "center",
+          "prop": "table_name"
+        },
+        {
+          "type": "string",
+          "label": "表描述",
+          "align": "center",
+          "prop": "table_desc"
+        },
+        {
+          "type": "string",
+          "label": "替换字段信息",
+          "align": "center",
+          "prop": "column_list"
+        },
+        {
+          "align": "center",
+          "prop": "org_field_name",
+          "type": "text",
+          "label": "法人字段名称",
+          "nowrap": true,
+          "dict": {
+            "dictType": "domain_code",
+            "dictKey": [
+              "section"
+            ],
+            "format": "[value]label",
+            "valueField": "domain_code",
+            "labelField": "domain_name",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct3302"
+              }
+            }
+          }
+        },
+        {
+          "align": "center",
+          "prop": "system_id",
+          "type": "text",
+          "nowrap": true,
+          "label": "系统列表",
+          "dict": {
+            "dictType": "system_list",
+            "dictKey": [
+              "section"
+            ],
+            "format": "label",
+            "valueField": "system_id",
+            "labelField": "system_name",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2321",
+                "length": 50
+              }
+            }
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": "200%",
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/ismt/ct/orgManage/org_sys_table_modify.json",
+                "method": "POST"
+              },
+              "props": {
+                "title": "维护法人初始化配置表"
+              }
+            },
+            {
+              "type": "look",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "ct2344"
+                }
+              },
+              "confirm": {
+                "title": "确定删除",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

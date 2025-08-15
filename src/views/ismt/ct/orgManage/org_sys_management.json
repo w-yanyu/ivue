@@ -1,0 +1,155 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "controls": [
+        {
+          "system_id": {
+            "control": "text",
+            "label": "系统号"
+          },
+          "system_name": {
+            "control": "text",
+            "label": "系统名称"
+          },
+          "is_inited": {
+            "control": "select",
+            "label": "是否初始化",
+            "selectFirstValue": false,
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "value-label"
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "icon": "el-icon-circle-plus",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/ismt/ct/orgManage/org_sys_add.json",
+            "params": {
+              "appId": "deciOnl"
+            }
+          },
+          "props": {
+            "title": "新增法人初始化系统"
+          }
+        },
+        {
+          "type": "look",
+          "label": "法人初始化",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/ismt/ct/orgManage/org_init_step.json",
+            "params": {
+              "appId": "deciOnl",
+              "busi_seq": "792602"
+            }
+          },
+          "props": {
+            "title": "法人初始化"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "ct2321"
+        }
+      },
+      "thead": [
+        {
+          "type": "string",
+          "label": "系统号",
+          "align": "center",
+          "prop": "system_id"
+        },
+        {
+          "type": "string",
+          "label": "系统名称",
+          "align": "center",
+          "prop": "system_name"
+        },
+        {
+          "type": "string",
+          "label": "是否初始化",
+          "align": "center",
+          "width": "100%",
+          "prop": "is_inited",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": "250%",
+          "align": "center",
+          "btns": [
+            {
+              "type": "custom",
+              "label": "表明细",
+              "toRequest": {
+                "url": "/views/ismt/ct/orgManage/org_sys_table_management_detail.json",
+                "method": "POST",
+                "params": {
+                  "system_id": "${{current.system_id}}"
+                }
+              },
+              "props": {
+                "title": "法人初始化表信息维护",
+                "width": "80%"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/ismt/ct/orgManage/org_sys_modify.json",
+                "method": "POST"
+              },
+              "props": {
+                "title": "维护法人初始化系统"
+              }
+            },
+            {
+              "type": "look",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "ct2324"
+                }
+              },
+              "confirm": {
+                "title": "确定删除",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

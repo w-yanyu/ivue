@@ -1,0 +1,118 @@
+<template>
+    <div ref="chart" :style="`width: 100%; height: 500px`"></div>
+</template>
+
+<script>
+import echarts from "echarts";
+
+export default {
+     props: {
+    cMeta: Object, // 布局相关json数据
+    cParentParams: Object, // 父页面传的参数
+    cParentMeta: Object, // 父页面的相关json数据
+    cParentScope: Object, // 父页面的scope数据对
+     },
+    data() {
+        return {
+            chart: null,
+            dateList: [],
+            hist_income_list: [],
+            income_list: [],
+            height: 0,
+        };
+    },
+    mounted() {
+        this.$nextTick(() => {
+            this.$http
+                .invokeAPI("/SUMP/icmcall/icmRPCCall", "post", {
+                    "servicecode": "pl0722",
+                    "package_no": this.cParentParams.package_no,
+                    "page_flage":"0"
+                })
+                .then((response) => {
+                    // 遍历返回数据  组装需要的数组形式
+                    if (response.code === "200") {
+                        response.data.forEach((item) => {
+                            this.dateList.push(item.operation_date);
+                            this.hist_income_list.push(item.hist_income);
+                            this.income_list.push(item.cur_income);
+                          
+                        });
+                        this.initChart();
+                    } else {
+                        this.$message({
+                            type: "error",
+                            message: response.message,
+                        });
+                    }
+                });
+            const resizeOb = new ResizeObserver((entries) => {
+                for (const entry of entries) {
+                    this.height = this.$parent.$el.offsetHeight;
+                    if(echarts.getInstanceByDom(entry.target))
+                    echarts.getInstanceByDom(entry.target).resize();
+                }
+            });
+            resizeOb.observe(this.$refs.chart);
+        });
+    },
+    methods: {
+        initChart() {
+            this.chart = echarts.init(this.$refs.chart);
+		    var option;
+
+            option = {
+            title: {
+                text: ''
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: ['历史收益', '收益']
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            toolbox: {
+                feature: {
+                saveAsImage: {}
+                }
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: this.dateList
+                //data: [20220101,20220102,20220103,20220104]
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [
+                {
+                    name: '历史收益',
+                    type: 'line',
+                    stack: 'Total',
+                    data: this.hist_income_list
+                    //data: [1,2,2,3]
+                },
+                {
+                    name: '收益',
+                    type: 'line',
+                    stack: 'Total',
+                    data: this.income_list
+                    //data: [1,2,2,3]
+                }
+                
+            ]
+            };
+
+            option && this.chart.setOption(option);
+
+        },
+    },
+};
+</script>

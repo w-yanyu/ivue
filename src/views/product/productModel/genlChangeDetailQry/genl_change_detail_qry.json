@@ -1,0 +1,167 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+      "form": {
+        "title":"查询条件",
+        "controls": [
+          {
+            
+            "prod_code": {
+              "control": "lookup",
+              "edit": true,
+              "label": "产品代码",
+              "rules": [
+                {
+                  "required":"true",
+                  "message": "请输入产品代码"
+                }
+              ],
+              "keyField": {
+                "prod_code": "prod_code"
+              },
+              "toRequest": {
+                "url": "/views/product/productModel/prod_list_qry.json",
+                "method": "post"
+              },
+              "props": {
+                "title": "请选择"
+              },
+              "format": "label"
+            
+            },
+            "txn_rung_num_32": {
+              "control": "text",
+              "label": "交易流水号"
+            },
+            "strt_dt_8": {
+              "control": "dateTimePicker",
+              "rules":[
+                {
+                  "required":"true",
+                  "message":"请输入起始日期"
+                }
+              ],
+              "label": "起始日期",
+              "type": "date",
+              "startPlaceholder": "选择起始日期",
+              "unlinkPanels": true,
+              "format":"yyyyMMdd",
+              "disabledDate": {
+                 "startRange": "19000101",
+                  "endRange": "99991231"
+              }
+            },
+            "end_dt": {
+              "control": "dateTimePicker",
+              "rules":[
+                {
+                  "required":"true",
+                  "message":"请输入终止日期"
+                }
+              ],
+              "label": "终止日期",
+              "type": "date",
+              "endPlaceholder": "选择终止日期",
+              "unlinkPanels": true,
+              "format":"yyyyMMdd",
+              "disabledDate": {
+                 "startRange": "19000101",
+                 "endRange": "99991231"
+              }
+            }
+          }
+        ]
+      },
+      
+      "datagrid": {
+        "scope": "searchTable",
+        "isInitSearch": false,
+        "doRequest": {
+          "url": "/SUMP/icmcall/icmRPCCall",
+          "method": "POST",
+          "params": {
+            "servicecode": "ln3287",
+            "outlistid":"lstKlnl_general_change"
+          }
+        },
+        "thead": [
+          {
+            "label": "产品代码",
+            "prop": "prod_code",
+            "align": "center"
+          },
+          {
+            "label": "货币代号",
+            "prop": "ccy_code_num",
+            "align": "center",
+            "dict": {
+              "dictType": "MS_CURRENCY",
+              "dictKey": [
+                  "MS_CURRENCY"
+              ],
+              "format": "label"
+          }
+          },
+          {
+            "label": "明细编号",
+            "prop": "detl_num",
+            "align": "center"
+          },
+          {
+            "label": "产品级字段",
+            "prop": "prod_lv_fld",
+            "align": "center"
+          },{
+            "label": "产品级字段描述",
+            "prop": "prod_lv_fld_dsc",
+            "align": "center"
+          },{
+            "label": "表格名称",
+            "prop": "form_nm",
+            "align": "center"
+          },{
+            "label": "表格描述",
+            "prop": "form_dsc",
+            "align": "center"
+          },{
+            "label": "表格序号",
+            "prop": "form_serl_num",
+            "align": "center"
+          },{
+            "label": "原数据值",
+            "prop": "orig_data_val",
+            "align": "center"
+          },{
+            "label": "新数据值",
+            "prop": "new_data_val",
+            "align": "center"
+          },{
+            "label": "备注",
+            "prop": "remks",
+            "align": "center"
+          },{
+            "label": "交易流水号",
+            "prop": "txn_rung_num_32",
+            "align": "center"
+          },{
+            "label": "交易日期",
+            "prop": "txn_dt_8",
+            "align": "center"
+          },{
+            "label": "交易机构",
+            "prop": "txn_org",
+            "align": "center"
+          },{
+            "label": "交易用户",
+            "prop": "txn_tlr",
+            "align": "center"
+          },{
+            "label": "法人代码",
+            "prop": "lgl_pern_code",
+            "align": "center"
+          }
+        ]
+      }
+    }
+  }
+  

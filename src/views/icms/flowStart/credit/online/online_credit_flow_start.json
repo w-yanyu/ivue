@@ -1,0 +1,497 @@
+{
+  "module": "v-inputDataForm-btn",
+  "layout": {
+    "form": {
+      "btns": [],
+      "scope": "templateScope",
+      "controlsGroup": [
+        {
+          "title": "申请信息",
+          "tooltip": "",
+          "titleIcon": "",
+          "showHint": "",
+          "accordion": false,
+          "expand": true,
+          "controls": [
+            {
+              "sale_prod_name": {
+                "control": "lookup",
+                "label": "可售产品",
+                "width": "40px",
+                "span": 7,
+                "edit": true,
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "可售产品不能为空!"
+                  }
+                ],
+                "keyField": {
+                  "sale_prod_name": "sale_prod_name",
+                  "sale_prod_cd": "sale_prod_cd",
+                  "busi_type": "prod_type"
+                },
+                "toRequest": {
+                  "url": "/views/icms/flowStart/credit_sell_product_lookup.json",
+                  "method": "get",
+                  "params": {
+                    "cust_class_list": "${{params.cust_class_list}}"
+                  }
+                },
+                "props": {
+                  "title": "选择产品",
+                  "width": "75%"
+                }
+              },
+              "sale_prod_cd": {
+                "control": "text",
+                "label": "可售产品编号",
+                "disabled": true,
+                "width": "40px",
+                "span": 7,
+                "rules": [
+                  {
+                    "required": false,
+                    "message": "证件号码不能为空!"
+                  }
+                ]
+              },
+              "busi_type": {
+                "width": "40px",
+                "span": 7,
+                "disabled": true,
+                "label": "业务类型",
+                "control": "remoteSelect",
+                "labelField": "title",
+                "valueField": "id",
+                "doRequest": {
+                  "url": "/SUMP/call/RPCCall",
+                  "method": "POST",
+                  "params": {
+                    "servicecode": "pd0144",
+                    "grupno": "0006",
+                    "pid": "KSCP"
+                  }
+                },
+                "events": {
+                  "doRequest": {
+                    "url": "/SUMP/call/RPCCall",
+                    "method": "post",
+                    "params": {
+                      "servicecode": "pd0143",
+                      "grupno": "0006",
+                      "id": "${{templateScope.busi_type}}"
+                    },
+                    "resultSet": {
+                      "prod_type_name": "title"
+                    }
+                  }
+                }
+              },
+              "prod_type_name": {
+                "control": "hidden",
+                "label": "业务类型名称"
+              },
+              "apply_type": {
+                "span": 7,
+                "label": "申请类型",
+                "width": "40px",
+                "hidden": true,
+                "value": "S"
+              },
+              "apply_type_name": {
+                "span": 7,
+                "label": "申请类型名称",
+                "width": "40px",
+                "hidden": true,
+                "value": "授信新申请"
+              },
+              "loan_amt": {
+                "control": "currency",
+                "label": "申请金额",
+                "width": "40px",
+                "disabled": false,
+                "span": 7,
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "申请金额不能为空!"
+                  }
+                ]
+              },
+              "loan_term": {
+                "control": "text",
+                "label": "贷款期限",
+                "width": "40px",
+                "disabled": false,
+                "span": 7,
+                "suffix": "M",
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "贷款期限不能为空!"
+                  }
+                ]
+              },
+              "loan_purpose_desc": {
+                "control": "lookup",
+                "label": "授信资金用途",
+                "span": 7,
+                "width": "40px",
+                "edit": false,
+                "rows": 4,
+                "keyField": {
+                  "loan_purpose_desc": "amt_purpose_name"
+                },
+                "toRequest": {
+                  "url": "/views/icms/docManager/loanPurpose/loanPurpose_lookup.json",
+                  "method": "get",
+                  "params": {
+                    "sale_prod_cd": "${{templateScope.sale_prod_cd}}",
+                    "prod_version": "${{templateScope.prod_version}}"
+                  }
+                },
+                "multiple": false,
+                "props": {
+                  "title": "选择贷款用途"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "title": "客户信息",
+          "tooltip": "",
+          "titleIcon": "",
+          "showHint": "",
+          "expand": true,
+          "controls": [
+            {
+              "is_credit": {
+                "control": "hidden",
+                "label": "是否授信",
+                "width": "40px",
+                "span": 7,
+                "dict": {
+                  "format": "label",
+                  "dictKey": [
+                    "MS_E_YESORNO"
+                  ],
+                  "dictType": "MS_E_YESORNO"
+                }
+              },
+              "cust_name": {
+                "control": "text",
+                "label": "客户姓名",
+                "width": "40px",
+                "span": 7,
+                "edit": true,
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "客户名称不能为空!"
+                  }
+                ]
+              },
+              "cust_type": {
+                "control": "select",
+                "label": "客户类型",
+                "width": "40px",
+                "disabled": true,
+                "value": "10",
+                "span": 7,
+                "dict": {
+                  "format": "label",
+                  "dictKey": [
+                    "US_E_CUST_TYPE"
+                  ],
+                  "dictType": "US_E_CUST_TYPE"
+                }
+              },
+              "sex_tp": {
+                "control": "select",
+                "label": "性别（征）",
+                "width": "40px",
+                "span": 7,
+                "dict": {
+                  "format": "label",
+                  "dictType": "MS_E_GENDER",
+                  "dictKey": [
+                    "MS_E_GENDER"
+                  ]
+                }
+              },
+              "country_code": {
+                "control": "select",
+                "label": "国籍",
+                "span": 7,
+                "width": "40px",
+                "dict": {
+                  "dictType": "US_E_INCTRY",
+                  "dictKey": [
+                    "US_E_INCTRY"
+                  ],
+                  "format": "label"
+                },
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请选择国别"
+                  }
+                ]
+              },
+              "nation": {
+                "control": "select",
+                "label": "民族",
+                "width": "40px",
+                "span": 7,
+                "dict": {
+                  "format": "label",
+                  "dictType": "MS_E_NATION",
+                  "dictKey": [
+                    "MS_E_NATION"
+                  ]
+                }
+              },
+              "birth_date": {
+                "control": "dateTimePicker",
+                "format": "yyyyMMdd",
+                "label": "出生日期（征）",
+                "width": "40px",
+                "span": 7,
+                "rules": [
+                  {
+                    "message": "请输入出生日期（征）",
+                    "required": true
+                  }
+                ]
+              },
+              "cert_type": {
+                "control": "select",
+                "label": "证件类型",
+                "width": "40px",
+                "disabled": false,
+                "span": 7,
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "证件类型不能为空!"
+                  }
+                ],
+                "dict": {
+                  "dictType": "MS_E_CRET_TYPE",
+                  "dictKey": [
+                    "MS_E_CRET_TYPE"
+                  ],
+                  "format": "label"
+                }
+              },
+              "cert_no": {
+                "control": "text",
+                "label": "证件号码",
+                "disabled": false,
+                "width": "40px",
+                "span": 7,
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "证件号码不能为空!"
+                  }
+                ]
+              },
+              "cert_day": {
+                "label": "证件签发日期",
+                "span": 7,
+                "width": "40px",
+                "control": "dateTimePicker",
+                "editable": true,
+                "format": "yyyyMMdd",
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请输入证件签发日期"
+                  }
+                ]
+              },
+              "card_end_day": {
+                "label": "证件到期日期",
+                "span": 7,
+                "width": "40px",
+                "control": "dateTimePicker",
+                "editable": true,
+                "format": "yyyyMMdd",
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请输入证件到期日期"
+                  }
+                ],
+                "disabledDate": {
+                  "startRange": "${{form.cardsday}}",
+                  "endRange": "3000-01-01"
+                }
+              },
+              "issuing_addr": {
+                "control": "areaCascade",
+                "title": "签发地址",
+                "label": "签发地址",
+                "span": 7,
+                "width": "40px",
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请输入注册地址"
+                  },
+                  {
+                    "max": 80,
+                    "message": "长度不能超过80个字符"
+                  }
+                ]
+              },
+              "mobile_no": {
+                "control": "text",
+                "label": "手机号码",
+                "disabled": false,
+                "width": "40px",
+                "span": 7,
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "手机号码不能为空!"
+                  },
+                  {
+                    "message": "手机号码必须为数字",
+                    "type": "number"
+                  },
+                  {
+                    "message": "手机号码不应超过11位",
+                    "min": 0,
+                    "max": 11
+                  }
+                ]
+              },
+              "education": {
+                "control": "select",
+                "label": "学历",
+                "span": 7,
+                "width": "40px",
+                "dict": {
+                  "dictType": "MS_E_MAXEDU",
+                  "dictKey": [
+                    "MS_E_MAXEDU"
+                  ],
+                  "format": "label"
+                }
+              },
+              "is_work": {
+                "control": "select",
+                "label": "是否有工作单位",
+                "span": 7,
+                "width": "40px",
+                "dict": {
+                  "dictType": "MS_E_YESORNO",
+                  "dictKey": [
+                    "MS_E_YESORNO"
+                  ],
+                  "format": "label"
+                }
+              },
+              "unit_nature": {
+                "control": "select",
+                "label": "单位性质",
+                "span": 7,
+                "width": "40px",
+                "dict": {
+                  "format": "label",
+                  "dictType": "US_E_NUIT_NATURE",
+                  "dictKey": [
+                    "US_E_NUIT_NATURE"
+                  ]
+                }
+              },
+              "year_income": {
+                "control": "currency",
+                "label": "年收入",
+                "span": 7,
+                "width": "40px"
+              },
+              "marr_state": {
+                "control": "select",
+                "label": "婚姻状态",
+                "width": "40px",
+                "span": 7,
+                "dict": {
+                  "format": "label",
+                  "dictType": "MS_E_MARITA",
+                  "dictKey": [
+                    "MS_E_MARITA"
+                  ]
+                }
+              },
+              "spouse_name": {
+                "control": "text",
+                "label": "配偶姓名",
+                "span": 7,
+                "width": "40px"
+              },
+              "spouse_cert_type": {
+                "control": "select",
+                "label": "配偶证件类型",
+                "width": "40px",
+                "span": 7,
+                "dict": {
+                  "dictType": "MS_E_CRET_TYPE",
+                  "dictKey": [
+                    "MS_E_CRET_TYPE"
+                  ],
+                  "format": "label"
+                }
+              },
+              "spouse_cert_no": {
+                "control": "text",
+                "label": "配偶证件号码",
+                "disabled": false,
+                "width": "40px",
+                "span": 7
+              },
+              "spouse_work_unit_name": {
+                "control": "text",
+                "label": "配偶工作单位名称",
+                "disabled": false,
+                "width": "40px",
+                "span": 7
+              },
+              "spouse_work_phone": {
+                "control": "text",
+                "label": "配偶工作单位电话",
+                "disabled": false,
+                "width": "40px",
+                "span": 7
+              },
+              "toDbsx": {
+                "span": 24,
+                "unFieldList": [
+                  "apply_type",
+                  "apply_type_name",
+                  "cust_type"
+                ],
+                "control": "dynamic",
+                "isShowChildrenForm": false,
+                "toRequest": {
+                  "method": "GET",
+                  "url": "@FlowSubmitBtn",
+                  "params": {
+                    "appId": "icmsOnl",
+                    "servicecode": "ar1000",
+                    "finalUrl": "/views/msap/bpm/workbench/workbench_main_tabs.json",
+                    "trans_type": "ADD"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

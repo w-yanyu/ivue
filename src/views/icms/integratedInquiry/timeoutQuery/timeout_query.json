@@ -1,0 +1,231 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "scope": "formData",
+            "foldLineNumber": 10,
+            "controls": [
+                {
+                    "apply_no": {
+                        "control": "text",
+                        "label": "申请编号"
+                    },
+                    "channel_no": {
+                        "control": "select",
+                        "placeholder": "请选择",
+                        "label": "申请渠道",
+                        "dict": {
+                            "dictType": "PD_E_APPLICABLE_CHANNELS",
+                            "dictKey": [
+                                "PD_E_APPLICABLE_CHANNELS"
+                            ],
+                            "format": "label"
+                        }
+                    },
+                    "sale_prod_cd": {
+                        "control": "remoteSelect",
+                        "label": "产品名称",
+                        "filterable": true,
+                        "labelField": "sale_prod_name",
+                        "valueField": "sale_prod_cd",
+                        "searchField": "sale_prod_name",
+                        "doRequest": {
+                            "url": "/SUMP/icmcall/icmRPCCall",
+                            "method": "post",
+                            "params": {
+                                "length": 999,
+                                "servicecode": "pd0214"
+                            }
+                        }
+                    },
+                    "cust_no": {
+                        "control": "text",
+                        "label": "客户编号"
+                    },
+                    "cust_name": {
+                        "control": "text",
+                        "label": "客户名称"
+                    },
+                    "cert_no": {
+                        "control": "text",
+                        "label": "证件号码"
+                    },
+                    "timeout_type": {
+                        "control": "select",
+                        "label": "超时类型",
+                        "placeholder": "请选择",
+                        "dict": {
+                            "dictType": "AR_E_TIMEOUT_TYPE",
+                            "dictKey": [
+                                "AR_E_TIMEOUT_TYPE"
+                            ],
+                            "format": "label"
+                        }
+                    },
+                    "time": {
+                        "control": "dateTimePicker",
+                        "label": "申请时间",
+                        "type": "daterange",
+                        "valueFormat": "yyyyMMdd",
+                        "startPlaceholder": "",
+                        "endPlaceholder": "",
+                        "unlinkPanels": true,
+                        "value": [
+                            "today-365",
+                            "today"
+                        ]
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "export",
+                    "target": "iconfont icon-daochu",
+                    "label": "导出",
+                    "doRequest": {
+                        "method": "POST",
+                        "loading": true,
+                        "timeout": 1000,
+                        "url": "/SUMP/rest/file/commExport",
+                        "params": {
+                            "length": 999,
+                            "servicecode": "ar0862",
+                            "exportname": "超时查询结果",
+                            "is_report": "0"
+                        }
+                    },
+                    "confirm": {
+                        "title": "提示信息",
+                        "msg": "确认导出吗？",
+                        "confirmButtonText": "确定",
+                        "cancelButtonText": "取消"
+                      }
+                }
+            ]
+        },
+        "datagrid": {
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ar0862",
+                    "is_report": "0"
+                }
+            },
+            "thead": [
+                {
+                    "label": "序号",
+                    "type": "index"
+                },
+                {
+                    "type": "string",
+                    "align": "center",
+                    "label": "申请编号",
+                    "prop": "apply_no"
+                },
+                {
+                    "align": "center",
+                    "label": "申请渠道",
+                    "prop": "channel_no",
+                    "dict": {
+                        "dictType": "PD_E_APPLICABLE_CHANNELS",
+                        "dictKey": [
+                            "PD_E_APPLICABLE_CHANNELS"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "type": "string",
+                    "align": "center",
+                    "label": "产品名称",
+                    "prop": "loan_prod_name"
+                },
+                {
+                    "type": "string",
+                    "align": "center",
+                    "label": "客户编号",
+                    "prop": "cust_no"
+                },
+                {
+                    "type": "string",
+                    "align": "center",
+                    "label": "客户名称",
+                    "prop": "cust_name"
+                },
+                {
+                    "type": "string",
+                    "align": "center",
+                    "label": "证件类型",
+                    "prop": "cert_type",
+                    "dict": {
+                        "dictType": "MS_E_CRET_TYPE",
+                        "dictKey": [
+                            "MS_E_CRET_TYPE"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "type": "string",
+                    "align": "center",
+                    "label": "证件号码",
+                    "prop": "cert_no",
+                    "width": "160px"
+                },
+                {
+                    "type": "string",
+                    "align": "center",
+                    "label": "申请金额(元)",
+                    "prop": "appl_amt"
+                },
+                {
+                    "type": "string",
+                    "align": "center",
+                    "label": "申请期限(月)",
+                    "prop": "ctr_term"
+                },
+                {
+                    "type": "string",
+                    "align": "center",
+                    "label": "申请时间",
+                    "prop": "apply_date"
+                },
+                {
+                    "type": "string",
+                    "align": "center",
+                    "label": "超时责任人",
+                    "prop": "timeout_respon_person"
+                },
+                {
+                    "type": "string",
+                    "align": "center",
+                    "label": "超时开始时间",
+                    "prop": "timeout_start_time"
+                },
+                {
+                    "type": "string",
+                    "align": "center",
+                    "label": "超时类型",
+                    "prop": "timeout_type",
+                    "dict": {
+                        "dictType": "AR_E_TIMEOUT_TYPE",
+                        "dictKey": [
+                            "AR_E_TIMEOUT_TYPE"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "type": "string",
+                    "align": "center",
+                    "label": "超时时间",
+                    "prop": "longTime"
+                }
+            ]
+        }
+    }
+}

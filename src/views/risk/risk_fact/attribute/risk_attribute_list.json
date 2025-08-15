@@ -1,0 +1,108 @@
+{
+    "module": "v-search-btn-datagrid",
+    "##pageId": "risk_fact",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "field_code": {
+                        "label": "属性代码",
+                        "control": "text",
+                        "span": 12
+                    },
+                    "field_name": {
+                        "label": "属性名称",
+                        "control": "text",
+                        "span": 12
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "##authId": "fact_add_btn",
+                    "show": {
+                        "expression": "'${{params.flag}}' === '1'"
+                    },
+                    "label": "新增",
+                    "toRequest": {
+                        "url": "/views/risk/risk_fact/attribute/risk_attribute_add.json",
+                        "method": "get",
+                        "params": {
+                            "fact_code": "${{params.fact_code}}"
+                        }
+                    },
+                    "props": {
+                        "width": "70%",
+                        "title": "新增"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "deci010105",
+                    "fact_code": "${{params.fact_code}}",
+                    "isList": true
+                }
+            },
+            "thead": [
+                {
+                    "label": "序号",
+                    "type": "index"
+                },
+                {
+                    "label": "属性名称",
+                    "prop": "field_name"
+                },
+                {
+                    "label": "属性代码",
+                    "prop": "field_code"
+                },
+                {
+                    "label": "属性类型",
+                    "prop": "field_type"
+                },
+                {
+                    "label": "操作",
+                    "width": "150px",
+                    "btns": [
+                        {
+                            "type": "look",
+                            "label": "查看",
+                            "toRequest": {
+                                "url": "/views/risk/risk_fact/attribute/risk_attribute_view.json",
+                                "method": "get"
+                            },
+                            "props": {
+                                "width": "70%"
+                            }
+                        },
+                        {
+                            "type": "delete",
+                            "##authId": "fact_del_btn",
+                            "show": {
+                                "expression": "'${{params.flag}}' === '1'"
+                            },
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "post",
+                                "params": {
+                                    "servicecode": "deci010107",
+                                    "fact_code": "${{params.fact_code}}"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

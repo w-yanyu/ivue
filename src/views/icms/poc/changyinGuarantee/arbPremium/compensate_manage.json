@@ -1,0 +1,130 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "part_no": {
+            "label": "合作方编号",
+            "control": "text"
+          },
+          "daichang_date": {
+            "label": "代偿日期",
+            "control": "dateTimePicker"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "导入数据",
+          "toRequest": {
+            "url": "/views/icms/poc/changyinGuarantee/arbPremium/import_excel.json",
+            "method": "get",
+            "params": {
+              "servicecode": "ar1636",
+              "appId":"icmsOnl"
+            }
+          },
+          "props": {
+            "title": "导入代偿明细信息",
+            "width": "80%"
+          }
+        },
+        {
+          "type": "export",
+          "label": "下载模板",
+          "icon": "iconfont icon-daochu",
+          "doRequest": {
+            "url": "/SUMP/rest/file/exportNullExcel",
+            "method": "get",
+            "params": {
+              "header": "合作方编号,代偿交易流水,证件号码,代偿借据,代偿总额（元）,代偿本金（元）,代偿利息（元）,代偿罚息（元）,代偿日期",
+              "fileName": "代偿信息同步表.xls"
+            }
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "ar1631",
+          "params": {
+          }
+        }
+      },
+      "pagination": {
+        "pageSizes": [
+          10,
+          15,
+          20
+        ],
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "type": "index",
+          "align": "center"
+        },
+        {
+          "type": "leaf",
+          "label": "合作方编号",
+          "align": "center",
+          "prop": "part_no"
+        },
+        {
+          "label": "代偿交易流水",
+          "prop": "daichang_no",
+          "align": "center",
+          "type": "leaf"
+        },
+        {
+          "label": "代偿借据",
+          "prop": "loan_id",
+          "align": "center",
+          "type": "leaf"
+        },
+        {
+          "label": "代偿总额",
+          "prop": "daichang_total",
+          "align": "center",
+          "type": "leaf"
+        },
+        {
+          "label": "代偿本金（元）",
+          "prop": "daichang_prin",
+          "align": "center",
+          "type": "leaf",
+          "decimal": "2"
+        },
+        {
+          "label": "代偿利息（元）",
+          "prop": "daichang_int",
+          "align": "center",
+          "type": "leaf",
+          "decimal": "2"
+        },
+        {
+          "label": "代偿罚息（元）",
+          "prop": "daichang_pnlt",
+          "align": "center",
+          "type": "leaf",
+          "decimal": "2"
+        },
+        {
+          "label": "代偿日期",
+          "prop": "daichang_date",
+          "align": "center",
+          "type": "leaf",
+          "decimal": "2"
+        }
+      ]
+    }
+  }
+}

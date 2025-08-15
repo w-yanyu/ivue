@@ -1,0 +1,136 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "doRequest": {
+            "url": "/SUMP/call/RPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "ce0185"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "collector": {
+            "control": "lookup",
+            "label": "催收员编码",
+            "width": "130px",
+            "keyField": {
+              "collector": "user_id",
+              "collector_name": "user_name"
+            },
+            "toRequest": {
+              "url": "/views/ce/paramManage/assign/collTeam/user_manager_lookup.json",
+              "method": "get"
+            },
+            "multiple": false,
+            "props": {
+              "title": "操作员选择"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入操作员名称"
+              }
+            ]
+          },
+          "collector_name": {
+            "control": "text",
+            "label": "催收员姓名",
+            "disabled": true,
+            "width": "130px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              },
+              {
+                "max": 30,
+                "message": "最多可以输入 30 个字节"
+              }
+            ]
+          }
+        },
+        {
+          "coll_group": {
+            "control": "text",
+            "label": "所属催收组",
+            "width": "130px",
+            "disabled": true,
+            "value": "${{params.props.coll_group}}"
+          },
+          "coll_post": {
+            "control": "select",
+            "default": "1",
+            "label": "催收岗位",
+            "width": "130px",
+            "dict": {
+              "dictType": "CE_COLL_POST",
+              "dictKey": [
+                "CE_COLL_POST"
+              ],
+              "format": "value-label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          }
+        },
+        {
+          "work_no": {
+            "control": "text",
+            "label": "坐席工号",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          },
+          "work_pass": {
+            "control": "text",
+            "label": "坐席密码",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              },
+              {
+                "max": 11,
+                "message": "最多可以输入 11 个字节"
+              }
+            ]
+          }
+        },
+        {
+          "extens_num": {
+            "control": "text",
+            "label": "分机号",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              },
+              {
+                "pattern": "^1(3[0-9]|5[0-3,5-9]|7[1-3,5-8]|8[0-9])[0-9]{8}$",
+                "message": "分机号格式错误"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

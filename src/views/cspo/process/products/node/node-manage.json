@@ -1,0 +1,114 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [],
+      "btns": []
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "custom",
+          "label": "自动获取",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "rlms_upwfin",
+              "wfprcd": "${{params.wfprod_cd}}",
+              "updway": "TASK"
+            }
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "rlms_qrwftk",
+          "wfprcd": "${{params.wfprod_cd}}"
+        }
+      },
+      "thead": [
+        {
+          "label": "任务编号",
+          "prop": "wftask_cd"
+        },
+        {
+          "label": "流程编号",
+          "prop": "wfprod_cd"
+        },
+        {
+          "label": "流程名称",
+          "prop": "wfprod_name"
+        },
+        {
+          "label":"活动定义id",
+          "prop":"task_def_id",
+          "align": "center"
+        },
+        {
+          "label":"活动定义名称",
+          "prop":"task_def_name"
+        },
+        {
+          "label":"任务类型",
+          "prop":"task_type"
+        },{
+          "label":"版本号",
+          "prop":"ver"
+        },{
+          "label":"修改时间",
+          "prop":"last_upd_dt"
+        },{
+          "label":"修改人",
+          "prop":"last_upd_usr"
+        },{
+          "label": "操作",
+          "width": "180px",
+          "fixed": "right",
+          "align":"center",
+          "btns": [{
+            "type": "edit",
+            "label": "查看",
+            "toRequest": {
+              "url": "/views/cspo/process/products/node/node-view.json",
+              "method": "GET"
+            },
+            "props": {
+              "width": "70%",
+              "title": "查看节点详情"
+            }
+          },{
+            "type": "edit",
+            "label": "修改",
+            "toRequest": {
+              "url": "/views/cspo/process/products/node/node-modify.json",
+              "method": "GET"
+            },
+            "props": {
+              "width": "70%",
+              "title": "流程节点修改"
+            }
+          },{
+            "type": "edit",
+            "label": "配置策略",
+            "toRequest": {
+              "url": "/views/cspo/process/products/node/node-config.json",
+              "method": "GET"
+            },
+            "props": {
+              "width": "75%",
+              "title": "策略管理"
+            }
+          }
+          ]
+        }
+      ]
+    }
+  }
+}

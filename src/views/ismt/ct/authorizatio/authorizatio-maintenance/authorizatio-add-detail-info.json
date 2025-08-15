@@ -1,0 +1,94 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "btns": [
+                {
+                    "type": "submit",
+                    "label": "提交",
+                    "icon": "",
+                    "doRequest": {
+                        "url": "",
+                        "method": "",
+                        "params": {}
+                    }
+                }
+            ],
+            "initRequest": "${{params}}",
+            "bringBack": true,
+            "controls": [
+                {
+                    "operater_ind": {
+                        "label": "操作",
+                        "control": "select",
+                        "dict": {
+                            "dictType": "E_DATAOPERATE",
+                            "dictKey": [
+                                "E_DATAOPERATE"
+                            ],
+                            "format": "label"
+                        },
+                        "disabled": true,
+                        "value": "A"
+                    },
+                    "role_id": {
+                        "control": "lookup",
+                        "label": "角色ID",
+                        "rules": [
+                            {
+                                "required": "true",
+                                "message": "请输入角色ID"
+                            },
+                            {
+                                "max": 64,
+                                "message": "长度不能超过64个字符"
+                            }
+                        ],
+                        "toRequest": {
+                            "url": "/views/ismt/ct/ParameterManagement/WorkflowRoleMaintenance/role-info-query.json",
+                            "method": "post",
+                            "params": {}
+                        },
+                        "props": {
+                            "title": "角色ID查询"
+                        },
+                        "format": "label"
+                    }
+                },
+                {
+                    "auth_id": {
+                        "control": "string",
+                        "rules": [
+                            {
+                                "max": 32,
+                                "message": "长度不能超过32个字符"
+                            }
+                        ],
+                        "label": "授权ID"
+                    },
+                    "auth_ccy": {
+                        "control": "select",
+                        "label": "授权币种",
+                        "dict": {
+                            "dictType": "MS_CURRENCY",
+                            "dictKey": [
+                                "MS_CURRENCY"
+                            ],
+                            "format": "label"
+                        }
+                    }
+                },
+                {
+                    "cash_max_limit_amt": {
+                        "control": "currency",
+                        "label": "现金最大授权金额"
+                    },
+                    "trxn_max_limit_amt": {
+                        "control": "currency",
+                        "label": "转账最大授权金额"
+                    }
+                }
+            ]
+        }
+    }
+}

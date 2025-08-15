@@ -1,0 +1,241 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "loan_no": {
+            "control": "text",
+            "label": "借据号"
+
+          },
+          "cust_name": {
+            "control": "text",
+            "label": "客户姓名"
+          }
+        },
+        {
+          "cust_no": {
+            "control": "text",
+            "label": "客户编号"
+          },
+          
+        
+          "suit_status": {
+            "control": "select",
+            "label": "当前案件诉讼状态",
+             "dict": {
+               "dictType": "PL_E_SUITSTUS",
+               "dictKey": [
+                 "PL_E_SUITSTUS"
+               ],
+               "format": "label"
+             }
+          }
+
+        },
+        {
+          "is_closed": {
+            "control": "select",
+            "label": "是否关闭",
+             "dict": {
+               "dictType": "MS_E_YESORNO",
+               "dictKey": [
+                 "MS_E_YESORNO"
+               ],
+               "format": "label"
+             }
+          },
+          "is_lgfe": {
+            "control": "select",
+            "label": "是否法诉",
+             "dict": {
+               "dictType": "MS_E_YESORNO",
+               "dictKey": [
+                 "MS_E_YESORNO"
+               ],
+               "format": "label"
+             }
+          }
+        },
+        {
+          "now_acc_reslt": {
+            "control": "select",
+            "label": "当前立案受理结果",
+             "dict": {
+               "dictType": "PL_E_SUITRESULT",
+               "dictKey": [
+                 "PL_E_SUITRESULT"
+               ],
+               "format": "label"
+             }
+          }
+        }
+
+      ]
+    },
+    "toolbar": {
+      "btns": [
+
+
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pl0513",
+
+          "page_id": "/views/pt/partnerManage/ptPartner_list.json"
+        }
+      },
+      "thead": [
+        {
+          "type": "index"
+        },
+        {
+          "label": "借据号",
+          "prop": "loan_no",
+          "align":"center"
+        },
+        {
+          "label": "客户姓名",
+          "prop": "cust_name",
+          "align":"center"
+        },
+        {
+          "label": "客户编号",
+          "prop": "cust_no",
+          "align":"center"
+        },
+        {
+          "label": "产品号",
+          "prop": "prod_no",
+          "align":"center"
+        },
+        {
+          "label": "产品名",
+          "prop": "prod_name",
+          "align":"center"
+        },
+        {
+          "label": "贷款形态",
+          "prop": "loan_form",
+          "align":"center",
+          "dict": {
+            "dictType": "MS_E_LEVEL5_TYPE",
+            "dictKey": [
+              "MS_E_LEVEL5_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "当前案件委案状态",
+          "prop": "entrust_status",
+          "align":"center",
+          "dict": {
+            "dictType": "PL_E_ENTRUSTSTUS",
+            "dictKey": [
+              "PL_E_ENTRUSTSTUS"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "当前案件诉讼状态",
+          "prop": "suit_status",
+          "align":"center",
+          "dict": {
+            "dictType": "PL_E_SUITSTUS",
+            "dictKey": [
+              "PL_E_SUITSTUS"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "是否关闭",
+          "prop": "is_closed",
+          "align":"center",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "是否结案",
+          "prop": "is_finished",
+          "align":"center",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "是否法诉",
+          "prop": "is_lgfe",
+          "align":"center",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "委案机构名称",
+          "prop": "entrorg_name",
+          "align":"center"
+        },
+        {
+          "label": "当前立案受理结果",
+          "prop": "now_acc_reslt",
+          "align":"center",
+          "dict": {
+            "dictType": "PL_E_SUITRESULT",
+            "dictKey": [
+              "PL_E_SUITRESULT"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align":"center",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/pl/lawsuitManagement/lawsuitApplyManagement/select/detail/tab_detail_see.json",
+                "method": "GET",
+                "params": {
+                  "loan_no": "${{current.loan_no}}"
+                  
+                }
+              },
+              "props": {
+                "width": "80%",
+                "title": "诉讼一览表详情"
+              }
+            }
+
+          ]
+        }
+      ]
+    }
+  }
+}

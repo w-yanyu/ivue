@@ -1,0 +1,92 @@
+{
+  "module": "d-steps",
+  "layout": {
+    "steps": {
+      "scope": "formObj",
+      "direction": "horizontal",
+      "alignCenter": true,
+      "finishStatus": "success",
+      "simpleType": false,
+      "nextStepType": "validate",
+      "list": [
+        {
+          "scope": "step1",
+          "title": "授权体系查看",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "url": "/views/ismt/ct/busiAuth/authp_system/authp_system_detail.json",
+            "params": {
+              "authp_system_code": "${{params.authp_system_code}}",
+              "auth_version": "${{params.auth_version}}",
+              "authp_system_name": "${{params.authp_system_name}}",
+              "dimension_busi_type": "${{params.dimension_busi_type}}",
+              "authp_system_status": "${{params.authp_system_status}}",
+              "all_exe_flag": "${{params.all_exe_flag}}",
+              "effect_date": "${{params.effect_date}}",
+              "invalid_date": "${{params.invalid_date}}",
+              "appId": "${{params.appId}}"
+            },
+            "method": "get"
+          }
+        },
+        {
+          "scope": "step2",
+          "title": "关联角色查看",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "url": "/views/ismt/ct/busiAuth/authp_rule/role_detail.json",
+            "params": {
+              "authp_system_code": "${{formObj.step1.authp_system_code}}",
+              "auth_version": "${{params.auth_version}}",
+              "appId": "${{params.appId}}"
+            },
+            "method": "get"
+          }
+        },
+        {
+          "scope": "step3",
+          "title": "适用机构查看",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "url": "/views/ismt/ct/busiAuth/authp_rule/branch_detail.json",
+            "params": {
+              "authp_system_code": "${{formObj.step1.authp_system_code}}",
+              "auth_version": "${{params.auth_version}}",
+              "appId": "${{params.appId}}"
+            },
+            "method": "get"
+          }
+        },
+        {
+          "scope": "step4",
+          "title": "关联业务指标查看",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "url": "/views/ismt/ct/busiAuth/authp_system/authp_system_param_detail.json",
+            "params": {
+              "authp_system_code": "${{formObj.step1.authp_system_code}}",
+              "auth_version": "${{params.auth_version}}",
+              "appId": "${{params.appId}}"
+            },
+            "method": "get"
+          }
+        },
+        {
+          "scope": "step5",
+          "title": "授权详情查看",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "url": "/views/ismt/ct/busiAuth/authp_system/auth_tree_detail.json",
+            "params": {
+              "authp_system_code": "${{formObj.step1.authp_system_code}}",
+              "authp_system_name": "${{formObj.step1.authp_system_name}}",
+              "auth_version": "${{params.auth_version}}",
+              "appId": "${{params.appId}}"
+            },
+            "method": "get"
+          }
+        }
+      ]
+    }
+  }
+}

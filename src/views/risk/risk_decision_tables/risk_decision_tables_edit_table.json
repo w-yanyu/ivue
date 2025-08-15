@@ -1,0 +1,71 @@
+{
+  "module": "v_search_editableDataGrid",
+  "layout": {
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "新增",
+          "icon": "el-icon-plus"
+        },
+        {
+          "type": "batchDelete",
+          "label": "批量删除",
+          "icon": "el-icon-close"
+        },
+        {
+          "type": "save",
+          "label": "保存",
+          "icon": "el-icon-tickets",
+          "doRequest": {
+            "url": "/pte/json/v_search_editableDataGrid/format_msg.json",
+            "method": "get",
+            "params": {
+              "yyy": "${{form}}"
+            }
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "###doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "deci020402",
+          "field_map": {}
+        }
+      },
+      "###thead": [
+        {
+          "type": "selection",
+          "align": "center",
+          "width": "55",
+          "fixed": "left"
+        },
+        {
+          "label": "占位1",
+          "prop": "orgName"
+        },
+        {
+          "label": "占位2",
+          "prop": "payeeName"
+        },
+        {
+          "label": "占位3",
+          "prop": "openAccountTypeName"
+        }
+      ],
+      "dynamicThead": {
+        "doRequest": {
+          "url": "/views/risk/risk_decision_tables/table_head_data.json",
+          "method": "POST",
+          "###params": {
+            "servicecode": "deci020402",
+            "field_map": {}
+          }
+        }
+      }
+    }
+  }
+}

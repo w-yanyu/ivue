@@ -1,0 +1,83 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+      "form": {
+        "scope": "formData",
+        "controls": [
+          {
+            "quality_inspector": {
+                "hidden": true,
+                "label": "质检员",
+                "control": "remoteSelect",
+                "labelField": "user_name",
+                "valueField": "user_id",
+                "doRequest": {
+                    "url": "/SUMP/rest/auth/userManager",
+                    "method": "POST",
+                    "params": {
+                        "servicecode": "ct2501",
+                        "role_id": "cszjy01"
+                    }
+                },
+                "format": "value-label"
+            },
+            "branch_id": {
+              "control": "text",
+              "label": "机构"
+            }
+          },
+          {
+            "artificial_start_quality_time": {
+                "label": "起始时间",
+                "control": "dateTimePicker",
+                "span": 12,
+                "format": "yyyy-MM-dd HH:mm:ss"
+              },
+              "artificial_end_quality_time": {
+                "label": "结束时间",
+                "control": "dateTimePicker",
+                "span": 12,
+                "format": "yyyy-MM-dd HH:mm:ss"
+              }
+          }
+        ]
+      },
+      "datagrid": {
+        "isInitSearch": false,
+        "doRequest": {
+          "url": "/SUMP/icmcall/icmRPCCall",
+          "method": "POST",
+          "params": {
+            "servicecode": "qc0021",
+            "appId": "qcOnl"
+          }
+        },
+        "thead": [
+          {
+            "type": "string",
+            "align": "center",
+            "label": "所属机构",
+            "prop": "branch_id"
+          },
+          {
+            "type": "string",
+            "align": "center",
+            "label": "质检员",
+            "prop": "quality_inspector"
+          },
+          {
+            "type": "string",
+            "align": "center",
+            "label": "质检日期",
+            "prop": "batch_no"
+          },
+          {
+            "type": "string",
+            "align": "center",
+            "label": "质检完成量",
+            "prop": "quality_users_case_nums"
+          }
+        ]
+      }
+    }
+  }

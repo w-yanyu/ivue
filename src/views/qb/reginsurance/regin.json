@@ -1,0 +1,126 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+      "form": {
+        "controls": [
+          {
+            "regionalCenterCode": {
+              "label": "区域中心",
+              "control": "remoteSelect",
+              "valueField": "regionalCenterCode",
+              "labelField": "regionalCenterName",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "selRegin",
+                  "length": 100
+                }
+              }
+
+              
+            },
+            "insuranceCenterCode": {
+                "label": "保险公司",
+                "control": "remoteSelect",
+                "valueField": "insuranceCode",
+                "labelField": "insuranceName",
+                "doRequest": {
+                  "url": "/SUMP/icmcall/icmRPCCall",
+                  "method": "post",
+                  "params": {
+                    "servicecode": "selInsurance",
+                    "length": 100
+                  }
+                }
+
+              }
+          }
+        ]
+      },
+     
+      "toolbar": {
+        "btns": [
+          {
+            "type": "add",
+            "target": "dialog",
+            "label": "维护",
+            "toRequest": {
+              "method": "GET",
+              "url": "/views/qb/reginsurance/reginsadd.json"
+            },
+            "props": {
+              "title": "新增"
+            }
+          }
+        ]
+      },
+
+
+
+
+
+
+
+      "datagrid": {
+        "scope": "searchTable",
+        "isInitSearch": false,
+        "doRequest": {
+          "url": "/SUMP/icmcall/icmRPCCall",
+          "method": "post",
+          "params": {
+            "servicecode": "selRegInsurance",
+        
+            "length": 100
+          }
+        },
+        "thead": [
+          {
+            "label": "序号",
+            "type": "index",
+            "align": "center"
+          },
+          {
+            "label": "区域中心编码",
+            "prop": "regionalCenterCode",
+            "align": "center"
+          },
+          {
+            "label": "区域中心名称",
+            "prop": "regionalCenterName",
+            "align": "center"
+          },
+          {
+            "label": "保险公司编码",
+            "prop": "insuranceCenterCode",
+            "align": "center"
+          },
+          {
+            "label": "保险公司名称",
+            "prop": "insuranceCenterName",
+            "align": "center"
+          },
+          
+          {
+            "label": "操作",
+            "fixed": "right",
+            "align": "center",
+            "btns": [
+              {
+                "type": "delete",
+                "label": "删除",
+                "doRequest": {
+                  "url": "/SUMP/icmcall/icmRPCCall",
+                  "method": "POST",
+                  "params": {
+                    "servicecode": "delRegInsurance"
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+  

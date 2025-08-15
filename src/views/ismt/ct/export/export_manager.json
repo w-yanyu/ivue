@@ -1,0 +1,166 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                  "page_id": {
+                      "control": "text",
+                      "label": "菜单",
+                      "rules": [
+                          {
+                              "max": 60,
+                              "message": "长度不能超过60个字符"
+                          }
+                      ]
+                  },
+                  "auth_status": {
+                      "control": "select",
+                      "label": "状态",
+                      "selectFirstValue":false,
+                      "dict": {
+                        "dictType": "CT_E_EXPAUTH_STATUS",
+                        "dictKey": [
+                            "CT_E_EXPAUTH_STATUS"
+                        ],
+                        "format": "label"
+                    }
+                  }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "target": "dialog",
+                    "label": "新增",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/ismt/ct/export/add_manager_steps.json"
+                    },
+                    "props": {
+                        "title": "新增智能业务数据导出管理"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ct4101",
+                    "appId":"deciOnl"
+                }
+            },
+            "pagination": {
+                "show": true,
+                "pageSize": 10
+            },
+            "thead": [
+                {
+                    "type": "index"
+                },
+                {
+                    "label": "记录编号",
+                    "prop": "record_no"
+                },
+                {
+                    "label": "菜单",
+                    "prop": "page_id"
+                },
+                {
+                  "label": "交易码",
+                  "prop": "tran_code"
+                },
+                {
+                    "label": "导出数据上限",
+                    "prop": "up_limit"
+                },
+                {
+                    "label": "导出格式",
+                    "prop": "exp_format",
+                    "dict": {
+                        "dictType": "CT_E_EXP_FORMAT",
+                        "format": "label",
+                        "dictKey": [
+                            "CT_E_EXP_FORMAT"
+                        ]
+                    },
+                    "format": "label"
+                },
+                {
+                  "label": "Excel分页记录数",
+                  "prop": "page_num"
+                },
+                {
+                  "label": "是否下放导出范围权限",
+                  "prop": "del_auth",
+                  "dict": {
+                      "dictType": "MS_E_YESORNO",
+                      "format": "label",
+                      "dictKey": [
+                          "MS_E_YESORNO"
+                      ]
+                  }
+                },
+                {
+                    "label": "授权状态",
+                    "prop": "auth_status",
+                    "dict": {
+                        "dictType": "CT_E_EXPAUTH_STATUS",
+                        "format": "label",
+                        "dictKey": [
+                            "CT_E_EXPAUTH_STATUS"
+                        ]
+                    }
+                },
+                {
+                    "label": "操作",
+                    "width": 120,
+                    "align":"center",
+                    "fixed": "right",
+                    "btns": [
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/ismt/ct/export/add_manager_steps.json",
+                                "method": "GET",
+                                "params":{
+                                    "record_no": "${{current.record_no}}",
+                                    "page_id": "${{current.page_id}}",
+                                    "tran_code": "${{current.tran_code}}",
+                                    "exp_format": "${{current.exp_format}}",
+                                    "page_num": "${{current.page_num}}",
+                                    "del_auth": "${{current.del_auth}}",
+                                    "auth_status": "${{current.auth_status}}",
+                                    "up_limit": "${{current.up_limit}}",
+                                    "flag":"upd"
+                                }
+
+                            },
+                            "props": {
+                                "title": "智能业务数据导出管理信息维护"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "详情",
+                            "toRequest": {
+                                "url": "/views/ismt/ct/export/add_manager_step_xianqin.json",
+                                "method": "GET"
+                            },
+                            "props": {
+                                "title": "智能业务数据导出管理信息详情"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+  }

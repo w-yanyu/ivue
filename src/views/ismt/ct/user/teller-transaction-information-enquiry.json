@@ -1,0 +1,219 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "foldLineNumber": 1,
+            "controls": [{
+                "trxn_seq": {
+                    "span": "8",
+                    "control": "text",
+                    "label": "交易流水",
+                    "rules": [{
+                            "requiredOr": [
+                                "trxn_seq",
+                                "busi_seq",
+                                "trxn_date"
+                            ],
+                            "message": "交易日期，交易流水，业务流水不能同时为空"
+                        },
+                        {
+                            "max": 32,
+                            "message": "长度不能超过32个字符"
+                        }
+                    ]
+                },
+                "busi_seq": {
+                    "span": "8",
+                    "control": "text",
+                    "label": "业务流水",
+                    "rules": [{
+                        "max": 32,
+                        "message": "长度不能超过32个字符"
+                    }]
+                },
+                "trxn_date": {
+                    "span": "8",
+                    "control": "dateTimePicker",
+                    "label": "交易日期",
+                    "prop": "trxn_date"
+                },
+                "trxn_teller": {
+                    "span": "8",
+                    "control": "text",
+                    "label": "交易用户",
+                    "rules": [{
+                        "max": 32,
+                        "message": "长度不能超过32个字符"
+                    }]
+                },
+                "trxn_type": {
+                    "span": "8",
+                    "control": "select",
+                    "label": "交易类型",
+                    "dict": {
+                        "dictType": "MS_E_TRXNTYPE",
+                        "dictKey": [
+                            "MS_E_TRXNTYPE"
+                        ],
+                        "format": "label"
+                    }
+                },
+                "trxn_branch": {
+                    "span": "8",
+                    "control": "text",
+                    "label": "交易机构",
+                    "rules": [{
+                        "max": 10,
+                        "message": "长度不能超过10个字符"
+                    }]
+                }
+            }, {
+                "ct_trxn_code": {
+                    "span": "8",
+                    "control": "text",
+                    "label": "柜面交易码",
+                    "rules": [{
+                        "max": 32,
+                        "message": "长度不能超过32个字符"
+                    }]
+                },
+                "trxn_ccy": {
+                    "span": "8",
+                    "control": "select",
+                    "label": "交易币种",
+                    "dict": {
+                        "dictType": "MS_CURRENCY",
+                        "dictKey": [
+                            "MS_CURRENCY"
+                        ],
+                        "format": "label"
+                    }
+                },
+                "trxn_status": {
+                    "span": "8",
+                    "control": "select",
+                    "label": "交易状态",
+                    "dict": {
+                        "dictType": "E_TRXNSTATUS",
+                        "dictKey": [
+                            "E_TRXNSTATUS"
+                        ],
+                        "format": "label"
+                    }
+                }
+
+            }]
+        },
+        "datagrid": {
+            "isInitSearch": false,
+            "scope": "searchTable",
+            "doRequest": {
+                "url": "/SUMP/rest/auth/userManager",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ct2036"
+                }
+            },
+            "thead": [{
+                    "type": "index"
+                },
+                {
+                    "label": "交易流水",
+                    "prop": "trxn_seq"
+                },
+                {
+                    "label": "交易日期",
+                    "prop": "trxn_date",
+                    "width": "100px",
+                    "type": "dateTimePicker"
+                },
+                {
+                    "label": "业务流水",
+                    "prop": "busi_seq"
+                },
+                {
+                    "label": "交易描述",
+                    "prop": "trxn_desc"
+                },
+                {
+                    "label": "交易类型",
+                    "width": "100px",
+                    "prop": "trxn_type",
+                    "dict": {
+                        "dictType": "MS_E_TRXNTYPE",
+                        "dictKey": [
+                            "MS_E_TRXNTYPE"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "柜面交易码",
+                    "width": "100px",
+                    "prop": "ct_trxn_code"
+                },
+                {
+                    "label": "交易用户",
+                    "prop": "trxn_teller"
+                },
+                {
+                    "label": "交易机构",
+                    "prop": "trxn_branch"
+                },
+                {
+                    "label": "金融交易序号",
+                    "prop": "financial_trxn_sort"
+                },
+                {
+                    "label": "交易币种",
+                    "prop": "trxn_ccy",
+                    "dict": {
+                        "dictType": "MS_CURRENCY",
+                        "format": "label",
+                        "dictKey": [
+                            "MS_CURRENCY"
+                        ]
+                    }
+                },
+                {
+                    "label": "交易状态",
+                    "prop": "trxn_status",
+                    "dict": {
+                        "dictType": "E_TRXNSTATUS",
+                        "dictKey": [
+                            "E_TRXNSTATUS"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "检查标志",
+                    "prop": "check_ind",
+                    "dict": {
+                        "dictType": "E_TRXNSTATUS",
+                        "dictKey": [
+                            "E_TRXNSTATUS"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "btns": [{
+                        "type": "look",
+                        "label": "详情",
+                        "toRequest": {
+                            "url": "/views/ismt/ct/user/teller-transaction-information-detail.json",
+                            "method": "POST"
+                        },
+                        "props": {
+                            "width": "85%",
+                            "title": "用户流水信息详情"
+                        }
+                    }]
+                }
+            ]
+        }
+    }
+}

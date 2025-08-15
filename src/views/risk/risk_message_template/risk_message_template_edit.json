@@ -1,0 +1,88 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "templateCode": {
+            "label": "消息模板代码",
+            "control": "string",
+            "span": 12
+          },
+          "status": {
+            "label": "状态",
+            "control": "string",
+            "span": 12,
+            "dict": {
+              "dictType": "status",
+              "dictKey": [],
+              "format": "value - label",
+              "doRequest": {
+                "url": "/views/risk/dictdata/enabledStatus.json",
+                "method": "get"
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "max": 1,
+                "message": "该控件必填"
+              }
+            ]
+          }
+        },
+        {
+          "templateContent": {
+            "label": "消息模板内容",
+            "control": "textarea",
+            "span": 24,
+            "placeholder": "请输入模板内容",
+            "showWordLimit": true,
+            "maxlength": 500,
+            "autosize": {
+              "minRows": 4,
+              "maxRows": 6
+            },
+            "rules": [
+              {
+                "required": true,
+                "max": 500,
+                "message": "请正确输入"
+              }
+            ]
+          }
+        },
+        {
+          "description": {
+            "label": "描述",
+            "control": "textarea",
+            "span": 24,
+            "showWordLimit": true,
+            "maxlength": 500,
+            "autosize": {
+              "minRows": 4,
+              "maxRows": 6
+            },
+            "rules": [
+              {
+                "max": 500,
+                "message": "请正确输入"
+              }
+            ]
+          }
+        }
+      ],
+      "initRequest": {
+        "url": "/API/risk-management-service/risk-message-template/query",
+        "method": "POST"
+      },
+      "doRequest": {
+        "url": "/API/risk-management-service/risk-message-template/update",
+        "method": "POST",
+        "params":{
+          "updateUser": "$g{{user_info.userCode}}"
+        }
+      }
+    }
+  }
+}

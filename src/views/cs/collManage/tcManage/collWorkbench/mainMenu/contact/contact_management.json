@@ -1,0 +1,105 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/iccsCall/iccsEurekaCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pl3607",
+          "case_id": "${{params.case_id}}",
+          "case_no": "${{params.case_no}}",
+          "cust_id": "${{params.cust_id}}",
+          "org_id": "${{params.org_id}}",
+          "oa_org_id": "${{params.oa_org_id}}"
+        }
+      },
+      "pagination": {
+        "show": true,
+        "pageSizes": [
+          5,
+          10,
+          15,
+          20
+        ],
+        "pageSize": 5
+      },
+      "thead": [
+        {
+          "type": "string",
+          "label": "联系人姓名",
+          "align": "center",
+          "width": "80px",
+          "prop": "cont_name"
+        },
+        {
+          "type": "string",
+          "label": "联系人关系",
+          "align": "center",
+          "width": "100px",
+          "prop": "relationship",
+          "dict": {
+            "dictKey": [
+              "relationship"
+            ],
+            "format": "value-label",
+            "labelField": "drop_list_desc",
+            "valueField": "drop_list_value",
+            "doRequest": {
+              "url": "/SUMP/iccsCall/iccsEurekaCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ap1071",
+                "drop_list_type": "RelationShip"
+              }
+            }
+          }
+        },
+        {
+          "type": "string",
+          "label": "电话类型",
+          "align": "center",
+          "width": "100px",
+          "prop": "tel_type",
+          "dict": {
+            "dictKey": [
+              "tel_type"
+            ],
+            "format": "value-label",
+            "labelField": "drop_list_desc",
+            "valueField": "drop_list_value",
+            "doRequest": {
+              "url": "/SUMP/iccsCall/iccsEurekaCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ap1071",
+                "drop_list_type": "tel_type"
+              }
+            }
+          }
+        },
+        {
+          "type": "string",
+          "label": "电话号码",
+          "align": "center",
+          "prop": "tel_no"
+        },
+        {
+          "type": "string",
+          "label": "是否有效",
+          "align": "center",
+          "width": "50px",
+          "prop": "is_valid",
+          "dict": {
+            "dictType": "E_YESORNO",
+            "dictKey": [
+              "E_YESORNO"
+            ],
+            "format": "value-label"
+          }
+        }
+      ]
+    }
+  }
+}

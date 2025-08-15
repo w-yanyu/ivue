@@ -1,0 +1,85 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "btns": [
+        {
+            "type": "custom",
+            "label": "提交",
+            "icon": "",
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "pd0303",
+                    "sale_prod_cd":"${{params.sale_prod_cd}}",
+                    "prod_version":"${{params.prod_version}}"
+
+                }
+                
+            },
+            "confirm": {
+              "title": "提示信息",
+              "msg": "请确认是否变更？  确定后请前往“可售产品管理”继续处理！",
+              "confirmButtonText": "确定",
+              "cancelButtonText": "取消"
+            }
+        }
+      ],
+      "controls": [
+        {
+          "version_flag": {
+            "control": "select",
+            "label": "是否发起模板版本变更",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "value-label"
+            },
+            "format": "label",
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择是否发起模板版本变更"
+              }
+            ],
+            "events" : {
+              "showItem": {
+                "1" : ["template_name", "template_version"]
+              }
+            }
+          }
+        },
+        {  "template_id": {
+            "control": "hidden",
+            "label": "模板编号",
+            "value":"${{params.template_id}}"
+          },
+          "template_name": {
+            "control": "string",
+            "label": "模板名称"
+          }
+        },
+        {
+          "template_version": {
+            "control": "lookup",
+            "label": "模板版本",
+            "keyField": {
+              "template_name": "template_name",
+              "template_version":"prod_version"
+            },
+            "toRequest": {
+              "url": "/views/pd/prodTemplate/prodTemplate_lookup.json",
+              "method": "post",
+              "params":{
+                "template_id":"${{params.template_id}}"
+              }
+            }
+          } 
+        }
+      ]
+    }
+  }
+}

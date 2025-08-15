@@ -1,0 +1,204 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [{
+                "cust_name": {
+                    "control": "text",
+                    "label": "客户名称",
+                    "rules": [{
+                        "max": 100,
+                        "message": "长度不能超过100个字符"
+                    }]
+                },
+                "ent_relation": {
+                    "control": "select",
+                    "label": "关联关系",
+                    "dict": {
+                        "dictType": "US_E_ENT_RELATION",
+                        "dictKey": [
+                            "US_E_ENT_RELATION"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                }
+            }]
+        },
+        "toolbar": {
+            "btns": [{
+                "type": "add",
+                "target": "dialog",
+
+                "label": "新增",
+                "toRequest": {
+                    "method": "GET",
+                    "url": "/views/us/entManager/corpRelaManager/cust_relationship_add.json",
+                    "params": {
+                        "rela_classify": "0",
+                        "cust_no": "${{params.cust_no}}"
+                    }
+                },
+                "show": {
+                    "expression": "'${{params.show_flash}}' == '1'"
+                },
+                "props": {
+                    "title": "关联关系新增",
+                    "width": "75%"
+                }
+            }]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "us0230",
+                    "rela_classify": "0",
+                    "cust_no": "${{params.cust_no}}"
+                }
+            },
+            "thead": [{
+                    "type": "index",
+                    "width": 50,
+                    "label": "序号"
+                },
+                {
+                    "label": "客户编号",
+                    "prop": "cust_no",
+                    "align": "center"
+                },
+                {
+                    "label": "关联客户名称",
+                    "prop": "cust_name",
+                    "align": "center"
+                },
+                {
+                    "label": "关联企业编号",
+                    "prop": "recust_no",
+                    "align": "center"
+                },
+                {
+                    "label": "是否我行客户",
+                    "prop": "is_our_cust",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                            "MS_E_YESORNO"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "关联关系",
+                    "prop": "ent_relation",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "US_E_ENT_RELATION",
+                        "dictKey": [
+                            "US_E_ENT_RELATION"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "关联级别",
+                    "prop": "relate_level",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "US_E_RELATION_LEVEL",
+                        "dictKey": [
+                            "US_E_RELATION_LEVEL"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "是否关联关系定义人",
+                    "prop": "is_relate",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                            "MS_E_YESORNO"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "关联类型",
+                    "prop": "association_type",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "US_E_RELATION_TYPE",
+                        "dictKey": [
+                            "US_E_RELATION_TYPE"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 160,
+                    "align": "center",
+                    "btns": [{
+                            "type": "look",
+                            "label": "详情",
+                            "toRequest": {
+                                "url": "/views/us/entManager/corpRelaManager/cust_relationship_info.json",
+                                "props": {
+                                    "width": "75%",
+                                    "title": "关联关系详情"
+                                }
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/us/entManager/corpRelaManager/cust_relationship_update.json",
+                                "method": "GET"
+                            },
+                            "show": {
+                                "expression": "'${{params.show_flash}}' == '1'"
+                            },
+                            "props": {
+                                "width": "75%",
+                                "title": "关联关系维护"
+                            }
+                        },
+                        {
+                            "type": "custom",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "us0233",
+                                    "trantp": "DELETE"
+                                }
+                            },
+                            "confirm": {
+                                "title": "确定删除",
+                                "confirmButtonText": "确定",
+                                "cancelButtonText": "取消"
+                            },
+                            "show": {
+                                "expression": "'${{params.show_flash}}' == '1'"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

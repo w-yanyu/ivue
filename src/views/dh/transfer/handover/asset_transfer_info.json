@@ -1,0 +1,84 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [{
+        "acc_brch_cd": {
+          "span": 8,
+          "control": "text",
+          "label": "账务机构"
+        },
+        "save_acct_name": {
+          "span": 8,
+          "control": "text",
+          "label": "存款户名"
+        }
+      }]
+    },
+    "toolbar": {
+      "btns": []
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "PLMSKGTS1004",
+          "appl_id": "${{params.appl_id}}"
+        }
+      },
+      "thead": [{
+          "type": "index",
+          "label": "序号",
+          "width": "55"
+        },
+        {
+          "label": "账务机构",
+          "prop": "acc_brch_cd"
+        },
+        {
+          "label": "出售金额(元)",
+          "prop": "sale_amt"
+        },
+        {
+          "label": "存款账号",
+          "prop": "save_acct"
+        },
+        {
+          "label": "存款户名",
+          "prop": "save_acct_name"
+        },
+        {
+          "label": "开户银行",
+          "prop": "save_acct_bank"
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "width": "260px",
+          "btns": [
+            {
+              "type": "look",
+              "label": "查看",
+              "toRequest": {
+                "url": "/views/dh/assetSale/totalApply/asset_total_info_details.json",
+                "method": "GET",
+                "params": {
+                  "appl_id": "${{params.appl_id}}",
+                  "sale_gather_id": "${{current.sale_gather_id}}",
+                  "sale_id": "${{current.sale_id}}"
+                }
+              },
+              "props": {
+                "width": "65%",
+                "title": "资产转让汇总申请信息"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

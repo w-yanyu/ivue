@@ -1,0 +1,156 @@
+{
+    "module": "v-inputDataForm-btn",
+    "layout": {
+        "form": {
+            "scope": "formData",
+            "btns": [],
+            "controls": [{
+                    "colt_no": {
+                        "control": "hidden",
+                        "label": "押品编号",
+                        "#span": 12,
+                        "width": "10px"
+                    },              
+                    "colt_desc": {
+                        "control": "lookup",
+                        "label": "押品名称",
+                        "#span": 12,
+                        "edit": false,
+                        "width": "10px",
+                        "keyField": {
+                            "colt_no": "colt_no"
+                        },
+                        "toRequest": {
+                            "url": "/views/cols/colsAppraisement/colt_lookup.json",
+                            "method": "get",
+                            "params":{
+                               
+                            }
+                        },
+                        "props": {
+                            "title": "查询押品名称"
+                        },
+                        "format": "label",
+                        "rules": [{
+                            "required": true,
+                            "message": "请选择客户名称"
+                        }]
+                    },
+                    "ordrid": {
+                        "control": "lookup",
+                        "#span": 12,
+                        "label": "授信编号",
+                        "width": "10px",
+                        "edit": false,
+                        "keyField": {
+                            "prodcd": "prodcd",
+                            "cltpcd": "cltpcd",
+                            "crcycd": "crcycd",
+                            "crdlno": "crdlno"
+                        },
+                        "toRequest": {
+                            "url": "/views/fols/CreditBusinessStart/creditNum_lookup.json",
+                            "method": "get",
+                            "params": {
+                                "custid": "${{formData.custId}}"
+                            }
+                        },
+                        "props": {
+                            "title": "选择额度编号"
+                        },
+                        "format": "label",
+                        "rules": [{
+                            "required": true,
+                            "message": "请选择客户名称"
+                        }]
+                    }
+                },
+                {
+                    "certtp": {
+                        "control": "select",
+                        "label": "证件类型",
+                        "#span": 12,
+                        "width": "10px",
+                        "disabled": true,
+                        "dict": {
+                            "dictType": "E_IDTFTP",
+                            "dictKey": [
+                                "E_IDTFTP"
+                            ],
+                            "labelField": "dictName",
+                            "valueField": "dictId"
+                        }
+                    },
+                    "certno": {
+                        "control": "text",
+                        "#span": 12,
+                        "width": "10px",
+                        "label": "证件号码",
+                        "disabled": true
+                    }
+                },
+
+                {
+                    "crdlno": {
+                        "control": "hidden",
+                        "label": "额度编号",
+                        "#span": 12,
+                        "width": "10px",
+                        "disabled": true
+                    }
+                },
+                {
+                    "prodcd": {
+                        "control": "text",
+                        "label": "业务产品",
+                        "#span": 12,
+                        "width": "10px",
+                        "disabled": true
+                    },
+                    "cltpcd": {
+                        "control": "text",
+                        "label": "可售产品",
+                        "#span": 12,
+                        "width": "10px",
+                        "disabled": true
+                    }
+                },
+                {
+                    "crcycd": {
+                        "control": "select",
+                        "#span": 12,
+                        "label": "币种",
+                        "width": "10px",
+                        "disabled": true,
+                        "dict": {
+                            "dictType": "MS_CURRENCY",
+                            "dictKey": [
+                                "MS_CURRENCY"
+                            ],
+                            "format": "label"
+                        }
+                    }
+                },
+                {
+                    "busi_desc": {
+                        "control": "textarea",
+                        "span": 24,
+                        "width": "10px",
+                        "label": "备注"
+                    }
+                },
+                {
+                    "toDbsx": {
+                        "span": 24,
+                        "control": "dynamic",
+                        "#isShowChildrenForm": false,
+                        "toRequest": {
+                            "method": "GET",
+                            "url": "@OutSubmitBtn"
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

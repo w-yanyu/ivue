@@ -1,0 +1,143 @@
+{
+  "module": "lr_tree_dynamic",
+  "layout": {
+    "refJs": "/refJs/treeMenu.js",
+    "tree": {
+      "scope": "treeTemplateParams",
+      "title": "催收组定义",
+      "width": "300px",
+      "min": "200px",
+      "max": "500px",
+      "hideDynamicArea": false,
+      "showRefresh": true,
+      "draggable": true,
+      "showToolbar": true,
+      "showTooltip": false,
+      "stopAddNodeField": "stopAddNode",
+      "stopDeleteNodeField": "isStopDeleteNode",
+      "draggableField": "isStopDraggable",
+      "idField": "coll_group",
+      "nodeTypeField": "type",
+      "pIdField": "parent_coll_team",
+      "labelField": "coll_team_name",
+      "isLeafField": "isLeaf",
+      "rootField": "coll_group",
+      "stopClickNodeField": "stopNodeClick",
+      "disabledField": "disabled",
+      "initRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ce0180",
+          "coll_kind": "02"
+        }
+      },
+      "root": {
+        "rootNode": {
+          "name": "BRANCH",
+          "value": "9999",
+          "disabled": true,
+          "coll_group": "9999"
+        },
+        "toRequest": {
+          "url": "/views/ce/paramManage/assign/collTeam/collTeam_rightTable.json",
+          "method": "get",
+          "params": {
+            "props": "${{current}}"
+          }
+        },
+        "contextMenu": [
+          {
+            "type": "add",
+            "label": "新增",
+            "icon": "el-icon-circle-plus-outline",
+            "toRequest": {
+              "url": "/views/ce/paramManage/assign/collTeam/collTeam_add.json",
+              "method": "get",
+              "params": {
+                "tree": "${{treeTemplateParams}}",
+                "props": "${{current}}"
+              }
+            },
+            "props": {
+              "width": "65%",
+              "title": "新增催收组定义",
+              "close": "",
+              "target": ""
+            }
+          }
+        ]
+      },
+      "nodeTypes": {
+        "collTeam": {
+          "icon": "el-icon-news",
+          "children": [
+            "collTeam"
+          ],
+          "toRequest": {
+            "url": "/views/ce/paramManage/assign/collTeam/collTeam_rightTable.json",
+            "method": "get",
+            "params": {
+              "props": "${{current}}"
+            }
+          },
+          "contextMenu": [
+            {
+              "type": "add",
+              "label": "新增",
+              "icon": "el-icon-circle-plus-outline",
+              "toRequest": {
+                "url": "/views/ce/paramManage/assign/collTeam/collTeam_add.json",
+                "method": "get",
+                "params": {
+                  "tree": "${{treeTemplateParams}}",
+                  "props": "${{current}}"
+                }
+              },
+              "props": {
+                "width": "65%",
+                "title": "新增催收组定义"
+              },
+              "eventAfter": {
+                "callback": "renderTree"
+              }
+            },
+            {
+              "type": "divider"
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "icon": "el-icon-remove-outline",
+              "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "ce0182"
+                }
+              },
+              "confirm": {
+                "title": "提示信息",
+                "msg": "该操作将删除当前催收组及其所有子催收组。确认删除吗？",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              },
+              "eventAfter": {
+                "callback": "renderTree"
+              }
+            }
+          ]
+        }
+      },
+      "search": {
+        "enabled": "true",
+        "showChildren": false,
+        "displayType": "tree",
+        "nameFields": [
+          "userName",
+          "userCode"
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,111 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "bbjtdm": {
+                        "label": "拨备计提代码",
+                        "control": "text",
+                        "rules": [
+                            {
+                                "max": "5",
+                                "message": "长度不能超过5个字符"
+                            }
+                        ]
+                    },
+                    "bbjtmc": {
+                        "label": "拨备计提名称",
+                        "control": "text",
+                        "rules": [
+                            {
+                                "max": "30",
+                                "message": "长度不能超过30个字符"
+                            }
+                        ]
+                    },
+                    "clevel":{
+                        "dict":{
+                            "dictType":"E_CUSTST",
+                            "dictKey":[
+                                "E_CUSTST"
+                            ],
+                            "format":"label"
+                        }
+
+                    }
+        
+                }
+            ]
+        },
+        "datagrid": {
+            "isInitSearch": false,
+            "scope": "searchTable",
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "PLMSKGSS0006"
+                }
+            },
+            "thead": [
+                {
+                    "prop": "bbjtdm",
+                    "label": "拨备计提代码",
+                    "align": "center"
+                },
+                {
+                    "prop": "clevel",
+                    "label": "五级分类等级",
+                    "align": "center"
+                },
+                {
+                    "prop": "bbjtbl",
+                    "label": "拨备计提比例",
+                    "align": "center"
+                },
+                {
+                    "prop": "bbztbl",
+                    "label": "拨备增提比例",
+                    "align": "center"
+                },
+                {
+                    "prop": "matmin",
+                    "label": "逾期天数最小值",
+                    "align": "center"
+                },
+                {
+                    "prop": "matmax",
+                    "label": "逾期天数最大值",
+                    "align": "center"
+                },
+               
+                {
+                    "prop": "firstl",
+                    "label": "拨备优先级",
+                    "align": "center"
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 200,
+                    "align":"center",
+                    "btns": [
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/other/loanPostManager/prov_edit.json",
+                                "method": "post"
+                            },
+                            "props": {
+                                "width": "65%",
+                                "title": "拨备参数维护"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

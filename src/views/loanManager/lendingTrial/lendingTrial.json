@@ -1,0 +1,403 @@
+{
+  "module": "v-form-editableDataGrid-btn",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "controls": [{
+        "custna": {
+          "label": "姓名",
+          "control": "lookup",
+          "edit": true,
+          "width": "130px",
+          "keyField": {
+            "custna": "custna",
+            "custac": "custid"
+          },
+          "toRequest": {
+            "url": "/views/us/usManager/corporateHandler/customersLookup.json",
+            "method": "post"
+          },
+          "props": {
+            "title": "查询客户名称"
+          },
+          "rules": [{
+            "required": true,
+            "message": "请选择客户名称"
+          }],
+          "format": "label"
+        },
+        "custac": {
+          "control": "string",
+          "disabled": true,
+          "label": "客户账号",
+          "width": "130px"
+        },
+        "crcycd": {
+          "label": "币种",
+          "control": "select",
+          "width": "130px",
+          "rules": [{
+            "required": true,
+            "message": "请选择币种"
+          }],
+          "dict": {
+            "dictType": "MS_CURRENCY",
+            "dictKey": [
+              "MS_CURRENCY"
+            ],
+            "format": "label"
+          }
+        },
+        "tranam": {
+          "control": "text",
+          "label": "交易金额",
+          "suffix": "元",
+          "width": "130px",
+          "format": {
+            "thousand": ",",
+            "decimal": "2",
+            "type": "currency"
+          },
+          "rules": [{
+            "required": true,
+            "message": "请选择日期"
+          }]
+        },
+        "loandt": {
+          "control": "dateTimePicker",
+          "label": "放款日期",
+          "format": "yyyyMMdd",
+          "width": "130px",
+          "rules": [{
+            "required": true,
+            "message": "请选择日期"
+          }]
+        },
+        "period": {
+          "control": "text",
+          "label": "贷款期限",
+          "width": "130px",
+          "suffix": "M",
+          "rules": [{
+            "required": true,
+            "message": "请选择日期"
+          }]
+        },
+        "matudt": {
+          "control": "dateTimePicker",
+          "label": "到期日期",
+          "format": "yyyyMMdd",
+          "width": "130px",
+          "rules": [{
+            "required": true,
+            "message": "请选择日期"
+          }]
+        },
+        "repyfm": {
+          "control": "text",
+          "label": "还款周期",
+          "width": "130px"
+        },
+        "prodcd": {
+          "control": "remoteSelect",
+          "label": "产品代码",
+          "width": "130px",
+          "labelField": "prodna",
+          "valueField": "prodcd",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "post",
+            "params": {
+              "servicecode": "CORELNTS2101"
+            }
+          },
+          "events": {
+            "condition": {
+              "$default": {
+                "control": {
+                  "sprdid": {
+                    "value": "${{formData.prodcd}}"
+                  }
+                }
+              }
+            }
+          },
+          "rules": [{
+            "required": true,
+            "message": "请选择产品代码"
+          }]
+        },
+        "sprdid": {
+          "control": "text",
+          "label": "可售产品ID",
+          "width": "130px",
+          "###control": "remoteSelect",
+          "###labelField": "crdtcd",
+          "###valueField": "crdtcd",
+          "###doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "post",
+            "paramsRequired": [
+              "prodcd"
+            ],
+            "params": {
+              "servicecode": "AS_ICMS_PD_QRPDLS",
+              "prodcd": "${{form.prodcd}}"
+            }
+          },
+          "rules": [{
+            "required": true,
+            "message": "请选择可售产品ID"
+          }]
+        },
+        "schdtp": {
+          "label": "还款方式",
+          "control": "select",
+          "width": "130px",
+          "rules": [{
+            "required": true,
+            "message": "请选择还款方式"
+          }],
+          "dict": {
+            "dictType": "E_SCHDTP",
+            "dictKey": [
+              "E_SCHDTP"
+            ],
+            "format": "label"
+          }
+        },
+        "incftp": {
+          "control": "select",
+          "label": "利率确认方式",
+          "width": "130px",
+          "rules": [{
+            "required": true,
+            "message": "请选择利率确认方式"
+          }],
+          "dict": {
+            "dictType": "E_INCFTP",
+            "dictKey": [
+              "E_INCFTP"
+            ],
+            "format": "label"
+          }
+        },
+        "irdyfg": {
+          "control": "select",
+          "label": "年/月利率标识",
+          "width": "130px",
+          "rules": [{
+            "required": true,
+            "message": "请选择年/月利率标识"
+          }],
+          "dict": {
+            "dictType": "E_IRDYFG",
+            "dictKey": [
+              "E_IRDYFG"
+            ],
+            "format": "label"
+          }
+        },
+        "lnrtir": {
+          "control": "text",
+          "label": "正常利率",
+          "width": "130px",
+          "suffix": "%",
+          "rules": [{
+            "required": true,
+            "message": "请输入正常利率"
+          }]
+        },
+        "frstmd": {
+          "control": "select",
+          "label": "首次还款日确定模式",
+          "width": "130px",
+          "rules": [{
+            "required": true,
+            "message": "请选择首次还款日确定模式"
+          }],
+          "dict": {
+            "dictType": "E_FRSTMD",
+            "dictKey": [
+              "E_FRSTMD"
+            ],
+            "format": "label"
+          }
+        },
+        "prisub": {
+          "control": "select",
+          "label": "本金分段",
+          "width": "130px",
+          "rules": [{
+            "required": true,
+            "message": "是否支持本金分段"
+          }],
+          "dict": {
+            "dictType": "E_YES___",
+            "dictKey": [
+              "E_YES___"
+            ],
+            "format": "label"
+          }
+        }
+      }]
+    },
+    "toolbar": {
+      "btns": [{
+        "type": "add",
+        "label": "添加本金分段",
+        "icon": "el-icon-plus",
+        "show": {
+          "expression": "'${{formData.prisub}}'==='1'"
+        }
+      }]
+    },
+    "datagrid": {
+      "name": "pspyls",
+      "pagination": {
+        "show": false
+      },
+      "thead": [{
+          "label": "序号",
+          "type": "index",
+          "align": "center",
+          "prop": "sortno"
+        },
+        {
+          "label": "还款方式",
+          "align": "center",
+          "type": "select",
+          "prop": "schdtp",
+          "rules": [{
+            "required": true,
+            "message": "请选择还款方式"
+          }],
+          "dict": {
+            "dictType": "E_SCHDTP",
+            "dictKey": [
+              "E_SCHDTP"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "还款周期",
+          "align": "center",
+          "type": "text",
+          "prop": "repyfm"
+        },
+        {
+          "label": "起始日期",
+          "align": "center",
+          "type": "dateTimePicker",
+          "format": "yyyyMMdd",
+          "prop": "bgindt",
+          "rules": [{
+            "required": true,
+            "message": "请选择起始日期"
+          }]
+        },
+        {
+          "label": "到期日期",
+          "align": "center",
+          "type": "dateTimePicker",
+          "format": "yyyyMMdd",
+          "prop": "matudt",
+          "rules": [{
+            "required": true,
+            "message": "请选择起始日期"
+          }]
+        },
+        {
+          "label": "本阶段还本金额",
+          "align": "center",
+          "type": "currency",
+          "prop": "crrpam"
+        },
+        {
+          "label": "本阶段附加费用金额",
+          "align": "center",
+          "type": "currency",
+          "prop": "adcgam"
+        },
+        {
+          "label": "本阶段附加收费代码",
+          "align": "center",
+          "type": "text",
+          "prop": "adcgcd"
+        },
+        {
+          "label": "本阶段附加收费计算基础",
+          "align": "center",
+          "type": "select",
+          "prop": "adcgbs",
+          "rules": [{
+            "required": false,
+            "message": "请选择本阶段附加收费计算基础"
+          }],
+          "dict": {
+            "dictType": "E_ADCGBS",
+            "dictKey": [
+              "E_ADCGBS"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作",
+          "btns": [{
+              "type": "add",
+              "label": "保存",
+              "doRequest": {
+                "url": "",
+                "method": "POST",
+                "params": {}
+              },
+              "props": {
+                "width": "65%",
+                "title": "保存"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "props": {
+                "width": "65%",
+                "title": "删除"
+              }
+            }
+          ],
+          "align": "center"
+        }
+      ]
+    },
+    "footer": {
+      "btns": [{
+          "type": "loanTrialBtn",
+          "label": "计算",
+          "target": "dialog",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              
+            }
+          },
+          "toRequest": {
+            "url": "/views/loanManager/lendingTrial/lendingTrial_loan_schedule.json",
+            "method": "GET",
+            "params": {}
+          },
+          "props": {
+              "title": "贷款放款试算结果"
+          }
+        },
+        {
+          "type": "reset",
+          "label": "重置",
+          "unplain": true
+        }
+      ]
+    }
+  }
+}

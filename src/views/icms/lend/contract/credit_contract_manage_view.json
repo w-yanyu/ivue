@@ -1,0 +1,165 @@
+{
+  "module": "v_realonlyForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "ar3005",
+          "source_system": "001",
+          "cust_no": "${{params.cust_id}}",
+          "prod_code": "${{params.prod_cd}}",
+          "prod_credit_seq": "${{params.reserve1}}",
+          "apply_no": "${{params.apply_no}}"
+        }
+      },
+      "controlsGroup": [
+        {
+          "title": {
+            "default": "授信信息",
+           "i18n": "L0501.Credit-information"
+        },
+          "tooltip": {
+            "default": "授信信息",
+           "i18n": "L0501.Credit-information"
+        },
+          "titleIcon": "el-icon-info",
+          "expand": true,
+          "accordion": false,
+          "controls": [
+            {
+              "prod_credit_seq": {
+                "control": "text",
+                "label": "额度编号",
+                "disabled": true,
+                "span": 8
+              },
+              "effect_date": {
+                "control": "dateTimePicker",
+                "format": "yyyyMMdd",
+                "label": "生效日期",
+                "disabled": true,
+                "span": 8
+              },
+              "expiry_date": {
+                "control": "dateTimePicker",
+                "format": "yyyyMMdd",
+                "label": "失效日期",
+                "disabled": true,
+                "span": 8
+              }
+            },
+            {
+              "old_ccy_code": {
+                "control": "select",
+                "disabled": true,
+                "label": "币种",
+                "span": 8,
+                "dict": {
+                  "dictType": "MS_CURRENCY",
+                  "dictKey": [
+                    "MS_CURRENCY"
+                  ],
+                  "format": "label"
+                }
+              },
+              "prod_total_credit": {
+                "control": "currency",
+                "disabled": true,
+                "decimal": "2",
+                "label": {
+                  "default": "授信金额(元)",
+                 "i18n": "L0501.Credit-amount"
+              },
+                "span": 8,
+                "align": "left",
+                "format":{
+                  "thousand": ","
+                }
+              },
+              "prod_total_exposure_credit": {
+                "control": "currency",
+                "disabled": true,
+                "decimal": "2",
+                "label": {
+                  "default": "授信总敞口金额(元)",
+                 "i18n": "L0501.Total-credit"
+              },
+                "span": 8,
+                "align": "left",
+                "format":{
+                  "thousand": ","
+                }
+              }
+            },
+            {
+              "available_use_limit": {
+                "control": "currency",
+                "disabled": true,
+                "decimal": "2",
+                "label": {
+                  "default": "授信可用金额(元)",
+                 "i18n": "L0501.Available-amount-of-credit"
+              },
+                "span": 8,
+                "align": "left",
+                "format":{
+                  "thousand": ","
+                }
+              },
+              "available_use_exposure": {
+                "control": "currency",
+                "disabled": true,
+                "decimal": "2",
+                "label": {
+                  "default": "授信可用敞口金额(元)",
+                 "i18n": "L0501.Available-exposure"
+				},
+                "span": 8,
+                "align": "left",
+                "format":{
+                  "thousand": ","
+                }
+              },
+              "quota_status": {
+                "control": "select",
+                "disabled": true,
+                "label": "额度状态",
+                "span": 8,
+                "dict": {
+                  "dictType": "UCCP_E_QUOTA_STATUS",
+                  "dictKey": [
+                    "UCCP_E_QUOTA_STATUS"
+                  ],
+                  "format": "label"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "title": "贷款合同信息",
+          "tooltip": "贷款合同信息",
+          "titleIcon": "el-icon-info",
+          "expand": true,
+          "accordion": false,
+          "controls": [
+            {
+              "info03": {
+                "span": 24,
+                "control": "dynamic",
+                "toRequest": {
+                  "url": "/views/icms/lend/contract/lend_contract_view.json",
+                  "params": {
+                    "apply_no": "${{params.apply_no}}"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

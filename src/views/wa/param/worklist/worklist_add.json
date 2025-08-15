@@ -1,0 +1,228 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "scope": "formData",
+            "name": "info",
+            "btns": [
+                {
+                    "type": "submit",
+                    "label": "提交",
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "wa0021"
+                        }
+                    }
+                }
+            ],
+            "controlsGroup": [
+                {
+                    "title": "预警任务单基本信息",
+                    "tooltip": "",
+                    "titleIcon": "",
+                    "showHint": "",
+                    "accordion": false,
+                    "expand": true,
+                    "controls": [
+                        {
+                            "task_name": {
+                                "control": "text",
+                                "label": "预警任务名称",
+                                "width": "130px",
+                                "rules": [
+                                    {
+                                        "required": true
+                                    }
+                                ],
+                                "span": "11"
+                            },
+                            "is_validity": {
+                                "control": "select",
+                                "label": "是否启用",
+                                "width": "130px",
+                                "span": "10",
+                                "rules": [
+                                    {
+                                        "required": true,
+                                        "message": "请选择是否启用"
+                                    }
+                                ],
+                                "dict": {
+                                    "dictType": "MS_E_YESORNO",
+                                    "dictKey": [
+                                        "MS_E_YESORNO"
+                                    ],
+                                    "format": "label"
+                                }
+                            },
+                            "batch_desc": {
+                                "label": "描述",
+                                "width": "130px",
+                                "placeholder": "(300个字以内,若没有请填“无”)",
+                                "control": "textarea",
+                                "span": "24",
+                                "autosize": {
+                                    "minRows": 4
+                                },
+                                "maxlength": 300,
+                                "showWordLimit": true
+                            },
+                          "warning_cust": {
+                            "control": "hidden",
+                            "label": "预警对象",
+                            "value":"C"
+                          }
+                        }
+                    ]
+                },
+                {
+                    "title": "预警任务单详细信息",
+                    "tooltip": "",
+                    "titleIcon": "",
+                    "showHint": "",
+                    "expand": true,
+                    "controls": [
+                        {
+                            "screen_style": {
+                                "control": "select",
+                                "label": "预警对象筛选方式",
+                                "width": "130px",
+                                "span": "10",
+                                "rules": [
+                                    {
+                                        "required": true,
+                                        "message": "请输入预警对象筛选方式"
+                                    }
+                                ],
+                                "dict": {
+                                    "dictType": "WA_E_SCREEN_STYLE",
+                                    "dictKey": [
+                                        "WA_E_SCREEN_STYLE"
+                                    ],
+                                    "format": "label"
+                                },
+                                "showItem": {
+                                    "S": [
+                                        "strategy_id"
+                                    ]
+                                }
+                            },
+                            "strategy_id": {
+                                "label": "策略编号",
+                                "control": "lookup",
+                                "edit": true,
+                                "width": "130px",
+                                "rules": [
+                                    {
+                                        "required": true,
+                                        "message": "请输入策略编号"
+                                    }
+                                ],
+                                "span": "10",
+                                "disable": "true",
+                                "initShow": false,
+                                "keyField": {
+                                    "strategy_id": "strategy_id"
+                                },
+                                "toRequest": {
+                                    "url": "/views/wa/param/worklist/worklist_filter.json",
+                                    "method": "post"
+                                },
+                                "props": {
+                                    "title": "选择筛选策略"
+                                },
+                                "format": "label"
+                            },
+                          "rule_package_no": {
+                            "control": "select",
+                            "label": "预警包规则编号",
+                            "width": "130px",
+                            "span": "10",
+                            "rules": [
+                              {
+                                "required": true,
+                                "message": "请输入预警包规则编号"
+                              }
+                            ],
+                            "dict": {
+                              "dictType": "WA_RULE_TYPE",
+                              "dictKey": [
+                                "WA_RULE_TYPE"
+                              ],
+                              "format": "label"
+                            }
+                          },
+                            "warn_rate_num": {
+                                "control": "text",
+                                "label": "预警频率",
+                                "width": "130px",
+                                "rules": [
+                                    {
+                                        "required": true,
+                                        "message": "请输入预警频率"
+                                    }
+                                ],
+                                "span": "10"
+                            },
+                            "warn_rate_style": {
+                                "control": "select",
+                                "label": "",
+                                "width": "15px",
+                                "span": "1",
+                                "rules": [
+                                    {
+                                        "required": true,
+                                        "message": "请选择预警频率周期"
+                                    }
+                                ],
+                                "dict": {
+                                    "dictType": "WA_E_RATE_STAYLE",
+                                    "dictKey": [
+                                        "WA_E_RATE_STAYLE"
+                                    ],
+                                    "format": "label"
+                                }
+                            }
+                        },
+                        {
+                            "first_warn_time": {
+                                "control": "dateTimePicker",
+                                "label": "首次预警时间",
+                                "width": "130px",
+                                "rules": [
+                                    {
+                                        "required": true,
+                                        "message": "请输入预警频率周期"
+                                    }
+                                ],
+                                "span": "10",
+                                "format": "yyyyMMdd"
+                            },
+                            "scheme_id": {
+                                "control": "select",
+                                "label": "工单分配规则",
+                                "width": "130px",
+                                "span": "10",
+                                "rules": [
+                                    {
+                                        "required": true,
+                                        "message": "请选择工单分配规则"
+                                    }
+                                ],
+                                "dict": {
+                                    "dictType": "WA_E_ASSIGNED_STYLE",
+                                    "dictKey": [
+                                        "WA_E_ASSIGNED_STYLE"
+                                    ],
+                                    "format": "label"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

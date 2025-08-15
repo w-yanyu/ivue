@@ -1,0 +1,60 @@
+{
+  "module": "lr-tree-dynamic",
+  "layout": {
+    "tree": {
+      "title": "集团成员授信",
+      "lazy": false,
+      "idField": "id",
+      "pIdField": "pid",
+      "labelField": "title",
+      "isLeafField": "isLeaf",
+      "nodeTypeField": "type",
+      "initRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "us0604",
+          "cust_no": "${{params.cust_no}}",
+          "is_group_credit_amt": "1"
+        }
+      },
+
+      "nodeTypes": {
+        "leaf00": {
+          "children": [
+            "leaf02"
+          ],
+          "toRequest": {
+            "url": "/views/icms/guaranteeManager/creditApplicationInfoManager/groupCredit/group_credit_manage.json",
+            "method": "get",
+            "params": {
+              "cust_no": "${{current.id}}",
+              "cust_name": "${{current.title}}",
+              "apply_no": "${{params.apply_no}}"
+            }
+          }
+        },
+        "leaf02": {
+          "children": [
+            "leaf02"
+          ],
+          "toRequest": {
+            "url": "/views/icms/guaranteeManager/creditApplicationInfoManager/groupCredit/group_credit_view.json",
+            "method": "get",
+            "params": {
+              "cust_no": "${{current.id}}",
+              "group_cust_no": "${{params.cust_no}}",
+              "apply_no": "${{params.apply_no}}",
+              "credit_prod_cd": "${{params.credit_prod_cd}}",
+
+              "cust_name": "${{current.title}}",
+              "base_ccy": "156",
+              "ccy_code": "156",
+              "exchange_rate": "1"
+            }
+          }
+        }
+      }
+    }
+  }
+}

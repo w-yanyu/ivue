@@ -1,0 +1,141 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/product/baseProductMange/product/lnfMatu/lnf_matu_add.json",
+            "params": {
+              "prodcd": "${{params.prodcd}}"
+            }
+          },
+          "props": {
+            "width": "70%",
+            "title": "产品到期属性新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "CORELNTS9013",
+          "prodcd": "${{params.prodcd}}"
+        }
+      },
+      "thead": [
+        {
+          "label": "产品代码",
+          "prop": "prodcd"
+        },
+        {
+          "label": "货币代号",
+          "prop": "crcycd",
+          "dict": {
+            "dictType": "MS_CURRENCY",
+            "dictKey": [
+              "MS_CURRENCY"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "到期扣息规则",
+          "prop": "instrp",
+          "dict": {
+            "dictType": "E_INSTRP",
+            "dictKey": [
+              "E_INSTRP"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "是否允许贷款展期",
+          "prop": "isexpd",
+          "dict": {
+            "dictType": "E_ISEXPD",
+            "dictKey": [
+              "E_ISEXPD"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "展期方式",
+          "prop": "expdtp",
+          "dict": {
+            "dictType": "E_EXPDTP",
+            "dictKey": [
+              "E_EXPDTP"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "展期最大次数",
+          "prop": "expdts"
+        },
+        {
+          "label": "展期最长期限",
+          "prop": "expdtm"
+        },
+        {
+          "label": "展期需足额扣款",
+          "prop": "expdrp",
+          "dict": {
+            "dictType": "E_EXPDRP",
+            "dictKey": [
+              "E_EXPDRP"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "修改",
+              "toRequest": {
+                "url": "/views/product/baseProductMange/product/lnfMatu/lnf_matu_update_sub.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "70%",
+                "title": "产品到期属性修改"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "CORELNTS9015"
+                }
+              },
+              "confirm": {
+                "title": "确定删除",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

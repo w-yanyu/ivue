@@ -1,0 +1,154 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "rateCode": {
+                        "control": "text",
+                        "label":  "定价方案编号",
+                        "rules": [
+                            {
+                                "max": 20,
+                                "message": "长度不能超过20个字符"
+                            }
+                        ]
+                    },
+                    "periods": {
+                        "control": "text",
+                        "label":  "期数",
+                        "rules": [
+                            {
+                                "max": 5,
+                                "message": "长度不能超过5个字符"
+                                
+                            }
+                        ]
+                    }
+                }
+               
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                  "type": "add",
+                  "target": "dialog",
+                  "label": "新增",
+                  "toRequest": {
+                      "method": "GET",
+                      "url": "/views/cm/InterestRateCenter/RatePlanManagement/planRequest.json"
+                  },
+                  "props": {
+                      "width": "65%",
+                      "title":  "利率方案信息新增"
+                  }
+              }
+              
+            
+            ]
+        }
+        ,
+        "datagrid": {
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "initPlan"
+                }
+            },
+            "pagination": {
+                "pageSizes": [
+                    10,
+                    15,
+                    20
+                ],
+                "pageSize": 10
+            },
+            "thead": [
+                {
+                    "label": "定价方案编号",
+                    "prop": "rate_code"
+                },
+                {
+                    "label":"定价方案名称",
+                    "prop": "rate_name"
+                },
+                {
+                    "label":  "期数",
+                    "prop": "periods"
+                },
+                {
+                    "label":  "利率",
+                    "prop": "interest_rate"
+                },
+                {
+                    "label":  "还款方式",
+                    "prop": "repayment_type",
+                    "dict": {
+                      "dictType": "E_SCHDTD",
+                      "dictKey": [
+                        "E_SCHDTD" 
+                      ],
+                      "format": "label",
+                    "labelField":"dictName",
+                    "valueField":"dictId"
+                  }
+                },
+                {
+                    "label":  "是否贴息(全额)",
+                    "prop": "subsidy_flag",
+                    "dict": {
+                      "dictType": "E_SUBFLG",
+                      "dictKey": [
+                        "E_SUBFLG"
+                      ],
+                      "format": "label",
+                    "labelField":"dictName",
+                    "valueField":"dictId"
+                  }
+                },
+                {
+                  "label": "操作",
+                  "fixed": "right",
+                  "width": 100,
+                  "align":"center",
+                  "btns": [
+                    {
+                      "type": "edit",
+                      "label": "维护",
+                      "toRequest": {
+                        "url": "/views/cm/InterestRateCenter/RatePlanManagement/updateplanRequest.json",
+                        "method": "POST"
+                      },
+                      "props": {
+                        "width": "75%",
+                        "title": "利率方案信息维护"
+                      }
+                    },  
+                    {
+                        "type": "delete",
+                        "label": "删除",
+                        "doRequest": {
+                            "url": "/SUMP/call/RPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "deleteplan"
+                            }
+                        }
+                    }
+                  ]
+                }
+            ]
+        },  
+        "alert": {
+          "span": 8,
+            "title": "还款方式编号说明：",
+            "description": [
+                "1-利随本清；2-按月还息一次还本；3-等额还款；4-等本还款 13-等本等息; 15-M+N模式。"
+            ],
+            "listStyle": "disc"
+        }
+    }
+}

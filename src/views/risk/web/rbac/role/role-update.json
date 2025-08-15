@@ -1,0 +1,81 @@
+{
+  "module": "v-inputDataForm-btn",
+  "layout": {
+    "form": {
+      "initRequest": {
+        "url": "/WEB/role",
+        "method": "GET"
+      },
+      "doRequest": {
+        "url": "/WEB/role",
+        "method": "PUT"
+      },
+      "controls": [
+        {
+          "id": {
+            "control": "string",
+            "initShow": false
+          },
+          "roleCode": {
+            "control": "string",
+            "label": "角色编码",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入角色编码"
+              }
+            ]
+          },
+          "roleName": {
+            "control": "text",
+            "label": "角色名称",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入角色名称"
+              }
+            ]
+          }
+        },
+        {
+          "application": {
+            "control": "select",
+            "label": "所属应用"
+          },
+          "enable": {
+            "control": "radio",
+            "label": "是否有效",
+            "#dict": {
+              "dictType": "WEB",
+              "dictKey": [
+                "WEB",
+                "boolean"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictCode",
+              "doRequest": {
+                "url": "/WEB/dict/common",
+                "method": "post"
+              }
+            },
+            "dict": {
+              "dictType": "yesOrNoNum",
+              "dictKey": [],
+              "doRequest": {
+                "url": "/views/risk/dictdata/yesOrNoNum.json",
+                "method": "post"
+              }
+            }
+          }
+        },
+        {
+          "description": {
+            "span": 24,
+            "control": "textarea",
+            "label": "备注"
+          }
+        }
+      ]
+    }
+  }
+}

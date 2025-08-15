@@ -1,0 +1,242 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "foldLineNumber": 4,
+      "scope": "formData",
+      "controls": [
+        {
+          "A": {
+            "control": "select",
+            "label": "区域中心",
+            "span": 8
+          },
+          "B": {
+            "control": "select",
+            "label": "产品大类",
+            "span": 8
+          },
+          "C": {
+            "control": "select",
+            "label": "账龄",
+            "span": 8
+          }
+        },
+        {
+          "D": {
+            "control": "text",
+            "label": "借据号",
+            "span": 8
+          },
+          "E": {
+            "control": "text",
+            "label": "客户名称",
+            "span": 8
+          },
+          "F": {
+            "control": "text",
+            "label": "证件号码",
+            "span": 8
+          }
+        },
+        {
+          "G": {
+            "control": "text",
+            "label": "委案公司",
+            "span": 8
+          },
+          "H": {
+            "control": "text",
+            "label": "委案到期时间",
+            "span": 8
+          }
+        },
+        {
+          "warnLabel": {
+            "label": "说明：账龄可以多选",
+            "labelWidth": "800px",
+            "span": 8,
+            "control": "link"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "export",
+          "icon": "el-icon-top-right",
+          "target": "dialog",
+          "checkCountMin":1,
+          "label": "导出",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/pl/collManage/oaManage/oaAssign/oaAssign_artificial.json"
+          }
+        },
+        {
+          "type": "import",
+          "icon": "el-icon-back",
+          "target": "dialog",
+          "checkCountMin":1,
+          "label": "取消分案导入",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/pl/collManage/oaManage/oaAssign/oaAssign_auto.json"
+          }
+        },
+        {
+          "type": "custom",
+          "icon": "el-icon-download",
+          "checkCountMin":1,
+          "label": "下载取消分案模板",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "pl4561",
+              "case_id": ""
+            }
+          },
+          "confirm": {
+            "title": "委外退案提醒",
+            "msg": "确定将案件退案，退出委外队列？",
+            "confirmButtonText": "确定",
+            "cancelButtonText": "取消"
+          }
+        },
+        {
+          "type": "custom",
+          "icon": "el-icon-s-data",
+          "target": "dialog",
+          "label": "委案数据统计",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/pl/collWorkManage/commissionManage/pending/pending_result_info.json"
+          },
+          "props": {
+            "width": "60%",
+            "title": "委案结果统计"
+          }
+        },
+        {
+          "type": "custom",
+          "icon": "el-icon-bell",
+          "target": "dialog",
+          "label": "委案确认",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/pl/collWorkManage/commissionManage/pending/pending_comfirm_info.json"
+          }
+        }
+      ]
+    },
+
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pl4560"
+        }
+      },
+      "thead": [
+        {
+          "type":"string",
+          "align":"center",
+          "width":"100px",
+          "label": "区域中心",
+          "prop": "branch_id"
+        },
+        {
+          "type":"string",
+          "align":"center",
+          "label": "借据号",
+          "prop": "case_id"
+
+        },
+        {
+          "type":"string",
+          "align":"center",
+          "width":"100px",
+          "label": "客户姓名",
+          "prop": "cust_name"
+        },
+        {
+          "type":"string",
+          "align":"center",
+          "label": "产品大类",
+          "prop": "id_no"
+        },
+        {
+          "type":"string",
+          "align":"center",
+          "width":"100px",
+          "label": "首逾标志",
+          "prop": "pre_function"
+        },
+        {
+          "type":"string",
+          "align":"center",
+          "width":"100px",
+          "label": "逾期天数",
+          "prop": "over_due_day"
+        },
+        {
+          "type":"string",
+          "align":"center",
+          "width":"100px",
+          "label": "账龄",
+          "prop": "oa_hands"
+        },
+        {
+          "type":"string",
+          "align":"center",
+          "width":"100px",
+          "label": "现贷余额",
+          "prop": "location_cd"
+        },
+        {
+          "type":"string",
+          "align":"center",
+          "width":"100px",
+          "label": "解除逾期金额",
+          "prop": "status_cd"
+        },
+        {
+          "type":"string",
+          "align":"center",
+          "label": "委案公司",
+          "prop": "queude_cd"
+        },
+        {
+          "type":"string",
+          "align":"center",
+          "label": "委案到期时间",
+          "prop": "queues_cd"
+        },
+        {
+          "type":"string",
+          "align":"center",
+          "label": "上一委案公司",
+          "prop": "queue_cd"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "100",
+          "label": "是否高危",
+          "prop": "collect_date"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "100",
+          "label": "是否法诉",
+          "prop": "collect_date"
+        }
+      ]
+    }
+  }
+}

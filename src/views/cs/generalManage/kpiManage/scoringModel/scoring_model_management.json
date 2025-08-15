@@ -1,0 +1,179 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "controls": [
+        {
+          "model_no": {
+            "control": "text",
+            "label": "模型编码"
+          },
+          "model_name": {
+            "control": "text",
+            "label": "模型名称"
+          }
+        },
+        {
+          "model_template": {
+            "control": "text",
+            "label": "模型模板"
+          },
+          "org_id": {
+            "label": "创建法人",
+            "control": "remoteSelect",
+            "labelField": "org_name",
+            "valueField": "org_id",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2311"
+              }
+            },
+            "format": "value-label"
+          }
+        },
+        {
+          "branch_id": {
+            "label": "创建机构",
+            "control": "remoteSelect",
+            "labelField": "branch_name",
+            "valueField": "branch_id",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2142",
+                "user_id": "$g{{user_info.userCode}}",
+                "branch_id": "$g{{user_info.branch_id}}",
+                "brch_relation_code": "01"
+              }
+            },
+            "format": "value-label"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "icon": "el-icon-circle-plus",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/cs/generalManage/kpiManage/scoringModel/scoring_model_add.json"
+          },
+          "props": {
+            "width": "70%",
+            "height": "95%",
+            "title": "新增评分模型"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "cb0323"
+        }
+      },
+      "thead": [
+        {
+          "type": "string",
+          "label": "模型编码",
+          "align": "center",
+          "prop": "model_no"
+        },
+        {
+          "type": "string",
+          "label": "模型名称",
+          "align": "center",
+          "prop": "model_name"
+        },
+        {
+          "type": "string",
+          "label": "模型模板",
+          "align": "center",
+          "prop": "model_template"
+        },
+        {
+          "type": "string",
+          "label": "描述",
+          "align": "center",
+          "prop": "detail"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "创建法人",
+          "prop": "org_id",
+          "dict": {
+            "dictKey": [
+              "org_id"
+            ],
+            "labelField": "org_name",
+            "valueField": "org_id",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2311",
+                "org_id": "${{current.org_id}}"
+              }
+            },
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "创建机构",
+          "prop": "branch_id",
+          "dict": {
+            "dictKey": [
+              "branch_id"
+            ],
+            "labelField": "branch_name",
+            "valueField": "branch_id",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2142",
+                "branch_id": "${{current.branch_id}}"
+              }
+            },
+            "format": "value-label"
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "align": "center",
+          "width": "130px",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/cs/generalManage/kpiManage/scoringModel/scoring_model_modify.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "70%",
+                "height": "95%",
+                "title": "评分模型维护"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

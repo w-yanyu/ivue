@@ -1,0 +1,122 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "prodCd": {
+            "control": "text",
+            "label": "产品编号",
+            "rules": [
+              {
+                "max": 20,
+                "message": "长度不能超过10个字符"
+              }
+            ]
+          },
+          "prodName": {
+            "control": "text",
+            "label": "产品名称",
+            "rules": [
+              {
+                "max": 20,
+                "message": "长度不能超过20个字符"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/pc/pc_main/pc_main_add.json"
+          },
+          "props": {
+            "title": "新增兼容性产品"
+          }
+        },
+        {
+          "type": "export",
+          "label": "批量导入",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/pc/pc_main/pc_batch_process.json"
+          },
+          "props": {
+            "title": "产品兼容性配置-批量导入"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "AS_ICMS_PD_PROLISE",
+          "page_id": "/views/pc/pc_main/pc_main.json"
+        }
+      },
+      "thead": [
+        {
+          "label": "序号",
+          "type": "index",
+          "align": "center"
+        },
+        {
+          "label": "产品编号",
+          "prop": "prodCd",
+          "align": "center"
+        },
+        {
+          "label": "产品名称",
+          "prop": "prodName",
+          "align": "center"
+        },
+        {
+          "label": "产品类别",
+          "prop": "prodType",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 500,
+          "align": "center",
+          "btns": [
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "AS_ICMS_PD_PROLIDE"
+                }
+              }
+            },
+            {
+              "type": "look",
+              "label": "兼容性设置",
+              "toRequest": {
+                "url": "/views/pc/pc_main/pc_main_setting.json",
+                "method": "POST"
+              },
+              "props": {
+                "title": "兼容性设置"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

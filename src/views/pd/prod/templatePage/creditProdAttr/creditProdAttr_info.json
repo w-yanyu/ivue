@@ -1,0 +1,267 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "name": "info",
+      "scope": "formData",
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "detail,format=pd0316,temp=pd0313",
+          "pageTranType": "${{params.pageTranType}}",
+          "credit_prod_cd": "${{params.sale_prod_cd}}",
+          "prod_version": "${{params.prod_version}}"
+        }
+      },
+      "btns": [],
+      "controls": [
+        {
+          "servicecode": {
+            "control": "hidden",
+            "label": "新增交易码",
+            "value": "pd0314"
+          },
+          "credit_prod_cd": {
+            "control": "string",
+            "label": "授信产品编号",
+            "span": 8,
+            "disabled": true
+          },
+          "prod_version": {
+            "control": "hidden",
+            "label": "产品版本",
+            "disabled": true
+          },
+          "is_self_help": {
+            "control": "select",
+            "label": "是否自助",
+            "span": 8,
+            "disabled": true,
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            }
+          },
+          "multiple_credit_allow_flag": {
+            "control": "select",
+            "label": "是否允许多个有效授信",
+            "disabled": true,
+            "span": 8,
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            }
+          },
+          "credit_way": {
+            "control": "select",
+            "disabled": true,
+            "label": "授信类型",
+            "span": 8,
+            "dict": {
+              "dictType": "PD_E_CREDIT_WAY",
+              "dictKey": [
+                "PD_E_CREDIT_WAY"
+              ],
+              "format": "label"
+            }
+          },
+          "guar_type":{
+            "span": 8,
+            "disabled": true,
+            "label": {
+              "default": "担保方式",
+              "i18n": "I10.guarantee-method"
+                      },
+            "control": "select",
+            "dict": {
+              "dictType": "MS_E_GUAR_TYPE",
+              "dictKey": [
+                "MS_E_GUAR_TYPE"
+              ],
+              "format": "label"
+            }
+        },
+        "colt_type": {
+          "label": "押品种类",
+          "control": "remoteSelect",
+          "disabled": true,
+          "span": 8,
+          "valueField": "colt_type",
+          "labelField": "colt_name",
+          "doRequest": {
+            "url": "/SUMP/call/RPCCall",
+            "method": "post",
+            "params": {
+              "servicecode": "co1012",
+              "guar_type": "${{formData.guar_type}}"
+            }
+          }
+        },
+          "is_allow_mul_prod": {
+            "disabled": true,
+            "control": "select",
+            "label": "是否允许同时存在多个产品明细",
+            "span": 8,
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            },
+            "showItem": {
+              "1": [
+                "credit_allow_num"
+              ]
+            },
+            "events": {
+              "condition": {
+                "0": {
+                  "control": {
+                    "cl_allocation_mode": {
+                      "disabled": true,
+                      "value": "1"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "credit_allow_num": {
+            "disabled": true,
+            "control": "text",
+            "initShow": false,
+            "label": "允许授信出账产品数量",
+            "span": 8
+          },
+          "cl_allocation_mode": {
+            "disabled": true,
+            "control": "select",
+            "label": "分配方式",
+            "span": 8,
+            "dict": {
+              "dictType": "PD_E_CLALLOCATION_MODE",
+              "dictKey": [
+                "PD_E_CLALLOCATION_MODE"
+              ],
+              "format": "label"
+            }
+          },
+          "min_credit_amt": {
+            "control": "currency",
+            "disabled": true,
+            "align": "left",
+            "label": "最小授信额度",
+            "span": 8,
+            "format": {
+              "thousand": ",",
+              "decimal": 2
+            }
+          },
+          "max_credit_amt": {
+            "control": "currency",
+            "disabled": true,
+            "align": "left",
+            "label": "最大授信额度",
+            "span": 8,
+            "format": {
+              "thousand": ",",
+              "decimal": 2
+            }
+          },
+          "min_credit_exposure": {
+            "control": "currency",
+            "disabled": true,
+            "align": "left",
+            "label": "最小授信敞口",
+            "span": 8,
+            "format": {
+              "thousand": ",",
+              "decimal": 2
+            }
+          },
+          "max_credit_exposure": {
+            "control": "currency",
+            "disabled": true,
+            "align": "left",
+            "label": "最大授信敞口",
+            "span": 8,
+            "format": {
+              "thousand": ",",
+              "decimal": 2
+            }
+          },
+          "due_date_option": {
+            "control": "select",
+            "label": "到期日选项",
+            "span": 8,
+            "disabled": true,
+            "dict": {
+              "dictType": "PD_E_DUE_DATE_OPTION",
+              "dictKey": [
+                "PD_E_DUE_DATE_OPTION"
+              ],
+              "format": "label"
+            }
+          },
+          "control_credit_flag": {
+            "control": "select",
+            "label": "是否控制授信额度",
+            "span": 8,
+            "disabled": true,
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            }
+          },
+          "inti_credit_allo_flag": {
+            "control": "select",
+            "label": "是否初始化额度分配组合",
+            "span": 8,
+            "disabled": true,
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            }
+          },
+          "credit_grace_days": {
+            "control": "string",
+            "label": "授信宽限天数",
+            "span": 8
+          },
+          "max_credit_term": {
+            "control": "string",
+            "label": "最大授信期限(月)",
+            "span": 8
+          },
+          "is_promptly_effect": {
+            "disabled": true,
+            "control": "select",
+            "label": "是否立即生效",
+            "span": 8,
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

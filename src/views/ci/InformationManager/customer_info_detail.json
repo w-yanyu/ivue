@@ -1,0 +1,239 @@
+{
+    "module": "v-inputDataForm-btn",
+    "layout": {
+        "form": {
+            "initDataOnce": true,
+            "initRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "us0001",
+                    "custid": "${{params.custid}}"
+                }
+            },
+            "btns": [{
+                "type": "custom",
+                "label": "修改",
+                "toRequest": {
+                    "url": "/views/ci/InformationManager/customer_info_update.json",
+                    "method": "GET",
+                    "target": "dialog",
+                    "params": {
+                        "certno": "${{params.certno}}",
+                        "custid": "${{params.custid}}"
+                    }
+                },
+                "eventAfter": {
+                    "callback": "resetCallback"
+                },
+                "props": {
+                    "width": "80%",
+                    "title": "客户开户信息维护"
+                }
+            }],
+            "controls": [{
+                    "custid": {
+                        "control": "text",
+                        "label": "客户编号",
+                        "span": "8",
+                        "width": "25px",
+                        "disabled": true
+                    },
+                    "custna": {
+                        "control": "text",
+                        "label": "客户名称",
+                        "span": "8",
+                        "width": "25px",
+                        "disabled": true
+                    },
+                    "cuodna": {
+                        "control": "text",
+                        "label": "客户曾用名",
+                        "span": "8",
+                        "width": "25px",
+                        "disabled": true
+                    }
+                },
+                {
+                    "cuenna": {
+                        "control": "text",
+                        "label": "客户英文名称",
+                        "disabled": true,
+                        "span": "8",
+                        "width": "25px"
+                    },
+                    "certtp": {
+                        "label": "证件类型",
+                        "control": "select",
+                        "width": "25px",
+                        "span": "8",
+                        "dict": {
+                            "format": "label",
+                            "dictKey": [
+                                "E_PUBLIC"
+                            ],
+                            "dictType": "E_PUBLIC"
+                        },
+                        "disabled": true
+                    },
+                    "certno": {
+                        "label": "证件号码",
+                        "control": "text",
+                        "width": "25px",
+                        "span": "8",
+                        "disabled": true
+                    }
+                },
+                {
+                    "cardsday": {
+                        "label": "证件签发日期",
+                        "width": "25px",
+                        "span": "8",
+                        "control": "dateTimePicker",
+                        "editable": true,
+                        "format": "yyyyMMdd",
+                        "disabled": true
+                    },
+                    "cardeday": {
+                        "label": "证件到期日期",
+                        "width": "25px",
+                        "span": "8",
+                        "control": "dateTimePicker",
+                        "editable": true,
+                        "format": "yyyyMMdd",
+                        "disabled": true,
+                        "disabledDate": {
+                            "startRange": "${{form.cardsday}}",
+                            "endRange": "3000-01-01"
+                        }
+                    },
+                    "inctry": {
+                        "label": "国别",
+                        "control": "select",
+                        "width": "25px",
+                        "span": "8",
+                        "dict": {
+                            "format": "label",
+                            "dictKey": [
+                                "E_INCTRY"
+                            ],
+                            "dictType": "E_INCTRY"
+                        },
+                        "disabled": true
+                    }
+                },
+                {
+                    "certct": {
+                        "label": "注册地址",
+                        "control": "text",
+                        "width": "25px",
+                        "span": "8",
+                        "disabled": true
+                    },
+                    "corgcd": {
+                        "control": "string",
+                        "label": "组织机构代码",
+                        "disabled": true,
+                        "width": "25px",
+                        "span": "8"
+                    },
+                    "orgdit": {
+                        "control": "text",
+                        "label": "机构信用代码",
+                        "disabled": true,
+                        "width": "25px",
+                        "span": "8"
+                    }
+                },
+                {
+                    "cuclas": {
+                        "label": "客户分类",
+                        "control": "select",
+                        "span": "8",
+                        "width": "25px",
+                        "dict": {
+                            "format": "label",
+                            "dictKey": [
+                                "E_CUCLAS"
+                            ],
+                            "dictType": "E_CUCLAS"
+                        },
+                        "disabled": true
+                    },
+                    "custty": {
+                        "label": "客户类别",
+                        "control": "select",
+                        "width": "25px",
+                        "span": "8",
+                        "dict": {
+                            "format": "label",
+                            "dictKey": [
+                                "E_CUSTTY"
+                            ],
+                            "dictType": "E_CUSTTY"
+                        },
+                        "disabled": true
+                    },
+                    "cuprop": {
+                        "label": "客户性质",
+                        "control": "select",
+                        "width": "25px",
+                        "span": "8",
+                        "dict": {
+                            "format": "label",
+                            "dictKey": [
+                                "E_CUPROP"
+                            ],
+                            "dictType": "E_CUPROP"
+                        },
+                        "disabled": true
+                    }
+                },
+                {
+                    "culncd": {
+                        "control": "text",
+                        "label": "贷款卡编号",
+                        "width": "25px",
+                        "span": "8",
+                        "disabled": true
+                    },
+                    "frozen": {
+                        "control": "select",
+                        "label": "冻结状态",
+                        "width": "25px",
+                        "span": "8",
+                        "options": [{
+                            "label": "否",
+                            "value": "N"
+                        }],
+                        "disabled": true
+                    },
+                    "indvfg": {
+                        "control": "hidden",
+                        "label": "是否个人客户",
+                        "dict": {
+                            "dictType": "E_YES",
+                            "dictKey": [
+                                "E_YES"
+                            ],
+                            "format": "label"
+                        },
+                        "disabled": true
+                    },
+                    "islpac": {
+                        "label": "是否法人关联客户",
+                        "control": "hidden",
+                        "dict": {
+                            "format": "label",
+                            "dictKey": [
+                                "E_YES_"
+                            ],
+                            "dictType": "E_YES_"
+                        },
+                        "disabled": true
+                    }
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,92 @@
+{
+  "module": "v-inputDataForm-btn",
+  "layout": {
+    "form": {
+      "doRequest": {
+        "url": "/WEB/organization",
+        "method": "POST",
+        "params": {
+          "orgParent": "${{params.orgCode}}"
+        }
+      },
+      "controls": [
+        {
+          "orgCode": {
+            "control": "text",
+            "label": "机构编码",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入机构编码"
+              }
+            ]
+          },
+          "orgName": {
+            "control": "text",
+            "label": "机构名称",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入机构名称"
+              }
+            ]
+          }
+        },
+        {
+          "orgType": {
+            "control": "select",
+            "label": "类型",
+            "value": "organization",
+            "disabled": true,
+            "dict": {
+              "dictType": "WEB",
+              "dictKey": [
+                "WEB",
+                "organization-type"
+              ],
+              "labelField": "appName",
+              "valueField": "appCode",
+              "doRequest": {
+                "url": "/WEB/application/list",
+                "method": "GET"
+              }
+            },
+            "required": true
+          },
+          "sequence": {
+            "control": "inputNumber",
+            "label": "排序号"
+          }
+        },
+        {
+          "enable": {
+            "control": "radio",
+            "label": "是否有效",
+            "value": "1",
+            "dict": {
+              "dictType": "WEB",
+              "dictKey": [
+                "WEB",
+                "boolean"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictCode",
+              "doRequest": {
+                "url": "/WEB/dict/common",
+                "method": "post"
+              }
+            },
+            "required": true
+          }
+        },
+        {
+          "description": {
+            "span": 24,
+            "control": "textarea",
+            "label": "备注"
+          }
+        }
+      ]
+    }
+  }
+}

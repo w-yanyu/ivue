@@ -1,0 +1,153 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "ruleid": {
+                        "label": "规则id",
+                        "control": "text",
+                        "rules": [
+                            {
+                                "max": "5",
+                                "message": "长度不能超过5个字符"
+                            }
+                        ]
+                    },
+                    "rudesc": {
+                        "label": "规则描述",
+                        "control": "text",
+                        "rules": [
+                            {
+                                "max": "30",
+                                "message": "长度不能超过30个字符"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "target": "dialog",
+                    "label": "新增",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/ac/assetClassifyAdjustRule/addAdjustRule.json"
+                    },
+                    "props": {
+                        "title": "资产分类调整规则新增"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "AS_ICMS_KG_RECURD",
+                    "method":"queryAll"
+                }
+            },
+            "thead": [
+                {
+                    "type": "index"
+                },
+                {
+                    "prop": "ruleid",
+                    "label": "规则id",
+                    "align": "center"
+                },
+                {
+                    "prop": "rudesc",
+                    "label": "规则描述",
+                    "align": "center"
+                },
+                {
+                    "prop": "rudate",
+                    "label": "分类日期",
+                    "align": "center"
+                },
+                {
+                    "prop": "freque",
+                    "dict": {
+                        "format": "label",
+                        "dictKey": [
+                            "E_FREQUE"
+                        ],
+                        "dictType": "E_FREQUE"
+                    },
+                    "label": "手工分类频率",
+                    "align": "center"
+                },
+                {
+                    "prop": "fachio",
+                    "dict": {
+                        "format": "label",
+                        "dictKey": [
+                            "E_FACHIO"
+                        ],
+                        "dictType": "E_FACHIO"
+                    },
+                    "label": "自动分类方式",
+                    "align": "center"
+                },
+                {
+                    "prop": "flowpa",
+                    "dict": {
+                        "format": "label",
+                        "dictKey": [
+                            "MS_E_YESORNO"
+                        ],
+                        "dictType": "MS_E_YESORNO"
+                    },
+                    "label": "是否发起流程",
+                    "align": "center"
+                },
+                {
+                    "prop": "pronumber",
+                    "label": "流程编号",
+                    "align": "center"
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": "200",
+                    "align": "center",
+                    "btns": [
+                        {
+                            
+                            "label": "维护",
+                            "type": "edit",
+                            "props": {
+                                "title": "资产分类调整规则修改"
+                            },
+                            "toRequest": {
+                                "method": "GET",
+                                "url": "/views/ac/assetClassifyAdjustRule/updateAdjustRule.json"
+                            }
+                        },
+                        {
+                            "label": "删除",
+                            "type": "delete",
+                            "doRequest": {
+                                "method": "POST",
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "params": {
+                                    "servicecode": "AS_ICMS_KG_RECURD",
+                                    "method":"del"
+                                }
+                            }
+                           
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

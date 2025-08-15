@@ -1,0 +1,150 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          
+          "user_name": {
+            "control": "text",
+            "label": "用户姓名",
+            "rules": [
+              {
+                "max": 100,
+                "message": "长度不能超过100个字符"
+              }
+            ]
+          },
+        
+          "user_status": {
+            "control": "select",
+            "dict": {
+              "dictType": "CT_E_TELLERSTAS",
+              "dictKey": [
+                "CT_E_TELLERSTAS"
+              ],
+              "format": "label"
+            },
+            "label": "用户状态"
+          }
+          },{
+          "branch_id": {
+            "control": "text",
+            "label": "机构号",
+            "rules": [
+              {
+                "max": 10,
+                "message": "长度不能超过10个字符"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增绑定用户",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/ismt/ct/roleManager/role-user-bind-add.json",
+            "params": {
+              "role_id":"${{params.role_id}}"
+            }
+          },
+          "props": {
+            "width": "60%",
+            "title": "新增绑定用户"
+          }
+        },
+        {
+          "type": "delete",
+          "target": "dialog",
+          "label": "删除绑定用户",
+          "doRequest": {
+            "url": "/SUMP/call/RPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "ct2104",
+              "role_id": "${{params.role_id}}",
+              "operater_ind":"D",
+              "brch_relation_code": "01",
+              "selectName":"userList"
+            }
+          },
+          "props": {
+            "width": "60%",
+            "title": "新增绑定用户"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "initRequest": "${{params}}",
+      "scope": "searchTable",
+      "doRequest": {
+        "url": "/SUMP/rest/auth/userManager",
+        "method": "POST",
+        "params": {
+          "servicecode": "ct2501",
+          "role_id":"${{params.role_id}}"
+        }
+      },
+      "thead": [
+        {
+          "type": "selection"
+        },
+        {
+          "label": "用户ID",
+          "prop": "user_id"
+        },
+        {
+          "label": "用户姓名",
+          "prop": "user_name"
+        },
+        {
+          "label": "性别",
+          "prop": "gender",
+          "dict": {
+            "dictType": "MS_E_GENDER",
+            "dictKey": [
+              "MS_E_GENDER"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "用户状态",
+          "prop": "user_status",
+          "dict": {
+            "dictType": "CT_E_TELLERSTAS",
+            "dictKey": [
+              "CT_E_TELLERSTAS"
+            ],
+            "format": "label"
+          }
+        },
+        
+        {
+          "label": "登录状态",
+          "prop": "login_status",
+          "dict": {
+            "dictType": "CT_E_LOGSTAS",
+            "dictKey": [
+              "CT_E_LOGSTAS"
+            ],
+            "format": "label"
+          }
+        },
+        
+        {
+          "label": "最后登录日期",
+          "prop": "last_login_time"
+        }
+
+      ]
+    }
+  }
+}

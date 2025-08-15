@@ -1,0 +1,145 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+      "form": {
+          "scope": "formData",
+          "initRequest": "${{params}}",
+          "controls": [
+              {
+                  "collector": {
+                      "control": "text",
+                      "label": "催收员编号"
+                  },
+                  "collector_name": {
+                      "control": "text",
+                      "label": "催收员姓名"
+                  }
+              }
+          ]
+      },
+      "toolbar": {
+          "btns": [
+              {
+                  "type": "add",
+                  "target": "dialog",
+                  "label": "新增",
+                  "show": {
+                    "expression": "'${{params.type}}' === 'collTeam' && '${{params.parent_coll_team}}' !== '-1'"
+                  },
+                  "toRequest": {
+                      "url": "/views/cs/paramManage/assign/collTeam/collUser_query.json",
+                      "method": "GET",
+                      "params": {
+                          "props": "${{params}}"
+                      }
+                  },
+                  "props": {
+                    "title": "新增催收员"
+                  }
+              }
+          ]
+      },
+      "datagrid": {
+          "isInitSearch": true,
+          "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "cb0043",
+                "appId": "cbOnl",
+                "coll_team": "${{params.coll_team}}"
+              }
+          },
+          "thead": [
+              {
+                  "type": "selection",
+                  "align":"center",
+                  "width": "55",
+                  "fixed": "left"
+              },
+              {
+                  "type":"string",
+                  "align":"center",
+                  "label": "催收员编号",
+                  "prop": "collector"
+              },
+              {
+                  "type":"string",
+                  "align":"center",
+                  "label": "催收员姓名",
+                  "prop": "collector_name"
+
+              },
+              {
+                  "type":"string",
+                  "align":"center",
+                  "label": "催收岗位",
+                  "prop": "coll_position",
+                  "dict": {
+                    "dictType": "CS_E_COLL_POST",
+                    "dictKey": [
+                        "CS_E_COLL_POST"
+                    ],
+                    "format": "value-label"
+                }
+              },
+              {
+                  "type":"string",
+                  "align":"center",
+                  "label": "催收组",
+                  "prop": "coll_team"
+              },
+              {
+                  "type":"string",
+                  "align":"center",
+                  "label": "坐席工号",
+                  "prop": "work_number"
+              },
+              {
+                  "type":"string",
+                  "align":"center",
+                  "label": "坐席密码",
+                  "prop": "work_password"
+              },
+              {
+                  "type":"string",
+                  "align":"center",
+                  "label": "分机号",
+                  "prop": "sub_phone_no"
+
+              },
+              {
+                  "label": "操作",
+                  "align":"center",
+                  "fixed": "right",
+                  "width": "150%",
+                  "btns": [
+                      {
+                          "type":"look",
+                          "label":"维护",
+                          "toRequest":{
+                              "url":"/views/cs/paramManage/assign/collTeam/collUser_modify.json",
+                              "method":"POST"
+                          },
+                          "props":{
+                              "title":"催收员维护"
+                          }
+                      },
+                      {
+                          "type": "delete",
+                          "label": "删除",
+                          "doRequest": {
+                              "url": "/SUMP/icmcall/icmRPCCall",
+                              "method": "POST",
+                              "params": {
+                                "servicecode": "cb0045",
+                                "appId": "cbOnl"
+                              }
+                          }
+                      }
+                  ]
+              }
+          ]
+      }
+  }
+}

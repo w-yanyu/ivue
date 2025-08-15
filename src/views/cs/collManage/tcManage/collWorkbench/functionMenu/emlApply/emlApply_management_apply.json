@@ -1,0 +1,79 @@
+{
+  "module": "v-inputDataForm-btn",
+  "layout": {
+    "form": {
+      "btns": [
+        {
+          "type": "submit",
+          "target": "dialog",
+          "label": "申请",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "case_id": "${{params.case_id}}",
+              "servicecode": "cb0117",
+              "appId": "cbOnl"
+            }
+          }
+        },
+        {
+          "type": "close",
+          "label": "返回"
+        }
+      ],
+      "controls": [
+        {
+          "template_code": {
+            "control": "lookup",
+            "label": "邮件模板",
+            "span": 8,
+            "keyField":{
+              "template_code": "template_id",
+              "template_type": "template_type",
+              "email_content": "template_content"
+            },
+            "toRequest": {
+              "url": "/views/cs/collManage/tcManage/collWorkbench/functionMenu/emlApply/prodMailSet_lookup.json",
+              "method": "post",
+              "params":{
+                "org_id": "${{params.org_id}}"
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "模板编号不得为空"
+              }
+            ]
+        
+          },
+          "email": {
+            "control": "text",
+            "span": 8,
+            "label": "电子邮箱",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              },
+              {
+                "pattern": "^[a-z0-9A-Z]+[- | a-z0-9A-Z . _]+@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-z]{2,}$",
+                "message": "请输入正确邮箱地址！"
+              }
+            ]
+          },
+          "email_content": {
+            "disabled": true,
+            "dataArray": true,
+            "labelWidth": "0",
+            "control": "mce",
+            "#control": "textarea",
+            "span": 22,
+            "label": "模板内容"
+          }
+        }
+      ]
+    }
+  }
+}

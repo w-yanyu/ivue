@@ -1,0 +1,212 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "controls": [
+        {
+          "gl_code": {
+            "control": "text",
+            "label": "科目号",
+            "name": "gl_code"
+          },
+          "gl_code_desc": {
+            "control": "text",
+            "label": "科目名称",
+            "name": "gl_code_desc"
+          }
+        },
+        {
+          "gl_code_type": {
+            "control": "select",
+            "label": "科目类别",
+            "name": "gl_code_type",
+            "dict": {
+              "dictType": "E_SUBJECTTYPE",
+              "dictKey": [
+                "E_SUBJECTTYPE"
+              ],
+              "format": "label"
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/loanManager/glCodeManagement/add/gl_code_detail_add.json"
+          },
+          "props": {
+            "title": "科目信息新增"
+          }
+        },
+        {
+          "type": "delete",
+          "label": "删除",
+          "icon": "el-icon-close",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "IGLSFATS3011",
+              "list01": "${{current.selectedData}}"
+            }
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "IGLSFATS2007"
+        }
+      },
+      "thead": [
+        {
+          "type": "selection",
+          "width": "35"
+        },
+        {
+          "type": "index",
+          "align": "center"
+        },
+        {
+          "label": "科目号",
+          "prop": "gl_code",
+          "align": "center"
+        },
+        {
+          "label": "科目名称",
+          "prop": "gl_code_desc",
+          "align": "center"
+        },
+        {
+          "label": "上级科目",
+          "prop": "upper_lvl_gl_code",
+          "align": "center"
+        },
+        {
+          "label": "科目类别",
+          "prop": "gl_code_type",
+          "align": "center",
+          "dict": {
+            "dictType": "E_SUBJECTTYPE",
+            "dictKey": [
+              "E_SUBJECTTYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "末层科目标志",
+          "prop": "end_gl_code_ind",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "余额性质",
+          "prop": "bal_prop",
+          "align": "center",
+          "dict": {
+            "dictType": "E_BALPROP",
+            "dictKey": [
+              "E_BALPROP"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "表内标志",
+          "prop": "on_bal_sheet_ind",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "借方手工记账许可",
+          "prop": "debit_manual_allow",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "贷方手工记账许可",
+          "prop": "credit_manual_allow",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "允许记账的系统",
+          "prop": "allow_accounting_sys",
+          "align": "center"
+        },
+        {
+          "label": "有效标志",
+          "prop": "valid_ind",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "建立日期",
+          "prop": "create_date",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/loanManager/glCodeManagement/modify/gl_code_modify.json",
+                "method": "POST"
+              },
+              "props": {
+                "title": "会计核算事件维护"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

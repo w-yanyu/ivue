@@ -1,0 +1,74 @@
+{
+  "module": "v-inputDataForm-btn",
+  "layout": {
+    "form": {
+      "btns": [
+        {
+          "type": "closeNavTab",
+          "target": "dialog",
+          "label": "申请",
+          "doRequest": {
+            "url": "/SUMP/call/RPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "ce3527",
+              "case_no":"${{params.case_no}}",
+              "apply_reason": "${{form.apply_reason}}",
+              "queue_code": "${{form.queue_code}}"
+            }
+          }
+        },
+        {
+          "type": "close",
+          "label": "返回"
+        }
+      ],
+
+      "controls": [
+        {
+          "queue_code": {
+            "control": "remoteSelect",
+            "span": 8,
+            "selectFirstValue": true,
+            "clearable": false,
+            "labelWidth": "0",
+            "inputWidth": "250px",
+            "label": "委外队列",
+            "labelField": "queue_name",
+            "valueField": "queue_code",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ce0054",
+                "coll_kind": "02",
+                "collection_type": "OA01",
+                "is_valid": "1"
+              }
+            },
+            "format": "label",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          },
+          "apply_reason": {
+            "control": "textarea",
+            "span": 22,
+            "rows":"6",
+            "labelWidth": "0",
+            "label": "申请原因",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

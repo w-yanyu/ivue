@@ -1,0 +1,76 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "initRequest": "${{params}}",
+            "controls": [
+                {
+                    "opridd": {
+                        "label": "操作员编号",
+                        "control": "text",
+                        "width": "130px",
+                        "rules": [
+                            {
+                                "max": 20,
+                                "message": "长度不能超过20个字符"
+                            }
+                        ]
+                    },
+                    "oprnam": {
+                        "label": "操作员姓名",
+                        "control": "text",
+                        "width": "130px",
+                        "rules": [
+                            {
+                                "max": 80,
+                                "message": "长度不能超过80个字符"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "foldLineNumber": 3
+        },
+        
+        "datagrid": {
+            "isInitSearch": false,
+            "scope": "searchTable",
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "AS_ICMS_CM_SEOPRA"
+                }
+            },
+            "thead": [
+                {
+                    "label": "操作",
+                    "fixed": "left",
+                    "btns": [
+                        {
+                            "type": "bringback",
+                            "label": "选择"
+                        }
+                    ]
+                },
+              
+                {
+                    "label": "操作员编号",
+                    "prop": "opridd"
+                },
+                {
+                    "label": "操作员姓名",
+                    "prop": "oprnam"
+                },
+               
+                {
+                    "label": "所属机构",
+                    "prop": "orgidd"
+                }
+            ],
+            "pagination": {
+                "show": true
+            }
+        }
+    }
+}

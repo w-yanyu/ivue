@@ -1,0 +1,120 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "foldLineNumber": 3,
+      "controls": [
+        {
+          "case_id": {
+            "control": "text",
+            "label": "案件编号"
+          },
+          "cust_name": {
+            "control": "text",
+            "label": "姓名"
+          },
+          "stage_code": {
+            "control": "remoteSelect",
+            "label": "逾期阶段",
+            "labelField": "stage_name",
+            "valueField": "stage_code",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "cb0083"
+              }
+            },
+            "format": "value-label"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "cb0292",
+          "serial_no": "${{params.serial_no}}"
+        }
+      },
+      "thead": [
+        {
+          "type": "string",
+          "align": "center",
+          "label": "登记流水号",
+          "prop": "reg_seq_no"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "案件编号",
+          "prop": "case_id"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "姓名",
+          "prop": "cust_name"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "逾期天数",
+          "prop": "overdue_days"
+        },
+        {
+          "type": "string",
+          "label": "逾期阶段",
+          "align": "center",
+          "prop": "stage_code",
+          "dict": {
+            "dictKey": [
+              "stage_code"
+            ],
+            "labelField": "stage_name",
+            "valueField": "stage_code",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "cb0083",
+                "stage_code": "${{current.stage_code}}"
+              }
+            },
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "逾期总额",
+          "format": {
+            "thousand": ","
+          },
+          "prop": "overdue_amount"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "净回款金额",
+          "format": {
+            "thousand": ","
+          },
+          "prop": "recovery_amt"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "佣金金额",
+          "format": {
+            "thousand": ","
+          },
+          "prop": "commission_total_amt"
+        }
+      ]
+    }
+  }
+}

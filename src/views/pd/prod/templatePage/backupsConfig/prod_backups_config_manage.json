@@ -1,0 +1,130 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "新增",
+          "toRequest": {
+            "url": "/views/pd/prod/templatePage/backupsConfig/prod_backups_config_add.json",
+            "method": "get",
+            "params": {
+              "sale_prod_cd": "${{params.sale_prod_cd}}",
+              "prod_version": "${{params.prod_version}}"
+            }
+          },
+          "props": {
+            "title": "备份处理配置新增",
+            "width": "65%"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "pd1534",
+          "sale_prod_cd": "${{params.sale_prod_cd}}",
+          "prod_version": "${{params.prod_version}}"
+        }
+      },
+      "pagination": {
+        "pageSizes": [
+          10,
+          15,
+          20
+        ],
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "type": "index",
+          "align": "center"
+        },
+        {
+          "label": "备份配置编号",
+          "prop": "join_lend_config_no",
+          "align": "center"
+        },
+        {
+          "label": "归档表名",
+          "prop": "archive_table_name",
+          "align": "center"
+        },
+        {
+          "label": "归档表类型",
+          "prop": "archive_table_type",
+          "dict": {
+            "dictType": "PD_E_ARCHIVE_TYPE",
+            "dictKey": [
+              "PD_E_ARCHIVE_TYPE"
+            ],
+            "format": "value-label"
+          },
+          "align": "center"
+        },
+        {
+          "label": "归档方式",
+          "prop": "archive_table_mode",
+          "dict": {
+            "dictType": "PD_E_ARCHIVE_MODE",
+            "dictKey": [
+              "PD_E_ARCHIVE_MODE"
+            ],
+            "format": "value-label"
+          },
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "width": "150px",
+          "align": "center",
+          "fixed": "right",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/pd/prod/templatePage/backupsConfig/prod_backups_config_detail.json",
+                "method": "get",
+                "params": {}
+              },
+              "props": {
+                "title": "备份处理配置详情",
+                "width": "80%"
+              }
+            },
+            {
+              "type": "look",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/pd/prod/templatePage/backupsConfig/prod_backups_config_modify.json",
+                "method": "get",
+                "params": {}
+              },
+              "props": {
+                "title": "备份处理配置维护",
+                "width": "80%"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "pd1533"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

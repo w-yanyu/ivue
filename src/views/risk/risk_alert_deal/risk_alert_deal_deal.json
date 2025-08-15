@@ -1,0 +1,292 @@
+{
+  "module": "v-form-btn-dynamic",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "investType": {
+            "control": "select",
+            "label": "调查结果标识",
+            "dict": {
+              "dictType": "investResultFlagSource",
+              "dictKey": [],
+              "format": "value-label",
+              "doRequest": {
+                "url": "/views/risk/dictdata/investResultFlag.json",
+                "method": "get"
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "该控件必填"
+              }
+            ]
+          },
+          "fraudFlag": {
+            "control": "select",
+            "label": "是否欺诈",
+            "dict": {
+              "dictType": "fraudFlagSource",
+              "dictKey": [],
+              "format": "value-label",
+              "doRequest": {
+                "url": "/views/risk/dictdata/fraudFlag.json",
+                "method": "get"
+              }
+            },
+            "events": {
+              "condition": {
+                "switch": {
+                  "0": {
+                    "control": {
+                      "fraudType": {
+                        "value": "",
+                        "rules": [
+                          {
+                            "required": false
+                          }
+                        ]
+                      },
+                      "fraudAmount": {
+                        "value": "",
+                        "rules": [
+                          {
+                            "required": false
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "1": {
+                    "control": {
+                      "fraudType": {
+                        "value": "",
+                        "rules": [
+                          {
+                            "required": true,
+                            "message": "该控件必填"
+                          }
+                        ]
+                      },
+                      "fraudAmount": {
+                        "value": "",
+                        "rules": [
+                          {
+                            "required": true,
+                            "message": "请正确输入"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "该控件必填"
+              }
+            ]
+          }
+        },
+        {
+          "fraudType": {
+            "control": "select",
+            "label": "欺诈类型",
+            "dict": {
+              "dictType": "fraudTypeSource",
+              "dictKey": [],
+              "format": "value-label",
+              "doRequest": {
+                "url": "/views/risk/dictdata/fraudType.json",
+                "method": "get"
+              }
+            }
+          },
+          "fraudAmount": {
+            "control": "currency",
+            "label": "欺诈金额",
+            "decimal": "2"
+          }
+        },
+        {
+          "processingFlag": {
+            "control": "select",
+            "label": "警报处理手段",
+            "format": "value-label",
+            "options": [
+              {
+                "label": "不处理",
+                "value": "00"
+              },
+              {
+                "label": "加入名单",
+                "value": "01"
+              },
+              {
+                "label": "删除名单",
+                "value": "02"
+              },
+              {
+                "label": "止付",
+                "value": "03"
+              }
+            ],
+            "events": {
+              "condition": {
+                "switch": {
+                  "01": {
+                    "control": {
+                      "listOwnerType": {
+                        "value": ""
+                      },
+                      "listType": {
+                        "value": ""
+                      }
+                    }
+                  },
+                  "02": {
+                    "control": {
+                      "listOwnerType": {
+                        "value": ""
+                      },
+                      "listType": {
+                        "value": ""
+                      }
+                    }
+                  },
+                  "03": {
+                    "control": {
+                      "listOwnerType": {
+                        "value": ""
+                      },
+                      "listType": {
+                        "value": ""
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "showItem": {
+              "": [],
+              "01": [
+                "listOwnerType",
+                "listType"
+              ],
+              "02": [
+                "listOwnerType",
+                "listType"
+              ],
+              "03": [
+                "listOwnerType"
+              ]
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "该控件必填"
+              }
+            ]
+          },
+          "listOwnerType": {
+            "control": "select",
+            "label": "处理对象",
+            "initShow": false,
+            "dict": {
+              "dictType": "listOwnerTypeSource",
+              "dictKey": [],
+              "format": "value-label",
+              "doRequest": {
+                "url": "/views/risk/dictdata/ownerType.json",
+                "method": "get"
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "该控件必填"
+              }
+            ]
+          }
+        },
+        {
+          "listType": {
+            "control": "select",
+            "label": "名单类型",
+            "initShow": false,
+            "dict": {
+              "dictType": "listTypeSource",
+              "dictKey": [],
+              "format": "value-label",
+              "valueField": "collectionIndicatorCode",
+              "labelField": "collectionIndicatorName",
+              "doRequest": {
+                "url": "/API/risk-management-service/risk-collection-indicator/queryDict",
+                "method": "post",
+                "params": {
+                  "collectionSource": "List"
+                }
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "该控件必填"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "submit",
+          "label": "处理完成",
+          "doRequest": {
+            "url": "/API/risk-management-service/risk-alert-information/dealOver",
+            "method": "post",
+            "params": {
+              "alertStatus": "03",
+              "alertId": "${{params.alertId}}",
+              "memoType": "02",
+              "status": "0",
+              "createUser": "$g{{user_info.userCode}}",
+              "updateUser": "$g{{user_info.userCode}}"
+            }
+          },
+          "confirm": {
+            "title": "提示信息",
+            "msg": "确定处理吗？",
+            "confirmButtonText": "确定",
+            "cancelButtonText": "取消"
+          }
+        },
+        {
+          "type": "custom",
+          "label": "添加调查信息",
+          "doRequest": {
+            "url": "/views/risk/risk_alert_deal/responce.json",
+            "method": "get"
+          },
+          "toRequest": {
+            "url": "/views/risk/risk_alert_deal/risk_alert_deal_add.json",
+            "method": "get",
+            "params": {
+              "investOwnerId": "${{params.alertId}}"
+            }
+          },
+          "props": {
+          }
+        },
+        {
+          "type": "close",
+          "label": "关闭"
+        }
+      ]
+    }
+  }
+}

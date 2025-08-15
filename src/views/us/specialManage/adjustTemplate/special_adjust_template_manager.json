@@ -1,0 +1,198 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "temp_no": {
+            "label": "组合编号",
+            "control": "text",
+            "rules": [
+              {
+                "required": false,
+                "message": "请输入组合编号"
+              }
+            ]
+          },
+          "temp_name": {
+            "label": "组合名称",
+            "control": "text",
+            "rules": [
+              {
+                "required": false,
+                "message": "请输入组合名称"
+              }
+            ]
+          },
+          "apply_cust_type": {
+            "label": "适用客户类型",
+            "control": "select",
+            "dict": {
+              "dictType": "US_E_APPL_CUST_TYPE",
+              "dictKey": "US_E_APPL_CUST_TYPE"
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/us/specialManage/adjustTemplate/special_adjust_template_add.json",
+            "params": {
+            }
+          },
+          "props": {
+            "title": "特殊项调整组合新增",
+            "width": "75%"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "us0433"
+        }
+      },
+      "thead": [
+        {
+          "type": "index",
+          "width": 50,
+          "label": "序号"
+        },
+        {
+          "label": "组合编号",
+          "prop": "temp_no",
+          "align": "center",
+          "type": "leaf"
+        },
+        {
+          "label": "组合名称",
+          "prop": "temp_name",
+          "align": "center",
+          "type": "leaf"
+        },
+        {
+          "label": "调整类型",
+          "prop": "adj_type",
+          "align": "center",
+          "type": "leaf",
+          "dict": {
+            "dictType": "US_E_ADJ_TYPE",
+            "dictKey": [
+              "US_E_ADJ_TYPE"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "label": "适用客户类型",
+          "prop": "apply_cust_type",
+          "align": "center",
+          "type": "leaf",
+          "dict": {
+            "dictType": "US_E_APPL_CUST_TYPE",
+            "dictKey": [
+              "US_E_APPL_CUST_TYPE"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "label": "审批权限",
+          "prop": "appr_auth",
+          "align": "center",
+          "type": "leaf",
+          "dict": {
+            "dictType": "US_E_APPR_AUTH",
+            "dictKey": [
+              "US_E_APPR_AUTH"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "label": "表名",
+          "prop": "table_name",
+          "align": "center",
+          "type": "leaf",
+          "dict": {
+            "dictType": "US_E_TABLE_NAME",
+            "dictKey": "US_E_TABLE_NAME",
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/us/specialManage/adjustTemplate/special_adjust_template_info.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "75%",
+                "title": "特殊项调整组合详情"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/us/specialManage/adjustTemplate/special_adjust_template_modify.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "75%",
+                "title": "特殊项调整组合维护"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "组合明细",
+              "toRequest": {
+                "url": "/views/us/specialManage/adjustTemplate/special_adjust_template_detail.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "75%",
+                "title": "特殊项调整组合明细"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "us0432"
+                }
+              },
+              "confirm": {
+                "title": "确定删除",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

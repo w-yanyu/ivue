@@ -1,0 +1,119 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "initRequest": "${{params}}",
+      "doRequest": {
+        "url": "",
+        "method": "POST",
+        "params": {}
+      },
+      "controls": [
+        {
+          "revoke_no": {
+            "control": "string",
+            "label": "撤销编号"
+          },
+          "branch_id": {
+            "control": "string",
+            "label": "机构编号"
+          },
+          "branch_name": {
+            "control": "string",
+            "label": "机构名称"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "#target": "dialog",
+          "label": "业务转移",
+          "toRequest": {
+            "method": "GET",
+            "url": "@BranchBusiness",
+            "params": {
+              "branch_name":"${{params.branch_name}}",
+              "branch_id":"${{params.branch_id}}",
+              "revoke_no":"${{params.revoke_no}}"
+            }
+          },
+          "props": {
+            "title": "业务转移",
+            "width":"80%",
+            "#height":"70%"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/rest/auth/userManager",
+        "method": "POST",
+        "params": {
+          "servicecode": "ct2191"
+        }
+      },
+      "pagination": {
+        "show": false,
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "type": "index",
+          "align": "center"
+        },
+        {
+          "label": "撤销编号",
+          "prop": "revoke_no"
+        },
+        {
+          "label": "机构号",
+          "prop": "branch_id"
+        },
+        {
+          "label": "机构名称",
+          "prop": "branch_name"
+        },
+        {
+          "label": "模块类型",
+          "prop": "module_type",
+          "dict": {
+            "dictType": "CT_E_MODULE_TYPE",
+            "dictKey": [
+              "CT_E_MODULE_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "目标机构",
+          "prop": "target_branch"
+        },
+        {
+          "label": "业务移交申请时间",
+          "prop": "transfer_appl_date"
+        },
+        {
+          "label": "业务移交时间",
+          "prop": "transfer_active_date"
+        },
+        {
+          "label": "移交状态",
+          "prop": "transfer_busi_status",
+          "dict": {
+            "dictType": "CT_E_TRANSFER_STATUS",
+            "dictKey": [
+              "CT_E_TRANSFER_STATUS"
+            ],
+            "format": "label"
+          }
+        }
+      ]
+    }
+  }
+}

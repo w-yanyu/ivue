@@ -1,0 +1,74 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "btns": [
+        {
+          "type": "submit",
+          "icon": "el-icon-check",
+          "label": "确认分配",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode":"cb0134",
+              "case_id": "${{params.selectedData}}"
+            }
+          }
+        },
+        {
+          "type": "close",
+          "label": "取消"
+        }
+      ],
+      "controls": [     
+          {
+            "coll_team": {
+              "control": "inputTree",
+              "label": "催收组",
+              "idField": "coll_team",
+              "nodeTypeField": "type",
+              "pIdField": "parent_coll_team",
+              "labelField": "coll_team_name",
+              "events": {
+                "emit": [
+                  "collector"
+                ]
+              },
+              "nodeTypes": {
+                "collTeam": {
+                  "icon": "el-icon-news",
+                  "children": [
+                    "collTeam"
+                  ]
+                }
+              },
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "cb0041"
+                }
+              },
+              "format": "value-label"
+            },
+            "collector": {
+              "control": "remoteSelect",
+              "label": "催收员",
+              "labelField": "user_name",
+              "valueField": "user_id",
+              "lazy": true,
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "cb0084"
+                }
+              },
+              "format": "value-label"
+            }
+          }
+      ]
+    }
+  }
+}

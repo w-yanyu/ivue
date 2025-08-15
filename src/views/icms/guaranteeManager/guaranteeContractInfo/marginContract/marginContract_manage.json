@@ -1,0 +1,195 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "controls": [
+        {
+          "colt_contract_no": {
+            "control": "text",
+            "label": "担保合同号",
+            "width": "130px"
+          },
+          "apply_no": {
+            "control": "text",
+            "label": "业务申请号",
+            "width": "130px"
+          },
+          "debt_cust_no": {
+            "control": "lookup",
+            "label": "被担保客户编号",
+            "width": "130px",
+            "keyField": {
+              "debt_cust_no": "cust_no"
+            },
+            "toRequest": {
+              "url": "/views/us/cust_lookup.json",
+              "method": "post"
+            }
+          },
+          "guar_rule": {
+            "control": "select",
+            "label": "担保规则",
+            "width": "130px",
+            "value": "O",
+            "dict": {
+              "dictType": "AR_E_GUAR_RULE",
+              "dictKey": [
+                "AR_E_GUAR_RULE"
+              ],
+              "format": "label"
+            },
+            "#rules": [
+              {
+                "required": true,
+                "message": "请选择担保规则"
+              }
+            ]
+          },
+          "guar_start_date": {
+            "control": "dateTimePicker",
+            "type": "date",
+            "width": "130px",
+            "label": "合同起始日"
+          },
+          "guar_end_date": {
+            "control": "dateTimePicker",
+            "type": "date",
+            "width": "130px",
+            "label": "合同到期日"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "showAndHideColumns": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "ar0365",
+          "guar_type": "2"
+        }
+      },
+      "pagination": {
+        "pageSizes": [
+          10,
+          15,
+          20,
+          50,
+          100
+        ],
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "type": "index",
+          "label": "序号",
+          "width": "60px",
+          "align": "center"
+        },
+        {
+          "label": "抵押合同号",
+          "prop": "colt_contract_no",
+          "width": "160px",
+          "align": "center"
+        },
+        {
+          "label": "最高额担保合同号",
+          "prop": "max_contract_no",
+          "width": "160px",
+          "align": "center",
+          "showColumn": "'${{formData.guar_rule}}' === 'O'"
+        },
+        {
+          "label": "被担保人",
+          "prop": "debt_cust_name",
+          "align": "center"
+        },
+        {
+          "label": "担保人",
+          "prop": "guar_cust_name",
+          "align": "center"
+        },
+        {
+          "label": "担保规则",
+          "prop": "guar_rule",
+          "align": "center",
+          "dict": {
+            "dictType": "AR_E_GUAR_RULE",
+            "dictKey": [
+              "AR_E_GUAR_RULE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "合同金额",
+          "prop": "contract_amt",
+          "align": "center"
+        },
+        {
+          "label": "合同余额",
+          "prop": "contract_bal",
+          "align": "center"
+        },
+        {
+          "label": "基准币种",
+          "prop": "base_ccy",
+          "dict": {
+            "format": "label",
+            "dictKey": [
+              "MS_CURRENCY"
+            ],
+            "dictType": "MS_CURRENCY"
+          }
+        },
+        {
+          "label": "起始日期",
+          "prop": "guar_start_date",
+          "align": "center"
+        },
+        {
+          "label": "到期日期",
+          "prop": "guar_end_date",
+          "align": "center"
+        },
+        {
+          "label": "合同状态",
+          "prop": "valid_state",
+          "align": "center",
+          "dict": {
+            "format": "label",
+            "dictKey": [
+              "AR_E_STATE"
+            ],
+            "dictType": "AR_E_STATE"
+          }
+        },
+        {
+          "label": "操作",
+          "width": 160,
+          "align": "center",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/icms/guaranteeManager/guaranteeContractManager/coltContractApply/coltContractApplyDetail/colt_contract_apply_detail.json",
+                "method": "get",
+                "params": {}
+              },
+              "props": {
+                "width": "80%",
+                "title": "抵押合同信息详情"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
+

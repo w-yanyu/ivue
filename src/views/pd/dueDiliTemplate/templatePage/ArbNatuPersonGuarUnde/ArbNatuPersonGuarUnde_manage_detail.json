@@ -1,0 +1,94 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ar1808",
+          "apply_no": "${{params.apply_no}}",
+          "cust_no": "${{params.cust_no}}",
+          "due_item_no": "${{params.due_item_no}}"
+        }
+      },
+      "thead": [
+        {
+          "type": "string",
+          "label": "核保编号",
+          "prop": "underwriting_no",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "保证人姓名",
+          "prop": "pledge_person_name",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "币种",
+            "disabled": true,
+          "prop": "ccy_code",
+          "dict": {
+            "dictType": "MS_CURRENCY",
+            "dictKey": [
+              "MS_CURRENCY"
+            ],
+            "format": "label"
+          },
+          "align": "center"
+        },
+        {
+          "type": "currency",
+          "label": "现有负债余额(含信用报告中未反映的)(万元)",
+          "prop": "existing_liability_balances",
+          "disabled": true,
+          "decimal": "2",
+          "format": {
+            "thousand": ","
+          },
+          "align": "center"
+        },
+        {
+          "type": "currency",
+          "label": "已对外提供担保余额(万元)",
+          "prop": "external_provided_guar_balance",
+          "disabled": true,
+          "decimal": "2",
+          "format": {
+            "thousand": ","
+          },
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "fixed":"right",
+          "width": "200px",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/pd/dueDiliTemplate/templatePage/ArbNatuPersonGuarUnde/ArbNatuPersonGuarUnde_info.json",
+                "method": "GET",
+                "params": {
+                  "apply_no": "${{params.apply_no}}",
+                  "cust_no": "${{params.cust_no}}",
+                  "due_item_no": "${{params.due_item_no}}"
+                }
+              },
+              "props": {
+                "width": "60%",
+                "title": "自然人保证核保信息详情"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

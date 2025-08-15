@@ -1,0 +1,231 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "name": "detail",
+            "initRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ar0921",
+                    "apply_no": "${{params.apply_no}}"
+                }
+            },
+            "controls": [
+                {
+                    "prim_key": {
+                        "label": "主键",
+                        "control": "hidden"
+                    },
+                    "appt": {
+                        "label": "申请人",
+                        "control": "text",
+                        "width": "140px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入申请人"
+                            }
+                        ]
+                    },
+                    "is_new_cust": {
+                        "label": "是否新客户",
+                        "control": "select",
+                        "width": "140px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请选择是否新客户"
+                            }
+                        ],
+                        "dict": {
+                            "dictType": "MS_E_YESORNO",
+                            "dictKey": [
+                                "MS_E_YESORNO"
+                            ]
+                        }
+                    },
+                    "industry_involved": {
+                        "label": "所属行业",
+                        "control": "text",
+                        "width": "140px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入所属行业"
+                            }
+                        ]
+                    },
+                    "first_evaluation_level": {
+                        "label": "初评信用等级",
+                        "control": "text",
+                        "width": "140px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入初评信用等级"
+                            }
+                        ]
+                    },
+                    "highest_credit_limit": {
+                        "label": "最高授信限额",
+                        "control": "text",
+                        "width": "140px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入最高授信限额"
+                            }
+                        ]
+                    },
+                    "credit_property": {
+                        "label": "授信性质",
+                        "control": "select",
+                        "width": "140px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请选择授信性质"
+                            }
+                        ],
+                        "dict": {
+                            "dictType": "AR_E_CREDIT_PROPERTY",
+                            "dictKey": [
+                                "AR_E_CREDIT_PROPERTY"
+                            ]
+                        }
+                    },
+                    "apply_amt": {
+                        "label": "申请金额",
+                        "control": "currency",
+                        "width": "140px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入申请金额"
+                            }
+                        ]
+                    },"exchange_rate": {
+                        "label": "汇率",
+                        "control": "currency",
+                        "width": "140px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入汇率"
+                            }
+                        ]
+                    },"base_busi_amt": {
+                        "label": "折基准币种申请金额",
+                        "control": "currency",
+                        "compute": "${{form.apply_amt}}*${{form.exchange_rate}}",
+                        "width": "140px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入折基准币种申请金额"
+                            }
+                        ]
+                    },
+                    "ccy_code": {
+                        "label": "货币代码",
+                        "control": "select",
+                        "width": "140px",
+                        "dict": {
+                            "dictType": "MS_CURRENCY",
+                            "dictKey": [
+                              "MS_CURRENCY"
+                            ],
+                            "format": "label"
+                          },
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入货币代码"
+                            }
+                        ]
+                    },
+                    "term": {
+                        "label": "期限",
+                        "control": "text",
+                        "width": "140px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入期限"
+                            }
+                        ]
+                    },
+                    "interest_rate": {
+                        "label": "利率",
+                        "control": "text",
+                        "width": "140px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入利率"
+                            }
+                        ]
+                    },
+                    "apply_pupose": {
+                        "label": "申请用途",
+                        "control": "text",
+                        "width": "140px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入申请用途"
+                            }
+                        ]
+                    },
+                    "credit_open_amt": {
+                        "label": "授信敞口金额",
+                        "control": "text",
+                        "width": "140px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入授信敞口金额"
+                            }
+                        ]
+                    },
+                    "guar_colt_desc": {
+                        "label": "担保单位或抵质押物描述",
+                        "width": "140px",
+                        "placeholder": "(500个字以内,若没有请填“无”)",
+                        "control": "textarea",
+                        "span": 24,
+                        "autosize": {
+                            "minRows": 3,
+                            "maxRows": 5
+                        },
+                        "maxlength": 500,
+                        "showWordLimit": true,
+                        "rules": [{
+                            "required": true,
+                            "message": "请输入描述"
+                        }]
+                    }
+                }
+            ],
+            "btns": [
+                {
+                    "type": "submit",
+                    "label": "提交",
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "ar0922",
+                            "apply_no": "${{params.apply_no}}",
+                            "cust_no": "${{params.cust_no}}"
+                        }
+                    },
+                    "show": {
+                      "expression": "'${{params.pageType}}' != 'detail'"
+                    }
+                }
+            ]
+        }
+    }
+}

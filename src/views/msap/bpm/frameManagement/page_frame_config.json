@@ -1,0 +1,197 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "appId": {
+              "control": "select",
+              "label": "业务模块",
+              "selectFirstValue":true,
+              "dict": {
+                  "dictType": "MS_APPID",
+                  "dictKey": [
+                      "MS_APPID"
+                  ],
+                  "format": "value-label"
+              },
+              "rules": [
+                  {
+                      "required": true,
+                      "message": "请选择业务模块"
+                  }]
+          }
+        },{
+          "frame_cd": {
+            "label": "框架编号",
+            "control": "text",
+            "rules": [
+              {
+                "max": 30,
+                "message": "长度不能超过30个字符"
+              }
+            ]
+          },
+          "frame_desc": {
+            "label": "框架名称",
+            "control": "text",
+            "rules": [
+              {
+                "max": 50,
+                "message": "长度不能超过50个字符"
+              }
+            ]
+          }
+        }
+      ],
+      "foldLineNumber": 3
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "POST",
+            "url": "/views/msap/bpm/frameManagement/page_frame_config_add.json",
+            "params": {
+              "appId":"${{form.appId}}",
+              "frame_cd":"${{current.frame_cd}}"
+            }
+          },
+          "props": {
+            "width": "65%",
+            "title": "页面框架基本信息录入"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "scope": "searchTable",
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "bpm0044",
+          "appId":"${{form.appId}}",
+          "frame_cd":"${{current.frame_cd}}"
+        }
+      },
+      "thead": [
+        {
+          "label": "序号",
+          "type": "index",
+          "align": "center"
+        },
+        {
+          "label": "框架编号",
+          "prop": "frame_cd",
+          "align": "center"
+        },
+        {
+          "label": "框架描述",
+          "prop": "frame_desc",
+          "align": "center"
+        },
+        {
+          "label": "是否生效",
+          "prop": "is_enabled",
+          "type": "select",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "是否被引用",
+          "prop": "is_quote",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "label"
+          },
+          "btns": [
+            {
+              "type": "look",
+              "toRequest": {
+                "url": "/views/msap/bpm/frameManagement/page_frame_cont.json",
+                "params": {
+                  "appId":"${{form.appId}}"
+                }
+              },
+              "props": {
+                "width": "65%",
+                "title": "框架引用查看"
+              }
+            }
+          ]
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "节点配置",
+              "toRequest": {
+                "url": "/views/msap/bpm/frameManagement/node_config.json",
+                "method": "post",
+                "params": {
+                  "appId":"${{form.appId}}"
+                }
+              },
+              "props": {
+                "width": "70%",
+                "title": "节点配置"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/msap/bpm/frameManagement/page_frame_config_edit.json",
+                "method": "post",
+                "params": {
+                  "appId":"${{form.appId}}"
+                }
+              },
+              "props": {
+                "width": "65%",
+                "title": "页面框架基本信息维护"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "bpm0043",
+                  "appId":"${{form.appId}}"
+                }
+              },
+              "show": {
+                "expression": "'${{current.is_quote}}' == '0'"
+              }
+            }
+          ]
+        }
+      ],
+      "pagination": {
+        "show": true
+      }
+    }
+  }
+}

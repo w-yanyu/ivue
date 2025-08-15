@@ -1,0 +1,64 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "btns": [
+                {
+                    "type": "submit",
+                    "label": "确认",
+                    "doRequest": {
+                        "method": "POST",
+                        "url": "/SUMP/call/RPCCall",
+                        "params": {
+                            "servicecode":"ce4562",
+                            "case_no":"${{params.selectedData}}"
+                        }
+                    }
+                },
+                {
+                    "type": "close",
+                    "label": "取消"
+                }
+            ],
+            "controls": [
+                {
+                    "allocate_proposal_no": {
+                        "control": "remoteSelect",
+                        "label": "请选择分配方案",
+                        "width": "180px",
+                        "align": "center",
+                        "span": "16",
+                        "labelField": "scheme_name",
+                        "valueField": "scheme_type",
+                        "doRequest":{
+                            "url": "/SUMP/call/RPCCall",
+                            "method": "POST",
+                            "params":{
+                                "servicecode":"ce0415",
+                                "scheme_type":"OA01",
+                                "coll_kind":"02",
+                                "is_valid":"1"
+                            }
+                        },
+                        "format":"value-label",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "outsourcing_end_date": {
+                        "control": "dateTimePicker",
+                        "width": "180px",
+                        "align": "center",
+                        "span": "16",
+                        "label": "委外到期日"
+                    }
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,168 @@
+{
+  "module": "v-search-btn-datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "roleCode": {
+            "control": "text",
+            "label": "角色编码"
+          },
+          "roleName": {
+            "control": "text",
+            "label": "角色名称"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "navTab",
+          "label": "新增",
+          "toRequest": {
+            "url": "/views/risk/web/rbac/role/role-add.json",
+            "method": "GET"
+          },
+          "props": {
+            "width": "60%",
+            "title": "新增角色"
+          }
+        },
+        {
+          "type": "delete",
+          "label": "删除",
+          "icon": "el-icon-close",
+          "doRequest": {
+            "url": "/WEB/role/batch",
+            "method": "DELETE"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "doRequest": {
+        "url": "/WEB/role/page",
+        "method": "get"
+      },
+      "pagination": {
+        "pageSizes": [
+          10,
+          15,
+          20,
+          50,
+          100
+        ],
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "width": "55",
+          "type": "selection"
+        },
+        {
+          "type": "index",
+          "label": "序号"
+        },
+        {
+          "label": "角色编码",
+          "prop": "roleCode"
+        },
+        {
+          "label": "角色名称",
+          "prop": "roleName"
+        },
+        {
+          "label": "所属系统",
+          "prop": "application",
+          "dict": {
+            "dictType": "WEB",
+            "dictKey": [
+              "homepage",
+              "application"
+            ],
+            "labelField": "appName",
+            "valueField": "appCode",
+            "doRequest": {
+              "url": "/WEB/application/list",
+              "method": "GET"
+            }
+          }
+        },
+        {
+          "label": "是否有效",
+          "prop": "enable",
+          "dict": {
+            "dictType": "WEB",
+            "dictKey": [
+              "WEB",
+              "boolean"
+            ],
+            "labelField": "dictName",
+            "valueField": "dictCode",
+            "doRequest": {
+              "url": "/WEB/dict/common",
+              "method": "post"
+            }
+          }
+        },
+        {
+          "label": "说明",
+          "prop": "description",
+          "width": "260"
+        },
+        {
+          "label": "操作",
+          "width": "200",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "编辑",
+              "toRequest": {
+                "url": "/views/risk/web/rbac/role/role-update.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "60%",
+                "title": "编辑"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/WEB/role",
+                "method": "DELETE"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "设置",
+              "toRequest": {
+                "url": "/views/risk/web/rbac/role/setting-tabs.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "80%",
+                "title": "关联资源"
+              }
+            },
+            {
+              "#type": "edit",
+              "label": "授权主页",
+              "toRequest": {
+                "url": "/views/risk/web/rbac/role/set-homepage.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "60%",
+                "title": "授权主页"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,106 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "initRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "QRMSTSDT0033",
+                    "merchant_id": "${{params.merchant_id}}"
+                }
+            },
+            "btns": [
+                {
+                    "type": "submit",
+                    "label": "提交",
+                    "icon": "",
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "QRMSTSDT0032",
+                            "merclist": "[${{form}}]"
+                        }
+                    }
+                }
+            ],
+            "controls": [
+                {
+                    "merchant_id": {
+                        "control": "string",
+                        "label": "商户号",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入商户号"
+                            }
+                        ]
+                    },
+                    "category": {
+                        "control": "string",
+                        "label": "品类",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入品类信息"
+                            },
+                            {
+                                "max": 5,
+                                "message": "长度不能超过5个字符"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "rate_name": {
+                        "control": "string",
+                        "label": "定价方案名称"
+                    },
+                    "merchant_name": {
+                        "control": "text",
+                        "label": "商户名称"
+                    }
+                },
+                {
+                    "rate_code": {
+                        "control": "lookup",
+                        "label": "定价方案编号",
+                        "multiple": true,
+                        "#valueDataType": "string",
+                        "toRequest": {
+                            "url": "/views/cm/InterestRateCenter/MercRateManagement/customermanager.json",
+                            "method": "get",
+                            "params": {},
+                            "props": {
+                                "width": "85%",
+                                "title": "请选择定价方案信息",
+                                "height": "450px"
+                            }
+                        },
+                        "events": {
+                            "set": {
+                                "rete_code": "rete_code",
+                                "rate_name": "rate_name"
+                            }
+                        },
+                        "#keyField": {
+                            "rete_code": "rete_code",
+                            "rate_name": "rate_name"
+                        },
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请选择定价方案信息"
+                            }
+                        ]
+                    },
+                    "corpno": {
+                        "control": "hidden",
+                        "label": "法人代码"
+                    }
+                }
+            ]
+        }
+    }
+}

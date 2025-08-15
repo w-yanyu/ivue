@@ -1,0 +1,232 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "doRequest": {
+        "url": "",
+        "method": "POST",
+        "params": {}
+      },
+      "controls": [
+        {
+
+          "cust_name": {
+            "control": "text",
+            "span": 10,
+            "label": "客户名称",
+            "rules": [{
+              "required": false,
+              "message": "请选择"
+            }]
+          },
+          "lmt_num": {
+            "control": "text",
+            "span": 10,
+            "label": "额度编号",
+            "rules": [{
+              "required": false,
+              "message": "请选择"
+            }]
+          }
+        },
+        {
+          "cert_no": {
+            "control": "text",
+            "span": 10,
+            "label": "证件号码",
+            "rules": [{
+              "required": false,
+              "message": "请选择"
+            }]
+          },
+          "commission_company": {
+            "control": "text",
+            "span": 10,
+            "label": "委案公司",
+            "rules": [{
+              "required": false,
+              "message": "请选择"
+            }]
+          }
+        },
+        {
+
+          "start_time": {
+            "control": "dateTimePicker",
+            "span": 10,
+            "label": "催收开始月份",
+            "placeholder": "请选择",
+            "format": "yyyyMM",
+            "rules": [{
+              "required": false,
+              "message": "请选择"
+            }]
+          },
+          "end_time": {
+            "control": "dateTimePicker",
+            "span": 10,
+            "label": "催收结束月份",
+            "placeholder": "请选择",
+            "format": "yyyyMM",
+            "rules": [{
+              "required": false,
+              "message": "请选择"
+            }]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "refresh": true,
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/pl/reminderManagement/reminder_add.json"
+          },
+          "props": {
+            "title": "催记新增",
+            "width": "70%"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pl0301"
+        }
+      },
+      "pagination": {
+        "show": true,
+        "pageSize": 10
+      },
+      "thead": [
+
+        {
+          "label": "额度编号",
+          "prop": "lmt_num"
+        },
+        {
+          "label": "客户名称",
+          "prop": "cust_name"
+        },
+        {
+          "label": "证件类型",
+          "prop": "cert_type",
+          "dict": {
+            "dictType": "MS_E_CRET_TYPE",
+            "dictKey": [
+              "MS_E_CRET_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "证件号码",
+          "prop": "cert_no"
+        },
+        {
+          "label": "委托公司名称",
+          "prop": "commission_company"
+        },
+        {
+          "label": "催收时间",
+          "prop": "urge_collt_time"
+        },
+        {
+          "label": "催收方式",
+          "prop": "urge_collt_type",
+          "dict": {
+            "dictType": "PL_E_URG_COLLT",
+            "dictKey": [
+              "PL_E_URG_COLLT"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "接洽人",
+          "prop": "contacter"
+        },
+        {
+          "label": "联系状态",
+          "prop": "contact_info",
+          "dict": {
+            "dictType": "PL_E_CONTACT_INFO",
+            "dictKey": [
+              "PL_E_CONTACT_INFO"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "还款意愿",
+          "prop": "repay_aspir",
+          "dict": {
+            "dictType": "PL_E_REPAY_ASPIR",
+            "dictKey": [
+              "PL_E_REPAY_ASPIR"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "还款能力",
+          "prop": "repay_capacity",
+          "dict": {
+            "dictType": "PL_E_REPAY_CAPACITY",
+            "dictKey": [
+              "PL_E_REPAY_CAPACITY"
+            ],
+            "format": "label"
+          }
+        },
+
+        {
+          "label": "客群特征",
+          "prop": "cust_feat",
+          "dict": {
+            "dictType": "PL_E_CUST_FEAT",
+            "dictKey": [
+              "PL_E_CUST_FEAT"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "备注",
+          "prop": "remark"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 150,
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "维护",
+              "refresh": true,
+              "toRequest": {
+                "url": "/views/pl/reminderManagement/reminder_details_update.json",
+                "method": "GET"
+              },
+              "props": {
+                "title": "用户角色维护"
+              }
+            }
+
+          ]
+        }
+      ]
+    }
+  }
+}

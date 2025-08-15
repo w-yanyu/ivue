@@ -1,0 +1,81 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "scope": "strForm",
+      "btns": [{
+        "type": "submit",
+        "label": "提交",
+        "icon": "",
+        "doRequest": {
+          "url": "/SUMP/call/RPCCall",
+          "method": "POST",
+          "params": {
+            "servicecode": "ct2174"
+          }
+        }
+      }],
+      "controls": [
+        {
+          "branch_id": {
+            "control": "text",
+            "label": "机构号",
+            "value":"${{params.branch_id}}",
+            "disabled": true,
+            "width": "130px"
+          },
+          "related_branch_id": {
+            "control": "lookup",
+            "width": "130px",
+            "edit": true,
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入映射机构号"
+              },
+              {
+                "max": 32,
+                "message": "长度不能超过32个字符"
+              }
+            ],
+            "label": "映射机构号",
+            "keyField": {
+              "related_branch_id": "branch_id"
+            },
+            "toRequest": {
+              "url": "/views/ismt/ct/branch/branchMapping/branch_mapping_lookup.json",
+              "method": "post",
+              "params": {
+                "brch_relation_code": "${{params.brch_relation_code}}"
+              }
+            },
+            "props": {
+              "title": "机构信息查询"
+            },
+            "format": "label"
+          },
+          "branch_mapping_type": {
+            "control": "select",
+            "label": "机构映射关系",
+            "width": "130px",
+            "dict": {
+              "dictType": "CT_E_BRANCH_MAPPING_TYPE",
+              "dictKey": [
+                "CT_E_BRANCH_MAPPING_TYPE"
+              ],
+              "format": "label"
+            }
+          },
+          "brch_relation_code": {
+            "control": "hidden",
+            "label": "机构关系",
+            "width": "130px",
+            "value": "${{params.brch_relation_code}}",
+            "disabled": false
+          }
+        }
+
+      ]
+    }
+  }
+}

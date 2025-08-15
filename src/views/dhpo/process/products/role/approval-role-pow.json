@@ -1,0 +1,88 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "isInitSearch": true,
+      "controls": [{
+        "opridd": {
+          "span": 8,
+          "control": "text",
+          "label": "操作员编号"
+        },
+        "oprnam": {
+          "span": 8,
+          "control": "text",
+          "label": "操作员名称"
+        }
+      }]
+    },
+    "toolbar": {
+      "btns": [{
+        "type": "add",
+        "target": "dialog",
+        "label": "新增",
+        "toRequest": {
+          "method": "POST",
+          "url": "@DhapprovalRoleManager",
+          "params": {
+            "wfrlid": "${{params.wfrlid}}"
+          }
+        },
+        "props": {
+          "width": "65%",
+          "title": "新增操作员"
+        }
+      }
+      ]
+    },
+    "datagrid": {
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "AS_PLMS_PB_SEWFOP",
+          "wfrlid": "${{params.wfrlid}}"
+        }
+      },
+      "thead": [
+        {
+        "type": "selection",
+        "width": "55"
+      }, {
+        "type": "index",
+        "label": "序号"
+      },
+        {
+        "label": "操作员编号",
+        "prop": "opridd",
+         "align": "center"
+      }, {
+        "label": "操作员名称",
+        "prop": "oprnam",
+         "align": "center"
+      },{
+          "label": "机构编号",
+          "prop": "branch_id",
+          "align": "center"
+        },
+        {
+        "label": "操作",
+        "width": "80px",
+         "align": "center",
+        "btns": [
+          {
+          "type": "delete",
+          "label": "删除",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "delete",
+            "params": {
+              "servicecode": "PLMSPBTS0035",
+              "wfrlid": "${{params.wfrlid}}"
+            }
+          }
+        }]
+      }]
+    }
+  }
+}

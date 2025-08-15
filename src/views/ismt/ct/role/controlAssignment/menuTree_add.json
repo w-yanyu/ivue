@@ -1,0 +1,49 @@
+{
+    "module": "lr-tree-dynamic",
+    "layout": {
+        "tree": {
+            "title": "菜单树",
+            "lazy": false,
+            "expandAllLevel":true,
+            "hideDynamicArea": false,
+            "isShowAddNode":false,
+            "idField": "menu_id",
+            "pIdField": "menu_upper_id",
+            "labelField": "menu_desc",
+            "isLeafField": "isLeaf",
+            "nodeTypeField": "type",
+            "initRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ct3107",
+                    "checked": "true"
+                }
+            },
+            "root": {
+                "rootNode": {
+                    "name": "菜单树",
+                    "value": "-1"
+                }
+            },
+            "rootTypes": [
+                "dept"
+            ],
+            "nodeTypes": {
+                "dept": {
+                    "children": [
+                        "dept"
+                    ],
+                    
+                    "toRequest": {
+                        "url": "/views/ismt/ct/role/controlAssignment/role_control_assigment_add.json",
+                        "method": "post",
+                        "params": {
+                            "role_id":"${{params.role_id}}"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

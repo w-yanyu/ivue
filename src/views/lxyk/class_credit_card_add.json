@@ -1,0 +1,629 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "scope": "strForm",
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "icon": "",
+          "doRequest": {
+            "url": "/SUMP/call/RPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "ln3970"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "loan_deal_mode": {
+            "control": "hidden",
+            "label": "贷款处理模式",
+            "value": "1",
+            "width": "100px",
+            "dict": {
+              "dictType": "E_LOAN_DEAL_MODE",
+              "dictKey": [
+                "E_LOAN_DEAL_MODE"
+              ],
+              "format": "label"
+            }
+          },
+          "smilr_cr_card_loan_acct_num": {
+            "control": "text",
+            "label": "类信用卡贷款账号",
+            "width": "100px"
+          },
+          "ccy_code_num": {
+            "label": "货币代号",
+            "control": "select",
+            "width": "100px",
+            "value": "156",
+            "dict": {
+              "dictType": "MS_CURRENCY",
+              "dictKey": [
+                "MS_CURRENCY"
+              ],
+              "format": "label"
+            }
+          }
+        },
+        {
+          "slbl_prod_nm": {
+            "control": "lookup",
+            "label": "可售产品名称",
+            "width": "100px",
+            "edit": true,
+            "keyField": {
+              "slbl_prod_nm": "prod_nm",
+              "slbl_prod_code": "prod_code"
+            },
+            "toRequest": {
+              "url": "/views/lxyk/class_credit_card_manage_choose.json",
+              "method": "get"
+            },
+            "props": {
+              "title": "选择类信用卡产品",
+              "width": "75%"
+            },
+            "format": "label"
+          },
+          "slbl_prod_code": {
+            "control": "hidden",
+            "label": "可售产品代码",
+            "width": "100px"
+          },
+          "prod_nm": {
+            "control": "lookup",
+            "label": "产品名称",
+            "width": "100px",
+            "edit": true,
+            "keyField": {
+              "prod_code": "prod_code",
+              "prod_nm": "prod_nm"
+            },
+            "toRequest": {
+              "url": "/views/product/productModel/prod_list_qry.json",
+              "method": "post"
+            },
+            "props": {
+              "title": "请选择"
+            },
+            "format": "label"
+          },
+          "prod_code": {
+            "control": "hidden",
+            "label": "产品代码",
+            "width": "100px"
+          } 
+        },
+        {
+          "open_acct_dt": {
+            "control": "dateTimePicker",
+            "label": "开户日期",
+            "width": "100px",
+            "type": "date",
+            "unlinkPanels": true,
+            "format": "yyyyMMdd",
+            "disabledDate": {
+              "startRange": "19000101",
+              "endRange": "99991231"
+            }
+          },
+          "matu": {
+            "control": "timeLimit",
+            "label": "期限",
+            "width": "100px",
+            "disabled": true
+          }
+        },
+        {
+          "matu_dt": {
+            "control": "dateTimePicker",
+            "label": "到期日期",
+            "type": "date",
+            "width": "100px",
+            "unlinkPanels": true,
+            "format": "yyyyMMdd",
+            "disabledDate": {
+              "startRange": "19000101",
+              "endRange": "99991231"
+            }
+          },
+          "genl_lmt": {
+            "control": "currency",
+            "label": "通用额度",
+            "width": "100px",
+            "format": "label",
+            "rules": [
+              {
+                "expression": "${{form.basic_lmt}} >=  0  ",
+                "message": "通用额度不能小于零"
+              }
+            ]
+          }
+        },
+        {
+          "basic_lmt": {
+            "control": "currency",
+            "label": "基础额度",
+            "width": "100px",
+            "format": "label",
+            "rules": [
+              {
+                "expression": "${{form.basic_lmt}} >=  0  ",
+                "message": "基础额度不能小于零"
+              }
+            ]
+          },
+          "temp_lmt": {
+            "control": "currency",
+            "label": "临时额度",
+            "width": "100px",
+            "format": "label",
+            "rules": [
+              {
+                "expression": "${{form.temp_lmt}} >=  0  ",
+                "message": "临时额度不能小于零"
+              }
+            ]
+          }
+        },
+        {
+          "istlmt_lmt": {
+            "control": "currency",
+            "label": "分期额度",
+            "width": "100px",
+            "format": "label",
+            "rules": [
+              {
+                "expression": "${{form.istlmt_lmt}} >=  0  ",
+                "message": "分期额度不能小于零"
+              }
+            ]
+          },
+          "frz_lmt": {
+            "control": "currency",
+            "width": "100px",
+            "label": "冻结额度",
+            "format": "label",
+            "rules": [
+              {
+                "expression": "${{form.istlmt_lmt}} >=  0  ",
+                "message": "冻结额度不能小于零"
+              }
+            ]
+          }
+        },
+        {
+          "cust_num": {
+            "control": "text",
+            "label": "客户号",
+            "width": "100px"
+          },
+          "cust_nm": {
+            "control": "text",
+            "label": "客户名称",
+            "width": "100px"
+          }
+        },
+        {
+          "rpymt_acct_num": {
+            "control": "text",
+            "label": "还款账号",
+            "width": "100px"
+          },
+          "rpymt_sub_acct_serl_num": {
+            "control": "text",
+            "label": "还款子账户序号",
+            "width": "100px"
+          }
+        },
+        {
+          "loan_pstg_acct_num": {
+            "control": "text",
+            "label": "贷款入账账号",
+            "width": "100px"
+          },
+          "loan_pstg_sub_acct_serl_num": {
+            "control": "text",
+            "label": "贷款入账子账户序号",
+            "width": "100px"
+          }
+        },
+        {
+          "oprtg_org": {
+            "control": "hidden",
+            "label": "营业机构",
+            "width": "100px",
+            "value": "$g{{user_info.branch_id}}"
+          },
+          "acctg_org": {
+            "control": "hidden",
+            "label": "账务机构",
+            "width": "100px",
+            "value": "$g{{user_info.branch_id}}"
+          }
+        },
+        {
+          "loan_bill_prd": {
+            "control": "periodGet",
+            "label": "账单周期",
+            "width": "100px"
+          },
+          "rpymt_prd": {
+            "control": "periodGet",
+            "width": "100px",
+            "label": "还款周期"
+          }
+        },
+        {
+          "rpymt_bill_dt_intrv_dys": {
+            "control": "text",
+            "label": "还款日账单日间隔天数",
+            "width": "100px"
+          },
+          "wthr_alw_min_rpymt_amt": {
+            "control": "select",
+            "label": "是否允许最小还款额还款",
+            "width": "100px",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            }
+          }
+        },
+        {
+          "auto_rpymt_set": {
+            "control": "select",
+            "label": "自动还款设置",
+            "width": "100px",
+            "dict": {
+              "dictType": "E_AUTO_RPYMT_SET",
+              "dictKey": [
+                "E_AUTO_RPYMT_SET"
+              ],
+              "format": "label"
+            }
+          },
+          "min_rpymt_caln_pcnt": {
+            "control": "text",
+            "label": "最低还款计算比例（%）",
+            "width": "100px"
+          }
+        },
+        {
+          "cnsp_due_bill_int_caln_way": {
+            "control": "select",
+            "label": "消费借据计息方式",
+            "width": "100px",
+            "dict": {
+              "dictType": "E_CNSP_DUE_BILL_INT_CALN_WAY",
+              "dictKey": [
+                "E_CNSP_DUE_BILL_INT_CALN_WAY"
+              ],
+              "format": "label"
+            }
+          },
+          "smilr_cr_card_rpymt_seq_num": {
+            "control": "text",
+            "label": "类信用卡还款顺序编号",
+            "width": "100px"
+          }
+        },
+        {
+          "have_grace_prd_flg": {
+            "control": "select",
+            "label": "是否有宽限期",
+            "width": "100px",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            }
+          },
+          "grace_prd_dys": {
+            "control": "text",
+            "label": "宽限期天数",
+            "width": "100px"
+          }
+        },
+        {
+          "cnsp_due_bill_deal_mode": {
+            "control": "select",
+            "label": "消费借据处理模式",
+            "value": "0",
+            "width": "100px",
+            "dict": {
+              "dictType": "E_CNSP_DUE_BILLDEAL_MODE",
+              "dictKey": [
+                "E_CNSP_DUE_BILLDEAL_MODE"
+              ],
+              "format": "label"
+            }
+          },
+          "cnsp_prod_nm": {
+            "control": "lookup",
+            "label": "消费产品名称",
+            "width": "100px",
+            "edit": true,
+            "keyField": {
+              "cnsp_prod_code": "prod_code",
+              "cnsp_prod_nm": "prod_nm"
+            },
+            "toRequest": {
+              "url": "/views/product/productModel/prod_list_qry.json",
+              "method": "get"
+            },
+            "props": {
+              "title": "选择产品",
+              "width": "75%"
+            },
+            "format": "label"
+          },
+          "cnsp_prod_code": {
+            "control": "hidden",
+            "label": "消费产品代码",
+            "width": "100px"
+          }
+        },
+        {
+          "wthr_alw_pstp_rpymt": {
+            "control": "select",
+            "label": "是否允许延期还款",
+            "width": "100px",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            }
+          },
+          "pstp_prod_nm": {
+            "control": "lookup",
+            "label": "延期产品名称",
+            "width": "100px",
+            "edit": true,
+            "keyField": {
+              "pstp_prod_code": "prod_code",
+              "pstp_prod_nm": "prod_nm"
+            },
+            "toRequest": {
+              "url": "/views/product/productModel/prod_list_qry.json",
+              "method": "get"
+            },
+            "props": {
+              "title": "选择产品",
+              "width": "75%"
+            },
+            "format": "label"
+          
+          },
+          "pstp_prod_code": {
+            "control": "hidden",
+            "label": "延期产品代码",
+            "width": "100px"
+          }
+        },
+        {
+          "wthr_alw_cnsp_istlm": {
+            "control": "select",
+            "label": "是否允许消费分期",
+            "width": "100px",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            }
+          },
+          "cnsp_istlmt_prod_name": {
+            "control": "lookup",
+            "label": "消费分期产品名称",
+            "width": "100px",
+            "edit": true,
+            "keyField": {
+              "cnsp_istlmt_prod_code": "prod_code",
+              "cnsp_istlmt_prod_name": "prod_nm"
+            },
+            "toRequest": {
+              "url": "/views/product/productModel/prod_list_qry.json",
+              "method": "get"
+            },
+            "props": {
+              "title": "选择产品",
+              "width": "75%"
+            },
+            "format": "label"
+          },
+          "cnsp_istlmt_prod_code": {
+            "control": "hidden",
+            "label": "消费分期产品代码",
+            "width": "100px"
+          }
+        },
+        {
+          "wthr_alw_txn_istlmt": {
+            "control": "select",
+            "label": "是否允许交易分期",
+            "width": "100px",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            }
+          },
+          "txn_istlmt_prod_name": {
+            "control": "lookup",
+            "label": "交易分期产品名称",
+            "width": "100px",
+            "edit": true,
+            "keyField": {
+              "txn_istlmt_prod_code": "prod_code",
+              "txn_istlmt_prod_name": "prod_nm"
+            },
+            "toRequest": {
+              "url": "/views/product/productModel/prod_list_qry.json",
+              "method": "get"
+            },
+            "props": {
+              "title": "选择产品",
+              "width": "75%"
+            },
+            "format": "label"
+          },
+          "txn_istlmt_prod_code": {
+            "control": "hidden",
+            "label": "交易分期产品代码",
+            "width": "100px"
+          }
+        },
+        {
+          "wthr_alw_bill_istlmt": {
+            "control": "select",
+            "label": "是否允许账单分期",
+            "width": "100px",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            }
+          },
+          "bill_istlmt_prod_name": {
+            "control": "lookup",
+            "label": "账单分期产品名称",
+            "width": "100px",
+            "edit": true,
+            "keyField": {
+              "bill_istlmt_prod_code": "prod_code",
+              "bill_istlmt_prod_name": "prod_nm"
+            },
+            "toRequest": {
+              "url": "/views/product/productModel/prod_list_qry.json",
+              "method": "get"
+            },
+            "props": {
+              "title": "选择产品",
+              "width": "75%"
+            },
+            "format": "label"
+          },
+          "bill_istlmt_prod_code": {
+            "control": "hidden",
+            "label": "账单分期产品代码",
+            "width": "100px"
+          }
+        },
+        {
+          "cnsp_nrl_int_rate": {
+            "control": "text",
+            "label": "消费正常利率",
+            "width": "100px"
+          },
+          "cnsp_pnly_int_rate": {
+            "control": "text",
+            "label": "消费罚息利率",
+            "width": "100px"
+          }
+        },
+        {
+          "istlmt_nrl_int_rate": {
+            "control": "text",
+            "label": "分期正常利率",
+            "width": "100px"
+          },
+          "istlmt_pnly_int_rate": {
+            "control": "text",
+            "label": "分期罚息利率",
+            "width": "100px"
+          }
+        },
+        {
+          "pstp_nrl_int_rate": {
+            "control": "text",
+            "label": "延期正常利率",
+            "width": "100px"
+          },
+          "pstp_pnly_int_rate": {
+            "control": "text",
+            "label": "延期罚息利率",
+            "width": "100px"
+          }
+        },
+        {
+          "istlmt_min_amt_rstct": {
+            "control": "currency",
+            "label": "分期最低金额限制",
+            "width": "100px",
+            "format": "label",
+            "rules": [
+              {
+                "expression": "${{form.istlmt_min_amt_rstct}} >=  0  ",
+                "message": "分期最低金额限制不能小于零"
+              }
+            ]
+          },
+          "istlmt_max_amt_rstct": {
+            "control": "currency",
+            "label": "分期最高金额限制",
+            "width": "100px",
+            "format": "label",
+            "rules": [
+              {
+                "expression": "${{form.istlmt_min_amt_rstct}} >=  0  ",
+                "message": "分期最高金额限制不能小于零"
+              }
+            ]
+          }
+        },
+        {
+          "pstp_min_amt_rstct": {
+            "control": "currency",
+            "label": "延期最低金额限制",
+            "width": "100px",
+            "format": "label",
+            "rules": [
+              {
+                "expression": "${{form.pstp_min_amt_rstct}} >=  0  ",
+                "message": "延期最低金额限制限制不能小于零"
+              }
+            ]
+          },
+          "pstp_max_amt_rstc": {
+            "control": "currency",
+            "label": "延期最高金额限制",
+            "width": "100px",
+            "format": "label",
+            "rules": [
+              {
+                "expression": "${{form.pstp_max_amt_rstc}} >=  0  ",
+                "message": "延期最高金额限制不能小于零"
+              }
+            ]
+          }
+        },
+        {
+          "pstp_rpymt_chrg_code": {
+            "control": "text",
+            "label": "延期还款收费代码",
+            "width": "100px"
+          }
+        }
+      ]
+    }
+  }
+}

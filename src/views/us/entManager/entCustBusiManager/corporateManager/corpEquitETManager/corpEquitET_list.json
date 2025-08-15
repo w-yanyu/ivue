@@ -1,0 +1,152 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "toolbar": {
+            "btns": [{
+                "type": "add",
+                "target": "dialog",
+                "label": "新增",
+                "toRequest": {
+                    "method": "POST",
+                    "url": "/views/us/entManager/entCustBusiManager/corporateManager/corpEquitETManager/corpEquitET_add.json",
+                    "params": {
+                        "cust_no": "${{params.cust_no}}"
+                    }
+                },
+                "show": {
+                    "expression": "'${{params.show_flash}}' == '1'"
+                },
+                "props": {
+                    "width": "80%",
+                    "title": "被控股企业信息新增"
+                }
+            }]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "us0290",
+                    "cust_no": "${{params.cust_no}}",
+                    "shoret": "ET"
+                }
+            },
+            "thead": [{
+                    "label": "序号",
+                    "type": "index",
+                    "align": "center"
+                },
+                {
+                    "label": "被控股企业名称",
+                    "prop": "cust_name",
+                    "align": "center"
+                },
+                {
+                    "label": "是否最大股东",
+                    "prop": "is_max_holder",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                            "MS_E_YESORNO"
+                        ]
+                    }
+                },
+                {
+                    "label": "出资类别",
+                    "prop": "contributive_type",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "US_E_INVEST_TYPE",
+                        "dictKey": [
+                            "US_E_INVEST_TYPE"
+                        ]
+                    }
+                },
+                {
+                    "label": "币种",
+                    "prop": "ccy_code",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "MS_CURRENCY",
+                        "dictKey": [
+                            "MS_CURRENCY"
+                        ]
+                    }
+                },
+                {
+                    "label": "出资金额/价值（万元）",
+                    "prop": "contributive_amt",
+                    "align": "center"
+                },
+                {
+                    "label": "股权比例(%)",
+                    "prop": "ownership_ratio",
+                    "align": "center"
+                },
+                {
+                    "label": "成为股东的日期",
+                    "prop": "shareholder_date",
+                    "align": "center",
+                    "format": "yyyy-MM-dd"
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 160,
+                    "align": "center",
+                    "btns": [{
+                            "type": "look",
+                            "label": "详情",
+                            "toRequest": {
+                                "url": "/views/us/entManager/entCustBusiManager/corporateManager/corpEquitETManager/corpEquitET_info.json",
+                                "method": "POST"
+                            },
+                            "props": {
+                                "width": "80%",
+                                "title": "被控股企业信息详情"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/us/entManager/entCustBusiManager/corporateManager/corpEquitETManager/corpEquitET_update.json",
+                                "method": "POST"
+                            },
+                            "show": {
+                                "expression": "'${{params.show_flash}}' == '1'"
+                            },
+                            "props": {
+                                "width": "80%",
+                                "title": "被控股企业信息维护"
+                            }
+                        },
+                        {
+                            "type": "custom",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "us0293"
+                                }
+                            },
+                            "show": {
+                                "expression": "'${{params.show_flash}}' == '1'"
+                            },
+                            "confirm": {
+                                "title": "确定删除",
+                                "confirmButtonText": "确定",
+                                "cancelButtonText": "取消"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

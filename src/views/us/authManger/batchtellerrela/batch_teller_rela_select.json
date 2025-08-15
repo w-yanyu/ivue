@@ -1,0 +1,118 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                  
+                    "user_name": {
+                        "control": "text",
+                        "label": "用户姓名",
+                        "rules": [
+                            {
+                                "max": 100,
+                                "message": "长度不能超过100个字符"
+                            }
+                        ]
+                    },
+                    "user_status": {
+                        "control": "select",
+                        "dict": {
+                            "dictType": "CT_E_TELLERSTAS",
+                            "dictKey": [
+                                "CT_E_TELLERSTAS"
+                            ],
+                            "format": "label"
+                        },
+                        "label": "用户状态"
+                    }
+                },
+                {
+                    
+                    "branch_id": {
+                        "control": "text",
+                        "label": "机构号",
+                        "rules": [
+                            {
+                                "max": 10,
+                                "message": "长度不能超过10个字符"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "refreshDialog",
+                    "label": "新增选中用户",
+                    "doRequest": {
+                        "url": "/SUMP/call/RPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "us1310",
+                            "selectName": "batchTellerRelaList",
+                            "batch_no": "${{params.batch_no}}"
+                        }
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "initRequest": "${{params}}",
+            "scope": "searchTable",
+            "doRequest": {
+                "url": "/SUMP/rest/auth/userManager",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ct2039"
+                },
+                "resultSet": {
+                    "trxn_teller":"user_id",
+                    "user_name":"user_name"
+                  }
+            },
+            "thead": [
+                {
+                    "type": "selection"
+                },
+                {
+                    "type": "index"
+                },
+                {
+                    "label": "用户ID",
+                    "prop": "user_id"
+                },
+                {
+                    "label": "用户姓名",
+                    "prop": "user_name"
+                },
+                {
+                    "label": "用户机构",
+                    "prop": "branch_id"
+                },
+                
+                {
+                    "label": "用户状态",
+                    "prop": "user_status",
+                    "dict": {
+                        "dictType": "CT_E_TELLERSTAS",
+                        "dictKey": [
+                            "CT_E_TELLERSTAS"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "最后登录日期",
+                    "prop": "last_login_time"
+                },
+              {
+                "label": "机构号",
+                "prop": "branch_id"
+              }
+            ]
+        }
+    }
+}

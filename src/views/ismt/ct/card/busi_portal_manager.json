@@ -1,0 +1,143 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+      "form": {
+          "doRequest": {
+              "url": "",
+              "method": "POST",
+              "params": {}
+          },
+          "controls": [
+              {
+                "card_id": {
+                    "control": "text",
+                    "label": "卡片编号",
+                    "rules": [
+                        {
+                            "max": 30,
+                            "message": "长度不能超过30个字符"
+                        }
+                    ]
+                },
+                "card_name": {
+                    "control": "text",
+                    "label": "卡片名称"
+                },
+                "busi_tp": {
+                    "control": "select",
+                    "label": "所属业务",
+                    "selectFirstValue":false,
+                    "dict": {
+                      "dictType": "CT_E_BUSI_TP",
+                      "dictKey": [
+                          "CT_E_BUSI_TP"
+                      ],
+                      "format": "label"
+                  }
+                }
+              }
+          ]
+      },
+      "toolbar": {
+          "btns": [
+              {
+                  "type": "add",
+                  "target": "dialog",
+                  "label": "新增",
+                  "toRequest": {
+                      "method": "GET",
+                      "url": "/views/ismt/ct/card/busi_portal_add.json"
+                  },
+                  "props": {
+                      "title": "新增用户门户配置"
+                  }
+              }
+          ]
+      },
+      "datagrid": {
+          "scope": "searchTable",
+          "isInitSearch": false,
+          "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                  "servicecode": "ct3016",
+                  "page_ind":"1",
+                  "appId":"deciOnl"
+              }
+          },
+          "pagination": {
+              "show": true,
+              "pageSize": 10
+          },
+          "thead": [
+              {
+                  "type": "index"
+              },
+              {
+                  "label": "卡片编号",
+                  "prop": "card_id"
+              },
+              {
+                  "label": "卡片名称",
+                  "prop": "card_name"
+              },
+              {
+                  "label": "卡片界面地址",
+                  "prop": "url"
+              },
+              {
+                "label": "所属业务",
+                "prop": "busi_tp",
+                "dict": {
+                    "dictType": "CT_E_BUSI_TP",
+                    "format": "label",
+                    "dictKey": [
+                        "CT_E_BUSI_TP"
+                    ]
+                }
+              },
+              {
+                "label": "图标类名称",
+                "prop": "card_icon"
+              },
+              {
+                  "label": "操作",
+                  "width": 300,
+                  "align":"center",
+                  "fixed": "right",
+                  "btns": [
+                      {
+                          "type": "edit",
+                          "label": "维护",
+                          "toRequest": {
+                              "url": "/views/ismt/ct/card/busi_portal_update.json",
+                              "method": "GET"
+                          },
+                          "props": {
+                              "title": "用户门户配置维护"
+                          }
+                      },
+                      {
+                        "type": "edit",
+                        "label": "删除",
+                        "doRequest": {
+                            "url": "/SUMP/icmcall/icmRPCCall",
+                            "method": "post",
+                            "params": {
+                                "servicecode": "ct3018"
+                            }
+                        },
+                        "confirm": {
+                            "title": "提示信息",
+                            "msg": "确认删除？",
+                            "confirmButtonText": "确定",
+                            "cancelButtonText": "取消"
+                        }
+                      }
+                  ]
+              }
+          ]
+      }
+  }
+}

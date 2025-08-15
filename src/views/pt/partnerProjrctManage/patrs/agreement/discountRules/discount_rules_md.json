@@ -1,0 +1,219 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pt0110",
+          "part_protocol_no": "${{params.part_protocol_no}}",
+          "version": "${{params.version}}"
+        }
+      },
+      "btns": [
+        {
+          "type": "submit",
+          "label": "保存",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "pt0112",
+              "discount_rule_no": "${{params.discount_rule_no}}",
+              "version": "${{params.version}}",
+              "part_project_no": "${{params.part_project_no}}",
+              "part_protocol_no": "${{params.part_protocol_no}}"
+            }
+          },
+          "eventAfter": {
+            "doLastCallback": false
+          }
+        }
+      ],
+      "controls": [
+        {
+          "discount_cust_type": {
+            "control": "select",
+            "label": "贴息使用客户类型",
+            "width": "50%",
+            "dict": {
+              "dictType": "PT_E_DISCOUNT_CUST_TYPE",
+              "dictKey": [
+                "PT_E_DISCOUNT_CUST_TYPE"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择"
+              }
+            ]
+          },
+          "discount_loan_use": {
+            "control": "select",
+            "label": "贴息贷款资金用途",
+            "width": "50%",
+            "dict": {
+              "dictType": "PT_E_DISCOUNT_LOAN_USE",
+              "dictKey": [
+                "PT_E_DISCOUNT_LOAN_USE"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择"
+              }
+            ]
+          }
+        },
+        {
+          "discount_time": {
+            "control": "select",
+            "label": "补贴申领时点",
+            "width": "50%",
+            "dict": {
+              "dictType": "PT_E_DISCOUNT_COUNT_VALUE",
+              "dictKey": [
+                "PT_E_DISCOUNT_COUNT_VALUE"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择"
+              }
+            ]
+          },
+          "calculation_method": {
+            "control": "select",
+            "label": "补贴金额计算方式",
+            "width": "50%",
+            "dict": {
+              "dictType": "PT_E_CALCULATION_METHOD",
+              "dictKey": [
+                "PT_E_CALCULATION_METHOD"
+              ],
+              "include":[
+                "3",
+                "4",
+                "6",
+                "7"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择"
+              }
+            ]
+          }
+        },
+        {
+          "discount_count_value": {
+            "control": "text",
+            "label": "贴息计算数值",
+            "width": "50%",
+            "rules": [
+              {
+                "required": true,
+                "message": "贴息计算数值"
+              }
+            ]
+          }
+        },
+        {
+          "discount_deduction_account": {
+            "control": "lookup",
+            "edit": true,
+            "label": "贴息扣款账户",
+            "width": "50%",
+            "keyField": {
+              "discount_deduction_account": "part_center_no"
+            },
+            "events": {
+              "set": {
+                "temp_name": ""
+              }
+            },
+            "toRequest": {
+              "url": "/views/pt/partnerProjrctManage/patrs/agreement/commissionProfit/account_lookup.json",
+              "method": "GET",
+              "params": {
+                "part_no": "${{params.part_no}}"
+              }
+            },
+            "props": {
+              "width": "50%",
+              "title": "查询账户"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择"
+              }
+            ]
+          },
+          "discount_back_account": {
+            "control": "lookup",
+            "edit": true,
+            "label": "贴息退回账户",
+            "width": "50%",
+            "keyField": {
+              "discount_back_account": "part_center_no"
+            },
+            "events": {
+              "set": {
+                "temp_name": ""
+              }
+            },
+            "toRequest": {
+              "url": "/views/pt/partnerProjrctManage/patrs/agreement/commissionProfit/account_lookup.json",
+              "method": "GET",
+              "params": {
+                "part_no": "${{params.part_no}}"
+              }
+            },
+            "props": {
+              "width": "50%",
+              "title": "查询账户"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择"
+              }
+            ]
+          }
+        },
+        {
+          "dicount_loan_min_amt": {
+            "control": "currency",
+            "label": "贴息贷款最小金额",
+            "decimal": "2",
+            "width": "50%",
+            "align": "left",
+            "format": {
+              "thousand": ","
+            }
+          },
+          "dicount_loan_max_amt": {
+            "control": "currency",
+            "label": "贴息贷款最大金额",
+            "decimal": "2",
+            "width": "50%",
+            "align": "left",
+            "format": {
+              "thousand": ","
+            }
+          }
+        }
+      ]
+    }
+  }
+}

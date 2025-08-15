@@ -1,0 +1,85 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "appId": {
+                        "span": 8,
+                        "control": "select",
+                        "label": "业务模块",
+                        "selectFirstValue":true,
+                        "dict": {
+                            "dictType": "MS_APPID",
+                            "dictKey": [
+                                "MS_APPID"
+                            ],
+                            "format": "value-label"
+                        },
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请选择业务模块"
+                            }]
+                    }
+                },
+                {
+                    "wf_prod_no": {
+                        "span": 8,
+                        "control": "text",
+                        "label": "流程产品编号"
+                    },
+                    "busi_type": {
+                        "span": 8,
+                        "control": "text",
+                        "label": "业务类型"
+                    }
+                },
+                {
+                    "date_from": {
+                        "span": 8,
+                        "control": "dateTimePicker",
+                        "label": "开始日期"
+                    },
+                    "date_end": {
+                        "span": 8,
+                        "control": "dateTimePicker",
+                        "label": "结束日期"
+                    }
+                }
+
+            ]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "bpm1026",
+                    "appId":"${{form.appId}}"
+                }
+            },
+            "thead": [
+                {
+                    "label": "序号",
+                    "type": "index"
+                },
+                {
+                    "label": "用户名称",
+                    "prop": "user_id"
+                },
+                {
+                    "label": "耗时",
+                    "prop": "total_cost"
+                },
+                {
+                    "label": "排名",
+                    "prop": "cur_rank"
+                }
+            ]
+        }
+    }
+}
+

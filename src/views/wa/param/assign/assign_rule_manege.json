@@ -1,0 +1,113 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+
+      "toolbar": {
+        "btns": [
+          {
+            "type": "add",
+            "label": "新增",
+            "toRequest": {
+                "url": "/views/wa/param/assign/assign_rule_add.json",
+                "method": "get",
+                "params": {
+                  "scheme_id":"${{params.scheme_id}}"
+                }
+            },
+            "props": {
+                "title": "新增",
+                "width": "65%"
+            }
+          }
+        ]
+      },
+      "datagrid": {
+        "scope": "searchTable",
+        "isInitSearch": true,
+        "doRequest": {
+          "url": "/SUMP/icmcall/icmRPCCall",
+          "method": "POST",
+          "params": {
+            "servicecode": "wa1203",
+            "scheme_id":"${{params.scheme_id}}"
+
+          }
+        },
+        "thead": [
+            {
+              "label": "案件分配规则编号",
+              "width": "160px",
+              "prop": "assign_rule_id",
+              "align": "center"
+            },
+            {
+              "label": "预警案件分配编码",
+              "width": "160px",
+              "prop": "assign_code",
+              "align": "center"
+            },
+            {
+              "label": "预警案件分配对象",
+              "width": "160px",
+              "prop": "assign_obj",
+              "align": "center"
+            },
+            {
+              "label": "案件分配方案编号",
+              "width": "160px",
+              "prop": "scheme_id",
+              "align": "center"
+            },
+            {
+                "label": "是否有效",
+                "align": "center",
+                "prop": "is_valid",
+                "dict": {
+                  "dictType": "MS_E_YESORNO",
+                  "dictKey": [
+                    "MS_E_YESORNO"
+                  ],
+                  "format": "label"
+                }
+            },
+            {
+              "label": "操作",
+              "fixed": "right",
+              "width": 200,
+              "align":"center",
+              "btns": [
+                {
+                  "type": "edit",
+                  "label": "维护",
+                  "toRequest": {
+                      "url": "/views/wa/param/assign/assign_rule_modify.json",
+                      "method": "get",
+                      "params": {
+
+                      }
+                  },
+                  "props": {
+                      "title": "维护",
+                      "width": "80%"
+                  }
+                },
+                {
+                  "type": "delete",
+                  "label": "删除",
+                  "doRequest": {
+                      "url": "/SUMP/icmcall/icmRPCCall",
+                      "method": "POST",
+                      "params": {
+                          "servicecode": "wa1206",
+                          "assign_rule_id": "${{current.assign_rule_id}}",
+                          "trantp": "DELETE"
+                      }
+                  }
+                }
+
+              ]
+            }
+        ]
+      }
+    }
+  }

@@ -1,0 +1,59 @@
+{
+  "module": "dynamicTabs",
+  "layout": {
+    "tabs": {
+      "submitBtnPlace": "right",
+      "doRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "ct2072",
+          "author_type": "F",
+          "operater_ind": "M"
+        }
+      },
+      "scope": "templateScope",
+      "initDataOnce": true,
+      "initRequest": {
+        "url": "/SUMP/call/RPCCall/",
+        "method": "post",
+        "params": {
+          "servicecode": "ct2070",
+          "auth_id": "${{params.auth_id}}",
+          "author_type": "${{params.author_type}}"
+        }
+      },
+      "tabHeader": [
+        {
+          "id": "baseInfo",
+          "scope": "baseInfo",
+          "label": "授权基础信息",
+          "closable": false,
+          "disabled": false,
+          "icon": "el-icon-date",
+          "toRequest": {
+            "url": "/views/ismt/ct/authorizatio/authorizatio-maintenance/authorizatio-update-Base.json",
+            "method": "post"
+          }
+        },
+        {
+          "id": "AuthDetatil",
+          "label": "授权明细",
+          "icon": "el-icon-date",
+          "closable": false,
+          "disabled": false,
+          "toRequest": {
+            "url": "/views/ismt/ct/authorizatio/authorizatio-maintenance/authorizatio-update-detail.json",
+            "method": "post",
+            "params": {
+              "auth_id": "${{templateScope.baseInfo.auth_id}}"
+            }
+          }
+        }
+      ],
+      "defaultActiveKey": "baseInfo",
+      "position": "top",
+      "styleClass": "card"
+    }
+  }
+}

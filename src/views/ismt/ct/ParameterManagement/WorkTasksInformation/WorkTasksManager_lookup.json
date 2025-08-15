@@ -1,0 +1,166 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "workjob_id": {
+                        "control": "text",
+                        "label": "工作任务ID",
+                        "labelField": "drop_list_desc",
+                        "valueField": "drop_list_value",
+                        "format": "label",
+                        "rules": [
+                            {
+                                "max": 32,
+                                "message": "长度不能超过32个字符"
+                            }
+                        ],
+                        "doRequest": {
+                            "url": "/SUMP/call/RPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "ms9999",
+                                "dynamic_drop_list_type": "CT0003"
+                            }
+                        }
+                    },
+                    "workflow_id": {
+                        "control": "text",
+                        "label": "工作流ID",
+                        "format": "label",
+                        "labelField": "drop_list_desc",
+                        "valueField": "drop_list_value",
+                        "valueFormat": "valueField-labelField",
+                        "rules": [
+                            {
+                                "max": 32,
+                                "message": "长度不能超过32个字符"
+                            }
+                        ],
+                        "doRequest": {
+                            "url": "/SUMP/call/RPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "ms9999",
+                                "dynamic_drop_list_type": "CT0004"
+                            }
+                        }
+                    }
+                },
+                {
+                    "begin_ind": {
+                        "control": "select",
+                        "label": "起始节点标志",
+                        "dict": {
+                            "dictType": "MS_E_YESORNO",
+                            "dictKey": [
+                                "MS_E_YESORNO"
+                            ],
+                            "format": "label"
+                        }
+                    },
+                    "end_ind": {
+                        "control": "select",
+                        "label": "结束节点标志",
+                        "dict": {
+                            "dictType": "MS_E_YESORNO",
+                            "dictKey": [
+                                "MS_E_YESORNO"
+                            ],
+                            "format": "label"
+                        }
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "target": "dialog",
+                    "label": "新增",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/ismt/ct/ParameterManagement/WorkTasksInformation/WorkTasksAdd.json"
+                    },
+                    "props": {
+                        "title": "工作任务信息新增"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ct2027"
+                }
+            },
+            "thead": [
+                {
+                    "type": "index"
+                },
+                {
+                    "label": "工作任务ID",
+                    "prop": "workjob_id"
+                },
+                {
+                    "label": "工作任务描述",
+                    "prop": "workjob_desc"
+                },
+                {
+                    "label": "工作流ID",
+                    "prop": "workflow_id"
+                },
+                {
+                    "label": "起始节点标志",
+                    "prop": "begin_ind",
+                    "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                            "MS_E_YESORNO"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "结束节点标志",
+                    "prop": "end_ind",
+                    "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                            "MS_E_YESORNO"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "任务签收方式",
+                    "prop": "job_rcv_method",
+                    "dict": {
+                        "dictType": "E_RECSTYLE",
+                        "dictKey": [
+                            "E_RECSTYLE"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "操作",
+                    "fixed": "left",
+                    "width": 120,
+                    "btns": [
+                        {
+                            "type": "bringback",
+                            "label": "选择"
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

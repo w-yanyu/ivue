@@ -1,0 +1,168 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "idtfno": {
+            "span":"6",
+            "control": "text",
+            "label": "证件号码",
+            "rules": [
+              {"required": true,
+                "message": "",
+                "max": 18,
+                "message": "证件号码不能为空，且长度不能超过18个字符"
+              }
+            ]
+          },
+          "lncfno": {
+            "span":"6",
+            "control": "text",
+            "label": "借据号",
+            "rules": [
+              {
+                "max": 80,
+                "message": "借据号不能为空"
+              }
+            ]
+          },
+          "idtftp": {
+            "span":"6",
+            "label": "证件类型",
+            "control": "select",
+            "dict": {
+              "format": "label",
+              "dictKey": [
+                "E_IDTFTP"
+              ],
+              "dictType": "E_IDTFTP"
+            }
+          },
+          "initdt": {
+            "span":"6",
+            "control": "dateTimePicker",
+            "label": "放款日期",
+            "format": "yyyyMMdd"
+          }
+        },
+        {
+          "clssst":{
+            "span":"6",
+            "label": "贷款形态",
+            "control": "select",
+            "dict": {
+              "format": "label",
+              "dictKey": [
+                "E_CLSSST"
+              ],
+              "dictType": "E_CLSSST"
+            }
+          },
+          "acctst":{
+            "span":"6",
+            "label": "贷款状态",
+            "control": "select",
+            "dict": {
+              "format": "label",
+              "dictKey": [
+                "E_ACCTST"
+              ],
+              "dictType": "E_ACCTST"
+            }
+          },
+          "custna": {
+            "span":"6",
+            "control": "text",
+            "label": "客户姓名"
+          },
+          "prodna": {
+            "span":"6",
+            "control": "text",
+            "label": "产品名称"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "CORELNTS2005"
+        }
+      },
+      "thead": [
+        {
+          "label": "操作",
+          "fixed": "left",
+          "btns": [
+            {
+              "type": "bringback",
+              "label": "选择"
+            }
+          ]
+        },
+        {
+          "label": "客户姓名",
+          "prop": "custna"
+        },
+        {
+          "label": "证件类型",
+          "prop": "idtftp",
+          "dict": {
+            "dictType": "E_IDTFTP",
+            "dictKey": [
+              "E_IDTFTP"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "证件号码",
+          "prop": "idtfno"
+        },
+        {
+          "label": "借据号",
+          "prop": "lncfno"
+        },
+        {
+          "label": "可售产品编号",
+          "prop": "sprdid"
+        },
+        {
+          "label": "产品名称",
+          "prop": "prodna"
+        },
+        {
+          "label": "放款日期",
+          "prop": "initdt"
+        },
+        {
+          "label": "贷款状态",
+          "prop": "acctst",
+          "dict": {
+            "dictType": "E_ACCTST",
+            "dictKey": [
+              "E_ACCTST"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "贷款形态",
+          "prop": "clssst",
+          "dict": {
+            "dictType": "E_CLSSST",
+            "dictKey": [
+              "E_CLSSST"
+            ],
+            "format": "label"
+          }
+        }
+      ]
+    }
+  }
+}

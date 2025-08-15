@@ -1,0 +1,293 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "foldLineNumber": 3,
+      "scope": "formData",
+      "controls": [
+        {
+          "cust_name": {
+            "control": "text",
+            "label": "客户姓名"
+          },
+          "cust_no": {
+            "control": "text",
+            "label": "客户号"
+          }
+        },
+        {
+          "cert_no": {
+            "control": "text",
+            "label": "证件号码"
+          },
+          "collector": {
+            "control": "text",
+            "label": "催收员"
+          }
+        },
+        {
+          "loan_no": {
+            "control": "text",
+            "label": "借据号"
+          },
+          "template_code": {
+            "control": "remoteSelect",
+            "label": "邮件模板",
+            "labelField": "template_name",
+            "valueField": "template_code",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ce0414",
+                "coll_kind": "02",
+                "template_type": "EML"
+              }
+            },
+            "format": "label"
+          }
+        },
+        {
+          "email_addr": {
+            "control": "text",
+            "label": "邮件地址"
+          },
+          "send_state": {
+            "control": "select",
+            "label": "发送状态",
+            "dict": {
+              "dictType": "CE_SENDSTATUS",
+              "dictKey": [
+                "CE_SENDSTATUS"
+              ],
+              "format": "value-label"
+            }
+          }
+        },
+        {
+          "busi_vary": {
+            "control": "text",
+            "label": "业务品种"
+          },
+          "case_cust_type": {
+            "control": "select",
+            "label": "客户类型",
+            "dict": {
+              "dictType": "CE_CASE_CUST_TYPE",
+              "dictKey": [
+                "CE_CASE_CUST_TYPE"
+              ],
+              "format": "value-label"
+            }
+          }
+        },
+        {
+          "daterange": {
+            "control": "dateTimePicker",
+            "label": "发送时间",
+            "type": "daterange",
+            "unlinkPanels": true,
+            "valueFormat": "yyyyMMdd",
+            "startPlaceholder": "选择开始时间",
+            "endPlaceholder": "选择结束时间",
+            "startField": "start_time",
+            "endField": "expir_time",
+            "disabledDate": "dateAfter"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "export",
+          "##target": "dialog",
+          "label": "导出",
+          "doRequest": {
+            "method": "POST",
+            "url": "/SUMP/icmcall/export",
+            "params": {
+              "servicecode": "ce1525"
+            }
+          },
+          "confirm":{
+            "title":"提示信息",
+            "msg":"确认导出吗？",
+            "confirmButtonText":"确定",
+            "cancelButtonText":"取消"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ce1523"
+        }
+      },
+      "thead": [
+        {
+          "type": "string",
+          "align": "center",
+          "width":"180px",
+          "label": "客户姓名",
+          "prop": "cust_name"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width":"180px",
+          "label": "发送时间",
+          "prop": "send_time"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width":"180px",
+          "label": "发送状态",
+          "prop": "send_state",
+          "dict": {
+            "dictType": "CE_SENDSTATUS",
+            "dictKey": [
+              "CE_SENDSTATUS"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "180px",
+          "label": "证件类型",
+          "prop": "cert_type",
+          "dict": {
+            "dictType": "MS_E_CRET_TYPE",
+            "dictKey": [
+              "MS_E_CRET_TYPE"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width":"180px",
+          "label": "证件号码",
+          "prop": "cert_no"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width":"180px",
+          "label": "邮件模板",
+          "prop": "template_code",
+          "dict": {
+            "dictKey": [
+              "template_code"
+            ],
+            "format": "label",
+            "labelField": "template_name",
+            "valueField": "template_code",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ce0414",
+                "coll_kind": "02",
+                "template_type": "EML"
+              }
+            }
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width":"180px",
+          "label": "邮件内容",
+          "prop": "mail_content"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width":"180px",
+          "label": "邮件地址",
+          "prop": "email_addr"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width":"180px",
+          "label": "业务品种名称",
+          "prop": "busi_type_name"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width":"180px",
+          "label": "本期五级分类",
+          "prop": "classify_result",
+          "dict": {
+            "dictType": "MS_E_LEVEL5_TYPE",
+            "dictKey": [
+              "MS_E_LEVEL5_TYPE"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width":"180px",
+          "label": "借据号",
+          "prop": "loan_no"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width":"180px",
+          "label": "客户号",
+          "prop": "cust_no"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width":"180px",
+          "label": "客户类型",
+          "prop": "case_cust_type",
+          "dict": {
+            "dictType": "CE_CASE_CUST_TYPE",
+            "dictKey": [
+              "CE_CASE_CUST_TYPE"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width":"180px",
+          "label": "催收员",
+          "prop": "collector",
+          "dict": {
+            "dictKey": [
+              "collector"
+            ],
+            "format": "label",
+            "labelField": "user_name",
+            "valueField": "user_id",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ce0403"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,236 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "foldLineNumber": 3,
+            "scope": "formData",
+            "controls": [
+                {
+                    "branch_id": {
+                        "control": "select",
+                        "label": "机构",
+                        "options": [
+                            {
+                                "label": "9999-BYB",
+                                "value": "9999"
+                            }
+                        ]
+                    },
+                    "cust_name": {
+                        "control": "text",
+                        "label": "客户姓名"
+                    }
+                },
+                {
+                    "coll_team": {
+                        "control": "text",
+                        "label": "催收组"
+                    },
+                    "collector": {
+                        "control": "text",
+                        "label": "催收员"
+                    }
+                },
+                {
+                    "id_no": {
+                        "control": "text",
+                        "label": "证件号码"
+                    },
+                    "cust_id": {
+                        "control": "text",
+                        "label": "客户编号"
+                    }
+                },
+                {
+                    "contact_no": {
+                        "control": "text",
+                        "label": "手机号码"
+                    },
+                    "queue_cd": {
+                        "control": "text",
+                        "label": "队列名称"
+                    }
+                },
+                {
+                    "location_cd": {
+                        "control": "remoteSelect",
+                        "label": "案件类型",
+                        "labelField": "location_name",
+                        "valueField": "location_cd",
+                        "doRequest": {
+                            "url": "/SUMP/icmcall/icmRPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "pl0410"
+                            }
+                        },
+                        "format": "label"
+                    },
+                    "function_cd": {
+                        "control": "remoteSelect",
+                        "label": "逾期阶段",
+                        "labelField": "function_name",
+                        "valueField": "function_cd",
+                        "doRequest": {
+                            "url": "/SUMP/icmcall/icmRPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "pl0412"
+                            }
+                        },
+                        "format": "label"
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "custom",
+                    "icon": "el-icon-edit",
+                    "label": "人工分配",
+                    "toRequest": {
+                        "url": "/views/pl/collManage/lgManage/lgAssign/lgAssign_manual_oper.json",
+                        "method": "GET"
+                    },
+                    "confirm": {
+                        "title": "提示信息",
+                        "msg": "直接全部长款确认吗？",
+                        "confirmButtonText": "确定",
+                        "cancelButtonText": "取消"
+                    }
+                },
+                {
+                    "type": "custom",
+                    "icon": "el-icon-bell",
+                    "checkCountMin":1,
+                    "label": "自动分配",
+                    "toRequest": {
+                        "url": "/views/pl/collManage/lgManage/lgAssign/lgAssign_auto_oper.json",
+                        "method": "GET"
+                    },
+                    "confirm": {
+                        "title": "提示信息",
+                        "msg": "直接全部长款确认吗？",
+                        "confirmButtonText": "确定",
+                        "cancelButtonText": "取消"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "pl4614"
+                }
+            },
+            "thead": [
+                {
+                    "type": "selection",
+                    "align":"center",
+                    "width": "55",
+                    "fixed": "left"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "机构",
+                    "prop": "branch_id"
+
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "客户编号",
+                    "prop": "case_id"
+
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "客户姓名",
+                    "prop": "cust_name"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "证件类型",
+                    "prop": "id_type",
+                    "dict": {
+                      "dictKey": [
+                        "id_type"
+                      ],
+                      "format": "label",
+                      "labelField": "drop_list_desc",
+                      "valueField": "drop_list_value",
+                      "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                          "servicecode": "ap1071",
+                          "drop_list_type": "CertType"
+                        }
+                      }
+                    }
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "证件号码",
+                    "prop": "id_no"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "案件状态",
+                    "prop": "status_cd",
+                    "dict": {
+                      "dictKey": [
+                        "status_cd"
+                      ],
+                      "format": "label",
+                      "labelField": "status_name",
+                      "valueField": "status_cd",
+                      "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                          "servicecode": "pl0411"
+                        }
+                      }
+                    }
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "案件类型",
+                    "prop": "location_cd",
+                    "dict": {
+                      "dictKey": [
+                        "lgAssign_location_cd"
+                      ],
+                      "format": "label",
+                      "labelField": "location_name",
+                      "valueField": "location_cd",
+                      "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                          "servicecode": "pl0410"
+                        }
+                      }
+                    }
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "逾期天数",
+                    "prop": "over_due_day"
+                }
+            ]
+        }
+    }
+}

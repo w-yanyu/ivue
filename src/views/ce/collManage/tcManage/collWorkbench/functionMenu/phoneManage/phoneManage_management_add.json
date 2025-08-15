@@ -1,0 +1,160 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "icon": "el-icon-tickets",
+          "doRequest": {
+            "url": "/SUMP/call/RPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "ce3540",
+              "case_no": "${{params.case_no}}"
+            }
+          }
+        },
+        {
+          "type": "close",
+          "label": "取消"
+        }
+      ],
+      "controls": [
+        {
+          "relationship": {
+            "control": "select",
+            "span": "6",
+            "inputWidth": "200px",
+            "label": "客户关系",
+            "dict": {
+              "dictType": "CE_E_RELATIONSHIP",
+              "dictKey": [
+                "CE_E_RELATIONSHIP"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ],
+            "####": "客户关系为本人时，姓名只能为本人信息",
+            "events": {
+              "condition": {
+                "9999": {
+                  "doRequest": {
+                    "url": "/SUMP/call/RPCCall",
+                    "method": "POST",
+                    "params": {
+                      "servicecode": "ce3602",
+                      "case_no": "${{params.case_no}}"
+                    },
+                    "resultSet": {
+                      "linkman": "name"
+                    }
+                  },
+                  "control": {
+                    "linkman": {
+                      "disabled": true
+                    }
+                  }
+                },
+                "####": "客户关系为非本人时，姓名置空",
+                "$default": {
+                  "control": {
+                    "linkman": {
+                      "value": "",
+                      "disabled": false
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "linkman": {
+            "control": "text",
+            "span": "8",
+            "inputWidth": "200px",
+            "label": "联系人姓名",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          },
+          "is_valid": {
+            "control": "select",
+            "span": "8",
+            "inputWidth": "200px",
+            "label": "是否有效",
+            "default": "1",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          }
+        },
+        {
+          "tele_type": {
+            "control": "select",
+            "span": "6",
+            "inputWidth": "200px",
+            "default": "MOBI",
+            "label": "电话类型",
+            "dict": {
+              "dictType": "CE_E_TELE_TYPE",
+              "dictKey": [
+                "CE_E_TELE_TYPE"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          },
+          "tel_no": {
+            "control": "text",
+            "span": "8",
+            "inputWidth": "200px",
+            "label": "电话号码",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              },
+              {
+                "pattern": "^(1\\d{10})+$|^0\\d{2,3}-?\\d{7,8}$",
+                "message": "请输入正确的电话号码！"
+              }
+            ]
+          }
+        },
+        {
+          "remark": {
+            "control": "textarea",
+            "span": "6",
+            "inputWidth": "1000px",
+            "rows": "12",
+            "label": "备注"
+          }
+        }
+      ]
+    }
+  }
+}

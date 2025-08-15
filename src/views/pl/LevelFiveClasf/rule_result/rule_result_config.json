@@ -1,0 +1,116 @@
+{
+    "module": "lr_transferTable",
+    "layout": {
+        "transfer": {
+            "height": "500px",
+            "left": {
+                "filterable": false,
+                "title": "已选产品",
+                "btn": {
+                    "label": "授权",
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "post",
+                        "params": {
+                            "servicecode": "pl0119",
+                            "matrix_number": "${{params.matrix_number}}"
+                        }
+                    }
+                },
+                "datagrid": {
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "pl0117",
+                            "matrix_number": "${{params.matrix_number}}"
+                        }
+                    },
+                    "checked": "checked",
+                    "pagination": {
+                        "show": true,
+                        "pageSizes": [
+                            10,
+                            20,
+                            30,
+                            40
+                        ],
+                        "pageSize": 10
+                    },
+                    "thead": [
+                        {
+                            "prop": "sale_prod_cd",
+                            "label": "可售产品编号"
+                        },
+                        {
+                            "prop": "sale_prod_name",
+                            "label": "可售产品名称"
+                        },
+                        {
+                            "prop": "matrix_name",
+                            "label": "矩阵名称"
+                        },
+                        {
+                            "prop": "is_take_effect",
+                            "label": "是否生效",
+                            "dict": {
+                                "dictType": "MS_E_YESORNO",
+                                "dictKey": [
+                                    "MS_E_YESORNO"
+                                ],
+                                "format": "label"
+                            }
+                        }
+                    ]
+                }
+            },
+            "right": {
+                "filterable": false,
+                "title": "可选产品",
+                "placeholder": "请输入角色名称",
+                "btn": {
+                    "label": "取消授权",
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "post",
+                        "params": {
+                            "servicecode": "pl0210",
+                            "matrix_number": "${{params.matrix_number}}",
+                            "matrix_name": "${{params.matrix_name}}"
+                        }
+                    }
+                },
+                "datagrid": {
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "post",
+                        "params": {
+                            "servicecode": "pl0118"
+                        }
+                    },
+                    "thead": [
+                        {
+                            "prop": "sale_prod_cd",
+                            "label": "可售产品编号"
+                        },
+                        {
+                            "prop": "sale_prod_name",
+                            "label": "可售产品名称"
+                        },
+                        {
+                            "label": "可售产品类型",
+                            "prop": "prod_type",
+                            "dict": {
+                              "dictType": "PD_E_FLOW_TYPE",
+                              "dictKey": [
+                                "PD_E_FLOW_TYPE"
+                              ],
+                              "format": "label"
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

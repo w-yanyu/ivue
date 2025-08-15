@@ -1,0 +1,131 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "btns": [],
+      "initRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "detail,format=pd0245,temp=pd0241",
+          "pageTranType": "${{params.pageTranType}}",
+          "sale_prod_cd": "${{params.sale_prod_cd}}",
+          "prod_version": "${{params.prod_version}}",
+          "apply_type": "${{params.apply_type}}"
+        }
+      },
+      "controls": [
+        {
+          "servicecode": {
+            "control": "hidden",
+            "label": "修改交易码",
+            "value": "pd0243",
+            "events": {
+              "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "pd0143",
+                  "grupno": "0006",
+                  "id": "${{params.apply_type}}"
+                },
+                "resultSet": {
+                  "prod_type_name": "title"
+                }
+              }
+            }
+          },
+          "prod_version": {
+            "control": "hidden",
+            "label": "prod_version"
+          },
+          "flow_prod_no": {
+            "control": "hidden",
+            "label": "flow_prod_no"
+          }
+        },
+        {
+          "sale_prod_cd": {
+            "control": "hidden",
+            "label": "可售产品编号"
+          },
+          "sale_prod_name": {
+            "control": "hidden",
+            "label": "可售产品名称"
+          }
+        },
+        {
+          "flow_prod_no": {
+            "control": "string",
+            "label": "流程产品编号",
+            "rules": [
+              {
+                "required": false,
+                "message": "必填项"
+              }
+            ]
+          },
+          "flow_prod_name": {
+            "control": "string",
+            "label": "流程产品名称",
+            "span": 12,
+            "rules": [
+              {
+                "required": false,
+                "message": "必填项"
+              }
+            ]
+          }
+        },
+        {
+          "authp_system_code": {
+            "control": "string",
+            "label": "授权体系编号",
+            "span": 12
+          },
+          "authp_system_name": {
+            "control": "string",
+            "label": "授权体系名称",
+            "span": 12
+          }
+        },
+        {
+          "doc_check_list_desc": {
+            "control": "string",
+            "label": "资料检查列表",
+            "span": 12,
+            "rules": [
+              {
+                "required": false,
+                "message": "必填项"
+              }
+            ]
+          },
+          "verify_list_desc": {
+            "control": "string",
+            "label": "核实项列表",
+            "span": 12,
+            "rules": [
+              {
+                "required": false,
+                "message": "必填项"
+              }
+            ]
+          }
+        },
+        {
+          "flow_type": {
+            "control": "hidden",
+            "label": "流程类型",
+            "span": 12
+          },
+          "apply_type": {
+            "span": 12,
+            "label": "申请类型",
+            "control": "hidden"
+          }
+        }
+      ]
+    }
+  }
+}

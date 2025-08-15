@@ -1,0 +1,76 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": "${{params}}",
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "bpm0054",
+          "appId":"${{params.appId}}"
+        }
+      },
+      "controls": [
+        {
+          "operator_id": {
+            "control": "string",
+            "label": "操作员编号",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入操作员编号"
+              }
+            ]
+          },
+          "operator_name": {
+            "control": "lookup",
+            "label": "操作员名称",
+            "width": "130px",
+            "edit": true,
+            "keyField": {
+              "operator_id": "user_id",
+              "operator_name": "user_name",
+              "branch_id": "branch_id"
+            },
+            "toRequest": {
+              "url": "/views/msap/bpm/processManagement/role/user-manager-list.json",
+              "method": "post",
+              "params": {
+                "appId":"${{params.appId}}"
+              }
+            },
+            "multiple": false,
+            "props": {
+              "title": "操作员选择"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入操作员名称"
+              }
+            ]
+          },
+          "branch_id": {
+            "control": "string",
+            "label": "机构号",
+            "width": "130px"
+          }
+        },
+        {
+          "appr_role_id": {
+            "control": "hidden",
+            "value": "${{params.appr_role_id}}"
+          }
+        },
+        {
+          "appr_role_name": {
+            "control": "hidden",
+            "value": "${{params.appr_role_name}}"
+          }
+        }
+      ]
+    }
+  }
+}

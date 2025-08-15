@@ -1,0 +1,147 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "methna": {
+                        "label": "方法名称",
+                        "control": "text",
+                        "rules": [
+                            {
+                                "max": 32,
+                                "message": "长度不能超过32个字符"
+                            }
+                        ]
+                    },
+
+                    "isflag": {
+                        "control": "select",
+                        "label": "是否有效",
+                        "dict": {
+                            "dictType": "BPM_E_ISFLAG",
+                            "dictKey": [
+                                "BPM_E_ISFLAG"
+                            ],
+                            "format": "label"
+                        }
+                    }
+                }
+            ],
+            "foldLineNumber": 3
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "target": "dialog",
+                    "label": "新增",
+                    "toRequest": {
+                        "method": "POST",
+                        "url": "/views/cstm/policyManagement/method_definitions_add.json"
+                    },
+                    "props": {
+                        "width": "65%",
+                        "title": "方法定义新增"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "isInitSearch": false,
+            "scope": "searchTable",
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "AS_RLMS_CP_SEMETH"
+                }
+            },
+            "thead": [
+                {
+                    "label": "序号",
+                    "align": "center",
+                    "type": "index"
+                },
+                {
+                    "label": "方法编号",
+                     "align": "center",
+                    "prop": "methcd"
+                },
+                {
+                    "label": "全路径名称",
+                     "align": "center",
+                    "prop": "quljmc"
+                },
+                {
+                    "label": "方法名称",
+                  "align": "center",
+                    "prop": "methna"
+                },
+
+                {
+                    "label": "是否有效",
+                  "align": "center",
+                    "prop": "isflag",
+                    "type": "select",
+                    "dict": {
+                        "dictType": "BPM_E_ISFLAG",
+                        "dictKey": [
+                            "BPM_E_ISFLAG"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 200,
+                    "align":"center",
+                    "btns": [
+                        {
+                            "type": "edit",
+                            "label": "方法参数",
+                            "toRequest": {
+                                "url": "/views/cstm/policyManagement/method_parameters.json",
+                                "method": "post"
+                            },
+                            "props": {
+                                "width": "70%",
+                                "title": "方法参数"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/cstm/policyManagement/method_definitions_edit.json",
+                                "method": "post"
+                            },
+                            "props": {
+                                "width": "65%",
+                                "title": "方法定义维护"
+                            }
+                        },
+
+                        {
+                            "type": "delete",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "post",
+                                "params": {
+                                    "servicecode": "AS_RLMS_CP_DEMETH",
+                                    "trantp":"DELETE"
+
+                                }
+                            }
+                        }
+                    ]
+                }
+            ],
+            "pagination": {
+                "show": true
+            }
+        }
+    }
+}

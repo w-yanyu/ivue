@@ -1,0 +1,285 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "controls": [
+        {
+          "branch_id": {
+            "control": "inputTree",
+            "label": "机构",
+            "idField": "coll_team",
+            "nodeTypeField": "type",
+            "pIdField": "parent_coll_team",
+            "labelField": "coll_team_name",
+            "nodeTypes": {
+              "branchTeam": {
+                "icon": "el-icon-news",
+                "children": [
+                  "branchTeam"
+                ]
+              }
+            },
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "cb0041",
+                "query_type": "branchTeam"
+              }
+            },
+            "format": "value-label"
+          },
+          "cust_name": {
+            "control": "text",
+            "label": "客户姓名"
+          }
+        },
+        {
+          "cert_no": {
+            "control": "text",
+            "label": "证件号码"
+          },
+          "cust_id": {
+            "control": "text",
+            "label": "客户号"
+          }
+        },
+        {
+          "phone_no": {
+            "control": "text",
+            "label": "手机号码"
+          },
+          "daterange": {
+            "control": "dateTimePicker",
+            "label": "承诺日期",
+            "type": "daterange",
+            "valueFormat": "yyyyMMdd",
+            "startPlaceholder": "请选择开始日期",
+            "endPlaceholder": "请选择结束日期",
+            "unlinkPanels": true,
+            "startField": "start_date",
+            "endField": "end_date"
+          }
+        },
+        {
+          "coll_result": {
+            "control": "remoteSelect",
+            "label": "催收结果",
+            "labelField": "coll_result_name",
+            "valueField": "coll_result_code",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "cb0087",
+                "is_valid": "Y",
+                "appId": "cbOnl"
+              }
+            },
+            "format": "value-label"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "export",
+          "icon": "iconfont icon-daochu",
+          "label": "导出",
+          "doRequest": {
+            "method": "POST",
+            "url": "/SUMP/rest/file/commExport",
+            "params": {
+              "length": 999,
+              "servicecode": "cb0175"
+            }
+          },
+          "confirm":{
+            "title":"提示信息",
+            "msg":"确认导出吗？",
+            "confirmButtonText":"确定",
+            "cancelButtonText":"取消"
+          }
+        },
+        {
+          "type": "custom",
+          "target": "dialog",
+          "icon": "el-icon-upload",
+          "label": "导入催记",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/cs/generalManage/collectionRecordManage/collectionRecord_Import.json"
+          },
+          "props": {
+            "width": "50%",
+            "title": "导入催记"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "appId": "cbOnl",
+          "servicecode": "cb0175"
+        }
+      },
+      "thead": [
+        {
+          "type": "string",
+          "align": "center",
+          "label": "机构",
+          "prop": "branch_id"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "案件编号",
+          "prop": "case_id"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "客户号",
+          "prop": "cust_id"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "客户姓名",
+          "prop": "cust_name"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "证件号码",
+          "prop": "cert_no"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "催收时间",
+          "prop": "coll_time"
+        },
+        {
+          "type": "string",
+          "label": "催收员",
+          "align": "center",
+          "prop": "collector",
+          "dict": {
+            "dictKey": [
+              "collector"
+            ],
+            "format": "value",
+            "labelField": "user_name",
+            "valueField": "user_id",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "cb0084",
+                "appId": "cbOnl"
+              }
+            }
+          }
+        },
+        {
+          "type": "string",
+          "label": "客户关系",
+          "align": "center",
+          "prop": "relationship",
+          "dict": {
+            "dictType": "CS_E_RELATIONSHIP",
+            "dictKey": [
+              "CS_E_RELATIONSHIP"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "联系姓名",
+          "prop": "relation_cust_name"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "电话号码",
+          "prop": "phone_no"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "电话状态",
+          "prop": "phone_status",
+          "dict": {
+            "dictType": "CS_E_PHONE_STATUS",
+            "dictKey": [
+              "CS_E_PHONE_STATUS"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "催收结果",
+          "prop": "coll_result",
+          "dict": {
+            "dictKey": [
+              "coll_result"
+            ],
+            "format": "value-label",
+            "labelField": "coll_result_name",
+            "valueField": "coll_result_code",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "cb0087",
+                "appId": "cbOnl"
+              }
+            }
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "是否有效结果",
+          "prop": "is_valid_result",
+          "dict": {
+            "dictType": "CS_E_YESORNO",
+            "dictKey": [
+              "CS_E_YESORNO"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "承诺金额",
+          "prop": "promise_amount"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "承诺日期",
+          "prop": "promise_date"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "备注",
+          "prop": "remark"
+        }
+      ]
+    }
+  }
+}

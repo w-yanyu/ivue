@@ -1,0 +1,125 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "scope": "templateScope",
+
+      "initRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "pd0114",
+          "template_id": "${{params.template_id}}"
+        }
+      },
+      "controls": [
+        {
+          "template_id": {
+            "control": "hidden",
+            "label": "template_id"
+          }
+        },
+        {
+          "template_name": {
+            "control": "text",
+            "label": "模板名称",
+            "span": 12,
+            "rules": [
+              {
+                "required": true,
+                "message": "必填项"
+              }
+            ]
+          },
+          "prod_type": {
+            "label": "产品类型",
+            "control": "remoteSelect",
+            "labelField": "title",
+            "valueField": "id",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "pd0144",
+                "grupno": "0006",
+                "pid": "KSCP"
+              }
+            },
+            "span": 12,
+            "rules": [
+              {
+                "required": true,
+                "message": "必填项"
+              }
+            ]
+          }
+        },
+        {
+          "apply_type_list": {
+            "control": "remoteSelect",
+            "multiple": true,
+            "span": 12,
+            "label": "申请类型列表",
+            "labelField": "title",
+            "valueField": "id",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "pd0144",
+                "grupno": "0006",
+                "pid": "${{templateScope.prod_type}}"
+              }
+            },
+            "format": "label",
+            "rules": [
+              {
+                "required": true,
+                "message": "必填项"
+              }
+            ]
+          },
+          "valid_flag": {
+            "control": "select",
+            "span": 12,
+            "label": "是否有效",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "必填项"
+              }
+            ]
+          }
+        },
+        {
+          "ccy_code": {
+            "control": "select",
+            "span": 12,
+            "label": "币种",
+            "dict": {
+              "dictType": "MS_CURRENCY",
+              "dictKey": [
+                "MS_CURRENCY"
+              ],
+              "format": "label-value"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "必填项"
+              }
+            ],
+"selectFirstValue":true
+          }
+        }
+      ]
+    }
+  }
+}

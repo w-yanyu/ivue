@@ -1,0 +1,166 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": "${{params}}",
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "ar0341",
+          "apply_no": "${{params.apply_no}}"
+        }
+      },
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交"
+        }
+      ],
+      "controls": [
+        {
+          "colt_apply_id": {
+            "label": "抵质押品申请序号",
+            "control": "text",
+            "value": "${{params.apply_no}}"
+          },
+          "cust_no": {
+            "label": "客户编号",
+            "disabled": true,
+            "control": "text"
+          },
+          "guar_cust_no": {
+            "label": "担保人",
+            "control": "hidden"
+          },
+          "guar_cust_name": {
+            "label": "担保人名称",
+            "control": "hidden"
+          },
+          "asset_list_id": {
+            "label": "资产清单序号",
+            "control": "lookup",
+            "keyField": {
+              "asset_list_id": "asset_list_id",
+              "colt_type": "colt_type",
+              "colt_type_name": "colt_type_name",
+              "guar_type": "guar_type",
+              "colt_amount": "sec_val",
+              "colt_prod_cd": "colt_prod_cd",
+              "colt_prod_name": "colt_prod_name",
+              "colt_no": "colt_no",
+              "colt_ccy": "eval_cyy",
+              "sec_ratio": "sec_rate",
+              "cust_no": "cust_no"
+            },
+            "toRequest": {
+              "url": "/views/icms/guaranteeManager/guaranteeInfoManager/collateralInfoManager/collateral_list_lookup.json",
+              "method": "post"
+            },
+            "multiple": false,
+            "props": {
+              "title": "抵质押品产品"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入资产清单序号"
+              }
+            ]
+          },
+          "guar_type": {
+            "label": "担保方式",
+            "control": "select",
+            "disabled": true,
+            "dict": {
+              "dictType": "AR_E_GUAR_TYPE",
+              "dictKey": [
+                "AR_E_GUAR_TYPE"
+              ],
+              "format": "value-label"
+            }
+          },
+          "colt_prod_cd": {
+            "label": "抵质押品产品编号",
+            "disabled": true,
+            "control": "text"
+          },
+          "colt_prod_name": {
+            "label": "抵质押品产品名称",
+            "disabled": true,
+            "control": "text"
+          },
+          "colt_type": {
+            "label": "抵质押品类型",
+            "disabled": true,
+            "control": "text"
+          },
+          "colt_type_name": {
+            "label": "抵制押品类型名称",
+            "disabled": true,
+            "control": "text"
+          },
+          "colt_amount": {
+            "label": "抵质押额",
+            "disabled": true,
+            "control": "currency",
+            "align": "left",
+            "format": {
+              "thousand": ","
+            }
+          },
+          "colt_no": {
+            "label": "抵质押品编号",
+            "disabled": true,
+            "control": "text"
+          },
+          "sec_ratio": {
+            "label": "抵质押率(%)",
+            "control": "currency",
+            "align": "left",
+            "disabled": true
+          },
+          "base_ccy": {
+            "label": "基准币种",
+            "control": "select",
+            "disabled": true,
+            "dict": {
+              "dictType": "MS_CURRENCY",
+              "dictKey": [
+                "MS_CURRENCY"
+              ],
+              "format": "value-label"
+            },
+            "selectFirstValue":"true"
+          },
+          "colt_ccy": {
+            "label": "抵质押币种",
+            "control": "select",
+            "dict": {
+              "dictType": "MS_CURRENCY",
+              "dictKey": [
+                "MS_CURRENCY"
+              ],
+              "format": "value-label"
+            }
+          },
+          "colt_rate": {
+            "label": "抵质押汇率",
+            "control": "currency",
+            "align": "left"
+          },
+          "colt_base_amount": {
+            "label": "抵质押额（折算基准币种）",
+            "compute": "${{form.colt_amount}}*${{form.colt_rate}}",
+            "disabled": true,
+            "control": "currency",
+            "align": "left",
+            "format": {
+              "thousand": ","
+            }
+          }
+        }
+      ]
+    }
+  }
+}

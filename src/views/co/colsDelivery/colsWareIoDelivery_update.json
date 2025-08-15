@@ -1,0 +1,92 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+      "form": {
+        "initRequest": "${{params}}",
+        "name": "detail",
+        "btns": [],
+        "controls": [
+          {
+            "doc_tx_no": {
+              "label": "档案交易号",
+              "control": "hidden"
+            },
+            "state": {
+              "label": "出入库状态",
+              "control": "hidden"
+            },
+            "doc_no": {
+              "label": "档案编号",
+              "width": "140px",
+              "disabled": true,
+              "control": "text"
+            },
+            "out_date": {
+              "label": "入库日期",
+              "width": "140px",
+              "control": "dateTimePicker",
+              "rules": [
+                {
+                  "required": true,
+                  "message": "请选择入库日期"
+                }
+              ]
+            }
+          },
+          {
+            "out_reason": {
+              "label": "出库原因",
+              "width": "140px",
+              "control": "select",
+              "multiple": false,
+              "value": "",
+              "dict": {
+                "dictType": "CO_E_OUTPUTRN",
+                "dictKey": [
+                  "CO_E_OUTPUTRN"
+                ],
+                "format": "label"
+              },
+              "rules": [{
+                "required": true,
+                "message": "请选择出库原因"
+              }]
+            }
+          },
+          {
+            "remark": {
+              "label": "备注",
+              "width": "140px",
+              "rows": 4,
+              "span": 24,
+              "control": "textarea"
+            },
+            "deal_type": {
+              "label": "交易类型",
+              "width": "140px",
+              "value": "out",
+              "control": "hidden"
+            }
+          },
+          {
+            "toDbsx": {
+              "span": 24,
+              "control": "dynamic",
+              "#isShowChildrenForm": false,
+              "toRequest": {
+                "method": "GET",
+                "url": "@FlowSubmitBtn",
+                "params": {
+                  "appId": "coOnl",
+                  "servicecode": "co3003",
+                  "finalUrl": "@CommWaitToDoDeal"
+
+                }
+              }
+            }
+          }
+        ]
+
+      }
+    }
+  }

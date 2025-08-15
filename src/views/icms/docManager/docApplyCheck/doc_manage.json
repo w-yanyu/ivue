@@ -1,0 +1,151 @@
+{
+  "module": "v-search-editableDataGrid",
+  "layout": {
+    "datagrid": {
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ar0201",
+          "apply_no": "${{params.apply_no}}"
+        }
+      },
+      "pagination": {
+        "pageSizes": [
+          10,
+          15,
+          20,
+          50,
+          100
+        ],
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "type": "string",
+          "label": "资料编号",
+          "prop": "doc_no",
+          "width": "180px",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "资料描述",
+          "prop": "doc_name",
+          "width": "240px",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "是否必需",
+          "prop": "is_must",
+          "width": "100px",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "select",
+          "disabled": true,
+          "label": "上传标志",
+          "prop": "upload_flag",
+          "width": "100px",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "select",
+          "disabled": true,
+          "label": "附件类型",
+          "prop": "filetype",
+          "align": "center",
+          "dict": {
+            "dictType": "AR_E_FILETYPE",
+            "dictKey": [
+              "AR_E_FILETYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "select",
+          "disabled": true,
+          "label": "是否获取GPS信息",
+          "prop": "is_access_info",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "select",
+          "disabled": true,
+          "label": "是否对图片进行原图检查",
+          "prop": "is_check_ps",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "是否购车发票验真",
+          "disabled": true,
+          "prop": "is_check_car_invoice",
+          "align": "center",
+          "type": "select",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "资料管理",
+              "toRequest": {
+                "url": "/views/icms/docManager/docApplyCheck/file_manage.json",
+                "method": "POST",
+                "params": {
+                  "doc_no": "${{current.doc_no}}",
+                  "apply_no": "${{current.apply_no}}"
+                }
+              },
+              "props": {
+                "width": "65%",
+                "title": "资料管理"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

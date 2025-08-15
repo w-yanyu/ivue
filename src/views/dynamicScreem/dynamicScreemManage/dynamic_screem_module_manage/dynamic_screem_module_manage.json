@@ -1,0 +1,226 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+      "form": {
+        "foldLineNumber": 4,
+        "controls": [
+
+          {
+            
+            "template_id": {
+              "control": "text",
+              "label": "模版编号"
+            },
+            "template_name": {
+              "control": "text",
+              "label": "模版名称",
+              "rules": [
+                {
+                  "max": 20,
+                  "message": "长度不能超过20个字符"
+                }
+              ]
+            }
+          },
+          {
+            "role_id": {
+              "control": "text",
+              "label": "角色id"
+            },
+            "is_enable": {
+              "label": "是否启用",
+              "control": "select",
+              "dict": {
+                  "format": "label",
+                  "dictKey": [
+                      "MS_E_YESORNO"
+                  ],
+                  "dictType": "MS_E_YESORNO"
+              }
+            }
+          },
+          {
+            "need_page": {
+              "control": "hidden",
+              "label": "need_page:",
+              "visible": "false",
+              "value": "1"
+            }
+          }
+        ]
+      },
+      "toolbar": {
+        "btns": [
+          {
+            "type": "add",
+            "target": "addlog",
+            "label": "新增模版",
+            "toRequest": {
+              "target": "navTab",
+              "url": "@dynamicScreemModuleAdd",
+              "method": "GET",
+              "params": {
+                "type": "add",
+                "appId": "${{form.appId}}"
+              }
+            },
+            "props": {
+              "width": "80%",
+              "title": "新增模版"
+            }
+          }
+        ]
+      },
+      "datagrid": {
+        "scope": "searchTable",
+        "isInitSearch": false,
+        "doRequest": {
+          "url": "/SUMP/icmcall/icmRPCCall",
+          "method": "POST",
+          "params": {
+            "servicecode": "ct2611",
+            "sizePage": 10
+            
+          }
+        },
+        "thead": [
+          {
+            "label": "序号",
+            "type": "index",
+            "width": "50px"
+          },
+          {
+            "label": "卡片编号",
+            "prop": "template_id"
+          },
+          {
+            "label": "模版名称",
+            "prop": "template_name"
+          },
+          {
+            "type":"image",
+            "label": "卡片预览",
+            "prop": "card_img",
+            "width": "400px"
+          },
+          {
+            "label": {
+              "default": "使用角色",
+              "i18n": "digitalScreen.user_role"
+            },
+            "prop": "role_name",
+            "width": "100px"
+          },
+          {
+            "###label": "是否可编辑",
+            "label": {
+              "default": "是否可编辑",
+              "i18n": "digitalScreen.is_edit"
+            },
+            "prop": "is_edit",
+            "type": "tag",
+            "align": "center",
+            "width": "100px",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            },
+            "switch": {
+              "0": "danger",
+              "1": "success"
+            }
+          },
+          {
+            "label": "是否启用",
+            "prop": "is_enable",
+            "type": "tag",
+            "align": "center",
+            "width": "80px",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            },
+            "switch": {
+              "0": "danger",
+              "1": "success"
+            }
+          },
+          {
+            "label": {
+              "default": "是否默认模板",
+              "i18n": "digitalScreen.is_default"
+            },
+            "prop": "is_default",
+            "type": "tag",
+            "align": "center",
+            "width": "100px",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            },
+            "switch": {
+              "0": "danger",
+              "1": "success"
+            }
+          },
+          {
+            "label": "创建时间",
+            "prop": "data_create_time"
+          },
+          {
+            "label": "操作",
+            "fixed": "right",
+            "width": 200,
+            "align": "center",
+            "btns": [
+              {
+                "type": "edit",
+                "label": "编辑",
+                "toRequest": {
+                  "target": "navTab",
+                  "url": "@dynamicScreemModuleEdit",
+                  "method": "GET",
+                  "params": {
+                    "appId": "${{form.card_id}}"
+                  }
+                }, "props": {
+                  "width": "80%",
+                  "title": "编辑"
+                }
+              },
+              {
+                "type": "delete",
+                "label": "删除",
+                "doRequest": {
+                  "url": "/SUMP/icmcall/icmRPCCall",
+                  "method": "POST",
+                  "params": {
+                    "servicecode": "ct2610",
+                    "appId": "${{form.template_id}}",
+                    "method": "del"
+                  }
+                },
+                "confirm": {
+                  "title": "提示信息",
+                  "msg": "确定删除该信息吗？",
+                  "confirmButtonText": "确定",
+                  "cancelButtonText": "取消"
+                }
+              }
+             
+            ]
+          }
+        ]
+      }
+    }
+  }
+  

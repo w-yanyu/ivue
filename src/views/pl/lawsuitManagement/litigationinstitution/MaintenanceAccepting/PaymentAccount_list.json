@@ -1,0 +1,129 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "toolbar": {
+            "btns": [{
+                "type": "add",
+                "target": "dialog",
+                "label": "新增",
+                "toRequest": {
+                    "method": "GET",
+                    "url": "/views/pl/lawsuitManagement/litigationinstitution/MaintenanceAccepting/PaymentAccount_add.json",
+                    "params": {
+                        "ma_org_no": "${{params.ma_org_no}}"
+                    }
+                },
+                "show": {
+                    
+                },
+                "props": {
+                    "title": "新增受理机构收款账户账户",
+                    "width": "75%"
+                }
+            }]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "pl0543",
+                    "ma_org_no": "${{params.ma_org_no}}"
+                }
+            },
+            "thead": [{
+                    "type": "index",
+                    "width": 50,
+                    "label": "序号"
+                },
+                {
+                    "label": "收款账户类型",
+                    "prop": "acct_type",
+                    "align":"center",
+                    "dict": {
+                    "dictType": "Pl_E_ACCOUNTYPE",
+                    "dictKey": [
+                      "Pl_E_ACCOUNTYPE"
+                   ],
+                    "format": "label"
+                }},
+                {
+                    "label": "收款账户名称",
+                    "prop": "acct_name",
+                    "align": "center"
+                },
+                {
+                    "label": "收款账户账号",
+                    "prop": "acct_no",
+                    "align": "center"
+                },
+                {
+                    "label": "开户行",
+                    "prop": "bank_name",
+                    "align": "center"
+                },
+                {
+                    "label": "开户行行号",
+                    "prop": "bank_no",
+                    "align": "center"
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 160,
+                    "align": "center",
+                    "btns": [{
+                            "type": "look",
+                            "label": "详情",
+                            "toRequest": {
+                                "url": "/views/pl/lawsuitManagement/litigationinstitution/MaintenanceAccepting/PaymentAccount_info.json",
+                                "method": "POST"
+                            },
+                            "props": {
+                                "width": "75%",
+                                "title": "受理机构收款账户详情"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/pl/lawsuitManagement/litigationinstitution/MaintenanceAccepting/PaymentAccount_update.json",
+                                "method": "GET"
+                            },
+                            "show": {
+                              
+                            },
+                            "props": {
+                                "width": "75%",
+                                "title": "受理机构收款账户维护"
+                            }
+                        },
+                        {
+                            "type": "custom",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "pl0546"
+
+                                }
+                            },
+                            "confirm": {
+                                "title": "确定删除",
+                                "confirmButtonText": "确定",
+                                "cancelButtonText": "取消"
+                            },
+                            "show": {
+                               
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

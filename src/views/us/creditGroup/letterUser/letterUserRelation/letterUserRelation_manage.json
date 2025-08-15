@@ -1,0 +1,71 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "us1212",
+          "node_group": "0001",
+          "area_no": "${{params.area_no}}"
+        }
+      },
+      "thead": [
+        {
+          "type": "index",
+          "label": "序号"
+        },
+        {
+          "label": "户口号",
+          "prop": "famliy_cd",
+          "align": "center"
+        },
+        {
+          "label": "信用户代表人客户号",
+          "prop": "cust_no",
+          "align": "center"
+        },
+        {
+          "label": "信用户代表人",
+          "prop": "cust_name",
+          "align": "center"
+        },
+        {
+          "label": "是否户主",
+          "prop": "is_head_of_famliy",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "所属村",
+          "prop": "area_no",
+          "align": "center",
+          "dict": {
+            "dictType": "usOnl",
+            "dictKey": ["usOnl"],
+            "labelField": "node_name",
+            "valueField": "node_cd",
+            "format": "label",
+            "doRequest":{
+              "url":"/SUMP/icmcall/icmRPCCall",
+              "method":"POST",
+              "params":{
+                "servicecode": "us1100",
+                "node_group":"0001"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

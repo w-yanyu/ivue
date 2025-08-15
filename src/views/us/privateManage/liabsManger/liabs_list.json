@@ -1,0 +1,123 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "toolbar": {
+            "btns": [{
+                "type": "add",
+                "target": "dialog",
+                "label": "新增",
+                "toRequest": {
+                    "method": "POST",
+                    "url": "/views/us/private-zcl/liabsManger/liabs_add.json",
+                    "params": {
+                        "cust_no": "1"
+                    }
+                },
+                "props": {
+                    "width": "80%",
+                    "title": "客户资产信息负债"
+                }
+            }]
+        },
+        "datagrid": {
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "us0166",
+                    "cust_no": "1"
+                }
+            },
+            "thead": [
+                {
+
+                    "type": "index",
+                    "label": "序号",
+                    "align": "center"
+                },
+                {
+                    "label": "负债类型",
+                    "prop": "bal_sheet_type",
+                    "align": "center"
+                },
+                {
+                    "label": "关联金融机构",
+                    "prop": "associat_institution",
+                    "align": "center"
+                },
+                {
+                    "label": "授信或贷款金额币种",
+                    "prop": "associat_institution",
+                    "align": "center"
+                },
+                {
+                    "label": "授信或贷款金额",
+                    "prop": "credit_ccy",
+                    "align": "center"
+                },
+                {
+                    "label": "截止日期",
+                    "prop": "closing_date",
+                    "align": "center"
+                },
+                {
+                    "label": "月还款额",
+                    "prop": "monthly_payment",
+                    "align": "center"
+                },
+                {
+                    "label": "到期日期",
+                    "prop": "matu_date",
+                    "align": "center"
+                },
+                {
+                    "label": "账户数",
+                    "prop": "accounts_number",
+                    "align": "center"
+                },
+                {
+                    "label": "操作",
+                    "width": "160px",
+                    "btns": [{
+                            "type": "look",
+                            "label": "详情",
+                            "toRequest": {
+                                "url": "/views/us/private-zcl/liabsManger/liabs_info.json",
+                                "method": "post",
+                                "props": {
+                                    "width": "80%",
+                                    "title": "客户负债详情"
+                                }
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/us/private-zcl/liabsManger/liabs_update.json",
+                                "method": "GET"
+                               
+                            },
+                            "props": {
+                                "width": "80%",
+                                "title": "客户负债信息维护"
+                            }
+                        },
+                        {
+                            "type": "delete",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "us0169"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

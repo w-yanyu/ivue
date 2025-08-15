@@ -1,0 +1,154 @@
+{
+  "module": "v-form-btn-dynamic",
+  "layout": {
+    "form": {
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ar0741",
+          "apply_no": "${{params.apply_no}}"
+        }
+      },
+      "controls": [
+        {
+          "credit_apply_id": {
+            "control": "hidden",
+            "span": 8
+          },
+          "contract_no": {
+            "control": "text",
+            "label": "授信通知书编号",
+            "disabled": true,
+            "span": 10
+          },
+          "base_ccy": {
+            "control": "select",
+            "label": "基准币种",
+            "disabled": true,
+"selectFirstValue":true,
+            "span": 10,
+            "dict": {
+              "dictType": "MS_CURRENCY",
+              "dictKey": [
+                "MS_CURRENCY"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId",
+              "format": "label"
+            } 
+          }
+        },
+        {
+          "apply_amt": {
+            "control": "currency",
+            "label": "授信金额",
+            "disabled": true,
+            "span": 10,
+            "rules": [
+              {
+                "required": false,
+                "message": "请输入授信金额"
+              }
+            ],
+            "align": "left",
+            "format":{
+              "thousand": ","
+            }
+          },
+          "ccy_code": {
+            "control": "select",
+            "label": "主授信币种",
+            "disabled": true,
+            "span": 10,
+            "dict": {
+              "dictType": "MS_CURRENCY",
+              "dictKey": [
+                "MS_CURRENCY"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId",
+              "format": "label"
+            } 
+          }
+        },
+        {
+          "exchange_rate": {
+            "control": "text",
+            "label": "授信汇率",
+            "disabled": true,
+            "span": 10,
+            "value": "1.0"
+          },
+          "base_busi_amt": {
+            "control": "currency",
+            "label": "授信金额(折基准币种)",
+            "disabled": true,
+            "span": 10,
+            "compute": "${{form.apply_amt}}*${{form.exchange_rate}}",
+            "rules": [
+              {
+                "message": "请输入授信总金额(折基准币种)",
+                "required": false
+              }
+            ]
+          }
+        },
+        {
+          "effective_date": {
+            "control": "dateTimePicker",
+            "label": "生效日期",
+            "disabled": true,
+            "span": 10,
+            "rules": [
+              {
+                "message": "生效日期不能为空",
+                "required": false
+              }
+            ]
+          },
+          "appr_term": {
+            "control": "text",
+            "label": "期限(月)",
+            "disabled": true,
+            "span": 10,
+            "rules": [
+              {
+                "required": false,
+                "message": "请选择业务期限(月)"
+              }
+            ]
+          }
+        },
+        {
+          "loan_purpose_desc": {
+            "control": "textarea",
+            "label": "授信资金用途",
+            "disabled": true,
+            "span": 20
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "submit",
+          "label": "保存",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "ar0742",
+              "apply_no": "${{params.apply_no}}",
+              "credit_prod_cd": "${{params.credit_prod_cd}}"
+            }
+          },
+          "show": {
+            "expression": "'${{params.pageType}}' != 'detail'"
+          }
+        }
+      ]
+    }
+  }
+}

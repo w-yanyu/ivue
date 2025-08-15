@@ -1,0 +1,154 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "doRequest": {
+                "url": "",
+                "method": "POST",
+                "params": {}
+            },
+            "controls": [
+                {
+                    "user_id": {
+                        "control": "lookup",
+                        "edit": true,
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入用户ID"
+                            },
+                            {
+                                "max": 32,
+                                "message": "长度不能超过32个字符"
+                            }
+                        ],
+                        "label": "用户ID",
+                        "keyField": {
+                            "user_id": "user_id"
+                        },
+                        "toRequest": {
+                            "url": "/views/ismt/ct/user/user-manager-lookup.json",
+                            "method": "post",
+                            "params": "${{form.user_id}}"
+                        },
+                        "props": {
+                            "title": "用户ID查询"
+                        },
+                        "format": "label"
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "target": "dialog",
+                    "label": "新增",
+                    "refresh": false,
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/ismt/ct/user/teller-role-add.json"
+                    },
+                    "props": {
+                        "title": "用户角色新增"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/rest/auth/userManager",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ct2024"
+                }
+            },
+            "pagination": {
+                "show": true,
+                "pageSize": 10
+            },
+            "thead": [
+                {
+                    "type": "index"
+                },
+                {
+                    "label": "用户ID",
+                    "prop": "user_id"
+                },
+                {
+                    "prop": "role_id",
+                    "label": "角色ID",
+                    "rules": [
+                        {
+                            "required": true,
+                            "message": "请输入角色ID"
+                        },
+                        {
+                            "max": 64,
+                            "message": "长度不能超过64个字符"
+                        }
+                    ],
+                    "value": "${{current.role_id}}"
+                },
+                {
+                    "label": "角色名称",
+                    "prop": "role_name"
+                },
+                {
+                    "label": "生效日期",
+                    "prop": "effect_date",
+                    "type": "dateTimePicker"
+                },
+                {
+                    "label": "失效日期",
+                    "prop": "expiry_date",
+                    "type": "dateTimePicker"
+                },
+                {
+                    "label": "是否默认角色",
+                    "prop": "default_role_flag",
+                    "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                          "MS_E_YESORNO"
+                        ],
+                        "format": "label"
+                      }
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 150,
+                    "align": "center",
+                    "btns": [
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/ismt/ct/user/teller-role-update.json",
+                                "method": "GET"
+                            },
+                            "props": {
+                                "title": "用户角色维护"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "删除",
+                            "toRequest": {
+                                "url": "/views/ismt/ct/user/teller-role-delete.json",
+                                "method": "GET"
+                            },
+                            "props": {
+                                "title": "用户角色删除"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

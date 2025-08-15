@@ -1,0 +1,136 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "coopcd": {
+            "control": "text",
+            "label": "合作方编号",
+            "rules": [
+              {
+                "max": 20,
+                "message": "长度不能超过10个字符"
+              }
+            ]
+          },
+          "ofpana": {
+            "control": "text",
+            "label": "合作方名称",
+            "rules": [
+              {
+                "max": 100,
+                "message": "长度不能超过100个字符"
+              }
+            ]
+          },
+          "cmcrno": {
+            "control": "text",
+            "label": "合作方证件号码",
+            "rules": [
+              {
+                "max": 100,
+                "message": "长度不能超过100个字符"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar":{
+      "btns": [
+        {
+          "type": "add",
+          "target": "addlog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/pm/pm_provincial _level/pm_provincial _level_add.json"
+          },
+          "props": {
+            "title": "省级规模信息新增",
+            "width":"45%"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "qrcopr"
+        }
+      },
+      "thead":
+        [{
+          "type": "index",
+          "label": "序号"
+        }, {
+          "label": "合作方名称",
+          "prop": "ofpana"
+        }, {
+          "label": "合作方编号",
+          "prop": "coopcd"
+        }, {
+          "label": "合作方证件类型",
+          "prop": "opcred",
+          "dict": {
+            "dictType": "E_IDTFTP",
+            "dictKey": [
+              "E_IDTFTP"
+            ],
+            "format": "label"
+          }
+        }, {
+          "label": "合作方证件号码",
+          "prop": "cmcrno"
+        }, {
+          "label": "省级规模",
+          "prop": "provsc."
+        }, {
+          "label": "合作方简称",
+          "prop": "cosina"
+        }, {
+          "label": "修改记录",
+          "prop": "postcode"
+        },{
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align":"center",
+          "btns": [
+            {
+              "type": "delete",
+              "label": "删除",
+              "url": "/SUMP/icmcall/testicmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "delcop"
+              },
+              "confirm": {
+                "title": "删除",
+                "msg": "确定删除该规模信息吗？",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            },
+            {
+              "type": "update",
+              "target": "updatelog",
+              "label": "修改",
+              "toRequest": {
+                "method": "GET",
+                "url": "/views/pm/pm_provincial _level/pm_provincial _level_update.json"
+              },
+              "props": {
+                "title": "省级规模信息修改",
+                "width":"45%"
+              }
+          }]
+        }]
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+    "module": "v-inputDataForm-btn",
+    "layout": {
+        "form": {
+            "initRequest": "${{params}}",
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "uccp0009"
+
+                }
+            },
+            "controls": [{
+                    "prod_group_code": {
+                        "control": "string",
+                        "label": "产品组编号"
+                    },
+                    "prod_code": {
+                        "control": "lookup",
+                        "edit": false,
+                        "label": "产品编号",
+                        "keyField": {
+                            "prod_code":"prod_code",
+                            "prod_name": "prod_name",
+                            "prod_type":"prod_type"
+                        },
+                        "toRequest": {
+                            "#url": "/views/pt/partnerProjrctManage/patrs/sellProduct/sell_prod_look_up.json",
+                            "url": "/views/uccp/prodManager/uccpProdManager/uccp_prod_lookup.json",
+                            "method": "get",
+                            "params": {
+                            }
+                        },
+                        "props": {
+                            "title": "请选择产品编号",
+                            "width": "75%"
+                        },
+                        "rules": [{
+                            "required": true,
+                            "message": "产品编号不能为空!"
+                        }]
+                    },
+                    "prod_name": {
+                        "control": "string",
+                        "label": "产品名称"
+                    }
+                }
+            ]
+        }
+    }
+}

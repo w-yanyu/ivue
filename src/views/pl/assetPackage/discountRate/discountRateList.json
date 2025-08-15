@@ -1,0 +1,97 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "reg_date": {
+            "label": "登记日期",
+            "control": "dateTimePicker",
+            "type": "date",
+            "format":"yyyyMMdd"              
+           
+        },              
+          "term_day": {
+            "label": "期限(天)",
+            "control": "inputNumber",
+            "precision":0          
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/pl/assetPackage/discountRate/addDiscountRate.json"
+          }
+        }
+
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pl0708"
+        }
+      },
+      "thead": [
+        {
+          "type": "index"
+        },
+        {
+          "prop": "reg_date",
+          "label": "登记日期",
+          "align": "center"
+        },
+        {
+          "prop": "term_day",
+          "label": "期限(天)",
+          "align": "center"
+        },
+        {
+          "label": "利率(%)",        
+          "align": "center",
+          "prop": "bchmk_int_rate"
+
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": "200",
+          "align": "center",
+          "btns": [
+            {
+              "toRequest": {
+                "method": "POST",
+                "url": "/views/pl/assetPackage/discountRate/updDiscountRate.json"
+              },
+              "label": "维护",
+              "type": "edit"
+            },
+            {
+              "doRequest": {
+                "method": "POST",
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "params": {
+                  "servicecode": "pl0707",
+                  "method": "del"
+                }
+              },
+              "label": "删除",
+              "type": "delete"
+            }                      
+          ]
+        }
+      ]
+    }
+  }
+}

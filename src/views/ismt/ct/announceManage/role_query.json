@@ -1,0 +1,96 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "initRequest": "${{params}}",
+            "controls": [
+                {
+                    "role_id": {
+                        "label": "操作角色编号",
+                        "control": "text",
+                        "rules": [
+                            {
+                                "max": 20,
+                                "message": "长度不能超过20个字符"
+                            }
+                        ]
+                    },
+                    "role_name": {
+                        "label": "操作角色名称",
+                        "control": "text",
+                        "rules": [
+                            {
+                                "max": 80,
+                                "message": "长度不能超过80个字符"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "foldLineNumber": 3
+        },
+        "toolbar": {
+            "btns": [
+              {
+                "type": "bringback",
+                "label": "选择"
+              }
+            ]
+          },
+        "datagrid": {
+            "isInitSearch": true,
+            "scope": "searchTable",
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "ct2025"
+                }
+            },
+            "thead": [
+                {
+                    "type": "selection",
+                    "width": "55px"
+                },
+                {
+                    "label": "操作角色编号",
+                    "prop": "role_id"
+                },
+                {
+                    "label": "操作角色名称",
+                    "prop": "role_name"
+                },
+                {
+                    "label": "操作层级",
+                    "prop": "rlauth",
+                    "type": "select",
+                    "dict": {
+                        "dictType": "E_RLAUTH",
+                        "dictKey": [
+                            "E_RLAUTH"
+                        ],
+                        "format": "label"
+                    }
+                },
+
+
+                {
+                    "label": "角色查询类型",
+                    "prop": "qrthtp",
+                    "type": "select",
+                    "dict": {
+                        "dictType": "E_QRTHTP",
+                        "dictKey": [
+                            "E_QRTHTP"
+                        ],
+                        "format": "label"
+                    }
+                }
+                
+            ],
+            "pagination": {
+                "show": true
+            }
+        }
+    }
+}

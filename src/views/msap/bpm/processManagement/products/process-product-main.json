@@ -1,0 +1,276 @@
+
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "appId": {
+              "control": "select",
+              "label": "业务模块",
+              "span": 8,
+              "selectFirstValue":true,
+              "dict": {
+                  "dictType": "MS_APPID",
+                  "dictKey": [
+                      "MS_APPID"
+                  ],
+                  "format": "value-label"
+              },
+              "rules": [
+                  {
+                      "required": true,
+                      "message": "请选择业务模块"
+                  }]
+          }
+        },
+        {
+          "wf_prod_no": {
+            "control": "text",
+            "label": "流程产品编号",
+            "span": 8,
+            "rules": [
+              {
+                "max": 100,
+                "message": "长度不能超过100个字符"
+              }
+            ]
+          },
+          "wf_prod_name": {
+            "control": "text",
+            "label": "流程产品名称",
+            "span": 8,
+            "rules": [
+              {
+                "max": 50,
+                "message": "长度不能超过10个字符"
+              }
+            ]
+          },
+          "branch_id": {
+            "label": "适用机构",
+            "span": 8,
+            "control": "lookup",
+            "keyField": {
+               "branch_id": "branch_id",
+               "branch_name":"branch_name"
+            },
+            "toRequest": {
+                "url": "/views/ismt/ct/busiAuth/authOperaLog/branch-info-manager_lookup.json",
+                "method": "post"
+            },
+            "multiple": false,
+            "props": {
+                "title": "适用机构选择"
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "bpm5001",
+          "appId":"${{form.appId}}"
+        }
+      },
+      "thead": [
+        {
+          "label": "流程产品编号",
+          "align":"center",
+          "prop": "wf_prod_no"
+        },
+        {
+          "label": "流程产品名称",
+          "align":"center",
+          "prop": "wf_prod_name"
+        },
+        {
+          "label": "流程名称",
+          "align":"center",
+          "prop": "wf_define_name"
+        },
+        {
+          "label": "流程产品类型",
+          "align":"center",
+          "prop": "wf_prod_tp",
+          "dict": {
+            "dictType": "BPM_E_WFPDTP",
+            "dictKey": [
+              "BPM_E_WFPDTP"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "label":"最新版本号",
+          "align":"center",
+          "prop":"bpm_version"
+        },
+        {
+          "label":"适用机构清单",
+          "align":"center",
+          "prop":"branch_value",
+          "btns": [
+            {
+              "type": "look",
+              "toRequest": {
+                "url": "/views/msap/bpm/processManagement/products/process-product-branch_view.json",
+                "params": {
+                  "appId":"${{form.appId}}",
+                  "wf_prod_no": "${{current.wf_prod_no}}",
+                  "bpm_version": "${{current.bpm_version}}"
+                }
+              },
+              "props": {
+                "width": "75%",
+                "title": "查看适用机构"
+              }
+            }
+          ]
+        },
+        {
+          "label":"维护人",
+          "align":"center",
+          "prop":"data_update_user"
+        },
+        {
+          "label":"维护日期",
+          "width": "160px",
+          "align":"center",
+          "prop":"data_update_time"
+        },
+        {
+          "label": "操作",
+          "width": "280px",
+          "align":"center",
+          "btns": [
+            {
+            "type": "edit",
+            "label": "详细信息查看",
+            "width": "130px",
+            "toRequest": {
+              "url": "/views/msap/bpm/processManagement/products/product-manage-view-step.json",
+              "method": "GET",
+              "params": {
+                "appId":"${{form.appId}}"
+              }
+            },
+            "props": {
+              "title": "详细信息查看",
+              "width":"75%"
+            }
+          },
+            {
+              "type": "custom",
+              "label": "变更",
+              "width": "70px",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "bpm5011",
+                  "appId":"${{form.appId}}",
+                  "old_bpm_version":"${{current.bpm_version}}",
+                  "old_wf_prod_no":"${{current.wf_prod_no}}"
+                }
+              },
+              "confirm": {
+                "title": "提示信息",
+                "#msg": "请确认是否变更？  确定后请前往“流程产品管理”继续处理！",
+                "msg": "请确认是否发起流程产品变更？",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            }, 
+            {
+            "type": "edit",
+            "label": "历史版本",
+            "width": "70px",
+            "toRequest": {
+              "url": "/views/msap/bpm/processManagement/products/process-product-history.json",
+              "method": "GET",
+              "params": {
+                "appId":"${{form.appId}}"
+              }
+            },
+            "props": {
+              "title": "历史版本查看",
+              "width":"75%"
+            }
+          }, 
+          {
+            "type": "edit",
+            "label": "审核记录",
+            "width": "70px",
+            "toRequest": {
+              "url": "/views/msap/bpm/processManagement/products/process-product-appr-record.json",
+              "method": "GET",
+              "params": {
+                "appId":"${{form.appId}}",
+                "servicecode":"bpm4025"
+              }
+            },
+            "props": {
+              "title": "审核记录查看"
+            }
+          },
+          {
+            "type": "add",
+            "target": "dialog",
+            "width": "70px",
+            "label": "复制流程",
+            "toRequest": {
+              "method": "GET",
+              "url": "/views/msap/bpm/processManagement/products/product-manage-copy.json",
+              "params":{
+                "appId":"${{form.appId}}"
+              }
+            }
+          },
+          {
+            "type": "add",
+            "target": "dialog",
+            "width": "140px",
+            "label": "查看流程图",
+            "toRequest": {
+              "url": "@ProcessImgView",
+              "method": "GET",
+              "params": {
+                "from": "processDesign",
+                "appId":"${{form.appId}}",
+                "id_": "${{current.wf_define_id}}"
+              }
+            },
+            "props": {
+              "width": "1200px",
+              "title": "查看流程图"
+            }
+          },
+          {
+            "type": "add",
+            "target": "dialog",
+            "width": "140px",
+            "label": "查看流程业务配置",
+            "toRequest": {
+              "method": "GET",
+              "url": "@WfProductSett",
+              "params":{
+                "appId":"${{form.appId}}",
+                "wfprod_cd":"${{current.wf_prod_no}}",
+                "servicecode":"bpm0069"
+              }
+            }
+          }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,226 @@
+{
+  "module": "v-search-btn-datagrid",
+  "pageId": "risk_strategy",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "strategyId": {
+            "label": "策略ID",
+            "control": "text",
+            "span": 8,
+            "rules": [
+              {
+                "message": "请正确输入",
+                "max": 8
+              }
+            ]
+          },
+          "strategyName": {
+            "label": "策略名称",
+            "control": "text",
+            "span": 8,
+            "rules": [
+              {
+                "message": "请正确输入",
+                "max": 100
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "authId": "strategy_add_btn",
+          "label": "新增",
+          "toRequest": {
+            "url": "/views/risk/risk_strategy/risk_strategy_add.json",
+            "method": "get",
+            "params": {}
+          },
+          "props": {
+            "width": "70%",
+            "title": "新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/API/risk-management-service/risk_strategy/page-select",
+        "method": "post"
+      },
+      "thead": [
+        {
+          "label": "策略ID",
+          "prop": "strategyId"
+        },
+        {
+          "label": "策略名称",
+          "prop": "strategyName"
+        },
+        {
+          "label": "交易种类",
+          "prop": "transType",
+          "dict": {
+            "dictType": "transType",
+            "dictKey": [],
+            "doRequest": {
+              "url": "/views/risk/dictdata/transType.json",
+              "method": "get"
+            }
+          }
+        },
+        {
+          "label": "交易类型",
+          "prop": "transClass",
+          "dict": {
+            "dictType": "transClass",
+            "dictKey": [],
+            "doRequest": {
+              "url": "/views/risk/dictdata/transClass.json",
+              "method": "get"
+            }
+          }
+        },
+        {
+          "label": "业务场景",
+          "prop": "businessScene",
+          "dict": {
+            "dictType": "businessScene",
+            "dictKey": [],
+            "doRequest": {
+              "url": "/views/risk/dictdata/businessScene.json",
+              "method": "get"
+            }
+          }
+        },
+        {
+          "label": "规则组",
+          "prop": "ruleGroups"
+        },
+        {
+          "label": "判定模式",
+          "prop": "handlerMode",
+          "dict": {
+            "dictType": "handlerMode",
+            "dictKey": [],
+            "doRequest": {
+              "url": "/views/risk/dictdata/handlerMode.json",
+              "method": "get"
+            }
+          }
+        },
+        {
+          "label": "生效状态",
+          "prop": "effectStatus",
+          "dict": {
+            "dictType": "effectStatus",
+            "dictKey": [],
+            "doRequest": {
+              "url": "/views/risk/dictdata/effectStatus.json",
+              "method": "get"
+            }
+          }
+        },
+        {
+          "label": "部署状态",
+          "prop": "deployStatus",
+          "dict": {
+            "dictType": "deployStatus",
+            "dictKey": [],
+            "doRequest": {
+              "url": "/views/risk/dictdata/deployStatus.json",
+              "method": "get"
+            }
+          }
+        },
+        {
+          "label": "操作",
+          "btns": [
+            {
+              "type": "edit",
+              "authId": "strategy_upd_btn",
+              "label": "编缉",
+              "toRequest": {
+                "url": "/views/risk/risk_strategy/risk_strategy_edit.json",
+                "method": "get"
+              },
+              "props": {
+                "width": "70%"
+              }
+            },
+            {
+              "type": "look",
+              "label": "查看",
+              "toRequest": {
+                "url": "/views/risk/risk_strategy/risk_strategy_view.json",
+                "method": "get"
+              },
+              "props": {
+                "width": "70%"
+              }
+            },
+            {
+              "type": "add",
+              "authId": "strategy_deployed_btn",
+              "label": "部署",
+              "doRequest": {
+                "url": "/API/risk-management-service/risk_strategy/deployed",
+                "method": "post",
+                "params": {
+                  "updateUser": "$g{{user_info.userCode}}"
+                }
+              },
+              "confirm":{
+                "title": "提示信息",
+                "msg": "确定部署？",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              },
+              "show":{
+                "prop":"deployStatus",
+                "is":["0"]
+              }
+            },
+            {
+              "type": "add",
+              "authId": "strategy_undeployed_btn",
+              "label": "反部署",
+              "doRequest": {
+                "url": "/API/risk-management-service/risk_strategy/undeployed",
+                "method": "post",
+                "params":{
+                  "updateUser": "$g{{user_info.userCode}}"
+                }
+              },
+              "confirm":{
+                "title": "提示信息",
+                "msg": "确定反部署？",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              },
+              "show":{
+                "prop":"deployStatus",
+                "is":["1"]
+              }
+            },
+            {
+              "type": "delete",
+              "authId": "strategy_del_btn",
+              "label": "删除",
+              "doRequest": {
+                "url": "/API/risk-management-service/risk_strategy/delete",
+                "method": "post"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

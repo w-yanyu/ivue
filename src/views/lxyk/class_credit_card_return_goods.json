@@ -1,0 +1,143 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": "${{params}}",
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "icon": "",
+          "doRequest": {
+            "url": "/SUMP/call/RPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": ""
+            }
+          },
+          "show": {
+            "expression": "'2' === '1'"
+          }
+        }
+      ],
+      "controlsGroup": [
+        {
+          "title": "类信用卡退货",
+          "tooltip": "类信用卡退货",
+          "titleIcon": "el-icon-info",
+          "expand": true,
+          "accordion": false,
+          "controls": [
+            {
+              "smilr_cr_card_loan_acct_num": {
+                "control": "string",
+                "label": "类信用卡贷款账号",
+                "width": "100px"
+              },
+              "cust_num": {
+                "control": "string",
+                "label": "客户号",
+                "width": "100px"
+              }
+            },
+            {
+              "cust_nm": {
+                "control": "string",
+                "label": "客户名称",
+                "width": "100px"
+              },
+              "smilr_cr_card_acct_ste": {
+                "control": "select",
+                "label": "类信用卡账户状态",
+                "width": "100px",
+                "disabled": true,
+                "dict": {
+                  "dictType": "E_SMILR_CR_CARD_ACCT_STE",
+                  "dictKey": [
+                    "E_SMILR_CR_CARD_ACCT_STE"
+                  ],
+                  "format": "label"
+                }
+              }
+            },
+            {
+              "ccy_code_num": {
+                "label": "货币代号",
+                "control": "select",
+                "width": "100px",
+                "disabled": true,
+                "dict": {
+                  "dictType": "MS_CURRENCY",
+                  "dictKey": [
+                    "MS_CURRENCY"
+                  ],
+                  "format": "label"
+                }
+              },
+              "ret_goods_amt": {
+                "control": "currency",
+                "label": "退货金额",
+                "width": "100px",
+                "format": "label",
+                "rules": [
+                  {
+                    "expression": "${{form.ret_goods_amt}} >=  0  ",
+                    "message": "分期金额不能小于零"
+                  },
+                  {
+                    "required": true,
+                    "message": "请输入分期额度"
+                  }
+                ]
+              }
+            },
+            {
+              "rpymt_acct_num": {
+                "control": "text",
+                "label": "还款账号",
+                "width": "100px",
+                "disabled": true
+              },
+              "rpymt_sub_acct_serl_num": {
+                "control": "text",
+                "label": "还款子账户序号",
+                "width": "100px",
+                "disabled": true
+              }
+            },
+            {
+              "cptl_src_acct_num": {
+                "control": "text",
+                "label": "资金来源账号",
+                "width": "100px"
+              },
+              "cptl_src_sub_acct_serl_num": {
+                "control": "text",
+                "label": "资金来源账号子序号",
+                "width": "100px"
+              }
+            },
+            {
+              "cplInfo": {
+                "span": 24,
+                "control": "dynamic",
+                "toRequest": {
+                  "url": "/views/lxyk/class_credit_card_billing_details_choose.json",
+                  "params": {
+                    "smilr_cr_card_loan_acct_num": "${{params.smilr_cr_card_loan_acct_num}}",
+                    "txn_evt": "SM_LNXF",
+                    "cust_num": "${{form.cust_num}}",
+                    "cust_nm": "${{form.cust_nm}}",
+                    "ret_goods_amt": "${{form.ret_goods_amt}}",
+                    "cptl_src_acct_num": "${{form.cptl_src_acct_num}}",
+                    "cptl_src_sub_acct_serl_num": "${{form.cptl_src_sub_acct_serl_num}}"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

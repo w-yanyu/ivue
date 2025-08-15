@@ -1,0 +1,227 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "data_create_user": {
+            "label": "导入人员",
+            "control": "select",
+            "width": "130px",
+            "dict": {
+              "dictType": "deciOnl",
+              "dictKey": [],
+              "labelField": "user_name",
+              "valueField": "user_id",
+              "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                  "length": 1000,
+                  "start": 1,
+                  "servicecode": "ct2502"
+                }
+              },
+              "format": "value-label"
+            }
+          },
+          "parse_status": {
+            "label": "导入状态",
+            "control": "select",
+            "width": "130px",
+            "dict": {
+              "dictType": "AR_E_PARSE_STATUS",
+              "dictKey": [
+                "AR_E_PARSE_STATUS"
+              ],
+              "format": "label"
+            }
+          },
+          "batch_no": {
+            "label": "批次编号",
+            "control": "text",
+            "width": "130px"
+          },
+          "file_name": {
+            "label": "文件名称",
+            "control": "text",
+            "width": "130px"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "导入数据",
+          "toRequest": {
+            "url": "/views/icms/import_excel_minio.json",
+            "method": "get",
+            "params": {
+              "servicecode": "ar0826",
+              "appId": "icmsOnl"
+            }
+          },
+          "props": {
+            "title": "导入预授信白名单信息",
+            "width": "80%"
+          }
+        },
+        {
+          "type": "export",
+          "label": "下载模板",
+          "icon": "iconfont icon-daochu",
+          "doRequest": {
+            "url": "/SUMP/rest/file/exportExcelForPreCredit",
+            "method": "get",
+            "params": {
+              "header": "产品编号,证件类型,证件号码,客户姓名,证件签发日期,证件到期日期,证件签发地址,国籍,出生日期,婚姻状态,最高学历,最高学位,单位性质,单位所属行业,工作单位,年收入,手机号码,家庭总负债金额,居住状况,资金用途编号,资金用途名称,主办客户经理ID,是否我行代发工资客户,是否我行存量业务客户,在我行存款档位,有效贷款笔数,贷款余额,居住稳定性,月净收入",
+              "fileName": "预授信白名单信息表.xls"
+            }
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": true,
+      "scope": "searchTable",
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ar0827"
+        }
+      },
+      "thead": [
+        {
+          "label": "序号",
+          "type": "index"
+        },
+        {
+          "type": "string",
+          "label": "批次编号",
+          "prop": "batch_no",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "文件名称",
+          "prop": "file_name",
+          "align": "center",
+          "btns": [
+            {
+              "type": "export",
+              "doRequest": {
+                "url": "/SUMP/minioCall/download",
+                "method": "GET",
+                "params": {
+                  "path": "${{current.file_path}}",
+                  "fileName": "${{current.file_name}}"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "type": "string",
+          "label": "导入人员",
+          "prop": "data_create_user",
+          "align": "center",
+          "dict": {
+            "dictType": "deciOnl",
+            "dictKey": [],
+            "labelField": "user_name",
+            "valueField": "user_id",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "length": 1000,
+                "start": 1,
+                "servicecode": "ct2502"
+              }
+            },
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "label": "导入时间",
+          "prop": "data_create_time",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "导入状态",
+          "prop": "parse_status",
+          "align": "center",
+          "dict": {
+            "dictType": "AR_E_PARSE_STATUS",
+            "dictKey": [
+              "AR_E_PARSE_STATUS"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 150,
+          "align": "center",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/icms/preCreditBusi/preCreditBusi_batchRelation.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "65%",
+                "title": "批量导入名单详情"
+              }
+            },
+            {
+              "type": "look",
+              "label": "异常信息",
+              "toRequest": {
+                "url": "@messageDialog",
+                "method": "POST"
+              },
+              "props": {
+                "width": "65%",
+                "title": "异常信息详情"
+              },
+              "show":{
+                "expression":"'${{current.parse_status}}' === '3' || '${{current.parse_status}}' === '2'"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "ar0828"
+                }
+              },
+              "confirm": {
+                "title": "确定删除",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              },
+              "show":{
+                "expression":"'${{current.parse_status}}' === '3'"
+              }
+            }
+          ]
+        }
+      ],
+      "pagination": {
+        "show": true
+      }
+    }
+  }
+}

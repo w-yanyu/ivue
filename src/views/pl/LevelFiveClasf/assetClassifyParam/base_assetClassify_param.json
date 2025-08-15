@@ -1,0 +1,124 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "five_clasf_id": {
+                        "label": "五级分类编号",
+                        "control": "text",
+                        "rules": [
+                            {
+                                "max": 5,
+                                "message": "长度不能超过5个字符"
+                            }
+                        ]
+                    },
+                    "five_clasf_desc": {
+                        "label": "五级分类描述",
+                        "control": "text",
+                        "rules": [
+                            {
+                                "max": 200,
+                                "message": "长度不能超过200个字符"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "foldLineNumber": 3
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "target": "dialog",
+                    "label": "新增",
+                    "toRequest": {
+                        "method": "POST",
+                        "url": "/views/pl/LevelFiveClasf/assetClassifyParam/base_assetClassify_param_add.json"
+                    },
+                    "props": {
+                        "width": "65%",
+                        "title": "新增分类"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "isInitSearch": false,
+            "scope": "searchTable",
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "pl0101"
+                   
+                }
+            },
+            "thead": [
+                {
+                    "label": "序号",
+                    "type": "index"
+                },
+                {
+                    "label": "五级分类编号",
+                    "prop": "five_clasf_id"
+                },
+                {
+                    "label": "五级分类描述",
+                    "prop": "five_clasf_desc"
+                },
+                {
+                    "label": "五级分类级别",
+                    "prop": "level5_type",
+                    "type": "select",
+                    "dict": {
+                        "dictType": "MS_E_LEVEL5_TYPE",
+                        "dictKey": [
+                            "MS_E_LEVEL5_TYPE"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 200,
+                    "align":"center",
+                    "btns": [
+                     
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/pl/LevelFiveClasf/assetClassifyParam/base_assetClassify_param_edit.json",
+                                "method": "post"
+                            },
+                            "props": {
+                                "width": "65%",
+                                "title": "维护"
+                            }
+                        },
+                       
+                        {
+                            "type": "delete",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "post",
+                                "params": {
+                                    "servicecode": "pl0104"
+                
+                                }
+                            }
+                        }
+                    ]
+                }
+            ],
+            "pagination": {
+                "show": true
+            }
+        }
+    }
+}

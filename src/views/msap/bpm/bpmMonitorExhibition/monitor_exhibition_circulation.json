@@ -1,0 +1,141 @@
+{
+  "module": "v-inputDataForm-btn",
+  "layout": {
+      "scope": "templateScope",
+      "form": {
+          "btns": [],
+          "controls": [
+              {
+                "appId": {
+                  "control": "select",
+                  "label": "业务模块",
+                  "span": "8",
+                  "selectFirstValue":true,
+                  "dict": {
+                    "dictType": "MS_APPID",
+                    "dictKey": [
+                      "MS_APPID"
+                    ],
+                  "format": "value-label"
+                },
+                "rules": [
+                  {
+                      "required": true,
+                      "message": "请选择业务模块"
+                  }],
+                "events": {
+                  "emit": [
+                      "top"
+                    ],
+                    "condition": {
+                      "coOnl": {
+                          "control": {
+                              "busi_type": {
+                                  "value": "CO"
+                              }
+                          }
+                      },
+                      "crOnl": {
+                          "control": {
+                              "busi_type": {
+                                  "value": "CR"
+                              }
+                          }
+                      },
+                      "plOnl": {
+                          "control": {
+                              "busi_type": {
+                                  "value": "PL"
+                              }
+                          }
+                      },
+                      "icmsOnl": {
+                        "control": {
+                          "busi_type": {
+                              "value": "CL"
+                          }
+                        }
+                      }
+                  } 
+                  }
+                }
+              },
+              { 
+                  "daterange": {
+                    "control": "dateTimePicker",
+                    "label": "请选择日期",
+                    "span": "8",
+                    "type": "daterange",
+                    "unlinkPanels": true,
+                    "valueFormat": "yyyyMMdd",
+                    "startPlaceholder": "选择开始时间",
+                    "endPlaceholder": "选择结束时间",
+                    "startField": "date_from",
+                    "endField": "date_end",
+                    "disabledDate": "dateAfter",
+                    "events": {
+                      "emit": [
+                        "top"
+                      ]
+                    }
+
+                  },
+                  "time_type": {
+                    "control": "select",
+                    "label": "请选择时间单位",
+                    "selectFirstValue":true,
+                    "span": "8",
+                    "dict": {
+                      "dictType": "BPM_E_TIME_TYPE",
+                      "dictKey": [
+                        "BPM_E_TIME_TYPE"
+                      ],
+                    "format": "label"
+                    },
+                    "events": {
+                      "emit": [
+                        "top"
+                      ]
+                    }
+
+                  },
+                  "busi_type": {
+                    "control": "select",
+                    "label": "请选择业务类型",
+                    "selectFirstValue":true,
+                    "span": "8",
+                    "dict": {
+                      "dictType": "BPM_E_BUSI_LX",
+                      "dictKey": [
+                        "BPM_E_BUSI_LX"
+                      ],
+                    "format": "label"
+                    },
+                    "events": {
+                      "emit": [
+                        "top"
+                      ]
+                    }
+
+                  },
+                  
+                  "top": {
+                      "control": "dynamic",
+                      "span": 24,
+                      "toRequest": {
+                        "url": "/views/msap/bpm/bpmMonitorExhibition/monitor_exhibition_home.json",
+                        "method": "post",
+                        "params": {
+                          "busi_type":"${{form.busi_type}}",
+                          "date_from":"${{form.date_from}}",
+                          "date_end":"${{form.date_end}}",
+                          "appId":"${{form.appId}}",
+                          "time_type":"${{form.time_type}}"
+                        }
+                      }
+                  }
+              }
+          ]
+      }
+  }
+}

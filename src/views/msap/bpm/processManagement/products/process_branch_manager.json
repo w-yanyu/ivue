@@ -1,0 +1,106 @@
+{
+    "module": "lr_transferTable",
+    "layout": {
+      "transfer": {
+        "height":"400px",
+        "left": {
+          "filterable":true,
+          "title": "可选机构",
+          "placeholder": "请输入机构名称",
+          "query":["branch_name"],
+          "btn":{
+            "label": "关联",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode":"bpm4021",
+                "wf_prod_no": "${{params.wf_prod_no}}",
+                "bpm_version": "${{params.bpm_version}}",
+                "appId":"${{params.appId}}",
+                "trans_type":"INSERT",
+                "rela_org_id":"${{current.org_id}}"
+              }
+            }
+          },
+          "datagrid": {
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode":"bpm4019",
+                "wf_prod_no": "${{params.wf_prod_no}}",
+                "bpm_version": "${{params.bpm_version}}",
+                "appId":"${{params.appId}}"
+              }
+            },
+            "pagination": {
+              "show": true
+            },
+            "thead": [
+              {
+                "label": "机构号",
+                "prop": "branch_id",
+                "align": "center"
+              },
+              {
+                "label": "机构名称",
+                "prop": "branch_name",
+                "align": "center"
+              }
+            ]
+          }
+        },
+        "right": {
+          "title":"已选机构",
+          "filterable":true,
+          "placeholder": "请输入机构名称",
+          "query":["branch_name"],
+          "btn":{
+            "label":"删除",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode":"bpm4021",
+                "wf_prod_no": "${{params.wf_prod_no}}",
+                "bpm_version": "${{params.bpm_version}}",
+                "appId":"${{params.appId}}",
+                "trans_type":"DELETE"
+              }
+            }
+          },
+          "datagrid": {
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "bpm4020",
+                "wf_prod_no": "${{params.wf_prod_no}}",
+                "bpm_version": "${{params.bpm_version}}",
+                "appId":"${{params.appId}}"
+              }
+            },
+            "pagination": {
+              "show": true
+            },
+            "checked":"checked",
+            "thead": [
+              {
+                "label": "机构号",
+                "prop": "branch_id",
+                "control": "text",
+                "align": "center"
+              },
+              {
+                "label": "机构名称",
+                "prop": "branch_name",
+                "align": "center"
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+  

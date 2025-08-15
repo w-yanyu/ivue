@@ -1,0 +1,175 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [],
+            "btns": []
+          },
+        "toolbar": {},
+        "datagrid": {
+            "isInitSearch": true,
+            "scope": "searchTable",
+            "name": "condition",
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "post",
+                "params": {
+                    "cust_no": "${{params.cust_no}}",
+                    "quota_type": "03",
+                    "source_system": "001",
+                    "servicecode": "uccp3080",
+                    "appId":"uccpOnl"
+                }
+            },
+            "pagination": {
+                "show": false
+              },
+            "thead": [
+                {
+                    "label": "额度编号",
+                    "prop": "prod_credit_seq",
+                    "align": "center",
+                    "width": "200px"
+                },
+                {
+                    "label": "产品编号",
+                    "prop": "prod_code",
+                    "align": "center"
+                },
+                {
+                    "label": "产品名称",
+                    "prop": "prod_name",
+                    "align": "center"
+                },
+                {
+                    "label": "业务币种",
+                    "prop": "base_ccy_code",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "MS_CURRENCY",
+                        "dictKey": [
+                            "MS_CURRENCY"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "生效日期",
+                    "prop": "effect_date",
+                    "align": "center"
+                },
+                {
+                    "label": "失效日期",
+                    "prop": "expiry_date",
+                    "align": "center"
+                },
+                {
+                    "label": "额度状态",
+                    "prop": "quota_status",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "UCCP_E_QUOTA_STATUS",
+                        "dictKey": [
+                            "UCCP_E_QUOTA_STATUS"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": {
+                        "default": "渠道来源",
+                        "i18n": "T302.Channel-Source"
+                                },
+                    "prop": "source_system",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "UCCP_E_SOURCE_SYSTEM",
+                        "dictKey": [
+                            "UCCP_E_SOURCE_SYSTEM"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": {
+                        "default": "授信总额",
+                        "i18n": "T302.Total-credit-amount"
+                                },
+                    "prop": "prod_total_credit",
+                    "align": "center",
+                    "format": {
+                        "thousand": ","
+                      }
+                },
+                {
+                    "label": {
+                        "default": "授信可用额度",
+                        "i18n": "T302.Available-credit-limit"
+                                },
+                    "prop": "available_use_limit",
+                    "align": "center",
+                    "format": {
+                        "thousand": ","
+                      }
+                },
+                {
+                  "label": "操作",
+                  "width": "180PX",
+                  "align": "center",
+                  "btns": [
+                    {
+                        "type": "custom",
+                        "label": "冻结",
+                        "doRequest": {
+                          "url": "/SUMP/call/RPCCall",
+                          "params": {
+                            "appId": "icmsOnl",
+                            "servicecode": "ar1310",
+                            "sale_prod_cd": "${{current.prod_code}}",
+                            "sale_prod_name": "${{current.prod_name}}",
+                            "busi_type": "LTBK",
+                            "cl_amt": "${{current.prod_total_credit}}",
+                            "avail_amt": "${{current.available_use_limit}}",
+                            "source_credit_number": "${{current.cust_credit_seq}}"
+                          }
+                        },
+                        "confirm": {
+                          "title": "提示信息",
+                          "msg": "确定冻结吗？",
+                          "confirmButtonText": "确定",
+                          "cancelButtonText": "取消"
+                        },
+                        "show": {
+                          "expression": "'${{current.quota_status}}' == '1'"
+                        }  
+          
+                      },
+                    {
+                        "type": "custom",
+                        "label": "调整",
+                        "doRequest": {
+                          "url": "/SUMP/call/RPCCall",
+                          "params": {
+                            "appId": "icmsOnl",
+                            "servicecode": "ar1406",
+                            "busi_type": "CL",
+                            "contract_no": "${{current.source_credit_number}}"
+                          }
+                        },
+                        "confirm": {
+                          "title": "提示信息",
+                          "msg": "确定调整吗？",
+                          "confirmButtonText": "确定",
+                          "cancelButtonText": "取消"
+                        },
+                        "show": {
+                          "expression": "'${{current.quota_status}}' == '1'"
+                        }  
+          
+                      }
+                  ]
+                }
+            ]
+        }
+    }
+}

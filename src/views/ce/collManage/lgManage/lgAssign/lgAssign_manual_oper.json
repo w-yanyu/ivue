@@ -1,0 +1,63 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "btns": [
+                {
+                    "type": "submit",
+                    "label": "确认分配",
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "pl4666",
+                            "assign_id": "${{params.selectedData}}"
+                        }
+                    }
+                },
+                {
+                    "type": "close",
+                    "label": "取消"
+                }
+            ],
+            "controls": [
+                {
+                    "legal_org_id": {
+                        "control": "remoteSelect",
+                        "label": "请选择诉讼公司",
+                        "width": "180px",
+                        "align": "center",
+                        "span": "16",
+                        "labelField": "coll_org_name",
+                        "valueField": "coll_org_id",
+                        "doRequest":{
+                            "url": "/SUMP/icmcall/icmRPCCall",
+                            "method": "POST",
+                            "params":{
+                                "servicecode":"pl0416",
+                                "coll_org_type":"LG01",
+                                "is_valid":"Y"
+                            }
+                        },
+                        "format":"label",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "legal_end_date": {
+                        "control": "dateTimePicker",
+                        "width": "180px",
+                        "align": "center",
+                        "span": "16",
+                        "label": "法诉到期日"
+                    }
+                }
+            ]
+        }
+    }
+}

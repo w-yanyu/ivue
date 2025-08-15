@@ -1,0 +1,146 @@
+{
+  "module": "v-realonlyForm-btn",
+  "layout": {
+    "form": {
+      "initRequest": "${{params}}",
+      "controls": [
+        {
+          "strategy_type": {
+            "control": "string",
+            "label": "策略类型",
+            "width": "130px",
+            "dict": {
+              "dictType": "CS_E_STRATEGY_TYPE",
+              "dictKey": [
+                "CS_E_STRATEGY_TYPE"
+              ],
+              "format": "value-label"
+            }
+          },
+          "strategy_code": {
+            "control": "string",
+            "label": "策略代码",
+            "width": "130px"
+          }
+        },
+        {
+          "queue_code": {
+            "control": "string",
+            "label": "队列代码",
+            "width": "130px",
+            "initShow": {
+              "expression": "'${{params.strategy_type}}' === 'QT'"
+            }
+          },
+          "queue_name": {
+            "control": "string",
+            "label": "队列名称",
+            "width": "130px",
+            "initShow": {
+              "expression": "'${{params.strategy_type}}' === 'QT'"
+            }
+          }
+        },
+        {
+          "strategy_name": {
+            "control": "string",
+            "label": "策略名称",
+            "width": "130px"
+          },
+          "strategy_desc": {
+            "control": "string",
+            "label": "策略描述",
+            "width": "130px"
+          }
+        },
+        {
+          "start_time": {
+            "label": "起始时间",
+            "width": "130px",
+            "control": "string",
+            "type": "dateTimePicker",
+            "span": 12,
+            "format": "yyyy-MM-dd HH:mm:ss"
+          },
+          "end_time": {
+            "label": "结束时间",
+            "width": "130px",
+            "control": "string",
+            "type": "dateTimePicker",
+            "span": 12,
+            "format": "yyyy-MM-dd HH:mm:ss"
+          }
+        },
+        {
+          "priority": {
+            "control": "string",
+            "label": "优先级",
+            "width": "130px"
+          },
+          "is_valid": {
+            "control": "string",
+            "label": "是否启用",
+            "width": "130px",
+            "dict": {
+              "dictType": "CS_E_YESORNO",
+              "dictKey": [
+                "CS_E_YESORNO"
+              ],
+              "format": "value-label"
+            }
+          }
+        },
+        {
+          "org_id": {
+            "hidden": true,
+            "label": "创建法人",
+            "disabled": true,
+            "width": "130px",
+            "control": "remoteSelect",
+            "labelField": "org_name",
+            "valueField": "org_id",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2311",
+                "org_id": "$g{{user_info.org_id}}"
+              }
+            },
+            "events": {
+              "emit": [
+                "operation"
+              ]
+            },
+            "format": "value-label"
+          },
+          "branch_id": {
+            "hidden": true,
+            "disabled": true,
+            "label": "创建机构",
+            "width": "130px",
+            "control": "remoteSelect",
+            "labelField": "branch_name",
+            "valueField": "branch_id",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2142",
+                "user_id": "$g{{user_info.userCode}}",
+                "branch_id": "$g{{user_info.branch_id}}",
+                "brch_relation_code": "01"
+              }
+            },
+            "events": {
+              "emit": [
+                "operation"
+              ]
+            },
+            "format": "value-label"
+          }
+        }
+      ]
+    }
+  }
+}

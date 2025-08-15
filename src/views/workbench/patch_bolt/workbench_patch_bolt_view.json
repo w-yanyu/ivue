@@ -1,0 +1,145 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "idtfno": {
+            "control": "text",
+            "label": "证件号码",
+            "rules": [
+              {
+                "max": 20,
+                "message": "长度不能超过20个字符"
+              }
+            ]
+          },
+          "mobino": {
+            "control": "text",
+            "label": "手机号码",
+            "rules": [
+              {
+                "max": 20,
+                "message": "长度不能超过20个字符"
+              }
+            ]
+          }
+        },
+        {
+          "custna": {
+            "control": "text",
+            "label": "申请人姓名",
+            "rules": [
+              {
+                "max": 80,
+                "message": "长度不能超过80个字符"
+              }
+            ]
+          },
+          "create_time": {
+            "control": "dateTimePicker",
+            "label": "进件起始日期",
+            "format":"yyyyMMdd",
+            "rules": [
+              {
+                "max": 8,
+                "message": "长度不能超过8个字符"
+              }
+            ]
+          },
+          "end_time": {
+            "control": "dateTimePicker",
+            "label": "进件截至日期",
+            "format":"yyyyMMdd",
+            "rules": [
+              {
+                "max": 8,
+                "message": "长度不能超过8个字符"
+              }
+            ]
+          }
+        }
+
+      ]
+    },
+    "toolbar":{
+    },
+
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "qryapl"
+        }
+      },
+      "thead": [
+        {
+          "type": "index",
+          "align": "center"
+        },
+        {
+          "label": "申请编号",
+          "prop": "applid",
+          "align": "center"
+        },
+        {
+          "label": "申请人姓名",
+          "prop": "custna",
+          "align": "center"
+        },
+        {
+          "label": "证件号码",
+          "prop": "idtfno",
+          "align": "center"
+        },
+        {
+          "label": "手机号",
+          "prop": "mobino",
+          "align": "center"
+        },
+        {
+          "label": "产品名称",
+          "prop": "proc_def_name",
+          "align": "center"
+        },
+        {
+          "label": "进件日期",
+          "prop": "create_time",
+          "align": "center"
+        },
+        {
+          "label": "当前节点",
+          "prop": "ref1_cd",
+          "align": "center"
+        },
+        {
+          "label": "当前处理人",
+          "prop": "cur_user_id",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align":"center",
+          "btns": [
+            {
+              "type": "delete",
+              "label": "申请终止",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "calrec"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

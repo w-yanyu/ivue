@@ -1,0 +1,225 @@
+{
+  "module": "v-form-editableDataGrid-btn",
+  "layout": {
+    "form": {
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "deci010307"
+        }
+      },
+      "controls": [
+        {
+          "functionCode": {
+            "control": "text",
+            "label": "函数代码",
+            "width": "auto",
+            "disabled": true,
+            "span": "8",
+            "rules": [
+              {
+                "required": true,
+                "pattern": "^[A-Za-z][A-Za-z\\d_]{0,65}$",
+                "message": "以首字母为大小写或加数字组合"
+              },
+              {
+                "required": true,
+                "message": "字数超限",
+                "max": 40
+              }
+            ]
+          },
+          "functionName": {
+            "control": "text",
+            "label": "函数名称",
+            "width": "auto",
+            "span": "8",
+            "rules": [
+              {
+                "required": true,
+                "pattern": "^[a-z0-9A-Z\u4e00-\u9fa5]+$",
+                "message": "仅可为字母、数字、文字及相关组合",
+                "max": 100
+              }
+            ]
+          },
+          "resultType": {
+            "control": "select",
+            "label": "返回类型",
+            "width": "auto",
+            "span": "8",
+            "format": "value-label",
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择"
+              }
+            ],
+            "options": [
+              {
+                "value": "String",
+                "label": "字符串"
+              },
+              {
+                "value": "Int",
+                "label": "整数"
+              },
+              {
+                "value": "Decimal",
+                "label": "数值"
+              },
+              {
+                "value": "Boolean",
+                "label": "布尔值"
+              },
+              {
+                "value": "void",
+                "label": "无"
+              }
+            ]
+          },
+          "functionBody": {
+            "control": "textarea",
+            "label": "函数体",
+            "width": "auto",
+            "span": "24",
+            "rows": 5,
+            "showWordLimit": 2000,
+            "maxlength": 2000,
+            "rules": [
+              {
+                "required": true,
+                "message": "请正确输入",
+                "max": 2000
+              }
+            ]
+          },
+          "description": {
+            "label": "备注",
+            "width": "auto",
+            "control": "textarea",
+            "span": 24,
+            "maxlength": 200,
+            "showWordLimit": 200,
+            "rows": 3,
+            "rules": [
+              {
+                "message": "请正确输入",
+                "max": 200
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "新增参数",
+          "icon": "el-icon-plus"
+        }
+      ]
+    },
+    "datagrid": {
+      "pagination": {
+        "show": false
+      },
+      "thead": [
+        {
+          "label": "序号",
+          "type": "index",
+          "align": "center"
+        },
+        {
+          "label": "参数类型",
+          "align": "center",
+          "type": "select",
+          "prop": "paramsDataType",
+          "rules": [
+            {
+              "required": true,
+              "message": "请选择参数类型"
+            }
+          ],
+          "format": "value-label",
+          "options": [
+            {
+              "value": "String",
+              "label": "字符串"
+            },
+            {
+              "value": "Int",
+              "label": "整数"
+            },
+            {
+              "value": "Decimal",
+              "label": "数值"
+            },
+            {
+              "value": "Boolean",
+              "label": "布尔值"
+            }
+          ]
+        },
+        {
+          "label": "参数字段",
+          "align": "center",
+          "type": "text",
+          "prop": "paramsCode",
+          "rules": [
+            {
+              "required": true,
+              "pattern": "^[a-zA-Z][a-zA-Z0-9_]*$",
+              "message": "命名错误，必须为字母开头的字符串"
+            }
+          ]
+        },
+        {
+          "label": "参数描述",
+          "align": "center",
+          "type": "text",
+          "prop": "paramsDesc",
+          "rules": [
+            {
+              "required": true,
+              "message": "请输入参数描述"
+            }
+          ]
+        },
+        {
+          "label": "操作",
+          "btns": [
+            {
+              "type": "delete",
+              "label": "删除",
+              "icon": "el-icon-close"
+            }
+          ],
+          "align": "center"
+        }
+      ]
+    },
+    "footer": {
+      "btns": [
+        {
+          "type": "riskfunctionbtn",
+          "label": "保存",
+          "icon": "el-icon-tickets",
+          "align": "center",
+          "doRequest": {
+            "#url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "createUser": "$g{{user_info.userCode}}",
+              "updateUser": "$g{{user_info.userCode}}",
+              "request_url": "/SUMP/icmcall/icmRPCCall",
+              "servicecode": "deci010301"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

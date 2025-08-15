@@ -1,0 +1,224 @@
+{
+  "module": "v-inputDataForm-btn",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "btns": [],
+      "controls": [
+        {
+          "cust_no": {
+            "control": "hidden",
+            "label": "cust_no"
+          },
+          "apply_no": {
+            "control": "hidden",
+            "label": "apply_no"
+          },
+          "cust_type": {
+            "control": "hidden",
+            "label": "cust_type"
+          },
+          "apply_type": {
+            "control": "hidden",
+            "label": "申请类型",
+            "value": "ACCEN"
+          },
+          "apply_type_name": {
+            "control": "hidden",
+            "label": "申请类型",
+            "value": "承兑申请"
+          },
+          "is_credit": {
+            "control": "hidden",
+            "label": "是否授信",
+            "value": "1"
+          },
+          "effect_date": {
+            "control": "hidden",
+            "label": "生效日期"
+          },
+          "expiry_date": {
+            "control": "hidden",
+            "label": "失效日期"
+          },
+          "cl_amt": {
+            "control": "hidden",
+            "label": "额度金额"
+          },
+          "reality_avail_amt": {
+            "control": "hidden",
+            "label": "实际可用余额"
+          },
+          "term": {
+            "control": "hidden",
+            "label": "期限"
+          },
+          "cust_name": {
+            "control": "lookup",
+            "label": "客户名称",
+            "width": "10px",
+            "keyField": {
+              "cust_no": "cust_no",
+              "cust_name": "cust_name",
+              "cert_type": "cert_type",
+              "cert_no": "cert_no",
+              "mobile_no": "phone_no",
+              "cust_type": "cust_type"
+            },
+            "events": {
+              "set": {
+                "limit_no": "",
+                "sale_prod_name": "",
+                "sale_prod_cd": "",
+                "apply_no": "",
+                "busi_type": "",
+                "prod_type_name": ""
+              }
+            },
+            "toRequest": {
+              "url": "/views/us/entManager/ent_cust_lookup.json",
+              "method": "get"
+            },
+            "props": {
+              "title": "选择客户",
+              "width": "75%"
+            },
+            "format": "label",
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择客户名称"
+              }
+            ]
+          },
+          "limit_no": {
+            "control": "lookup",
+            "#span": 12,
+            "label": "额度编号",
+            "width": "10px",
+            "keyField": {
+              "sale_prod_name": "cl_type_name",
+              "sale_prod_cd": "cl_type_cd",
+              "apply_no": "order_id",
+              "busi_type": "busi_prod_type",
+              "prod_type_name": "busi_prod_type_name",
+              "effect_date":"effect_date",
+              "expiry_date":"expiry_date",
+              "cl_amt":"cl_amt",
+              "reality_avail_amt":"reality_avail_amt",
+              "term":"credit_period"
+            },
+            "toRequest": {
+              "url": "/views/icms/flowStart/lend/creditBusinessStart/credit_limit_lookup.json",
+              "method": "get",
+              "params": {
+                "cust_no": "${{formData.cust_no}}",
+                "cl_level": "P",
+                "status": "Y",
+                "busi_prod_type": "ACCE"
+              }
+            },
+            "props": {
+              "title": "请选择额度编号"
+            },
+            "format": "label",
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择额度编号"
+              }
+            ]
+          },
+          "busi_type": {
+            "width": "10px",
+            "span": 12,
+            "disabled": true,
+            "label": "业务类型",
+            "control": "remoteSelect",
+            "labelField": "title",
+            "valueField": "id",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "pd0144",
+                "grupno": "0006",
+                "pid": "KSCP"
+              }
+            }
+          },
+          "prod_type_name": {
+            "control": "hidden",
+            "label": "业务类型"
+          },
+          "mobile_no": {
+            "control": "text",
+            "width": "10px",
+            "label": "手机号码",
+            "disabled": true,
+            "span": 12,
+            "rules": [
+              {
+                "required": false,
+                "message": "请输入手机号码"
+              }
+            ]
+          },
+          "cert_type": {
+            "control": "select",
+            "label": "证件类型",
+            "#span": 12,
+            "width": "10px",
+            "disabled": true,
+            "dict": {
+              "dictType": "MS_E_CRET_TYPE",
+              "dictKey": [
+                "MS_E_CRET_TYPE"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId"
+            }
+          },
+          "cert_no": {
+            "control": "text",
+            "#span": 12,
+            "width": "10px",
+            "label": "证件号码",
+            "disabled": true
+          },
+          "sale_prod_cd": {
+            "control": "text",
+            "label": "可售产品",
+            "#span": 12,
+            "width": "10px",
+            "disabled": true
+          },
+          "sale_prod_name": {
+            "control": "text",
+            "label": "产品名称",
+            "#span": 12,
+            "width": "10px",
+            "disabled": true
+          },
+          "toDbsx": {
+            "span": 24,
+            "control": "dynamic",
+            "unFieldList": [
+              "ccy_code"
+            ],
+            "#isShowChildrenForm": false,
+            "toRequest": {
+              "method": "GET",
+              "url": "@FlowSubmitBtn",
+              "params": {
+                "appId": "icmsOnl",
+                "servicecode": "ar1031",
+                "finalUrl": "@CommWaitToDoDeal"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

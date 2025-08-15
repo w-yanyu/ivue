@@ -1,0 +1,144 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "template_id": {
+            "label": "模板编号",
+            "control": "text"
+          },
+          "template_name": {
+            "label": "模板名称",
+            "control": "text"
+          }
+        },
+        {
+          "prod_type": {
+            "label": "产品类型",
+            "control": "remoteSelect",
+            "labelField": "title",
+            "valueField": "id",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "pd0144",
+                "grupno": "0006",
+                "pid": "KSCP"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/pd/prodTemplate/prodTemplateTmp_add.json"
+          },
+          "props": {
+            "width": "75%",
+            "title": "新增模板"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "pd0150",
+          "appr_status": "01",
+          "cust_class_list": "${{params.cust_class_list}}"
+        }
+      },
+      "thead": [
+        {
+          "label": "模板编号",
+          "prop": "template_id",
+          "align": "center"
+        },
+        {
+          "label": "模板名称",
+          "prop": "template_name",
+          "align": "center"
+        },
+        {
+          "label": "模板版本",
+          "prop": "prod_version",
+          "align": "center"
+        },
+        {
+          "label": "产品类型",
+          "prop": "prod_type_name",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "适用客户类型",
+          "prop": "cust_class",
+          "align": "center",
+          "dict": {
+            "dictType": "PD_E_CUST_CLASS",
+            "dictKey": [
+              "PD_E_CUST_CLASS"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "width": 180,
+          "btns": [
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/pd/prodTemplate/prodTemplateTmp_upd.json",
+                "method": "GET",
+                "params": {
+                  "tranType": "modify",
+                  "template_id": "${{current.template_id}}",
+                  "template_name": "${{current.template_name}}",
+                  "prod_version": "${{current.prod_version}}",
+                  "prod_type_name": "${{current.prod_type_name}}",
+                  "is_stop_use": "${{current.is_stop_use}}",
+                  "valid_flag": "${{current.valid_flag}}"
+                }
+              },
+              "props": {
+                "width": "65%",
+                "title": "产品模板维护"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "pd0152"
+                }
+              },
+              "confirm": {
+                "title": "确定删除",
+                "cancelButtonText": "取消",
+                "confirmButtonText": "确定"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

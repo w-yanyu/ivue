@@ -1,0 +1,172 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "epcgcd": {
+                        "control": "text",
+                        "label": "罚金编号",
+                        "rules": [
+                            {
+                                "max": 18,
+                                "message": "长度不能超过18个字符"
+                            }
+                        ]
+                    },
+                    "epcgna": {
+                        "control": "text",
+                        "label": "罚金名称"
+                    }
+                },
+                {
+                    "efctdt": {
+                        "control": "dateTimePicker",
+                        "label": "生效日期",
+                        "type": "date",
+                        "format": "yyyyMMdd"
+                    },
+                    "inefdt": {
+                        "control": "dateTimePicker",
+                        "label": "失效日期",
+                        "type": "date",
+                        "format": "yyyyMMdd"
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "target": "dialog",
+                    "label": "新增",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/loanManager/fineParameters/fineParameters_add.json"
+                    },
+                    "props": {
+                        "width": "65%",
+                        "title": "新增罚金参数"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "caozuolx": "3",
+                    "servicecode": "edeppe"
+                }
+            },
+            "pagination": {
+                "pageSizes": [
+                    10,
+                    15,
+                    20
+                ],
+                "pageSize": 10
+            },
+            "thead": [
+                {
+                    "label": "罚金编号",
+                    "prop": "epcgcd",
+                    "align": "center"
+                },
+                {
+                    "label": "罚金名称",
+                    "prop": "epcgna",
+                    "align": "center"
+                },
+                {
+                    "label": "生效日期",
+                    "prop": "efctdt",
+                    "align": "center"
+                },
+                {
+                    "label": "失效日期",
+                    "prop": "inefdt",
+                    "align": "center"
+                },
+                {
+                    "label": "最大罚金金额",
+                    "prop": "epcgmx",
+                    "align": "center"
+                },
+                {
+                    "label": "最小罚金金额",
+                    "prop": "epcgmn",
+                    "align": "center"
+                },
+                {
+                    "label": "罚金计算类型",
+                    "prop": "pentyp",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "E_PENTYP",
+                        "dictKey": [
+                            "E_PENTYP"
+                        ],
+                        "format": "label",
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "起始日期规则",
+                    "prop": "stadat",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "E_STADAT",
+                        "dictKey": [
+                            "E_STADAT"
+                        ],
+                        "format": "label",
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "固定金额",
+                    "prop": "fxcgam",
+                    "align": "center"
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 180,
+                    "align": "center",
+                    "btns": [
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/loanManager/fineParameters/fineParameters_update.json",
+                                "method": "GET"
+                            },
+                            "props": {
+                                "width": "75%",
+                                "title": "罚金参数信息维护"
+                            }
+                        },
+                        {
+                            "type": "delete",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "edeppe",
+                                    "caozuolx": "2"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,132 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "doRequest": {
+                "url": "",
+                "method": "POST",
+                "params": {}
+            },
+            "controls": [
+                {
+                    "role_id": {
+                        "control": "remoteSelect",
+                        "label": "角色ID",
+                        "labelField": "drop_list_desc",
+                        "valueField": "drop_list_value",
+                        "rules": [
+                            {
+                                "max": 64,
+                                "message": "长度不能超过64个字符"
+                            }
+                        ],
+                        "doRequest": {
+                            "url": "/SUMP/call/RPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "ms9999",
+                                "dynamic_drop_list_type": "CT0001"
+                            }
+                        },
+                        "format": "label"
+                    },
+                    "role_mutex_id": {
+                        "control": "remoteSelect",
+                        "label": "角色互斥ID",
+                        "labelField": "drop_list_desc",
+                        "valueField": "drop_list_value",
+                        "rules": [
+                            {
+                                "max": 10,
+                                "message": "长度不能超过10个字符"
+                            }
+                        ],
+                        "doRequest": {
+                            "url": "/SUMP/call/RPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "ms9999",
+                                "dynamic_drop_list_type": "CT0001"
+                            }
+                        },
+                        "format": "label"
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "target": "dialog",
+                    "label": "新增",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/ismt/ct/roleManager/rme-info-add.json"
+                    },
+                    "props": {
+                        "title": "角色互斥信息新增"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ct2066"
+                }
+            },
+            "pagination": {
+                "show": true,
+                "pageSize": 10
+            },
+            "thead": [
+                {
+                    "type": "index"
+                },
+                {
+                    "label": "角色ID",
+                    "prop": "role_id"
+                },
+                {
+                    "label": "角色互斥ID",
+                    "prop": "role_mutex_id"
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "align": "center",
+                    "width": 150,
+                    "btns": [
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/ismt/ct/roleManager/rme-info-update.json",
+                                "method": "GET"
+                            },
+                            "props": {
+                                "title": "角色维护"
+                            }
+                        },
+                        {
+                            "type": "delete",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/call/RPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "ct2080"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

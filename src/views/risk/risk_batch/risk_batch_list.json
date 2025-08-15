@@ -1,0 +1,125 @@
+{
+  "module": "v-inputDataForm-btn",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "jobName": {
+            "label": "批量名称",
+            "control": "select",
+            "span": 8,
+            "options": [
+              {
+                "label": "批量指标变量导入",
+                "value": "indicatorImportJob"
+              },
+              {
+                "label": "批量指标变量删除",
+                "value": "indicatorDeleteJob"
+              },
+              {
+                "label": "客户指标清理",
+                "value": "customerIndicatorHistoryDelJob"
+              },
+              {
+                "label": "其它指标清理",
+                "value": "otherIndicatorHistoryDeleteJob"
+              },
+              {
+                "label": "客户行为习惯统计",
+                "value": "customerHabitStatisticJob"
+              }
+            ],
+            "events": {
+              "condition": {
+                "switch": {
+                  "indicatorDeleteJob": {
+                    "control": {
+                      "taskId": {
+                        "initShow": true
+                      }
+                    }
+                  },
+                  "$default": {
+                    "control": {
+                      "taskId": {
+                        "initShow": false
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "该控件必填",
+                "max": 40
+              }
+            ]
+          },
+          "taskId": {
+            "label": "批次id",
+            "control": "lookup",
+            "initShow": false,
+            "span": 8,
+            "rules": [
+              {
+                "required": true,
+                "message": "请正确输入",
+                "max": 40
+              }
+            ],
+            "keyField": [
+              "taskId"
+            ],
+            "toRequest":{
+              "url": "/views/risk/risk_batch/risk_batch_import_task_info.json",
+              "method": "get",
+              "params": {
+              }
+            },
+            "props": {
+              "width": "70%",
+              "title": "批量指标导入任务查询",
+              "close": "",
+              "target": ""
+            }
+          }
+        }
+      ],
+      "btnPlace": "left",
+      "btns": [
+        {
+          "type": "import",
+          "label": "文件导入",
+          "icon": "iconfont icon-daoru1",
+          "props": {
+            "width": "600px",
+            "title": "导入",
+            "doRequest": {
+              "url": "/API/risk-management-service/risk-batch/fileImport",
+              "method": "post"
+            },
+            "multiple": true,
+            "name": "import",
+            "accept": ".csv",
+            "limit": 1,
+            "allSize": 1
+          }
+        },
+        {
+          "type": "submit",
+          "label": "执行批量",
+          "doRequest": {
+            "url": "/API/risk-management-service/risk-batch/batchExecute",
+            "method": "post",
+            "params": {
+              "operator": "$g{{user_info.userCode}}"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

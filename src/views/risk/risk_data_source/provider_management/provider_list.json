@@ -1,0 +1,165 @@
+{
+  "module": "v-search-btn-datagrid",
+  "pageId": "risk_rule_constant",
+  "layout": {
+    "form": {
+      "controls": [{
+        "provider_code": {
+          "label": "提供方代码",
+          "control": "text",
+          "span": 8,
+          "rules": [{
+            "message": "请正确输入",
+            "max": 20
+          }]
+        },
+        "provider_name": {
+          "label": "提供方名称",
+          "control": "text",
+          "span": 8,
+          "rules": [{
+            "message": "请正确输入",
+            "max": 60
+          }]
+        },
+        "service_type": {
+          "label": "服务类型",
+          "control": "select",
+          "span": 8,
+          "dict": {
+            "format": "label",
+            "dictKey": [
+              "DECI_E_SERVICE_TYPE"
+            ],
+            "dictType": "DECI_E_SERVICE_TYPE"
+          }
+        }
+      }]
+    },
+    "toolbar": {
+      "btns": [{
+        "type": "add",
+        "label": "新增",
+        "toRequest": {
+          "url": "@providerAdd",
+          "method": "get"
+        },
+        "props": {
+          "width": "70%",
+          "title": "新增"
+        }
+      }]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+            "servicecode": "deci050005"
+        }
+      },
+      "thead": [
+        {
+        "label": "序号",
+        "type": "index"
+        },
+        {
+          "label": "提供方代码",
+          "prop": "provider_code"
+        },
+        {
+          "label": "提供方名称",
+          "prop": "provider_name"
+        },
+        {
+          "label": "服务类型",
+          "prop": "service_type",
+          "dict": {
+            "format": "label",
+            "dictKey": [
+              "DECI_E_SERVICE_TYPE"
+            ],
+            "dictType": "DECI_E_SERVICE_TYPE"
+          }
+        },
+        {
+          "label": "描述",
+          "prop": "description"
+        },
+        {
+          "label": "法人代码",
+          "prop": "org_id"
+        },
+        {
+          "label": "数据创建时间",
+          "prop": "data_create_time"
+        },
+        {
+          "label": "数据更新时间",
+          "prop": "data_update_time"
+        },
+        {
+          "label": "数据创建柜员",
+          "prop": "data_create_user"
+        },
+        {
+          "label": "数据更新柜员",
+          "prop": "data_update_user"
+        },
+        {
+          "label": "数据版本号",
+          "prop": "data_version"
+        },
+        {
+          "label": "操作",
+          "width": "150px",
+          "btns": [{
+              "type": "edit",
+              "authId": "constant_upd_btn",
+              "label": "维护",
+              "toRequest": {
+                "url": "@providerAdd",
+                "method": "get",
+                "params": {"isEdit":true}
+              },
+              "props": {
+                "width": "70%"
+              }
+            },
+            {
+              "type": "look",
+              "label": "查看",
+              "toRequest": {
+                "url": "/views/risk/risk_data_source/provider_management/provider_view.json",
+                "method": "get"
+              },
+              "props": {
+                "width": "70%"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "disabled": "'${{current.is_delete}}' === '0'",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "deci050003",
+                  "provider_code": "${{current.provider_code}}"
+                }
+              },
+              "confirm": {
+                  "title": "提示信息",
+                  "msg": "确认删除当前数据？",
+                  "confirmButtonText": "确定",
+                  "cancelButtonText": "取消"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

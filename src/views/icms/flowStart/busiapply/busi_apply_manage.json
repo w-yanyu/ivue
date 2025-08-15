@@ -1,0 +1,162 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "apply_no": {
+                        "label": {
+                            "default": "申请号",
+                            "i18n": "L0501.Application-number"
+                        },
+                        "control": "text"
+                    },
+                    "cust_name": {
+                        "control": "text",
+                        "label": {
+                            "default": "客户名称",
+                            "i18n": "L0501.cust_name"
+                        }
+                    },
+                    "busi_type": {
+                        "label": "业务类型",
+                        "span": 12,
+                        "control": "remoteSelect",
+                        "labelField": "title",
+                        "valueField": "id",
+                        "doRequest": {
+                            "url": "/SUMP/call/RPCCall",
+                            "method": "POST",
+                            "exclude": [
+                                "V"
+                            ],
+                            "params": {
+                                "servicecode": "pd0144",
+                                "grupno": "0006",
+                                "pid": "KSCP"
+                            }
+                        }
+                    },
+                    "apply_type": {
+                        "label": "申请类型",
+                        "span": 12,
+                        "control": "select",
+                        "dict": {
+                            "dictType": "PD_E_APPLY_TYPE",
+                            "dictKey": [
+                                "PD_E_APPLY_TYPE"
+                            ],
+                            "format": "label-value"
+                        }
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": []
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ar0860"
+                }
+            },
+            "thead": [
+                {
+                    "label": {
+                        "default": "申请号",
+                        "i18n": "L0501.Application-number"
+                    },
+                    "prop": "apply_no",
+                    "align": "center"
+                },
+                {
+                    "label": "申请日期",
+                    "prop": "apply_date",
+                    "align": "center"
+                },
+                {
+                    "label": "客户编号",
+                    "prop": "prin_cust_no",
+                    "align": "center"
+                },
+                {
+                    "label": "客户名称",
+                    "prop": "cust_name",
+                    "align": "center"
+                },
+                {
+                    "label": "产品编号",
+                    "prop": "sale_prod_cd",
+                    "align": "center"
+                },
+                {
+                    "label": "产品名称",
+                    "prop": "sale_prod_name",
+                    "align": "center"
+                },
+                {
+                    "label": "流程产品编号",
+                    "prop": "wf_prod_no",
+                    "align": "center"
+                },
+                {
+                    "label": "流程产品名称",
+                    "prop": "wf_prod_name",
+                    "align": "center"
+                },
+                {
+                    "prop": "apply_type",
+                    "label": "申请类型",
+                    "dict": {
+                        "dictType": "PD_E_APPLY_TYPE",
+                        "dictKey": [
+                            "PD_E_APPLY_TYPE"
+                        ],
+                        "format": "label-value"
+                    }
+                },
+                {
+                    "label": "业务类型",
+                    "prop": "busi_type",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "PD_E_BUSI_TYPE",
+                        "dictKey": [
+                            "PD_E_BUSI_TYPE"
+                        ],
+                        "format": "label-value"
+                    }
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 140,
+                    "align": "center",
+                    "btns": [
+                        {
+                            "type": "edit",
+                            "label": "流程跟踪",
+                            "toRequest": {
+                                "url": "@ProcessImgView",
+                                "method": "GET",
+                                "params": {
+                                    "from": "backlog",
+                                    "appId": "icmsOnl"
+                                }
+                            },
+                            "props": {
+                                "width": "1200px",
+                                "title": "流程跟踪图"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

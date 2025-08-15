@@ -1,0 +1,92 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "initRequest": "${{params}}",
+            "btns": [
+                {
+                    "type": "submit",
+                    "label": "提交",
+                    "icon": "",
+                    "doRequest": {
+                        "url": "/SUMP/rest/auth/userRole",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "ct2006",
+                            "operater_ind": "M",
+                            "system_id": ""
+                        }
+                    }
+                }
+            ],
+            "controls": [
+                {
+                   
+                    "role_id": {
+                        "control": "lookup",
+                        "disabled": true,
+                        "label": "角色ID",
+                        "width": "150px",
+                        "rules": [
+                            {
+                                "max": 64,
+                                "message": "长度不能超过64个字符"
+                            }
+                        ],
+                        "keyField": {
+                            "role_id": "role_id"
+                        },
+                        "toRequest": {
+                            "url": "/views/ismt/ct/roleManager/role-manager_lookup.json",
+                            "method": "post",
+                            "params": "${{form.role_id}}"
+                        },
+                        "props": {
+                            "title": "角色ID查询"
+                        },
+                        "format": "label"
+                    },
+                    "role_name": {
+                        "control": "string",
+                        "label": "角色名称",
+                        "width": "150px",
+                        "rules": [
+                            {
+                                "max": 100,
+                                "message": "长度不能超过100个字符"
+                            }
+                        ]
+                    },
+                    "effect_date": {
+                        "control": "dateTimePicker",
+                        "label": "生效日期",
+                        "width": "150px",
+                        "prop": "effect_date"
+                    },
+                    "expiry_date": {
+                        "control": "dateTimePicker",
+                        "width": "150px",
+                        "label": "失效日期",
+                        "prop": "expiry_date"
+                    },
+                    "default_role_flag":{
+                        "control": "select",
+                        "label": "是否默认角色",
+                        "dict": {
+                            "dictType": "MS_E_YESORNO",
+                            "dictKey": [
+                                "MS_E_YESORNO"
+                            ],
+                            "format": "label"
+                        }
+                    },
+                    "user_id":{
+                        "control":"hidden",
+                        "label":"用户id"
+                    }
+                   
+                }
+            ]
+        }
+    }
+}

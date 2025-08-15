@@ -1,0 +1,126 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "doc_no": {
+                        "label": "资料编号",
+                        "control": "text",
+                        "width": "140px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入资料编号"
+                            }
+                        ]
+                    },
+                    "doc_name": {
+                        "label": "资料名称",
+                        "control": "text",
+                        "width": "140px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入资料名称"
+                            }
+                        ]
+                    },
+                    "is_person_doc": {
+                        "label": "是否个人资料",
+                        "control": "select",
+                        "width": "140px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请选择是否个人资料"
+                            }
+                        ],
+                        "dict": {
+                            "dictType": "MS_E_YESORNO",
+                            "dictKey": [
+                                "MS_E_YESORNO"
+                            ]
+                        }
+                    },
+                    "doc_type": {
+                        "label": "资料类型",
+                        "width": "140px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请选择资料类型"
+                            }
+                        ],
+                        "control": "remoteSelect",
+                        "labelField": "title",
+                        "valueField": "id",
+                        "doRequest": {
+                            "url": "/SUMP/call/RPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "pd0144",
+                                "grupno": "0006",
+                                "pid": "KSCP"
+                            }
+                        },
+                        "events": {
+                            "doRequest": {
+                                "url": "/SUMP/call/RPCCall",
+                                "method": "post",
+                                "params": {
+                                    "servicecode": "pd0143",
+                                    "grupno": "0006",
+                                    "id": "${{form.doc_type}}"
+                                },
+                                "resultSet": {
+                                    "prod_type_name": "title"
+                                }
+                            }
+                        }
+                    },
+                    "prod_type_name": {
+                        "control": "hidden",
+                        "label": "资料类型名称",
+                        "width": "140px"
+                    },
+                    "doc_type_no": {
+                        "label": "资料分类",
+                        "width": "140px",
+                        "control": "remoteSelect",
+                        "labelField": "doc_type_name",
+                        "valueField": "doc_type_no",
+                        "doRequest": {
+                            "url": "/SUMP/icmcall/icmRPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "ar0101",
+                                "start": 1,
+                                "length": 10000
+                            }
+                        },
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请选择资料分类编号"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "btns": [
+                {
+                    "type": "submit",
+                    "label": "提交",
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "ar0122"
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,96 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "initRequest": "${{params}}",
+            "controls": [
+                {
+                    "acrlid": {
+                        "label": "操作角色编号",
+                        "control": "text",
+                        "width": "130px",
+                        "rules": [
+                            {
+                                "max": 20,
+                                "message": "长度不能超过20个字符"
+                            }
+                        ]
+                    },
+                    "acrlnm": {
+                        "label": "操作角色名称",
+                        "control": "text",
+                        "width": "130px",
+                        "rules": [
+                            {
+                                "max": 80,
+                                "message": "长度不能超过80个字符"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "foldLineNumber": 3
+        },
+        "datagrid": {
+            "isInitSearch": false,
+            "scope": "searchTable",
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "AS_ICMS_CM_SEACRL"
+                }
+            },
+            "thead": [
+                {
+                    "label": "操作",
+                    "fixed": "left",
+                    "btns": [
+                        {
+                            "type": "bringback",
+                            "label": "选择"
+                        }
+                    ]
+                },
+                {
+                    "label": "操作角色编号",
+                    "prop": "acrlid"
+                },
+                {
+                    "label": "操作角色名称",
+                    "prop": "acrlnm"
+                },
+                {
+                    "label": "操作层级",
+                    "prop": "rlauth",
+                    "type": "select",
+                    "dict": {
+                        "dictType": "E_RLAUTH",
+                        "dictKey": [
+                            "E_RLAUTH"
+                        ],
+                        "format": "label"
+                    }
+                },
+
+
+                {
+                    "label": "角色查询类型",
+                    "prop": "qrthtp",
+                    "type": "select",
+                    "dict": {
+                        "dictType": "E_QRTHTP",
+                        "dictKey": [
+                            "E_QRTHTP"
+                        ],
+                        "format": "label"
+                    }
+                }
+                
+            ],
+            "pagination": {
+                "show": true
+            }
+        }
+    }
+}

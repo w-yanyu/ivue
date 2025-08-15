@@ -1,0 +1,126 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "datagrid": {
+            "scope": "searchTable",
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "us0235",
+                    "recust_no": "${{params.recust_no}}",
+                    "ent_relation": "${{params.ent_relation}}"
+                }
+            },
+            "thead": [
+                {
+                  "label": "序号",
+                  "type": "index",
+                  "align": "center"
+                },
+                {
+                  "label": "客户类别",
+                  "prop": "cust_type",
+                  "align": "center",
+                  "dict": {
+                    "format": "label",
+                    "dictKey": [
+                      "US_E_CUST_TYPE"
+                    ],
+                    "dictType": "US_E_CUST_TYPE"
+                  }
+                },
+                {
+                  "label": "客户名称",
+                  "prop": "cust_name",
+                  "align": "center"
+                },
+                {
+                  "label": "客户英文名称",
+                  "prop": "cust_english_name",
+                  "align": "center"
+                },
+                {
+                  "label": "客户曾用名",
+                  "prop": "cust_befor_name",
+                  "align": "center"
+                },
+                {
+                  "label": "客户性质",
+                  "prop": "cust_nature",
+                  "align": "center",
+                  "dict": {
+                    "format": "label",
+                    "dictKey": [
+                      "US_E_LEGAL_CUST_PROPERTY"
+                    ],
+                    "dictType": "US_E_LEGAL_CUST_PROPERTY"
+                  }
+                },
+                {
+                  "label": "证件类型",
+                  "prop": "cert_type",
+                  "align": "center",
+                  "dict": {
+                    "dictType": "MS_E_CRET_TYPE",
+                    "dictKey": [
+                      "MS_E_CRET_TYPE"
+                    ],
+                    "labelField": "dictName",
+                    "valueField": "dictId"
+                  }
+                },
+                {
+                  "label": "证件号码",
+                  "prop": "cert_no",
+                  "align": "center"
+                },
+                {
+                  "label": "操作",
+                  "align": "center",
+                  "btns": [
+                    {
+                      "type": "custom",
+                      "label": "详细信息",
+                      "show": {
+                        "prop": "indvfg",
+                        "is": [
+                          "1"
+                        ]
+                      },
+                      "toRequest": {
+                        "url": "/views/us/usManager/user_info.json",
+                        "props": {
+                          "width": "80%",
+                          "height": "400px",
+                          "title": "个人客户信息"
+                        }
+                      }
+                    },
+                    {
+                      "type": "custom",
+                      "label": "详细信息",
+                      "show": {
+                        "prop": "cust_type",
+                        "is": [
+                          "20"
+                        ]
+                      },
+                      "toRequest": {
+                        "url": "/views/us/entManager/ent_cust_tree.json",
+                        "params": {
+                          "show_flash":"${{params.show_flash}}"
+                         },
+                        "props": {
+                          "width": "95%",
+                          "height": "590px",
+                          "title": "对公客户信息"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+        }
+    }
+}

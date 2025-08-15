@@ -1,0 +1,236 @@
+{
+  "module": "v-search-btn-datagrid",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "controls": [
+        {
+          "branch_id": {
+            "label": "服务机构",
+            "control": "remoteSelect",
+            "labelField": "branch_name",
+            "valueField": "branch_id",
+            "searchField":"branch_name",
+            "span": 6,
+            "width": "auto",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "post",
+              "params": {
+                "servicecode": "ct2191",
+                "is_display":"0"
+              }
+            },
+            "rules": [
+              {
+                "required": false,
+                "message": "请输入机构名称"
+              }
+            ],
+            "format": "label"
+          },
+          "system_number_identification": {
+            "label": "服务系统",
+            "control": "remoteSelect",
+            "labelField": "systemName",
+            "valueField": "systemId",
+            "searchField":"systemName",
+            "span": 6,
+            "width": "auto",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "post",
+              "params": {
+                "servicecode": "deci090101",
+                "length":1000
+              }
+            },
+            "rules": [
+              {
+                "required": false,
+                "message": "请输入机构名称",
+                "max": 125
+              }
+            ],
+            "format": "label"
+          },
+          "score_model_code": {
+            "label": "模型代码",
+            "control": "text",
+            "span": 6
+          },
+          "model_name": {
+            "label": "模型名称",
+            "control": "text",
+            "span": 6
+          }
+        },
+        {
+          "model_type": {
+            "label": "模型类型",
+            "control": "select",
+            "span": 6,
+            "dict": {
+              "dictType": "DECI_E_MODE_TYPE",
+              "dictKey": [
+                "DECI_E_MODE_TYPE"
+              ],
+              "format": "label"
+            }
+          },
+          "transaction_start_time": {
+            "control": "dateTimePicker",
+            "label": "开始日期:",
+            "span": 6,
+            "value":"today-30",
+            "format": "yyyyMMdd",
+            "rules": [{
+              "required": true,
+              "message": "请输入开始日期"
+          }]
+          },
+          "transaction_end_time": {
+            "control": "dateTimePicker",
+            "label": "结束日期:",
+            "span": 6,
+            "value":"today",
+            "format": "yyyyMMdd",
+            "rules": [{
+              "required": true,
+              "message": "请输入结束日期"
+          }]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "deci060119",
+          "isList": true
+        }
+      },
+      "pagination": {
+        "hideOnSinglePage": false,
+        "show": true,
+        "pageSizes": [10, 15, 20],
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "label": "序号",
+          "type": "index"
+        },
+        {
+          "label": "服务机构",
+          "prop": "branch_id",
+          "dict": {
+            "dictType": "DECI_E_BRANCH_MARK",
+            "dictKey": [
+              "DECI_E_BRANCH_MARK"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "服务系统",
+          "prop": "system_number_identification",
+          "dict": {
+            "dictType":"deciOnl",
+              "dictKey": [],
+              "format": "label",
+              "labelField": "systemName",
+              "valueField": "systemId",
+              "doRequest": {
+                  "url": "/SUMP/icmcall/icmRPCCall",
+                  "method": "POST",
+                  "params": {
+                      "servicecode": "deci090101",
+                      "length":1000
+                  }
+              }
+          }
+        },
+        {
+          "label": "模型名称",
+          "prop": "model_name"
+        },
+        {
+          "label": "模型代码",
+          "prop": "score_model_code"
+        },
+        {
+          "label": "模型类型",
+          "prop": "model_type",
+          "dict": {
+            "dictType": "DECI_E_MODE_TYPE",
+            "dictKey": [
+              "DECI_E_MODE_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "调用次数",
+          "prop": "call_count"
+        },
+        {
+          "label": "响应时间",
+          "prop": "respond_time"
+        },
+        {
+          "label": "异常次数",
+          "prop": "unusual_count"
+        },
+        {
+          "label": "操作",
+          "width": "150px",
+          "align": "center",
+          "btns": [
+            {
+              "show": {
+                "expression": "'${{current.model_type}}' != 'GL'"
+              },
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "@ModelAnalysisDetail",
+                "method": "get",
+                "params":{
+                  "transaction_start_time":"${{formData.transaction_start_time}}",
+                  "transaction_end_time":"${{formData.transaction_end_time}}"
+                }
+              },
+              "props": {
+                "width": "80%"
+              }
+            },
+            {
+              "show": {
+                "expression": "'${{current.model_type}}' == 'GL'"
+              },
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "@modelAnalysisTemplateFlow",
+                "method": "get",
+                "params":{
+                  "transaction_start_time":"${{formData.transaction_start_time}}",
+                  "transaction_end_time":"${{formData.transaction_end_time}}"
+                }
+              },
+              "props": {
+                "width": "80%"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,113 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "btns": [],
+      "controls": [
+        {
+          "commission_name": {
+            "control": "text",
+            "label": "佣金方案名称",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          }
+        },
+        {
+          "daterange": {
+            "control": "dateTimePicker",
+            "label": "生效时间",
+            "type": "daterange",
+            "unlinkPanels": true,
+            "valueFormat": "yyyyMMdd",
+            "startPlaceholder": "请选择开始时间",
+            "endPlaceholder": "请选择结束时间",
+            "startField": "start_date",
+            "endField": "end_date",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          }
+        },
+        {
+          "commission_calculation_plan":{
+            "control": "select",
+            "value":"200",
+            "label": "佣金计算方案",
+            "options": [
+              {
+                "value": "200",
+                "label": "按人头费用"
+              },
+              {
+                "value": "100",
+                "label": "按佣金比率"
+              },
+              {
+                "value": "300",
+                "label": "案件单价(元)"
+              }
+            ],
+            "events": {
+              "showItem":{
+                "200":["head_expenses"],
+                "100":["commission_rate"],
+                "300":["case_unitPrice"]
+              }
+            }
+          },
+          "head_expenses": {
+            "span": 24,
+            "allowCreate": true,
+            "control": "dynamic",
+            "label": "",
+            "toRequest":{
+              "url":"/views/cs/compManage/contrManage/cmsnScheme/addCmsn/headExp/commission_settings.json",
+              "params": {
+                "commission_name": "${{formData.commission_name}}",
+                "start_date": "${{formData.daterange.start_date}}",
+                "end_date":"${{formData.daterange.end_date}}",
+                "commission_calculation_plan":"${{formData.commission_calculation_plan}}"
+              }
+            }
+          },
+          "commission_rate": {
+            "span": 24,
+            "allowCreate": true,
+            "control": "dynamic",
+            "toRequest":{
+              "url":"/views/cs/compManage/contrManage/cmsnScheme/addCmsn/cmsnRate/service_fee_settings.json",
+              "params": {
+                "commission_name": "${{formData.commission_name}}",
+                "start_date": "${{formData.start_date}}",
+                "end_date":"${{formData.end_date}}",
+                "commission_calculation_plan":"${{formData.commission_calculation_plan}}"
+              }
+            }
+          },
+          "case_unitPrice": {
+            "span": 24,
+            "allowCreate": true,
+            "control": "dynamic",
+            "toRequest":{
+              "url":"/views/cs/compManage/contrManage/cmsnScheme/addCmsn/caseUnitPrice/overdue_stage_settings.json",
+              "params": {
+                "commission_name": "${{formData.commission_name}}",
+                "start_date": "${{formData.start_date}}",
+                "end_date":"${{formData.end_date}}",
+                "commission_calculation_plan":"${{formData.commission_calculation_plan}}"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,60 @@
+{
+    "module": "d-steps",
+    "layout": {
+        "steps": {
+            "scope":"formObj",
+            "direction": "horizontal",
+            "alignCenter": true,
+            "finishStatus": "success",
+            "simpleType": false,
+            "nextStepType": "validate",
+            "list": [
+                {
+                    "scope":"step1",
+                    "title": "产品组信息配置",
+                    "icon": "el-icon-edit",
+                    "toRequest": { 
+                        "method": "GET",
+                        "url": "/views/uccp/prodManager/uccpProdGroup/uccp_prod_group_upd.json",
+                        "params": {
+                            "prod_group_code":"${{params.prod_group_code}}",
+                            "prod_group_name":"${{params.prod_group_name}}",
+                            "quota_calculation_rule":"${{params.quota_calculation_rule}}",
+                            "prod_group_limit":"${{params.prod_group_limit}}",
+                            "valid_flag":"${{params.valid_flag}}",
+                            "flag":"${{params.flag}}",
+                            "sup_prod_group_code":"${{params.sup_prod_group_code}}"
+                        }
+                    },
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "uccp0007"
+                        }
+                    }
+                },
+                {
+                    "scope":"step2",
+                    "title": "产品关联配置",
+                    "icon": "el-icon-edit",
+                    "toRequest": {
+                        "url": "/views/uccp/prodManager/uccpProdGroup/uccp_prod_relation_manager.json",
+                        "params": {
+                            "prod_group_code":"${{params.prod_group_code}}"
+                        },
+                        "method": "get"
+                    },
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "uccp0011",
+                            "prod_group_code":"${{params.prod_group_code}}"
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

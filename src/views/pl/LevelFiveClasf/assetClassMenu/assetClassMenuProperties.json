@@ -1,0 +1,101 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/pl/LevelFiveClasf/assetClassMenu/addAssetClassMenuProperties.json",
+            "params": {
+              "matrix_number":"${{params.matrix_number}}",
+              "matrix_name": "${{params.matrix_name}}"
+            }
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pl0109",
+          "matrix_number":"${{params.matrix_number}}"
+        }
+      },
+      "thead": [
+
+        {
+          "prop": "ovdue_dys_down_lmt",
+          "label": "逾期天数下限",
+          "align": "center"
+        },
+        {
+          "prop": "ovdue_dys_upr_lmt",
+          "label": "逾期天数上限",
+          "align": "center"
+        },
+        {
+          "prop": "classify_code",
+          "label": "分类代码",
+          "align": "center",
+          "width": 120,    
+          "dict": {
+            "dictType": "PL_E_CLEVEL",
+            "dictKey": [
+              "PL_E_CLEVEL"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": "200",
+          "align": "center",
+          "btns": [
+            {
+              "toRequest": {
+                "method": "POST",
+                "url": "/views/pl/LevelFiveClasf/assetClassMenu/updAssetClassMenuProperties.json"
+              },
+              "label": "修改",
+              "type": "edit"
+            },
+            {
+              "type": "edit",
+              "label": "配置规则",
+              "toRequest": {
+                "url": "/views/pl/LevelFiveClasf/assetClassMenu/rule_config.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "60%",
+                "title": "配置规则"
+              }
+            },
+            {
+              "doRequest": {
+                "method": "POST",
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "params": {
+                  "servicecode": "pl0111",
+                  "method": "del"
+                }
+              },
+              "label": "删除",
+              "type": "delete"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

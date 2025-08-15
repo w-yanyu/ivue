@@ -1,0 +1,371 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "foldLineNumber": 3,
+            "scope": "formData",
+            "controls": [
+            {
+              "cert_no": {
+                "control": "text",
+                "label": "证件号码"
+              },
+              "cust_id": {
+                "control": "text",
+                "label": "客户编号"
+              }
+            },
+            {
+              "loan_no": {
+                "control": "text",
+                "label": "借据号"
+              },
+              "is_call_end": {
+                "control": "select",
+                "label": "是否完成",
+                "dict": {
+                  "format": "value-label",
+                  "dictKey": [
+                    "CS_E_YESORNO"
+                  ],
+                  "dictType": "CS_E_YESORNO"
+                }
+              }
+            },
+            {
+              "loan_legal_process": {
+                "control": "remoteSelect",
+                "label": "进度状态",
+                "format": "value-label"
+              },
+              "queue_code": {
+                "control": "remoteSelect",
+                "label": "队列名称",
+                "labelField": "queue_name",
+                "valueField": "queue_code",
+                "doRequest": {
+                  "url": "/SUMP/icmcall/icmRPCCall",
+                  "method": "POST",
+                  "params": {
+                    "servicecode": "cb0082"
+                  }
+                },
+                "format": "value-label"
+              }
+            },
+            {
+              "case_status": {
+                "control": "select",
+                "label": "案件状态",
+                "dict": {
+                  "dictType": "CS_E_STATUS_CD",
+                  "dictKey": [
+                    "CS_E_STATUS_CD"
+                  ],
+                  "format": "value-label"
+                }
+              },
+              "classify_code": {
+                "control": "select",
+                "label": "案件类型",
+                "dict": {
+                  "dictType": "CS_E_LOCATION_CD",
+                  "dictKey": [
+                    "CS_E_LOCATION_CD"
+                  ],
+                  "format": "value-label"
+                }
+              }
+            },
+            {
+              "start_day": {
+                "control": "inputNumber",
+                "label": "逾期天数开始值"
+              },
+              "end_day": {
+                "control": "inputNumber",
+                "label": "逾期天数结束值"
+              }
+            },
+            {
+              "ovd_amt_total_1": {
+                "control": "currency",
+                "label": "欠款金额区间开始值"
+              },
+              "ovd_amt_total_2": {
+                "control": "currency",
+                "label": "欠款金额区间结束值"
+              }
+            },
+            {
+              "collect_date_1": {
+                "control": "inputNumber",
+                "label": "入催天数区间开始值"
+
+              },
+
+              "collect_date_2": {
+                "control": "inputNumber",
+                "label": "入催天数区间结束值"
+              }
+            },
+            {
+              "stage_code": {
+                "control": "remoteSelect",
+                "label": "逾期阶段",
+                "labelField": "stage_name",
+                "valueField": "stage_code",
+                "doRequest": {
+                  "url": "/SUMP/icmcall/icmRPCCall",
+                  "method": "POST",
+                  "params": {
+                    "servicecode": "cb0083"
+                  }
+                },
+                "format": "value-label"
+              }
+            }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                  "type": "custom",
+                  "icon": "el-icon-date",
+                  "target": "dialog",
+                  "checkCountMin": 1,
+                  "label": "展期",
+                  "toRequest": {
+                    "method": "GET",
+                    "url": "/views/cs/collManage/lgManage/lgWork/lgwork_extension.json"
+                  }
+                },
+                {
+                  "type": "custom",
+                  "icon": "el-icon-back",
+                  "target": "dialog",
+                  "checkCountMin": 1,
+                  "label": "退件",
+                  "confirm": {
+                    "title": "提示信息",
+                    "msg": "确定退件吗？",
+                    "confirmButtonText": "确定",
+                    "cancelButtonText": "取消"
+                  },
+                  "doRequest": {
+                    "method": "POST",
+                    "url": "/SUMP/icmcall/icmRPCCall",
+                    "params": {
+                      "appId": "cbOnl",
+                      "servicecode": "cb0203",
+                      "list01": "${{params.selectedData}}"
+                    }
+                  }
+                },
+                {
+                  "type": "custom",
+                  "icon": "el-icon-picture",
+                  "target": "dialog",
+                  "checkCountMin": 1,
+                  "checkCountMax": 1,
+                  "label": "影像资料",
+                  "toRequest": {
+                    "method": "GET",
+                    "url": "/views/cs/collManage/lgManage/lgWork/lgwork_plVideo.json"
+                  }
+                },
+                {
+                  "type": "custom",
+                  "icon": "el-icon-view",
+                  "target": "dialog",
+                  "checkCountMin": 1,
+                  "label": "证据预览",
+                  "toRequest": {
+                    "method": "GET",
+                    "url": "/views/cs/collManage/lgManage/lgWork/lgwork_plVideo.json"
+                  }
+                },
+                {
+                  "type": "custom",
+                  "icon": "el-icon-circle-check",
+                  "target": "dialog",
+                  "checkCountMin": 1,
+                  "label": "完成",
+                  "confirm": {
+                    "title": "提示信息",
+                    "msg": "确定完成吗？",
+                    "confirmButtonText": "确定",
+                    "cancelButtonText": "取消"
+                  },
+                  "doRequest": {
+                    "method": "POST",
+                    "url": "/SUMP/icmcall/icmRPCCall",
+                    "params": {
+                      "appId": "cbOnl",
+                      "servicecode": "cb0205",
+                      "list01": "${{params.selectedData}}"
+                    }
+                  }
+                }
+            ]
+        },
+        "datagrid": {
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "appId": "cbOnl",
+                  "servicecode": "cb0201",
+                  "page_id": "/views/cs/collManage/lgManage/lgWork/lgWork_management.json"
+                }
+            },
+            "thead": [
+                {
+                    "type": "selection",
+                    "align":"center",
+                    "width": "55",
+                    "fixed": "left"
+                },
+                {
+                    "label": "操作",
+                    "align":"center",
+                    "fixed": "right",
+                    "width": "200px",
+                    "btns": [
+                        {
+                          "type": "look",
+                          "label": "案件详情",
+                          "toRequest": {
+                            "url": "/views/cs/assistManage/caseDetail/caseDetail_2/case_detail_main.json",
+                            "method": "POST",
+                            "params": {
+                              "case_id": "${{current.case_id}}"
+                            }
+                          },
+                          "props": {
+                            "width": "80%",
+                            "title": "案件详情"
+                          }
+                        }
+                    ]
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width": "180px",
+                    "label": "客户编号",
+                    "prop": "case_id"
+
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width": "180px",
+                    "label": "客户姓名",
+                    "prop": "cust_name"
+                },
+                {
+                  "type": "string",
+                  "align": "center",
+                  "label": "证件类型",
+                  "prop": "cert_type",
+                  "dict": {
+                    "dictType": "CS_E_CERT_TYPE",
+                    "dictKey": [
+                      "CS_E_CERT_TYPE"
+                    ],
+                    "format": "value-label"
+                  }
+                },
+                {
+                  "type": "string",
+                  "align": "center",
+                  "width": "200px",
+                  "label": "证件号码",
+                  "prop": "cert_no"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width": "180px",
+                    "label": "逾期天数",
+                    "prop": "overdue_days"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width": "180px",
+                    "label": "诉讼公司",
+                    "prop": "oa_org_id",
+                    "dict": {
+                      "dictKey": [
+                        "legal_org_id"
+                      ],
+                      "format": "value-label",
+                      "labelField": "coll_team_name",
+                      "valueField": "coll_team_name",
+                      "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                          "servicecode": "cb0041",
+                          "query_type":"branchTeam"
+                        }
+                      }
+                    }
+                },
+                {
+                  "type":"string",
+                  "align":"center",
+                  "width": "180px",
+                  "label": "诉讼状态",
+                  "prop": "legal_status"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width": "180px",
+                    "label": "诉讼金额",
+                    "prop": "oa_amt"
+                },
+                {
+                  "type":"string",
+                  "align":"center",
+                  "width": "180px",
+                  "label": "法诉开始日期",
+                  "prop": "legal_begin_date"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width": "180px",
+                    "label": "法诉结束日期",
+                    "prop": "legal_end_date"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width": "180px",
+                    "label": "进度状态",
+                    "prop": "legal_process"
+
+                },
+                {
+                  "align":"center",
+                  "width": "180px",
+                  "label": "是否完成",
+                  "prop": "is_call_end",
+                  "type": "select",
+                  "dict": {
+                    "format": "value-label",
+                    "dictKey": [
+                      "CS_E_YESORNO"
+                    ],
+                    "dictType": "CS_E_YESORNO"
+                  }
+                }
+            ]
+        }
+    }
+}

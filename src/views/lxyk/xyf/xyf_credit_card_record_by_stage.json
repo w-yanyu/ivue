@@ -1,0 +1,150 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "smilr_cr_card_loan_acct_num": {
+            "control": "hidden",
+            "value": "${{params.smilr_cr_card_loan_acct_num}}",
+            "label": "类信用卡贷款账号"
+          },
+          "txn_evt": {
+            "control": "select",
+            "label": "分期方式",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入分期方式"
+              }
+            ],
+            "value": "FQ",
+            "options": [
+              {
+                "label": "类信用卡分期",
+                "value": "FQ"
+              },
+              {
+                "label": "类信用卡交易分期",
+                "value": "SM_JYFQ"
+              },
+              {
+                "label": "类信用卡消费分期",
+                "value": "SM_XFFQ"
+              },
+              {
+                "label": "类信用卡账单分期",
+                "value": "SM_ZDFQ"
+              }
+            ]
+          },
+          "bill_prds": {
+            "type": "month",
+            "control": "dateTimePicker",
+            "format": "yyyyMM",
+            "label": "账期"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "syln0011",
+          "outlistid": "list01"
+        }
+      },
+      "thead": [
+        {
+          "label": "账期",
+          "prop": "bill_prds",
+          "align": "center"
+        },
+        {
+          "label": "消费编号",
+          "prop": "loan_due_bill_num",
+          "align": "center"
+        },
+        {
+          "label": "明细序号",
+          "prop": "detl_serl_num",
+          "align": "center"
+        },
+        {
+          "label": "交易金额",
+          "prop": "txn_amt",
+          "format": {
+            "thousand": ","
+          },
+          "align": "center"
+        },
+        {
+          "label": "借据状态",
+          "prop": "loan_acct_ste",
+          "align": "center",
+          "dict": {
+            "dictType": "LN_E_LOAN_ACCT_STE",
+            "dictKey": [
+              "LN_E_LOAN_ACCT_STE"
+            ],
+            "format": "label"
+          }
+          
+        },
+        {
+          "label": "还款方式",
+          "prop": "txn_evt",
+          "align": "center",
+          "dict": {
+            "dictType": "LN_E_TXN_EVT",
+            "dictKey": [
+              "LN_E_TXN_EVT"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "交易日期",
+          "prop": "txn_dt_8",
+          "align": "center"
+        },{
+          "label": "操作",
+          "fixed": "right",
+          "width": 150,
+          "align": "center",
+          "btns": [
+            {
+              "type": "custom",
+              "label": "提前结清",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "loading":true,
+                "method": "post",
+                "params": {
+                  "servicecode": "ar0050",
+                  "smilr_cr_card_loan_acct_num": "${{current.smilr_cr_card_loan_acct_num}}",
+                  "loan_due_bill_num": "${{current.loan_due_bill_num}}",
+                  "txn_evt":"${{current.txn_evt}}",
+                  "rpymt_acct_num": "${{current.rpymt_acct_num}}",
+                  "cust_num":"${{params.cust_num}}",
+                 "cust_nm":"${{params.cust_nm}}"
+                }
+              },"show": {
+                "expression": "'${{current.loan_acct_ste}}' === '0'"
+              },
+              "confirm": {
+                "title": "确定还款",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

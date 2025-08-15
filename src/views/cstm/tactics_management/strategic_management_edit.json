@@ -1,0 +1,388 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "scope": "templateScope",
+            "initRequest":"${{params}}",
+            "initDataOnce":true,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "AS_RLMS_CP_UPCELV"
+                }
+              },
+              "btns":[
+				{
+					"type":"submit",
+					"label":"提交"
+				}
+			],
+          "controls": [
+            {
+              "celvcd": {
+                "label": "策略编号",
+                "control": "string",
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请输入策略编号"
+                  }
+                ]
+              },
+              "cltype": {
+                "control": "select",
+                "label": "策略类型",
+                "dict": {
+                  "dictType": "BPM_E_CLTYPE",
+                  "dictKey": [
+                    "BPM_E_CLTYPE"
+                  ],
+                  "format": "label"
+                },
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请选择有效标志"
+                  }
+                ]
+              },
+              "celvnm": {
+                "label": "策略名称",
+                "control": "text",
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请输入策略名称"
+                  }
+                ]
+              },
+
+              "isflag": {
+                "control": "select",
+                "label": "有效标志",
+                "dict": {
+                  "dictType": "BPM_E_ISFLAG",
+                  "dictKey": [
+                    "BPM_E_ISFLAG"
+                  ],
+                  "format": "label"
+                },
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请选择有效标志"
+                  }
+                ]
+              },
+              "cldesc": {
+                "label": "策略描述",
+                "control": "text",
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请输入策略描述"
+                  }
+                ]
+              },
+
+
+
+
+              "leftlx": {
+                "control": "select",
+                "label": "左边表达式",
+                "dict": {
+                  "dictType": "E_LEFTLX",
+                  "dictKey": [
+                    "E_LEFTLX"
+                  ],
+                  "format": "label"
+                },
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请选择左边表达式 "
+                  }
+                ],
+                "showItem": {
+                  "1": [
+                    "leftfd"
+                  ],
+                  "2": [
+                    "leftgs"
+                  ]
+                },
+                "events": {
+                  "condition": {
+                    "1": {
+                      "control": {
+                        "leftfd": {
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "请输入字段"
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "2": {
+                      "control": {
+                        "leftgs": {
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "请输入公式"
+                            }
+                          ]
+                        }
+
+                      }
+                    }
+                  }
+                }
+              },
+
+
+              "leftfd": {
+                "label": "左字段",
+                "control": "lookup",
+                "initShow": false,
+                "edit": true,
+                "keyField": {
+                  "leftfd": "ysjnam"
+                },
+                "toRequest": {
+                  "url": "/views/cstm/tactics_management/metadata_management_list.json",
+                  "method": "post",
+                  "params": {
+                    "leftfd": "${{form.leftfd}}"
+                  }
+                },
+                "props": {
+                  "width": "85%",
+                  "title": "左字段查询"
+                }
+              },
+
+
+
+              "leftgs": {
+                "label": "左公式",
+                "control": "lookup",
+                "initShow": false,
+                "edit": true,
+                "keyField": {
+                  "leftgs": "ysjnam"
+                },
+                "toRequest": {
+                  "url": "/views/cstm/tactics_management/metadata_management_list.json",
+                  "method": "post",
+                  "params": {
+                    "leftgs": "${{form.leftgs}}"
+                  }
+                },
+                "props": {
+                  "width": "85%",
+                  "title": "左公式查询"
+                }
+              },
+
+              "oprato": {
+                "control": "select",
+                "label": "操作",
+                "dict": {
+                  "dictType": "BPM_E_OPRATO",
+                  "dictKey": [
+                    "BPM_E_OPRATO"
+                  ],
+                  "format": "label"
+                },
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请选择操作"
+                  }
+                ]
+              },
+
+              "rghtlx": {
+                "control": "select",
+                "label": "右边表达式",
+                "dict": {
+                  "dictType": "E_RGHTLX",
+                  "dictKey": [
+                    "E_RGHTLX"
+                  ],
+                  "format": "label"
+                },
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请选择左边表达式 "
+                  }
+                ],
+                "showItem": {
+                  "1": [
+                    "rgthfd"
+                  ],
+                  "2": [
+                    "rghtpm",
+                    "rghtpt"
+                  ],
+                  "3": [
+                    "rghtmn",
+                    "rghtmx"
+                  ],
+                  "4": [
+                    "rghtgs"
+                  ]
+                },
+                "events": {
+                  "condition": {
+                    "1": {
+                      "control": {
+                        "rgthfd": {
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "请输入字段"
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "2": {
+                      "control": {
+                        "leftgs": {
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "请输入公式"
+                            }
+                          ]
+                        }
+
+                      }
+                    },"3": {
+                      "control": {
+                        "rghtmn": {
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "请输入右范围最小值"
+                            }
+                          ]
+                        },
+                        "rghtmx": {
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "请输入右范围最大值"
+                            }
+                          ]
+                        }
+
+                      }
+                    },
+                    "4": {
+                      "control": {
+                        "rghtgs": {
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "右公式"
+                            }
+                          ]
+                        }
+
+                      }
+                    }
+                  }
+                }
+              },
+              "rgthfd": {
+                "label": "右字段",
+                "control": "lookup",
+                "initShow": false,
+                "edit": true,
+                "keyField": {
+                  "rgthfd": "ysjnam"
+                },
+                "toRequest": {
+                  "url": "/views/cstm/tactics_management/metadata_management_list.json",
+                  "method": "post",
+                  "params": {
+                    "rgthfd": "${{form.rgthfd}}"
+                  }
+                },
+                "props": {
+                  "width": "85%",
+                  "title": "右字段查询"
+                }
+              },
+              "rghtpt": {
+                "label": "右参数类型",
+                "control": "select",
+                "initShow": false,
+                "multiple": false,
+                "collapseTags": true,
+                "options": [
+                  {
+                    "label": "数值",
+                    "value": "0"
+                  },
+                  {
+                    "label": "字符串",
+                    "value": "1"
+                  },
+                  {
+                    "label": "时间",
+                    "value": "2"
+                  }
+                ]
+              },
+              "rghtpm": {
+                "label": "右参数值",
+                "control": "text",
+                "initShow": false
+              },
+
+
+              "rghtmn": {
+                "label": "右范围最小值(开区间)",
+                "control": "text",
+                "initShow": false
+
+              },
+              "rghtmx": {
+                "label": "右范围最大值(闭区间)",
+                "control": "text",
+                "initShow": false
+              },
+              "rghtgs": {
+                "label": "右公式",
+                "control": "lookup",
+                "edit": true,
+                "initShow": false,
+                "keyField": {
+                  "rghtgs": "ysjnam"
+                },
+                "toRequest": {
+                  "url": "/views/cstm/tactics_management/metadata_management_list.json",
+                  "method": "post",
+                  "params": {
+                    "rghtgs": "${{form.rghtgs}}"
+                  }
+                },
+                "props": {
+                  "width": "85%",
+                  "title": "右公式查询"
+                }
+              }
+            }
+          ]
+        }
+    }
+}

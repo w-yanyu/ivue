@@ -1,0 +1,101 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "btns": [],
+      "initRequest": "${{params}}",
+      "controls": [
+        {
+          "commission_name": {
+            "disabled":true,
+            "control": "text",
+            "label": "佣金方案名称"
+          }
+        },
+        {
+          "daterange": {
+            "disabled":true,
+            "control": "dateTimePicker",
+            "label": "生效时间",
+            "type": "daterange",
+            "unlinkPanels": true,
+            "valueFormat": "yyyyMMdd",
+            "startPlaceholder": "请选择开始时间",
+            "endPlaceholder": "请选择结束时间",
+            "startField": "start_date",
+            "endField": "end_date"
+          }
+        },
+        {
+          "commission_calculation_plan":{
+            "disabled":true,
+            "control": "select",
+            "label": "佣金计算方案",
+            "options": [
+              {
+                "value": "200",
+                "label": "按人头费用"
+              },
+              {
+                "value": "100",
+                "label": "按佣金比率"
+              },
+              {
+                "value": "300",
+                "label": "案件单价(元)"
+              }
+            ],
+            "events": {
+              "showItem":{
+                "200":["head_expenses"],
+                "100":["commission_rate"],
+                "300":["case_unitPrice"]
+              }
+            }
+          },
+          "head_expenses": {
+            "span": 24,
+            "allowCreate": true,
+            "control": "dynamic",
+            "label": "",
+            "toRequest":{
+              "url":"/views/cs/compManage/contrManage/cmsnScheme/viewCmsn/headExp/commission_settings.json",
+              "params": {
+                "servicecode": "xxxxx",
+                "appId": "cbOnl",
+                "commission_settings": "${{params.commission_settings}}",
+                "percentage_calculation_plan": "${{params.percentage_calculation_plan}}",
+                "indicator_results": "${{params.indicator_results}}",
+                "default_or_custom": "${{params.default_or_custom}}"
+              }
+            }
+          },
+          "commission_rate": {
+            "span": 24,
+            "allowCreate": true,
+            "control": "dynamic",
+            "toRequest":{
+              "url":"/views/cs/compManage/contrManage/cmsnScheme/viewCmsn/cmsnRate/service_fee_settings.json",
+              "params": {
+                "servicecode": "xxxxx",
+                "appId": "cbOnl"
+              }
+            }
+          },
+          "case_unitPrice": {
+            "span": 24,
+            "allowCreate": true,
+            "control": "dynamic",
+            "toRequest":{
+              "url":"/views/cs/compManage/contrManage/cmsnScheme/viewCmsn/caseUnitPrice/overdue_stage_settings.json",
+              "params": {
+                "servicecode": "xxxxx",
+                "appId": "cbOnl"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

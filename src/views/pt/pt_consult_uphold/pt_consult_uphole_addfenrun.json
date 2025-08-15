@@ -1,0 +1,144 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+
+
+      "btns": [
+        {
+          "type": "submit",
+          "label": "保存",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "pt0006"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "part_protocol_no": {
+            "control": "text",
+            "label": "合作方协议编号",
+            "width": "120px",
+            "disabled": true,
+            "value": "${{params.part_protocol_no}}",
+            "rules": [
+              {
+                "required": true,
+                "message": "合作方协议编号不得为空"
+              }
+            ]
+          },
+          "profit_cumulative_rule": {
+            "control": "select",
+            "label": "分润累计规则",
+            "width": "120px",
+            "dict": {
+              "dictKey": [
+                "PT_E_SUMMARY_CUMULATIVE_RULE"
+              ],
+              "dictType": "PT_E_SUMMARY_CUMULATIVE_RULE",
+              "format": "label"
+            }
+          }
+        },
+        {
+          "profit_baseline": {
+            "control": "select",
+            "label": "分润基准",
+            "width": "120px",
+            "disabled": false,
+            "dict": {
+              "dictType": "PT_E_PROFIT_BASELINE",
+              "dictKey": [
+                "PT_E_PROFIT_BASELINE"
+              ],
+              "format": "label"
+            }
+          },
+          "profit__calculation_method": {
+            "control": "select",
+            "label": "分润计算方式",
+            "width": "120px",
+            "dict": {
+              "dictType": "PT_E_PROFIT__CALCULATION_METHOD",
+              "dictKey": [
+                "PT_E_PROFIT__CALCULATION_METHOD"
+              ],
+              "format": "label"
+            }
+          }
+        },
+        {
+          "profit_value": {
+            "control": "text",
+            "disabled": false,
+            "label": "分润数值",
+            "width": "120px"
+          },
+          "payment_method": {
+            "control": "select",
+            "disabled": false,
+            "label": "结算方式",
+            "width": "120px",
+            "dict": {
+              "dictType": "PT_E_PAYMENT_METHOD",
+              "dictKey": [
+                "PT_E_PAYMENT_METHOD"
+              ],
+              "format": "label"
+            },
+            "payment_period": {
+              "control": "text",
+              "disabled": false,
+              "label": "结算周期",
+              "width": "120px"
+            }
+          }
+        },
+        {
+
+          "profit_account_no": {
+          "control": "lookup",
+          "edit": true,
+          "label": "分润账户编号",
+          "width": "50%",
+          "keyField": {
+            "profit_account_no": "acct_no",
+            "part_no": "cust_no",
+            "cert_no": "cert_no",
+            "cert_type": "cert_type",
+            "cust_type": "cust_type",
+            "corp_size": "corp_size",
+            "ind_credit": "ind_credit"
+          },
+          "events": {
+            "set": {
+              "temp_name": ""
+            }
+          },
+          "toRequest": {
+            "url": "/views/us/entManager/custfinanceManager/partAcctManager/partAcct_lookup.json",
+            "method": "GET",
+            "params": {
+              "cust_no": "${{params.part_no}}"
+            }
+          },
+          "props": {
+            "width": "50%",
+            "title": "查询账户"
+          },
+          "format": "label",
+          "rules": [{
+            "required": true,
+            "message": "请选择"
+          }]
+        }
+        }
+      ]
+    }
+  }
+}

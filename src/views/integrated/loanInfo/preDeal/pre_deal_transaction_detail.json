@@ -1,0 +1,115 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pa0001",
+          "loan_due_bill_num": "${{params.loan_due_bill_num}}",
+          "outlistid": "list01"
+        }
+      },
+      "thead": [
+        {
+          "label": "借据号",
+          "align": "center",
+          "width": "160px",
+          "prop": "loan_due_bill_num"
+        },
+        {
+          "align": "center",
+          "label": "产品代码",
+          "prop": "prod_code",
+          "width": "80px"
+        },
+        {
+          "align": "center",
+          "width": "180px",
+          "label": "客户号",
+          "prop": "cust_num"
+        },
+        {
+          "align": "center",
+          "label": "客户名称",
+          "prop": "cust_nm"
+        },
+        {
+          "align": "center",
+          "label": "贷款余额字段",
+          "prop": "loan_bal_fld"
+        },
+        {
+          "align": "center",
+          "label": "贷款余额字段说明",
+          "prop": "bal_fld_nm_comt"
+        },
+        {
+          "align": "center",
+          "label": "业务事件方式",
+          "prop": "busi_evt_way",
+          "dict": {
+            "dictType": "LN_E_BUSI_EVT_WAY",
+            "dictKey": [
+              "LN_E_BUSI_EVT_WAY"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "align": "center",
+          "label": "交易金额",
+          "prop": "txn_amt",
+          "format": {
+            "thousand": ","
+          }
+        },
+        {
+          "align": "center",
+          "label": "余额",
+          "prop": "bal",
+          "format": {
+            "thousand": ","
+          }
+        },
+        {
+          "align": "center",
+          "label": "摘要",
+          "prop": "abst_dsc"
+        },
+        {
+          "align": "center",
+          "label": "交易日期",
+          "prop": "txn_dt_8"
+        },
+        {
+          "label": "交易流水(分录)",
+          "prop": "txn_rung_num_32",
+          "fixed": "right",
+          "align": "center",
+          "width": 220,
+          "btns": [
+            {
+              "type": "look",
+              "toRequest": {
+                "url": "/views/integrated/loanInfo/accounting_entry_single.json",
+                "method": "POST",
+                "params": {
+                  "txn_rung_num_32": "${{current.txn_rung_num_32}}",
+                  "txn_dt_8": "${{current.txn_dt_8}}"
+                }
+              },
+              "props": {
+                "width": "80%",
+                "title": "单笔交易会计分录明细"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,256 @@
+{
+  "module": "v-inputDataForm-btn",
+  "layout": {
+    "form": {
+      "scope": "baseInfo",
+      "name": "baseInfo",
+      "btns": [],
+      "controls": [
+        {
+          "cust_no": {
+            "control": "hidden",
+            "label": "cust_no"
+          },
+          "apply_no": {
+            "control": "hidden",
+            "label": "apply_no"
+          },
+          "parent_apply_id": {
+            "control": "hidden",
+            "label": "parent_apply_id"
+          },
+          "cust_type": {
+            "control": "hidden",
+            "label": "cust_type"
+          },
+          "loan_amt": {
+            "control": "hidden",
+            "label": "放款金额"
+          },
+          "apply_type_name": {
+            "control": "hidden",
+            "width": "10px",
+            "span": 8,
+            "value": "贷款出账",
+            "label": "申请类型名称"
+          },
+          "apply_type": {
+            "control": "hidden",
+            "width": "10px",
+            "span": 8,
+            "value": "N",
+            "label": "申请类型"
+          },
+          "is_credit": {
+            "control": "hidden",
+            "width": "10px",
+            "span": 8,
+            "value": "1",
+            "label": "是否授信"
+          },
+          "busi_type": {
+            "control": "string",
+            "width": "10px",
+            "span": 8,
+            "value": "LOAN",
+            "label": "业务类型"
+          },
+          "prod_type_name": {
+            "control": "hidden",
+            "width": "10px",
+            "span": 8,
+            "value": "贷款",
+            "label": "业务类型名称",
+            "hidden": true
+          },
+          "cust_name": {
+            "control": "lookup",
+            "label": "客户名称",
+            "width": "10px",
+            "span": 8,
+            "keyField": {
+              "cust_no": "cust_no",
+              "cust_name": "cust_name",
+              "cert_type": "cert_type",
+              "cert_no": "cert_no",
+              "mobile_no": "mobile_no",
+              "cust_type": "cust_type"
+            },
+            "events": {
+              "set": {
+                "limit_no": ""
+              }
+            },
+            "toRequest": {
+              "url": "/views/us/entManager/ent_cust_lookup.json",
+              "method": "get"
+            },
+            "props": {
+              "title": "选择客户",
+              "width": "75%"
+            },
+            "format": "label",
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择客户名称"
+              }
+            ]
+          },
+          "limit_no": {
+            "control": "lookup",
+            "label": "额度编号",
+            "width": "10px",
+            "span": 8,
+            "keyField": {
+              "limit_no": "prod_credit_seq",
+              "avail_amt": "available_use_limit",
+              "apply_no": "apply_no",
+              "parent_apply_id": "apply_no",
+              "effect_date": "effect_date",
+              "expiry_date": "expiry_date",
+              "sale_prod_cd": "prod_code",
+              "sale_prod_name": "prod_name"
+            },
+            "toRequest": {
+              "url": "/views/icms/flowStart/lend/creditBusinessStart/credit_limit_lookup2.json",
+              "method": "get",
+              "params": {
+                "cust_no": "${{baseInfo.cust_no}}",
+                "source_system": "001",
+                "cust_class":"${{params.cust_class}}"
+              }
+            },
+            "eventAfter": {
+              "doParentCallback": true
+            },
+            "props": {
+              "title": "请选择额度编号"
+            },
+            "format": "label",
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择额度编号"
+              }
+            ]
+          },
+          "avail_amt": {
+            "control": "currency",
+            "width": "10px",
+            "align":"left",
+            "span": 8,
+            "label": "可用额度(元)",
+            "disabled": true
+          },
+          "effect_date": {
+            "control": "dateTimePicker",
+            "width": "10px",
+            "span": 8,
+            "label": "额度起始日期",
+            "format": "yyyyMMdd",
+            "disabled": true
+          },
+          "expiry_date": {
+            "control": "dateTimePicker",
+            "width": "10px",
+            "span": 8,
+            "label": "额度到期日期",
+            "format": "yyyyMMdd",
+            "disabled": true
+          },
+          "mobile_no": {
+            "control": "hidden",
+            "width": "10px",
+            "span": 8,
+            "label": "手机号码",
+            "disabled": true,
+            "rules": [
+              {
+                "required": false,
+                "message": "请输入手机号码"
+              }
+            ]
+          },
+          "cert_type": {
+            "control": "select",
+            "label": "证件类型",
+            "width": "10px",
+            "span": 8,
+            "disabled": true,
+            "dict": {
+              "dictType": "MS_E_CRET_TYPE",
+              "dictKey": [
+                "MS_E_CRET_TYPE"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId"
+            }
+          },
+          "cert_no": {
+            "control": "text",
+            "width": "10px",
+            "span": 8,
+            "label": "证件号码",
+            "disabled": true
+          },
+          "sale_prod_cd": {
+            "control": "text",
+            "label": "可售产品",
+            "width": "10px",
+            "span": 8,
+            "disabled": true
+          },
+          "sale_prod_name": {
+            "control": "text",
+            "label": "产品名称",
+            "width": "10px",
+            "span": 8,
+            "disabled": true
+          },
+          "ccy_code": {
+            "control": "select",
+            "label": "币种",
+          "selectFirstValue": "true",
+            "width": "10px",
+            "span": 8,
+            "disabled": true,
+            "dict": {
+              "dictType": "MS_CURRENCY",
+              "dictKey": [
+                "MS_CURRENCY"
+              ],
+              "format": "label"
+            }
+          },
+          "repay_acct": {
+            "control": "lookup",
+            "span": 8,
+            "label": "还款账号",
+            "width": "10px",
+            "format": "label",
+            "keyField": {
+              "repay_acct": "acct_no"
+            },
+            "toRequest": {
+              "url": "/views/icms/flowStart/jhBusi/car/custOthac_list_lookup.json",
+              "method": "get",
+              "params": {
+                "cust_no": "${{baseInfo.cust_no}}"
+              }
+            },
+            "props": {
+              "title": "选择还款账号"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择还款账号"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

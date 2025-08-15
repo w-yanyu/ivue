@@ -1,0 +1,304 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "bpm4004",
+          "appId": "${{params.appId}}",
+          "wf_prod_no": "${{params.wf_prod_no}}",
+          "task_define_id": "${{params.task_define_id}}",
+          "bpm_version": "${{params.bpm_version}}"
+        }
+      },
+      "scope": "searchTable",
+      "btns": [
+        {
+          "type": "submit",
+          "label": "保存",
+          "icon": "",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "bpm4005",
+              "appId": "${{params.appId}}",
+              "bpm_version": "${{params.bpm_version}}"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "wf_prod_no": {
+            "control": "string",
+            "label": "流程产品编号",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true
+              }
+            ]
+          },
+          "wf_prod_name": {
+            "control": "string",
+            "label": "流程产品名称",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true
+              }
+            ]
+          },
+          "task_define_id": {
+            "control": "string",
+            "label": "节点id",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true
+              }
+            ]
+          },
+          "task_define_name": {
+            "control": "string",
+            "label": "节点名称",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true
+              }
+            ]
+          },
+          "task_type": {
+            "control": "string",
+            "label": "节点类型",
+            "width": "130px",
+            "dict": {
+              "dictType": "BPM_E_TASK_TYPE",
+              "dictKey": [
+                "BPM_E_TASK_TYPE"
+              ],
+              "format": "label"
+            },
+            "events": {
+              "showItem": {
+                
+                "MANUAL": [
+                  "time_bind_flag"
+                ],
+                "RECE": [
+                  "time_bind_flag","trig_tp","trig_num"
+                ],
+                
+                "TIMER": [
+                   "time_bind_flag"
+                ]
+              },
+              "condition": {
+                "MANUAL": {
+                  "control": {
+                    "task_url1": {
+                      "disabled": false
+                    },
+                    "task_url2": {
+                      "disabled": false
+                    }
+                  }
+                }
+              }
+            },
+            "rules": [
+              {
+                "required": true
+              }
+            ]
+          },
+          "time_bind_flag": {
+            "control": "string",
+            "label": "是否定时",
+            "width": "130px",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true
+              }
+            ],
+            "events": {
+              "showItem": {
+                "1": [
+                  "time_way"
+                ]
+              }
+            }
+          },
+          "time_way": {
+            "control": "string",
+            "label": "定时方式",
+            "width": "130px",
+            "dict": {
+              "dictType": "BPM_E_TIME_WAY",
+              "dictKey": [
+                "BPM_E_TIME_WAY"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true
+              }
+            ],
+            "events": {
+              "showItem": {
+                "0": [
+                  "time_kind",
+                  "task_time_interval"
+                ],
+                "1": [
+                  "time_date"
+                ],
+                "2": [
+                  "time_kind",
+                  "task_time_interval",
+                  "cycle_num"
+                ]
+              }
+            }
+          },
+          "time_kind": {
+            "control": "select",
+            "label": "时间单位",
+            "width": "130px",
+            "dict": {
+              "dictType": "BPM_E_TIME_KIND",
+              "dictKey": [
+                "BPM_E_TIME_KIND"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true
+              }
+            ]
+          },
+          "time_date": {
+            "control": "text",
+            "label": "指定到期时间",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true
+              }
+            ]
+          },
+          "task_time_interval": {
+            "control": "text",
+            "label": "定时间隔",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入定时间隔"
+              }
+            ]
+          },
+          "cycle_num": {
+            "control": "text",
+            "label": "循环次数",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true
+              }
+            ]
+          },
+          "trig_tp": {
+            "control": "select",
+            "label": "等待节点触发方式",
+            "width": "130px",
+            "dict": {
+              "dictType": "BPM_E_RECE_TRIG_WAY",
+              "dictKey": [
+                "BPM_E_RECE_TRIG_WAY"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true
+              }
+            ]
+          },
+          "trig_num": {
+            "control": "text",
+            "label": "触发次数上限",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true
+              }
+            ]
+          },
+          "task_url1": {
+            "control": "lookup",
+            "label": "待办任务信息展示框架",
+            "width": "130px",
+            "disabled": false,
+            "edit": true,
+            "value": "",
+            "keyField": {
+              "task_url1": "frame_cd"
+            },
+            "toRequest": {
+              "url": "/views/msap/bpm/frameManagement/menu_list.json",
+              "method": "get",
+              "params": {
+                "appId": "${{params.appId}}"
+              }
+            },
+            "props": {
+              "title": "框架选择",
+              "width": "60%"
+            }
+          },
+          "task_url2": {
+            "control": "lookup",
+            "label": "已办任务信息展示框架",
+            "width": "130px",
+            "disabled": false,
+            "edit": true,
+            "value": "",
+            "keyField": {
+              "task_url2": "frame_cd"
+            },
+            "toRequest": {
+              "url": "/views/msap/bpm/frameManagement/menu_list.json",
+              "method": "get",
+              "params": {
+                "appId": "${{params.appId}}"
+              }
+            },
+            "props": {
+              "title": "框架选择",
+              "width": "60%"
+            }
+          },
+          "remark": {
+            "control": "textarea",
+            "label": "备注",
+            "width": "130px"
+          }
+        }
+      ]
+    }
+  }
+}

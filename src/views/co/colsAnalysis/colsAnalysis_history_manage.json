@@ -1,0 +1,114 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "controls": [
+        {
+          "data_create_time": {
+            "span": 12,
+            "control": "dateTimePicker",
+            "label": "操作日期",
+            "placeholder":"操作日期",
+            "format":"yyyy-MM-dd",
+            "valueFormat": "yyyyMMdd"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "co2103",
+          "data_create_time": "${{formData.data_create_time}}",
+          "data_create_user": "$g{{user_info.userCode}}"
+        }
+      },
+      "pagination": {
+        "pageSizes": [
+          10,
+          15,
+          20,
+          50,
+          100
+        ],
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "label": "记录编号",
+          "prop": "record_no"
+        },
+        {
+          "label": "押品类型",
+          "prop": "colt_type",
+          "align": "center",
+          "dict": {
+            "dictKey": [
+              "E_COLT_TYPE"
+            ],
+            "format": "[value]label",
+            "valueField": "colt_type",
+            "labelField": "colt_name",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "post",
+              "params": {
+                "servicecode": "co1012"
+              }
+            }
+          }
+        },
+        {
+          "label": "操作人",
+          "prop": "data_create_user",
+          "align": "center"
+        },
+        {
+          "label":  "对比分析时间",
+          "prop": "data_create_time",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "width": "200px",
+          "align": "center",
+          "btns": [
+            {
+              "type": "look",
+              "label": "查看详情",
+              "target": "dialog",
+              "toRequest": {
+                "url": "@comparativeAnalysisCollateral",
+                "method": "GET",
+                "#target": "navTab",
+                "params": {
+                  "caozuolx" : "0"
+                }
+              },
+              "props": {
+                "width": "90%",
+                "title": "押品对照分析"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "co2104"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

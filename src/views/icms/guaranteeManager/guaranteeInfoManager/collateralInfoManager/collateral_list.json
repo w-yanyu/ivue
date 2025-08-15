@@ -1,0 +1,155 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "新增",
+          "target": "dialog",
+          "toRequest": {
+            "method": "POST",
+            "url": "/views/icms/guaranteeManager/guaranteeInfoManager/collateralInfoManager/collateral_list_add.json",
+            "params": {
+              "apply_no": "${{params.apply_no}}"
+            },
+             "props": {
+               "width": "65%",
+               "title": "新增抵质押信息"
+            }
+          },
+          "show": {
+            "expression": "'${{params.pageType}}' != 'detail'"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ar0343",
+          "apply_no": "${{params.apply_no}}"
+        }
+      },
+
+      "thead": [
+        {
+          "prop": "apply_no",
+          "label": {
+            "default": "申请号", 
+             "i18n": "L0501.Application-number"
+                            },
+          "align": "center"
+        },
+        {
+          "label": {
+            "default": "抵质押品编号", 
+             "i18n": "K0001.collateral-number"
+                            },
+          "prop": "colt_no",
+          "align": "center"
+        },
+        {
+          "label": {
+            "default": "资产清单序号", 
+             "i18n": "K0001.Asset-List-Number"
+                            },
+          "prop": "asset_list_id",
+          "align": "center"
+        },
+        {
+          "label": {
+            "default": "抵质押品产品编号", 
+             "i18n": "K0001.Product-number-of-collateral"
+                            },
+          "prop": "colt_prod_cd",
+          "align": "center"
+        },
+        {
+          "label": {
+            "default": "抵质押品产品名称", 
+             "i18n": "K0001.collateral-products"
+                            },
+          "prop": "colt_prod_name",
+          "align": "center"
+        },
+        {
+         "label": {
+            "default": "担保方式", 
+             "i18n": "I10.guarantee-method"
+                            },
+          "prop": "guar_type",
+          "align": "center",
+          "dict": {
+            "dictType": "AR_E_GUAR_TYPE",
+            "dictKey": [
+              "AR_E_GUAR_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": {
+            "default": "抵质押品类型", 
+             "i18n": "K0001.Type-of-collateral"
+                            },
+          "prop": "colt_type",
+          "align": "center"
+        },
+        {
+          "label": {
+            "default": "抵质押额", 
+             "i18n": "K0001.mortgage-and-pledge-amount"
+                            },
+          "prop": "colt_amount",
+          "align": "center",
+          "format":{
+            "thousand": ","
+          }  
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "btns": [
+            {
+              "old_data_flag": {
+                "control": "hidden",
+                "label": ""
+            },
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "ar0342"
+                }
+              },
+              "show": {
+                "expression": " '${{params.pageType}}' != 'detail' && '${{current.old_data_flag}}' !='1' "
+              }
+            },
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/icms/guaranteeManager/guaranteeInfoManager/collateralInfoManager/collateral_list_detail.json",
+                "method": "get"
+              },
+             "props": {
+              "width": "65%",
+              "title": "抵制押品信息详情"
+           }
+            }
+          ]
+        }
+
+      ]
+    }
+  }
+}

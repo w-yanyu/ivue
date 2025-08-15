@@ -1,0 +1,194 @@
+{
+  "module": "v-form-editableDataGrid-btn",
+  "layout": {
+    "form": {
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode":"wa1201"
+        }
+      },
+      "scope": "formData",
+      "controls": [
+        {
+          "scheme_id": {
+            "control": "text",
+            "disabled":true,
+            "label": "分配方案编号"
+          },
+          "scheme_name": {
+            "control": "text",
+            "label": "分配方案名称",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              },
+              {
+                "max": 30,
+                "message": "最多可以输入 30 个字节"
+              }
+            ]
+          }
+        },
+        {
+          "assigned_style": {
+            "control": "select",
+            "label": "预警案件分配类型",
+            "disabled":true,
+            "dict": {
+              "dictType": "E_ASSIGNED_STYLE",
+              "dictKey": [
+                "E_ASSIGNED_STYLE"
+              ],
+              "format": "value-label"
+            }
+          },
+          "is_valid": {
+            "control": "select",
+            "label": "是否启用",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "value-label"
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "新增",
+          "icon": "el-icon-plus"
+        },
+        {
+          "type": "batchDelete",
+          "label": "删除",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+                "servicecode": "wa1206",
+                "assign_rule_id": "${{current.assign_rule_id}}",
+                "trantp": "DELETE"
+            }
+        }
+        }
+      ]
+    },
+    "datagrid": {
+      "name": "scheme",
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "wa1203",
+          "scheme_id":"${{params.scheme_id}}"
+        }
+      },
+      "pagination": {
+        "show": false
+      },
+      "allData":true,
+      "thead": [
+        {
+          "type": "selection",
+          "align": "center",
+          "width": "55",
+          "fixed": "left",
+          "show": {
+            "prop": "changkuan",
+            "is": [
+              "0"
+            ]
+          }
+        },
+        {
+          "prop": "assign_code",
+          "type": "remoteSelect",
+          "align":"center",
+          "label": "预警案件分配编码",
+          "format": "value-label",
+          "labelField": "product_name",
+          "valueField": "product_code",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode":"wa1208"
+            
+            }
+          },
+          "rules": [
+            {
+              "required": true,
+              "message": "请选择"
+            }
+          ]
+        },
+        {
+          "prop": "assign_obj",
+          "type": "remoteSelect",
+          "align":"center",
+          "label": "预警案件分配对象",
+          "format": "value-label",
+          "labelField": "user_name",
+          "valueField": "user_id",
+          "doRequest": {
+            "url": "/SUMP/rest/auth/userManager",
+            "method": "POST",
+            "params": {
+              "servicecode":"ct2002"
+            }
+          },
+          "rules": [
+            {
+              "required": true,
+              "message": "请选择"
+            }
+          ]
+        },
+        {
+          "label": "操作",
+          "width": "280px",
+          "btns": [
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "wa1206",
+                    "assign_rule_id": "${{current.assign_rule_id}}",
+                    "trantp": "DELETE"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "footer": {
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "icon": "el-icon-tickets",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode":"wa1210"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

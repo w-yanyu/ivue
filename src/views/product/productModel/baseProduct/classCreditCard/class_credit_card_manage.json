@@ -1,0 +1,225 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "pageId": "D0107",
+    "form": {
+      "controls": [
+        {
+          "prod_code": {
+            "control": "text",
+            "label": "产品代码"
+          },
+          "prod_nm": {
+            "control": "text",
+            "label": "产品名称"
+          }
+        },
+        {
+          "loan_prod_ste": {
+            "control": "select",
+            "label": "贷款产品状态",
+            "dict": {
+              "dictType": "LN_E_LOAN_PROD_STE",
+              "dictKey": [
+                "LN_E_LOAN_PROD_STE"
+              ],
+              "format": "label"
+            }
+          },
+          "loan_obj": {
+            "control": "select",
+            "label": "贷款对象",
+            "dict": {
+              "dictType": "LN_E_LOAN_OBJ",
+              "dictKey": [
+                "LN_E_LOAN_OBJ"
+              ],
+              "format": "label"
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/product/productModel/baseProduct/classCreditCard/class_credit_card_add.json"
+          },
+          "props": {
+            "title": "类信用卡产品新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "syln3004",
+          "outlistid": "listnm"
+        }
+      },
+      "thead": [
+        {
+          "label": "产品代码",
+          "prop": "prod_code",
+          "align": "center"
+        },
+        {
+          "label": "产品名称",
+          "prop": "prod_nm",
+          "align": "center"
+        },
+        {
+          "label": "贷款对象",
+          "prop": "loan_obj",
+          "align": "center",
+          "dict": {
+            "dictType": "LN_E_LOAN_OBJ",
+            "dictKey": [
+              "LN_E_LOAN_OBJ"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "贷款处理模式",
+          "prop": "loan_deal_mode",
+          "align": "center",
+          "isShow": false,
+          "dict": {
+            "dictType": "E_LOAN_DEAL_MODE",
+            "dictKey": [
+              "E_LOAN_DEAL_MODE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "生效日期",
+          "prop": "eff_dt",
+          "align": "center"
+        },
+        {
+          "label": "失效日期",
+          "prop": "invld_dt",
+          "align": "center"
+        },
+        {
+          "label": "贷款产品状态",
+          "prop": "loan_prod_ste",
+          "align": "center",
+          "dict": {
+            "dictType": "LN_E_LOAN_PROD_STE",
+            "dictKey": [
+              "LN_E_LOAN_PROD_STE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "货币代号",
+          "prop": "ccy_code_num",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_CURRENCY",
+            "dictKey": [
+              "MS_CURRENCY"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 130,
+          "align": "center",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/product/productModel/baseProduct/classCreditCard/class_credit_card_info.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "70%",
+                "title": "类信用卡产品信息详情"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "authId": "D010701",
+              "toRequest": {
+                "url": "/views/product/productModel/baseProduct/classCreditCard/class_credit_card_update.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "70%",
+                "title": "类信用卡产品信息维护"
+              }
+            },
+            {
+              "type": "add",
+              "label": "拷贝",
+              "authId": "D010704",
+              "toRequest": {
+                "url": "/views/product/productModel/baseProduct/classCreditCard/class_credit_card_copy.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "70%",
+                "title": "类信用卡产品拷贝"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "逻辑删除",
+              "authId": "D010702",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "ln3017",
+                  "del_class": "2"
+                }
+              },
+              "confirm": {
+                "title": "确定删除",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "物理删除",
+              "authId": "D010703",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "ln3017",
+                  "del_class": "1"
+                }
+              },
+              "confirm": {
+                "title": "确定删除",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

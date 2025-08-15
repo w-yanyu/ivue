@@ -1,0 +1,125 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "prod_name": {
+            "control": "text",
+            "label": "节点名称",
+            "rules": [
+              {
+                "max": 100,
+                "message": "长度不能超过100个字符"
+              }
+            ]
+          },
+          "prod_cd": {
+            "control": "text",
+            "label": "节点编码",
+            "rules": [
+              {
+                "max": 100,
+                "message": "长度不能超过100个字符"
+              }
+            ]
+          },
+          "parent_prod": {
+            "control": "text",
+            "label": "上级节点编码",
+            "rules": [
+              {
+                "max": 100,
+                "message": "长度不能超过100个字符"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {},
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode":"FindData"
+        }
+      },
+      "thead": [
+        {
+          "label": "节点编码",
+          "prop": "prod_cd",
+          "align": "center"
+        },
+        {
+          "label": "节点名称",
+          "prop": "prod_name",
+          "align": "center"
+        },
+        {
+          "type":"string",
+          "label": "上级节点编码",
+          "prop": "parent_prod",
+          "align": "center"
+        },
+        {
+          "label": "审核状态",
+          "prop": "audit_status",
+          "align":"center",
+          "dict": {
+            "dictType": "E_SKILL_STATUS",
+            "dictKey": [
+              "E_SKILL_STATUS"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "层级类型",
+          "prop": "level_type",
+          "align":"center",
+          "dict": {
+            "dictType": "LEVEL_STATUS",
+            "dictKey": [
+              "LEVEL_STATUS"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width":"200px",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "节点详情",
+              "toRequest": {
+                "method": "GET",
+                "url": "/views/skillcloud/save/auditing.json"
+              },
+              "props": {
+                "width": "80%",
+                "title":  "节点信息详情"
+              }
+            },
+            {
+              "type": "look",
+              "label": "发起审核",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "E_SKILL_STATUS"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

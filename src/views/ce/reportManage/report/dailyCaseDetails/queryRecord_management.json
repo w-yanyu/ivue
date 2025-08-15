@@ -1,0 +1,178 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "controls": [
+        {
+          "report_date": {
+            "control": "dateTimePicker",
+            "label": "统计时间",
+            "value": "today"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "export",
+          "label": "导出",
+          "icon": "iconfont icon-daochu",
+          "doRequest": {
+            "method": "POST",
+            "url": "/SUMP/icmcall/export",
+            "params": {
+              "servicecode": "ce5707"
+            }
+          },
+          "confirm":{
+            "title":"提示信息",
+            "msg":"确认导出吗？",
+            "confirmButtonText":"确定",
+            "cancelButtonText":"取消"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ce5703"
+        }
+      },
+      "thead": [
+        {
+          "type": "selection",
+          "align": "center",
+          "width": "55",
+          "fixed": "left",
+          "show": {
+            "prop": "changkuan",
+            "is": [
+              "0"
+            ]
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "统计日期",
+          "prop": "report_date"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "客户姓名",
+          "prop": "cust_name"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "客户编号",
+          "prop": "cust_no"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "逾期天数",
+          "prop": "overdue_days"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "入催时贷款余额",
+          "prop": "collect_loan_balance"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "入组时间",
+          "prop": "in_group_time"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "入组金额",
+          "prop": "in_group_amt"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "120",
+          "label": "案件类型",
+          "prop": "case_cls_code",
+          "dict": {
+            "dictKey": [
+              "location_cd_aaa"
+            ],
+            "format": "value-label",
+            "labelField": "location_name",
+            "valueField": "case_cls_code",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ce0410"
+              }
+            }
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "催收组",
+          "prop": "coll_group"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "催收员",
+          "prop": "collector"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "逾期阶段",
+          "prop": "overdue_stage_code",
+          "dict": {
+            "dictKey": [
+              "function_cd"
+            ],
+            "format": "value-label",
+            "labelField": "ovd_period_name",
+            "valueField": "overdue_stage_code",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ce0412"
+              }
+            }
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "回款金额",
+          "prop": "refund_amt"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "存量金额",
+          "prop": "stock_amt"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "带走金额",
+          "prop": "taken_amt"
+        }
+      ]
+    }
+  }
+}

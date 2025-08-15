@@ -1,0 +1,134 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    
+                    "merchantId": {
+                      "control": "text",
+                      "label":  "商户号",
+                      "rules": [
+                          {
+                              "max": 20,
+                              "message": "长度不能超过20个字符"
+                          }
+                      ]
+                  },
+                  "category": {
+                    "control": "text",
+                    "label":  "品类",
+                    "rules": [
+                        {
+                            "max": 5,
+                            "message": "长度不能超过5个字符"
+                        }
+                    ]
+                }
+                }  
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                  "type": "add",
+                  "target": "dialog",
+                  "label": "新增",
+                  "toRequest": {
+                      "method": "GET",
+                      "url": "/views/cm/InterestRateCenter/MercRateManagement/MercRateManagement_add.json"
+                  },
+                  "props": {
+                      "width": "75%",
+                      "title":  "商户品类信息新增"
+                  }
+              }
+            ]
+        }
+        ,
+        "datagrid": {
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "InitMerc"
+                }
+            },
+            "pagination": {
+                "pageSizes": [
+                    10,
+                    15,
+                    20
+                ],
+                "pageSize": 10
+            },
+            "thead": [
+                
+                {
+                    "label": "商户号",
+                    "prop": "merchant_id"
+                },
+                {
+                    "label":"商户名称",
+                    "prop": "merchant_name"
+                },
+                {
+                    "label":  "品类",
+                    "prop": "category"
+                },
+                {
+                    "label":  "定价方案编号",
+                    "prop": "rate_code"                 
+                },
+                {
+                    "label":  "定价方案名称",
+                    "prop": "rate_name"
+                },
+                {
+                  "label": "操作",
+                  "fixed": "right",
+                  "width": 200,
+                  "align":"center",
+                  "btns": [
+                    {
+                        "type": "look",
+                        "label": "定价方案详情",
+                        "toRequest": {
+                            "url": "/views/cm/InterestRateCenter/MercRateManagement/LookRatePlanRequest.json",
+                            "method": "POST"
+                        },
+                        "props": {
+                            "width": "75%",
+                            "title": "利率详情信息"
+                          }
+                    },
+                    {
+                      "type": "edit",
+                      "label": "维护",
+                      "toRequest": {
+                        "url": "/views/cm/InterestRateCenter/MercRateManagement/MercRateManagement_update.json",
+                        "method": "POST"
+                      },
+                      "props": {
+                        "width": "75%",
+                        "title": "商户品类信息修改"
+                      }
+                    },  
+                    {
+                        "type": "delete",
+                        "label": "删除",
+                        "doRequest": {
+                            "url": "/SUMP/call/RPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "deletemerc"
+                            }
+                        }
+                    }
+                  ]
+                }
+            ]
+        }
+    }
+}

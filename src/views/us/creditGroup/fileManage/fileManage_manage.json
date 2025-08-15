@@ -1,0 +1,181 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "file_no": {
+            "control": "text",
+            "label": "文件编号",
+            "rules": [
+              {
+                "max": 32,
+                "message": "长度不能超过32个字符"
+              }
+            ]
+          },
+          "file_name": {
+            "control": "text",
+            "label": "文件名称",
+            "rules": [
+              {
+                "max": 20,
+                "message": "长度不能超过20个字符"
+              }
+            ]
+          },
+          "file_type": {
+            "control": "select",
+            "label": "文件类型",
+            "dict": {
+              "dictType": "US_E_FILE_TYPE",
+              "dictKey": [
+                "US_E_FILE_TYPE"
+              ],
+              "format": "label-value"
+            },
+            "rules": [
+              {
+                "max": 10,
+                "message": "长度不能超过10个字符"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/us/creditGroup/fileManage/fileManage_add.json",
+            "params": {
+              "cust_no": "${{params.cust_no}}"
+            }
+          },
+          "props": {
+            "width": "50%",
+            "title": "文件上传"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "us1263",
+          "cust_no": "${{params.cust_no}}"
+        }
+      },
+      "pagination": {
+        "pageSizes": [
+          10,
+          15,
+          20,
+          50,
+          100
+        ],
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "label": "序号",
+          "type": "index",
+          "align": "center"
+        },
+        {
+          "label": "文件编号",
+          "prop": "file_no",
+          "align": "center"
+        },
+        {
+          "label": "文件类型",
+          "prop": "file_type",
+          "align": "center",
+          "dict": {
+            "dictType": "US_E_FILE_TYPE",
+            "dictKey": [
+              "US_E_FILE_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "文件名称",
+          "prop": "file_name",
+          "align": "center"
+        },
+        {
+          "label": "文件路径",
+          "prop": "file_path",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align": "center",
+          "btns": [
+            {
+              "type": "custom",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/us/creditGroup/fileManage/fileManage_detail.json",
+                "method": "GET",
+                "params": {
+                  "path": "${{current.file_path}}"
+                }
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/us/creditGroup/fileManage/fileManage_modify.json",
+                "method": "GET",
+                "params": {
+                  "file_no": "${{current.file_no}}"
+                }
+              },
+              "props": {
+                "width": "65%",
+                "title": "协议维护"
+              }
+            },
+            {
+              "type": "export",
+              "label": "下载",
+              "doRequest": {
+                "url": "/SUMP/minioCall/download",
+                "method": "get",
+                "params": {
+                  "path": "${{current.file_path}}",
+                  "fileName": "${{current.file_name}}"
+                }
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "us1266",
+                  "file_no": "${{current.file_no}}"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,166 @@
+<template>
+  <div>
+    <h3><i class="el-icon-s-grid"></i>循环透支</h3>
+    <table border="1">
+      <tr>
+        <th rowspan="3">账户编号</th>
+        <th>授信机构</th>
+        <th>业务种类</th>
+        <th>开立日期</th>
+        <th>到期日</th>
+        <th>币种</th>
+        <th>信用额度</th>
+        <th>发放形式</th>
+      </tr>
+      <tr>
+        <th>担保方式</th>
+        <th>余额</th>
+        <th>五级分类</th>
+        <th>逾期总额</th>
+        <th>逾期本金</th>
+        <th>逾期月数</th>
+        <th>最近一次还款日期</th>
+      </tr>
+      <tr>
+        <th>最近一次还款总额</th>
+        <th>最近一次还款形式</th>
+        <th>剩余还款月数</th>
+        <th>特定交易提示</th>
+        <th>授信协议编号</th>
+        <th>历史表现</th>
+        <th>信息报告日期</th>
+      </tr>
+      <template  v-for="item in arbCOutRevoOverdraftCom">
+        <tr>
+          <td rowspan="3">{{item.account_no}}</td>
+          <td>{{item.credit_branch}}</td>
+          <td>{{item.busi_class}}</td>
+          <td>{{item.start_date}}</td>
+          <td>{{item.end_date}}</td>
+          <td>{{item.ccy_code}}</td>
+          <td>{{item.credit_quota}}</td>
+          <td>{{item.distribution_form}}</td>
+        </tr>
+        <tr>
+          <td>{{item.guar_type}}</td>
+          <td>{{item.balance}}</td>
+          <td>{{item.five_level_class}}</td>
+          <td>{{item.overdue_total_amt}}</td>
+          <td>{{item.overdue_principal}}</td>
+          <td>{{item.oberdue_month_num}}</td>
+          <td>{{item.last_repay_date}}</td>
+        </tr>
+        <tr>
+          <td>{{item.last_repay_total_amt}}</td>
+          <td>{{item.last_repay_form}}</td>
+          <td>{{item.repay_month_num}}</td>
+          <td>{{item.specific_trans_tips}}</td>
+          <td>{{item.credit_protocol_no}}</td>
+          <td>{{item.his_performance}}</td>
+          <td>{{item.info_report_date}}</td>
+        </tr>
+      </template>
+      <template  v-if="arbCOutRevoOverdraftCom.length === 0">
+        <tr>
+          <td rowspan="3"></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </template>
+    </table>
+  </div>
+</template>
+
+<script>
+
+export default {
+  name: "arbCOutRevoOverdraft",
+  props: {
+    cMeta: Object, // 布局相关数据
+    cParentMeta: Object, // 父页面模板json数据
+    cParentScope: Object, // 父页面每块区域业务数据
+    cParentParams: Object, // 父页面自定义参数与内置参数
+  },
+  data() {
+    return {
+      arbCOutRevoOverdraftCom: []
+    }
+  },
+  computed: {},
+  created() {
+    this.init();
+  },
+  methods: {
+    init() {
+      if (this.cParentParams) {
+        this.arbCOutRevoOverdraftCom = this.cParentParams;
+      }
+    }
+  }
+}
+</script>
+
+
+<style lang="less" scoped>
+table {
+  width: calc(100% - 10px);
+  height: auto;
+  margin: 0 10px 0 10px;
+  table-layout: fixed;
+
+  th {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: black;
+    height: 40px;
+  }
+
+  td {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    height: 40px;
+  }
+
+  td, th {
+    white-space: nowrap; //强制在一行显示
+    overflow: hidden; //溢出的内容切割隐藏
+    text-overflow: ellipsis; //当内联溢出块容器时，将溢出部分替换为…
+    word-break: keep-all; //允许在单词内换行
+
+  }
+}
+
+h3 {
+  color: black;
+  font-weight: bold;
+}
+.table-title {
+  width: 100%;
+  text-align: center;
+}
+</style>

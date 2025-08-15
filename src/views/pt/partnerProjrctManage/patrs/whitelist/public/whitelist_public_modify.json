@@ -1,0 +1,229 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest":"${{params}}",
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "pt0449",
+          "part_protocol_no": "${{params.part_protocol_no}}",
+          "part_project_no": "${{params.part_project_no}}",
+          "version": "${{params.version}}",
+          "protocol_whitelist_no": "${{params.protocol_whitelist_no}}",
+          "cust_type": "20"
+        }
+      },
+      "controlsGroup": [
+        {
+          "title": "客户信息",
+          "tooltip": "",
+          "titleIcon": "",
+          "showHint": "",
+          "accordion": false,
+          "expand": true,
+          "controls": [
+            {
+              "cust_no": {
+                "control": "lookup",
+                "label": "客户编号",
+                "width": "140px",
+                "span": 8,
+                "edit": true,
+                "keyField": {
+                  "cust_no": "cust_no",
+                  "cust_name": "cust_name",
+                  "cert_type": "cert_type",
+                  "cert_no": "cert_no",
+                  "registered_capital": "register_princi",
+                  "year_established": "year_established",
+                  "legal_representative": "legal_representative",
+                  "new_busi_class_std": "industry_type_name",
+                  "phone_no": "phone_no"
+                },
+                "toRequest": {
+                  "url": "/views/us/entManager/ent_cust_lookup.json",
+                  "method": "post"
+                },
+                "multiple": false,
+                "props": {
+                  "title": "客户选择"
+                }
+              },
+              "cust_name": {
+                "control": "text",
+                "label": "客户姓名",
+                "width": "140px",
+                "span": 8,
+                "disabled": true
+              },
+              "cert_type": {
+                "control": "select",
+                "label": "证件类型",
+                "width": "140px",
+                "span": 8,
+                "disabled": true,
+                "dict": {
+                  "dictType": "US_E_PUB_CRET_TYPE",
+                  "dictKey": [
+                    "US_E_PUB_CRET_TYPE"
+                  ],
+                  "format": "label"
+                }
+              },
+              "cert_no": {
+                "control": "text",
+                "label": "证件号码",
+                "width": "140px",
+                "span": 8,
+                "disabled": true
+              },
+              "phone_no": {
+                "control": "text",
+                "label": "固定电话",
+                "width": "140px",
+                "span": 8,
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请输入固定电话"
+                  }
+                ]
+              },
+              "registered_capital": {
+                "control": "currency",
+                "label": "注册资本",
+                "width": "140px",
+                "span": 8,
+                "format": {
+                  "thousand": ",",
+                  "decimal": "2"
+                }
+              },
+              "year_established": {
+                "control": "dateTimePicker",
+                "label": "成立年份",
+                "width": "140px",
+                "span": 8,
+                "format": "yyyy",
+                "type": "year"
+              },
+              "legal_representative": {
+                "control": "text",
+                "label": "法定代表人",
+                "width": "140px",
+                "span": 8
+              },
+              "new_busi_class_std": {
+                "control": "lookup",
+                "label": "行业分类（征）",
+                "width": "140px",
+                "span": 8,
+                "placeholder": "点击行业分类",
+                "toRequest": {
+                  "url": "@jsonLookUpTree",
+                  "method": "post",
+                  "params": {
+                    "treeTitle": "行业分类",
+                    "treeType": "3",
+                    "new_busi_class_std": "industry_type_code"
+                  }
+                },
+                "keyField": {
+                  "new_busi_class_std": "industry_type_code"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "title": "定制信息",
+          "tooltip": "",
+          "titleIcon": "",
+          "showHint": "",
+          "accordion": false,
+          "expand": true,
+          "controls": [
+            {
+              "ccy_code": {
+                "control": "select",
+                "label": "币种",
+                "width": "140px",
+                "span": 8,
+                "dict": {
+                  "dictType": "MS_CURRENCY",
+                  "dictKey": [
+                    "MS_CURRENCY"
+                  ],
+                  "format": "label"
+                }
+              },
+              "loan_term": {
+                "control": "text",
+                "label": "贷款期限（月）",
+                "width": "140px",
+                "span": 8,
+                "suffix": "M"
+              },
+              "max_credit_amt": {
+                "control": "currency",
+                "label": "最大授信额度（元）",
+                "width": "140px",
+                "span": 8,
+                "format": {
+                  "thousand": ",",
+                  "decimal": "2"
+                }
+              },
+              "min_credit_amt": {
+                "control": "currency",
+                "label": "最小授信额度（元）",
+                "width": "140px",
+                "span": 8,
+                "format": {
+                  "thousand": ",",
+                  "decimal": "2"
+                }
+              },
+              "credit_amt": {
+                "control": "currency",
+                "label": "授信额度（元）",
+                "width": "140px",
+                "span": 8,
+                "format": {
+                  "thousand": ",",
+                  "decimal": "2"
+                }
+              },
+              "interest_rate": {
+                "control": "currency",
+                "label": "年利率（%）",
+                "width": "140px",
+                "span": 8,
+                "format": {
+                  "thousand": ",",
+                  "decimal": "2"
+                }
+              },
+              "repay_type_list": {
+                "control": "select",
+                "label": "还款方式",
+                "width": "140px",
+                "span": 24,
+                "multiple": true,
+                "dict": {
+                  "dictType": "MS_E_REPAY_WAY",
+                  "dictKey": [
+                    "MS_E_REPAY_WAY"
+                  ],
+                  "format": "label"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

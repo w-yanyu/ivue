@@ -1,0 +1,408 @@
+{
+  "module": "v-search-btn-datagrid",
+  "pageId": "risk_score_card",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "scoreCardCode": {
+            "label": "简单评分卡代码",
+            "control": "text",
+            "width": "auto",
+            "span": 8,
+            "rules": [
+              {
+                "message": "字段长度超限",
+                "max": 40
+              }
+            ]
+          },
+          "scoreCardName": {
+            "label": "简单评分卡名称",
+            "width": "auto",
+            "control": "text",
+            "span": 8,
+            "rules": [
+              {
+                "message": "字段长度超限",
+                "max": 40
+              }
+            ]
+          },
+          "branchId": {
+            "label": "机构名称",
+              "control": "remoteSelect",
+              "labelField": "branch_name",
+              "valueField": "branch_id",
+              "searchField":"branch_name",
+              "span": 6,
+              "value": "$g{{user_info.branch_id}}",
+              "width": "auto",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "ct2191"
+                }
+            },
+            "format": "label"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "#type": "add",
+          "#label": "新增",
+          "#authId": "score_card_add_btn",
+          "#toRequest": {
+            "#url": "/views/risk/risk_score_card/risk_score_card_add.json",
+            "#method": "get"
+          },
+          "#props": {
+            "#width": "70%",
+            "#title": "新增"
+          }
+        },
+        {
+          "##type": "export",
+          "##label": "下载导入模板",
+          "##authId": "score_card_inm_btn",
+          "##icon": "iconfont icon-daochu",
+          "##doRequest": {
+            "##url": "/API/risk-management-service/risk-score-card/downloadImportTemplate",
+            "##method": "post"
+          }
+        },
+        {
+          "##type": "import",
+          "##label": "导入",
+          "##authId": "score_card_in_btn",
+          "##icon": "iconfont icon-daoru1",
+          "##props": {
+            "##width": "600px",
+            "##title": "导入",
+            "##doRequest": {
+              "##url": "/API/risk-management-service/risk-score-card/import",
+              "##method": "post"
+            },
+            "##multiple": false,
+            "##name": "import",
+            "##accept": ".xls,.xlsx",
+            "##limit": 1,
+            "##size": 1024,
+            "##allSize": 1
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "scoreCardType": "0",
+          "servicecode": "deci020120",
+          "isList": true
+        }
+      },
+      "pagination": {
+        "hideOnSinglePage": false,
+        "show": true,
+        "pageSizes": [
+          10,
+          15,
+          20
+        ],
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "label": "序号",
+          "type": "index"
+        },
+        {
+          "label": "简单评分卡代码",
+          "prop": "scoreCardCode"
+        },
+        {
+          "label": "简单评分卡名称",
+          "prop": "scoreCardName"
+        },
+        {
+          "label": "机构名称",
+          "prop": "branchId",
+          "dict": {
+            "dictType": "DECI_E_BRANCH_MARK",
+            "dictKey": [
+              "DECI_E_BRANCH_MARK"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "版本号",
+          "prop": "version"
+        },
+        {
+          "label": "服务对象",
+          "prop": "serviceObject"
+        },
+        {
+          "label": "备注",
+          "prop": "description"
+        },
+         {
+          "label": "最新维护人",
+          "prop": "applyUser",
+          "dict": {
+            "dictType":"deciOnl",
+              "dictKey": [],
+              "format": "label",
+              "labelField": "user_name",
+              "valueField": "user_id",
+              "doRequest": {
+                  "url": "/SUMP/icmcall/icmRPCCall",
+                  "method": "POST",
+                  "params": {
+                    "length":1000,
+                    "start":1,
+                      "servicecode": "ct2503"
+                  }
+              }
+          }
+        },
+        {
+          "label": "最新维护时间",
+          "prop": "applyTime"
+        },
+        {
+          "label": "操作",
+          "width": "300px",
+          "btns": [
+            {
+              "type": "look",
+              "label": "查看",
+              "authId": "score_card_vie_btn",
+              "toRequest": {
+                "url": "@riskScoreCardModelView",
+                "method": "get"
+              },
+              "props": {
+                "width": "90%",
+                "top": "4vh"
+              }
+            },
+            {
+              "type": "confirmIncreaseBtn",
+              "label": "变更",
+              "width": "70px",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "deci020205",
+                  "riskOperationType": "U",
+                  "approveStatus": "00"
+                }
+              },
+              "show": {
+                "expression": "'${{current.branchId}}' == '$g{{user_info.branch_id}}'"
+              },
+              "confirm": {
+                "title": "提示信息",
+                "msgTemplate":"是否对“${{current.scoreCardCode}}”“${{current.scoreCardName}}”发起变更？",
+                "msg": "",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "authId": "score_card_edt_btn",
+              "toRequest": {
+                "url": "@riskScoreCardModelEdit",
+                "method": "get"
+              },
+              "props": {
+                "width": "90%"
+              },
+              "show": {
+                "expression": "false"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "复制",
+              "toRequest": {
+                "url": "/views/risk/risk_score_card/risk_score_card_copy.json",
+                "method": "get",
+                "params": {
+                  "scoreCardCode": "${{current.scoreCardCode}}",
+                  "scoreCardName": "${{current.scoreCardName}}",
+                  "currVersion": "${{current.currVersion}}"
+                }
+              },
+              "show": {
+                "expression": "true"
+              },
+                "props": {
+                "title": "简单评分卡复制"
+              }
+            },
+            {
+              "type": "confirmIncreaseBtn",
+              "label": "版本切换",
+              "width": "70px",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "deci020205",
+                  "riskOperationType": "S",
+                  "approveStatus": "00"
+                }
+              },
+              "show": {
+                "expression": "'${{current.branchId}}' == '$g{{user_info.branch_id}}'"
+              },
+              "confirm": {
+                "title": "提示信息",
+                "msgTemplate":"是否对“${{current.scoreCardCode}}”“${{current.scoreCardName}}”发起版本切换？",
+                "msg": "",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "版本切换",
+              "authId": "score_card_del_btn",
+              "#icon": "el-icon-delete",
+              "toRequest": {
+                "url": "@simpleScoreCardVersionBack",
+                "method": "get",
+                "params": {}
+              },
+              "props": {
+               
+              },
+              "show": {
+                "expression": "false"
+              }
+            },
+            {
+              "type": "export",
+              "label": "导出PDF",
+              "authId": "score_card_outp_btn",
+              "icon": "iconfont icon-daochu",
+              "doRequest": {
+                "url": "/SUMP/riskController/riskCallDownload",
+                "method": "post",
+                "params": {
+                  "servicecode": "risk-management-service/risk-score-card/outputPDF",
+                  "appId": "risk-management-service"
+                }
+              },
+              "show": {
+                "expression": "false"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "authId": "score_card_del_btn",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "deci020205",
+                  "riskOperationType": "D",
+                  "approveStatus": "00"
+                }
+              },
+              "show": {
+                "expression": "'${{current.branchId}}' == '$g{{user_info.branch_id}}'"
+              }
+            },
+            {
+              "###type": "export",
+              "###label": "导出Excel",
+              "###authId": "score_card_oute_btn",
+              "#icon": "iconfont icon-daochu",
+              "doRequest": {
+                "url": "/SUMP/rest/file/deciScoreCardExport",
+                "method": "post",
+                "params": {
+                  "servicecode": "deci020120",
+                  "servicecode2": "deci020108",
+                  "exportname":"${{current.scoreCardName}}",
+                  "start": 1,
+                  "length": 10000
+                }
+              },
+              "show": {
+                "expression": "true"
+              },
+              "confirm": {
+                "title": "提示信息",
+                "msg": "是否导出 '${{current.scoreCardName}}' 评分卡？",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            },
+            {
+              "#type": "custom",
+              "#label": "还原",
+              "#authId": "score_card_del_btn",
+              "#icon": "el-icon-delete",
+              "#doRequest": {
+                "#url": "/SUMP/icmcall/icmRPCCall",
+                "#method": "post",
+                "#params": {
+                  "#scoreCardType": "0",
+                  "#servicecode": "deci020122"
+                }
+              },
+              "show": {
+                "expression": "'${{current.scoreCardStatus}}'!== 'Y' && '${{current.scoreCardStatus}}'!=='C' && '${{current.currVersion}}' !== '0'"
+              },
+              "confirm": {
+                "title": "提示信息",
+                "msg": "确定要还原至最新生效版本吗?",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "提交审核",
+              "authId": "score_card_edt_btn",
+              "#icon": "el-icon-edit",
+              "doRequest": {
+                "url": "/SUMP/riskController/riskCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "risk-management-service/risk-score-card/reviewScoreCard",
+                  "appId": "risk-management-service"
+                }
+              },
+              "show": {
+                "expression": "false"
+              },
+              "confirm": {
+                "title": "提示信息",
+                "msg": "确定提交审核吗?",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

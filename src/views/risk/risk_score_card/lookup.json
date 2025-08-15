@@ -1,0 +1,138 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+      "form": {
+        "controls": [
+          {
+            "scoreCardType": {
+              "label": "评分卡类型",
+              "control": "select",
+              "dict": {
+                "dictType": "scoreCardType",
+                "dictKey": [],
+                "format": "label",
+                "doRequest": {
+                  "url": "/views/risk/dictdata/scoreCardType.json",
+                  "method": "get"
+                }
+              },
+              "span": 6
+            },
+            "scoreCardCode": {
+              "label": "评分卡代码",
+              "control": "text",
+              "span": 6
+            },
+            "scoreCardName": {
+              "label": "评分卡名称",
+              "control": "text",
+              "span": 6
+            },
+  
+            "version": {
+              "label": "版本号",
+              "control": "inputNumber",
+              "min": 0.0,
+              "step": 0.1,
+              "span": 6
+            },
+            "branch_id": {
+              "label": "机构名称",
+              "control": "remoteSelect",
+              "labelField": "branch_name",
+              "valueField": "branch_id",
+              "searchField":"branch_name",
+              "span": 6,
+              "value": "$g{{user_info.branch_id}}",
+              "width": "auto",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "ct2191"
+                }
+              },
+              "rules": [
+                {
+                  "required": true,
+                  "message": "请输入机构名称",
+                  "max": 125
+                }
+              ],
+              "format": "label"
+            }
+          }
+        ]
+      },
+      "datagrid": {
+        "isInitSearch": false,
+        "doRequest": {
+          "url": "/SUMP/icmcall/icmRPCCall",
+          "method": "POST",
+          "params": {
+            "scoreCardStatus":"",
+            "servicecode": "deci030007"
+          }
+        },
+        "pagination": {
+          "hideOnSinglePage": false,
+          "show": true,
+          "pageSizes": [10, 15, 20],
+          "pageSize": 10
+        },
+        "thead": [
+          {
+            "label": "评分卡类型",
+            "prop": "scoreCardType",
+            "dict": {
+              "dictType": "scoreCardType",
+              "dictKey": [],
+              "format": "label",
+              "doRequest": {
+                "url": "/views/risk/dictdata/scoreCardType.json",
+                "method": "get"
+              }
+            }
+          },
+          {
+            "label": "评分卡代码",
+            "prop": "scoreCardCode"
+          },
+          {
+            "label": "评分卡名称",
+            "prop": "scoreCardName"
+          },
+          {
+            "label": "机构名称",
+            "prop": "branch_id",
+            "dict": {
+              "dictType": "DECI_E_BRANCH_MARK",
+              "dictKey": [
+                "DECI_E_BRANCH_MARK"
+              ],
+              "format": "label"
+            }
+          },
+          {
+            "label": "版本号",
+            "prop": "version"
+          },
+          {
+            "label": "最后维护时间",
+            "prop": "updateTime"
+          },
+          {
+            "label": "操作",
+            "width": "150px",
+            "btns": [
+              {
+                "type": "bringback",
+                "label": "选择"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+  

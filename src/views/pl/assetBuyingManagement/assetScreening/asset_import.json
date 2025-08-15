@@ -1,0 +1,99 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pl0441"
+        }
+      },
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "icon": "el-icon-tickets"
+        }
+      ],
+      "controls": [
+        {
+          "package_no": {
+            "control": "remoteSelect",
+            "label": "资产包名称",
+            "labelField": "package_name",
+            "valueField": "package_no",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ],
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "length": 999,
+                "start": 1,
+                "asset_package_type": "1",
+                "servicecode": "pl0423"
+              }
+            },
+            "format": "value-label"
+          }
+        },
+        {
+          "detail_import_type": {
+            "control": "select",
+            "label": "明细导入类型",
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择"
+              }
+            ],
+            "dict": {
+              "dictType": "PL_E_DETAIL_IMPORT_TYPE",
+              "dictKey": [
+                "PL_E_DETAIL_IMPORT_TYPE"
+              ],
+              "format": "label"
+            }
+          }
+        },
+        {
+          "file": {
+            "doRequest": {
+              "url": "/SUMP/minioCall/upload",
+              "method": "post",
+              "params": {
+                "org_id": "$g{{user_info.org_id}}"
+              },
+              "resultSet": {
+                "file_path": "path",
+                "file_name": "oldName",
+                "file_size": "size"
+              }
+            },
+            "width": "240px",
+            "control": "file",
+            "limit": 1,
+            "limitSize": 10,
+            "label": "上传文件",
+            "btnLable": "请选择文件"
+          },
+          "file_path": {
+            "control": "hidden"
+          }
+        },
+        {
+          "file_name": {
+            "control": "string",
+            "label": "文件名称"
+          }
+        }
+      ]
+    }
+  }
+}

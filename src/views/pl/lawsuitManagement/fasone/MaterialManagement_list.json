@@ -1,0 +1,139 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+              {
+                "city_name": {
+                  "control": "text",
+                  "label": "机构名称"
+      
+                },
+                "attn_name": {
+                  "control": "text",
+                  "label": "收件人名称"
+                }
+              }
+      
+            ]
+          },
+        "toolbar": {
+            "btns": [{
+                "type": "add",
+                "target": "dialog",
+                "label": "新增",
+                "toRequest": {
+                    "method": "GET",
+                    "url": "/views/pl/lawsuitManagement/fasone/MaterialManagement_add.json",
+                    "params": {
+
+                    }
+                },
+                "show": {
+                    
+                },
+                "props": {
+                    "title": "新增收件人管理信息",
+                    "width": "65%"
+                }
+            }]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "pl0534"
+                   
+                }
+            },
+            "thead": [{
+                    "align": "center",
+                    "label": "机构名称",
+                    "prop":"city_name"
+        
+                },
+                {
+                    "label": "收件人名称",
+                    "prop": "attn_name",
+                    "align": "center",  
+                    "disabled": true
+                },
+                {
+                    "label": "收件人电话",
+                    "prop": "attn_phone",
+                    "align": "center"
+                    
+                },
+                {
+                    "label": "收件人地址",
+                    "prop": "attn_address",
+                    "align": "center"
+                },
+                {
+                    "label": "是否有效",
+                    "prop": "acceptance_org_type",
+                    "align":"center",
+                    "dict": {
+                      "dictType": "MS_E_YESORNO",
+                      "dictKey": [
+                        "MS_E_YESORNO"
+                      ],
+                      "format": "label"
+                    }
+                },
+                {
+                    "label": "备注",
+                    "prop": "remark",
+                    "align": "center"
+                },
+                
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 160,
+                    "align": "center",
+                    "btns": [
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/pl/lawsuitManagement/fasone/MaterialManagement_update.json",
+                                "method": "GET"
+                            },
+                            "show": {
+                              
+                            },
+                            "props": {
+                                "width": "60%",
+                                "title": "更新收件人管理信息"
+                            }
+                        },
+                        {
+                            "type": "custom",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "pl0537"
+
+                                }
+                            },
+                            "confirm": {
+                                "title": "确定删除",
+                                "confirmButtonText": "确定",
+                                "cancelButtonText": "取消"
+                            },
+                            "show": {
+                               
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

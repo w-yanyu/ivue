@@ -1,0 +1,163 @@
+{
+  "module": "v-search-btn-datagrid",
+  "pageId": "risk_fact",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "factCode": {
+            "label": "事实代码",
+            "control": "select",
+            "span": 8,
+            "dict": {
+              "dictType": "factCode",
+              "dictKey": [],
+              "format": "value-label",
+              "doRequest": {
+                "url": "/API/risk-management-service/combobox-select/fact-without-field",
+                "method": "post"
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "该控件必填"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "authId": "fact_add_btn",
+          "show": true,
+          "label": "新增",
+          "toRequest": {
+            "url": "@riskFactAdd",
+            "method": "get"
+          },
+          "props": {
+            "width": "70%",
+            "title": "新增"
+          }
+        },
+        {
+          "type": "import",
+          "label": "导入",
+          "authId": "fact_import_btn",
+          "icon": "iconfont icon-daoru1",
+          "props": {
+            "width": "600px",
+            "title": "导入",
+            "doRequest": {
+              "url": "/API/risk-management-service/risk-fact/import",
+              "method":"post"
+            },
+            "multiple": true,
+            "name": "import",
+            "accept":".xls,.xlsx",
+            "limit":1,
+            "size":1024,
+            "allSize":1
+          }
+        },
+        {
+          "type": "export",
+          "label": "导出",
+          "icon": "iconfont icon-daochu",
+          "doRequest": {
+            "url": "/API/risk-management-service/risk-fact/output",
+            "method":"get"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/API/risk-management-service/risk-fact/page-select",
+        "method": "post"
+      },
+      "thead": [
+        {
+          "label": "事实属性名称",
+          "prop": "fieldName"
+        },
+        {
+          "label": "事实属性代码",
+          "prop": "fieldCode"
+        },
+        {
+          "label": "事实属性类型",
+          "prop": "fieldType",
+          "dict": {
+            "dictType": "dataType",
+            "dictKey": [],
+            "doRequest": {
+              "url": "/views/risk/dictdata/dataType.json",
+              "method": "get"
+            }
+          }
+        },
+        {
+          "label": "引用集合代码",
+          "prop": "referenceCollectionCode",
+          "dict": {
+            "dictType": "rule_constant",
+            "dictKey": [],
+            "format": "value-label",
+            "doRequest": {
+              "url": "/API/risk-management-service/combobox-select/rule_constant",
+              "method": "post"
+            }
+          }
+        },
+        {
+          "label": "备注",
+          "prop": "description"
+        },
+        {
+          "label": "操作",
+          "width": "150px",
+          "btns": [
+            {
+              "type": "edit",
+              "authId": "fact_upd_btn",
+              "label": "编缉",
+              "toRequest": {
+                "url": "/views/risk/risk_fact/risk_fact_edit.json",
+                "method": "get"
+              },
+              "props": {
+                "width": "70%"
+              }
+            },
+            {
+              "type": "look",
+              "label": "查看",
+              "toRequest": {
+                "url": "/views/risk/risk_fact/risk_fact_view.json",
+                "method": "get"
+              },
+              "props": {
+                "width": "70%"
+              }
+            },
+            {
+              "type": "delete",
+              "authId": "fact_del_btn",
+              "label": "删除",
+              "doRequest": {
+                "url": "/API/risk-management-service/risk-fact/delete",
+                "method": "post"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,139 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/us/privateManage/assetStatus/manageInfo/manageInfo_add.json",
+            "params": {
+              "cust_no": "${{params.cust_no}}"
+            }
+          },
+          "show": {
+            "expression": "'${{params.show_flash}}' == '1'"
+          },
+          "props": {
+            "title": "个人经营情况新增",
+            "width": "75%"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "us0151",
+          "cust_no": "${{params.cust_no}}"
+        }
+      },
+      "thead": [
+        {
+          "type": "index",
+          "width": 50,
+          "label": "序号"
+        },
+        {
+          "label": "经营单位名称",
+          "prop": "busi_unit_name",
+          "align": "center"
+        },
+        {
+          "label": "经营单位类型",
+          "prop": "busi_unit_type",
+          "align": "center",
+          "dict": {
+            "dictType": "US_E_BUSI_UNIT_TYPE",
+            "dictKey": [
+              "US_E_BUSI_UNIT_TYPE"
+            ],
+            "labelField": "dictName",
+            "valueField": "dictId"
+          }
+        },
+        {
+          "label": "经营单位所属行业",
+          "prop": "busi_unit_industry",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_WORKTP",
+            "dictKey": [
+              "MS_E_WORKTP"
+            ],
+            "labelField": "dictName",
+            "valueField": "dictId"
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 160,
+          "align": "center",
+          "btns": [
+            {
+              "type": "custom",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/us/privateManage/assetStatus/manageInfo/manageInfo_info.json",
+                "props": {
+                  "width": "75%",
+                  "title": "个人经营情况信息详情"
+                },
+                "params": {
+                  "cust_no": "${{current.cust_no}}"
+                }
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/us/privateManage/assetStatus/manageInfo/manageInfo_modify.json",
+                "method": "POST",
+                "params": {
+                  "manage_id": "${{current.manage_id}}",
+                  "cust_no": "${{params.cust_no}}"
+                }
+              },
+              "show": {
+                "expression": "'${{params.show_flash}}' == '1'"
+              },
+              "props": {
+                "width": "75%",
+                "title": "个人经营情况信息维护"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "us0154",
+                  "manage_id": "${{current.manage_id}}"
+                }
+              },
+              "show": {
+                "expression": "'${{params.show_flash}}' == '1'"
+              },
+              "confirm": {
+                "title": "确定删除",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

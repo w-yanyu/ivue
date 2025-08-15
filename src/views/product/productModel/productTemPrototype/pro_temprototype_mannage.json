@@ -1,0 +1,174 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "tplt_protp_code": {
+            "control": "text",
+            "label": "模板原型代码",
+            "rules": [
+              {
+                "max": 18,
+                "message": "长度不能超过18个字符"
+              }
+            ]
+          },
+          "tplt_protp_nm": {
+            "control": "text",
+            "label": "模板原型名称",
+            "rules": [
+              {
+                "max": 80,
+                "message": "长度不能超过80个字符"
+              }
+            ]
+          }
+        },
+        {
+          "tplt_protp_ste": {
+            "control": "select",
+            "label": "模板原型状态",
+            "dict": {
+              "dictType": "LN_E_TPLT_PROTP_STE",
+              "dictKey": [
+                "LN_E_TPLT_PROTP_STE"
+              ],
+              "format": "label"
+            }
+          },
+          "core_busi_dman": {
+            "control": "text",
+            "label": "业务领域（默认01-贷款）",
+            "width": "100px",
+            "initShow": false,
+            "value": "01"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/product/productModel/productTemPrototype/pro_temprototype_add.json"
+          },
+          "props": {
+            "title": "产品模板原型新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ln3255",
+          "outlistid": "lstKlnf_tplt_protp"
+        }
+      },
+      "thead": [
+        {
+          "label": "模板原型代码",
+          "prop": "tplt_protp_code",
+          "align": "center"
+        },
+        {
+          "label": "模板原型名称",
+          "prop": "tplt_protp_nm",
+          "align": "center"
+        },
+        {
+          "label": "模板原型描述",
+          "prop": "tplt_protp_dsc",
+          "align": "center"
+        },
+        {
+          "label": "模板原型状态",
+          "prop": "tplt_protp_ste",
+          "align": "center",
+          "dict": {
+            "dictType": "LN_E_TPLT_PROTP_STE",
+            "dictKey": [
+              "LN_E_TPLT_PROTP_STE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 300,
+          "align": "center",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/product/productModel/productTemPrototype/pro_temprototype_info.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "50%",
+                "title": "基础产品信息详情"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/product/productModel/productTemPrototype/pro_temprototype_update.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "50%",
+                "title": "基础产品信息维护"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "逻辑删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "ln3259",
+                  "del_class": "2"
+                }
+              },
+              "confirm": {
+                "title": "确定删除",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "物理删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "ln3259",
+                  "del_class": "1"
+                }
+              },
+              "confirm": {
+                "title": "确定删除",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

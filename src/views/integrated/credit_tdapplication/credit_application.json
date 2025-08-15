@@ -1,0 +1,214 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+          "controls": [
+            {
+              "crdtcd": {
+                "label": "产品编号",
+                "control": "remoteSelect",
+                "valueField": "ln_prod_cd",
+                "labelField": "product_desc",
+                "doRequest": {
+                  "url": "/SUMP/icmcall/icmRPCCall",
+                  "method": "post",
+                  "params": {
+                    "servicecode": "ICMSPDTS0178"
+                  }
+                },
+                "format": "value-label",
+                "rules": [
+                  {
+                    "required": false,
+                    "message": "请选择产品编号"
+                  }
+                ]
+              },
+              "applid": {
+                "control": "text",
+                "label": "申请号"
+              }
+            },
+            {
+              "idtfno": {
+                "control": "text",
+                "label": "证件号码",
+                "rules": [
+                  {
+                    "max": 20,
+                    "message": "长度不能超过20个字符"
+                  }
+                ]
+              },
+              "applst": {
+                "control": "select",
+                "label": "申请状态",
+                "dict": {
+                  "dictType": "E_SXAPPLST",
+                  "dictKey": [
+                    "E_SXAPPLST"
+                  ],
+                  "format": "label"
+                }
+              }
+            },
+            {
+              "stardt": {
+                "control": "dateTimePicker",
+                "label": "申请起始日期",
+                "editable": true,
+                "format": "yyyyMMdd"
+              },
+              "expidt": {
+                "control": "dateTimePicker",
+                "label": "申请截止日期",
+                "editable": true,
+                "format": "yyyyMMdd"
+              }
+            },
+            {
+              "idtftp": {
+                "control": "select",
+                "label": "证件类型",
+                "dict": {
+                  "dictType": "E_IDTFTR",
+                  "dictKey": [
+                    "E_IDTFTR"
+                  ],
+                  "format": "label"
+                }
+              },
+              "custna": {
+                "control": "text",
+                "label": "客户名称"
+              }
+            },
+
+            {
+              "channel": {
+                "control": "text",
+                "label": "渠道"
+              }
+            }
+          ]
+        },
+        "toolbar": {
+            "btns": [
+            ]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "qrcreapl"
+                }
+            },
+            "thead": [
+              {
+                "label": "申请号",
+                "prop": "applid",
+                "align":"center",
+                "visible": "true"
+              },
+              {
+                "label": "客户号",
+                "prop": "custid",
+                "align":"center",
+                "visible": "true"
+              },
+              {
+                "label": "第三方申请号",
+                "prop": "thirdid",
+                "align":"center",
+                "visible": "true"
+              },
+                {
+                    "label": "客户名称",
+                    "prop": "custna",
+                    "align":"center"
+                },
+                {
+                    "label": "证件类型",
+                    "prop": "idtftp",
+                    "align":"center",
+
+                  "dict": {
+                    "dictType": "E_IDTFTR",
+                    "dictKey": [
+                      "E_IDTFTR"
+                    ],
+                    "format": "label"
+                  }
+                },
+                {
+                    "label": "证件号码",
+                    "prop": "idtfno",
+                    "align":"center"
+                },
+                {
+                    "label": "授信编号",
+                    "prop": "crdtno",
+                    "align":"center"
+                },
+                 {
+                    "label": "可售产品编号",
+                    "prop": "crdtcd",
+                    "align":"center"
+                },  {
+                    "label": "产品名称",
+                    "prop": "prodna",
+                    "align":"center"
+                },  {
+                    "label": "渠道",
+                    "prop": "channel",
+                    "align":"center"
+                },  {
+                    "label": "授信金额(元)",
+                    "prop": "cdtamt",
+                    "align":"center"
+                },  {
+                "label": "申请状态",
+                "prop": "applst",
+                "align":"center",
+
+                "dict": {
+                  "dictType": "E_SXAPPLST",
+                  "dictKey": [
+                    "E_SXAPPLST"
+                  ],
+                  "format": "label"
+                }
+              },  {
+                    "label": "申请金额(元)",
+                    "prop": "applam",
+                    "align":"center"
+                },  {
+                    "label": "申请时间",
+                    "prop": "applDt",
+                    "align":"center"
+                },
+                {
+                 "label": "详情",
+                 "align":"center",
+                 "btns": [
+                   {
+                     "type": "look",
+                     "label": "详情",
+                     "toRequest": {
+                       "url": "/views/integrated/credit_tdapplication/credit_application_result.json",
+                       "method": "POST"
+                     },
+                     "props": {
+                       "width": "1200px",
+                       "title": "征信报告详情"
+                     }
+                   }
+                  ]
+                }
+              ]
+        }
+    }
+}

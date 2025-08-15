@@ -1,0 +1,161 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "initRequest": "${{params}}",
+            "scope": "formData",
+            "btns": [
+                {
+                    "type": "submit",
+                    "label": "提交",
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "IUMSCUTS0025",
+                            "trantp": "INSERT"
+                        }
+                    }
+                }
+            ],
+            "controls": [
+                {
+                    "custna": {
+                        "control": "lookup",
+                        "edit": true,
+                        "width": "10px",
+                        "label": "控制人名称",
+                        "keyField": {
+                            "infact": "custid",
+                            "custna": "custna",
+                            "corgcd": "corgcd",
+                            "cert_type": "certtp",
+                            "cert_no": "certno"
+                        },
+                        "toRequest": {
+                            "url": "/views/us/usManager/corporatePropertyRights/customer_lookup.json",
+                            "method": "get",
+                            "params": {
+                                "rpt_type": "${{params.rpt_type}}",
+                                "cust_id": "${{params.cust_id}}"
+                            }
+                        },
+                        "props": {
+                            "title": "选择实际控制人",
+                            "width": "75%"
+                        },
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请选择控制人信息!"
+                            }
+                        ]
+                    },
+                    "cert_type": {
+                        "control": "select",
+                        "label": "证件类型",
+                        "width": "10px",
+                        "disabled": true,
+                        "dict": {
+                            "dictType": "E_PUBLIC",
+                            "dictKey": [
+                                "E_PUBLIC"
+                            ],
+                            "format": "label"
+                        },
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请选择证件类型"
+                            }
+                        ]
+                    },
+                    "cert_no": {
+                        "control": "text",
+                        "label": "证件号码",
+                        "disabled": true,
+                        "width": "10px",
+                        "rules": [
+                            {
+                                "max": 50,
+                                "required": true,
+                                "message": "请输入证件号码"
+                            }
+                        ]
+                    },
+                    "lead_type": {
+                        "control": "select",
+                        "label": "控制人类型",
+                        "width": "10px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请选择控制人类型"
+                            }
+                        ],
+                        "dict": {
+                            "dictType": "E_LETYPE",
+                            "dictKey": [
+                                "E_LETYPE"
+                            ],
+                            "format": "label"
+                        },
+                        "showItem": {
+                            "2": [
+                                "corgcd"
+                            ],
+                            "9": [
+                                "corgcd"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "statss": {
+                        "control": "select",
+                        "label": "是否有效",
+                        "width": "10px",
+                        "dict": {
+                            "dictType": "E_YES_",
+                            "dictKey": [
+                                "E_YES_"
+                            ],
+                            "format": "label"
+                        },
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请选择是否有效"
+                            }
+                        ]
+                    },
+                    "corgcd": {
+                        "control": "text",
+                        "label": "组织机构代码",
+                        "disabled": true,
+                        "width": "10px",
+                        "rules": [
+                            {
+                                "max": 30,
+                                "pattern": "^[0-9]+$"
+                            }
+                        ]
+                    },
+                    "infact": {
+                        "control": "hidden",
+                        "label": "控制人编号",
+                        "width": "10px",
+                        "disabled": true
+                    },
+                    "custid": {
+                        "control": "hidden",
+                        "label": "客户编号",
+                        "value": "${{params.custid}}",
+                        "width": "10px",
+                        "disabled": true
+                    }
+                }
+            ]
+        }
+    }
+}

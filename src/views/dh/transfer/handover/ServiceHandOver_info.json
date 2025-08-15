@@ -1,0 +1,175 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "simwf_cd": {
+            "control": "text",
+            "label": "移交产品类型"
+          },
+          "transfer_id": {
+            "control": "text",
+            "label": "移交编码"
+          },
+          "trans_status": {
+            "control": "select",
+            "label": "移交状态",
+            "dict": {
+              "dictType": "E_ALTER_STATUS",
+              "dictKey": [
+                "E_ALTER_STATUS"
+              ]
+            },
+            "format": "label"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/dh/transfer/handover/ServiceHandOver_add.json"
+          },
+          "props": {
+            "width": "65%",
+            "title": "业务移交启动新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "qrhaov"
+        }
+      },
+      "thead": [
+        {
+          "type": "index",
+          "align": "center"
+        },
+        {
+          "label": "移交产品编号",
+          "prop": "transfer_id",
+          "align": "center"
+        },
+        {
+          "label": "移交产品类型",
+          "prop": "simwf_cd",
+          "align": "center"
+        },
+        {
+          "label": "最新修改时间",
+          "prop": "data_update_time",
+          "align": "center"
+        },
+           {
+          "label": "移交状态",
+          "prop": "trans_status",
+          "align": "center",
+          "dict": {
+            "dictType": "E_ALTER_STATUS",
+            "dictKey": [
+              "E_ALTER_STATUS"
+            ]
+          },
+          "format": "label"
+        },
+        {
+          "label": "启动操作员",
+          "prop": "start_usr",
+          "align": "center"
+        },
+        {
+          "label": "启动机构",
+          "prop": "start_org",
+          "align": "center"
+        },
+        {
+          "label": "当前处理人",
+          "prop": "handle_user",
+          "align": "center"
+        },        {
+          "label": "当前处理步骤",
+          "prop": "handle_node",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "align":"center",
+          "fixed": "right",
+          "width": 200,
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/dh/transfer/handover/ServiceHandOver_details.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "65%",
+                "title": "业务移交启动详情"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "show": {
+                "expression": "'${{current.trans_status}}' === '1'"
+              },
+              "toRequest": {
+                "url": "/views/dh/transfer/handover/ServiceHandOver_modify.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "65%",
+                "title": "业务移交明细"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "show": {
+                "expression": "'${{current.trans_status}}' === '1'"
+              },
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "dehaov"
+                }
+              }
+            },
+            {
+              "type": "edit",
+              "label":  "流程启动",
+              "show": {
+                "expression": "'${{current.trans_status}}' === '1'"
+              },
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "startAssetTransfer",
+                  "transfer_id": "${{current.transfer_id}}",
+                  "simwf_cd": "${{current.simwf_cd}}"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

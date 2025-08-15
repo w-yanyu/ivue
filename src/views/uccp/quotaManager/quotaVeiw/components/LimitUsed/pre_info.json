@@ -1,0 +1,176 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "prod_code": {
+                        "control": "text",
+                        "label": "产品编号",
+                        "span": "8"
+                    },
+                    "prod_group_code": {
+                        "control": "text",
+                        "label": "产品组编号",
+                        "span": "8"
+                    },
+                    "preccup_status": {
+                        "control": "select",
+                        "label": "占用状态",
+                        "span": "8",
+                        "dict": {
+                            "dictType": "UCCP_E_PRECCUP_STATUS",
+                            "dictKey": [
+                                "UCCP_E_PRECCUP_STATUS"
+                            ],
+                            "format": "label"
+                        }
+                    }
+                },
+                {}
+            ]
+          },
+        "toolbar": {},
+        "datagrid": {
+            "isInitSearch": true,
+            "scope": "searchTable",
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "post",
+                "params": {
+                    "cust_no": "${{params.cust_no}}",
+                    "cust_name" : "${{params.cust_name}}",
+                    "servicecode": "uccp3019",
+                    "appId":"uccpOnl"
+                }
+            },
+            "thead": [
+                {
+                    "label": "客户编号",
+                    "align": "center",
+                    "prop": "cust_no"
+                },
+                {
+                    "label": "客户名称",
+                    "align": "center",
+                    "prop": "cust_name"
+                },{
+                    "label": "产品编号",
+                    "prop": "prod_code",
+                    "align": "center"
+                },
+                {
+                    "label": "产品名称",
+                    "prop": "prod_name",
+                    "align": "center"
+                },
+                {
+                    "label": "产品组编号",
+                    "prop": "prod_group_code",
+                    "align": "center"
+                },
+                {
+                    "label": "产品组名称",
+                    "prop": "prod_group_name",
+                    "align": "center"
+                },
+                {
+                    "label": "产品额度编号",
+                    "align": "center",
+                    "prop": "prod_credit_seq"
+                },
+                {
+                    "label": "来源系统",
+                    "align": "center",
+                    "prop": "source_system",
+                    "dict": {
+                        "dictType": "UCCP_E_SOURCE_SYSTEM",
+                        "dictKey": [
+                            "UCCP_E_SOURCE_SYSTEM"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "合同/协议/业务编号",
+                    "align": "center",
+                    "prop": "contract_no"
+                },
+                {
+                    "label": "开始日期",
+                    "align": "center",
+                    "prop": "preccup_effective_date"
+                },
+                {
+                    "label": "到期日期",
+                    "align": "center",
+                    "prop": "preccup_expiry_date"
+                },
+                {
+                    "label": "预占用金额",
+                    "align": "center",
+                    "prop": "preccup_reality_limit",
+                    "format": {
+                        "thousand": ","
+                      }
+                },
+                {
+                    "label": "预占用敞口金额",
+                    "align": "center",
+                    "prop": "preccup_reality_exposure_limit",
+                    "format": {
+                        "thousand": ","
+                      }
+                },
+                {
+                    "label": "占用状态",
+                    "align": "center",
+                    "prop": "preccup_status",
+                    "dict": {
+                        "dictType": "UCCP_E_PRECCUP_STATUS",
+                        "dictKey": [
+                            "UCCP_E_PRECCUP_STATUS"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "业务币种",
+                    "align": "center",
+                    "prop": "base_ccy_code",
+                    "dict": {
+                        "dictType": "MS_CURRENCY",
+                        "dictKey": [
+                            "MS_CURRENCY"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 80,
+                    "align": "center",
+                    "btns": [
+                        {
+                            "type": "edit",
+                            "label": "详情",
+                            "toRequest": {
+                                "url": "/views/uccp/quotaManager/quotaVeiw/components/LimitUsed/preccup_info_detail.json",
+                                "method": "GET",
+                                "params": {
+                                    
+                                }
+                            },
+
+                            "props": {
+                                "width": "80%",
+                                "title": "预占用信息详情"
+                            }
+                        }
+                    ]
+                }   
+            ]
+        }
+    }
+}

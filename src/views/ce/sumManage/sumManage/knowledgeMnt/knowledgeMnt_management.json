@@ -1,0 +1,187 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "scope": "formData",
+            "controls": [
+                {
+                    "doc_name": {
+                      "control": "text",
+                      "label": "文档名称"
+                    },
+                    "doc_type": {
+                        "control": "select",
+                        "label": "文档类型",
+                        "dict": {
+                          "dictType": "CE_E_DOC_TYPE",
+                          "dictKey": [
+                            "CE_E_DOC_TYPE"
+                          ],
+                          "format": "value-label"
+                        }
+                    }
+                },
+                {
+                    "data_create_user": {
+                        "control": "text",
+                        "label": "上传人"
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+              {
+                "type": "add",
+                "icon": "el-icon-circle-plus",
+                "target": "dialog",
+                "label": "新增",
+                "toRequest": {
+                  "method": "GET",
+                  "url": "/views/ce/sumManage/sumManage/knowledgeMnt/knowledgeMnt_add.json"
+                },
+                "props": {
+                  "width": "50%",
+                  "title":  "上传文档"
+                }
+              }
+            ]
+        },
+        "datagrid": {
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ce6640"
+                }
+            },
+            "thead": [
+                {
+                    "type": "selection",
+                    "align":"center",
+                    "width": "55",
+                    "fixed": "left",
+                    "show": {
+                        "prop": "changkuan",
+                        "is": [
+                            "0"
+                        ]
+                    }
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width": "150px",
+                    "label": "文档编号",
+                    "prop": "doc_no"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width": "130px",
+                    "label": "文档名称",
+                    "prop": "doc_name"
+
+                },
+                {
+                  "type": "string",
+                  "align": "center",
+                  "label": "文档类型",
+                  "width": "130px",
+                  "prop": "doc_type",
+                  "dict": {
+                    "dictType": "CE_E_DOC_TYPE",
+                    "dictKey": [
+                      "CE_E_DOC_TYPE"
+                    ],
+                    "format": "value-label"
+                  }
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "下载次数",
+                    "prop": "dwld_count"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "是否有效",
+                    "prop": "is_valid",
+                    "dict": {
+                      "dictType": "MS_E_YESORNO",
+                      "dictKey": [
+                        "MS_E_YESORNO"
+                      ],
+                      "format": "value-label"
+                    }
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "上传人",
+                    "prop": "data_create_user"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width": "150px",
+                    "label": "上传时间",
+                    "prop": "data_create_time"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "最新下载人",
+                    "prop": "data_update_user"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "最新下载时间",
+                    "prop": "data_update_time"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "当前版本",
+                    "prop": "data_version"
+                },
+                {
+                  "label": "操作",
+                  "fixed": "right",
+                  "width": "130px",
+                  "align":"center",
+                  "btns": [
+                    {
+                      "type": "export",
+                      "label": "下载",
+                      "icon": "el-icon-download",
+                      "doRequest": {
+                        "url": "/SUMP/icmcall/downloadStream",
+                        "method": "POST",
+                        "params": {
+                          "servicecode": "ce6642",
+                          "filePath": "${{current.doc_path}}",
+                          "fileName": "${{current.doc_name}}"
+                        }
+                      }
+                    },
+                    {
+                      "type": "delete",
+                      "label": "删除",
+                      "doRequest": {
+                        "url": "/SUMP/call/RPCCall",
+                        "method": "POST",
+                        "params": {
+                          "servicecode": "ce6643"
+                        }
+                      }
+                    }
+                  ]
+                }
+            ]
+        }
+    }
+}

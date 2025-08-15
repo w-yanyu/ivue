@@ -1,0 +1,163 @@
+{
+  "module": "lr-tree-dynamic",
+  "layout": {
+    "tree": {
+      "title": "车辆范围及优惠信息",
+      "lazy": false,
+      "idField": "tree_id",
+      "pIdField": "tree_pid",
+      "labelField": "tree_title",
+      "isLeafField": "tree_is_left",
+      "nodeTypeField": "tree_type",
+      "expandId": [
+        "-1"
+      ],
+      "initRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pd0622",
+          "sale_prod_cd": "${{params.sale_prod_cd}}",
+          "prod_version": "${{params.prod_version}}"
+        }
+      },
+      "root": {
+        "rootNode": {
+          "name": "车辆信息",
+          "value": "-1"
+        },
+        "contextMenu": [
+          {
+            "type": "add",
+            "label": "添加车型",
+            "icon": "el-icon-circle-plus-outline",
+            "childNodeType": "carBrand",
+            "toRequest": {
+              "url": "/views/pd/prod/templatePage/prodCarSellRange/prod_relation_car.json",
+              "method": "get",
+              "params": {
+                "sale_prod_cd": "${{params.sale_prod_cd}}",
+                "prod_version": "${{params.prod_version}}"
+              }
+            },
+            "props": {
+              "width": "80%",
+              "title": "关联车辆信息"
+            },
+            "eventAfter": {
+              "callback": "renderTree"
+            }
+          }
+        ]
+      },
+      "nodeTypes": {
+        "carBrand": {
+          "children": [
+            "carBrand"
+          ],
+          "contextMenu": [
+            {
+              "type": "add",
+              "label": "添加车型",
+              "icon": "el-icon-circle-plus-outline",
+              "childNodeType": "carBrand",
+              "toRequest": {
+                "url": "/views/pd/prod/templatePage/prodCarSellRange/prod_relation_car.json",
+                "method": "get",
+                "params": {
+                  "sale_prod_cd": "${{params.sale_prod_cd}}",
+                  "prod_version": "${{params.prod_version}}"
+                }
+              },
+              "props": {
+                "width": "80%",
+                "title": "关联车辆信息"
+              },
+              "eventAfter": {
+                "callback": "renderTree"
+              }
+            }
+          ]
+        },
+        "carKind": {
+          "children": [
+            "carKind"
+          ],
+          "##toRequest": {
+            "url": "/views/pd/prod/templatePage/prodCarSellRange/car_sell_discount.json",
+            "params": {
+              "brand_no": "${{current.tree_id}}",
+              "method": "post"
+            }
+          },
+          "eventAfter": {
+            "callback": "renderTree"
+          },
+          "contextMenu": [
+            {
+              "type": "add",
+              "label": "添加车型",
+              "icon": "el-icon-circle-plus-outline",
+              "childNodeType": "carBrand",
+              "##toRequest": {
+                "url": "/views/pd/prod/templatePage/prodCarSellRange/prod_relation_car.json",
+                "method": "get",
+                "params": {
+                  "sale_prod_cd": "${{params.sale_prod_cd}}",
+                  "prod_version": "${{params.prod_version}}"
+                }
+              },
+              "props": {
+                "width": "80%",
+                "title": "关联车辆信息"
+              },
+              "eventAfter": {
+                "callback": "renderTree"
+              }
+            }
+          ]
+        },
+        "carModel": {
+          "children": [
+            "carModel"
+          ],
+          "toRequest": {
+            "url": "/views/pd/prod/templatePage/prodCarSellRange/car_sell_discount.json",
+            "method": "post",
+            "params": {
+              "tree_id": "${{current.tree_id}}",
+              "sale_prod_cd": "${{params.sale_prod_cd}}",
+              "prod_version": "${{params.prod_version}}"
+            }
+          },
+          "eventAfter": {
+            "callback": "renderTree"
+          },
+          "contextMenu": [
+            {
+              "type": "add",
+              "label": "添加车型",
+              "icon": "el-icon-circle-plus-outline",
+              "childNodeType": "carBrand",
+              "toRequest": {
+                "url": "/views/pd/prod/templatePage/prodCarSellRange/prod_relation_car.json",
+                "method": "get",
+                "params": {
+                  "sale_prod_cd": "${{params.sale_prod_cd}}",
+                  "prod_version": "${{params.prod_version}}"
+                }
+              },
+              "props": {
+                "width": "80%",
+                "title": "关联车辆信息"
+              },
+              "eventAfter": {
+                "callback": "renderTree"
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,27 @@
+import JsEncrypt from "jsencrypt";
+//设置公钥
+const PUBLIC_KEY =""
+// 设置私钥
+const PRIVATE_KEY =
+  "MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDLex6PmWzHGD5h+N5pDKZ1fmr/qaEmr8gpIvuMmpg+sMKznr2CNEqOhcaXBoWmjtH6eGRRm2Xxwso3tYhxyHAykO6avkfk6KGd7yWCehTObNRvRl5AXkUkSLBnpwOgicer1cRuFOQ8HyyMyZM96eUEEYpY6BUF4Z+DcZZl/6lNOBjc36tDdqdUm+48mQt3CcOFaJeo9alO2JKpW+pDjPQG1uyccaYhRANiReGeuusSXHQQCK1zGIc4gB0qgJttbBweo7YTxuyJpBzQXJEI8II2xnQLfsMSZmKxPvNeHCSmhfCDIqZ8pQYFUEuWldCmR+Q1doqULNM9AeW4kqFGibv/AgMBAAECggEAAQ4+dlhBbDb/+9oirUDXjDx/qZvjriOzUiNQUsZqi8i2+d+U9Bv5Vwvyn83024xaIoaFXrcDrGFqUyep8Y0sp9aApmTeUp2yWPNoqmifuwJth7ZBvuu+SBXodGE1b5vHYWjWgAuzs2wl+wUAso2IFqFQqm1pzoIBJdltAlJ1OmVRvQhu++M9Kxx9zFFYNPIet8QZXbqZDuVPYdtlEQhGqfQKsO/4Vtq4DivZjtPoLQvAlcZ1jyrDLw4bKe1AkkTOz1ZCuc0rDOsaRz0JPzVfh36RFBgKFX8MpjmiLtvRxeyd3yB17DExRgYhd5EJqscvrWdg6mPHa1cq02T7+E50AQKBgQDs49TduoHdJHQzPuWbYOVq7/6SdKhpHlxJX07oZEUfzzULzd+ja6LnrU7mtkhO7egsovaJ+y46wxN/g/FK0cGqhvYQYAaXSi4BQC0hAS00+xA9PN896zY3yAL7JUD7ag3fXqi96qU6Upz5D/2PV33oDKs5HAq0M+M39mym1JfnfwKBgQDb5VYVk1RfAbqfRqD45zarfjX3x+fDlRox0oBDzzX8tBbaC9BL4IDMuw9HMqOMXbtVVbJDX5Qy/v6FiCECqa+nsfpmaIl61G2tYINmz5QQWEBS6+YppNQy/JkG6QrfpBTVGa9UgJhKyDs8KlsXSB96NY1WKU3vgqeWv0eWFcRrgQKBgQClwESRYI69TWSA9uFxdrsPuB1IHJg59SRdsnJj6MT1HObg+4wfrJCvynQKukCd+Zkaomwe38HZG+Xos0mCMIJx7zz8+DOkaCMIfP8WuNwI1iLmtlD94jZtkWWElOyC/hH22ST4vdYemO981dN1GKLgWvzzWMukiynRXntnwBkJwQKBgDhpnG0Kj/GTsvnbl75jKr5SMawwh7/AR6kSdL9wsEv1M4uazkQ5AzICp0e/sP94qG+a/ZGVOqLekhNVugpB2ANwgGm3VdXCG6UIBo3goP6UdWQQisqSM7Ik5WlFbfmz0XheD4HhP7Cnr7KetyHA6fpjNLAvBoR0g2QEDGxvhyWBAoGBAMliNBBILad1+vKASO8pXTIdeB+LFTz1FnhHZ46A94i3OpBqtCok75QJ3hKzkJdv06EJieeJQNj9chH3cmVWvmg3OdGPX5/8UVIgQPAbtngSpZxlQecP8YvdaFYj5hRbqQnLn7n7mZrGRXk30otf31o1e6CR7u3B8ukH9U/pBxZS";
+
+
+
+// 加密
+ function encrypt(txt) {
+  const encryptor = new JSEncrypt()
+  encryptor.setPublicKey(PUBLIC_KEY) // 设置公钥
+  return encryptor.encrypt(txt) // 对数据进行加密
+}
+
+// 解密
+ function decrypt(txt) {
+  const encryptor = new JSEncrypt()
+  encryptor.setPrivateKey(PRIVATE_KEY) // 设置私钥
+  return encryptor.decrypt(txt) // 对数据进行解密
+}
+
+export default{
+  encrypt,
+  decrypt
+}

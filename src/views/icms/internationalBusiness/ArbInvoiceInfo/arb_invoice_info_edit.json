@@ -1,0 +1,118 @@
+{
+    "module": "v-inputDataForm-btn",
+    "layout": {
+      "form": {
+        "scope": "formData",
+          "initRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                  "servicecode": "ar1324",
+                  "apply_no":"${{current.apply_no}}",
+                  "invoice_no":"${{current.invoice_no}}"
+              }
+          },
+        "btns": [
+          {
+            "type": "submit",
+            "label": "提交",
+            "icon": "",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ar1322"
+              }
+            }
+          }
+        ],
+        "controls": [
+          {
+            
+            "apply_no": {
+              "control": "text",
+              "disabled":true,
+              "label": "申请号",
+              "width": "200px",
+              "span": 7
+            },"loan_no": {
+              "control": "text",
+              "disabled":true,
+              "label": "借据号",
+              "width": "200px",
+              "span": 7
+            },"invoice_no": {
+              "control": "text",
+              "label": "发票号码",
+              "disabled":true,
+              "width": "200px",
+              "span": 7
+            },"invoice_amt": {
+              "control": "currency",
+              "label": "发票金额",
+              "width": "200px",
+              "span": 7,
+              "format":{
+                "thousand":","
+              }
+            },"exchange_rate": {
+              "control": "currency",
+              "label": "汇率",
+              "width": "200px",
+              "span": 7
+            },"invoice_base_amt": {
+              "control": "currency",
+              "label": "发票金额（折基准币种）",
+              "compute": "${{formData.invoice_amt}}*${{formData.exchange_rate}}",
+              "width": "200px",
+              "span": 7,
+              "format":{
+                "thousand":","
+              }
+            },"ccy_code": {
+              "control": "select",
+              "label": "发票币种",
+              "width": "200px",
+              "dict": 
+                  {
+                    "dictType":"MS_CURRENCY",
+                    "dictKey": "MS_CURRENCY",
+                    "format":"label"
+                  },
+              "span": 7
+            },"base_ccy": {
+              "control": "select",
+              "label": "基准币种",
+              "disabled":true,
+              "width": "200px",
+              "dict": 
+                  {
+                    "dictType":"MS_CURRENCY",
+                    "dictKey": "MS_CURRENCY",
+                    "format":"label"
+                  },
+              "span": 7
+            },"invoice_date": {
+              "control": "dateTimePicker",
+              "editable": false,
+              "format": "yyyyMMdd",
+              "label": "开票日期",
+              "width": "200px",
+              "span": 7
+            },"buyer": {
+              "control": "text",
+              "label": "买方(购买方)",
+              "width": "200px",
+              "span": 7
+            },"seller": {
+              "control": "text",
+              "label": "卖方(销售方)",
+              "width": "200px",
+              "span": 7
+            }
+            
+          }
+        ]
+      }
+    }
+  }

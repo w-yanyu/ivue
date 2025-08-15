@@ -1,0 +1,128 @@
+{
+  "module": "v-inputDataForm-btn",
+  "layout": {
+    "form": {
+      "btns": [],
+      "scope": "ruleTypeValueSet",
+      "controls": [
+        {
+          "column_operator": {
+            "span": 18,
+            "control": "select",
+            "label": "列连接符",
+            "value": "${{params.column_operator}}",
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择！"
+              }
+            ],
+            "dict": {
+              "format": "label",
+              "dictKey": ["CT_COLUMN_OPERATOR"],
+              "dictType": "CT_COLUMN_OPERATOR"
+            },
+            "showItem": {
+              "isNull": [
+                ""
+              ],
+              "isNotNull": [
+                ""
+              ],
+              "$default": [
+                "dict_type",
+                "rule_value",
+                "rule_value_name"
+              ]
+            }
+          }
+        },
+        {
+          "dict_type": {
+            "span": 18,
+            "label": "数据字典",
+            "value": "${{params.dict_type}}",
+            "control": "lookup",
+            "multiple": false,
+            "toRequest": {
+              "url": "@ruleDictypeTable",
+              "method": "post",
+              "params": {
+                "dict_type": "${{ruleTypeValueSet.dict_type}}"
+              }
+            },
+            "keyField": {
+              "dict_type": "dict_type"
+            },
+            "props": {
+              "title": "数据字典选择带回",
+              "width": "65%",
+              "height": "450"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择！"
+              }
+            ],
+            "events": {
+              "firstInit": false,
+              "condition": {
+                "$default": {
+                  "control": {
+                    "rule_value": {
+                      "value": ""
+                    },
+                    "rule_value_name": {
+                      "value": ""
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "rule_value": {
+            "span": 18,
+            "control": "hidden",
+            "value": "${{params.rule_value}}"
+          }
+        },
+        {
+          "rule_value_name": {
+            "span": 18,
+            "control": "lookup",
+            "value": "${{params.rule_value_name}}",
+            "label": "规则值",
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择！"
+              }
+            ],
+            "multiple": true,
+            "valueDataType": "string",
+            "toRequest": {
+              "url": "@ruleDictvalueTable",
+              "method": "get",
+              "params": {
+                "dict_type": "${{ruleTypeValueSet.dict_type}}",
+                "rule_value": "${{ruleTypeValueSet.rule_value}}"
+              }
+            },
+            "keyField": {
+              "rule_value": "dict_id",
+              "rule_value_name": "dict_name"
+            },
+            "props": {
+              "title": "数据字典值选择带回",
+              "width": "65%",
+              "height": "450"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

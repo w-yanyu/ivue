@@ -1,0 +1,147 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "workflow_id": {
+                        "control": "text",
+                        "label": "工作流ID",
+                        "rules": [
+                            {
+                                "max": 32,
+                                "message": "长度不能超过32个字符"
+                            }
+                        ]
+                    },
+                    "workflow_desc": {
+                        "control": "text",
+                        "label": "工作流描述",
+                        "rules": [
+                            {
+                                "max": 100,
+                                "message": "长度不能超过100个字符"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "amount_exchange_ind": {
+                        "control": "select",
+                        "label": "自动折算标志",
+                        "dict": {
+                            "dictType": "MS_E_YESORNO",
+                            "dictKey": [
+                                "MS_E_YESORNO"
+                            ],
+                            "format": "label"
+                        }
+                    },
+                    "ccy_code": {
+                        "control": "select",
+                        "label": "货币代码",
+                        "dict": {
+                            "dictType": "MS_CURRENCY",
+                            "dictKey": [
+                                "MS_CURRENCY"
+                            ],
+                            "format": "label"
+                        }
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "target": "dialog",
+                    "label": "新增",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/ismt/ct/ParameterManagement/WorkflowDefinitionMaintenance/WorkflowDefinitionAdd.json"
+                    },
+                    "props": {
+                        "title": "工作流定义新增"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ct2093"
+                }
+            },
+            "thead": [
+                {
+                    "type": "index"
+                },
+                {
+                    "label": "工作流ID",
+                    "prop": "workflow_id"
+                },
+                {
+                    "label": "工作流描述",
+                    "prop": "workflow_desc"
+                },
+                {
+                    "label": "自动折算标志",
+                    "prop": "amount_exchange_ind",
+                    "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                            "MS_E_YESORNO"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "货币代码",
+                    "prop": "ccy_code",
+                    "dict": {
+                        "dictType": "MS_CURRENCY",
+                        "dictKey": [
+                            "MS_CURRENCY"
+                        ],  
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "操作",
+                    "width": 150,
+                    "fixed": "right",
+                    "align": "center",
+                    "btns": [
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/ismt/ct/ParameterManagement/WorkflowDefinitionMaintenance/WorkflowDefinitionUpdate.json",
+                                "method": "GET"
+                            },
+                            "props": {
+                                "title": "工作流定义维护"
+                            }
+                        },
+                        {
+                            "type": "look",
+                            "label": "删除",
+                            "toRequest": {
+                                "url": "/views/ismt/ct/ParameterManagement/WorkflowDefinitionMaintenance/workflow_definition_delete.json",
+                                "method": "post"
+                            },
+                            "props": {
+                                "title": "工作流定义信息删除"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

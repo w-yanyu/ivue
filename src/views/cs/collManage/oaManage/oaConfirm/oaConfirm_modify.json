@@ -1,0 +1,59 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "btns": [
+                {
+                    "type": "submit",
+                    "icon": "el-icon-check",
+                    "label": "确认",
+                    "doRequest": {
+                        "method": "POST",
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "params": {
+                            "servicecode":"cb0220",
+                            "case_id":"${{params.selectedData}}"
+                        }
+                    }
+                },
+                {
+                    "type": "close",
+                    "label": "取消"
+                }
+            ],
+            "controls": [
+                {
+                    "oa_org_id": {
+                        "hidden": true,
+                        "label": "委外公司代码",
+                        "disabled": false,
+                        "width": "130px",
+                        "control": "remoteSelect",
+                        "labelField": "outsourcing_org_name",
+                        "valueField": "outsourcing_org_id",
+                        "doRequest": {
+                          "url": "/SUMP/icmcall/icmRPCCall",
+                          "method": "POST",
+                          "params": {
+                            "servicecode": "cb0052",
+                            "org_id": "$g{{user_info.org_id}}"
+                          }
+                        },
+                        "events": {
+                          "emit": [
+                            "operation"
+                          ]
+                        },
+                        "format": "value-label",
+                        "rules": [
+                            {
+                                "required":true,
+                                "message":"请选择"
+                            }
+                        ]
+                      }                                         
+                }
+            ]
+        }
+    }
+}

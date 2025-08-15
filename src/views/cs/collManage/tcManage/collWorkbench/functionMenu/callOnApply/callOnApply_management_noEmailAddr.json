@@ -1,0 +1,122 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "toolbar": {
+      "btns": [
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "cb0124",
+          "case_id":"${{params.case_id}}",
+          "org_id": "${{params.org_id}}"
+        }
+      },
+      "pagination": {
+        "pageSizes": [
+          10,
+          15,
+          20,
+          50,
+          100
+        ],
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "label": "联系人姓名",
+          "prop": "relation_cust_name",
+          "align": "center"
+        },
+        {
+          "label": "客户关系",
+          "prop": "relationship",
+          "align": "center",
+          "dict": {
+            "dictType": "CS_E_RELATIONSHIP",
+            "dictKey": [
+              "CS_E_RELATIONSHIP"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "label": "地址类型",
+          "prop": "address_type",
+          "align": "center",
+          "dict": {
+            "dictType": "CS_E_ADDRESS_TYPE",
+            "dictKey": [
+              "CS_E_ADDRESS_TYPE"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "label":"地址",
+          "prop": "address",
+          "align": "center"
+        },
+        {
+          "label":  "申请类型",
+          "prop": "register_type",
+          "align": "center",
+          "dict": {
+            "dictType": "CS_E_REGISTER_TYPE",
+            "dictKey": [
+              "CS_E_REGISTER_TYPE"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "label": "是否有效",
+          "prop": "is_valid",
+          "align": "center",
+          "dict": {
+            "dictType": "CS_E_YESORNO",
+            "dictKey": [
+              "CS_E_YESORNO"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "label":  "备注",
+          "prop": "remark",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "width": "100px",
+          "btns": [
+            {
+              "type": "custom",
+              "label": "申请",
+              "disabled": "'${{current.address}}' === ''",
+              "toRequest": {
+                "url": "/views/cs/collManage/tcManage/collWorkbench/functionMenu/callOnApply/callOnApply_management_apply.json",
+                "method": "POST",
+                "params": {
+                  "case_id":"${{params.case_id}}",
+                  "address": "${{current.address}}",
+                  "interview_name": "${{current.relation_cust_name}}",
+                  "relationship": "${{current.relationship}}"
+                }
+              },
+              "props": {
+                "width": "80%",
+                "title": "外访申请"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,271 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "initRequest": "${{params}}",
+      "btns": [
+        {
+          "type": "submit",
+          "label": "保存",
+          "icon": "",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "ar0784",
+              "apply_no": "${{params.apply_no}}"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "prod_name": {
+            "label": "业务产品",
+            "control": "lookup",
+            "disabled": true,
+            "width": "130px",
+            "span": 7,
+            "edit": true,
+            "keyField": {
+              "loan_prod_cd": "sale_prod_cd",
+              "prod_name": "sale_prod_name"
+            },
+            "toRequest": {
+              "url": "/views/icms/guaranteeManager/creditApplicationInfoManager/product_lookup_lists.json",
+              "method": "post",
+              "params": {
+                "appl_id": "${{params.apply_no}}",
+                "credit_prod_cd": "${{params.credit_prod_cd}}"
+              }
+            },
+            "props": {
+              "width": "80%",
+              "title": "选择业务产品"
+            },
+            "format": "label",
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择业务产品"
+              }
+            ]
+          },
+          "loan_prod_cd": {
+            "label": "产品编号",
+            "control": "hidden",
+            "width": "130px",
+            "span": 7,
+            "format": "label"
+          },
+          "base_ccy": {
+            "control": "select",
+            "label": "基准币种",
+            "width": "130px",
+            "disabled": true,
+ "selectFirstValue": "true",
+            "span": 7,
+            "dict": {
+              "dictType": "MS_CURRENCY",
+              "dictKey": [
+                "MS_CURRENCY"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择授信币种"
+              }
+            ] 
+          },
+          "ccy_code": {
+            "control": "select",
+            "label": "授信币种",
+            "width": "130px",
+            
+            "span": 7,
+            "dict": {
+              "dictType": "MS_CURRENCY",
+              "dictKey": [
+                "MS_CURRENCY"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择授信币种"
+              }
+            ] 
+          },
+          "exchange_rate": {
+            "control": "currency",
+            "label": "汇率",
+            "width": "130px",
+            "value": 1,
+            "disabled": true,
+            "span": 7,
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择汇率"
+              }
+            ]
+          },
+          "cycling_flag": {
+            "control": "select",
+            "label": "是否可循环使用金额",
+            "disabled": true,
+            "width": "130px",
+            "span": 14,
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择是否可循环使用金额"
+              }
+            ]
+          },
+          "old_credit_term": {
+            "control": "text",
+            "label": "原业务期限(月)",
+            "disabled": true,
+            "width": "130px",
+            "span": 7
+          },
+          "credit_term": {
+            "control": "text",
+            "label": "调整后业务期限(月)",
+            "width": "130px",
+            "span": 14,
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择业务期限(月)"
+              }
+            ]
+          },
+          "old_busi_assign_amt": {
+            "control": "currency",
+            "label": "原业务授信分配金额",
+            "disabled": true,
+            "width": "130px",
+            "span": 7,
+
+            "align": "left",
+            "format":{
+              "thousand": ","
+            }
+          },
+          "busi_assign_amt": {
+            "control": "currency",
+            "label": "调整后业务授信分配金额",
+            "width": "130px",
+            "span": 7,
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择业务授信分配金额"
+              }
+            ],
+            "align": "left",
+            "format":{
+              "thousand": ","
+            }
+          },
+          "base_busi_assign_amt": {
+            "control": "currency",
+            "label": "业务授信分配金额(折基准币种)",
+            "width": "130px",
+            "span": 7,
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择业务授信分配金额(折基准币种)"
+              }
+            ],
+            "compute": "${{formData.busi_assign_amt}}*${{formData.exchange_rate}}",
+            "align": "left",
+            "format":{
+              "thousand": ","
+            }
+          },
+          "cl_allocation_mode": {
+            "control": "select",
+            "label": "分配方式",
+            "width": "130px",
+            "span": 7,
+            "disabled": true,
+            "dict": {
+              "dictType": "AR_E_CLALLOCATION_MODE",
+              "dictKey": [
+                "AR_E_CLALLOCATION_MODE"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": false,
+                "message": "请输入业务金额分配方式"
+              }
+            ]
+          },
+          "old_data_flag":{
+            "control": "select",
+            "disabled": true,
+            "label": "调整前是否存在本产品",
+            "width": "130px",
+            "span": 7,
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            },
+            "showItem": {
+              "1": [
+                "is_used"
+              ]}
+          },
+          "is_used": {
+            "control": "select",
+            "label": "是否终止该产品",
+            "width": "130px",
+            "span": 7,
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            }
+          },
+          "remark": {
+            "label": "备注",
+            "control": "textarea",
+            "width": "130px",
+            "span": 21,
+            "autosize": {
+              "minRows": 4
+            },
+            "rules": [
+              {
+                "max": "200",
+                "message": "长度不能超过200个字符"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

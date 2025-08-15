@@ -1,0 +1,174 @@
+{
+  "module": "lr_tree_dynamic",
+  "layout": {
+    "tree": {
+      "scope": "treeTemplateParams",
+      "title": "产品目录",
+      "width": "300px",
+      "lazy": true,
+      "idField": "node_cd",
+      "nodeType": "node_type",
+      "pIdField": "parent_node_cd",
+      "labelField": "node_name",
+      "isLeafField": "is_leaf",
+      "disabledField": "disabled",
+      "rootTypes": [
+        "1"
+      ],
+      "search": {
+        "enabled": "true",
+        "displayType": "list",
+        "nameFields": [
+          "node_name"
+        ]
+      },
+      "root": {
+        "rootNode": {
+          "name": "产品",
+          "value": "0",
+          "node_cd": "0",
+          "icon": "xitongguanli"
+        },
+        "contextMenu": [
+          {
+            "type": "add",
+            "label": "新增",
+            "icon": "el-icon-circle-plus-outline",
+            "toRequest": {
+              "url": "/views/pd/prodContents/prodContents_add.json",
+              "method": "get",
+              "params": {
+                "node_type": "1",
+                "group_num": "0001"
+              }
+            },
+            "props": {
+              "width": "50%",
+              "title": "产品目录新增"
+            }
+          },
+          {
+            "type": "custom",
+            "label": "刷新",
+            "icon": "el-icon-circle-plus-outline",
+            "doRequest": {
+              "url": "/pte/json/layout/success.json",
+              "method": "post"
+            },
+            "eventAfter": {
+              "callback": "renderTree"
+            }
+          }
+        ]
+      },
+      "nodeTypes": {
+        "1": {
+          "icon": "el-icon-news",
+          "children": [
+            "1",
+            "2"
+          ],
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "post",
+            "params": {
+              "servicecode": "pd0338",
+              "node_cd": "${{current.node_cd}}",
+              "group_num": "0001",
+              "node_name": ""
+            }
+          },
+          "toRequest": {
+            "url": "@springboard",
+            "method": "get",
+            "params": {
+              "tranType": "detail",
+              "template_id": "${{current.template_id}}",
+              "template_version": "${{current.template_version}}",
+              "sale_prod_cd": "${{current.sale_prod_cd}}",
+              "sale_prod_name": "${{current.sale_prod_name}}",
+              "prod_type": "${{current.prod_type}}",
+              "prod_version": "${{current.prod_version}}",
+              "busi_seq": "${{current.busi_seq}}"
+            }
+          },
+          "contextMenu": [
+            {
+              "type": "custom",
+              "label": "刷新",
+              "icon": "el-icon-circle-plus-outline",
+              "doRequest": {
+                "url": "/pte/json/layout/success.json",
+                "method": "post"
+              },
+              "eventAfter": {
+                "callback": "renderTree"
+              },
+              "show": {
+                "expression": "'${{current.node_type}}' == '2'"
+              }
+            },
+            {
+              "type": "add",
+              "label": "新增",
+              "icon": "el-icon-circle-plus-outline",
+              "toRequest": {
+                "url": "/views/pd/prodContents/prodContents_add.json",
+                "method": "get",
+                "params": {
+                }
+              },
+              "show": {
+                "expression": "'${{current.node_type}}' == '1'"
+              },
+              "props": {
+                "width": "50%",
+                "title": "标题"
+              }
+            },
+            {
+              "type": "add",
+              "label": "维护",
+              "icon": "el-icon-circle-plus-outline",
+              "toRequest": {
+                "url": "/views/pd/prodContents/prodContents_modify.json",
+                "method": "get",
+                "params": {
+                }
+              },
+              "show": {
+                "expression": "'${{current.node_type}}' == '1'"
+              },
+              "props": {
+                "width": "50%",
+                "title": "目录维护"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "icon": "el-icon-remove-outline",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "pd0339",
+                  "group_num": "0001"
+                }
+              },
+              "show": {
+                "expression": "'${{current.node_type}}' == '1'"
+              },
+              "confirm": {
+                "title": "提示信息",
+                "msg": "确定要删除吗？",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,69 @@
+{
+    "module": "v-search-btn-datagrid",
+    "layout": {
+      "form": {
+        "btns":[],
+        "controls": [
+          {
+            "group_code": {
+              "label": "规则组代码",
+              "control": "text",
+              "disabled":true,
+              "value":"${{params.group_code}}",
+              "span": 12
+            },
+            "group_name": {
+              "label": "规则组名称",
+              "control": "text",
+              "value": "${{params.group_name}}",
+              "disabled":true,
+              "span": 12
+            }
+          }
+        ]
+      },
+      "datagrid": {
+        "isInitSearch": true,
+        "doRequest": {
+          "url": "/SUMP/icmcall/icmRPCCall",
+          "method": "post",
+          "params":{
+            "trxn_seq": "${{params.trxn_seq}}",
+            "group_code": "${{params.group_code}}",
+            "hit_flag": "notHit",
+            "servicecode": "deci060111",
+            "isList": true
+          }
+        },
+        "pagination": {
+          "hideOnSinglePage":false,
+          "show": true,
+          "pageSizes": [
+            10,
+            15,
+            20
+          ],
+          "pageSize": 10
+        },
+        "thead": [
+        
+          {
+            "label": "规则代码",
+            "prop": "rule_code"
+          },
+          {
+            "label": "规则名称",
+            "prop": "rule_name"
+          }, 
+          {
+            "label": "输入值",
+            "prop": "input_values"
+          },
+          {
+            "label": "交易时间",
+            "prop": "data_create_time"
+          }
+        ]
+      }
+    }
+  }

@@ -1,0 +1,63 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "scope": "strForm",
+      "btns": [{
+        "type": "submit",
+        "label": "提交",
+        "icon": "",
+        "doRequest": {
+          "url": "/SUMP/call/RPCCall",
+          "method": "POST",
+          "params": {
+            "servicecode": "ct2178"
+          }
+        }
+      }],
+      "controls": [
+        {
+          "branch_id": {
+            "control": "text",
+            "label": "机构号",
+            "width": "130px",
+            "value": "${{params.branch_id}}",
+            "disabled": true
+          },
+          "brch_relation_code": {
+            "control": "hidden",
+            "label": "机构关系",
+            "width": "130px",
+            "value": "${{params.brch_relation_code}}",
+            "disabled": false
+          },
+          "role_id": {
+            "control": "lookup",
+            "width": "130px",
+            "multiple": true,
+            "edit": true,
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入角色ID"
+              }
+            ],
+            "label": "角色ID",
+            "keyField": {
+              "role_id": "role_id"
+            },
+            "toRequest": {
+              "url": "/views/ismt/ct/branch/branchRole/role_lookup.json",
+              "method": "post"
+            },
+            "props": {
+              "title": "关联角色ID查询"
+            },
+            "format": "label"
+          }
+        }
+
+      ]
+    }
+  }
+}

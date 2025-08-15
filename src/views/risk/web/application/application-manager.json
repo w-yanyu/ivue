@@ -1,0 +1,127 @@
+{
+  "module": "v-search-btn-datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "appCode": {
+            "span": 8,
+            "control": "text",
+            "label": "应用编码",
+            "placeholder": "应用编码"
+          },
+          "appName": {
+            "span": 8,
+            "control": "text",
+            "label": "应用名称",
+            "placeholder": "应用名称"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "navTab",
+          "label": "新增",
+          "toRequest": {
+            "url": "/views/risk/web/application/application-add.json",
+            "method": "GET"
+          },
+          "props": {
+            "width": "65%",
+            "title": "新增"
+          }
+        },
+        {
+          "type": "delete",
+          "label": "删除",
+          "icon": "el-icon-close",
+          "doRequest": {
+            "url": "/WEB/application/batch",
+            "method": "DELETE"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "doRequest": {
+        "url": "/WEB/application/page",
+        "method": "GET"
+      },
+      "thead": [
+        {
+          "type": "selection",
+          "width": "55"
+        },
+        {
+          "type": "index",
+          "label": "序号"
+        },
+        {
+          "label": "应用编码",
+          "prop": "appCode"
+        },
+        {
+          "label": "应用名称",
+          "prop": "appName"
+        },
+        {
+          "label": "是否公共应用",
+          "prop": "isPublic",
+          "dict": {
+            "dictType": "WEB",
+            "dictKey": [
+              "WEB",
+              "boolean"
+            ],
+            "labelField": "dictName",
+            "valueField": "dictCode",
+            "doRequest": {
+              "url": "/WEB/dict/common",
+              "method": "post"
+            }
+          }
+        },
+        {
+          "label": "操作",
+          "width": "120",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "编辑",
+              "toRequest": {
+                "url": "/views/risk/web/application/application-update.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "65%",
+                "title": "编辑"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/WEB/application",
+                "method": "DELETE"
+              }
+            }
+          ],
+          "type": "btns"
+        }
+      ],
+      "pagination": {
+        "pageSizes": [
+          10,
+          15,
+          20,
+          50,
+          100
+        ],
+        "pageSize": 10
+      }
+    }
+  }
+}

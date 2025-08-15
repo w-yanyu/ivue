@@ -1,0 +1,123 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [{
+                "colt_catg": {
+                    "label": "抵质押品大类",
+                    "control": "text"
+                },
+                "colt_catg_desc": {
+                    "label": "抵质押品大类说明",
+                    "control": "text"
+                }
+            }]
+        },
+        "toolbar": {
+            "btns": [{
+                "type": "add",
+                "label": "新增",
+                "toRequest": {
+                    "url": "/views/co/colsProductManager/coltCatManager/coltCat_add.json",
+                    "method": "get",
+                    "params": {}
+                },
+                "props": {
+                    "title": "抵质押品大类新增",
+                    "width": "80%"
+                }
+            }]
+        },
+        "datagrid": {
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "co1002",
+                    "params": {}
+                }
+            },
+            "pagination": {
+                "pageSizes": [10, 15, 20],
+                "pageSize": 10
+            },
+            "thead": [{
+                    "type": "index",
+                    "align": "center"
+                },{
+                "label": "抵质押品大类",
+                "prop": "colt_catg",
+                "align": "center",
+                "type": "leaf"
+              },
+                {
+                    "label": "抵质押品大类说明",
+                    "prop": "colt_catg_desc",
+                    "align": "center",
+                    "type": "leaf"
+                },
+                {
+                    "label": "折算系数(%)",
+                    "prop": "colt_coeff",
+                    "align": "center",
+                    "type": "leaf"
+                },
+                {
+                    "label": "是否低风险",
+                    "prop": "is_low_risk",
+                    "align": "center",
+                    "type": "leaf",
+                    "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                            "MS_E_YESORNO"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "备注",
+                    "prop": "remark",
+                    "align": "center",
+                    "type": "leaf"
+                },
+                {
+                    "label": "操作",
+                    "width": "150px",
+                    "align": "center",
+                    "fixed": "right",
+                    "btns": [{
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/co/colsProductManager/coltCatManager/coltCat_update.json",
+                                "method": "get"
+
+                            },
+                            "props": {
+                                "title": "抵质押品大类维护",
+                                "width": "80%"
+                            }
+                        },
+                        {
+                            "type": "delete",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "DELETE",
+                                "params": {
+                                    "servicecode": "co1019",
+                                    "tran_type": "3",
+                                    "detail": {
+                                        "colt_catg": "${{current.colt_catg}}"
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,132 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+
+    "toolbar": {
+      "btns": []
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "co2051",
+          "colt_no": "${{params.colt_no}}"
+        }
+      },
+      "pagination": {
+        "pageSizes": [
+          10,
+          15,
+          20
+        ],
+        "show": true,
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "type": "index",
+          "label": "序号"
+        },
+        {
+          "label": "抵质押品编号",
+          "prop": "colt_no",
+          "align": "center"
+        },
+        {
+          "label": "资产清单序号",
+          "prop": "asset_list_id",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "资产类型",
+          "align": "center",
+          "prop": "colt_type",
+          "dict": {
+            "dictKey": [
+              "E_COLT_TYPE"
+            ],
+            "format": "[value]label",
+            "valueField": "colt_type",
+            "labelField": "colt_name",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "post",
+              "params": {
+                "servicecode": "co1012"
+              }
+            }
+          }
+        },
+        {
+          "type": "string",
+          "label": "抵质押品产品",
+          "prop": "colt_prod_cd",
+          "align": "center",
+          "dict": {
+            "dictKey": [
+              "E_COLT_PROD_CD"
+            ],
+            "format": "[value]label",
+            "valueField": "colt_prod_cd",
+            "labelField": "colt_prod_name",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "co1013"
+              }
+            }
+          }
+        },
+        {
+          "label": "押品数量",
+          "prop": "count",
+          "align": "center"
+        },
+        {
+          "label": "存放地址",
+          "prop": "store_addr",
+          "align": "center"
+        },
+        {
+          "label": "评估币种",
+          "prop": "eval_cyy",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_CURRENCY",
+            "dictKey": [
+              "MS_CURRENCY"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "btns": [
+            {
+              "type": "custom",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/co/colsAppraisement/cobColtDetail.json",
+                "method": "GET",
+                "params": {
+                  "colt_no": "${{current.colt_no}}"
+              }
+              },
+              "props": {
+                "width": "80%",
+                "height": "80%",
+                "title": "押品详情"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,129 @@
+{
+  "module": "v-form-editableDataGrid-btn",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "controls": [
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "新增",
+          "icon": "el-icon-plus"
+        },
+        {
+          "type": "batchDelete",
+          "label": "删除",
+          "icon": "el-icon-close"
+        }
+      ]
+    },
+    "datagrid": {
+      "name": "allDatas",
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "cb0351",
+          "solution_no" : "${{params.solution_no}}"
+        }
+      },
+      "pagination": {
+        "show": false
+      },
+      "allData":true,
+      "thead": [
+        {
+          "type": "selection",
+          "show": {
+            "prop": "changkuan",
+            "is": [
+              "1"
+            ]
+          }
+        },
+        {
+          "prop": "dimension_no",
+          "label": "维度",
+          "type": "remoteSelect",
+          "labelField": "dimension_name",
+          "valueField": "dimension_no",
+          "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "length": 999,
+                "servicecode": "cb0316"
+              }
+            },
+            "format": "value-label"
+        },
+        {
+          "prop": "indicator_no",
+          "label": "指标",
+          "type": "remoteSelect",
+          "labelField": "indicator_alias",
+          "valueField": "indicator_no",
+          "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "length": 999,
+                "servicecode": "cb0313"
+              }
+            },
+            "format": "value-label"
+        },
+        {
+          "prop": "indicator_weight",
+          "type": "text",
+          "label": "指标权重"
+        },
+        {
+          "prop": "model_no",
+          "label": "评分模型",
+          "type": "remoteSelect",
+          "labelField": "model_name",
+          "valueField": "model_no",
+          "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "length": 999,
+                "servicecode": "cb0323"
+              }
+            },
+            "format": "value-label"
+        },
+        {
+          "prop": "model_rule",
+          "label": "模型配置",
+          "type": "text"
+        }
+      ]
+    },
+    "footer": {
+      "btns": [
+        {
+          "type": "submit",
+          "label": "保存",
+          "icon": "el-icon-tickets",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode":"cb0354",
+              "solution_no" : "${{params.solution_no}}"
+            }
+          }
+        },
+        {
+          "type": "close",
+          "label": "取消"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,63 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "btns": [],
+            "initRequest": "${{params}}",
+            "controls": [
+              {
+                "commission_settings":{
+                  "control": "radio",
+                  "value":"close",
+                  "label": "提成设置",
+                  "options": [
+                    {
+                      "value": "open",
+                      "label": "开启"
+                    },
+                    {
+                      "value": "close",
+                      "label": "关闭"
+                    }
+                  ],
+                  "events": {
+                    "showItem":{
+                      "open":["commission_settings_open"],
+                      "close":["commission_settings_close"]
+                    }
+                  }
+                },
+                "commission_settings_open": {
+                  "span": 24,
+                  "allowCreate": true,
+                  "control": "dynamic",
+                  "toRequest":{
+                    "url":"/views/cs/compManage/contrManage/cmsnScheme/addCmsn/headExp/commission_settings_open.json",
+                    "params": {
+                      "commission_name": "${{params.commission_name}}",
+                      "start_date": "${{params.start_date}}",
+                      "end_date":"${{params.end_date}}",
+                      "commission_calculation_plan":"${{params.commission_calculation_plan}}"
+                    }
+                  }
+                },
+                "commission_settings_close": {
+                  "span": 24,
+                  "allowCreate": true,
+                  "control": "dynamic",
+                  "label": "",
+                  "toRequest":{
+                    "url":"/views/cs/compManage/contrManage/cmsnScheme/addCmsn/headExp/commission_settings_close.json",
+                    "params": {
+                      "commission_name": "${{params.commission_name}}",
+                      "start_date": "${{params.start_date}}",
+                      "end_date":"${{params.end_date}}",
+                      "commission_calculation_plan":"${{params.commission_calculation_plan}}"
+                    }
+                  }
+                }
+              }
+            ]
+        }
+    }
+}

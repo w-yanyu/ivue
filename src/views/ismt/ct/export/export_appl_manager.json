@@ -1,0 +1,172 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                  "export_applno": {
+                      "control": "text",
+                      "label": "导出申请号",
+                      "rules": [
+                          {
+                              "max": 60,
+                              "message": "长度不能超过60个字符"
+                          }
+                      ]
+                  },
+                  "exp_status": {
+                      "control": "select",
+                      "label": "导出状态",
+                      "selectFirstValue":false,
+                      "dict": {
+                        "dictType": "CT_E_EXP_STATUS",
+                        "dictKey": [
+                            "CT_E_EXP_STATUS"
+                        ],
+                        "format": "label"
+                    }
+                  },
+                  "appl_time": {
+                    "control": "text",
+                    "label": "申请时间",
+                    "rules": [
+                        {
+                            "max": 60,
+                            "message": "长度不能超过60个字符"
+                        }
+                    ]
+                    },
+                    "file_name": {
+                        "control": "text",
+                        "label": "文件名称",
+                        "rules": [
+                            {
+                                "max": 60,
+                                "message": "长度不能超过60个字符"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ct4113",
+                    "appId":"deciOnl",
+                    "appl_user":"$g{{user_info.userCode}}"
+                }
+            },
+            "pagination": {
+                "show": true,
+                "pageSize": 10
+            },
+            "thead": [
+                {
+                    "type": "index"
+                },
+                {
+                    "label": "导出申请号",
+                    "prop": "export_applno"
+                },
+                {
+                    "label": "文件名称",
+                    "prop": "file_name"
+                },
+                {
+                  "label": "导出申请人",
+                  "prop": "appl_user"
+                },
+                {
+                    "label": "申请时间",
+                    "prop": "appl_time"
+                },
+                {
+                    "label": "导出状态",
+                    "prop": "exp_status",
+                    "dict": {
+                        "dictType": "CT_E_EXP_STATUS",
+                        "format": "label",
+                        "dictKey": [
+                            "CT_E_EXP_STATUS"
+                        ]
+                    },
+                    "format": "label"
+                },
+                {
+                  "label": "下载时间",
+                  "prop": "down_time"
+                },
+                {
+                    "label": "文件路径",
+                    "prop": "file_path"
+                },
+                {
+                    "label": "操作",
+                    "width": 120,
+                    "align":"center",
+                    "fixed": "right",
+                    "btns": [
+                        {
+                            "type": "edit",
+                            "label": "激活",
+                            "show": {
+                                "prop": "exp_status",
+                                "is": [
+                                    "2"
+                                ]
+                            },
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "post",
+                                "params": {
+                                    "servicecode": "ct4112",
+                                    "exp_status": "0",
+                                    "record_no" : "${{current.record_no}}"
+                                }
+                            },
+                            "confirm": {
+                                "title": "提醒",
+                                "msg": "确定激活？",
+                                "confirmButtonText": "确定",
+                                "cancelButtonText": "取消"
+                              }
+                        },
+                        {
+                            "type": "export",
+                            "label": "下载",
+                            "show": {
+                                "prop": "exp_status",
+                                "is": [
+                                    "3"
+                                ]
+                            },
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/downloadStream",
+                                "icon": "el-icon-download",
+                                "method": "POST",
+                                "params": {
+                                    "fileName": "${{current.file_name}}",
+                                    "filePath": "${{current.file_path}}${{current.file_name}}"
+                                }
+                            },
+                            "confirm": {
+                                "title": "提醒",
+                                "msg": "确定下载？",
+                                "confirmButtonText": "确定",
+                               "cancelButtonText": "取消"
+                              } 
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+  }

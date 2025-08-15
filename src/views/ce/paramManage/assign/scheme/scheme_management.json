@@ -1,0 +1,207 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "scope": "formData",
+            "controls": [
+                {
+                    "scheme_type": {
+                        "control": "select",
+                        "label": "分配方案类型",
+                        "dict": {
+                          "dictType": "CE_COLL_TYPE",
+                          "dictKey": [
+                            "CE_COLL_TYPE"
+                          ],
+                          "format": "value-label"
+                        }
+                    },
+                    "scheme_pattern": {
+                        "control": "select",
+                        "label": "分配方式",
+                        "dict": {
+                          "dictType": "CE_SCHEME_PATTERN",
+                          "dictKey": [
+                            "CE_SCHEME_PATTERN"
+                          ],
+                          "format": "value-label"
+                        }
+                    },
+                    "scheme_name": {
+                        "control": "text",
+                        "label": "分配方案名称"
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "icon": "el-icon-circle-plus",
+                    "target": "dialog",
+                    "label": "新增",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/ce/paramManage/assign/scheme/scheme_add.json"
+                    },
+                    "props": {
+                        "title": "新增分配方案定义"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ce0064",
+                    "coll_kind":"02"
+                }
+            },
+            "thead": [
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "分配方案编号",
+                    "prop": "allocate_proposal_no"
+
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "分配方案名称",
+                    "prop": "scheme_name"
+                },
+                {
+                    "label": "分配方案类型",
+                    "prop": "scheme_type",
+                    "align":"center",
+                    "dict": {
+                      "dictType": "CE_COLL_TYPE",
+                      "dictKey": [
+                        "CE_COLL_TYPE"
+                      ],
+                      "format": "value-label"
+                    }
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "分配方式",
+                    "prop": "scheme_pattern",
+                    "dict": {
+                      "dictType": "CE_SCHEME_PATTERN",
+                      "dictKey": [
+                        "CE_SCHEME_PATTERN"
+                      ],
+                      "format": "value-label"
+                    }
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "优先级",
+                    "prop": "priority"
+                },
+
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "是否启用",
+                    "prop": "is_valid",
+                    "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                            "MS_E_YESORNO"
+                        ],
+                        "format": "value-label"
+                    }
+                },
+
+                {
+                    "label": "操作",
+                    "align":"center",
+                    "fixed": "right",
+                    "width": "150%",
+                    "btns": [
+                        {
+                            "type":"look",
+                            "label":"详情",
+                            "show": {
+                              "expression": "'${{current.scheme_type}}' === 'TC01'"
+                            },
+                            "toRequest":{
+                                "url":"/views/ce/paramManage/assign/scheme/tc_scheme_info.json",
+                                "method":"POST"
+                            },
+                            "props":{
+                                "width":"80%",
+                                "title":"分配方案定义详情"
+                            }
+                        },
+                        {
+                          "type":"look",
+                          "label":"详情",
+                          "show": {
+                            "expression": "'${{current.scheme_type}}' !== 'TC01'"
+                          },
+                          "toRequest":{
+                            "url":"/views/ce/paramManage/assign/scheme/scheme_info.json",
+                            "method":"POST"
+                          },
+                          "props":{
+                            "width":"80%",
+                            "title":"分配方案定义详情"
+                          }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "show": {
+                              "expression": "'${{current.scheme_type}}' === 'TC01'"
+                            },
+                            "toRequest": {
+                                "url": "/views/ce/paramManage/assign/scheme/tc_scheme_modify.json",
+                                "method": "POST"
+                            },
+                            "props": {
+                                "width":"80%",
+                                "title": "分配方案定义维护"
+                            }
+                        },
+                        {
+                          "type": "edit",
+                          "label": "维护",
+                          "show": {
+                            "expression": "'${{current.scheme_type}}' !== 'TC01'"
+                          },
+                          "toRequest": {
+                            "url": "/views/ce/paramManage/assign/scheme/scheme_modify.json",
+                            "method": "POST"
+                          },
+                          "props": {
+                            "width":"80%",
+                            "title": "分配方案定义维护"
+                           }
+                        },
+                        {
+                            "type": "delete",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/call/RPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "ce0061",
+                                    "coll_kind":"02"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

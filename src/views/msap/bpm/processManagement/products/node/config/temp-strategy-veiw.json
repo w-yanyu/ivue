@@ -1,0 +1,70 @@
+{
+  "module": "v-form-editableDataGrid-btn",
+  "layout": {
+    "form": {
+      "controls": [
+      ],
+      "btns": [
+      ]
+    },
+    "toolbar": {
+      "btns": []
+    },
+    "datagrid": {
+      "doRequest": {
+        "url":"/SUMP/icmcall/icmRPCCall",
+        
+        "method":"POST",
+        "params": {
+          "wf_task_no": "${{params.wf_task_no}}",
+          "bpm_version": "${{params.bpm_version}}",
+          "wf_prod_no": "${{params.wf_prod_no}}",
+          "task_define_id": "${{params.task_define_id}}",
+          "servicecode": "bpm4009",
+          "appId":"${{params.appId}}"
+        }
+      },
+      "pagination": {
+        "show": true
+      },
+      "thead": [
+        {
+          "prop": "policy_name",
+          "type": "string",
+          "label": "策略名称"
+        },
+        {
+          "prop": "policy_id",
+          "type": "string",
+          "label": "策略编号"
+        }
+      ]
+    },
+    "footer": {
+      "btns": [
+        {
+          "type": "edit",
+          "label": "维护",
+          "icon": "el-icon-tickets",
+          "toRequest": {
+            "url": "/views/msap/bpm/processManagement/products/node/config/temp-strategy-config-main.json",
+            "method": "POST",
+            "params": {
+              "wf_task_no": "${{params.wf_task_no}}",
+              "bpm_version": "${{params.bpm_version}}",
+              "wf_prod_no": "${{params.wf_prod_no}}",
+              "task_define_id": "${{params.task_define_id}}",
+              "appId":"${{params.appId}}"
+            }
+          },
+          "show": {
+            "expression": "'${{params.isEdit}}' == 'true'"
+          },
+          "eventAfter": {
+              "callback": "refreshCallback"
+            }       
+        }
+      ]
+    }
+  }
+}

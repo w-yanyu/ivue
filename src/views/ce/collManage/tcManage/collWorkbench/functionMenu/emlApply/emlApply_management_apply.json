@@ -1,0 +1,95 @@
+{
+  "module": "v-inputDataForm-btn",
+  "layout": {
+    "form": {
+      "btns": [
+        {
+          "type": "submit",
+          "target": "dialog",
+          "label": "申请",
+          "doRequest": {
+            "url": "/SUMP/call/RPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "ce3522",
+              "case_no": "${{params.case_no}}",
+              "template_code": "${{form.template_code}}",
+              "email_addr": "${{form.email_addr}}",
+              "collection_type": "TC"
+            }
+          }
+        },
+        {
+          "type": "close",
+          "label": "返回"
+        }
+      ],
+      "controls": [
+        {
+          "template_code": {
+            "control": "remoteSelect",
+            "span": 8,
+            "###clearable": "控件右侧清除按钮，可清除控件内容",
+            "clearable": false,
+            "##selectFirstValue": "是否选中第一条数据",
+            "selectFirstValue": true,
+            "inputWidth": "250px",
+            "label": "信邮模板",
+            "labelField": "template_name",
+            "valueField": "template_code",
+            "format": "label",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ce0414",
+                "coll_kind": "02",
+                "template_type": "EML"
+              }
+            },
+            "events": {
+              "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "ce0094",
+                  "coll_kind": "02",
+                  "template_code": "${{form.template_code}}",
+                  "template_type": "EML"
+                },
+                "resultSet": {
+                  "template_content": "template_content"
+                }
+              }
+            }
+          },
+          "email_addr": {
+            "control": "text",
+            "span": 8,
+            "inputWidth": "250px",
+            "label": "电子邮箱",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              },
+              {
+                "pattern": "^[a-z0-9A-Z]+[- | a-z0-9A-Z . _]+@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-z]{2,}$",
+                "message": "请输入正确邮箱地址！"
+              }
+            ]
+          },
+          "template_content": {
+            "disabled": true,
+            "dataArray": true,
+            "labelWidth": "0",
+            "control": "mce",
+            "#control": "textarea",
+            "span": 22,
+            "label": "模板内容"
+          }
+        }
+      ]
+    }
+  }
+}

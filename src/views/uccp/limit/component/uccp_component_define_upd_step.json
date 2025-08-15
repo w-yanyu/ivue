@@ -1,0 +1,67 @@
+{
+    "module": "d-steps",
+    "layout": {
+      "steps": {
+        "scope": "formObj",
+        "direction": "horizontal",
+        "alignCenter": true,
+        "finishStatus": "success",
+        "simpleType": false,
+        "nextStepType": "submit",
+        "list": [
+          {
+            "title": "维护限额部件",
+            "scope": "sp1",
+            "icon": "el-icon-document",
+            "toRequest": {
+              "url": "/views/uccp/limit/component/uccp_component_define_upd.json",
+              "method": "get",
+              "params": {
+                "limit_component_type":"${{params.limit_component_type}}",
+                "limit_component_code": "${{params.limit_component_code}}",
+                "limit_component_name":"${{params.limit_component_name}}",
+                "limit_control_way":"${{params.limit_control_way}}",
+                "limit_manage_way":"${{params.limit_manage_way}}",
+                "exposure_flag":"${{params.exposure_flag}}",
+                "valid_flag":"${{params.valid_flag}}",
+                "need_check_flag":"${{params.need_check_flag}}",
+                "limit_component_desc":"${{params.limit_component_desc}}"
+              }
+            },
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "post",
+              "params": {
+                  "servicecode": "uccp5007"
+              }
+            }
+          },
+          {
+            "title": "部件维度配置",
+            "scope": "sp2",
+            "forbidBack":true,
+            "icon": "el-icon-document",
+            "toRequest": {
+              "url": "/views/uccp/limit/component/uccp_component_detail_list.json",
+              "method": "get",
+              "params": {
+                "limit_component_code": "${{params.limit_component_code}}"
+                
+              },
+              "eventAfter": {
+                "doParentCallback": true
+              }
+            },
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "uccp5014"
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+  

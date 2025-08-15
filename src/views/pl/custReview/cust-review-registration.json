@@ -1,0 +1,169 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "doRequest": {
+                "url": "",
+                "method": "POST",
+                "params": {}
+            },
+            "controls": [{
+                    "cert_type": {
+                        "control": "select",
+                        "label": "证件类型",
+                        "dict": {
+                            "dictType": "US_E_PRI_CRET_TYPE",
+                            "dictKey": [
+                                "US_E_PRI_CRET_TYPE"
+                            ],
+                            "format": "label"
+                        }
+                    },
+                    "cert_no": {
+                        "control": "text",
+                        "label": "证件号码",
+                        "rules": [{
+                            "max": 100,
+                            "message": "长度不能超过100个字符"
+                        }]
+                    }
+                },
+                {
+                    "cr_grntg_num": {
+                        "control": "text",
+                        "rules": [{
+                            "max": 100,
+                            "message": "长度不能超过64个字符"
+                        }],
+                        "label": "授信编号"
+                    },
+                    "daterange": {
+                        "control": "dateTimePicker",
+                        "label": "申请时间",
+                        "type": "daterange",
+                        "unlinkPanels": true,
+                        "valueFormat": "yyyyMMdd",
+                        "startPlaceholder": "选择开始时间",
+                        "endPlaceholder": "选择结束时间",
+                        "startField": "start_date",
+                        "endField": "expir_date",
+                        "disabledDate": "dateAfter"
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [{
+                "type": "add",
+                "target": "dialog",
+                "label": "新增",
+                "toRequest": {
+                    "method": "GET",
+                    "url": "/views/pl/custReview/custReview-add/cust-review-add.json"
+                },
+                "props": {
+                    "title": "客户回访新增"
+                }
+            }]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "pl0401"
+                }
+            },
+            "pagination": {
+                "show": true,
+                "pageSize": 10
+            },
+            "thead": [{
+                    "type": "index"
+                },
+                {
+                    "label": "任务编号",
+                    "prop": "task_no"
+                },
+                {
+                    "label": "任务名称",
+                    "prop": "task_name"
+                },
+                {
+                    "label": "客户姓名",
+                    "prop": "cust_name",
+                    "dict": {
+                        "dictType": "US_E_PRI_CRET_TYPE",
+                        "format": "label",
+                        "dictKey": [
+                            "US_E_PRI_CRET_TYPE"
+                        ]
+                    },
+                    "format": "label"
+                },
+                {
+                    "label": "证件类型",
+                    "prop": "cert_type",
+                    "dict": {
+                        "dictType": "US_E_PRI_CRET_TYPE",
+                        "format": "label",
+                        "dictKey": [
+                            "US_E_PRI_CRET_TYPE"
+                        ]
+                    },
+                    "format": "label"
+                },
+                {
+                    "prop": "cert_no",
+                    "label": "证件号码"
+                },
+                {
+                    "prop": "cust_review_type",
+                    "label": "回访类型",
+                    "dict": {
+                        "dictType": "PL_E_CUST_REVIWE_TYPE",
+                        "format": "label",
+                        "dictKey": [
+                            "PL_E_CUST_REVIWE_TYPE"
+                        ]
+                    }
+                },
+                {
+                    "prop": "check_prod",
+                    "label": "检查产品"
+                },
+                {
+                    "label": "授信编号",
+                    "prop": "cr_grntg_num"
+                },
+                {
+                    "prop": "check_time",
+                    "label": "检查时间"
+                },
+                {
+                    "label": "备注",
+                    "prop": "remark"
+                },
+                {
+                    "label": "操作",
+                    "width": 150,
+                    "align": "center",
+                    "fixed": "right",
+                    "btns": [{
+                        "type": "edit",
+                        "label": "维护",
+                        "toRequest": {
+                            "url": "/views/pl/custReview/custReview-maintenance/cust-review-update.json",
+                            "method": "GET"
+                        },
+                        "props": {
+                            "title": "授权信息维护"
+                        }
+                    }]
+                }
+            ]
+        }
+    }
+}

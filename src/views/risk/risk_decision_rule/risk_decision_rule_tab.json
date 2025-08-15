@@ -1,0 +1,196 @@
+{
+  "module": "composer",
+  "layout": {
+    "id1": {
+      "type": "tabs",
+      "span": 24,
+      "render": {
+        "position": "top",
+        "styleClass": "border-card",
+        "tabHeader": [
+          {
+            "id": "info",
+            "label": "基本信息",
+            "closable": true,
+            "disabled": false,
+            "icon": "el-icon-date",
+            "clickInit": false,
+            "init":{
+              "initRequest": "${{params}}"
+            },
+            "render": {
+              "form1": {
+                "type": "form",
+                "span": 24,
+                "render": {
+                  "controls": [
+                    {
+                      "cruleId": {
+                        "label": "规则id",
+                        "control": "string",
+                        "span": 12
+                      },
+                      "cruleName": {
+                        "label": "规则名称",
+                        "control": "text",
+                        "span": 12,
+                        "rules": [
+                          {
+                            "required": true,
+                            "message": "该控件必填"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "cruleCode": {
+                        "label": "规则代码",
+                        "control": "text",
+                        "span": 12,
+                        "rules": [
+                          {
+                            "required": true,
+                            "message": "该控件必填"
+                          }
+                        ]
+                      },
+                      "cruleVersion": {
+                        "label": "规则版本",
+                        "control": "inputNumber",
+                        "span": 12,
+                        "rules": [
+                          {
+                            "required": true,
+                            "message": "请输入正整数",
+                            "type":"integer",
+                            "min": 0
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "cruleType": {
+                        "label": "规则类型",
+                        "control": "text",
+                        "span": 12,
+                        "rules": [
+                          {
+                            "required": true,
+                            "message": "该控件必填"
+                          }
+                        ]
+                      },
+                      "natureExpression": {
+                        "label": "规则自然语言表达式",
+                        "control": "text",
+                        "span": 12,
+                        "rules": [
+                          {
+                            "required": true,
+                            "message": "该控件必填"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "executableExpression": {
+                        "label": "规则可执行表达式",
+                        "control": "textarea",
+                        "span": 24,
+                        "rules": [
+                          {
+                            "required": true,
+                            "message": "该控件必填"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "description": {
+                        "label": "备注",
+                        "control": "textarea",
+                        "span": 24
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "id": "resetPassword",
+            "label": "重置密码",
+            "closable": false,
+            "disabled": false,
+            "icon": "el-icon-date",
+            "clickInit": true,
+            "init":{
+              "initRequest": {
+                "url": "/pte/json/composer/example/tabs/initRequest.json",
+                "method":"get"
+              }
+            },
+            "render": {
+              "form2": {
+                "type": "form",
+                "span": 24,
+                "render": {
+                  "controls": [
+                    {
+                      "userCode": {
+                        "control": "string",
+                        "label": "用户编码",
+                        "placeholder": "用户编码",
+                        "required": true
+                      }
+                    },
+
+                    {
+                      "password": {
+                        "control": "password",
+                        "label": "旧密码",
+                        "placeholder":  "旧密码",
+                        "required": true
+                      }
+                    },
+                    {
+                      "newPassword": {
+                        "control": "password",
+                        "label": "新密码",
+                        "placeholder": "新密码",
+                        "required": true
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "toolbar2":{
+      "type": "toolbar",
+      "span": 24,
+      "render": {
+        "btnPlace":"right",
+        "btns":[
+          {
+            "label": "提交",
+            "doRequest": {
+              "url": "/pte/json/composer/example/tabs/format_msg.json",
+              "method": "POST",
+              "autoParams":["form1", "form2"]
+            },
+            "eventBefore": {
+              "callback": {
+                "form1": "validate",
+                "form2": "validate"
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

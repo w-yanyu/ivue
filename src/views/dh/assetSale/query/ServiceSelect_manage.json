@@ -1,0 +1,96 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "sale_id": {
+            "control": "text",
+            "label": "转让编码"
+          },
+          "appl_id": {
+            "control": "text",
+            "label": "申请编号"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "kg0010"
+        }
+      },
+      "thead": [
+        {
+          "type": "index",
+          "align": "center",
+          "label": "序号"
+        },
+        {
+          "label": "转让编码",
+          "prop": "sale_id",
+          "align": "center"
+        },
+        {
+          "label": "申请编号",
+          "prop": "appl_id",
+          "align": "center"
+        },
+        {
+          "label": "启动操作员",
+          "prop": "start_usr",
+          "align": "center"
+        },
+        {
+          "label": "启动机构",
+          "prop": "start_org",
+          "align": "center"
+        },
+        {
+          "label": "当前处理人",
+          "prop": "handle_user",
+          "align": "center"
+        },        {
+          "label": "当前处理步骤",
+          "prop": "handle_node",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "align":"center",
+          "fixed": "right",
+          "btns": [
+            
+            {
+              "type": "look",
+              "label": "查看详情",
+              "toRequest": {
+                "url": "@DHAssetsaleHandover",
+                "method": "GET",
+                "target": "navTab",
+                "params": {
+                  "transfer_id": "${{current.transfer_id}}",
+                  "appl_id": "${{current.appl_id}}",
+                  "proc_inst_id": "${{current.proc_inst_id}}"
+                }
+              },
+              "props": {
+                "title": "查看详情"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,154 @@
+{
+  "module": "lr_transferTable",
+  "layout": {
+    "transfer": {
+      "height":"500px",
+      "left": {
+        "filterable":false,
+        "title": "可选关联页面",
+        "placeholder": "请输入页面编号",
+        "query":["page_template_no"],
+        "btn":{
+          "label": "关联",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode":"pd0158",
+              "trans_type": "INSERT",
+              "template_id": "${{params.template_id}}",
+              "prod_version": "${{params.prod_version}}"
+            }
+          }
+        },
+        "datagrid": {
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "pd0160",
+              "template_id": "${{params.template_id}}",
+              "prod_version": "${{params.prod_version}}",
+              "apply_type": "${{params.apply_type}}",
+              "prod_type": "${{params.prod_type}}"
+            }
+          },
+          "thead": [
+            {
+              "label": "页面编号",
+              "prop": "page_template_no",
+              "width": "140px",
+              "control": "text",
+              "align": "center"
+            },
+            {
+              "label": "页面名称",
+              "prop": "page_template_name",
+              "width": "140px",
+              "align": "center"
+            },
+            {
+              "label": "申请类型",
+              "prop": "apply_type_name",
+              "width": "140px",
+              "align": "center"
+            },
+            {
+              "label": "产品类型",
+              "prop": "prod_type_name",
+              "width": "140px",
+              "align": "center"
+            },
+            {
+              "label": "是否必须",
+              "prop": "must_flag",
+              "align": "center",
+              "dict": {
+                "dictType": "MS_E_YESORNO",
+                "dictKey": [
+                  "MS_E_YESORNO"
+                ],
+                "format": "label"
+              }
+            }
+          ]
+        }
+      },
+      "right": {
+        "title":"已关联页面",
+        "filterable":false,
+        "placeholder": "请输入页面编号",
+        "query":["page_template_no"],
+        "btn":{
+          "label":"删除",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode":"pd0158",
+              "trans_type": "DELETE",
+              "template_id": "${{params.template_id}}",
+              "prod_version": "${{params.prod_version}}"
+            }
+          }
+        },
+        "selectionDisabled": {
+          "expression": "'${{current.must_flag}}' === '1'"
+        },
+        "datagrid": {
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "pd0159",
+              "template_id": "${{params.template_id}}",
+              "prod_version": "${{params.prod_version}}",
+              "apply_type": "${{params.apply_type}}",
+              "prod_type": "${{params.prod_type}}"
+            }
+          },
+          "checked":"checked",
+          "thead": [
+            {
+              "label": "页面编号",
+              "width": "140px",
+              "prop": "page_template_no",
+              "control": "text",
+              "align": "center"
+            },
+            {
+              "label": "页面名称",
+              "prop": "page_template_name",
+              "width": "140px",
+              "align": "center"
+            },
+            {
+              "label": "申请类型",
+              "prop": "apply_type_name",
+              "width": "140px",
+              "align": "center"
+            },
+            {
+              "label": "产品类型",
+              "prop": "prod_type_name",
+              "width": "140px",
+              "align": "center"
+            },
+            {
+              "label": "是否必须",
+              "prop": "must_flag",
+              "align": "center",
+              "dict": {
+                "dictType": "MS_E_YESORNO",
+                "dictKey": [
+                  "MS_E_YESORNO"
+                ],
+                "format": "label"
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

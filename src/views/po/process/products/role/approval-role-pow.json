@@ -1,0 +1,90 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "isInitSearch": true,
+      "controls": [{
+        "operator_id": {
+          "span": 8,
+          "control": "text",
+          "label": "操作员编号",
+          "placeholder": "操作员编号"
+        },
+        "operator_name": {
+          "span": 8,
+          "control": "text",
+          "label": "操作员名称",
+          "placeholder": "操作员名称"
+        }
+      }]
+    },
+    "toolbar": {
+      "btns": [{
+        "type": "add",
+        "target": "dialog",
+        "label": "新增",
+        "toRequest": {
+          "method": "POST",
+          "url": "/views/po/process/products/role/approval-role-pwd-add.json",
+          "params": {
+            "appr_role_id": "${{params.appr_role_id}}"
+          }
+        },
+        "props": {
+          "width": "65%",
+          "title": "新增操作员"
+        }
+      }
+      ]
+    },
+    "datagrid": {
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "bpm0056",
+          "appr_role_id": "${{params.appr_role_id}}"
+        }
+      },
+      "thead": [
+        {
+        "type": "selection",
+        "width": "55"
+      }, {
+        "type": "index",
+        "label": "序号"
+      },
+        {
+        "label": "操作员编号",
+        "prop": "appr_role_id",
+         "align": "center"
+      }, {
+        "label": "操作员名称",
+        "prop": "operator_id",
+         "align": "center"
+      },{
+        "label": "机构编号",
+        "prop": "branch_id",
+        "align": "center"
+        },
+        {
+        "label": "操作",
+        "width": "80px",
+         "align": "center",
+        "btns": [
+          {
+          "type": "delete",
+          "label": "删除",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "delete",
+            "params": {
+              "servicecode": "bpm0055",
+              "appr_role_id": "${{params.appr_role_id}}"
+            }
+          }
+        }]
+      }]
+    }
+  }
+}

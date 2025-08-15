@@ -1,0 +1,135 @@
+{
+  "module": "v-form-editableDataGrid-btn",
+  "init": {
+    "initRequest": "${{params}}"
+  },
+  "layout": {
+    "toolbar": {
+      "#btnPlace": "right",
+      "btns": [
+        {
+          "type": "add",
+          "label": "新增",
+          "icon": "el-icon-plus"
+        }
+      ]
+    },
+    "datagrid": {
+      "name": "constInfo",
+      "pagination": {
+        "show": false
+      },
+      "initRequest": "${{params.constInfo}}",
+      "thead": [
+        {
+          "prop": "data_type",
+          "label": "数据类型",
+          "value":"${{params.data_type}}",
+          "type": "select",
+          "dict": {
+            "dictType": "dataType",
+            "dictKey": [],
+            "format": "value-label",
+            "doRequest": {
+              "url": "/views/risk/dictdata/dataType.json",
+              "method": "get"
+            }
+          },
+          "events": {
+            "condition": {
+              "switch": {
+                "String":{
+                  "control": {
+                    "constValue": {
+                      "rules": [
+                        {
+                          "required": true,
+                          "message": "请正确输入"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "Int":{
+                  "control":{
+                    "constValue":{
+                      "rules":[
+                        {
+                          "required":true,
+                          "pattern":"^-?[0-9]+$",
+                          "message":"请正确输入整数"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "Decimal":{
+                  "control":{
+                    "constValue":{
+                      "rules":[
+                        {
+                          "required":true,
+                          "pattern":"^(-?[0-9]+)(\\.[0-9]{1,2})?$",
+                          "message":"请正确输入可带两位小数的数字"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "Boolean":{
+                  "control":{
+                    "constValue":{
+                      "rules":[
+                        {
+                          "required":true,
+                          "pattern":"^(true)$|^(false)$",
+                          "message":"请输入true或false"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "disabled":true
+        },
+        {
+          "prop": "const_value",
+          "label": "常量值",
+          "type": "text",
+
+          "rules": [
+            {
+              "required": true,
+              "message": "请正确输入"
+            }
+          ]
+        },
+        {
+          "label": "备注",
+          "prop": "description",
+          "type": "text",
+          "rules": [
+            {
+              "required": true,
+              "message": "请正确输入",
+              "max": 100
+            }
+          ]
+        },
+        {
+          "label": "操作",
+          "width": "70px",
+          "btns": [
+            {
+              "type": "delete",
+              "label": "删除"
+            }
+          ],
+          "align": "center"
+        }
+      ]
+    }
+  }
+}

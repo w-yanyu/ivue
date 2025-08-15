@@ -1,0 +1,170 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "archive_no": {
+                        "control": "text",
+                        "label": "归档编号",
+                        "rules": [
+                            {
+                                "max": 10,
+                                "message": "长度不能超过10个字符"
+                            }
+                        ]
+                    },
+                    "is_return": {
+                        "control": "select",
+                        "label": "是否归还",
+                        "width": "130px",
+                        "dict": {
+                          "dictType": "MS_E_YESORNO",
+                          "dictKey": [
+                            "MS_E_YESORNO"
+                          ],
+                          "format": "label"
+                        }
+                      },
+                    "cust_name": {
+                        "control": "text",
+                        "label": "客户名称",
+                        "rules": [
+                            {
+                                "max": 32,
+                                "message": "长度不能超过32个字符"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "target": "dialog",
+                    "label": "新增",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/pl/archivesmgement/borrow/add_borrow.json"
+                    },
+                    "props": {
+                        "title": "档案清单",
+                        "width": "80%"
+                    }
+                },
+                {
+                    "type": "add",
+                    "target": "dialog",
+                    "label": "归还",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/pl/archivesmgement/"
+                    },
+                    "props": {
+                        "title": "上架信息",
+                        "width":"80%"
+                    }
+                },
+                {
+                    "type": "add",
+                    "target": "dialog",
+                    "label": "详情查看",
+                    "doRequest": {
+                        "url": "/SUMP/call/RPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "",
+                            "bind_default_menu_ind": "1",
+                            "system_id": ""
+                        }
+                    },
+                    "props": {
+                        "title": ""
+                    }
+                },
+                {
+                    "type": "add",
+                    "target": "dialog",
+                    "label": "提交",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/pl/archivesmgement/borrow/submit.json"
+                    },
+                    "props": {
+                        "title": "提交信息",
+                        "width": "80%"
+                    }
+                },
+                {
+                    "type": "add",
+                    "target": "dialog",
+                    "label": "删除",
+                    "doRequest": {
+                        "url": "/SUMP/call/RPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "",
+                            "bind_default_menu_ind": "1",
+                            "system_id": ""
+                        }
+                    },
+                    "props": {
+                        "title": ""
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": ""
+                }
+            },
+            "pagination": {
+                "show": true
+            },
+            "thead": [
+                {
+                    "type": "index"
+                },
+                {
+                    "label": "归档编号",
+                    "prop": "archive_no"
+                },
+                {
+                    "label": "借阅人",
+                    "prop": "borrower"
+                },
+                {
+                    "label": "申请日期",
+                    "prop": ""
+                },
+                {
+                    "label": "利用方式",
+                    "prop": "use_method"
+                },
+                {
+                    "label": "利用目的",
+                    "prop": "use_purpose",
+                    "dict": {
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "是否归还",
+                    "prop": "is_return"
+                },
+                {
+                    "label": "预计归还日期",
+                    "prop": "expected_return_date"
+                }
+            ]
+        }
+    }
+}

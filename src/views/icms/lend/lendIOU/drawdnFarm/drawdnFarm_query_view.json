@@ -1,0 +1,214 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "POST",
+            "url": "/views/icms/lend/lendIOU/drawdnFarm/drawdnFarm_add.json",
+            "params": {
+              "lend_no":"${{params.lend_no}}"
+            }
+          },
+          "props": {
+            "width": "65%",
+            "title": "涉农贷款信息新增"
+          },
+          "show": {
+            "expression": "'${{params.pageType}}' != 'info'"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "scope": "searchTable",
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ar0501",
+          "lend_no":"${{params.lend_no}}"
+        }
+      },
+      "thead": [
+        {
+          "label": "放款序号",
+          "prop": "lend_no",
+          "align": "center"
+        },
+        {
+          "label": "涉农信息分类",
+          "prop": "loan_farm_class",
+          "align": "center",
+          "dict": {
+            "dictType": "AR_E_LOAN_FARM_CLASS",
+            "dictKey": [
+              "AR_E_LOAN_FARM_CLASS"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "label": "企业规模",
+          "prop": "firm_scale",
+          "align": "center",
+          "dict": {
+            "dictType": "AR_E_ENT_SCALE",
+            "dictKey": [
+              "AR_E_ENT_SCALE"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "label": "贷款用途",
+          "prop": "loan_farm_purpose",
+          "align": "center",
+          "dict": {
+            "dictType": "AR_E_LOAN_FARM_PURPOSE",
+            "dictKey": [
+              "AR_E_LOAN_FARM_PURPOSE"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "label": "贷款分类",
+          "prop": "loan_farm_credit",
+          "align": "center",
+          "dict": {
+            "dictType": "AR_E_LOAN_FARM_CREDIT",
+            "dictKey": [
+              "AR_E_LOAN_FARM_CREDIT"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "label": "主体形式",
+          "prop": "main_form",
+          "align": "center",
+          "dict": {
+            "dictType": "AR_E_MAIN_FORM",
+            "dictKey": [
+              "AR_E_MAIN_FORM"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "是否农村中小企业",
+          "prop": "is_farm_corp_size",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "label": "否农村企业及各类组织农业综合开发",
+          "prop": "is_farm_corp_deve",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "label": "是否扶贫贴息",
+          "prop": "is_support_poor",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "label": "是否城市企业农业综合开发",
+          "prop": "is_city_corp_deve",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/icms/lend/lendIOU/drawdnFarm/drawdnFarm_modify.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "70%",
+                "title": "涉农贷款信息维护"
+              },
+              "show": {
+                "expression": "'${{params.pageType}}' != 'info'"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "post",
+                "params": {
+                  "caozuolx": "2",
+                  "servicecode": "ar0503",
+                  "lend_no": "${{params.lend_no}}"
+                }
+              },
+              "confirm": {
+                "title": "确定删除",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              },
+              "show": {
+                "expression": "'${{params.pageType}}' != 'info'"
+              }
+            },
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/icms/lend/lendIOU/drawdnFarm/drawdnFarm_info.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "85%",
+                "title": "涉农贷款信息详情"
+              }
+            }
+          ]
+        }
+      ],
+      "pagination": {
+        "show": true
+      }
+    }
+  }
+}

@@ -1,0 +1,120 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "initRequest": "${{params}}",
+            "btns": [
+                {
+                    "type": "submit",
+                    "label": "提交",
+                    "icon": "",
+                    "doRequest": {
+                        "url": "/SUMP/call/RPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "ct3151"
+                        }
+                    }
+                }
+            ],
+            "controls": [
+                {
+                    "control_id":{
+                        "control":"text",
+                        "rules":[{
+                            "message":"请输入控件编号",
+                            "required":true
+                        }],
+                        "label":"控件编号"
+                    },
+                    "control_name":{
+                        "control":"text",
+                        "rules":[{
+                            "message":"请输入控件名称",
+                            "required":true
+                        }],
+                        "label":"控件名称"
+                    },
+                    "menu_id": {
+                        "control": "string",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入菜单编号"
+                            },
+                            {
+                                "max": 10,
+                                "message": "长度不能超过10个字符"
+                            }
+                        ],
+                        "label": "菜单编号"
+
+                    },
+                    "control_type":{
+                        "dict":{
+                            "dictKey":["CT_E_CONTROL_TYPE"],
+                            "dictType":"CT_E_CONTROL_TYPE"
+                        },
+                        "control":"select",
+                        "label":"控件类型",
+                        "format": "value-label",
+                        "rules":[{
+                            "message":"请输入控件类型",
+                            "required":true
+                        }]
+                        
+                    },
+                    "trxn_type":{
+                        "dict":{
+                            "dictKey":["MS_E_TRXNTYPE"],
+                            "dictType":"MS_E_TRXNTYPE"
+                        },
+                        "control":"select",
+                        "label":"控件交易类型",
+                        "format": "value-label",
+                        "rules":[{
+                            "message":"请选择控件交易类型",
+                            "required":true
+                        }],
+                        "showItem": {
+                            "Q": [
+                              "tran_code"
+                            ]
+                          }
+                    },                    
+                    "tran_code":{
+                        "control":"lookup",
+                        "disabled":false,
+                        "rules":[{
+                            "message":"请输入对应交易码",
+                            "required":true
+                        }],
+                        "label":"对应交易码",
+                        "keyField":{
+                            "tran_code": "flow_tran_id"
+                          },
+                          "toRequest": {
+                            "url": "/views/msap/adp/project_tran_lookup.json",
+                            "method": "post",
+                            "params": {
+                              
+                            }
+                          },
+                          "props": {
+                            "title": "项目交易选择"
+                          }
+                    },
+                    "control_desc":{
+                        "control":"text",
+                        "rules":[{
+                            "message":"请输入控件描述",
+                            "required":false
+                        }],
+                        "label":"控件描述"
+                    }
+
+                }
+            ]
+        }
+    }
+}

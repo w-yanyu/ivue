@@ -1,0 +1,174 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "workjob_id": {
+                        "control": "text",
+                        "label": "工作任务ID",
+                        "format": "label",
+                        "rules": [
+                            {
+                                "max": 32,
+                                "message": "长度不能超过32个字符"
+                            }
+                        ]
+                    },
+                    "role_id": {
+                        "control": "text",
+                        "label": "角色ID",
+                        "rules": [
+                            {
+                                "max": 64,
+                                "message": "长度不能超过64个字符"
+                            }
+                        ]
+                      
+                    }
+                },
+                {
+                    "serial_no": {
+                        "control": "text",
+                        "label": "序号",
+                        "rules": [
+                            {
+                                "max": 32,
+                                "message": "长度不能超过32个字符"
+                            }
+                        ]
+                    },
+                    "scope_of_role": {
+                        "control": "select",
+                        "label": "角色所在机构",
+                        "rules": [
+                            {
+                                "max": 32,
+                                "message": "长度不能超过32个字符"
+                            }
+                        ],
+                        "dict": {
+                            "dictType": "E_BRCONFINE",
+                            "dictKey": [
+                                "E_BRCONFINE"
+                            ],
+                            "format": "label"
+                        }
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "target": "dialog",
+                    "label": "新增",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/ismt/ct/ParameterManagement/WorkflowRoleMaintenance/WorkflowRoleAdd.json"
+                    },
+                    "props": {
+                        "title": "工作流角色信息新增"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ct2091"
+                }
+            },
+            "thead": [
+                {
+                    "label": "工作任务ID",
+                    "prop": "workjob_id"
+                },
+                {
+                    "label": "角色ID",
+                    "prop": "role_id"
+                },
+                {
+                    "label": "序号",
+                    "prop": "serial_no"
+                },
+                {
+                    "label": "角色所在机构",
+                    "prop": "scope_of_role",
+                    "dict": {
+                        "dictType": "E_BRCONFINE",
+                        "dictKey": [
+                            "E_BRCONFINE"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "交易币种",
+                    "dict": {
+                        "dictType": "MS_CURRENCY",
+                        "dictKey": [
+                            "MS_CURRENCY"
+                        ],
+                        "format": "label"
+                    },
+                    "prop": "trxn_ccy"
+                },
+                {
+                    "label": "审批金额下限",
+                    "prop": "min_limit_value"
+                },
+                {
+                    "label": "审批金额上限",
+                    "prop": "max_limit_value"
+                },
+                {
+                    "label": "操作",
+                    "width": 200,
+                    "fixed": "right",
+                    "align": "center",
+                    "btns": [
+                        {
+                            "type": "look",
+                            "label": "详情",
+                            "toRequest": {
+                                "url": "/views/ismt/ct/ParameterManagement/WorkflowRoleMaintenance/workflow_role_detail.json",
+                                "method": "POST"
+                            },
+                            "props": {
+                                "title": "工作流角色信息详情"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/ismt/ct/ParameterManagement/WorkflowRoleMaintenance/WorkflowRoleUpdate.json",
+                                "method": "GET"
+                            },
+                            "props": {
+                                "title": "工作流角色信息维护"
+                            }
+                        },
+                        {
+                            "type": "look",
+                            "label": "删除",
+                            "toRequest": {
+                                "url": "/views/ismt/ct/ParameterManagement/WorkflowRoleMaintenance/workflow_role_delete.json",
+                                "method": "post"
+                            },
+                            "props": {
+                                "title": "工作流角色信息删除"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

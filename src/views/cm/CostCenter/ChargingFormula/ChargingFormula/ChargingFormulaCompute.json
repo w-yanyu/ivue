@@ -1,0 +1,119 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "chrgfm": {
+                        "control": "text",
+                        "label": "计费公式代码"
+                    },
+                    "fmunam": {
+                        "control": "text",
+                        "label": "公式名称"
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "target": "dialog",
+                    "label": "新增",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/cm/CostCenter/ChargingFormula/ChargingFormula/ChargingFormulaCompute-add.json"
+                    },
+                    "props": {
+                        "title": "计费公式定义新增"
+                    }
+                },
+                {
+                    "type": "export",
+                    "label": "导出",
+                    "doRequest": {
+                        "method": "",
+                        "url": ""
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "qrcmdf",
+                    "page_id": ""
+                }
+            },
+            "thead": [
+                {
+                    "label": "收费公式代码",
+                    "prop": "chrgfm"
+                },
+                {
+                    "label": "公式名称",
+                    "prop": "fmunam"
+                },
+                {
+                    "label": "文件依据",
+                    "prop": "filebs"
+                },
+                {
+                    "label": "生效日期",
+                    "prop": "filebs"
+                },
+                {
+                    "label": "失效日期",
+                    "prop": "inefdt"
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 200,
+                    "align":"center",
+                    "btns": [
+                        {
+                            "type": "look",
+                            "label": "配置明细",
+                            "toRequest": {
+                                "url": "/views/cm/CostCenter/ChargingFormula/ChargingFormula/ChargingFormulaCompute-detail.json",
+                                "method": "POST"
+                            },
+                            "props": {
+                                "width": "85%",
+                                "title": "计费公式明细"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/cm/CostCenter/ChargingFormula/ChargingFormula/ChargingFormulaCompute-update.json",
+                                "method": "GET"
+                            },
+                            "props": {
+                                "title": "计费公式定义维护"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "删除",
+                            "toRequest": {
+                                "url": "/views/cm/CostCenter/ChargingFormula/ChargingFormula/ChargingFormulaCompute-delete.json",
+                                "method": "GET"
+                            },
+                            "props": {
+                                "title": "计费公式定义删除"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

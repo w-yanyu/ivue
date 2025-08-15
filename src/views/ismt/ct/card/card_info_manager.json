@@ -1,0 +1,190 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+      "form": {
+          "doRequest": {
+              "url": "",
+              "method": "POST",
+              "params": {}
+          },
+          "controls": [
+              {
+                "card_id": {
+                    "control": "text",
+                    "label": "卡片编号",
+                    "rules": [
+                        {
+                            "max": 30,
+                            "message": "长度不能超过30个字符"
+                        }
+                    ]
+                },
+                "card_name": {
+                    "control": "text",
+                    "label": "卡片名称"
+                },
+                "card_type": {
+                    "control": "select",
+                    "label": "卡片类型",
+                    "selectFirstValue":false,
+                    "dict": {
+                      "dictType": "CT_E_CARD_TYPE",
+                      "dictKey": [
+                          "CT_E_CARD_TYPE"
+                      ],
+                      "format": "label"
+                  }
+                },
+                "card_status": {
+                    "control": "select",
+                    "label": "卡片状态",
+                    "selectFirstValue":false,
+                    "dict": {
+                      "dictType": "CT_E_CARD_STATUS",
+                      "dictKey": [
+                          "CT_E_CARD_STATUS"
+                      ],
+                      "format": "label"
+                  }
+                }
+              }
+          ]
+      },
+      "toolbar": {
+          "btns": [
+              {
+                  "type": "add",
+                  "target": "dialog",
+                  "label": "新增",
+                  "toRequest": {
+                      "method": "GET",
+                      "url": "/views/ismt/ct/card/card_info_add.json"
+                  },
+                  "props": {
+                      "title": "新增卡片"
+                  }
+              }
+          ]
+      },
+      "datagrid": {
+          "scope": "searchTable",
+          "isInitSearch": false,
+          "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                  "servicecode": "ct3001",
+                  "appId":"deciOnl"
+              }
+          },
+          "pagination": {
+              "show": true,
+              "pageSize": 10
+          },
+          "thead": [
+              {
+                  "type": "index"
+              },
+              {
+                  "label": "卡片编号",
+                  "prop": "card_id"
+              },
+              {
+                  "label": "卡片名称",
+                  "prop": "card_name"
+              },
+              {
+                  "label": "卡片类型",
+                  "prop": "card_type",
+                  "dict": {
+                      "dictType": "CT_E_CARD_TYPE",
+                      "format": "label",
+                      "dictKey": [
+                          "CT_E_CARD_TYPE"
+                      ]
+                  },
+                  "format": "label"
+              },
+              {
+                "label": "适用角色名称",
+                "prop": "scope_range_str"
+              },
+              {
+                  "label": "卡片大小横向",
+                  "prop": "card_portrait"
+              },
+              {
+                "label": "卡片大小纵向",
+                "prop": "card_transver"
+              },
+              {
+                "label": "卡片状态",
+                "prop": "card_status",
+                "dict": {
+                    "dictType": "CT_E_CARD_STATUS",
+                    "format": "label",
+                    "dictKey": [
+                        "CT_E_CARD_STATUS"
+                    ]
+                }
+              },
+              {
+                  "label": "操作",
+                  "width": 300,
+                  "align":"center",
+                  "fixed": "right",
+                  "btns": [
+                      {
+                        "type": "edit",
+                        "label": "卡片详情",
+                        "toRequest": {
+                            "url": "/views/ismt/ct/card/card_info_edit.json",
+                            "method": "GET"
+                        },
+                        "props": {
+                            "title": "卡片详情"
+                        }
+                      },
+                      {
+                          "type": "edit",
+                          "label": "维护",
+                          "toRequest": {
+                              "url": "/views/ismt/ct/card/card_info_update.json",
+                              "method": "GET"
+                          },
+                          "props": {
+                              "title": "卡片信息维护"
+                          }
+                      },
+                      {
+                        "type": "edit",
+                        "label": "特殊信息维护",
+                        "toRequest": {
+                            "url": "/views/ismt/ct/card/card_info_update_spc.json",
+                            "method": "GET"
+                        },
+                        "props": {
+                            "title": "卡片特殊信息维护"
+                        }
+                      },
+                      {
+                        "type": "edit",
+                        "label": "审批详情",
+                        "toRequest": {
+                            "url": "/views/ismt/ct/card/card_appv_edit.json",
+                            "method": "GET",
+                            "params":{
+                                "card_id":"${{current.card_id}}",
+                                "card_name":"${{current.card_name}}"
+                            }
+                        },
+                        "props": {
+                            "title": "审批详情"
+                        }
+                      }
+                  ]
+              }
+          ]
+      }
+  }
+}

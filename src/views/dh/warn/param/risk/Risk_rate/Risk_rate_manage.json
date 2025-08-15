@@ -1,0 +1,184 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "risk_rate_code": {
+            "control": "text",
+            "label": "风险级别代码"
+          },
+          "risk_rate_name": {
+            "control": "text",
+            "label": "风险级别名称"
+          },
+          "risk_type": {
+            "control": "hidden",
+            "label": "风险级别类型",
+            "dict": {
+              "dictType": "E_RISKTYPE",
+              "dictKey": [
+                "E_RISKTYPE"
+              ]
+            },
+            "closable": true,
+            "disabled": true
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "POST",
+            "url": "/views/dh/warn/param/risk/Risk_rate/Risk_rate_add.json",
+            "params": {
+              "risk_type": "C"
+            }
+          },
+          "props": {
+            "width": "75%",
+            "title": "预警级别定义新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "wa1501",
+          "page_id": "/views/dh/warn/param/risk/Risk_rate/Risk_rate_manage.json"
+        }
+      },
+      "thead": [
+        {
+          "label": "序号",
+          "type": "index"
+        },
+        {
+          "label": "风险级别代码",
+          "prop": "risk_rate_code",
+          "align": "center"
+        },
+        {
+          "label": "风险级别名称",
+          "prop": "risk_rate_name",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "风险分值区间(初值)",
+          "width": "140",
+          "prop": "first_operator",
+          "dict": {
+            "dictType": "E_RELATIONOPERATOR",
+            "dictKey": [
+              "E_RELATIONOPERATOR"
+            ],
+            "format": "label ${{current.first_number}}"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "风险分值区间(末值)",
+          "width": "140",
+          "prop": "second_operator",
+          "dict": {
+            "dictType": "E_RELATIONOPERATOR",
+            "dictKey": [
+              "E_RELATIONOPERATOR"
+            ],
+            "format": "label ${{current.second_number}}"
+          }
+        },
+        {
+          "type": "tag",
+          "label": "风险信号",
+          "width": "160px",
+          "prop": "risk_rate_signal",
+          "align": "center",
+          "dict": {
+            "dictType": "E_RISKSIGNAL",
+            "dictKey": [
+              "E_RISKSIGNAL"
+            ],
+            "format": "value-label"
+          },
+          "switch": {
+            "O": "warning",
+            "Y": "warning",
+            "R": "danger",
+            "G": "success"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "150",
+          "label": "操作日期",
+          "prop": "data_update_time"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 180,
+          "align": "center",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/dh/warn/param/risk/Risk_rate/Risk_rate_detail.json",
+                "method": "POST",
+                "params": {
+                  "risk_type": "C"
+                }
+              },
+              "props": {
+                "width": "75%",
+                "title": "预警级别定义详情"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/dh/warn/param/risk/Risk_rate/Risk_rate_edit.json",
+                "method": "POST",
+                "params": {
+                  "risk_type": "C"
+                }
+              },
+              "props": {
+                "width": "75%",
+                "title": "预警级别定义维护"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "wa1502",
+                  "trantp": "DELETE"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

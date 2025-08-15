@@ -1,0 +1,107 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "icon": "",
+          "doRequest": {
+            "url": "/SUMP/call/aOrUProcess",
+            "method": "POST",
+            "params": {
+              "servicecode": "rlms_addwfp"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "wfprcd": {
+            "control": "text",
+            "label": "流程产品编号",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入机构号"
+              },
+              {
+                "max": 64,
+                "message": "长度不能超过64个字符"
+              }
+            ]
+          },
+          "wfprna": {
+            "control": "text",
+            "label": "流程产品名称",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入流程产品名称"
+              },
+              {
+                "max": 64,
+                "message": "长度不能超过64个字符"
+              }
+            ]
+          },
+          "wfprtp": {
+            "control": "select",
+            "label": "流程产品类型",
+            "width": "130px",
+            "dict": {
+              "dictType": "E_CSWFPDTP",
+              "dictKey": [
+                "E_CSWFPDTP"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择流程产品类型"
+              }
+            ]
+          },
+          "actidd": {
+            "control": "lookup",
+            "label": "流程定义ID",
+            "width": "130px",
+            "prop": "actidd",
+            "keyField":{
+              "actidd":"id_",
+              "actnam":"name_"
+            },
+            "toRequest": {
+              "url": "/views/cspo/process/products/process-product-list.json",
+              "method": "post"
+            },
+            "props": {
+              "title": "流程模板查询"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择流程定义ID"
+              }
+            ]
+          },
+          "actnam": {
+            "control": "string",
+            "label": "流程定义名称",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入流程定义名称"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

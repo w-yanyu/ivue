@@ -1,0 +1,111 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "pagination": {
+        "show": false
+      },
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": { 
+              "servicecode": "py0005",
+              "page_id": "/views/cs/paramManage/strategy/automateStrategy/strategy_group_add.json",
+              "appId": "pyOnl",
+              "strategy_code": "${{params.strategy_code}}"
+             }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "strategy_code": {
+            "control": "hidden",
+            "label": "策略编号",
+            "width": "130px",
+            "value":"${{params.strategy_code}}"
+          },
+          "strategy_group_code": {
+            "control": "text",
+            "label": "策略组代码",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true,
+                "pattern": "^[A-Za-z0-9_]+$",
+                "message": "请输入数字/字母/下划线,长度 32 个字节以内"
+              },
+              {
+                "max": 10,
+                "message": "最多可以输入 32 个字节"
+              }
+            ]
+          },
+          "strategy_group_name": {
+            "control": "text",
+            "label": "策略组名称",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              },
+              {
+                "max": 30,
+                "message": "最多可以输入 64 个字节"
+              }
+            ]
+          },
+          "group_assign_ratio": {
+            "control": "inputNumber",
+            "label": "组分配比重",
+            "width": "130px",
+            "min": 1,
+            "max": 100,
+            "rules": [
+              {
+                "required": true,
+                "pattern": "^[0-9]",
+                "message": "请输入 1 到 100 之间的数字"
+              },
+              {
+                "expression": "'${{form.group_assign_ratio}}'.length < 4",
+                "message": "最多可以输入 4 个字节"
+              }
+            ]
+          },
+          "assign_algorithm": {
+            "control": "select",
+            "label": "分配算法",
+            "width": "130px",
+            "selectFirstValue": false,
+            "dict": {
+              "dictType": "CS_ASSIGN_ALG",
+              "dictKey": [
+                "CS_ASSIGN_ALG"
+              ],
+              "format": "value-label"
+            }
+          },
+          "assign_ratio_mode": {
+            "control": "select",
+            "label": "分配比重模式",
+            "width": "130px",
+            "selectFirstValue": false,
+            "dict": {
+              "dictType": "CS_ASSIGN_RATIO_MODE",
+              "dictKey": [
+                "CS_ASSIGN_RATIO_MODE"
+              ],
+              "format": "value-label"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

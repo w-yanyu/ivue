@@ -1,0 +1,98 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "initRequest": "${{params}}",
+            "btns": [
+                {
+                    "type": "submit",
+                    "label": "提交",
+                    "icon": "",
+                    "doRequest": {
+                        "url": "",
+                        "method": "",
+                        "params": {}
+                    }
+                }
+            ],
+            "bringBack": true,
+            "controls": [
+                {
+                    "operater_ind": {
+                        "label": "操作",
+                        "control": "string",
+                        "dict": {
+                            "dictType": "E_DATAOPERATE",
+                            "dictKey": [
+                                "E_DATAOPERATE"
+                            ],
+                            "format": "label"
+                        },
+                        "value": "D"
+                    },
+                    "role_id": {
+                        "control": "text",
+                        "label": "角色ID",
+                        "labelField": "drop_list_desc",
+                        "valueField": "drop_list_value",
+                        "disabled": true,
+                        "rules": [
+                            {
+                                "max": 64,
+                                "message": "长度不能超过64个字符"
+                            }
+                        ],
+                        "doRequest": {
+                            "url": "/SUMP/call/RPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "ms9999",
+                                "dynamic_drop_list_type": "CT0001"
+                            }
+                        },
+                        "format": "label"
+                    }
+                },
+                {
+                    "auth_id": {
+                        "control": "string",
+                        "rules": [
+                            {
+                                "max": 32,
+                                "message": "长度不能超过32个字符"
+                            }
+                        ],
+                        "label": "授权ID"
+                    },
+                    "auth_ccy": {
+                        "control": "text",
+                        "label": "授权币种",
+                        "labelField": "drop_list_desc",
+                        "valueField": "drop_list_value",
+                        "disabled": true,
+                        "doRequest": {
+                            "url": "/SUMP/call/RPCCall/",
+                            "method": "post",
+                            "params": {
+                                "servicecode": "ms1053",
+                                "dynamic_drop_list_type": "AP0011"
+                            }
+                        },
+                        "format": "label"
+                    }
+                },
+                {
+                    "cash_max_limit_amt": {
+                        "control": "string",
+                        "label": "现金最大授权金额"
+                    },
+                    "trxn_max_limit_amt": {
+                        "control": "text",
+                        "disabled": true,
+                        "label": "转账最大授权金额"
+                    }
+                }
+            ]
+        }
+    }
+}

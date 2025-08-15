@@ -1,0 +1,182 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "scope": "formData",
+            "controls": [
+                {
+                    "coll_org_no": {
+                        "control": "text",
+                        "label": "催收机构编号"
+                    },
+                    "coll_org_name": {
+                        "control": "text",
+                        "label": "催收机构名称"
+                    }
+                },
+                {
+                    "coll_org_type": {
+                        "control": "select",
+                        "label": "催收机构类型",
+                        "dict": {
+                          "dictType": "CE_COLL_ORG_TYPE",
+                          "dictKey": [
+                            "CE_COLL_ORG_TYPE"
+                          ],
+                          "format": "value-label"
+                        }
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "icon": "el-icon-circle-plus",
+                    "target": "dialog",
+                    "label": "新增",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/ce/paramManage/assign/collOrg/collOrg_add.json"
+                    },
+                    "props": {
+                        "title": "新增外包机构定义"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ce0044"
+                }
+            },
+            "thead": [
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "催收机构编号",
+                    "prop": "coll_org_no"
+
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "催收机构名称",
+                    "prop": "coll_org_name"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "催收机构类型",
+                    "prop": "coll_org_type",
+                    "dict": {
+                      "dictType": "CE_COLL_ORG_TYPE",
+                      "dictKey": [
+                        "CE_COLL_ORG_TYPE"
+                      ],
+                      "format": "value-label"
+                    }
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "邮编",
+                    "prop": "post_cd"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "地址",
+                    "prop": "address"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "电话号码",
+                    "prop": "tel_no"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "传真",
+                    "prop": "fax"
+                },
+
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "联系人",
+                    "prop": "linkman"
+                },
+
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "联系人电话",
+                    "prop": "cntctpers_tel"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "是否启用",
+                    "prop": "is_valid",
+                    "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                            "MS_E_YESORNO"
+                        ],
+                        "format": "value-label"
+                    }
+                },
+
+                {
+                    "label": "操作",
+                    "align":"center",
+                    "fixed": "right",
+                    "width": "150%",
+                    "btns": [
+                        {
+                            "type":"look",
+                            "label":"详情",
+                            "toRequest":{
+                                "url":"/views/ce/paramManage/assign/collOrg/collOrg_info.json",
+                                "method":"POST"
+                            },
+                            "props":{
+                                "title":"外包机构定义详情"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/ce/paramManage/assign/collOrg/collOrg_modify.json",
+                                "method": "POST"
+                            },
+                            "props": {
+                                "title": "外包机构定义维护"
+                            }
+                        },
+                        {
+                            "type": "delete",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/call/RPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "ce0041",
+                                    "coll_kind":"02"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

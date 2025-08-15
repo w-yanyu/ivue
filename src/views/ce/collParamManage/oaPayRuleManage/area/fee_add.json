@@ -1,0 +1,143 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "btns": [
+                {
+                    "type": "submit",
+                    "label": "提交",
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "pl0080"
+                        }
+                    }
+                }
+            ],
+            "controls": [
+                {
+                    "fee_type": {
+                        "control": "remoteSelect",
+                        "label": "业绩归属",
+                        "default":"OA",
+                        "width": "130px",
+                        "labelField": "drop_list_desc",
+                        "valueField": "drop_list_value",
+                        "doRequest": {
+                            "url": "/SUMP/icmcall/icmRPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "ap1071",
+                                "drop_list_type": "fee_type_pl"
+                            }
+                        },
+                        "format": "label",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入"
+                            }
+                        ]
+                    },
+                    "fee_cd": {
+                        "control": "text",
+                        "label": "产品大类",
+                        "width": "130px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入"
+                            },
+                            {
+                                "max": 30,
+                                "message": "最多可以输入 30 个字节"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "rate_type": {
+                        "control": "remoteSelect",
+                        "label": "账龄",
+                        "default":"A",
+                        "width": "130px",
+                        "labelField": "drop_list_desc",
+                        "valueField": "drop_list_value",
+                        "doRequest": {
+                            "url": "/SUMP/icmcall/icmRPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "ap1071",
+                                "drop_list_type": "RATE_TYPE_LOAN"
+                            }
+                        },
+                        "format": "label",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入"
+                            }
+                        ]
+                    },
+                    "stage": {
+                        "control": "remoteSelect",
+                        "label": "最小回收率",
+                        "default":"A3",
+                        "width": "130px",
+                        "labelField": "drop_list_desc",
+                        "valueField": "drop_list_value",
+                        "doRequest": {
+                            "url": "/SUMP/icmcall/icmRPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "ap1071",
+                                "drop_list_type": "STAGE_LOAN"
+                            }
+                        },
+                        "filterable":true,
+                        "format": "label",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "principal_rate": {
+                        "control": "inputNumber",
+                        "label": "最大回收率",
+                        "width": "130px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入"
+                            },
+                            {
+                                "expression":"'${{form.principal_rate}}'.length <= 21",
+                                "message":"最多可以输入 21 个字节"
+                            }
+                        ]
+                    },
+                    "lev_rate": {
+                        "control": "inputNumber",
+                        "label": "佣金上限",
+                        "width": "130px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入"
+                            },
+                            {
+                                "expression":"'${{form.lev_rate}}'.length <= 21",
+                                "message":"最多可以输入 21 个字节"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    }
+}

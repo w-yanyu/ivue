@@ -1,0 +1,81 @@
+{
+    "module": "v_search_editableDataGrid",
+    "layout": {
+        "toolbar": {
+          "initRequest": "${{params}}",
+            "btns": [
+                {
+                    "type": "save",
+                    "target": "dialog",
+                    "label": "保存",
+                    "toRequest": {
+                        "method": "post",
+                        "url": ""
+                    },
+                    "props": {
+                        "title": "任务清分"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+          "scope": "searchTable",
+          "isInitSearch": false,
+          "doRequest": {
+            "url": "/SUMP/call/RPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "pl0351",
+              "archive_no": "${{params.archive_no}}"
+
+            }
+          },
+            "pagination": {
+                "show": false
+            },
+            "thead": [
+                {
+                    "type": "index"
+                },
+              {
+                "label": "档案等级",
+                "prop": "archives_level",
+                "type": "string",
+                "dict": {
+                  "dictType": "PL_E_ARCHIVES_LEVEL",
+                  "dictKey": [
+                    "PL_E_ARCHIVES_LEVEL"
+                  ],
+                  "format": "label"
+                }
+              },
+                {
+                    "label": "档案目录",
+                  "type": "string",
+                    "prop": "archives_directory"
+                },
+                {
+                    "label": "是否存在电子资料",
+                     "type": "text",
+                    "prop": "is_electronic_data"
+                },
+                {
+                    "label": "是否存在纸质资料",
+                    "prop": "is_paper_data"
+                },
+                {
+                    "label": "纸质档案是否原件",
+                    "prop": "is_paper_source"
+                },
+                {
+                    "label": "纸质份数",
+                    "prop": "paper_num"
+                },
+                {
+                    "label": "影像目录",
+                    "prop": "video_directory"
+                }
+            ]
+        }
+    }
+}

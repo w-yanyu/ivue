@@ -1,0 +1,244 @@
+{
+  "module": "lr-tree-dynamic",
+  "layout": {
+    "tree": {
+      "title": "模板页面信息",
+      "lazy": false,
+      "idField": "node_cd",
+      "pIdField": "parent_node_cd",
+      "labelField": "node_name",
+      "isLeafField": "is_leaf",
+      "nodeTypeField": "node_type",
+      "initRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pd0351",
+          "group_num": "0004"
+        }
+      },
+      "root": {
+        "rootNode": {
+          "name": "报告配置项",
+          "value": "BASE",
+          "node_cd": "BASE",
+          "node_type": "1"
+        },
+        "contextMenu": [
+          {
+            "type": "add",
+            "label": "新增",
+            "childNodeType": "1",
+            "icon": "el-icon-circle-plus-outline",
+            "toRequest": {
+              "url": "/views/pd/dueDiliTemplate/dueDiliTemplate_tree_cust_add.json",
+              "method": "get",
+              "params": {
+                "group_num": "0002"
+              }
+            },
+            "props": {
+              "width": "80%",
+              "title": "新增客户类型"
+            },
+            "eventAfter": {
+              "callback": "renderTree"
+            }
+          }
+        ]
+      },
+      "nodeTypes": {
+        "1": {
+          "children": [
+            "1",
+            "2",
+            "3"
+          ],
+          "toRequest": {
+            "url": "@dueSpringboard",
+            "method": "get",
+            "params": {
+              "node_cd": "${{current.node_cd}}",
+              "node_name": "${{current.node_name}}",
+              "node_type": "${{current.node_type}}",
+              "is_leaf": "${{current.is_leaf}}"
+            }
+          },
+          "contextMenu": [
+            {
+              "type": "add",
+              "label": "新增",
+              "childNodeType": "1",
+              "icon": "el-icon-circle-plus-outline",
+              "toRequest": {
+                "url": "/views/pd/dueDiliTemplate/dueDiliTemplate_tree_template_add.json",
+                "method": "get",
+                "params": {
+                  "group_num": "0002"
+                }
+              },
+              "props": {
+                "width": "80%",
+                "title": "新增模板类型"
+              },
+              "eventAfter": {
+                "callback": "renderTree"
+              }
+            },
+            {
+              "type": "divider"
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "icon": "el-icon-remove-outline",
+              "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "pd0354",
+                  "group_num": "0002",
+                  "node_cd": "${{current.node_cd}}"
+                }
+              },
+              "confirm":{
+                "title":"提示信息",
+                "msg":"确认删除吗？",
+                "confirmButtonText":"确定",
+                "cancelButtonText":"取消"
+              },
+              "eventAfter": {
+                "callback": "renderTree"
+              }
+            }
+          ]
+        },
+        "2": {
+          "children": [
+            "3"
+          ],
+          "toRequest": {
+            "url": "@dueSpringboard",
+            "method": "get",
+            "params": {
+              "node_cd": "${{current.node_cd}}",
+              "node_name": "${{current.node_name}}",
+              "node_type": "${{current.node_type}}",
+              "is_leaf": "${{current.is_leaf}}"
+            }
+          },
+          "contextMenu": [
+            {
+              "type": "add",
+              "label": "新增",
+              "icon": "el-icon-circle-plus-outline",
+              "toRequest": {
+                "url": "/views/pd/dueDiliTemplate/dueDiliTemplate_tree_item_add.json",
+                "method": "get",
+                "params": {
+                  "group_num": "0002"
+                }
+              },
+              "props": {
+                "width": "80%",
+                "title": "新增调查项"
+              },
+              "eventAfter": {
+                "callback": "renderTree"
+              }
+            },
+            {
+              "type": "divider"
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "icon": "el-icon-remove-outline",
+              "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "pd0354",
+                  "group_num": "0002",
+                  "node_cd": "${{current.node_cd}}"
+                }
+              },
+              "confirm":{
+                "title":"提示信息",
+                "msg":"确认删除吗？",
+                "confirmButtonText":"确定",
+                "cancelButtonText":"取消"
+              },
+              "eventAfter": {
+                "callback": "renderTree"
+              }
+            }
+          ]
+        },
+        "3": {
+          "children": [
+            "3"
+          ],
+          "toRequest": {
+            "url": "@dueSpringboard",
+            "method": "get",
+            "params": {
+              "node_cd": "${{current.node_cd}}",
+              "node_name": "${{current.node_name}}",
+              "node_type": "${{current.node_type}}",
+              "is_leaf": "${{current.is_leaf}}"
+            }
+          },
+          "contextMenu": [
+            {
+              "type": "add",
+              "label": "新增",
+              "icon": "el-icon-circle-plus-outline",
+              "toRequest": {
+                "url": "/views/pd/dueDiliTemplate/dueDiliTemplate_tree_item_add.json",
+                "method": "get",
+                "params": {
+                  "group_num": "0002",
+                  "parent_node_cd": "${{params.parent_node_cd}}"
+                }
+              },
+              "props": {
+                "width": "80%",
+                "title": "新增调查项"
+              },
+              "eventAfter": {
+                "callback": "renderTree"
+              }
+            },
+            {
+              "type": "divider"
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "icon": "el-icon-remove-outline",
+              "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "pd0354",
+                  "group_num": "0002",
+                  "node_cd": "${{current.node_cd}}"
+                }
+              },
+              "confirm":{
+                "title":"提示信息",
+                "msg":"确认删除吗？",
+                "confirmButtonText":"确定",
+                "cancelButtonText":"取消"
+              },
+              "eventAfter": {
+                "callback": "renderTree"
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

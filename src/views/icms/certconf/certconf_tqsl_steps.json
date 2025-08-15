@@ -1,0 +1,86 @@
+{
+    "module": "d-steps",
+    "layout": {
+        "steps": {
+            "scope":"formObj",
+            "direction": "horizontal",
+            "alignCenter": true,
+            "finishStatus": "success",
+            "simpleType": false,
+          
+            "nextStepType": "validate",
+            "list": [
+                {
+                    "scope":"step1",
+                    "title": "信息填写",
+                    "icon": "el-icon-edit",
+                    "toRequest": { 
+                        "method": "GET",
+                        "url": "/views/icms/certconf/certconf_tqsl.json",
+                        "params": {
+                            "certconf_id":"${{params.certconf_id}}",
+                            "issue_date":"${{params.issue_date}}",
+                            "vehicle_manuf":"${{params.vehicle_manuf}}",
+                            "vehicle_brand":"${{params.vehicle_brand}}",
+                            "vehicle_model":"${{params.vehicle_model}}",
+                            "vehicle_number":"${{params.vehicle_number}}",
+                            "vehicle_color":"${{params.vehicle_color}}",
+                            "manuf_date":"${{params.manuf_date}}",
+                            "cert_status":"${{params.cert_status}}",
+                            "cert_keep_date":"${{params.cert_keep_date}}",
+                            "engine_number":"${{params.engine_number}}",
+                            "cert_receiver":"${{params.cert_receiver}}",
+							"issuing_per":"${{params.issuing_per}}",
+							"distr_model":"${{params.distr_model}}",
+							"delivery_num":"${{params.delivery_num}}",
+							"cert_acce_time":"${{params.cert_acce_time}}",
+							"cert_receives":"${{params.cert_receives}}",
+							"vehicle_photo":"${{params.vehicle_photo}}",
+							"apply_no":"${{params.apply_no}}",
+							"return_time":"${{params.return_time}}",
+							"return_per":"${{params.return_per}}",
+							"manuf_time":"${{params.manuf_time}}",
+							"manuf_per":"${{params.manuf_per}}"
+                        }
+                    },
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                          "servicecode": "ar4001",
+                           "cert_status":"3",
+                           "apply_no":"${{params.apply_no}}"
+                        },
+                        "resultSet": {
+                            "apply_no": "apply_no"
+                          }
+                      }
+                },
+                {
+                    "scope":"step2",
+                    "forbidBack": "true",
+                    "title": "合格证资料上传",
+                    "icon": "el-icon-edit",
+                    "toRequest": { 
+                        "url": "/views/icms/certconf/certconf_add_file.json",
+                        "params": {
+                            "apply_no":"${{formObj.step1.apply_no}}",
+                            "doc_no":"CERT_APPLY_001"
+                        },
+                        "method": "get"
+                    },
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "ar4003",
+                            "apply_no":"${{formObj.step1.apply_no}}",
+                            "cert_status": "3",
+                            "appId":"icmsOnl"
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,131 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "frame_cd": {
+                        "label": "框架编号",
+                        "control": "text",
+                        "rules": [
+                            {
+                                "max": 30,
+                                "message": "长度不能超过30个字符"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "foldLineNumber": 3
+        },
+       
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "target": "dialog",
+                    "label": "新增",
+                    "toRequest": {
+                        "method": "POST",
+                        "url": "/views/ismt/ct/PageFrameConfig/page_frame_config_add.json"
+                    },
+                    "props": {
+                        "width": "65%",
+                        "title": "页面框架基本信息录入"
+                    }
+                }
+            ]
+        },
+    
+        "datagrid": {
+            "isInitSearch": false,
+            "scope": "searchTable",
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "AS_ICMS_PB_PGFRME"
+                }
+            },
+            "thead": [
+
+                {
+                    "label": "序号",
+                    "type": "index"
+                },
+                {
+                    "label": "框架编号",
+                    "prop": "frame_cd"
+                },
+                {
+                    "label": "页面链接",
+                    "prop": "url"
+                },
+                {
+                    "label": "框架描述",
+                    "prop": "frame_desc"
+                },
+                {
+                    "label": "是否生效",
+                    "prop": "is_enabled",
+                    "type": "select",
+                    "dict": {
+                        "dictType": "E_ISENBE",
+                        "dictKey": [
+                            "E_ISENBE"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 200,
+                    "align":"center",
+                    "btns": [
+                        {
+                            "type": "edit",
+                            "label": "节点配置",
+                            "toRequest": {
+                                "url": "/views/ismt/ct/PageFrameConfig/node_config.json",
+                                "method": "post"
+                            },
+                            "props": {
+                                "width": "70%",
+                                "title": "节点配置"
+                            }
+                        },
+                     
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/ismt/ct/PageFrameConfig/page_frame_config_edit.json",
+                                "method": "post"
+                            },
+                            "props": {
+                                "width": "65%",
+                                "title": "页面框架基本信息修改"
+                            }
+                        },
+                       
+                        {
+                            "type": "delete",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "post",
+                                "params": {
+                                    "servicecode": "AS_ICMS_PB_DEFRME"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ],
+            "pagination": {
+                "show": true
+            }
+        }
+    }
+}

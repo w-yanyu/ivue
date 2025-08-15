@@ -1,0 +1,112 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "sale_prod_cd": {
+            "control": "hidden",
+            "label": "可售产品编号",
+            "value": "${{params.sale_prod_cd}}"
+          }
+        }
+      ],
+      "btns":[]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ar0441",
+          "guar_contract_type": "${{params.guar_contract_type}}",
+          "apply_no": "${{params.apply_no}}",
+          "cust_no": "${{params.cust_no}}"
+        }
+      },
+      "thead": [
+        {
+          "type":"string",
+          "label": "最高额担保合同号",
+          "prop": "max_contract_no",
+          "align": "center"
+        },
+        {
+          "type":"string",
+          "label": "担保人",
+          "prop": "guar_cust_no",
+          "align": "center"
+        },
+        {
+          "type":"string",
+          "label": "担保人名称",
+          "prop": "guar_cust_name",
+          "align": "center"
+        },
+        {
+          "type":"string",
+          "label": "担保金额",
+          "prop": "guar_amt",
+          "align": "center"
+        },
+        {
+          "type":"string",
+          "label": "可用余额",
+          "prop": "contract_bal",
+          "align": "center"
+        },
+        {
+          "type":"string",
+          "label": "货币代码",
+          "prop": "ccy_code",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_CURRENCY",
+            "dictKey": [
+                "MS_CURRENCY"
+            ],
+            "format": "label"
+        }
+        },
+        {
+          "type":"string",
+          "label": "合同余额",
+          "prop": "contract_bal",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "width":"200px",
+          "btns": [
+            {
+              "type": "custom",
+              "label": "导入",
+              "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "ar0442",
+                  "apply_no": "${{params.apply_no}}",
+                  "debt_cust_no": "${{params.cust_no}}",
+                  "debt_cust_name": "${{params.cust_name}}"
+                }
+              },
+              "confirm": {
+                "title": "提示信息",
+                "msg": "确认导入合同吗？",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              },
+              "eventAfter": {
+                "doParentCallback": true
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

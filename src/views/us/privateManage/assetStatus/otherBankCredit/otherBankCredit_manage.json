@@ -1,0 +1,187 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "bank_name": {
+            "label": "授信行名称",
+            "control": "text",
+            "rules": [
+              {
+                "max": 80,
+                "message": "长度不能超过80个字符"
+              }
+            ]
+          },
+          "loan_type": {
+            "label": "授信业务种类",
+            "control": "text",
+            "rules": [
+              {
+                "max": 100,
+                "message": "长度不能超过100个字符"
+              }
+            ]
+          },
+          "guar_type": {
+            "control": "select",
+            "label": "担保方式",
+            "dict": {
+              "dictType": "MS_E_GUAR_TYPE",
+              "dictKey": [
+                "MS_E_GUAR_TYPE"
+              ],
+              "format": "label"
+            }
+          }
+        }
+      ],
+      "foldLineNumber": 3
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "POST",
+            "url": "/views/us/privateManage/assetStatus/otherBankCredit/otherBankCredit_add.json",
+            "params": {
+              "cust_no": "${{params.cust_no}}"
+            }
+          },
+          "show": {
+            "expression": "'${{params.show_flash}}' == '1'"
+        },
+          "props": {
+            "width": "80%",
+            "title": "他行授信信息新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": true,
+      "scope": "searchTable",
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "us0125",
+          "cust_no": "${{params.cust_no}}"
+        }
+      },
+      "thead": [
+        {
+          "label": "序号",
+          "type": "index",
+          "align": "center"
+        },
+        {
+          "label": "授信行名称",
+          "prop": "bank_name",
+          "align": "center"
+        },
+        {
+          "label": "授信业务种类",
+          "prop": "loan_type",
+          "align": "center"
+        },
+        {
+          "label": "授信币种",
+          "prop": "ccy_code",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_CURRENCY",
+            "dictKey": [
+              "MS_CURRENCY"
+            ]
+          }
+        },
+        {
+          "label": "授信余额",
+          "prop": "credit_balance",
+          "align": "center",
+          "format":{
+            "thousand":","
+          }
+        },
+        {
+          "label": "合同金额",
+          "prop": "contract_amt",
+          "align": "center",
+          "format":{
+            "thousand":","
+          }
+        },
+        {
+          "label": "担保方式",
+          "prop": "guar_type",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_GUAR_TYPE",
+            "dictKey": [
+              "MS_E_GUAR_TYPE"
+            ],
+            "labelField": "dictName",
+            "valueField": "dictId"
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 160,
+          "align": "center",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/us/privateManage/assetStatus/otherBankCredit/otherBankCredit_info.json",
+                "method": "post"
+              },
+              "props": {
+                "width": "80%",
+                "title": "他行授信信息详情"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/us/privateManage/assetStatus/otherBankCredit/otherBankCredit_modify.json",
+                "method": "post"
+              },
+              "show": {
+                "expression": "'${{params.show_flash}}' == '1'"
+            },
+              "props": {
+                "width": "80%",
+                "title": "他行授信信息维护"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "us0128"
+                }
+              },
+              "show": {
+                "expression": "'${{params.show_flash}}' == '1'"
+            }
+            }
+          ]
+        }
+      ],
+      "pagination": {
+        "show": true
+      }
+    }
+  }
+}

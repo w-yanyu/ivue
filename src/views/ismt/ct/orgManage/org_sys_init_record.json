@@ -1,0 +1,155 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "controls": [
+        {
+          "system_id": {
+            "control": "text",
+            "label": "系统编号"
+          },
+          "system_name": {
+            "control": "text",
+            "label": "系统名称"
+          }
+        },
+        {
+          "target_org_id": {
+            "control": "text",
+            "label": "目标法人号"
+          },
+          "is_inited": {
+            "control": "select",
+            "label": "是否初始化完成",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "value-label"
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": []
+    },
+    "datagrid": {
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "ct2346"
+        }
+      },
+      "thead": [
+        {
+          "label": "流水号",
+          "align": "center",
+          "prop": "busi_seq",
+          "btns": [
+            {
+              "type": "look",
+              "toRequest": {
+                "url": "@orgInitProcess",
+                "method": "get",
+                "params": {
+                  "busi_seq": "${{current.busi_seq}}"
+                }
+              },
+              "props": {
+                "width": "35%",
+                "title": "进度展示",
+                "close": "",
+                "that": "this",
+                "position": "center"
+              }
+            }
+          ]
+          
+        },
+        {
+          "type": "string",
+          "label": "系统编号",
+          "align": "center",
+          "prop": "system_id"
+        },
+        {
+          "type": "string",
+          "label": "系统名称",
+          "align": "center",
+          "prop": "system_name"
+        },
+        {
+          "align": "center",
+          "prop": "org_id",
+          "type": "text",
+          "label": "被复制法人",
+          "nowrap": true,
+          "dict": {
+            "dictType": "org_id",
+            "dictKey": [
+              "section"
+            ],
+            "format": "[value]label",
+            "valueField": "org_id",
+            "labelField": "org_name",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2311",
+                "length": 50
+              }
+            }
+          }
+        },
+        {
+          "type": "string",
+          "label": "目标法人号",
+          "align": "center",
+          "prop": "target_org_id"
+        },
+        {
+          "type": "string",
+          "label": "处理状态",
+          "align": "center",
+          "prop": "tran_state",
+          "dict": {
+            "dictType": "COM_E_BAT_TRAN_STATE",
+            "dictKey": [
+              "COM_E_BAT_TRAN_STATE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": "200%",
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "明细记录",
+              "toRequest": {
+                "url": "/views/ismt/ct/orgManage/org_sys_table_record_list.json",
+                "method": "POST",
+                "params": {
+                  "system_id": "${{current.system_id}}",
+                  "busi_seq": "${{current.busi_seq}}"
+                }
+              },
+              "props": {
+                "title": "表初始化明细记录"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

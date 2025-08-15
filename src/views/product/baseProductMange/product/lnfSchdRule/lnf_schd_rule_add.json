@@ -1,0 +1,904 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "scope": "formScope",
+      "initRequest": "${{params}}",
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "icon": "",
+          "doRequest": {
+            "url": "/SUMP/icmcall/pd/RepaymentCycleMnt",
+            "method": "POST",
+            "params": {
+              "servicecode": "CORELNTS9002"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "prodcd": {
+            "control": "text",
+            "label": "产品代码",
+            "width": "160px",
+            "disabled": true
+          },
+          "crcycd": {
+            "disabled": true,
+            "value":"CNY",
+            "control": "select",
+            "label": "货币代号",
+            "width": "160px",
+            "dict": {
+              "dictType": "MS_CURRENCY",
+              "dictKey": [
+                "MS_CURRENCY"
+              ],
+              "format": "label"
+            }
+          }
+        },
+        {
+          "schdsr": {
+            "control": "select",
+            "label": "期供生成方式",
+            "width": "160px",
+            "dict": {
+              "dictType": "E_SCHDSR",
+              "dictKey": [
+                "E_SCHDSR"
+              ],
+              "format": "label"
+            },
+            "value": "2",
+            "disabled": true
+          },
+          "schdts": {
+            "control": "select",
+            "label": "还款方式",
+            "width": "160px",
+            "multiple": true,
+            "dict": {
+              "dictType": "E_SCHDTP",
+              "dictKey": [
+                "E_SCHDTP"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入还款方式"
+              }
+            ]
+          }
+        },
+        {
+          "eqmode": {
+            "control": "select",
+            "label": "等额处理规则",
+            "width": "160px",
+            "dict": {
+              "dictType": "E_EQMODE",
+              "dictKey": [
+                "E_EQMODE"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入等额处理规则"
+              }
+            ]
+          },
+          "dfperd": {
+            "control": "text",
+            "label": "默认期限",
+            "width": "160px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入默认期限"
+              },
+              {
+                "pattern": "^[0-9]+[MQY]",
+                "message": "输入不合法"
+              },
+              {
+                "max": 6,
+                "message": "长度不能超过6个字符"
+              }
+            ],
+            "suffix": {
+              "title": "期限",
+              "width": "130px",
+              "placeholder":"请输入正整数",
+              "options": [
+                {
+                  "value": "M",
+                  "label": "月"
+                },
+                {
+                  "value": "Q",
+                  "label": "季"
+                },
+                {
+                  "value": "Y",
+                  "label": "年"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "interval1": {
+            "span": "9",
+            "control": "select",
+            "label": "还款周期",
+            "width": "160px",
+            "dict": {
+              "dictType": "E_FREQUENCY",
+              "dictKey": [
+                "E_FREQUENCY"
+              ],
+              "format": "value"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入还款周期-间隔"
+              }
+            ],
+            "events": {
+              "condition": {
+                "$default": {
+                  "control": {
+                    "interval3": {
+                      "value": "${{formScope.interval1}}"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "recirculation1": {
+            "span": "5",
+            "control": "select",
+            "label": "",
+            "width": "160px",
+            "dict": {
+              "dictType": "E_RECIRCULATION",
+              "dictKey": [
+                "E_RECIRCULATION"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入还款周期-循环量"
+              }
+            ],
+            "events": {
+              "condition": {
+                "$default": {
+                  "control": {
+                    "recirculation3": {
+                      "value": "${{formScope.recirculation1}}"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "workdayoptions1": {
+            "span": "5",
+            "control": "select",
+            "label": "",
+            "width": "160px",
+            "dict": {
+              "dictType": "E_WORKDAYOPTIONS",
+              "dictKey": [
+                "E_WORKDAYOPTIONS"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入还款周期-工作日选项"
+              }
+            ],
+            "events": {
+              "condition": {
+                "$default": {
+                  "control": {
+                    "workdayoptions3": {
+                      "value": "${{formScope.workdayoptions1}}"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "date1": {
+            "span": "5",
+            "control": "select",
+            "label": "",
+            "width": "160px",
+            "dict": {
+              "dictType": "E_DATE",
+              "dictKey": [
+                "E_DATE"
+              ],
+              "format": "value"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入还款周期-日期"
+              }
+            ],
+            "events": {
+              "condition": {
+                "$default": {
+                  "control": {
+                    "date3": {
+                      "value": "${{formScope.date1}}"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "#repyfm": {
+            "#control": "hidden",
+            "#label": "还款周期",
+            "#width": "160px",
+            "#rules": [
+              {
+                "#required": true,
+                "#message": "请输入还款周期"
+              },
+              {
+                "#max": 8,
+                "#message": "长度不能超过8个字符"
+              }
+            ]
+          }
+        },
+        {
+          "interval2": {
+            "span": "9",
+            "control": "select",
+            "label": "还本周期",
+            "width": "160px",
+            "dict": {
+              "dictType": "E_FREQUENCY",
+              "dictKey": [
+                "E_FREQUENCY"
+              ],
+              "format": "value"
+            }
+          },
+          "recirculation2": {
+            "span": "5",
+            "control": "select",
+            "label": "",
+            "width": "160px",
+            "dict": {
+              "dictType": "E_RECIRCULATION",
+              "dictKey": [
+                "E_RECIRCULATION"
+              ],
+              "format": "label"
+            }
+          },
+          "workdayoptions2": {
+            "span": "5",
+            "control": "select",
+            "label": "",
+            "width": "160px",
+            "dict": {
+              "dictType": "E_WORKDAYOPTIONS",
+              "dictKey": [
+                "E_WORKDAYOPTIONS"
+              ],
+              "format": "label"
+            }
+          },
+          "date2": {
+            "span": "5",
+            "control": "select",
+            "label": "",
+            "width": "160px",
+            "dict": {
+              "dictType": "E_DATE",
+              "dictKey": [
+                "E_DATE"
+              ],
+              "format": "value"
+            }
+          }
+        },
+        {
+          "interval3": {
+            "span": "9",
+            "control": "select",
+            "label": "逾期还款周期",
+            "width": "160px",
+            "dict": {
+              "dictType": "E_FREQUENCY",
+              "dictKey": [
+                "E_FREQUENCY"
+              ],
+              "format": "value"
+            },
+            "disabled": true
+          },
+          "recirculation3": {
+            "span": "5",
+            "control": "select",
+            "label": "",
+            "width": "160px",
+            "dict": {
+              "dictType": "E_RECIRCULATION",
+              "dictKey": [
+                "E_RECIRCULATION"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入逾期还款周期-循环量"
+              }
+            ],
+            "disabled": true
+          },
+          "workdayoptions3": {
+            "span": "5",
+            "control": "select",
+            "label": "",
+            "width": "160px",
+            "dict": {
+              "dictType": "E_WORKDAYOPTIONS",
+              "dictKey": [
+                "E_WORKDAYOPTIONS"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入逾期还款周期-工作日选项"
+              }
+            ],
+            "disabled": true
+          },
+          "date3": {
+            "span": "5",
+            "control": "select",
+            "label": "",
+            "width": "160px",
+            "dict": {
+              "dictType": "E_DATE",
+              "dictKey": [
+                "E_DATE"
+              ],
+              "format": "value"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入逾期还款周期-日期"
+              }
+            ],
+            "disabled": true
+          }
+        },
+        {
+          "repysq": {
+            "label": "还款顺序编号",
+            "width": "160px",
+            "control": "lookup",
+            "edit": "true",
+            "name": "repysq",
+            "multiple": false,
+            "keyField": {
+              "repysq": "buckcd"
+            },
+            "toRequest": {
+              "url": "/views/product/baseProductMange/product/lnfSchdRule/lnf_schd_rule_hkbh.json",
+              "method": "get"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "还款顺序编号"
+              },
+              {
+                "max": 30,
+                "message": "长度不能超过30个字符"
+              }
+            ]
+          },
+          "insttp": {
+            "control": "select",
+            "label": "结息方式",
+            "width": "160px",
+            "dict": {
+              "dictType": "E_INSTTP",
+              "dictKey": [
+                "E_INSTTP"
+              ],
+              "format": "label"
+            },
+            "value": "3",
+            "disabled": true
+          }
+        },
+        {
+          "isadsc": {
+            "control": "select",
+            "label": "允许调整还款方式",
+            "width": "160px",
+            "dict": {
+              "dictType": "E_YES___",
+              "dictKey": [
+                "E_YES___"
+              ],
+              "format": "label"
+            },
+            "value": "1",
+            "disabled": true
+          },
+          "lastmd": {
+            "control": "select",
+            "label": "末期还款方式",
+            "width": "160px",
+            "dict": {
+              "dictType": "E_LASTMD",
+              "dictKey": [
+                "E_LASTMD"
+              ],
+              "format": "label"
+            },
+            "value": "1",
+            "disabled": true
+          }
+        },
+        {
+          "frstmd": {
+            "control": "select",
+            "label": "首次还款日确定模式",
+            "width": "160px",
+            "dict": {
+              "dictType": "E_FRSTMD",
+              "dictKey": [
+                "E_FRSTMD"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入首次还款日确定模式"
+              }
+            ]
+          },
+          "fpmind": {
+            "control": "text", 
+            "label": "首次首期间隔最小天数",
+            "width": "160px",
+            "rules": [
+              {
+                "max": 10,
+                "message": "长度不能超过10个字符"
+              }
+            ]
+          }
+        },
+        {
+          "multmd": {
+            "control": "select",
+            "label": "复贷还款日确定模式",
+            "width": "160px",
+            "dict": {
+              "dictType": "E_FRSTMD",
+              "dictKey": [
+                "E_FRSTMD"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入复贷还款日确定模式"
+              }
+            ]
+          },
+          "mpmind": {
+            "control": "text",
+            "label": "复贷首期间隔最小天数",
+            "width": "160px",
+            "rules": [
+              {
+                "max": 10,
+                "message": "长度不能超过10个字符"
+              }
+            ]
+          }
+        },
+        {
+          "isaurp": {
+            "control": "select",
+            "label": "自动扣款标志",
+            "width": "160px",
+            "dict": {
+              "dictType": "E_ISAURP",
+              "dictKey": [
+                "E_ISAURP"
+              ],
+              "format": "label"
+            },
+            "value": "1",
+            "disabled": true
+          },
+          "isclos": {
+            "control": "select",
+            "label": "自动结清贷款标志",
+            "width": "160px",
+            "dict": {
+              "dictType": "E_ISCLOS",
+              "dictKey": [
+                "E_ISCLOS"
+              ],
+              "format": "label"
+            },
+            "value": "1",
+            "disabled": true
+          }
+        },
+        {
+          "aurptp": {
+            "control": "select",
+            "label": "不足额扣款方式",
+            "width": "160px",
+            "dict": {
+              "dictType": "E_AURPTP",
+              "dictKey": [
+                "E_AURPTP"
+              ],
+              "format": "label"
+            },
+            "value": "1",
+            "disabled": true
+          },
+          "auovtp": {
+            "control": "select",
+            "label": "逾期不足额扣款方式",
+            "width": "160px",
+            "dict": {
+              "dictType": "E_AUOVTP",
+              "dictKey": [
+                "E_AUOVTP"
+              ],
+              "format": "label"
+            },
+            "value": "1",
+            "disabled": true
+          }
+        },
+        {
+          "isepym": {
+            "control": "select",
+            "label": "是否允许提前还款",
+            "width": "160px",
+            "dict": {
+              "dictType": "E_YES___",
+              "dictKey": [
+                "E_YES___"
+              ],
+              "format": "label"
+            },
+            "events": {
+              "condition": {
+                "$default": {
+                  "control": {
+                    "issett": {
+                      "disabled": false
+                    },
+                    "iscurr": {
+                      "disabled": false
+                    },
+                    "ispart": {
+                      "disabled": false
+                    }
+                  }
+                },
+                "0": {
+                  "control": {
+                    "issett": {
+                      "value": "",
+                      "disabled": true
+                    },
+                    "iscurr": {
+                      "value": "",
+                      "disabled": true
+                    },
+                    "ispart": {
+                      "value": "",
+                      "disabled": true
+                    }
+                  }
+                },
+                "1": {
+                  "control": {
+                    "issett": {
+                      "disabled": false
+                    },
+                    "iscurr": {
+                      "disabled": false
+                    },
+                    "ispart": {
+                      "disabled": false
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "iscurr": {
+            "control": "select",
+            "label": "是否允许提前还当期",
+            "width": "160px",
+            "dict": {
+              "dictType": "E_YES___",
+              "dictKey": [
+                "E_YES___"
+              ],
+              "format": "label"
+            }
+          }
+        },
+        {
+          "ispart": {
+            "control": "select",
+            "label": "是否允许提前部分还款",
+            "width": "160px",
+            "dict": {
+              "dictType": "E_YES___",
+              "dictKey": [
+                "E_YES___"
+              ],
+              "format": "label"
+            }
+          },
+          "issett": {
+            "control": "select",
+            "label": "是否允许提前结清",
+            "width": "160px",
+            "dict": {
+              "dictType": "E_YES___",
+              "dictKey": [
+                "E_YES___"
+              ],
+              "format": "label"
+            }
+          }
+        },
+        {
+          "epymtp": {
+            "control": "select",
+            "label": "提前还款还息方式",
+            "width": "160px",
+            "dict": {
+              "dictType": "E_EPYMTP",
+              "dictKey": [
+                "E_EPYMTP"
+              ],
+              "format": "label"
+            },
+            "value": "2",
+            "disabled": true
+          },
+          "epchsc": {
+            "control": "select",
+            "label": "提前还款调整计划",
+            "width": "160px",
+            "dict": {
+              "dictType": "E_ISCHSC",
+              "dictKey": [
+                "E_ISCHSC"
+              ],
+              "format": "label"
+            },
+            "value": "1",
+            "disabled": true
+          }
+        },
+        {
+          "tmchsc": {
+            "control": "select",
+            "label": "期限变更调整计划",
+            "width": "160px",
+            "dict": {
+              "dictType": "E_ISCHSC",
+              "dictKey": [
+                "E_ISCHSC"
+              ],
+              "format": "label"
+            },
+            "value": "1",
+            "disabled": true
+          },
+          "rtchsc": {
+            "control": "select",
+            "label": "利率变更调整计划",
+            "width": "160px",
+            "dict": {
+              "dictType": "E_ISCHSC",
+              "dictKey": [
+                "E_ISCHSC"
+              ],
+              "format": "label"
+            },
+            "value": "1",
+            "disabled": true
+          }
+        },
+        {
+          "isgrac": {
+            "control": "select",
+            "label": "是否有宽限期",
+            "width": "160px",
+            "dict": {
+              "dictType": "E_ISGRAC",
+              "dictKey": [
+                "E_ISGRAC"
+              ],
+              "format": "label"
+            },
+            "value": "1"
+          },
+          "grintp": {
+            "control": "select",
+            "label": "宽限期计息方式",
+            "width": "160px",
+            "dict": {
+              "dictType": "E_GRINTP",
+              "dictKey": [
+                "E_GRINTP"
+              ],
+              "format": "label"
+            },
+            "value": "1"
+          }
+        },
+        {
+          "grovtp": {
+            "control": "select",
+            "label": "宽限期后计息规则",
+            "width": "160px",
+            "dict": {
+              "dictType": "E_GROVTP",
+              "dictKey": [
+                "E_GROVTP"
+              ],
+              "format": "label"
+            },
+            "value": "1",
+            "disabled": true
+          },
+          "grtftp": {
+            "control": "select",
+            "label": "宽限期转逾期规则",
+            "width": "160px",
+            "dict": {
+              "dictType": "E_GRTFTP",
+              "dictKey": [
+                "E_GRTFTP"
+              ],
+              "format": "label"
+            },
+            "value": "1"
+          }
+        },
+        {
+          "grhdtp": {
+            "control": "select",
+            "label": "宽限期节假日规则",
+            "width": "160px",
+            "dict": {
+              "dictType": "E_HDAYTP",
+              "dictKey": [
+                "E_HDAYTP"
+              ],
+              "format": "label"
+            },
+            "value": "A",
+            "disabled": true
+          },
+          "iscoof": {
+            "control": "select",
+            "label": "是否冷静期",
+            "width": "160px",
+            "dict": {
+              "dictType": "E_YES___",
+              "dictKey": [
+                "E_YES___"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入是否冷静期"
+              }
+            ]
+          }
+        },
+        {
+          "iscoin": {
+            "control": "select",
+            "label": "冷静期是否收息",
+            "width": "160px",
+            "dict": {
+              "dictType": "E_YES___",
+              "dictKey": [
+                "E_YES___"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入冷静期是否收息"
+              }
+            ]
+          },
+          "cooday": {
+            "control": "text",
+            "label": "冷静期天数",
+            "width": "160px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入冷静期天数"
+              },
+              {
+                "max": 10,
+                "message": "长度不能超过10个字符"
+              }
+            ]
+          },
+          "deditp": {
+            "control": "select",
+            "label": "扣款维度类别",
+            "width": "160px",
+            "dict": {
+              "dictType": "E_DEDITP",
+              "dictKey": [
+                "E_DEDITP"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入扣款维度类别"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

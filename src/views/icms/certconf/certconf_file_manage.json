@@ -1,0 +1,123 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "上传文件",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/icms/docManager/docApplyCheck/file_upload.json",
+            "params": {
+              "apply_no": "${{params.apply_no}}",
+              "doc_no": "${{params.doc_no}}",
+              "is_access_info": "${{params.is_access_info}}",
+              "is_check_ps": "${{params.is_check_ps}}",
+              "is_check_car_invoice": "${{params.is_check_car_invoice}}",
+              "filetype": "${{params.filetype}}"
+            }
+          },
+          "props": {
+            "width": "65%",
+            "title": "上传文件"
+          },
+          "eventAfter": {
+            "###doParentCallback": true
+          },
+          "show": {
+            "expression": "'${{params.pageType}}' != 'detail'"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ar0221",
+          "apply_no": "${{params.apply_no}}",
+          "doc_no": "${{params.doc_no}}"
+        }
+      },
+      "pagination": {
+        "pageSizes": [
+          10,
+          15,
+          20,
+          50,
+          100
+        ],
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "label": "序号",
+          "type": "index",
+          "align": "center"
+        },
+        {
+          "label": "文件名",
+          "prop": "file_name",
+          "align": "center"
+        },
+        {
+          "label": "文件大小(Byte)",
+          "prop": "file_size",
+          "align": "center"
+        },
+        {
+          "label": "文件上传时间",
+          "prop": "data_create_time",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align": "center",
+          "btns": [
+            {
+
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "ar0224"
+                }
+              },
+              "eventAfter": {
+                "doParentCallback": true
+              },
+              "show": {
+                "expression": "'${{params.pageType}}' != 'detail'"
+              }
+            },
+            {
+              "type": "export",
+              "label": "下载",
+              "doRequest": {
+                "url": "/SUMP/minioCall/download",
+                "method": "GET",
+                "params": {
+                  "path": "${{current.file_path}}",
+                  "fileName": "${{current.file_name}}"
+                }
+              },
+              "eventAfter": {
+                "doParentCallback": true
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

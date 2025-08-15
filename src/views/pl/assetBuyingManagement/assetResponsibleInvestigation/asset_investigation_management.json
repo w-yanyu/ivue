@@ -1,0 +1,219 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "controls": [
+        {
+          "package_no": {
+            "control": "remoteSelect",
+            "label": "资产包名称",
+            "labelField": "package_name",
+            "valueField": "package_no",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "length": 999,
+                "start": 1,
+                "servicecode": "pl0423"
+              }
+            },
+            "format": "label"
+          },
+          "project_manager": {
+            "control": "text",
+            "label": "项目经理"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "icon": "el-icon-circle-plus",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/pl/assetBuyingManagement/assetResponsibleInvestigation/asset_investigation_add.json"
+          },
+          "props": {
+            "width": "65%",
+            "title": "新增资产尽调"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pl0427"
+        }
+      },
+      "thead": [
+        {
+          "type": "string",
+          "align": "center",
+          "label": "尽调编号",
+          "prop": "diligence_no"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "资产包编号",
+          "prop": "package_no"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "资产包名称",
+          "prop": "package_name"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "尽调机构",
+          "prop": "diligence_mechanism"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "尽调基准日",
+          "prop": "diligence_base_date"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "项目经理",
+          "prop": "project_manager"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "部门名称",
+          "prop": "department",
+          "dict": {
+            "dictKey": [
+              "department"
+            ],
+            "format": "label",
+            "labelField": "branch_name",
+            "valueField": "branch_id",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2173"
+              }
+            }
+          }
+        },
+        {
+          "type": "currency",
+          "align": "center",
+          "label": "尽调结论",
+          "prop": "diligence_conclusion"
+        },
+        {
+          "type": "currency",
+          "align": "center",
+          "label": "备注信息",
+          "prop": "remark"
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "fixed": "right",
+          "width": "200",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/pl/assetBuyingManagement/assetResponsibleInvestigation/asset_investigation_info.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "65%",
+                "title": "资产尽调详情"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/pl/assetBuyingManagement/assetResponsibleInvestigation/asset_investigation_modify.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "65%",
+                "title": "资产尽调维护"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "pl0426"
+                }
+              }
+            },
+            {
+              "type": "edit",
+              "label": "尽调日志",
+              "toRequest": {
+                "url": "/views/pl/assetBuyingManagement/assetResponsibleInvestigation/assetDiligenceLog/asset_diligence_log_management.json",
+                "method": "POST",
+                "params": {
+                  "diligence_no": "${{current.diligence_no}}"
+                }
+              },
+              "props": {
+                "width": "65%",
+                "title": "尽调日志"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "资产包定价情况汇总",
+              "toRequest": {
+                "url": "/views/pl/assetBuyingManagement/assetResponsibleInvestigation/assetDiligencePricing/asset_diligence_pricing_management.json",
+                "method": "POST",
+                "params": {
+                  "diligence_no": "${{current.diligence_no}}"
+                }
+              },
+              "props": {
+                "width": "65%",
+                "title": "资产包定价情况汇总"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "资产包风险提示",
+              "toRequest": {
+                "url": "/views/pl/assetBuyingManagement/assetResponsibleInvestigation/assetDiligenceRisk/asset_diligence_risk_management.json",
+                "method": "POST",
+                "params": {
+                  "diligence_no": "${{current.diligence_no}}"
+                }
+              },
+              "props": {
+                "width": "65%",
+                "title": "资产包风险提示"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

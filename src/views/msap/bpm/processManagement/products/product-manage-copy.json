@@ -1,0 +1,134 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "icon": "",
+          "doRequest": {
+            "url": "/SUMP/call/aOrUProcess",
+            "method": "POST",
+            "params": {
+              "servicecode": "bpm5011",
+              "appId":"${{params.appId}}",
+              "old_bpm_version":"${{params.bpm_version}}"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "wf_prod_no": {
+            "control": "text",
+            "label": "新流程产品编号",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入新流程产品编号"
+              },
+              {
+                "max": 64,
+                "message": "长度不能超过64个字符"
+              }
+            ]
+          },
+          "old_wf_prod_no": {
+            "value":"${{params.wf_prod_no}}",
+            "control": "text",
+            "label": "旧流程产品编号",
+            "width": "130px",
+            "disabled": true,
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入旧流程产品编号"
+              },
+              {
+                "max": 64,
+                "message": "长度不能超过64个字符"
+              }
+            ]
+          },
+          "wf_prod_name": {
+            "control": "text",
+            "label": "新流程产品名称",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入新流程产品名称"
+              },
+              {
+                "max": 64,
+                "message": "长度不能超过64个字符"
+              }
+            ]
+          },
+          "wf_prod_tp": {
+            "value":"${{params.wf_prod_tp}}",
+            "control": "select",
+            "disabled": true,
+            "label": "流程产品类型",
+            "width": "130px",
+            "dict": {
+              "dictType": "BPM_E_WFPDTP",
+              "dictKey": [
+                "BPM_E_WFPDTP"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择流程产品类型"
+              }
+            ]
+          },
+          "wf_define_id": {
+            "value":"${{params.wf_define_id}}",
+            "control": "lookup",
+            "disabled": false,
+            "label": "流程编号",
+            "width": "130px",
+            "prop": "actidd",
+            "keyField":{
+              "wf_define_id":"id_",
+              "wf_define_name":"name_"
+            },
+            "toRequest": {
+              "url": "/views/msap/bpm/processManagement/products/process-product-list.json",
+              "method": "post",
+              "params":{
+                "appId":"${{params.appId}}"
+              }
+            },
+            "props": {
+              "title": "流程编号查询"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择流程编号"
+              }
+            ]
+          },
+          "wf_define_name": {
+            "value":"${{params.wf_define_name}}",
+            "control": "string",
+            "label": "流程名称",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入流程名称"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

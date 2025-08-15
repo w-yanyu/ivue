@@ -1,0 +1,134 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "strategy_name": {
+            "label": "策略名称",
+            "control": "text"
+          },
+          "is_validity": {
+            "control": "select",
+            "label": "是否有效",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ]
+            },
+            "format": "label"
+          }
+        }
+
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "新增",
+          "toRequest": {
+            "url": "/views/wa/param/filter/filter_query_add.json",
+            "method": "get",
+            "params": {}
+          },
+          "props": {
+            "title": "预警筛选策略新增",
+            "width": "75%"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "wa0011"
+        }
+      },
+      "thead": [
+        {
+          "label": "序号",
+          "type": "index"
+        },
+        {
+          "label": "策略编号",
+          "prop": "strategy_id",
+          "align": "center"
+        },
+        {
+          "label": "策略名称",
+          "prop": "strategy_name",
+          "align": "center"
+        },
+        {
+          "label": "是否有效",
+          "align": "center",
+          "prop": "is_validity",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作日期",
+          "prop": "data_update_time",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/wa/param/filter/filter_query_details.json",
+                "method": "get",
+                "params": {}
+              },
+              "props": {
+                "title": "预警筛选策略详情",
+                "width": "75%"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/wa/param/filter/filter_query_modify.json",
+                "method": "get",
+                "params": {}
+              },
+              "props": {
+                "title": "预警筛选策略维护",
+                "width": "75%"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "wa0041",
+                  "strategy_id": "${{current.strategy_id}}"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,212 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "initRequest": "${{params}}",
+            "btns": [{
+                "type": "submit",
+                "label": "提交",
+                "icon": "",
+                "doRequest": {
+                    "url": "/SUMP/icmcall/icmRPCCall",
+                    "method": "POST",
+                    "params": {
+                        "servicecode": "us0302"
+                    }
+                }
+            }],
+            "controls": [{
+                "cust_no": {
+                    "control": "hidden",
+                    "label": "客户编号",
+                    "width": "10px",
+                    "disabled": true
+                },
+                "serial_no": {
+                    "control": "hidden",
+                    "label": "企业对外投资及联营信息流水号",
+                    "edit": false
+                },
+                "cust_name2": {
+                    "control": "hidden",
+                    "edit": true,
+                    "width": "10px",
+                    "rules": [],
+                    "label": "关联企业名称",
+                    "keyField": {
+                        "cust_name": "cust_name",
+                        "in_cust_no": "cust_no"
+                    },
+                    "toRequest": {
+                        "url": "/views/us/entManager/ent_cust_lookup.json",
+                        "method": "post"
+                    },
+                    "props": {
+                        "title": "查询关联企业客户名称"
+                    },
+                    "format": "label"
+                },
+                "in_cust_no": {
+                    "control": "hidden",
+                    "label": "被投资单位客户ID",
+                    "width": "10px",
+                    "disabled": true,
+                    "rules": [{
+                        "required": true,
+                        "message": "被投资单位客户ID"
+                    }]
+                },
+                "cust_name": {
+                    "label": "被投资单位客户名称",
+                    "control": "text",
+                    "width": "10px",
+                    "disabled": true,
+                    "rules": [{
+                        "required": true
+                    }]
+                },
+                "is_our_cust": {
+                    "control": "select",
+                    "label": "是否我行客户",
+                    "width": "10px",
+                    "value": "1",
+                    "disabled": true,
+                    "rules": [{
+                        "required": true,
+                        "message": "请选择是否我行客户"
+                    }],
+                    "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                            "MS_E_YESORNO"
+                        ],
+                        "format": "label"
+                    }
+                },
+                "inves_type": {
+                    "control": "select",
+                    "label": "关联关系描述",
+                    "width": "10px",
+                    "rules": [{
+                        "required": true,
+                        "message": "请选择关联关系描述"
+                    }],
+                    "dict": {
+                        "dictType": "US_E_INVES_TYPE",
+                        "dictKey": [
+                            "US_E_INVES_TYPE"
+                        ],
+                        "format": "label"
+                    }
+                },
+                "is_controller": {
+                    "control": "select",
+                    "label": "是否实际控制人",
+                    "width": "10px",
+                    "rules": [{
+                        "required": true,
+                        "message": "请选择是否实际控制人"
+                    }],
+                    "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                            "MS_E_YESORNO"
+                        ],
+                        "format": "label"
+                    }
+                },
+                "retpyj": {
+                    "control": "select",
+                    "label": "关联企业性质(银监)",
+                    "width": "10px",
+                    "rules": [{
+                        "required": true,
+                        "message": "请选择关联企业性质(银监)"
+                    }],
+                    "dict": {
+                        "dictType": "US_E_RETYYJ",
+                        "dictKey": [
+                            "US_E_RETYYJ"
+                        ],
+                        "format": "label"
+                    }
+                },
+                "nature_type": {
+                    "control": "select",
+                    "label": "关联企业性质",
+                    "width": "10px",
+                    "rules": [{
+                        "required": true,
+                        "message": "请选择关联企业性质"
+                    }],
+                    "dict": {
+                        "dictType": "US_E_NATURE_TYPE",
+                        "dictKey": [
+                            "US_E_NATURE_TYPE"
+                        ],
+                        "format": "label"
+                    }
+                },
+                "relate_type": {
+                    "control": "select",
+                    "label": "关联类型",
+                    "width": "10px",
+                    "rules": [{
+                        "required": true,
+                        "messsage": "请选择关联类型"
+                    }],
+                    "dict": {
+                        "dictType": "US_E_RELATION_TYPE",
+                        "dictKey": [
+                            "US_E_RELATION_TYPE"
+                        ],
+                        "format": "label"
+                    }
+                },
+                "busi_addr": {
+                    "label": "经营地址",
+                    "control": "textarea",
+                    "width": "10px",
+                    "placeholder": "100字以内",
+                    "autosize": {
+                        "minRows": 4
+                    },
+                    "span": "24",
+                    "rules": [{
+                        "required": false,
+                        "max": 100,
+                        "message": "请输入经营地址"
+                    }]
+                },
+                "busi_scope": {
+                    "label": "经营范围",
+                    "span": "24",
+                    "control": "textarea",
+                    "width": "10px",
+                    "placeholder": "100字以内",
+                    "autosize": {
+                        "minRows": 4
+                    },
+                    "rules": [{
+                        "required": false,
+                        "max": 100,
+                        "message": "请输入经营范围"
+                    }]
+                },
+                "remark": {
+                    "label": "备注",
+                    "control": "textarea",
+                    "width": "10px",
+                    "span": "24",
+                    "autosize": {
+                        "minRows": 4
+                    },
+                    "rules": [{
+                        "max": "100",
+                        "message": "长度不能超过100个字符"
+                    }]
+                }
+            }]
+        }
+    }
+}

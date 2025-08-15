@@ -1,0 +1,166 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+
+    "toolbar": {
+      "btns": [
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "ce3552",
+          "case_no": "${{params.case_no}}"
+        }
+      },
+      "pagination": {
+        "pageSizes": [
+          10,
+          15,
+          20,
+          50,
+          100
+        ],
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "label": "被访人姓名",
+          "align": "center",
+          "width": "180px",
+          "prop": "callon_name"
+        },
+        {
+          "label": "客户关系",
+          "prop": "relationship",
+          "align": "center",
+          "width": "180px",
+          "dict": {
+            "dictType": "CE_E_RELATIONSHIP",
+            "dictKey": [
+              "CE_E_RELATIONSHIP"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label":"地址",
+          "align": "center",
+          "width": "180px",
+          "prop": "address"
+        },
+        {
+          "label":  "申请人",
+          "align": "center",
+          "width": "180px",
+          "prop": "appt",
+          "dict": {
+            "dictKey": [
+              "appt"
+            ],
+            "format": "label",
+            "labelField": "user_name",
+            "valueField": "user_id",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ce0403"
+              }
+            }
+          }
+        },
+        {
+          "label":  "申请时间",
+          "align": "center",
+          "width": "180px",
+          "prop": "apply_date"
+        },
+        {
+          "label":  "申请原因",
+          "align": "center",
+          "width": "180px",
+          "prop": "apply_reason"
+        },
+        {
+          "label":  "审核状态",
+          "align": "center",
+          "width": "180px",
+          "prop": "appr_state",
+          "dict": {
+            "dictType": "CE_APPR_STATE",
+            "dictKey": [
+              "CE_APPR_STATE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label":  "审核人",
+          "align": "center",
+          "width": "180px",
+          "prop": "approver",
+          "dict":{
+            "dictKey": [
+              "approver"
+            ],
+            "format": "label",
+            "labelField": "user_name",
+            "valueField": "user_id",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ce0403"
+              }
+            }
+          }
+        },
+        {
+          "label":  "审核时间",
+          "align": "center",
+          "width": "180px",
+          "prop": "appr_date"
+        },
+        {
+          "label":  "审核说明",
+          "align": "center",
+          "width": "180px",
+          "prop": "appr_comment"
+        },
+        {
+          "label": "操作",
+          "align":"center",
+          "width": "180px",
+          "btns": [
+            {
+              "type": "delete",
+              "label": "撤回",
+              "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "ce1559",
+                  "apply_journal_no": "${{current.apply_journal_no}}"
+                }
+              },
+              "confirm": {
+                "title": "提示信息",
+                "msg": "确认撤回吗?"
+              },
+              "show": {
+                "prop": "appr_state",
+                "is": [
+                  "NC"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

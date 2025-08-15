@@ -1,0 +1,143 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "crdlno": {
+            "control": "text",
+            "label": "额度账号",
+            "width": "50%",
+            "rules": [
+              {
+                "max": 80,
+                "message": "长度不能超过80个字符"
+              }
+            ]
+          },
+          "acctna": {
+            "control": "text",
+            "label": "姓名",
+            "width": "50%",
+            "rules": [
+              {
+                "max": 50,
+                "message": "长度不能超过50个字符"
+              }
+            ]
+          }
+        },
+        {
+          "idtfno": {
+            "control": "text",
+            "label": "证件号",
+            "width": "50%",
+            "rules": [
+              {
+                "max": 30,
+                "message": "长度不能超过30个字符"
+              }
+            ]
+          },
+          "sprdid": {
+            "control": "text",
+            "label": "产品名称",
+            "width": "50%",
+            "rules": [
+              {
+                "max": 30,
+                "message": "长度不能超过30个字符"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "custom",
+          "target": "dialog",
+          "label": "批量五级分类",
+          "#checkCountMin": 1,
+          "toRequest": {
+            "method": "GET",
+            "url": "@ManualSubmit"
+          },
+          "props": {
+            "title": "手动五级分类"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "PLMSKGTS0002"
+        }
+      },
+      "thead": [
+        {
+          "type" :  "selection",
+          "width": "55"
+        },
+        {
+          "label": "借据号",
+          "prop": "lncfno"
+        },
+        {
+          "label": "逾期天数",
+          "prop": "modsdy"
+        },
+        {
+          "label": "贷款状态",
+          "prop": "clssst",
+          "dict": {
+            "dictType": "E_CLSSST",
+            "dictKey": [
+              "E_CLSSST"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "系统五级分类",
+          "prop": "endres",
+          "dict": {
+            "dictType": "E_CLEVEL1",
+            "dictKey": [
+              "E_CLEVEL1"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "人工五级分类(影响征信)",
+          "prop": "rgzxgradcd",
+          "dict": {
+            "dictType": "E_CLEVEL1",
+            "dictKey": [
+              "E_CLEVEL1"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "人工五级分类(不影响征信)",
+          "prop": "rggradcd",
+          "dict": {
+            "dictType": "E_CLEVEL1",
+            "dictKey": [
+              "E_CLEVEL1"
+            ],
+            "format": "label"
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,158 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": "${{params}}",
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "us1162",
+          "cust_no": "${{params.cust_no}}"
+        }
+      },
+      "controls": [
+        {
+          "revenue_data_no": {
+            "control": "hidden",
+            "label": "营业数据编号",
+            "span": 8,
+            "width": "25px"
+          },
+          "trxn_date": {
+            "control": "dateTimePicker",
+            "label": "交易日期",
+            "span": 8,
+            "width": "25px",
+            "format": "yyyyMMdd",
+            "disabled": true
+          },
+          "revenue_data_type": {
+            "control": "select",
+            "label": "营业数据类型",
+            "span": 8,
+            "width": "25px",
+            "dict": {
+              "dictType": "US_E_REVENUE_DATA_TYPE",
+              "dictKey": [
+                "US_E_REVENUE_DATA_TYPE"
+              ],
+              "format": "label"
+            },
+            "disabled": true
+          },
+          "revenue_name": {
+            "control": "text",
+            "label": "营业数据名称",
+            "span": 8,
+            "width": "25px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入营业数据名称"
+              }
+            ]
+          },
+          "acct_amt": {
+            "control": "currency",
+            "label": "金额",
+            "span": 8,
+            "width": "25px",
+            "align": "left",
+            "format": {
+              "thousand": ",",
+              "decimal": 2
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入金额"
+              }
+            ]
+          },
+          "ccy_code": {
+            "control": "select",
+            "label": "币种",
+            "span": 8,
+            "width": "25px",
+            "dict": {
+              "dictType": "MS_CURRENCY",
+              "dictKey": [
+                "MS_CURRENCY"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入币种"
+              }
+            ]
+          },
+          "industry_type_name": {
+            "control": "lookup",
+            "label": "行业分类",
+            "span": "8",
+            "width": "25px",
+            "placeholder": "点击行业分类",
+            "toRequest": {
+              "url": "@jsonLookUpTree",
+              "method": "post",
+              "params": {
+                "treeTitle": "行业分类",
+                "treeType": "3",
+                "industry_type_code": "industry_type_code"
+              }
+            },
+            "keyField": {
+              "industry_type_code": "industry_type_code"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入行业分类"
+              }
+            ]
+          },
+          "industry_type_code": {
+            "control": "hidden",
+            "label": "行业分类编码",
+            "span": "8",
+            "width": "25px"
+          },
+          "prod_name": {
+            "control": "text",
+            "label": "产品名",
+            "span": 8,
+            "width": "25px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入行业分类编码"
+              }
+            ]
+          },
+          "area": {
+            "control": "select",
+            "label": "地区",
+            "span": 8,
+            "width": "25px",
+            "dict": {
+              "dictType": "US_E_AREA_TYPE",
+              "dictKey": [
+                "US_E_AREA_TYPE"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入地区"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

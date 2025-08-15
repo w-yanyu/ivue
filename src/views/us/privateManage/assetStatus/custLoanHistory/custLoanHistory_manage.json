@@ -1,0 +1,128 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "foldLineNumber":2,
+      "btns": [
+
+      ],
+      "controls": [
+        {
+          "cert_type": {
+            "span": 8,
+            "label": "证件类型",
+            "control": "select",
+            "disabled": true,
+            "value":"${{params.cert_type}}",
+            "dict": {
+              "format": "label",
+              "dictKey": [
+                "MS_E_CRET_TYPE"
+              ],
+              "dictType": "MS_E_CRET_TYPE"
+            }
+          },
+          "cert_no": {
+            "span": 8,
+            "control": "text",
+            "label": "证件号码",
+            "disabled": true,
+            "value":"${{params.cert_no}}",
+            "rules": [
+              {
+                "max": 35,
+                "message": "长度不能超过18个字符"
+              }
+            ]
+          }
+        }
+
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "outlistid":"lnCpstnQryType",
+          "servicecode": "ln3108",
+          "cust_num": "${{params.cust_no}}",
+          "cert_type": "${{params.cert_type}}",
+          "cert_no": "${{params.cert_no}}"
+        }
+      },
+      "thead": [
+        {
+          "label": "序号",
+          "type" :  "index"
+        },
+        {
+          "label": "客户姓名",
+          "prop": "cust_nm"
+         
+        },
+      
+        
+        {
+          "label": "借据号",
+          "prop": "loan_due_bill_num"
+        },
+        {
+          "label": "可售产品编号",
+          "prop": "slbl_prod_code"
+        },
+        {
+          "label": "可售产品名称",
+          "prop": "slbl_prod_nm"
+        },
+        {
+          "label": "到期日期",
+          "prop": "matu_dt"
+        },
+        {
+          "label": "贷款金额(元)",
+          "prop": "due_bill_amt",
+          "type": "string",
+          "align": "center",
+          "format": {
+            "thousand": ",",
+            "decimal": "2",
+            "type": "currency"
+          }
+        },
+        {
+          "label": "贷款形态",
+          "prop": "loan_form",
+          "dict": {
+            "dictType": "LN_E_LOAN_FORM",
+            "dictKey": [
+              "LN_E_LOAN_FORM"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "align":"center",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/integrated/loanInfo/loan_info_tabs.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "80%",
+                "title": "借据信息详情"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

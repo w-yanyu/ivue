@@ -1,0 +1,306 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "scope": "formData",
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "nxrepy"}
+            },
+            "btns": [
+                {
+                    "type": "submit",
+                    "label": "还款"
+                }
+            ],
+            "controls": [
+                {
+                    "lncfno": {
+                        "control": "lookup",
+                        "width": "130px",
+                        "edit": true,
+                        "rules": [
+                          {
+                            "required": true,
+                            "message": "请输入贷款借据号"
+                          }
+                        ],
+                        "label": "贷款借据号",
+                        "keyField": {
+                          "lncfno": "lncfno",
+                          "acctna": "custna",
+                          "instdt": "initdt",
+                          "matudt": "matudt",
+                          "termfm": "termfm",
+                          "lncfam": "lncfam",
+                          "lnnpbl": "lnnpbl",
+                          "lnopbl": "lnopbl"
+                        },
+                        "toRequest": {
+                          "url": "views/dh/advanceSpecial/ActiveRepayment/Act_repaymentTrial_lookup.json",
+                          "method": "post"
+                        },
+                        "props": {
+                          "width": "80%",
+                          "title": "贷款借据号查询"
+                        },
+                        "format": "label"
+                      },
+                    "acctna": {
+                        "label": "客户名称",
+                        "control": "text",
+                        "width": "130px",
+                        "disabled":true,
+                        "format": "label"
+                    },
+                    "instdt": {
+                        "label": "起息日期",
+                        "control": "text",
+                        "width": "130px",
+                        "disabled":true,
+                        "format": "label"
+                    },
+                    "matudt": {
+                        "label": "到期日期",
+                        "control": "text",
+                        "width": "130px",
+                        "disabled":true,
+                        "format": "label"
+                    },
+                    "termfm": {
+                        "label": "贷款期限",
+                        "control": "text",
+                        "width": "130px",
+                        "disabled":true,
+                        "format": "label"
+                    },
+                    "lncfam": {
+                        "label": "借据金额",
+                        "control": "text",
+                        "width": "130px",
+                        "disabled":true,
+                        "format": "label"
+                    },
+                    "lnnpbl": {
+                        "label": "正常本金",
+                        "control": "text",
+                        "width": "130px",
+                        "disabled":true,
+                        "format": "label"
+                    },
+                    "lnopbl": {
+                        "label": "逾期本金",
+                        "control": "text",
+                        "width": "130px",
+                        "disabled":true,
+                        "format": "label"
+                    },
+                    "repytp": {
+                        "label": "还款种类",
+                        "control": "select",
+                        "width": "130px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请选择还款种类"
+                            }
+                        ],
+                        "dict": {
+                            "dictType": "E_REPYTP1",
+                            "dictKey": [
+                                "E_REPYTP1"
+                            ],
+                            "format": "label"
+                        },
+                        "showItem": {
+                            "4": ["adpytp"]
+                        },
+                        "events": {
+                            "condition": {
+                                "6": {
+                                    "control": {
+                                        "adpytp": {
+                                            "rules": [
+                                                {
+                                                    "required": false,
+                                                    "message": "请选择提前还款类型"
+                                                }
+                                            ]
+                                        },
+                                        "repyam": {
+                                            "disabled":true,
+                                            "rules": [
+                                                {
+                                                    "required": true,
+                                                    "message": "请输入还款金额"
+                                                }
+                                            ]
+                                        }
+
+                                    },
+                                    "doRequest": {
+                                        "url": "/SUMP/call/RPCCall",
+                                        "method": "POST",
+                                        "params": {
+                                            "servicecode": "qrcuam",
+                                            "lncfno": "${{formData.lncfno}}",
+                                            "repytp": "${{formData.repytp}}"
+                                        },
+                                        "resultSet": {
+                                            "repyam":"rpcoam"
+                                        }
+                                    }
+                                },
+                                "4": {
+                                    "control": {
+                                        "adpytp": {
+                                            "rules": [
+                                                {
+                                                    "required": true,
+                                                    "message": "请选择提前还款类型"
+                                                }
+                                            ]
+                                        },
+                                        "repyam": {
+                                            "disabled":false,
+                                            "rules": [
+                                                {
+                                                    "required": true,
+                                                    "message": "请输入还款金额"
+                                                }
+                                            ]
+                                        }
+
+                                    },
+                                    "doRequest": {
+                                        "url": "/SUMP/call/RPCCall",
+                                        "method": "POST",
+                                        "params": {
+                                            "servicecode": "qrcuam",
+                                            "lncfno": "${{formData.lncfno}}",
+                                            "repytp": "${{formData.repytp}}"
+                                        },
+                                        "resultSet": {
+                                            "repyam":"rpcoam"
+                                        }
+                                    }
+                                },
+                                "1": {
+                                    "control": {
+                                        "adpytp": {
+                                            "rules": [
+                                                {
+                                                    "required": false,
+                                                    "message": "请选择提前还款类型"
+                                                }
+                                            ]
+                                        },
+                                        "repyam": {
+                                            "disabled":false,
+                                            "rules": [
+                                                {
+                                                    "required": true,
+                                                    "message": "请输入还款金额"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "doRequest": {
+                                        "url": "/SUMP/call/RPCCall",
+                                        "method": "POST",
+                                        "params": {
+                                            "servicecode": "qrcuam",
+                                            "lncfno": "${{formData.lncfno}}",
+                                            "repytp": "${{formData.repytp}}"
+                                        },
+                                        "resultSet": {
+                                            "repyam":"rpcoam"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "repyam": {
+                        "control": "text",
+                        "label": "还款金额",
+                        "width": "130px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入还款金额"
+                            }
+                        ]
+                    },
+                    "chckdt": {
+                        "control": "dateTimePicker",
+                        "label": "网贷平台日期",
+                        "format": "yyyyMMdd",
+                        "width": "130px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入网贷平台日期"
+                            }
+                        ]
+                    },
+                    "chcksq": {
+                        "control": "text",
+                        "label": "网贷平台流水",
+                        "width": "130px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入网贷平台流水"
+                            }
+                        ]
+                    },
+                    "ordrid": {
+                        "control": "text",
+                        "label": "订单号",
+                        "width": "130px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入订单号"
+                            }
+                        ]
+                    },
+                    "pychnl": {
+                        "control": "text",
+                        "label": "支付渠道",
+                        "width": "130px",
+                        "value": "JDJR",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入支付渠道"
+                            }
+                        ]
+                    },
+                    "adpytp": {
+                        "label": "提前还款类型",
+                        "control": "select",
+                        "width": "130px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请选择提前还款类型"
+                            }
+                        ],
+                        "dict": {
+                            "dictType": "E_ADRPTP1",
+                            "dictKey": [
+                                "E_ADRPTP1"
+                            ],
+                            "format": "label"
+                        }
+                    }
+
+                }
+            ]
+        }
+    }
+}

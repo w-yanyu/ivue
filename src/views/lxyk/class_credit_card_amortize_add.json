@@ -1,0 +1,234 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": "${{params}}",
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "icon": "",
+          "doRequest": {
+            "url": "/SUMP/call/RPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "ln3972"
+            }
+          },
+          "show": {
+            "expression": "'${{current.istlmt_tp}}' != '1'"
+          }
+        }
+      ],
+      "controlsGroup": [
+        {
+          "title": "类信用卡分期",
+          "tooltip": "类信用卡分期",
+          "titleIcon": "el-icon-info",
+          "expand": true,
+          "accordion": false,
+          "controls": [
+            {
+              "smilr_cr_card_loan_acct_num": {
+                "control": "string",
+                "label": "类信用卡贷款账号",
+                "width": "100px"
+              },
+              "smilr_cr_card_acct_ste": {
+                "control": "select",
+                "label": "类信用卡账户状态",
+                "width": "100px",
+                "disabled": true,
+                "dict": {
+                  "dictType": "E_SMILR_CR_CARD_ACCT_STE",
+                  "dictKey": [
+                    "E_SMILR_CR_CARD_ACCT_STE"
+                  ],
+                  "format": "label"
+                }
+              }
+            },
+            {
+              "cust_num": {
+                "control": "string",
+                "label": "客户号",
+                "width": "100px"
+              },
+              "cust_nm": {
+                "control": "string",
+                "label": "客户名称",
+                "width": "100px"
+              }
+            },
+            {
+              "ccy_code_num": {
+                "label": "货币代号",
+                "control": "select",
+                "width": "100px",
+                "disabled": true,
+                "dict": {
+                  "dictType": "MS_CURRENCY",
+                  "dictKey": [
+                    "MS_CURRENCY"
+                  ],
+                  "format": "label"
+                }
+              },
+              "txn_amt": {
+                "control": "currency",
+                "label": "分期金额",
+                "width": "100px",
+                "format": "label",
+                "rules": [
+                  {
+                    "expression": "${{form.txn_amt}} >=  0  ",
+                    "message": "分期金额不能小于零"
+                  },
+                  {
+                    "required": true,
+                    "message": "请输入分期额度"
+                  }
+                ]
+              }
+            },
+            {
+              "istlmt_prds": {
+                "control": "select",
+                "label": "分期期数",
+                "width": "100px",
+                "dict": {
+                  "dictType": "E_ISTLMT_PRDS",
+                  "dictKey": [
+                    "E_ISTLMT_PRDS"
+                  ],
+                  "format": "label"
+                },
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请选择分期期数"
+                  }
+                ]
+              },
+              "istlmt_tp": {
+                "control": "select",
+                "label": "分期类型",
+                "width": "100px",
+                "dict": {
+                  "dictType": "E_ISTLMT_TP",
+                  "dictKey": [
+                    "E_ISTLMT_TP"
+                  ],
+                  "format": "label"
+                },
+                "showItem": {
+                  "$default": [],
+                  "1": [
+                    "lstSmilrCrCardBillDetl"
+                  ]
+                },
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请选择分期类型"
+                  }
+                ],
+                "events": {
+                  "condition": {
+                    "0": {
+                      "doRequest": {
+                        "url": "/SUMP/call/RPCCall",
+                        "method": "POST",
+                        "params": {
+                          "servicecode": "ln3997",
+                          "smilr_cr_card_loan_acct_num": "${{params.smilr_cr_card_loan_acct_num}}"
+                        },
+                        "resultSet": {
+                          "prod_code": "cnsp_istlmt_prod_code"
+                        }
+                      }
+                    },
+                    "1": {
+                      "doRequest": {
+                        "url": "/SUMP/call/RPCCall",
+                        "method": "POST",
+                        "params": {
+                          "servicecode": "ln3997",
+                          "smilr_cr_card_loan_acct_num": "${{params.smilr_cr_card_loan_acct_num}}"
+                        },
+                        "resultSet": {
+                          "prod_code": "txn_istlmt_prod_code"
+                        }
+                      }
+                    },
+                    "2": {
+                      "doRequest": {
+                        "url": "/SUMP/call/RPCCall",
+                        "method": "POST",
+                        "params": {
+                          "servicecode": "ln3997",
+                          "smilr_cr_card_loan_acct_num": "${{params.smilr_cr_card_loan_acct_num}}"
+                        },
+                        "resultSet": {
+                          "prod_code": "bill_istlmt_prod_code"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "prod_code": {
+                "control": "lookup",
+                "label": "分期产品代码",
+                "width": "100px",
+                "edit": true,
+                "keyField": {
+                  "prod_code": "prod_code",
+                  "prod_nm": "prod_nm"
+                },
+                "toRequest": {
+                  "url": "/views/product/productModel/prod_list_qry.json",
+                  "method": "get"
+                },
+                "props": {
+                  "title": "选择分期产品",
+                  "width": "75%"
+                },
+                "format": "label"
+              },
+              "prod_nm": {
+                "control": "string",
+                "label": "分期产品名称",
+                "width": "100px"
+              }
+            },
+            {
+              "lstSmilrCrCardBillDetl": {
+                "initShow": false,
+                "span": 24,
+                "control": "dynamic",
+                "toRequest": {
+                  "url": "/views/lxyk/class_credit_card_deal_info.json",
+                  "params": {
+                    "smilr_cr_card_loan_acct_num": "${{params.smilr_cr_card_loan_acct_num}}",
+                    "txn_evt": "SM_LNXF",
+                    "smilr_cr_card_acct_ste": "${{form.smilr_cr_card_acct_ste}}",
+                    "cust_num": "${{form.cust_num}}",
+                    "cust_nm": "${{form.cust_nm}}",
+                    "ccy_code_num": "${{form.ccy_code_num}}",
+                    "istlmt_tp": "${{form.istlmt_tp}}",
+                    "prod_code": "${{form.prod_code}}",
+                    "txn_amt": "${{form.txn_amt}}",
+                    "istlmt_prds": "${{form.istlmt_prds}}"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

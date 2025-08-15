@@ -1,0 +1,818 @@
+{
+	"module": "v_inputDataForm_btn",
+	"layout": {
+		"form": {
+			"initRequest": {
+				"url": "/SUMP/icmcall/icmRPCCall",
+				"method": "POST",
+				"params": {
+					"servicecode": "PLMSKGSS0003",
+					"lncfno": "${{params.lncfno}}",
+					"applid": "${{params.applid}}"
+				}
+      },
+
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "PLMSKGSS0009"
+        }
+      },
+
+			"btns": [
+				{
+					"type": "submit",
+					"label": "保存"
+        },
+				{
+					"type": "reset",
+					"label": "重置"
+        }
+			],
+			"controlsGroup": [
+				{
+					"title": "基本信息",
+					"accordion": false,
+					"expand": true,
+					"controls": [
+						{
+							"applid": {
+								"label": "申请号",
+								"control": "hidden",
+								"span": 6,
+								"name": "applid",
+								"value": "${{params.applid}}",
+								
+								"disabled": true,
+								"rules": [
+								{
+									"required": false
+								}
+								]
+							},
+							"acctna": {
+								"label": "客户名称",
+								"control": "text",
+								"span": 6,
+								"name": "acctna",
+                				"value": "${{form.loanInfo.acctna}}",
+								
+               					"disabled": true,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							},
+							"custno": {
+								"label": "客户号",
+								"control": "text",
+								"span": 6,
+								"name": "custno",
+                				"value": "${{form.loanInfo.custno}}",
+								
+                				"disabled": true,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							},
+							"idtfno": {
+								"label": "证件号码",
+								"control": "text",
+								"span": 6,
+								"name": "idtfno",
+                				"value": "${{form.loanInfo.idtfno}}",
+								
+                				"disabled": true,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							},
+							"lncfno": {
+								"label": "借据号",
+								"span": 6,
+								"name": "lncfno",
+                				"value": "${{form.loanInfo.lncfno}}",
+								"control": "text",
+								"edit": "true",
+								
+                				"disabled": true,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							},
+							"prodna": {
+								"label": "产品名称",
+								"control": "text",
+								"span": 6,
+								"name": "prodna",
+               					"value": "${{form.loanInfo.prodna}}",
+								
+                				"disabled": true,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							},
+							"prodcd": {
+								"label": "产品代码",
+								"control": "text",
+								"span": 6,
+               				 	"value": "${{form.loanInfo.prodcd}}",
+								"name": "prodcd",
+								
+                				"disabled": true,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							}
+
+						}
+					]
+				},
+				{
+					"title": "欠款信息",
+					"accordion": false,
+					"expand": true,
+					"controls": [
+						{
+							"acctno": {
+								"label": "贷款账号",
+								"span": 6 ,
+								"control": "text",
+								"name": "acctno",
+                				"value": "${{form.loanInfo.acctno}}",
+								
+								"disabled": true,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							},
+
+							"lnream1": {
+								"label": "逾期金额",
+								"span": 6 ,
+								"control": "currency",
+								"compute":"${{form.lnream}}+${{form.yclixi}}",
+								"disabled": true,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							},
+							"lnream": {
+								"label": "逾期金额",
+								"span": 6 ,
+								"control": "hidden",
+                				"value": "${{form.loanInfo.lnream}}",
+                				"name": "lnream",
+								
+								"disabled": true,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							},
+							"lnrebl": {
+								"label": "贷款余额",
+								"span": 6 ,
+								"control": "text",
+								"name": "lnrebl",
+                				"value": "${{form.loanInfo.lnrebl}}",
+								
+								"disabled": true,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							},
+
+							"clssst": {
+								"control": "select",
+								"span": 6 ,
+								"label": "贷款状态",
+								
+                				"value": "${{form.loanInfo.clssst}}",
+								"disabled": true,
+								"dict": {
+									"dictType": "E_CLSSST",
+									"dictKey": [
+										"E_CLSSST"
+									],
+									"format": "label"
+								}
+
+							},
+							"ovdays": {
+								"label": "逾期天数",
+								"span": 6 ,
+								"control": "text",
+								"name": "ovdays",
+                				"value": "${{form.loanInfo.ovdays}}",
+								
+								"disabled": true,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							},
+
+
+
+							"lnnpbl": {
+								"label": "正常本金",
+								"span": 6 ,
+								"control": "text",
+								"name": "lnnpbl",
+                				"value": "${{form.loanInfo.lnnpbl}}",
+								
+								"disabled": true,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							},
+							"lnopbl": {
+								"label": "逾期本金",
+								"span": 6 ,
+								"control": "text",
+								"name": "lnopbl",
+                				"value": "${{form.loanInfo.lnopbl}}",
+								"disabled": true,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							},
+							"lndpbl": {
+								"label": "呆滞本金",
+								"span": 6 ,
+								"control": "text",
+								"name": "lndpbl",
+                				"value": "${{form.loanInfo.lndpbl}}",
+								
+								"disabled": true,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							},
+							"hxxxpr": {
+								"label": "核销本金",
+								"span": 6 ,
+								"control": "text",
+								"name": "hxxxpr",
+                				"value": "${{form.loanInfo.hxxxpr}}",
+								
+								"disabled": true,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							},
+							"yjxxni": {
+								"label": "应计利息",
+								"span": 6 ,
+								"control": "currency",
+								"compute":"${{form.ysyjni}}+${{form.csyjni}}",
+								
+								"disabled": true,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							},
+							"ysyjni": {
+								"label": "应收应计利息",
+								"span": 6 ,
+								"control": "hidden",
+								"name": "ysyjni",
+                				"value": "${{form.loanInfo.ysyjni}}",
+								
+								"disabled": true,
+								"rules": [
+									{
+										"required": false
+									}
+								]
+							},
+							"csyjni": {
+								"label": "催收应计利息",
+								"span": 6 ,
+								"control": "hidden",
+								"name": "csyjni",
+                				"value": "${{form.loanInfo.csyjni}}",
+								
+								"disabled": true
+							},
+							"ysxxoi": {
+								"label": "应收欠息",
+								"span": 6 ,
+								"control": "currency",
+								"compute":"${{form.ysxxoi1}}+${{form.csxxoi}}",
+								
+								"disabled": true
+							},
+							
+							"yclixi": {
+								"label": "逾期应计利息",
+								"span": 6 ,
+								"control": "text",
+								"name": "yclixi",
+                				"value": "${{form.loanInfo.yclixi}}",
+								
+								"disabled": true
+							},
+							"ysxxoi1": {
+								"label": "应收欠息",
+								"span": 6 ,
+								"control": "hidden",
+               					"value": "${{form.loanInfo.ysxxoi}}",
+								"name": "ysxxoi1",
+								
+								"disabled": true
+							},
+							"csxxoi": {
+								"label": "催收欠息",
+								"span": 6 ,
+								"control": "hidden",
+               					 "value": "${{form.loanInfo.csxxoi}}",
+								"name": "csxxoi",
+								
+								"disabled": true
+							},
+							"reduam": {
+								"label": "可减总额",
+								"span": 6 ,
+								"control": "hidden",
+               					 "value": "${{form.loanInfo.reduam}}",
+								"name": "reduam",
+								
+								"disabled": true
+							},
+
+							"yjxxpi": {
+								"label": "应计罚息",
+								"span": 6 ,
+								"control": "currency",
+								"compute":"${{form.ysyjpi}}+${{form.csyjpi}}",
+								
+								"disabled": true
+							},
+							"ysyjpi": {
+								"label": "应收应计罚息",
+								"span": 6 ,
+								"control": "hidden",
+                				"value": "${{form.loanInfo.ysyjpi}}",
+								"name": "ysyjpi",
+								
+								"disabled": true
+							},
+							"csyjpi": {
+								"label": "催收应计罚息",
+								"span": 6 ,
+								"control": "hidden",
+                				"value": "${{form.loanInfo.csyjpi}}",
+								"name": "csyjpi",
+								
+								"disabled": true
+							},
+							"ysxxpi": {
+								"label": "应收罚息",
+								"span": 6 ,
+								"control": "currency",
+								"compute":"${{form.ysxxpi1}}+${{form.csxxpi}}",
+								"disabled": true
+							},
+							"ysxxpi1": {
+								"label": "应收罚息",
+								"span": 6 ,
+								"control": "hidden",
+                				"value": "${{form.loanInfo.ysxxpi}}",
+								"name": "ysxxpi1",
+								"disabled": true
+							},
+							"csxxpi": {
+								"label": "催收罚息",
+								"span": 6 ,
+								"control": "hidden",
+								"name": "csxxpi",
+                				"value": "${{form.loanInfo.csxxpi}}",
+								"disabled": true
+							},
+
+							"hxxxin1": {
+								"label": "核销利息",
+								"span": 6 ,
+								"control": "currency",
+                				"compute":"${{form.hxxxin}}+${{form.hxxxoi}}+${{form.hxprin}}",
+								"disabled": true
+							},
+
+							"hxxxin": {
+								"label": "核销利息隐藏",
+								"span": 6 ,
+								"control": "hidden",
+								"name": "hxxxin",
+                				"value": "${{form.loanInfo.hxxxin}}",
+								"disabled": true
+							},
+							"hxxxoi": {
+								"label": "核销欠息",
+								"span": 6 ,
+								"control": "hidden",
+								"name": "hxxxoi",
+                				"value": "${{form.loanInfo.hxxxoi}}",
+								"disabled": true
+							},
+							"hxprin": {
+								"label": "核销本金利息",
+								"span": 6 ,
+								"control": "hidden",
+								"name": "hxprin",
+                				"value": "${{form.loanInfo.hxprin}}",
+								"disabled": true
+							},
+							"ysxxfe": {
+								"label": "逾期违约金",
+								"span": 6 ,
+								"control": "text",
+								"name": "ysxxfe",
+                				"value": "${{form.loanInfo.ysxxfe}}",
+								"disabled": true
+							}
+						}
+					]
+				},
+				{
+					"title": "调整信息",
+					"accordion": false,
+					"expand": true,
+					"controls": [
+						{
+							"remthd": {
+								"label": "减免方式",
+								"span": 8,
+								"control": "select",
+								"name": "remthd",
+                				"value": "${{form.reduinfo.remthd}}",
+								"dict": {
+									"dictType": "E_REMTHD",
+									"dictKey": [
+										"E_REMTHD"
+									],
+									"format": "label"
+								},
+								"rules": [
+									{
+										"required": true,
+										"message": "请选择减免方式"
+									}
+								],
+								
+								"events": {
+									"condition": {
+										"2": {
+											"control": {
+												"jmlixi": {
+													
+													"compute":"",
+													"disabled": false,
+													"rules": [
+														{
+															"required": true,
+															"message": "请输入减免利息"
+														}
+													]
+												},
+												"jmfaxi": {
+													"compute":"",
+													"disabled": false,
+													"rules": [
+														{
+															"required": true,
+															"message": "请输入减免罚息"
+														}
+													]
+												},
+												"jmznf": {
+													"compute":"",
+													"disabled": false,
+													"rules": [
+														{
+															"required": true,
+															"message": "请输入减免滞纳费"
+														}
+													]
+												}
+
+											}
+										},
+										"1": {
+											"control": {
+												"jmlixi": {
+													
+													"disabled": true,
+													"compute":"${{form.ysxxoi1}}+${{form.csxxoi}}+${{form.yclixi}}+${{form.hxxxin1}}",
+													"rules": [
+														{
+															"required": true,
+															"message": "请输入减免利息"
+														}
+													]
+												},
+												"jmfaxi": {
+													"disabled": true,
+													"compute":"${{form.ysxxpi1}}+${{form.csxxpi}}+${{form.ysyjpi}}+${{form.csyjpi}}",
+													"rules": [
+														{
+															"required": true,
+															"message": "请输入减免罚息"
+														}
+													]
+												},
+												"jmznf": {
+													"compute": "${{form.ysxxfe}}+0",
+													"disabled": true,
+													"rules": [
+														{
+															"required": true,
+															"message": "请输入减免逾期违约金"
+														}
+													]
+												}
+
+											}
+										}
+									}
+								}
+							},
+							"dtsfam": {
+								"label": "调整总息费",
+								"span": 8,
+								"control": "currency",
+								"compute":"${{form.jmlixi}}+${{form.jmfaxi}}+${{form.jmznf}}",
+								"decimal": 2,
+								"name": "dtsfam",
+								"max": 21,
+								"initShow": false
+							},
+							"jmlixi": {
+								"label": "减免利息",
+								"span": 8,
+								"value": "${{form.reduinfo.jmlixi}}",
+								"control": "currency",
+								"decimal": 2,
+								"max": 21,
+								"multiple": false
+							},
+							"jmfaxi": {
+								"label": "减免罚息",
+								"span": 8,
+								"control": "currency",
+								"decimal": 2,
+								"max": 21,
+								"value": "${{form.reduinfo.jmfaxi}}",
+								"multiple": false
+							},
+							"jmznf": {
+								"label": "减免逾期违约金",
+								"span": 8,
+								"control": "currency",
+								"decimal": 2,
+								"max": 21,
+								"value": "${{form.reduinfo.jmznf}}",
+								"multiple": false
+							},
+							"initUrgent": {
+								"control": "hidden",
+								"value": "${{form.reduinfo.urgent}}",
+								"span": 8
+							},
+							"urgent": {
+								"span": 8,
+								"label": " ",
+								"width": "240px",
+								"control": "checkbox",
+								"value": [],
+								"disabled": true,
+								"options": [
+									{
+										"label": "已获得管理层审批",
+										"value": "1"
+									}
+								]
+							},
+							"requiredUrgent": {
+								"span": 8,
+								"label": " ",
+								"width": "240px",
+								"control": "checkbox",
+								"value": [],
+								"options": [
+									{
+										"label": "已获得管理层审批",
+										"value": "1"
+									}
+								],
+								"rules": [
+									{
+										"required": true,
+										"message": "请选择已获得管理层审批"
+									}
+								]
+							},
+							"remttp": {
+								"span": 8,
+								"label": "减免类型",
+								"control": "select",
+								"name":  "remttp",
+                				"value": "${{form.reduinfo.remttp}}",
+								
+								"dict": {
+									"dictType": "E_REMTTP",
+									"dictKey": [
+										"E_REMTTP"
+									],
+									"format": "label"
+								},
+								"rules": [
+									{
+										"required": true,
+										"message": "请选择减免类型"
+									}
+								]
+							},
+							"adjrsn": {
+								"label": "调整申请原因",
+								"width": 200,
+								"control": "select",
+								"name": "adjrsn",
+                				"value": "${{form.reduinfo.adjrsn}}",
+								"dict": {
+									"dictType": "E_ADJRS",
+									"dictKey": [
+										"E_ADJRS"
+									],
+									"format": "label"
+								},"rules": [
+									{
+										"required": true,
+										"message": "请选择调整申请原因"
+									}
+								]
+							},
+							"urgentControl": {
+								"span": 8,
+								"control": "dynamic",
+								"isShowChildrenForm": false,
+								"toRequest": {
+								"method": "GET",
+								"url": "@UrgentControl"
+								},
+								"rules": [
+									{
+										"required": true,
+										"message": "请填写备注信息"
+									}
+								]
+							},
+							"urgentShowItem": {
+								"label": "urgentShowItem",
+								"control": "hidden",
+								"value": "1",
+								"span": 8,
+								"showItem": {
+									"1": ["urgent"],
+									"2": ["requiredUrgent"]
+								}
+							},
+							"dtsfsq": {
+								"label": "减免顺序编号",
+								"control": "hidden",
+								"span": 8,
+								"name": "dtsfsq",
+								"value":"cgfe87654321"
+							},
+							"remark": {
+								"label": "备注",
+								"control": "textarea",
+								"width": "240px",
+								"span":24,
+                				"value": "${{form.reduinfo.remark}}",
+								"autosize":{"minRows": 2,"maxRows":4},
+								"name": "remark",
+								"rules": [
+									{
+										"required": true,
+										"message": "请填写备注信息"
+									},
+									{
+										"max": 200,
+										"message": "长度不能超过200个字符"
+									}
+								]
+							},
+							"upload": {
+								"control": "dynamic",
+               					"value": "${{form.reduinfo.idanne}}",
+								"isShowChildForm": true,
+								"span": 6,
+								"toRequest": {
+									"url": "@SingleUpload",
+									"method": "get",
+									"params": {
+										"formKey": "upload",
+										"formLabel": "身份证附件",
+										"isInvert": true,
+										"required": true
+									}
+								},
+								"rules": [
+									{
+										"required": true,
+										"message": "请上传身份证附件"
+									}
+								]
+							},
+							"apanne": {
+								"control": "dynamic",
+                "value": "${{form.reduinfo.apanne}}",
+								"isShowChildForm": true,
+								"span": 6,
+								"toRequest": {
+									"url": "@SingleUpload",
+									"method": "get",
+									"params": {
+										"formKey": "apanne",
+										"formLabel": "申请书附件",
+										"isInvert": true,
+										"required": true
+									}
+								},
+								"rules": [
+									{
+										"required": true,
+										"message": "请上传申请书附件"
+									}
+								]
+							},
+
+							"cdtane": {
+								"control": "dynamic",
+                "value": "${{form.reduinfo.cdtane}}",
+								"isShowChildForm": true,
+								"span": 6,
+								"toRequest": {
+									"url": "@SingleUpload",
+									"method": "get",
+									"params": {
+										"formKey": "cdtane",
+										"formLabel": "征信报告附件",
+										"isInvert": true
+									}
+								}
+							},
+							"otbane": {
+								"control": "dynamic",
+                "value": "${{form.reduinfo.otbane}}",
+								"isShowChildForm": true,
+								"span": 6,
+								"toRequest": {
+									"url": "@SingleUpload",
+									"method": "get",
+									"params": {
+										"formKey": "otbane",
+										"formLabel": "其他证据附件",
+										"isInvert": true
+									}
+								}
+							}
+						}
+					]
+				}
+			]
+		}
+	}
+}

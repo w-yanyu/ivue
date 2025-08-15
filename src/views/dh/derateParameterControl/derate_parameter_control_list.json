@@ -1,0 +1,120 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "accountDuration": {
+            "label": "账龄",
+            "control": "select",
+            "value": [],
+            "dict": {
+              "dictKey": [
+                "E_ACCDURATION"
+              ],
+              "dictType": "E_ACCDURATION",
+              "format": "label"
+            }
+          },
+          "productType": {
+            "label": "产品大类",
+            "control": "select",
+            "value": [],
+            "dict": {
+              "dictKey": [
+                "E_PRODUCTTYPE"
+              ],
+              "dictType": "E_PRODUCTTYPE",
+              "format": "label"
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/dh/derateParameterControl/derate_parameter_control_add.json"
+          },
+          "props": {
+            "title": "减免参数控制新增",
+            "width": "1200px"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": true,
+      "scope": "searchTable",
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "PLMSKGTS0087"
+        }
+      },
+      "pagination": {
+        "show": true
+      },
+      "thead": [
+        {
+          "label": "账龄",
+          "prop": "account_duration"
+        },
+        {
+          "label": "产品大类",
+          "prop": "product_type"
+        },
+        {
+          "label": "减免利息上限(%)",
+          "prop": "redu_Inte_max"
+        },
+        {
+          "label": "减免罚息上限(%)",
+          "prop": "redu_pena_Inte_max"
+        },
+        {
+          "label": "减免费用上限(%)",
+          "prop": "redu_cost_max"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 120,
+          "align": "left",
+          "btns": [
+            {
+              "label": "维护",
+              "type": "edit",
+              "props": {
+                "title": "减免参数控制维护",
+                "width": "1200px"
+              },
+              "toRequest": {
+                "method": "GET",
+                "url": "/views/dh/derateParameterControl/derate_parameter_control_edit.json"
+              }
+            },
+            {
+              "label": "删除",
+              "type": "delete",
+              "doRequest": {
+                "method": "POST",
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "params": {
+                  "servicecode": "PLMSKGTS0089",
+                  "paraId": "${{current.para_id}}"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,137 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [],
+      "btns": []
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "custom",
+          "label": "自动获取",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "bpm0004",
+              "wf_prod_no": "${{params.wf_prod_no}}",
+              "wf_prod_name": "${{params.wf_prod_name}}",
+              "wf_define_id": "${{params.wf_define_id}}",
+              "updway": "PART",
+              "appId":"${{params.appId}}"
+            }
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "bpm0009",
+          "wf_prod_no": "${{params.wf_prod_no}}",
+          "appId":"${{params.appId}}"
+        }
+      },
+      "thead": [
+        {
+          "label": "配置编号",
+          "prop": "wf_part_no"
+        },
+        {
+          "label": "配置名称",
+          "prop": "wf_part_name"
+        },
+        {
+          "label": "流程编号",
+          "prop": "wf_prod_no"
+        },
+        {
+          "label":"流程名称",
+          "prop":"wf_prod_name"
+        },
+        {
+          "label":"定义ID",
+          "prop":"task_define_id"
+        },
+        {
+          "label":"定义名称",
+          "prop":"task_define_name"
+        },{
+          "label":"处理方式",
+          "prop":"select_type",
+          "dict": {
+            "dictType": "BPM_E_SELECT_TYPE",
+            "dictKey": [
+              "BPM_E_SELECT_TYPE"
+            ],
+            "format": "label"
+          },
+          "align": "center"
+        },{
+          "label":"参与人类型",
+          "prop":"part_type",
+          "dict": {
+            "dictType": "BPM_E_PART_TYPE",
+            "dictKey": [
+              "BPM_E_PART_TYPE"
+            ],
+            "format": "label"
+          },
+          "align": "center"
+        },{
+          "label":"版本号",
+          "prop":"data_version"
+        },{
+          "label":"修改日期",
+          "prop":"data_update_time"
+        },{
+          "label":"修改人",
+          "prop":"data_update_user"
+        },{
+          "label":"备注",
+          "prop":"remark"
+        },{
+          "label": "操作",
+          "width": "100px",
+          "fixed": "right",
+          "align":"center",
+          "btns": [{
+            "type": "edit",
+            "label": "查看",
+            "toRequest": {
+              "url": "/views/msap/bpm/processManagement/products/participant/view-detail.json",
+              "method": "GET",
+              "params": {
+                "appId":"${{params.appId}}"
+              }
+            },
+            "props": {
+              "width": "70%",
+              "height": "60%",
+              "title": "查看参与者详情"
+            }
+          },{
+            "type": "edit",
+            "label": "修改",
+            "toRequest": {
+              "url": "/views/msap/bpm/processManagement/products/participant/view-modify.json",
+              "method": "GET",
+              "params": {
+                "appId":"${{params.appId}}"
+              }
+            },
+            "props": {
+              "width": "70%",
+              "title": "参与者修改"
+            }
+          }]
+        }
+      ]
+    }
+  }
+}

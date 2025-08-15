@@ -1,0 +1,191 @@
+{
+  "module": "v-form-btn-dynamic",
+  "layout": {
+    "form": {
+      "scope":"formData",
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "ar0067",
+          "apply_no": "${{params.apply_no}}"
+        }
+      },
+
+      "controls": [
+        {
+          "apply_no": {
+            "control": "hidden",
+            "label": "申请号",
+            "span": 8,
+            "disabled": true,
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "smilr_cr_card_loan_acct_num": {
+            "control": "text",
+            "label": "类信用卡贷款账号",
+            "span": 8,
+            "disabled": true,
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "sale_prod_cd": {
+            "control": "text",
+            "label": "可售产品编号",
+            "span": 8,
+            "disabled": true,
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "cust_no": {
+            "control": "text",
+            "label": "客户编号",
+            "span": 8,
+            "disabled": true,
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "cust_name": {
+            "control": "text",
+            "label": "客户名称",
+            "span": 8,
+            "disabled": true,
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "trxn_amt": {
+            "control": "currency",
+            "decimal": "2",
+            "align": "left",
+            "label": "分期金额(元) ",
+            "disabled": true,
+            "span": 8,
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ],
+            "format": {
+              "thousand": ","
+            }
+          },
+          "istlmt_prds": {
+            "control": "text",
+            "label": "分期期数",
+            "span": 8,
+            "disabled": true,
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+
+          "istlmt_tp": {
+            "control": "select",
+            "label": "分期类型",
+            "span": 8,
+            "disabled": true,
+            "dict": {
+              "dictType": "E_ISTLMT_TP",
+              "dictKey": [
+                "E_ISTLMT_TP"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId",
+              "format": "label"
+            },
+            "showItem": {
+              "1": [
+                "lstSmilrCrCardBillDetl"
+              ]
+            }
+          },
+          "trxn_date": {
+            "control": "dateTimePicker",
+            "format": "yyyy-MM-dd",
+            "valueFormat": "yyyyMMdd",
+            "label": "交易日期",
+            "disabled": true,
+            "span": 8,
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "cur_bill_prds": {
+            "control": "dateTimePicker",
+            "format": "yyyy-MM",
+            "valueFormat": "yyyyMM",
+            "label": "当前账期",
+            "disabled": true,
+            "span": 8,
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "lstSmilrCrCardBillDetl": {
+            "initShow": false,
+            "span": 24,
+            "control": "dynamic",
+            "toRequest": {
+              "url": "/views/lxyk/xyf/flow/credit_card_order_bystages_list.json",
+              "params": {
+                "apply_no": "${{formData.apply_no}}"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "期供详情",
+          "toRequest": {
+            "url": "/views/lxyk/class_credit_card_supply_list_info.json",
+            "params": {
+              "smilr_cr_card_loan_acct_num": "${{formData.smilr_cr_card_loan_acct_num}}",
+              "prcpl_smtn": "${{formData.trxn_amt}}",
+              "istlmt_tp": "${{formData.istlmt_tp}}",
+              "istlmt_prds": "${{formData.istlmt_prds}}"
+            }
+          },
+          "props": {
+            "width": "70%",
+            "title": "期供详情"
+          }
+        }
+      ]
+    }
+  }
+}

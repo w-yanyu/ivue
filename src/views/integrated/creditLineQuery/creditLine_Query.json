@@ -1,0 +1,172 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "custno": {
+            "control": "lookup",
+            "label": "客户号",
+            "edit": true,
+            "width":"50%",
+            "rules": [
+              {
+                "max": 32,
+                "message": "长度不能超过32个字符"
+              }
+            ], 
+            "keyField": {
+              "custno": "custid"
+            },
+            "toRequest": {
+              "url": "/views/us/usManager/userQuery/customer_lookup.json",
+              "method": "post"
+            },
+            "props": {
+              "title": "请选择"
+            },
+            "format": "label"
+          },
+          "crdlno": {
+            "control": "text",
+            "label": "额度编号",
+            "rules": [
+              {
+                "max": 20,
+                "message": "长度不能超过20个字符"
+              },
+              {
+                "##requiredOr": [
+                  "idtfno",
+                  "crdlno"
+                ],
+                "##message": "证件号、额度编号不能同时为空"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": []
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "amtifo",
+          "page_id": "/views/integrated/creditLineQuery/creditLine_Query.json"
+        }
+      },
+      "thead": [
+        {
+          "label": "额度编号",
+          "prop": "crdlno",
+          "align": "center"
+        },
+        {
+          "label": "客户号",
+          "prop": "custno",
+          "align": "center"
+        },
+        {
+          "label": "客户名称",
+          "prop": "custna",
+          "align": "center"
+        },
+   
+        {
+          "label": "生效日期",
+          "prop": "stardt",
+          "align": "center"
+        },
+        {
+          "label": "失效日期",
+          "prop": "effedt",
+          "align": "center"
+        },
+        {
+          "label": "额度金额",
+          "prop": "crdlam",
+          "align": "center"
+        },
+        {
+          "label": "利率",
+          "prop": "intrvl",
+          "align": "center"
+        },
+        {
+          "label": "额度级别",
+          "prop": "cllevl",
+          "align": "center",
+          "dict": {
+            "dictType": "E_CLLEVL",
+            "dictKey": [
+              "E_CLLEVL"
+            ],
+            "format": "label",
+            "labelField": "dictName",
+            "valueField": "dictId"
+          }
+        },
+        {
+          "label": "期限",
+          "prop": "termfm",
+          "align": "center"
+        },
+        {
+          "label": "可用余额",
+          "prop": "avlbal",
+          "align": "center"
+        },
+        {
+          "label": "产品名称",
+          "prop": "prodna",
+          "align": "center"
+        },
+        {
+          "label": "额度类型名称",
+          "prop": "cltpna",
+          "align": "center"
+        },
+        {
+          "label": "有效状态",
+          "prop": "status",
+          "align": "center",
+          "dict": {
+            "dictType": "E_STATUS",
+            "dictKey": [
+              "E_STATUS"
+            ],
+            "format": "label",
+            "labelField": "dictName",
+            "valueField": "dictId"
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/integrated/creditLineQuery/creditLine_Query_see.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "70%",
+                "title": "授信额度详情"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

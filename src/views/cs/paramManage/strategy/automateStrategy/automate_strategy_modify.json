@@ -1,0 +1,350 @@
+{
+  "module": "v-form-editableDataGrid-btn",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "initRequest": "${{params}}",
+      "controls": [
+        {
+          "queue_code": {
+            "hidden": true,
+            "label": "队列代码",
+            "disabled": true,
+            "width": "130px",
+            "control": "remoteSelect",
+            "labelField": "queue_name",
+            "valueField": "queue_code",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "cb0081",
+                "org_id": "$g{{user_info.org_id}}"
+              }
+            },
+            "events": {
+              "emit": [
+                "operation"
+              ]
+            },
+            "format": "value-label"
+          },
+          "strategy_group_type": {
+            "control": "select",
+            "label": "策略组类型",
+            "width": "130px",
+            "disabled": true,
+            "selectFirstValue": false,
+            "dict": {
+              "dictType": "CS_E_STRATEGY_GROUPS_TYPE",
+              "dictKey": [
+                "CS_E_STRATEGY_GROUPS_TYPE"
+              ],
+              "format": "value-label"
+            }
+          },
+          "strategy_code": {
+            "control": "string",
+            "disabled": true,
+            "label": "策略代码",
+            "width": "130px"
+          },
+          "strategy_name": {
+            "control": "string",
+            "disabled": true,
+            "label": "策略名称",
+            "width": "130px"
+          }
+        },
+        {
+          "strategy_desc": {
+            "control": "text",
+            "label": "策略描述",
+            "width": "130px",
+            "rules": [
+              {
+                "max": 128,
+                "message": "最多可以输入 128 个字节"
+              }
+            ]
+          },
+          "is_valid": {
+            "control": "select",
+            "label": "是否启用",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ],
+            "dict": {
+              "dictType": "CS_E_YESORNO",
+              "dictKey": [
+                "CS_E_YESORNO"
+              ],
+              "format": "value-label"
+            }
+          }
+        },
+        {
+          "start_time": {
+            "label": "起始时间",
+            "control": "dateTimePicker",
+            "type": "dateTimePicker",
+            "span": 12,
+            "width": "130px",
+            "format": "yyyy-MM-dd HH:mm:ss",
+            "disabledDate": {
+              "endRange": "today"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "起始时间不能为空"
+              }
+            ]
+          },
+          "end_time": {
+            "label": "结束时间",
+            "control": "dateTimePicker",
+            "type": "dateTimePicker",
+            "span": 12,
+            "width": "130px",
+            "format": "yyyy-MM-dd HH:mm:ss",
+            "disabledDate": {
+              "endRange": "today"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "结束时间不能为空"
+              }
+            ]
+          }
+        },
+        {
+          "priority": {
+            "control": "inputNumber",
+            "label": "优先级",
+            "width": "130px",
+            "min": 1,
+            "max": 10,
+            "rules": [
+              {
+                "required": true,
+                "pattern": "^[0-9]",
+                "message": "请输入 0 到 11 之间的数字"
+              },
+              {
+                "expression": "'${{form.priority}}'.length < 3",
+                "message": "最多可以输入 3 个字节"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "icon": "el-icon-circle-plus",
+          "target": "dialog",
+          "label": "新增策略组",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/cs/paramManage/strategy/automateStrategy/strategy_group_add.json",
+            "params": {
+              "strategy_code": "${{params.strategy_code}}"
+            }
+          },
+          "props": {
+            "width": "65%",
+            "title": "新增策略组"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "name": "scheme",
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "py0008",
+          "appId": "pyOnl"
+        }
+      },
+      "thead": [
+        {
+          "prop": "strategy_group_code",
+          "type": "string",
+          "align": "center",
+          "disabled": true,
+          "label": "策略组代码"
+        },
+        {
+          "prop": "strategy_group_name",
+          "type": "string",
+          "align": "center",
+          "disabled": true,
+          "label": "策略组名称"
+        },
+        {
+          "prop": "group_assign_ratio",
+          "type": "string",
+          "align": "center",
+          "disabled": true,
+          "label": "组分配比重"
+        },
+        {
+          "prop": "assign_algorithm",
+          "type": "string",
+          "align": "center",
+          "label": "分配算法",
+          "disabled": true,
+          "format": "value-label",
+          "dict": {
+            "dictType": "CS_ASSIGN_ALG",
+            "dictKey": [
+              "CS_ASSIGN_ALG"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "prop": "assign_ratio_mode",
+          "type": "string",
+          "align": "center",
+          "disabled": true,
+          "label": "分配比重模式",
+          "format": "value-label",
+          "dict": {
+            "dictType": "CS_ASSIGN_RATIO_MODE",
+            "dictKey": [
+              "CS_ASSIGN_RATIO_MODE"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "fixed": "right",
+          "width": "250px",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/cs/paramManage/strategy/automateStrategy/strategy_group_info.json",
+                "method": "POST"
+              },
+              "props": {
+                "title": "详情"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "show": {
+                "expression": "'${{params.strategy_group_type}}' === 'DJOB'"
+              },
+              "toRequest": {
+                "url": "/views/cs/paramManage/strategy/automateStrategy/division_modify.json",
+                "method": "POST",
+                "params": {
+                  "strategy_group_type": "$g{{params.strategy_group_type}}"
+                }
+              },
+              "props": {
+                "width": "90%",
+                "title": "维护"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "show": {
+                "expression": "'${{params.strategy_group_type}}' === 'PJOB'"
+              },
+              "toRequest": {
+                "url": "/views/cs/paramManage/strategy/automateStrategy/pie_modify.json",
+                "method": "POST",
+                "params": {
+                  "strategy_group_type": "$g{{params.strategy_group_type}}"
+                }
+              },
+              "props": {
+                "width": "90%",
+                "title": "维护"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "show": {
+                "expression": "'${{params.strategy_group_type}}' === 'CJOB'"
+              },
+              "toRequest": {
+                "url": "/views/cs/paramManage/strategy/automateStrategy/class_sms_modify.json",
+                "method": "POST",
+                "params": {
+                  "strategy_group_type": "$g{{params.strategy_group_type}}"
+                }
+              },
+              "props": {
+                "width": "90%",
+                "height": "90%",
+                "title": "维护"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "配置规则",
+              "toRequest": {
+                "url": "/views/cs/paramManage/strategy/strategy_group_rule_config.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "80%",
+                "height": "80%",
+                "title": "配置规则"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "py0006",
+                  "appId": "pyOnl"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "footer": {
+      "btns": [
+        {
+          "type": "submit",
+          "label": "保存",
+          "icon": "el-icon-tickets",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "py0003",
+              "appId": "pyOnl"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

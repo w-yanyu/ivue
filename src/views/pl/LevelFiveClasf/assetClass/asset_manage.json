@@ -1,0 +1,89 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [{
+                "matrix_number": {
+                    "label": "矩阵编号",
+                    "control": "text"
+                },
+                "matrix_name": {
+                    "label": "矩阵名称",
+                    "control": "text"
+                }
+            }]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "target": "dialog",
+                    "label": "新增",
+                    "toRequest": {
+                      "method": "GET",
+                      "url": "/views/pl/repayAcctChange/query/account_manage.json"
+                    },
+                    "props": {
+                      "width": "65%",
+                      "title":  "资产分类配置新增"
+                    }
+                  }
+            ]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "pl0004"
+                }
+            },
+            "thead": [
+                {
+                    "label": "矩阵编号",
+                    "width": "160px",
+                    "prop": "matrix_number",
+                    "align": "center"
+                },
+                {
+                    "label": "矩阵名称",
+                    "prop": "matrix_name",
+                    "align": "center"
+                },
+                {
+                    "label": "矩阵描述",
+                    "prop": "matrix_describe",
+                    "align": "center",
+                    "width": "160px"
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 200,
+                    "align": "center",
+                    "btns": [
+                        {
+                            "type": "look",
+                            "label": "查看详情",
+                            "toRequest": {
+                                "url": "@ZDHWaitToWithDeal",
+                                "method": "GET",
+                                "target": "navTab",
+                                "params": {
+                                    "change_num": "${{current.change_num}}",
+                                    "apply_no": "${{current.apply_no}}",
+                                    "flow_no": "${{current.flow_no}}"
+                                }
+                            },
+                            "props": {
+                                "title": "查看详情"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

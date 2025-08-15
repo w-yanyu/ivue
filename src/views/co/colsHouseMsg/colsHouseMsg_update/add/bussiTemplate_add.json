@@ -1,0 +1,68 @@
+{
+  "module": "d-steps",
+  "layout": {
+    "steps": {
+      "scope": "formObj",
+      "direction": "vertical",
+      "alignCenter": true,
+      "finishStatus": "success",
+      "simpleType": false,
+      "nextStepType": "submit",
+      "list": [
+        {
+          "scope": "step1",
+          "title": "楼盘信息管理新增",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "url": "/views/co/colsHouseMsg/colsHouseMsg_update/colsHouseMsg_add.json",
+            "method": "get",
+            "params": {
+
+            }
+          },
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "post",
+            "params":{
+              "appId": "coOnl",
+              "servicecode": "co5004",
+              "opera_type": "1"
+            },
+            "resultSet": {
+
+            }
+          }
+        },
+        {
+          "scope": "step2",
+          "forbidBack": true,
+          "title": "楼盘信息与商户关联",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "url": "/views/co/colsHouseMsg/colsHouseMsg_update/add/bussiTemplateMenu.json",
+            "method": "get",
+            "params": {
+              "house_id": "${{formObj.step1.house_id}}",
+              "house_name": "${{formObj.step1.house_name}}"
+              
+            }
+          },
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "post",
+            "params":{
+              "appId": "coOnl",
+              "servicecode": "co5003",
+              "house_id": "${{formObj.step1.house_id}}",
+              "opera_type": "1"
+            },
+            "eventAfter": {
+              "doParentCallback": true
+            }
+          }
+        }
+
+      ]
+    }
+  }
+}

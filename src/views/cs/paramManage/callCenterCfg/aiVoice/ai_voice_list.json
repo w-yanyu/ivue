@@ -1,0 +1,193 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "service_code": {
+            "label": "主API服务",
+            "control": "remoteSelect",
+            "labelField": "api_desc",
+            "valueField": "api_name",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2550",
+                "server_range": "csOnl"
+              }
+            },
+            "format": "value"
+          },
+          "org_id": {
+            "label": "创建法人",
+            "control": "remoteSelect",
+            "labelField": "org_name",
+            "valueField": "org_id",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2311",
+                "org_id": "$g{{user_info.org_id}}"
+              }
+            },
+            "format": "value-label"
+          },
+          "branch_id": {
+            "label": "创建机构",
+            "control": "remoteSelect",
+            "labelField": "branch_name",
+            "valueField": "branch_id",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2142",
+                "user_id": "$g{{user_info.userCode}}"
+              }
+            },
+            "format": "value-label"
+          },
+          "status": {
+            "control": "select",
+            "label": "状态",
+            "selectFirstValue": false,
+            "dict": {
+              "dictType": "CS_CALLSER_STATUS",
+              "dictKey": [
+                "CS_CALLSER_STATUS"
+              ],
+              "format": "value-label"
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "新增",
+          "target": "dialog",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/cs/paramManage/callCenterCfg/aiVoice/ai_voice_add.json"
+          },
+          "props": {
+            "width": "80%",
+            "title": "呼叫中心智能语音配置新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "doRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "cb0054",
+          "appId": "cbOnl",
+          "service_type": "A"
+        }
+      },
+      "thead": [
+        {
+          "label": "主键",
+          "type": "label",
+          "prop": "id",
+          "isShow": "false"
+        },
+        {
+          "label": "主API服务",
+          "prop": "service_code"
+        },
+        {
+          "label": "API服务描述",
+          "prop": "service_name"
+        },
+        {
+          "label": "请求地址",
+          "prop": "request_url"
+        },
+        {
+          "label": "回推地址1",
+          "prop": "return_url1"
+        },
+        {
+          "label": "回推地址2",
+          "prop": "return_url2"
+        },
+        {
+          "label": "备注",
+          "prop": "remarks"
+        },
+        {
+          "label": "权重",
+          "prop": "weight"
+        },
+        {
+          "label": "延迟时间(ms)",
+          "prop": "defer_time"
+        },
+        {
+          "label": "最大串行数",
+          "prop": "max_erial_num"
+        },
+        {
+          "label": "状态",
+          "prop": "status",
+          "align": "center",
+          "dict": {
+            "dictType": "CS_CALLSER_STATUS",
+            "dictKey": [
+              "CS_CALLSER_STATUS"
+            ],
+            "labelField": "dictName",
+            "valueField": "dictId"
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": "100px",
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/cs/paramManage/callCenterCfg/aiVoice/ai_voice_update.json",
+                "id": "${{current.id}}",
+                "method": "GET"
+              },
+              "props": {
+                "width": "80%",
+                "title": "呼叫中心智能语音配置维护"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "cb0057",
+                  "appId": "cbOnl",
+                  "id": "${{current.id}}"
+                }
+              },
+              "confirm": {
+                "title": "提示信息",
+                "msg": "确认删除呼叫中心智能语音配置？",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

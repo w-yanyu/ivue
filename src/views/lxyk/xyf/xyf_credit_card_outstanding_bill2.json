@@ -1,0 +1,57 @@
+{
+  "module": "v-form-btn-dynamic",
+ "layout": {
+   "form": {
+     "initRequest":"${{params}}",
+     "controlsGroup": [
+       {
+         "title": "当前账单信息",
+         "tooltip": "step1",
+         "titleIcon": "",
+         "showHint": "",
+         "accordion": false,
+         "expand": true,
+         "controls": [
+           {
+             "id1": {
+               "control": "dynamic",
+               "span": 24,
+               "toRequest": {
+                 "url": "/views/lxyk/xyf/xyf_credit_card_bill_order_info2.json",
+                 "method": "post",
+                 "params": {         
+                   "pageType":"detail",
+                   "parentRowData": "${{params}}"
+                 }
+               }
+             }
+           }
+         ]
+       },
+       {
+         "title": "账单内交易信息",
+         "tooltip": "step2",
+         "expand": true,
+         "controls": [
+           {
+             "id2": {
+               "control": "dynamic",
+               "span": 24,
+               "toRequest": {
+                 "url": "/views/lxyk/xyf/xyf_credit_card_bill_order_list.json",
+                 "method": "get",
+                 "params": {
+                     "smilr_cr_card_loan_acct_num":"${{params.smilr_cr_card_loan_acct_num}}",
+                     "cust_no": "${{params.cust_num}}",
+                     "pageType":"detail",
+                     "bill_type": "${{params.bill_type}}"
+                 }
+               }
+             }
+           }
+         ]
+       }
+     ]
+   }
+ }
+}

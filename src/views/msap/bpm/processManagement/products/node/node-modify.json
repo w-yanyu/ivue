@@ -1,0 +1,150 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest":"${{params}}",
+      "scope": "searchTable",
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "icon": "",
+          "doRequest": {
+            "url": "/SUMP/call/nodeModify",
+            "method": "POST",
+            "params": {
+              "servicecode": "bpm0006",
+              "wf_task_no": "${{params.wf_task_no}}",
+              "trans_type": "UPDATE",
+              "appId":"${{params.appId}}"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "wf_prod_no": {
+            "control": "string",
+            "label": "流程编号",
+            "width": "130px"
+          },
+          "wf_prod_name": {
+            "control": "string",
+            "label": "流程名称",
+            "width": "130px"
+          },
+          "task_define_id": {
+            "control": "string",
+            "label": "活动id",
+            "width": "130px"
+          },
+          "task_define_name": {
+            "control": "string",
+            "label": "活动名称",
+            "width": "130px"
+          },
+          "task_type": {
+            "control": "string",
+            "label": "任务类型",
+            "width": "130px",
+            "dict": {
+              "dictType": "BPM_E_TASK_TYPE",
+              "dictKey": [
+                "BPM_E_TASK_TYPE"
+              ],
+              "format": "label"
+            },
+            "events" : {
+              "showItem": {
+                "TIMER" : ["task_time_rule","task_time_interval"]
+              }
+            }
+          },
+          "task_time_rule": {
+            "control": "select",
+            "label": "定时规则",
+            "width": "130px",
+            "dict": {
+              "dictType": "BPM_E_TASK_TIME_RULE",
+              "dictKey": [
+                "BPM_E_TASK_TIME_RULE"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入定时规则"
+              }
+            ]
+          },
+          "task_time_interval": {
+            "control": "text",
+            "label": "定时间隔",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入定时间隔"
+              }
+            ]
+          },
+          "task_url1": {
+            "control": "lookup",
+            "label": "待办任务信息展示框架",
+            "width": "130px",
+            "disabled": false,
+            "edit": true,
+            "value": "",
+            "keyField": {
+              "task_url1": "frame_cd"
+            },
+            "toRequest": {
+              "url": "/views/msap/bpm/frameManagement/menu_list.json",
+              "method": "get",
+              "params": {
+                "appId":"${{params.appId}}"
+              }
+            },
+            "props": {
+              "title": "框架选择",
+              "width": "80%"
+            }
+          },
+          "task_url2": {
+            "control": "lookup",
+            "label": "已办任务信息展示框架",
+            "width": "130px",
+            "disabled": false,
+            "edit": true,
+            "value": "",
+            "keyField": {
+              "task_url2": "frame_cd"
+            },
+            "toRequest": {
+              "url": "/views/msap/bpm/frameManagement/menu_list.json",
+              "method": "get",
+              "params": {
+                "appId":"${{params.appId}}"
+              }
+            },
+            "props": {
+              "title": "框架选择",
+              "width": "80%"
+            }
+          },
+          "data_version": {
+            "control": "string",
+            "label": "版本号",
+            "width": "130px"
+          },
+          "remark": {
+            "control": "textarea",
+            "label": "流程备注",
+            "width": "130px"
+          }
+        }
+      ]
+    }
+  }
+}

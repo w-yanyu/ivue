@@ -1,0 +1,287 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "ddc_mny_parm_num": {
+            "control": "text",
+            "label": "扣款参数编号",
+            "rules": [
+              {
+                "max": 10,
+                "message": "长度不能超过10个字符"
+              }
+            ]
+          },
+          "ddc_mny_parm_dsc": {
+            "control": "text",
+            "label": "扣款参数描述",
+            "rules": [
+              {
+                "max": 300,
+                "message": "长度不能超过300个字符"
+              }
+            ]
+          }
+        },
+        {
+          "loan_form": {
+            "control": "select",
+            "label": "贷款形态",
+            "dict": {
+              "dictType": "LN_E_LOAN_FORM",
+              "dictKey": [
+                "LN_E_LOAN_FORM"
+              ],
+              "format": "label"
+            }
+          },
+          "imprmt_loan_flg": {
+            "control": "select",
+            "label": "减值贷款标志",
+            "dict": {
+              "dictType": "LN_E_IMPRMT_LOAN_FLG",
+              "dictKey": [
+                "LN_E_LOAN_FORM"
+              ],
+              "format": "label"
+            }
+          }
+        },
+        {
+          "acd_non_acd_ste": {
+            "control": "select",
+            "label": "应计非应计状态",
+            "dict": {
+              "dictType": "LN_E_ACD_NON_ACD_STE",
+              "dictKey": [
+                "LN_E_ACD_NON_ACD_STE"
+              ],
+              "format": "label"
+            }
+          },
+          "rpymt_attr": {
+            "control": "select",
+            "label": "还款属性",
+            "dict": {
+              "dictType": "LN_E_RPYMT_ATTR",
+              "dictKey": [
+                "LN_E_RPYMT_ATTR"
+              ],
+              "format": "label"
+            }
+          }
+        },
+        {
+          "rpymt_ste_rule": {
+            "control": "select",
+            "label": "还款状态规则",
+            "dict": {
+              "dictType": "LN_E_RPYMT_STE_RULE",
+              "dictKey": [
+                "LN_E_RPYMT_STE_RULE"
+              ],
+              "format": "label"
+            }
+          },
+          "rpymt_seq": {
+            "control": "text",
+            "label": "还款顺序",
+            "rules": [
+              {
+                "max": 20,
+                "message": "长度不能超过20个字符"
+              }
+            ]
+          }
+        },
+        {
+          "data_comt": {
+            "control": "text",
+            "label": "数据说明",
+            "rules": [
+              {
+                "max": 80,
+                "message": "长度不能超过80个字符"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/paramManage/loanDdcSeq/loan_ddc_seq_add.json"
+          },
+          "props": {
+            "title": "新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ap0000",
+          "parm_tab_nm": "klnp_ddc_seq",
+          "dtbs_oprn_flg": "3",
+          "data_pkg": "${{current}}"
+        }
+      },
+      "thead": [
+        {
+          "label": "扣款参数编号",
+          "prop": "ddc_mny_parm_num",
+          "align": "center"
+        },
+        {
+          "label": "扣款参数描述",
+          "prop": "ddc_mny_parm_dsc",
+          "align": "center"
+        },
+        {
+          "label": "贷款形态",
+          "prop": "loan_form",
+          "align": "center",
+          "dict": {
+            "dictType": "LN_E_LOAN_FORM",
+            "dictKey": [
+              "LN_E_LOAN_FORM"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "减值贷款标志",
+          "prop": "imprmt_loan_flg",
+          "align": "center",
+          "dict": {
+            "dictType": "LN_E_IMPRMT_LOAN_FLG",
+            "dictKey": [
+              "LN_E_IMPRMT_LOAN_FLG"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "应计非应计状态",
+          "prop": "acd_non_acd_ste",
+          "align": "center",
+          "dict": {
+            "dictType": "LN_E_ACD_NON_ACD_STE",
+            "dictKey": [
+              "LN_E_ACD_NON_ACD_STE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "还款属性",
+          "prop": "rpymt_attr",
+          "align": "center",
+          "dict": {
+            "dictType": "LN_E_RPYMT_ATTR",
+            "dictKey": [
+              "LN_E_RPYMT_ATTR"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "还款状态规则",
+          "prop": "rpymt_ste_rule",
+          "align": "center",
+          "dict": {
+            "dictType": "LN_E_RPYMT_STE_RULE",
+            "dictKey": [
+              "LN_E_RPYMT_STE_RULE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "还款顺序",
+          "prop": "rpymt_seq",
+          "align": "center"
+        },
+        {
+          "label": "数据说明",
+          "prop": "data_comt",
+          "align": "center"
+        },
+        {
+          "label": "序号",
+          "prop": "serl_num_long",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 300,
+          "align": "center",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/paramManage/loanDdcSeq/loan_ddc_seq_info.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "50%",
+                "title": "基础产品信息详情"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/paramManage/loanDdcSeq/loan_ddc_seq_update.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "50%",
+                "title": "扣款顺序参数维护"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "ap0000",
+                  "parm_tab_nm": "klnp_ddc_seq",
+                  "dtbs_oprn_flg": "2",
+                  "data_pkg": {
+                    "ddc_mny_parm_num":"${{current.ddc_mny_parm_num}}",
+                    "loan_form": "${{current.loan_form}}",
+                    "imprmt_loan_flg":"${{current.imprmt_loan_flg}}",
+                    "acd_non_acd_ste": "${{current.acd_non_acd_ste}}"
+                  }
+                }
+              },
+              "confirm": {
+                "title": "确定删除",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

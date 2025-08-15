@@ -1,0 +1,142 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "wfprna": {
+            "control": "text",
+            "label": "流程产品名称",
+            "rules": [
+              {
+                "max": 50,
+                "message": "长度不能超过10个字符"
+              }
+            ]
+          },
+          "wfprcd": {
+            "control": "text",
+            "label": "流程产品编号",
+            "width": 100,
+            "rules": [
+              {
+                "max": 100,
+                "message": "长度不能超过100个字符"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增流程",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/cspo/process/products/product-manage-add.json"
+          },
+          "props": {
+            "title": "部署流程"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "rlms_qrwfpr"
+        }
+      },
+      "thead": [
+        {
+          "label": "流程产品编号",
+          "align": "center",
+          "prop": "wfprod_cd"
+        },
+        {
+          "label": "流程产品名称",
+          "align": "center",
+          "prop": "wfprod_name"
+        },
+        {
+          "label": "流程定义名称",
+          "align": "center",
+          "prop": "proc_def_name"
+        },
+        {
+          "label":"版本号",
+          "align": "center",
+          "prop":"ver",
+          "width": 80
+        },
+        {
+          "label":"修改日期",
+          "align": "center",
+          "prop":"last_upd_dt"
+        },
+        {
+          "label":"修改人",
+          "align": "center",
+          "prop":"last_upd_usr"
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "width": "300px",
+          "btns": [{
+            "type": "edit",
+            "label": "路线管理",
+            "toRequest": {
+              "url": "/views/cspo/process/products/route/route-manage.json",
+              "method": "GET",
+              "target": "navTab"
+            },
+            "props": {
+              "title": "流程路线管理"
+            }
+          }, {
+            "type": "edit",
+            "label": "节点管理",
+            "toRequest": {
+              "url": "/views/cspo/process/products/node/node-manage.json",
+              "method": "GET",
+              "target": "navTab"
+            },
+            "props": {
+              "title": "流程节点管理"
+            }
+          }, {
+            "type": "edit",
+            "label": "参与者管理",
+            "toRequest": {
+              "url": "/views/cspo/process/products/participant/participant-manage.json",
+              "method": "GET",
+              "target": "navTab"
+            },
+            "props": {
+              "title": "参与者管理"
+            }
+          }, {
+            "type": "edit",
+            "label": "配置管理",
+            "toRequest": {
+              "url": "/views/cspo/process/products/config/config-manage.json",
+              "method": "GET"
+            },
+            "props": {
+              "title": "流程产品配置信息"
+            }
+          }
+          ]
+        }
+      ]
+    }
+  }
+}

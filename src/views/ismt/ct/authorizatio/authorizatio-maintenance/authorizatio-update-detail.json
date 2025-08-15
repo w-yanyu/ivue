@@ -1,0 +1,153 @@
+{
+    "module": "v-form-editableDataGrid-btn",
+    "layout": {
+        "initReqeust": "${{params}}",
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "label": "新增",
+                    "icon": "el-icon-plus",
+                    "toRequest": {
+                        "url": "/views/ismt/ct/authorizatio/authorizatio-add/authorizatio-add-detail-info.json",
+                        "method": "post",
+                        "params": {
+                            "auth_id": "${{params.auth_id}}"
+                        }
+                    },
+                    "props": {
+                        "title": "授权信息明细"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "name": "ctAuthInfo",
+            "pagination": {
+                "show": false
+            },
+            "thead": [
+                {
+                    "type": "index"
+                },
+                {
+                    "type": "string",
+                    "label": "操作",
+                    "prop": "operater_ind",
+                    "dict": {
+                        "dictType": "E_DATAOPERATE",
+                        "dictKey": [
+                            "E_DATAOPERATE"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "type": "string",
+                    "disabled": true,
+                    "label": "角色ID",
+                    "prop": "role_id"
+                },
+                {
+                    "type": "string",
+                    "label": "授权ID",
+                    "prop": "auth_id"
+                },
+                {
+                    "control": "select",
+                    "label": "折算币种",
+                    "width": "125px",
+                    "prop": "auth_ccy",
+                    "dict": {
+                        "format": "label",
+                        "dictKey": [
+                            "MS_CURRENCY"
+                        ],
+                        "dictType": "MS_CURRENCY"
+                    }
+                },
+                {
+                    "type": "string",
+                    "label": "现金最大授权金额",
+                    "prop": "cash_max_limit_amt"
+                },
+                {
+                    "type": "string",
+                    "label": "转账最大授权金额",
+                    "prop": "trxn_max_limit_amt"
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "align": "center",
+                    "width": 150,
+                    "btns": [
+                        {
+                            "type": "etEdit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/ismt/ct/authorizatio/authorizatio-maintenance/authorizatio-update-detail-info.json",
+                                "method": "POST",
+                                "params": {
+                                    "operater_ind": "M"
+                                }
+                            },
+                            "props": {
+                                "title": "授权明细维护"
+                            },
+                            "show": {
+                                "prop": "operater_ind",
+                                "expression": "'${{value}}'!='A'"
+                            }
+                        },
+                        {
+                            "type": "etEdit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/ismt/ct/authorizatio/authorizatio-maintenance/authorizatio-add-detail-info.json",
+                                "method": "POST",
+                                "params": {
+                                    "operater_ind": "A"
+                                }
+                            },
+                            "props": {
+                                "title": "授权明细新增"
+                            },
+                            "show": {
+                                "prop": "operater_ind",
+                                "expression": " '${{value}}' == 'A' "
+                            }
+                        },
+                        {
+                            "type": "etEdit",
+                            "label": "删除",
+                            "toRequest": {
+                                "url": "/views/ismt/ct/authorizatio/authorizatio-maintenance/authorizatio-delete-detail-info.json",
+                                "method": "POST",
+                                "params": {
+                                    "operater_ind": "D"
+                                }
+                            },
+                            "props": {
+                                "title": "授权详细信息删除"
+                            },
+                            "show": {
+                                "prop": "operater_ind",
+                                "expression": "'${{value}}'!='A'"
+                            }
+                        },
+                        {
+                            "type": "delete",
+                            "label": "删除",
+                            "icon": "el-icon-close",
+                            "show": {
+                                "prop": "operater_ind",
+                                "expression": " '${{value}}' == 'A' "
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

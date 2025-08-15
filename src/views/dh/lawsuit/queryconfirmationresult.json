@@ -1,0 +1,147 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+      "form": {
+        "controls": [
+          {
+            "regional_center": {
+              "control": "remoteSelect",
+              "label": "区域中心",
+              "value":"$g{{user_info.branch_id}}",
+              "labelField": "brachName",
+              "valueField": "branchNo",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "RLMSPLTS1068"
+                }
+              },
+              "format": "value-label"
+            },  
+            "lncf_no": {
+              "control": "text",
+              "label": "借据号",
+              "rules": [
+                {
+                  "max": 80,
+                  "message": "长度不能超过80个字符"
+                }
+              ]
+            }
+          },
+          {
+            "cust_nm": {
+                "control": "text",
+                "label": "客户名称",
+                "rules": [
+                  {
+                    "max": 80,
+                    "message": "长度不能超过80个字符"
+                  }
+                ]
+              },
+            "cert_id": {
+              "control": "text",
+              "label": "证件号码",
+              "rules": [
+                {
+                  "max": 20,
+                  "message": "长度不能超过20个字符"
+                }
+              ]
+            }
+          },{
+            "undertake_org_nm": {               
+            "label": "承办机构名称",
+            "control": "remoteSelect",
+            "labelField": "dictName",
+            "valueField": "dictId",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "RLMSPLTS1072"
+              }
+            },
+            "format": "label"
+              }
+          }
+        ]
+      },
+     
+      "datagrid": {
+        "scope": "searchTable",
+        "isInitSearch": true,
+        "doRequest": {
+          "url": "/SUMP/icmcall/icmRPCCall",
+          "method": "POST",
+          "params": {
+            "servicecode": "pl2200",
+            "regional_center": "${{current.regional_center}}",
+             "lncf_no": "${{current.lncf_no}}",
+             "cust_nm": "${{current.cust_nm}}",
+             "cert_id":"${{current.cert_id}}",
+             "undertake_org_nm":"${{current.undertake_org_nm}}"
+          }
+        },
+        "thead": [
+          {
+            "label": "申请单编号",
+            "prop": "apply_id",
+            "align": "center"
+          },
+          {
+            "label": "借据号",
+            "prop": "lncf_no",
+            "align": "center"
+          },
+          {
+            "label": "客户名称",
+            "prop": "cust_nm",
+            "align": "center"
+          },
+          {
+            "label": "证件号码",
+            "prop": "cert_id",
+            "align": "center"
+          },
+          {
+            "label": "承办机构名称",
+            "prop": "undertake_org_nm",
+            "align": "center"
+          },
+          {
+            "label": "受理机构名称",
+            "prop": "accept_org_nm",
+            "align": "center"
+          },
+          {
+            "label": "终结执行案号",
+            "prop": "final_execut_id",
+            "align": "center"
+          },
+          {
+            "label": "终结执行裁定书落款日期",
+            "prop": "close_date",
+            "align": "center"
+          },
+          {
+            "label": "申请人",
+            "prop": "apply_nm",
+            "align": "center"
+          },
+          {
+            "label": "申请时间",
+            "prop": "apply_time",
+            "align": "center"
+          },
+          {
+            "label": "结案时间",
+            "prop": "case_end_time",
+            "align": "center"
+          }
+        ]
+      }
+    }
+  }

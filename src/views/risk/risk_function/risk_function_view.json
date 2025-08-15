@@ -1,0 +1,173 @@
+{
+  "module": "v-form-editableDataGrid-btn",
+  "layout": {
+    "form": {
+      "initRequest": "${{params}}",
+      "controls": [
+        {
+          "functionCode": {
+            "control": "string",
+            "label": "函数代码",
+            "width": "auto",
+            "span": "8",
+            "rules": [
+              {
+                "required": true
+              }
+            ]
+          },
+          "functionName": {
+            "control": "string",
+            "label": "函数名称",
+            "width": "auto",
+            "span": "8",
+            "rules": [
+              {
+                "required": true
+              }
+            ]
+          },
+          "resultType": {
+            "control": "select",
+            "label": "返回类型",
+            "width": "auto",
+            "format": "value-label",
+            "span": "8",
+            "options": [
+              {
+                "value": "String",
+                "label": "字符串"
+              },
+              {
+                "value": "Int",
+                "label": "整数"
+              },
+              {
+                "value": "Decimal",
+                "label": "数值"
+              },
+              {
+                "value": "Boolean",
+                "label": "布尔值"
+              },
+              {
+                "value": "void",
+                "label": "无"
+              }
+            ],
+            "disabled": true,
+            "rules": [
+              {
+                "required": true
+              }
+            ]
+          },
+          "functionBody": {
+            "control": "textarea",
+            "label": "函数体",
+            "width": "auto",
+            "span": "24",
+            "rows": 5,
+            "showWordLimit": 2000,
+            "maxlength": 2000,
+            "rules": [
+              {
+                "required": true,
+                "message": "请正确输入",
+                "max": 2000
+              }
+            ],
+            "disabled": true
+          },
+          "description": {
+            "label": "备注",
+            "width": "auto",
+            "control": "textarea",
+            "span": 24,
+            "maxlength": 200,
+            "showWordLimit": 200,
+            "rows": 3,
+            "rules": [
+              {
+                "message": "请正确输入",
+                "max": 200
+              }
+            ],
+            "disabled": true
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "新增参数",
+          "icon": "el-icon-plus",
+          "disabled": true
+        }
+      ]
+    },
+    "datagrid": {
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "function_code": "${{params.functionCode}}",
+          "function_id": "${{params.functionId}}",
+          "servicecode": "deci010303"
+        }
+      },
+      "pagination": {
+        "show": false
+      },
+      "thead": [
+        {
+          "label": "序号",
+          "type": "index",
+          "align": "center"
+        },
+        {
+          "label": "参数类型",
+          "align": "center",
+          "type": "select",
+          "prop": "paramsDataType",
+          "format": "value-label",
+          "options": [
+            {
+              "value": "String",
+              "label": "字符串"
+            },
+            {
+              "value": "Int",
+              "label": "整数"
+            },
+            {
+              "value": "Decimal",
+              "label": "数值"
+            },
+            {
+              "value": "Boolean",
+              "label": "布尔值"
+            }
+          ],
+          "disabled": true
+        },
+        {
+          "label": "参数字段",
+          "align": "center",
+          "type": "text",
+          "prop": "paramsCode",
+          "disabled": true
+        },
+        {
+          "label": "参数描述",
+          "align": "center",
+          "type": "text",
+          "prop": "paramsDesc",
+          "disabled": true
+        }
+      ]
+    }
+  }
+}

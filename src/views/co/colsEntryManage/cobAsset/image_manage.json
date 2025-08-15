@@ -1,0 +1,132 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "上传文件",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/co/colsEntryManage/cobAsset/new/info_image.json",
+            "params": {
+              "colt_no": "${{params.colt_no}}",
+              "asset_list_id": "${{params.asset_list_id}}"
+            }
+          },
+          "props": {
+            "width": "65%",
+            "title": "上传文件"
+          },
+          "eventAfter": {
+            "###doParentCallback": true
+          },
+          "show": {
+            "expression": "'${{params.pageType}}' != 'detail'"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "co5007",
+          "asset_list_id": "${{params.asset_list_id}}"
+        }
+      },
+      "pagination": {
+        "pageSizes": [
+          10,
+          15,
+          20,
+          50,
+          100
+        ],
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "label": "序号",
+          "type": "index",
+          "align": "center"
+        },
+        {
+          "label": "文件名",
+          "prop": "file_name",
+          "align": "center",
+          "btns": [
+            {
+              "type": "look",
+              "toRequest": {
+                "url": "@lookAgreementBtn",
+                "params": {
+                  "protocol_path": "${{current.file_path}}"
+                }
+              },
+              "props": {
+                "width": "75%",
+                "height": "80%",
+                "title": "预览"
+              }
+            }
+          ]
+        },
+        {
+          "label": "文件大小(Byte)",
+          "prop": "file_size",
+          "align": "center"
+        },
+        {
+          "label": "文件上传时间",
+          "prop": "data_create_time",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align": "center",
+          "btns": [
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "co5009",
+                  "image_id": "${{current.image_id}}"
+                }
+              },
+              "###eventAfter": {
+                "doParentCallback": true
+              },
+              "show": {
+                "expression": " '${{params.pageType}}' != 'detail'"
+              }
+            },
+            {
+              "type": "export",
+              "label": "下载",
+              "doRequest": {
+                "url": "/SUMP/minioCall/download",
+                "method": "GET",
+                "params": {
+                  "path": "${{current.file_path}}",
+                  "fileName": "${{current.file_name}}"
+                }
+              },
+              "eventAfter": {
+                "doParentCallback": true
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

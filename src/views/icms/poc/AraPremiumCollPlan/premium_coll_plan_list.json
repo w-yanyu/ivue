@@ -1,0 +1,136 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "新增",
+          "target": "dialog",
+          "toRequest": {
+            "method": "POST",
+            "url": "/views/icms/poc/AraPremiumCollPlan/premium_coll_plan_add.json",
+            "params": {
+              "apply_no": "${{params.apply_no}}"
+            },
+            "props": {
+              "width": "65%",
+              "title": "新增保费收取计划信息"
+            }
+          },
+          "show": {
+            "expression": "'${{params.pageType}}' != 'detail'"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ar1662",
+          "apply_no": "${{params.apply_no}}"
+        }
+      },
+      "thead": [
+        {
+          "prop": "apply_no",
+          "label": "申请号",
+          "align": "center"
+        },
+        {
+          "label": "保费收取计划编号",
+          "prop": "premium_plan_no",
+          "align": "center"
+        },
+        {
+          "label": "保费收取计划名称",
+          "prop": "premium_plan_name",
+          "align": "center"
+        },
+        {
+          "label": "保费收取方",
+          "prop": "premium_receiver",
+          "align": "center",
+          "dict": {
+            "dictType": "AR_E_PREMIUM_RECEIVER",
+            "dictKey": [
+              "AR_E_PREMIUM_RECEIVER"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "保费收取方式",
+          "prop": "premium_mode",
+          "align": "center",
+          "dict": {
+            "dictType": "AR_E_PREMIUM_MODE",
+            "dictKey": [
+              "AR_E_PREMIUM_MODE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作",
+          "width": "200px",
+          "fixed": "right",
+          "align": "center",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/icms/poc/AraPremiumCollPlan/premium_coll_plan_detail.json",
+                "method": "get"
+              },
+              "props": {
+                "width": "65%",
+                "title": "保费收取计划详情"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/icms/poc/AraPremiumCollPlan/premium_coll_plan_edit.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "75%",
+                "title": "保证人信息维护"
+              },
+              "show": {
+                "expression": "'${{params.pageType}}' != 'detail'"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "ar1663"
+                }
+              },
+              "confirm": {
+                "title": "提示信息",
+                "msg": "确定删除保费收取计划信息吗？",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              },
+              "show": {
+                "expression": "'${{params.pageType}}' != 'detail'"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

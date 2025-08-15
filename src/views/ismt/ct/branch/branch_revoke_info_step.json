@@ -1,0 +1,79 @@
+{
+    "module": "d-steps",
+    "layout": {
+      "steps": {
+        "scope": "formObj",
+        "direction": "horizontal",
+        "alignCenter": true,
+        "finishStatus": "success",
+        "simpleType": false,
+        "nextStepType": "submit",
+        "list": [
+          {
+            "title": "机构撤销申请信息",
+            "scope": "sp1",
+            "icon": "el-icon-document",
+            "toRequest": {
+              "url": "/views/ismt/ct/branch/branch-detail-revoke.json",
+              "method": "get",
+              "params": {
+                "branch_id":"${{params.branch_id}}",
+                "branch_name":"${{params.branch_name}}",
+                "branch_stus":"${{params.branch_stus}}"
+              }
+            }
+          },
+          {
+            "title": "组织机构调整",
+            "scope": "sp2",
+            "forbidBack":true,
+            "icon": "el-icon-document",
+            "toRequest": {
+              "url": "/views/ismt/ct/branch/branch-user-manager.json",
+              "method": "get",
+              "params": {
+                "branch_id":"${{params.branch_id}}"
+              }
+            },
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2194",
+                "branch_id":"${{params.branch_id}}"
+              },
+              "resultSet": {
+                "revoke_no": "revoke_no"
+              }
+            }
+          },
+          {
+            "title": "业务移交申请",
+            "scope": "sp3",
+            "forbidBack":true,
+            "icon": "el-icon-document",
+            "toRequest": {
+              "url": "/views/ismt/ct/branch/branch-business-manager.json",
+              "method": "get",
+              "params": {
+                "branch_id":"${{params.branch_id}}",
+                "branch_name":"${{params.branch_name}}"
+              },
+              "eventAfter": {
+                "doParentCallback": true
+              }
+            },
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2194",
+                "branch_id":"${{params.branch_id}}"
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+  

@@ -1,0 +1,214 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "cb0294"
+            }
+          }
+        },
+        {
+          "type": "close",
+          "label": "取消"
+        }
+      ],
+      "controls": [
+        {
+          "serial_no": {
+            "control": "string",
+            "disabled": true,
+            "label": "付款登记流水号"
+          },
+          "payment_type": {
+            "control": "select",
+            "label": "付款类型",
+            "selectFirstValue": false,
+            "dict": {
+              "dictType": "CS_PAYMENT_TYPE",
+              "dictKey": [
+                "CS_PAYMENT_TYPE"
+              ],
+              "format": "value-label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          }
+        },
+        {
+          "contract_no": {
+            "label": "关联合同编号",
+            "control": "remoteSelect",
+            "labelField": "contract_name",
+            "valueField": "id_",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "cb0300"
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ],
+            "format": "value-label"
+          },
+          "payer_p": {
+            "control": "text",
+            "label": "付款方",
+            "width": "130",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              },
+              {
+                "max": 30,
+                "message": "最多可以输入 30 个字节"
+              }
+            ]
+          }
+        },
+        {
+          "payment_account": {
+            "control": "text",
+            "label": "付款账号",
+            "width": "130",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              },
+              {
+                "max": 30,
+                "message": "最多可以输入 30 个字节"
+              }
+            ]
+          },
+          "payee": {
+            "control": "text",
+            "label": "收款方",
+            "width": "130",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              },
+              {
+                "max": 30,
+                "message": "最多可以输入 30 个字节"
+              }
+            ]
+          }
+        },
+        {
+          "payee_account": {
+            "control": "text",
+            "label": "收款账号",
+            "width": "130",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              },
+              {
+                "max": 30,
+                "message": "最多可以输入 30 个字节"
+              }
+            ]
+          },
+          "payment_way": {
+            "control": "select",
+            "label": "付款方式",
+            "selectFirstValue": false,
+            "dict": {
+              "dictType": "CS_PAYMENT_WAY",
+              "dictKey": [
+                "CS_PAYMENT_WAY"
+              ],
+              "format": "value-label",
+              "rules": [
+                {
+                  "required": true,
+                  "message": "请输入"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "payment_time": {
+            "label": "付款日期",
+            "control": "dateTimePicker",
+            "format": "yyyyMMdd",
+            "rules": [
+              {
+                "required": true,
+                "message": "选择付款日期"
+              }
+            ]
+          },
+          "payment_amount": {
+            "control": "text",
+            "label": "付款金额",
+            "width": "130",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              },
+              {
+                "max": 30,
+                "message": "最多可以输入 30 个字节"
+              }
+            ]
+          }
+        },
+        {
+          "file_name": {
+            "control": "hidden"
+          }
+        },
+        {
+          "file_path": {
+            "control": "hidden"
+          }
+        },
+        {
+          "file": {
+            "doRequest": {
+              "url": "/SUMP/minioCall/upload",
+              "method": "post",
+              "params": {
+                "org_id": "$g{{user_info.org_id}}"
+              },
+              "resultSet": {
+                "file_path": "path",
+                "file_name": "oldName",
+                "file_size": "size"
+              }
+            },
+            "control": "file",
+            "limit": 1,
+            "limitSize": 10,
+            "label": "上传文件",
+            "btnLable": "请选择文件"
+          }
+        }
+      ]
+    }
+  }
+}

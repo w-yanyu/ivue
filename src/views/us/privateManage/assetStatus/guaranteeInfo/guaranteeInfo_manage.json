@@ -1,0 +1,199 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "POST",
+            "url": "/views/us/privateManage/assetStatus/guaranteeInfo/guaranteeInfo_add.json",
+            "params": {
+              "cust_no": "${{params.cust_no}}"
+            }
+          },
+          "show": {
+            "expression": "'${{params.show_flash}}' == '1'"
+          },
+          "props": {
+            "width": "65%",
+            "title": "个人保险信息新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "us0099",
+          "cust_no": "${{params.cust_no}}"
+        },
+        "resultSet": {
+          "ins_no": "ins_no"
+        }
+      },
+      "thead": [
+        {
+          "type": "index",
+          "width": 50,
+          "label": "序号",
+          "align": "center"
+        },
+        {
+          "label": "保险单号",
+          "prop": "ins_no",
+          "align": "center"
+        },
+        {
+          "label": "保险险种",
+          "prop": "ins_type",
+          "align": "center",
+          "dict": {
+            "dictType": "US_E_INS_TYPE",
+            "dictKey": [
+              "US_E_INS_TYPE"
+            ],
+            "labelField": "dictName",
+            "valueField": "dictId"
+          }
+        },
+        {
+          "label": "投保金额(元)",
+          "prop": "ins_amt",
+          "type": "string",
+          "align": "center",
+          "format": {
+            "thousand": ",",
+            "decimal": "2",
+            "type": "currency"
+          }
+        },
+        {
+          "label": "保险金额（元）",
+          "prop": "ins_recoup_amt",
+          "type": "string",
+          "align": "center",
+          "format": {
+            "thousand": ",",
+            "decimal": "2",
+            "type": "currency"
+          }
+        },
+        {
+          "label": "保险失效日期",
+          "prop": "ins_invalid_dt",
+          "align": "center"
+        },
+        {
+          "label": "状态",
+          "prop": "is_valid",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "labelField": "dictName",
+            "valueField": "dictId"
+          }
+        },
+        {
+          "label": "保险受益人",
+          "prop": "ins_bnf_name",
+          "align": "center"
+        },
+        {
+          "label": "经办人",
+          "prop": "ins_via_name",
+          "align": "center"
+        },
+        {
+          "label": "保险公司名称",
+          "prop": "ins_corp_name",
+          "align": "center"
+        },
+        {
+          "label": "保险公司联系电话",
+          "prop": "ins_corp_phone",
+          "align": "center"
+        },
+        {
+          "label": "保险单内容",
+          "prop": "ins_desc",
+          "align": "center"
+        },
+        {
+          "label": "备注",
+          "prop": "remark",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 160,
+          "align": "center",
+          "btns": [
+            {
+              "type": "custom",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/us/privateManage/assetStatus/guaranteeInfo/guaranteeInfo_info.json",
+                "props": {
+                  "width": "75%",
+                  "title": "个人保险信息详情"
+                },
+                "params": {
+                  "ins_no": "${{current.ins_no}}"
+                }
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/us/privateManage/assetStatus/guaranteeInfo/guaranteeInfo_modify.json",
+                "method": "POST",
+                "params": {
+                  "ins_no": "${{current.ins_no}}"
+                }
+              },
+              "show": {
+                "expression": "'${{params.show_flash}}' == '1'"
+              },
+              "props": {
+                "width": "75%",
+                "title": "个人保险信息维护"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "us0102",
+                  "ins_no": "${{current.ins_no}}"
+                }
+              },
+              "show": {
+                "expression": "'${{params.show_flash}}' == '1'"
+              },
+              "confirm": {
+                "title": "确定删除",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

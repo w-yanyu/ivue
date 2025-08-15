@@ -1,0 +1,81 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "sale_prod_cd": {
+            "control": "text",
+            "label": "可售产品编号",
+            "rules": [
+              {
+                "max": 32,
+                "message": "长度不能超过32个字符"
+              }
+            ]
+          },
+          "prod_type": {
+            "label": "产品类型",
+            "control": "remoteSelect",
+            "labelField": "title",
+            "valueField": "id",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "pd0144",
+                "grupno": "0006",
+                "pid": "KSCP"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "detail,format=pd0329,temp=pd0325",
+          "pageTranType": "${{params.pageTranType}}",
+          "credit_prod_cd": "${{params.sale_prod_cd}}",
+          "prod_version": "${{params.prod_version}}"
+        }
+      },
+      "pagination": {
+        "pageSizes": [
+          10,
+          15,
+          20,
+          50,
+          100
+        ],
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "label": "序号",
+          "type": "index",
+          "align": "center"
+        },
+        {
+          "label": "可售产品编号",
+          "prop": "sale_prod_cd",
+          "align": "center"
+        },
+        {
+          "label": "可售产品名称",
+          "prop": "sale_prod_name",
+          "align": "center"
+        },
+        {
+          "label": "产品类型",
+          "prop": "prod_type_name",
+          "align": "center"
+        }
+      ]
+    }
+  }
+}

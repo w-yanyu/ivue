@@ -1,0 +1,427 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "controls": [
+        {
+          "start_date": {
+            "control": "dateTimePicker",
+            "valueFormat": "yyyyMMdd",
+            "label": "起始日期"
+          },"end_date": {
+            "control": "dateTimePicker",
+            "valueFormat": "yyyyMMdd",
+            "label": "结束日期"
+          }
+        },{
+          "source_org_id": {
+            "label": "案件所属法人",
+            "control": "remoteSelect",
+            "labelField": "org_name",
+            "valueField": "org_id",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2311",
+                "org_id": "$g{{user_info.org_id}}"
+              }
+            },
+            "format": "value-label"
+          },"source_branch_id": {
+            "label": "案件所属机构",
+            "control": "remoteSelect",
+            "labelField": "branch_name",
+            "valueField": "branch_id",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2142",
+                "user_id": "$g{{user_info.userCode}}"
+              }
+            },
+            "format": "value-label"
+          }
+
+        },{
+          "statistical_frequency":{
+            "control": "select",
+            "label": "报表频度",
+            "dict": {
+                "dictType": "MS_E_CYCLETYPE",
+                "dictKey": [
+                    "MS_E_CYCLETYPE"
+                ],
+                "format": "value-label"
+            }
+          },
+          "oa_org_id": {
+            "label": "委外公司",
+            "control": "remoteSelect",
+            "labelField": "outsourcing_org_name",
+            "valueField": "outsourcing_org_id",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "cb0052",
+                "org_id": "$g{{user_info.org_id}}"
+              }
+            },
+            "events": {
+              "emit": [
+                "operation"
+              ]
+            },
+            "format": "value-label"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "cb0188"
+        }
+      },
+      "thead": [
+        {
+          "type": "string",
+          "align": "center",
+          "label": "统计日期",
+          "prop": "report_date"
+        },{
+          "type": "string",
+          "align": "center",
+          "label": "统计频度",
+          "dict": {
+            "dictType": "MS_E_CYCLETYPE",
+            "dictKey": [
+                "MS_E_CYCLETYPE"
+            ],
+            "format": "value-label"
+        },
+          "prop": "statistical_frequency"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "委外公司",
+          "width":150,
+          "dict": {
+            "dictKey": [
+              "outsourcing_org_id"
+            ],
+            "labelField": "outsourcing_org_name",
+            "valueField": "outsourcing_org_id",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "cb0052",
+                "outsourcing_org_id": "${{current.oa_org_id}}"
+              }
+            },
+            "format": "value-label"
+          },
+          "prop": "oa_org_id"
+
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "C-M1笔数",
+          "prop": "c_m1_cnt"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "M1笔数",
+          "prop": "m1_cnt"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "C-M1金额(元)",
+          "format": {
+            "thousand": ","
+          },
+          "prop": "c_m1_amt"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "M1金额(元)",
+          "format": {
+            "thousand": ","
+          },
+          "prop": "m1_amt"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "M1-M2笔数",
+          "prop": "m1_m2_cnt"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "M2笔数",
+          "prop": "m2_cnt"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "M1-M2金额(元)",
+          "format": {
+            "thousand": ","
+          },
+          "prop": "m1_m2_amt"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "M2金额(元)",
+          "format": {
+            "thousand": ","
+          },
+          "prop": "m2_amt"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "M2-M3笔数",
+          "prop": "m2_m3_cnt"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "M3笔数",
+          "prop": "m3_cnt"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "M2-M3金额(元)",
+          "format": {
+            "thousand": ","
+          },
+          "prop": "m2_m3_amt"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "M3金额(元)",
+          "format": {
+            "thousand": ","
+          },
+          "prop": "m3_amt"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "M3-M4笔数",
+          "prop": "m3_m4_cnt"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "M4笔数",
+          "prop": "m4_cnt"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "M3-M4金额(元)",
+          "format": {
+            "thousand": ","
+          },
+          "prop": "m3_m4_amt"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "M4金额(元)",
+          "format": {
+            "thousand": ","
+          },
+          "prop": "m4_amt"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "M4-M5笔数",
+          "prop": "m4_m5_cnt"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "M5笔数",
+          "prop": "m5_cnt"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "M4-M5金额(元)",
+          "format": {
+            "thousand": ","
+          },
+          "prop": "m4_m5_amt"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "M5金额(元)",
+          "format": {
+            "thousand": ","
+          },
+          "prop": "m5_amt"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "M5-M6笔数",
+          "prop": "m5_m6_cnt"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "M6笔数",
+          "prop": "m6_cnt"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "M5-M6金额(元)",
+          "format": {
+            "thousand": ","
+          },
+          "prop": "m5_m6_amt"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "M6金额(元)",
+          "format": {
+            "thousand": ","
+          },
+          "prop": "m6_amt"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "M6-M7笔数",
+          "prop": "m6_m7_cnt"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "M7笔数",
+          "prop": "m7_cnt"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "M6-M7金额(元)",
+          "format": {
+            "thousand": ","
+          },
+          "prop": "m6_m7_amt"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "M7金额(元)",
+          "format": {
+            "thousand": ","
+          },
+          "prop": "m7_amt"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "M7-M7+笔数",
+          "prop": "m7_m7a_cnt"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "M7+笔数",
+          "prop": "m7a_cnt"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "M7-M7+金额(元)",
+          "format": {
+            "thousand": ","
+          },
+          "prop": "m7_m7a_amt"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "M7+金额(元)",
+          "format": {
+            "thousand": ","
+          },
+          "prop": "m7a_amt"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "案件所属法人",
+          "dict": {
+            "dictKey": [
+              "source_org_id"
+            ],
+            "labelField": "org_name",
+            "valueField": "org_id",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2311",
+                "org_id": "${{current.source_org_id}}"
+              }
+            },
+            "format": "value-label"
+          },
+          "prop": "source_org_id"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "案件所属机构",
+          "dict": {
+            "dictKey": [
+              "source_branch_id"
+            ],
+            "labelField": "branch_name",
+            "valueField": "branch_id",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2142",
+                "branch_id": "${{current.source_branch_id}}"
+              }
+            },
+            "format": "value-label"
+          },
+          "prop": "source_branch_id"
+        }
+      ]
+    }
+  }
+}

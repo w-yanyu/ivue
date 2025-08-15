@@ -1,0 +1,326 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+      "form": {
+        "controls": [
+          {
+            "strt_input_dt": {
+              "control": "dateTimePicker",
+              "endPlaceholder": "选择录入日期-起",
+              "unlinkPanels": true,
+              "disabledDate": {
+                 "startRange": "1900-01-01",
+                 "endRange": "9999-12-31"
+              },
+              "label": "录入日期-起",
+              "rules": [
+                {
+                  
+                }
+              ]
+            },
+            "end_input_dt": {
+              "control": "dateTimePicker",
+              "endPlaceholder": "选择录入日期-止",
+              "unlinkPanels": true,
+              "disabledDate": {
+                 "startRange": "1900-01-01",
+                 "endRange": "9999-12-31"
+              },
+              "label": "录入日期-止",
+              "rules": [
+                {
+                  
+                }
+              ]
+            }
+          },
+          {
+            "sbj_mntnc_tp": {
+              "control": "select",
+              "label": "科目维护类型",
+              "dict": {
+                "dictType": "AC_E_SBJ_MNTNC_TP",
+                "dictKey": [
+                    "AC_E_SBJ_MNTNC_TP"
+                ],
+                "format": "label"
+            },
+              "rules": [
+                {
+                 
+                }
+              ]
+            },
+            "sbj_mntnc_ste": {
+              "control": "select",
+              "label": "科目维护数据状态",
+              "dict": {
+                "dictType": "AC_E_SBJ_MNTNC_DATA_STE",
+                "dictKey": [
+                    "AC_E_SBJ_MNTNC_DATA_STE"
+                ],
+                "format": "label"
+            },
+              "rules": [
+                {
+                  
+                }
+              ]
+            }
+          },
+          {
+            "sbj_num": {
+              "control": "text",
+              "label": "科目号",
+              "rules": [
+                {
+                 
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "toolbar": {
+        "btns": [
+          {
+            "type": "add",
+            "label": "批量复核",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "fa7057",
+                "sbj_mntnc_ste":"1",
+                "plFlag":"1"
+                
+              }
+            },
+            "confirm": {
+              "title": "确定复核",
+              "confirmButtonText": "确定",
+              "cancelButtonText": "取消"
+            }
+          },{
+            "type": "delete",
+            "label": "批量解除复核",
+            "icon": "el-icon-close",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "fa7057",
+                "sbj_mntnc_ste":"0",
+                "lstKemuwh":[
+                  {
+                      "input_dt":"${{current.input_dt}}",
+                      "txn_rung_num_32":"${{current.txn_rung_num_32}}"
+                  }
+                ],
+                "plFlag":"1"
+                
+              }
+            },
+            "confirm": {
+              "title": "确定解除复核",
+              "confirmButtonText": "确定",
+              "cancelButtonText": "取消"
+            }
+          },
+          {
+            "type": "add",
+            "label": "批量生效",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "fa7058",
+                "lstKemuwh":[
+                  {
+                    "input_dt":"${{current.input_dt}}",
+                    "txn_rung_num_32":"${{current.txn_rung_num_32}}"
+                  }
+                ],
+                "plFlag":"1"
+                
+              }
+            },
+            "confirm": {
+              "title": "确定生效",
+              "confirmButtonText": "确定",
+              "cancelButtonText": "取消"
+            }
+          }
+        ]
+      },
+      "datagrid": {
+        "scope": "searchTable",
+        "isInitSearch": false,
+        "doRequest": {
+          "url": "/SUMP/icmcall/icmRPCCall",
+          "method": "POST",
+          "params": {
+            "servicecode": "fa7074",
+            "outlistid":"lstKglb_sbj_mntnc"
+          }
+        },
+        "pagination": {
+          "pageSizes": [
+              10,
+              15,
+              20,
+              50,
+              100
+          ],
+          "pageSize": 10
+      },
+        "thead": [
+          {
+            "type": "selection",
+            "width": "55"
+        },
+          {
+            "label": "录入日期",
+            "prop": "input_dt",
+            "align": "center"
+          },
+          {
+            "label": "科目维护类型",
+            "prop": "sbj_mntnc_tp",
+            "dict": {
+              "dictType": "AC_E_SBJ_MNTNC_TP",
+              "dictKey": [
+                  "AC_E_SBJ_MNTNC_TP"
+              ],
+              "format": "label"
+          },
+            "align": "center"
+          },
+          {
+            "label": "科目维护数据状态",
+            "prop": "sbj_mntnc_ste",
+            "dict": {
+              "dictType": "AC_E_SBJ_MNTNC_DATA_STE",
+              "dictKey": [
+                  "AC_E_SBJ_MNTNC_DATA_STE"
+              ],
+              "format": "label"
+          },
+            "align": "center"
+          },
+          {
+            "label": "科目号",
+            "prop": "sbj_num",
+            "align": "center"
+          },{
+            "label": "用户流水号",
+            "prop": "txn_rung_num_32",
+            "align": "center"
+          },
+          {
+            "label": "科目名称",
+            "prop": "sbj_nm",
+            "align": "center"
+          },
+          {
+            "label": "执行日期",
+            "prop": "exec_dt",
+            "align": "center"
+          },
+          {
+            "label": "操作",
+            "fixed": "right",
+            "width": 200,
+            "align": "center",
+            "btns": [
+              {
+                "type": "look",
+                "label": "详情",
+                "toRequest": {
+                  "url": "/views/paramManage/subjectInfoManage/subject_instructions_detail.json",
+                  "method": "POST"
+                },
+                "props": {
+                  "width": "50%",
+                  "title": "科目详情"
+                }
+              },
+              {
+                "type": "custom",
+                "label": "复核",
+                "doRequest": {
+                  "url": "/SUMP/icmcall/icmRPCCall",
+                  "method": "POST",
+                  "params": {
+                    "servicecode": "fa7057",
+                    "sbj_mntnc_ste":"1",
+                    "lstKemuwh":[
+                      {
+                          "input_dt":"${{current.input_dt}}",
+                          "txn_rung_num_32":"${{current.txn_rung_num_32}}"
+                      }
+                    ]
+                    
+                  }
+                },
+                "confirm": {
+                  "title": "确定复核",
+                  "confirmButtonText": "确定",
+                  "cancelButtonText": "取消"
+                }
+              },
+              {
+                "type": "custom",
+                "label": "解除复核",
+                "doRequest": {
+                  "url": "/SUMP/icmcall/icmRPCCall",
+                  "method": "POST",
+                  "params": {
+                    "servicecode": "fa7057",
+                    "sbj_mntnc_ste":"0",
+                    "lstKemuwh":[
+                      {
+                          "input_dt":"${{current.input_dt}}",
+                          "txn_rung_num_32":"${{current.txn_rung_num_32}}"
+                      }
+                    ]
+                    
+                  }
+                },
+                "confirm": {
+                  "title": "确定解除复核",
+                  "confirmButtonText": "确定",
+                  "cancelButtonText": "取消"
+                }
+              },
+              {
+                "type": "custom",
+                "label": "生效",
+                "doRequest": {
+                  "url": "/SUMP/icmcall/icmRPCCall",
+                  "method": "POST",
+                  "params": {
+                    "servicecode": "fa7058",
+                    "lstKemuwh":[
+                      {
+                        "input_dt":"${{current.input_dt}}",
+                        "txn_rung_num_32":"${{current.txn_rung_num_32}}"
+                      }
+                    ]
+                    
+                  }
+                },
+                "confirm": {
+                  "title": "确定生效",
+                  "confirmButtonText": "确定",
+                  "cancelButtonText": "取消"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+  

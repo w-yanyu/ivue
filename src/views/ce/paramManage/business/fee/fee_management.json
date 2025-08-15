@@ -1,0 +1,182 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "scope": "formData",
+            "controls": [
+                {
+                    "fee_code": {
+                        "control": "text",
+                        "label": "费率代码"
+                    },
+                    "fee_type": {
+                        "control": "select",
+                        "label": "费率类型",
+                        "dict": {
+                          "dictType": "CE_FEE_TYPE",
+                          "dictKey": [
+                            "CE_FEE_TYPE"
+                          ],
+                          "format": "value-label"
+                        }
+                    },
+                    "handstr": {
+                      "control": "inputNumber",
+                      "label": "手别",
+                      "min": 0,
+                      "max": 10
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "icon": "el-icon-circle-plus",
+                    "target": "dialog",
+                    "label": "新增",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/ce/paramManage/business/fee/fee_add.json"
+                    },
+                    "props": {
+                        "title": "新增佣金参数"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ce0084"
+                }
+            },
+            "thead": [
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width":"180px",
+                    "label": "费率代码",
+                    "prop": "fee_code"
+
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width":"180px",
+                    "label": "费率类型",
+                    "prop": "fee_type",
+                    "dict": {
+                      "dictType": "CE_FEE_TYPE",
+                      "dictKey": [
+                        "CE_FEE_TYPE"
+                      ],
+                      "format": "value-label"
+                    }
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width":"180px",
+                    "label": "费率类别",
+                    "prop": "feerate_catg",
+                    "dict": {
+                      "dictType": "CE_FEERATE_CATG",
+                      "dictKey": [
+                        "CE_FEERATE_CATG"
+                      ],
+                      "format": "value-label"
+                    }
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width":"180px",
+                    "label": "阶段释义",
+                    "prop": "stage_interpretation",
+                    "dict": {
+                      "dictType": "CE_STAGE_INTERPRETATION",
+                      "dictKey": [
+                        "CE_STAGE_INTERPRETATION"
+                      ],
+                      "format": "value-label"
+                    }
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width":"180px",
+                    "label": "本金费率(%)",
+                    "prop": "principal_rate"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width":"180px",
+                    "label": "利费费率(%)",
+                    "prop": "lev_rate"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width":"180px",
+                    "label": "外诉费率(%)",
+                    "prop": "lev_rate"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width":"180px",
+                    "label": "手别",
+                    "prop": "hands"
+                },
+                {
+                    "label": "操作",
+                    "align":"center",
+                    "fixed": "right",
+                    "width": "150%",
+                    "btns": [
+                        {
+                            "type":"look",
+                            "label":"详情",
+                            "toRequest":{
+                                "url":"/views/ce/paramManage/business/fee/fee_info.json",
+                                "method":"POST"
+                            },
+                            "props":{
+                                "title":"佣金参数详情"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/ce/paramManage/business/fee/fee_modify.json",
+                                "method": "POST"
+                            },
+                            "props": {
+                                "title": "佣金参数维护"
+                            }
+                        },
+                        {
+                            "type": "delete",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/call/RPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "ce0081",
+                                    "coll_kind":"02"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

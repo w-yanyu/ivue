@@ -1,0 +1,95 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "icon": "el-icon-circle-plus",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "POST",
+            "url": "/views/pl/assetBuyingManagement/assetResponsibleInvestigation/assetDiligencePricing/asset_diligence_pricing_add.json",
+            "params": {
+              "diligence_no": "${{params.diligence_no}}"
+            }
+          },
+          "props": {
+            "width": "65%",
+            "title": "新增资产尽调定价情况"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pl0435",
+          "diligence_no": "${{params.diligence_no}}"
+        }
+      },
+      "thead": [
+        {
+          "type": "string",
+          "align": "center",
+          "label": "资产包定价编号",
+          "prop": "pricing_no"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "资产包定价情况",
+          "prop": "asset_package_pricing"
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "fixed": "right",
+          "width": "80",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/pl/assetBuyingManagement/assetResponsibleInvestigation/assetDiligencePricing/asset_diligence_pricing_info.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "65%",
+                "title": "资产尽调定价情况详情"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/pl/assetBuyingManagement/assetResponsibleInvestigation/assetDiligencePricing/asset_diligence_pricing_modify.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "65%",
+                "title": "资产尽调定价情况维护"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "pl0434"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

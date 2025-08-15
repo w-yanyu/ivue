@@ -1,0 +1,198 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "pljypich": {
+                        "control": "text",
+                        "label": "批量任务批次号",
+                        "rules": [
+                            {
+                                "max": 10,
+                                "message": "长度不能超过10个字符"
+                            }
+                        ]
+                    },
+                    "pljylcbs": {
+                        "control": "text",
+                        "label": "批量交易流程ID",
+                        "rules": [
+                            {
+                                "max": 100,
+                                "message": "长度不能超过100个字符"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "pljyzbsh": {
+                        "control": "text",
+                        "label": "批量交易组ID"
+                    },
+                    "piljybss": {
+                        "control": "text",
+                        "label": "批量交易ID"
+                    }
+                },
+                {
+                    "trandt": {
+                        "control": "dateTimePicker",
+                        "label": "交易日期",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入上日日期"
+                            },
+                            {
+                                "max": 8,
+                                "message": "长度不能超过8个字符"
+                            }
+                        ]
+                    },
+                    "lastdt": {
+                        "control": "dateTimePicker",
+                        "label": "上日日期",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入上日日期"
+                            },
+                            {
+                                "max": 8,
+                                "message": "长度不能超过8个字符"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "jiaoyzht": {
+                        "control": "select",
+                        "label": "交易状态",
+                        "rules": [
+                            {
+                                "max": 16,
+                                "message": "长度不能超过8个字符"
+                            }
+                        ],
+                        "dict": {
+                            "dictType": "E_ZYZXZT",
+                            "dictKey": [
+                                "E_ZYZXZT"
+                            ],
+                            "format": "label"
+                        }
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "AS_ICMS_LN_QRPLRZ",
+                    "page_id": "/views/other/day_end_exception_handling/icms_bat.json"
+                }
+            },
+            "thead": [
+                {
+                    "type": "index"
+                },
+                {
+                    "label": "批量任务批次号",
+                    "prop": "pljypich"
+                },
+                {
+                    "label": "批量任务提交日期",
+                    "prop": "pljytjrq"
+                },
+                {
+                    "label": "批量交易流程ID",
+                    "prop": "pljylcbs"
+                },
+                {
+                    "label": "批量交易组ID",
+                    "prop": "pljyzbsh"
+                },
+                {
+                    "label": "批量交易ID",
+                    "prop": "piljybss"
+                },
+                {
+                    "label": "交易运行状态",
+                    "prop": "jiaoyzht",
+                    "dict": {
+                        "dictType": "E_PILJYZHT",
+                        "dictKey": [
+                            "E_PILJYZHT"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "错误信息",
+                    "prop": "cuowxinx"
+                },
+                {
+                    "label": "错误堆栈",
+                    "prop": "cuowduiz"
+                },
+                {
+                    "label": "服务标识",
+                    "prop": "fuwbiaoz"
+                },
+                {
+                    "label": "交易开始时间",
+                    "prop": "jyksshij"
+                },
+                {
+                    "label": "交易结束时间",
+                    "prop": "jyjsshij"
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 200,
+                    "align":"center",
+                    "btns": [
+                        {
+                            "type": "look",
+                            "label": "详情",
+                            "toRequest": {
+                                "url": "/views/other/day_end_exception_handling/runlog.json",
+                                "method": "POST",
+                                "params":{
+                                    "servicecode":"AS_ICMS_LN_QRYXRZ"
+                                }
+                            },
+                            "props": {
+                                "width": "70%",
+                                "title": "交易运行日志"
+                            }
+                        },
+                        {
+                            "type": "custom",
+                            "label": "重跑",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "POST",
+                                "params":{
+                                    "servicecode":"AS_ICMS_LN_UPPLRW",
+                                    "jiaoyzht":"${{form.jiaoyzht}}"
+                                }
+                            },
+                            "confirm": {
+                                "title": "重跑确认",
+                                "confirmButtonText": "确定",
+                                "cancelButtonText": "取消"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

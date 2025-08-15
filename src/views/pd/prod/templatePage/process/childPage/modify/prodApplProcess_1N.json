@@ -1,0 +1,180 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "btns": [],
+      "scope": "templateScope",
+      "initRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "pd0241",
+          "sale_prod_cd": "${{params.sale_prod_cd}}",
+          "prod_version": "${{params.prod_version}}",
+          "apply_type": "${{params.apply_type}}"
+        }
+      },
+      "controls": [
+        {
+          "servicecode": {
+            "control": "hidden",
+            "label": "修改交易码",
+            "value": "pd0243"
+          },
+          "prod_version": {
+            "control": "hidden",
+            "label": "prod_version"
+          },
+          "flow_prod_no": {
+            "control": "hidden",
+            "label": "flow_prod_no"
+          }
+        },
+        {
+          "sale_prod_cd": {
+            "control": "hidden",
+            "label": "可售产品编号"
+          },
+          "sale_prod_name": {
+            "control": "hidden",
+            "label": "可售产品名称"
+          }
+        },
+        {
+          "flow_prod_no": {
+            "control": "lookup",
+            "label": "流程产品编号",
+            "keyField": {
+              "flow_prod_no": "wf_prod_no",
+              "flow_prod_name": "wf_prod_name"
+            },
+            "toRequest": {
+              "url": "/views/pd/prod/templatePage/process/childPage/process_product_lookup.json",
+              "method": "get"
+            },
+            "props": {
+              "title": "流程产品"
+            },
+            "span": 12,
+            "rules": [
+              {
+                "required": true,
+                "message": "必填项"
+              }
+            ]
+          },
+          "flow_prod_name": {
+            "control": "text",
+            "label": "流程产品名称",
+            "span": 12,
+            "rules": [
+              {
+                "required": true,
+                "message": "必填项"
+              }
+            ]
+          }
+        },
+        {
+          "authp_system_code": {
+            "control": "lookup",
+            "label": "授权体系编号",
+            "keyField": {
+              "authp_system_code": "authp_system_code",
+              "authp_system_name": "authp_system_name"
+            },
+            "toRequest": {
+              "url": "/views/pd/prod/templatePage/process/childPage/authp_system_lookup.json",
+              "method": "get"
+            },
+            "props": {
+              "title": "授权体系编号"
+            },
+            "span": 12
+          },
+          "authp_system_name": {
+            "control": "text",
+            "label": "授权体系名称",
+            "span": 12
+          }
+        },
+        {
+          "data_check_list_no": {
+            "control": "lookup",
+            "span": 12,
+            "label": "资料检查列表编号",
+            "keyField": {
+              "data_check_list_no": "doc_check_list_no"
+            },
+            "toRequest": {
+              "url": "/views/pd/prod/templatePage/process/childPage/docChecklist_lookup.json",
+              "method": "get"
+            },
+            "props": {
+              "title": "资料检查列表编号"
+            }
+          },
+          "verify_list_cd": {
+            "control": "lookup",
+            "span": 12,
+            "label": "核实项列表编号",
+            "keyField": {
+              "verify_list_cd": "verify_list_cd"
+            },
+            "toRequest": {
+              "url": "/views/pd/prod/templatePage/process/childPage/verifyChecklist_lookup.json",
+              "method": "get"
+            },
+            "props": {
+              "title": "核实项列表编号"
+            }
+          }
+        },
+        {
+          "flow_type": {
+            "control": "string",
+            "label": "流程类型",
+            "span": 12
+          },
+          "apply_type": {
+            "span": 12,
+            "label": "申请类型",
+            "control": "remoteSelect",
+            "multiple": false,
+            "labelField": "title",
+            "valueField": "id",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "pd0144",
+                "grupno": "0006",
+                "pid": "${{templateScope.prod_type}}"
+              }
+            },
+            "format": "label",
+            "rules": [
+              {
+                "required": true,
+                "message": "必填项"
+              }
+            ]
+          }
+        },
+        {
+          "busi_flow_category_name": {
+            "control": "text",
+            "label": "业务流程类别名称",
+            "span": 12,
+            "rules": [
+              {
+                "required": true,
+                "message": "必填项"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

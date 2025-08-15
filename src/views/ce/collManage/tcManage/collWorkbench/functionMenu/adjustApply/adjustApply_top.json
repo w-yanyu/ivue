@@ -1,0 +1,235 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "btns": [],
+            "controls": [
+                {
+                    "plan_amt": {
+                        "control": "text",
+                        "label": "金额",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入"
+                            }
+                        ]
+                    },
+                    "plan_rate": {
+                        "control": "text",
+                        "label": "执行利率",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入"
+                            }
+                        ]
+                    },
+                    "settlement_type": {
+                        "control": "remoteSelect",
+                        "label": "结息方式",
+                        "labelField": "drop_list_desc",
+                        "valueField": "drop_list_value",
+                        "####doRequest": {
+                            "url": "/SUMP/icmcall/icmRPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "ap1071",
+                                "drop_list_type": ""
+                            }
+                        },
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入"
+                            }
+                        ]
+                    },
+                    "start_date": {
+                        "control": "dateTimePicker",
+                        "label": "起始日期",
+                        "valueFormat": "yyyyMMdd",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入"
+                            }
+                        ]
+                    },
+                    "end_date": {
+                        "control": "dateTimePicker",
+                        "label": "终止日期",
+                        "valueFormat": "yyyyMMdd",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入"
+                            }
+                        ]
+                    },
+                    "specified_date": {
+                        "control": "inputNumber",
+                        "label": "指定还款日期",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入"
+                            },
+                            {
+                                "type": "integer",
+                                "message": "请输入整数"
+                            }
+                        ]
+                    },
+                    "pay_type": {
+                        "control": "remoteSelect",
+                        "label": "还款方式",
+                        "labelField": "drop_list_desc",
+                        "valueField": "drop_list_value",
+                        "####doRequest": {
+                            "url": "/SUMP/icmcall/icmRPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "ap1071",
+                                "drop_list_type": ""
+                            }
+                        },
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入"
+                            }
+                        ]
+                    },
+                    "apply_reason": {
+                        "control": "textarea",
+                        "span": 24,
+                        "rows":"6",
+                        "label": "申请原因",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入"
+                            }
+                        ]
+                    },
+                    "plan_total_amt": {
+                        "control": "text",
+                        "label": "计划总金额",
+                        "disabled": true
+                    },
+                    "plan_total_interest": {
+                        "control": "text",
+                        "label": "计划总利息",
+                        "disabled": true
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "custom",
+                    "target": "dialog",
+                    "label": "还款计算",
+                    "####doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "",
+                            "case_id": "",
+                            "apply_reason": "",
+                            "legal_type": "",
+                            "queue_cd": ""
+                        }
+                    }
+                },
+                {
+                    "type": "custom",
+                    "target": "dialog",
+                    "label": "清空",
+                    "####doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "",
+                            "case_id": "",
+                            "apply_reason": "",
+                            "legal_type": "",
+                            "queue_cd": ""
+                        }
+                    }
+                },
+                {
+                    "type": "custom",
+                    "target": "dialog",
+                    "label": "申请",
+                    "####doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "",
+                            "case_id": "",
+                            "apply_reason": "",
+                            "legal_type": "",
+                            "queue_cd": ""
+                        }
+                    }
+                },
+                {
+                    "type": "close",
+                    "label": "返回"
+                }
+            ]
+        },
+        "datagrid": {
+            "isInitSearch": true,
+            "####doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "",
+                    "case_id": ""
+                }
+            },
+            "thead": [
+                {
+                    "type": "string",
+                    "label": "期次",
+                    "align": "center",
+                    "prop": ""
+                },
+                {
+                    "type": "string",
+                    "label": "本期起始日期",
+                    "align": "center",
+                    "prop": ""
+                },
+                {
+                    "type": "string",
+                    "label": "本期终止日期",
+                    "align": "center",
+                    "prop": ""
+                },
+                {
+                    "type": "string",
+                    "label": "本期本金金额",
+                    "align": "center",
+                    "prop": ""
+                },
+                {
+                    "type": "string",
+                    "label": "本期利息金额",
+                    "align": "center",
+                    "prop": ""
+                },
+                {
+                    "type": "string",
+                    "label": "本期本息合计金额",
+                    "align": "center",
+                    "prop": ""
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,853 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "ar0582",
+          "apply_no": "${{params.apply_no}}"
+        }
+      },
+      "btns": [],
+      "controls": [
+        {
+          "loan_contract_no": {
+            "control": "text",
+            "label": {
+              "default": "合同编号",
+             "i18n": "L0501.Contract-number"
+          },
+            "span": 8,
+            "disabled": true,
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "assisting_investigator_name": {
+            "control": "lookup",
+            "edit": false,
+            "disabled": true,
+            "span": 8,
+            "rules": [
+              {
+                "required": false,
+                "message": "选择协办调查人名称"
+              }
+            ],
+            "label": {
+              "default": "协办调查人名称",
+             "i18n": "L0501.Name-of-co-investigator"
+          },
+            "keyField": {
+              "assisting_investigator_name": "user_name"
+            },
+            "toRequest": {
+              "url": "/views/icms/flowStart/lookup/user_manager_lookup.json",
+              "method": "post"
+            },
+            "props": {
+              "width": "80%",
+              "title": "协办调查人"
+            },
+            "format": "label"
+          },
+          "risk_coverage": {
+            "control": "select",
+            "label": {
+              "default": "风险覆盖",
+             "i18n": "L0501.Risk-coverage"
+          },
+            "dict": {
+              "dictType": "AR_E_RISK_DTL",
+              "dictKey": [
+                "AR_E_RISK_DTL"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId",
+              "format": "label"
+            },
+            "disabled": true,
+            "span": 8,
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "loan_contract_sign_date": {
+            "control": "dateTimePicker",
+            "format": "yyyy-MM-dd",
+            "valueFormat": "yyyyMMdd",
+            "label": {
+              "default": "合同签订日期",
+             "i18n": "L0501.Contract-signing-date"
+          },
+            "disabled": true,
+            "span": 8,
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "loan_contract_start_date": {
+            "control": "dateTimePicker",
+            "format": "yyyy-MM-dd",
+            "valueFormat": "yyyyMMdd",
+            "label": {
+              "default": "合同起始日期",
+             "i18n": "L0501.Contract-Start-Date"
+          },
+            "disabled": true,
+            "span": 8,
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "loan_contract_end_date": {
+            "control": "dateTimePicker",
+            "format": "yyyy-MM-dd",
+            "valueFormat": "yyyyMMdd",
+            "label": {
+              "default": "合同结束日期",
+             "i18n": "L0501.Contract-End-Date"
+          },
+            "disabled": true,
+            "span": 8,
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "ccy_code": {
+            "control": "select",
+            "label": {
+              "default": "申请币种",
+             "i18n": "L0501.Application-currency"
+          },
+            "disabled": true,
+            "span": 8,
+            "dict": {
+              "dictType": "MS_CURRENCY",
+              "dictKey": [
+                "MS_CURRENCY"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "base_ccy": {
+            "control": "select",
+            "label": {
+              "default": "基准币种",
+             "i18n": "L0501.base-currency"
+          },
+            "disabled": true,
+            "span": 8,
+            "dict": {
+              "dictType": "MS_CURRENCY",
+              "dictKey": [
+                "MS_CURRENCY"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "exchange_rate": {
+            "control": "text",
+            "label": {
+              "default": "汇率",
+             "i18n": "L0501.exchange-rate"
+          },
+            "disabled": true,
+            "span": 8,
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "apply_amt": {
+            "control": "currency",
+            "decimal": "2",
+            "label": {
+              "default": "申请金额",
+             "i18n": "L0501.Application-amount"
+          },
+            "disabled": true,
+            "span": 8,
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ],
+            "align": "left",
+            "format": {
+              "thousand": ","
+            }
+          },
+          "apply_base_amt": {
+            "control": "currency",
+            "decimal": "2",
+            "label": {
+              "default": "申请金额(折基准币种)",
+             "i18n": "L0501.Application-amount-base-currency"
+          },
+            "compute": "${{form.apply_amt}}*${{form.exchange_rate}}",
+            "align": "left",
+            "disabled": true,
+            "format": {
+              "thousand": ","
+            },
+            "span": 8,
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "appr_amt": {
+            "control": "currency",
+            "decimal": "2",
+            "align": "left",
+            "label": {
+              "default": "审批金额",
+             "i18n": "L0501.Approval-amount"
+          },
+            "disabled": true,
+            "format": {
+              "thousand": ","
+            },
+            "span": 8
+          },
+          "periods": {
+            "control": "text",
+            "label": {
+              "default": "期限（月）",
+             "i18n": "L0501.Term-months"
+          },
+            "disabled": true,
+            "span": 8,
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "apply_repay_way": {
+            "control": "select",
+            "label": {
+              "default": "申请还款方式",
+             "i18n": "L0501.Application-for-repayment-method"
+          },
+            "dict": {
+              "dictType": "AR_E_REPAY_WAY",
+              "dictKey": [
+                "AR_E_REPAY_WAY"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId",
+              "format": "label"
+            },
+            "span": 8,
+            "disabled": true,
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "apply_repay_freq": {
+            "control": "select",
+            "label": {
+              "default": "申请还款间隔",
+             "i18n": "L0501.Application-repayment-interval"
+          },
+            "dict": {
+              "dictType": "AR_APPLY_REPAY_FREQ",
+              "dictKey": [
+                "AR_APPLY_REPAY_FREQ"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId",
+              "format": "label"
+            },
+            "disabled": true,
+            "span": 8,
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "due_day": {
+            "control": "text",
+            "label": {
+              "default": "扣款日",
+             "i18n": "L0501.Deduction-date"
+          },
+            "disabled": true,
+            "span": 8,
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "apply_inst_rate_ratio": {
+            "control": "text",
+            "label": {
+              "default": "申请利率浮动比例",
+             "i18n": "L0501.Apply-for-interest-rate-floating-ratio"
+          },
+            "disabled": true,
+            "span": 8,
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ]
+          },"apply_Interest_rate_spread": {
+          "control": "currency",
+          "decimal":"6",
+          "disabled": true,
+          "label": "申请利差",
+          "span": 8
+          },
+          "overdue_penalties_inst_float_ratio": {
+            "control": "text",
+            "label": {
+              "default": "逾期罚息利率浮动比例",
+             "i18n": "L0501.Floating-ratio"
+          },
+            "disabled": true,
+            "span": 8,
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "apply_punish_float_ratio": {
+            "control": "text",
+            "label": {
+              "default": "挪用罚息浮动比例",
+             "i18n": "L0501.penalty-interest"
+          },
+            "disabled": true,
+            "span": 8,
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "inst_rate_flag": {
+            "control": "select",
+            "label": {
+              "default": "年/月利率标识",
+             "i18n": "L0501.interest-rate"
+          },
+            "dict": {
+              "dictType": "AR_E_INST_FLAG",
+              "dictKey": [
+                "AR_E_INST_FLAG"
+              ],
+              "format": "label"
+            },
+            "disabled": true,
+            "span": 8,
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "loan_inst_rate": {
+            "control": "text",
+            "decimal": "6",
+            "label": {
+              "default": "执行利率",
+             "i18n": "L0501.strike-rate"
+          },
+            "disabled": true,
+            "span": 8,
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "inst_rate_adjust_mode": {
+            "control": "select",
+            "label": {
+              "default": "利率调整模式",
+             "i18n": "L0501.Interest-rate"
+          },
+            "dict": {
+              "dictType": "AR_E_RATE_ADJUST_MODE",
+              "dictKey": [
+                "AR_E_RATE_ADJUST_MODE"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId",
+              "format": "label"
+            },
+            "disabled": true,
+            "span": 8,
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "is_entrusted_loan": {
+            "control": "select",
+            "label": {
+              "default": "是否委托贷款",
+             "i18n": "L0501.Entrusted-loan-or-not"
+          },
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            },
+            "disabled": true,
+            "span": 8,
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "trust_pay_limit_flag": {
+            "control": "select",
+            "label": {
+              "default": "是否受托支付限额",
+             "i18n": "L0501.payment-limit"
+          },
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            },
+            "disabled": true,
+            "span": 8,
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ],
+            "align": "left",
+            "format": {
+              "thousand": ","
+            }
+          },
+          "trust_pay_amt": {
+            "control": "currency",
+            "decimal": "2",
+            "label": {
+              "default": "受托支付限额(元)",
+             "i18n": "L0501.Entrusted-payment"
+          },
+            "disabled": true,
+            "span": 8,
+            "align": "left",
+            "format": {
+              "thousand": ","
+            },
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "low_risk_guar_amt": {
+            "control": "currency",
+            "decimal": "2",
+            "label": {
+              "default": "低风险担保金额(折基准币种)",
+             "i18n": "L0501.Low-risk"
+          },
+            "disabled": true,
+            "span": 8,
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ],
+            "align": "left",
+            "format": {
+              "thousand": ","
+            }
+          },
+          "low_risk_sec_ratio": {
+            "control": "text",
+            "label": {
+              "default": "低风险担保比例",
+             "i18n": "L0501.guarantee-ratio"
+          },
+            "disabled": true,
+            "span": 8,
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "is_realty_pledge_loan": {
+            "control": "select",
+            "label": {
+              "default": "是否房地产抵押贷款",
+             "i18n": "L0501.estate-mortgage"
+          },
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            },
+            "disabled": true,
+            "span": 8,
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ],
+            "showItem": {
+              "Y": [
+                "house_colt_type"
+              ]
+            }
+          },
+          "realty_pledge_type": {
+            "control": "select",
+            "label": {
+              "default": "房地产抵押贷款类型",
+             "i18n": "L0501.real-estate"
+          },
+            "dict": {
+              "dictType": "AR_E_HOUSE_COLT_TYPE",
+              "dictKey": [
+                "AR_E_HOUSE_COLT_TYPE"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId",
+              "format": "label"
+            },
+            "disabled": true,
+            "span": 8,
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "loan_use": {
+            "control": "lookup",
+            "label": {
+              "default": "贷款用途",
+             "i18n": "L0501.Loan-purpose"
+          },
+            "disabled": true,
+            "span": 8,
+            "edit": false,
+            "rows": 4,
+            "keyField": {
+              "loan_use": "amt_purpose_name"
+            },
+            "toRequest": {
+              "url": "/views/icms/docManager/loanPurpose/loanPurpose_lookup.json",
+              "method": "get",
+              "params": {
+                "sale_prod_cd": "${{params.sale_prod_cd}}",
+                "prod_version": "${{params.prod_version}}"
+              }
+            },
+            "multiple": false,
+            "props": {
+              "title": "选择贷款用途"
+            },
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "loan_deposit_ratio": {
+            "control": "select",
+            "label": {
+              "default": "在我行存贷比",
+             "i18n": "L0501.loan-ratio"
+          },
+            "dict": {
+              "dictType": "AR_E_LOAN_DEPOSIT_RATIO",
+              "dictKey": [
+                "AR_E_LOAN_DEPOSIT_RATIO"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId",
+              "format": "label"
+            },
+            "disabled": true,
+            "span": 8,
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ]
+          }, 
+          "loan_mode": {
+            "control": "select",
+            "label": {
+              "default": "贷款出账模式"
+          },
+            "dict": {
+              "dictType": "AR_E_DEBT_MODE",
+              "dictKey": [
+                "AR_E_DEBT_MODE"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId",
+              "format": "label"
+            },
+            "disabled": true,
+            "span": 8,
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          
+          "cust_rale_type": {
+            "control": "select",
+            "label": {
+              "default": "客户关联度",
+             "i18n": "L0501.Customer-correlation"
+          },
+            "dict": {
+              "dictType": "AR_E_CUST_RALE_TYPE",
+              "dictKey": [
+                "AR_E_CUST_RALE_TYPE"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId",
+              "format": "label"
+            },
+            "disabled": true,
+            "span": 8,
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "credit_history": {
+            "control": "select",
+            "label": {
+              "default": "信用记录",
+             "i18n": "L0501.Credit"
+          },
+            "dict": {
+              "dictType": "AR_E_CREDIT_HIST",
+              "dictKey": [
+                "AR_E_CREDIT_HIST"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId",
+              "format": "label"
+            },
+            "disabled": true,
+            "span": 8,
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "center_name": {
+            "control": "text",
+            "label": {
+              "default": "合作银行",
+             "i18n": "L0501.Cooperative-Bank"
+          },
+            "disabled": true,
+            "span": 8
+          }, 
+          "source_of_funds": {
+            "control": "select",
+            "disabled":true,
+            "label": "资金来源",
+            "dict": {
+              "dictType": "AR_E_SOURCE_OF_FUNDS",
+              "dictKey": [
+                "AR_E_SOURCE_OF_FUNDS"
+              ]
+            },
+            "span": 8
+          },
+          "prdcly_lendg_flg": {
+            "control": "select",
+            "label": "频率性放款标志(周期)",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ]
+            },
+            "disabled": true,
+            "span": 8
+          },
+          "lendg_tp": {
+            "control": "select",
+            "label": "频率放款类型",
+            "disabled": true,
+            "dict": {
+              "dictType": "LN_E_LENDMD",
+              "dictKey": [
+                "LN_E_LENDMD"
+              ]
+            },
+            "span": 8
+          },
+          "lendg_prd": {
+            "control": "text",
+            "label": "频率放款周期",
+            "disabled": true,
+            "span": 8
+          },
+          "lendg_way": {
+            "control": "select",
+            "label": "频率放款方式",
+            "dict": {
+              "dictType": "LN_E_LENDTP",
+              "dictKey": [
+                "LN_E_LENDTP"
+              ]
+            },
+            "disabled": true,
+            "span": 8
+          },
+          "evry_tm_lendg_amt_pcnt": {
+            "control": "text",
+            "label": "每次放款金额(元)或比例(%)",
+            "disabled": true,
+            "span": 8
+          },
+          "lendg_due_bill_mgmt_mode": {
+            "control": "select",
+            "label": "放款借据模式",
+            "dict": {
+              "dictType": "LN_E_AUTOTG",
+              "dictKey": [
+                "LN_E_AUTOTG"
+              ]
+            },
+            "disabled": true,
+            "span": 8
+          },
+          "part_no": {
+            "control": "hidden",
+            "label": "合作商编号"
+          },
+          "specific_purpose": {
+            "label": {
+              "default": "具体用途",
+             "i18n": "L0501.Specific-Use"
+          },
+            "control": "textarea",
+            "disabled": true,
+            "span": 24,
+            "autosize": {
+              "minRows": 3,
+              "maxRows": 5
+            },
+            "maxlength": 40,
+            "showWordLimit": true,
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "remark": {
+            "label": {
+              "default": "备注",
+             "i18n": "L0501.notes"
+          },
+            "control": "textarea",
+            "disabled": true,
+            "span": 24,
+            "autosize": {
+              "minRows": 3,
+              "maxRows": 5
+            },
+            "maxlength": 40,
+            "showWordLimit": true
+          }
+        },
+        {
+          "apply_no": {
+            "label": "申请号",
+            "control": "hidden",
+            "value": "${{params.apply_no}}"
+          }
+        }
+      ]
+    }
+  }
+}

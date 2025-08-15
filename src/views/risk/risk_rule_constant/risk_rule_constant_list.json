@@ -1,0 +1,144 @@
+{
+  "module": "v-search-btn-datagrid",
+  "pageId": "risk_rule_constant",
+  "layout": {
+    "form": {
+      "controls": [{
+        "const_code": {
+          "label": "常量代码",
+          "control": "text",
+          "span": 8,
+          "rules": [{
+            "message": "请正确输入",
+            "max": 20
+          }]
+        },
+        "const_name": {
+          "label": "常量名称",
+          "control": "text",
+          "span": 8,
+          "rules": [{
+            "message": "请正确输入",
+            "max": 60
+          }]
+        }
+      }]
+    },
+    "toolbar": {
+      "btns": [{
+        "type": "add",
+        "authId": "constant_add_btn",
+        "label": "新增",
+        "toRequest": {
+          "url": "@riskRuleConstantAdd",
+          "method": "get"
+        },
+        "props": {
+          "width": "70%",
+          "title": "新增"
+        }
+      }]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+            "servicecode": "deci010201",
+             "isList": true
+        }
+      },
+      "thead": [
+        {
+        "label": "序号",
+        "type": "index"
+        },
+        {
+          "label": "常量代码",
+          "prop": "const_code"
+        },
+        {
+          "label": "常量名称",
+          "prop": "const_name"
+        },
+        {
+          "label": "数据类型",
+          "prop": "data_type",
+          "dict": {
+            "dictType": "data_type",
+            "dictKey": [],
+            "doRequest": {
+              "url": "/views/risk/dictdata/dataType.json",
+              "method": "get"
+            }
+          }
+        },
+        {
+          "label": "值类型",
+          "prop": "value_type",
+          "dict": {
+            "dictType": "value_type",
+            "dictKey": [],
+            "doRequest": {
+              "url": "/views/risk/dictdata/valueType.json",
+              "method": "get"
+            }
+          }
+        },
+        {
+          "label": "常量值",
+          "prop": "const_value"
+        },
+        {
+          "label": "最新维护时间",
+          "prop": "data_update_time"
+        }, {
+          "label": "备注",
+          "prop": "description"
+        },
+        {
+          "label": "操作",
+          "width": "150px",
+          "btns": [{
+              "type": "edit",
+              "authId": "constant_upd_btn",
+              "label": "维护",
+              "toRequest": {
+                "url": "@riskRuleConstantAdd",
+                "method": "get",
+                "params": {"isEdit":true}
+              },
+              "props": {
+                "width": "70%"
+              }
+            },
+            {
+              "type": "look",
+              "label": "查看",
+              "toRequest": {
+                "url": "/views/risk/risk_rule_constant/risk_rule_constant_view.json",
+                "method": "get"
+              },
+              "props": {
+                "width": "70%"
+              }
+            },
+            {
+              "type": "delete",
+              "authId": "constant_del_btn",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "deci010205"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

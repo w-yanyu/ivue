@@ -1,0 +1,164 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "sale_prod_cd": {
+            "control": "hidden",
+            "label": "可售产品编号",
+            "value": "${{params.sale_prod_cd}}"
+          }
+        }
+      ],
+      "btns":[]
+    },
+    "toolbar": {
+      "btns": [
+          {
+              "type": "add",
+              "label": "版本对比",
+              "checkCountMax": 2,
+              "checkCountMin": 2,
+              "toRequest": {
+                "url": "@sellProductListCompare",
+                  "method": "POST"
+              },
+              "props": {
+                "width": "70%",
+                "title": "产品对比分析报告"
+              }
+          }
+      ]
+  },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pd0211",
+          "appr_status": "03"
+        }
+      },
+      "thead": [
+        {
+          "type": "selection"
+        },
+        {
+          "type":"string",
+          "label": "授信产品名称",
+          "prop": "sale_prod_name",
+          "align": "center"
+        },
+        {
+          "type":"string",
+          "label": "授信产品编号",
+          "prop": "sale_prod_cd",
+          "align": "center"
+        },
+        {
+          "type":"string",
+          "label": "授信产品版本",
+          "prop": "prod_version",
+          "align": "center"
+        },
+        {
+          "type":"string",
+          "label": "授信产品类型",
+          "prop": "prod_type",
+          "align": "center"
+        },
+        {
+          "type":"string",
+          "label": "授信产品类型名称",
+          "prop": "prod_type_name",
+          "align": "center"
+        },
+        {
+          "type":"string",
+          "label": "模板编号",
+          "prop": "template_id",
+          "align": "center"
+        },
+        {
+          "type":"string",
+          "label": "模板版本",
+          "prop": "template_version",
+          "align": "center"
+        },
+        {
+          "type":"string",
+          "label": "审批状态",
+          "prop": "appr_status",
+          "align": "center",
+          "dict": {
+            "dictType": "PD_E_APPR_STATUS",
+            "dictKey": [
+              "PD_E_APPR_STATUS"
+            ],
+            "format": "label-value"
+          }
+        },
+        {
+          "type":"string",
+          "label": "产品状态",
+          "prop": "prod_status",
+          "align": "center",
+          "dict": {
+            "dictType": "PD_E_PROD_STATUS",
+            "dictKey": [
+              "PD_E_PROD_STATUS"
+            ],
+            "format": "label-value"
+          }
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "width":"200px",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "@prodLayout",
+                "method": "GET",
+                "params": {
+                  "tranType": "detail",
+                  "template_id": "${{current.template_id}}",
+                  "pageTranType": "temp"
+                }
+              },
+              "props": {
+                "width": "75%",
+                "title": "可售产品详情"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "切换",
+              "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "pd0218"
+                }
+              },
+              "confirm": {
+                "title": "提示信息",
+                "msg": "确认切换版本吗？",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              },
+              "eventAfter": {
+                "doParentCallback": true
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

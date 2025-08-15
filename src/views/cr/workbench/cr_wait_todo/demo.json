@@ -1,0 +1,69 @@
+{
+    "module": "v-inputDataForm-btn",
+    "layout": {
+        "form": {
+            "doRequest": {
+                "url": "/demo/submitData",
+                "method": ""
+            },
+            "controls": [{
+                    "routid": {
+                        "control": "remoteSelect",
+                        "label": "提交类型",
+                        "span": 12,
+                        "placeholder": "请选择提交类型",
+                        "valueField": "route_id",
+                        "labelField": "route_name",
+                        "doRequest": {
+                            "url": "/SUMP/icmcall/icmRPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "CRMSBPMTS0012",
+                                "instid": "${{params.instid}}",
+                                "tkinid": "${{params.tkinid}}"
+                            }
+                        },
+                        "events": {
+                            "emit": [
+                                "usercd1"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "usercd1": {
+                        "control": "remoteSelect",
+                        "label": "下一处理人",
+                        "span": 12,
+                        "placeholder": "请选择下一处理人",
+                        "valueField": "usercd",
+                        "labelField": "usercd",
+                        "doRequest": {
+                            "url": "/SUMP/icmcall/icmRPCCall",
+                            "method": "POST",
+                            "paramsRequired": ["routid"],
+                            "params": {
+                                "servicecode": "CRMSBPMTS0015",
+                                "instid": "${{params.instid}}",
+                                "routid": "${{form.routid}}",
+                                "cruser": "${{params.cruser}}",
+                                "crorgg": "${{params.crorgg}}"
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": {
+                        "control": "textarea",
+                        "label": "意见描述",
+                        "span": 18,
+                        "rules": [{
+                            "required": true,
+                            "message": "请输入意见描述"
+                        }]
+                    }
+                }
+            ]
+        }
+    }
+}

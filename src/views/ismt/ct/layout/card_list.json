@@ -1,0 +1,80 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "card_id": {
+            "control": "text",
+            "label": "卡片编号",
+            "rules": [
+              {
+                "max": 30,
+                "message": "长度不能超过30个字符"
+              }
+            ]
+          },
+          "card_name": {
+            "control": "text",
+            "label": "卡片名称"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ct3005",
+          "user_id": "$g{{user_info.userCode}}",
+          "card_portrait": "${{params.card_portrait}}",
+          "card_transver": "${{params.card_transver}}"
+        }
+      },
+      "thead": [
+        {
+          "label": "卡片编号",
+          "prop": "card_id"
+        },
+        {
+          "label": "卡片名称",
+          "prop": "card_name"
+        },
+        {
+          "label": "卡片类型",
+          "prop": "card_type",
+          "dict": {
+            "dictType": "CT_E_CARD_TYPE",
+            "format": "label",
+            "dictKey": ["CT_E_CARD_TYPE"]
+          },
+          "format": "label"
+        },
+        {
+          "prop": "url",
+          "label": "卡片界面地址"
+        },
+        {
+          "label": "横向尺寸",
+          "prop": "card_portrait"
+        },
+        {
+          "label": "纵向尺寸",
+          "prop": "card_transver"
+        },
+        {
+          "label": "操作",
+          "width": "100px",
+          "align": "center",
+          "btns": [
+            {
+              "type": "bringback",
+              "label": "选择"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

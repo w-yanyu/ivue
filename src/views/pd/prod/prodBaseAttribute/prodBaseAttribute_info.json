@@ -1,0 +1,295 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "detail,format=pd0216,temp=pd0215",
+          "pageTranType": "${{params.pageTranType}}",
+          "sale_prod_cd": "${{params.sale_prod_cd}}",
+          "prod_version": "${{params.prod_version}}"
+        }
+      },
+      "btns": [],
+      "controls": [
+        {
+          "template_id": {
+            "control": "hidden",
+            "label": "模板编号",
+            "value": "${{params.template_id}}"
+          },
+          "prod_version": {
+            "control": "hidden",
+            "label": "可售产品版本",
+            "value": "${{params.prod_version}}"
+          },
+          "busi_seq": {
+            "control": "hidden",
+            "label": "业务流水",
+            "value": "${{params.busi_seq}}"
+          },
+          "prod_type_name": {
+            "control": "hidden",
+            "label": "业务类型名称",
+            "value": "${{params.prod_type_name}}"
+          },
+          "template_version": {
+            "control": "hidden",
+            "label": "模板版本",
+            "value": "${{params.template_version}}"
+          },
+          "sale_prod_cd": {
+            "control": "string",
+            "label": "可售产品编号",
+            "span": 8,
+            "width": "50px",
+            "rules": [
+              {
+                "required": false,
+                "message": "可售产品名称不得为空"
+              },
+              {
+                "max": 80,
+                "message": "长度不能超过80个字符"
+              }
+            ]
+          },
+          "sale_prod_name": {
+            "control": "string",
+            "label": "可售产品名称",
+            "span": 8,
+            "width": "50px",
+            "rules": [
+              {
+                "required": false,
+                "message": "可售产品名称不得为空"
+              },
+              {
+                "max": 80,
+                "message": "长度不能超过80个字符"
+              }
+            ]
+          },
+          "prod_type": {
+            "label": "可售产品类型",
+            "disabled": true,
+            "span": 8,
+            "width": "50px",
+            "control": "remoteSelect",
+            "labelField": "title",
+            "valueField": "id",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "pd0144",
+                "grupno": "0006",
+                "pid": "KSCP"
+              }
+            },
+            "format": "label",
+            "rules": [
+              {
+                "required": false,
+                "message": "可售产品类型不得为空"
+              }
+            ]
+          }
+        },
+        {
+          "sale_prod_attr": {
+            "control": "select",
+            "label": "可售产品属性",
+            "disabled": true,
+            "span": 8,
+            "width": "50px",
+            "dict": {
+              "dictType": "PD_E_PROD_ATTR",
+              "dictKey": [
+                "PD_E_PROD_ATTR"
+              ],
+              "format": "value-label"
+            },
+            "rules": [
+              {
+                "required": false,
+                "message": "基础产品名称不得为空"
+              }
+            ]
+          },
+          "prod_abbr_desc": {
+            "control": "string",
+            "label": "可售产品简称描述",
+            "span": 8,
+            "width": "50px",
+            "rules": [
+              {
+                "required": false,
+                "message": "可售产品简称描述不得为空"
+              }
+            ]
+          },
+          "prod_abbr_flag": {
+            "control": "string",
+            "label": "可售产品简称标志",
+            "span": 8,
+            "width": "50px",
+            "rules": [
+              {
+                "required": false,
+                "message": "可售产品简称标志不得为空"
+              }
+            ]
+          }
+        },
+        {
+          "base_prod_cd": {
+            "control": "string",
+            "label": "基础产品编号",
+            "span": 8,
+            "width": "50px"
+          },
+          "base_prod_name": {
+            "control": "string",
+            "label": "基础产品名称",
+            "span": 8,
+            "width": "50px",
+            "#rules": [
+              {
+                "required": false,
+                "message": "基础产品名称不得为空"
+              }
+            ]
+          },
+          "prod_contents_name": {
+            "control": "string",
+            "label": "产品所属目录",
+            "span": 8,
+            "width": "50px"
+          },
+          "prod_contents_cd": {
+            "control": "hidden",
+            "label": "产品所属目录编号",
+            "span": 8
+          }
+        },
+        {
+          "amt_purpose_type_name": {
+            "label": "资金用途分类",
+            "control": "textarea",
+            "disabled": true,
+            "span": 8,
+            "width": "50px"
+          },
+          "amt_purpose_type_no": {
+            "control": "hidden",
+            "label": "资金用途分类编号",
+            "span": 8,
+            "width": "50px"
+          },
+          "is_credit": {
+            "control": "select",
+            "disabled": true,
+            "label": "是否需要授信",
+            "span": 8,
+            "width": "50px",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId",
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": false,
+                "message": "是否需要授信不得为空"
+              }
+            ]
+          },
+          "cust_class": {
+            "control": "select",
+            "disabled": true,
+            "label": "适用客户类型",
+            "span": 8,
+            "width": "50px",
+            "dict": {
+              "dictType": "PD_E_CUST_CLASS",
+              "dictKey": [
+                "PD_E_CUST_CLASS"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId",
+              "format": "label"
+            }
+          }
+        },
+        {
+          "prod_label": {
+            "control": "select",
+            "disabled": true,
+            "label": "产品标签",
+            "multiple": true,
+            "span": 8,
+            "width": "50px",
+            "dict": {
+              "dictType": "PD_E_PROD_LABEL",
+              "dictKey": [
+                "PD_E_PROD_LABEL"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId",
+              "format": "label"
+            }
+          },
+          "recommend": {
+            "control": "select",
+            "label": "是否推荐",
+            "span": 8,
+            "width": "50px",
+            "disabled": true,
+            "dict": {
+              "format": "label",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "dictType": "MS_E_YESORNO"
+            }
+          }
+        },
+        {
+          "prod_desc": {
+            "control": "textarea",
+            "span": 24,
+            "width": "50px",
+            "disabled": true,
+            "label": "描述",
+            "autosize": {
+              "minRows": 3,
+              "maxRows": 7
+            },
+            "maxlength": 500,
+            "showWordLimit": true
+          }
+        },
+        {
+          "prod_picture_url": {
+            "control": "hidden",
+            "label": "产品图片URL"
+          },
+          "img": {      
+            "width": "50px",
+            "control": "img",
+            "span": 8, 
+            "label": "产品图片",
+            "value":"${{params.prod_picture_url}}"
+          }
+        }
+      ]
+    }
+  }
+}

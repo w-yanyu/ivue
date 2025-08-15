@@ -1,0 +1,84 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "btns": [
+        {
+          "type": "submit",
+          "label": "预测",
+          "icon": "el-icon-data-analysis"          
+        },
+      {
+        "type": "edit",
+        "label": "查看走势图",
+        "icon": "el-icon-data-analysis",
+        "toRequest": {
+            "url": "@froecastChartPre",
+            "method": "POST",
+            "params":{
+                "operation_date": "${{form.operation_date}}"
+            }
+        }
+      }
+      ],
+      "controls": [
+        {
+          "operation_date": {
+            "label": "预测开始日期",
+            "control": "dateTimePicker",
+            "type": "date",
+            "format": "yyyyMMdd",
+            "rules": [
+              {
+                "required": true,
+                "message": "请填写预测开始日期"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": []
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pl0732"
+        }
+      },
+      "pagination": {
+        "show": false
+      },
+      "thead": [
+        {
+          "type": "index"
+        },
+        {
+          "prop": "operation_date",
+          "label": "日期",
+          "align": "center"
+        },
+        {
+          "prop": "plan_income",
+          "label": "计划入金",
+          "align": "center"
+        },
+        {
+          "label": "计划出金",
+          "align": "center",
+          "prop": "plan_out"
+        },
+        {
+          "label": "缺口",
+          "align": "center",
+          "prop": "gap_amt"
+        }
+      ]
+    }
+  }
+}

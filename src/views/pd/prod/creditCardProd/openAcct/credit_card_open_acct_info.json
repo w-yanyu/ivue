@@ -1,0 +1,351 @@
+{
+  "module": "v-inputDataForm-btn",
+  "layout": {
+    "form": {
+      "name": "info",
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pd1201",
+          "sale_prod_cd": "${{params.sale_prod_cd}}",
+          "prod_version": "${{params.prod_version}}"
+        }
+      },
+      "btns": [],
+      "controlsGroup": [
+        {
+          "title": "基本属性",
+          "tooltip": "",
+          "titleIcon": "",
+          "showHint": "",
+          "accordion": false,
+          "expand": true,
+          "controls": [
+            {
+              "servicecode": {
+                "control": "hidden",
+                "label": "保存类型用卡开户属性",
+                "value": "pd1202"
+              },
+              "sale_prod_cd": {
+                "label": "可售产品编号",
+                "control": "hidden",
+                "value": "${{params.sale_prod_cd}}"
+              },
+              "prod_version": {
+                "label": "产品版本",
+                "control": "hidden",
+                "value": "${{params.prod_version}}"
+              }
+            },
+            {
+              "period_min_limit": {
+                "label": "分期最低金额限制(单笔)",
+                "control": "currency",
+                "align": "left",
+                "format": {
+                  "thousand": ",",
+                  "decimal": 2
+                },
+                "span": 8,
+                "width": "140px",
+                "rules": [
+                  {
+                    "required": false,
+                    "message": "分期最低金额限制(单笔)"
+                  }
+                ]
+              },
+              "period_max_limit": {
+                "label": "分期最高金额限制(单笔)",
+                "control": "currency",
+                "align": "left",
+                "format": {
+                  "thousand": ",",
+                  "decimal": 2
+                },
+                "span": 8,
+                "width": "140px",
+                "rules": [
+                  {
+                    "required": false,
+                    "message": "分期最高金额限制(单笔)"
+                  }
+                ]
+              },
+              "bill_day": {
+                "label": "账单日",
+                "control": "select",
+                "span": 8,
+                "width": "140px",
+                "options": [
+                  {
+                    "label": "01号出账",
+                    "value": "1MA01"
+                  },
+                  {
+                    "label": "05号出账",
+                    "value": "1MA05"
+                  },
+                  {
+                    "label": "10号出账",
+                    "value": "1MA10"
+                  }
+                ],
+                "events": {
+                  "condition": {
+                    "1MA01": {
+                      "control": {
+                        "repay_day": {
+                          "value": "1MA05"
+                        }
+                      }
+                    },
+                    "1MA05": {
+                      "control": {
+                        "repay_day": {
+                          "value": "1MA15"
+                        }
+                      }
+                    },
+                    "1MA10": {
+                      "control": {
+                        "repay_day": {
+                          "value": "1MA25"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "repay_day": {
+                "label": "每月还款日",
+                "control": "select",
+                "span": 8,
+                "width": "140px",
+                "options": [
+                  {
+                    "label": "5号还款",
+                    "value": "1MA05"
+                  },
+                  {
+                    "label": "15号还款",
+                    "value": "1MA15"
+                  },
+                  {
+                    "label": "25号还款",
+                    "value": "1MA25"
+                  }
+                ]
+              },
+              "effect_date": {
+                "label": "生效日期",
+                "control": "dateTimePicker",
+                "span": 8,
+                "width": "140px",
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请输入生效日期"
+                  }
+                ]
+              },
+              "expiry_date": {
+                "label": "失效日期",
+                "control": "dateTimePicker",
+                "span": 8,
+                "width": "140px",
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请输入生效日期"
+                  }
+                ]
+              }
+            },
+            {
+              "delay_min_limit": {
+                "label": "延期最低金额限制(单笔)",
+                "control": "currency",
+                "align": "left",
+                "format": {
+                  "thousand": ",",
+                  "decimal": 2
+                },
+                "span": 8,
+                "width": "140px",
+                "rules": [
+                  {
+                    "required": false,
+                    "message": "延期最低金额限制(单笔)"
+                  }
+                ]
+              },
+              "delay_max_limit": {
+                "label": "延期最高金额限制(单笔)",
+                "control": "currency",
+                "align": "left",
+                "format": {
+                  "thousand": ",",
+                  "decimal": 2
+                },
+                "span": 8,
+                "width": "140px",
+                "rules": [
+                  {
+                    "required": false,
+                    "message": "延期最高金额限制(单笔)"
+                  }
+                ]
+              },
+              "is_grace_period": {
+                "label": "是否宽限期",
+                "control": "select",
+                "span": 8,
+                "width": "140px",
+                "rules": [
+                  {
+                    "required": false,
+                    "message": "请选择是否宽限期"
+                  }
+                ],
+                "dict": {
+                  "dictType": "MS_E_YESORNO",
+                  "dictKey": [
+                    "MS_E_YESORNO"
+                  ]
+                },
+                "events": {
+                  "condition": {
+                    "0": {
+                      "control": {
+                        "grace_period_days": {
+                          "initShow": false,
+                          "value": ""
+                        }
+                      }
+                    },
+                    "1": {
+                      "control": {
+                        "grace_period_days": {
+                          "initShow": true
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "grace_period_days": {
+                "label": "宽限期天数",
+                "control": "text",
+                "span": 8,
+                "width": "140px",
+                "rules": [
+                  {
+                    "required": false,
+                    "message": "请输入宽限期天数"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "title": "利率属性",
+          "tooltip": "",
+          "titleIcon": "",
+          "showHint": "",
+          "accordion": false,
+          "expand": true,
+          "controls": [
+            {
+              "cnsp_nrl_int_rate": {
+                "label": "消费正常利率",
+                "control": "currency",
+                "align": "left",
+                "span": 8,
+                "width": "140px",
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请输入消费正常利率"
+                  }
+                ]
+              },
+              "cnsp_pnly_int_rate": {
+                "label": "消费罚息利率",
+                "control": "currency",
+                "align": "left",
+                "span": 8,
+                "width": "140px",
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请输入消费罚息利率"
+                  }
+                ]
+              },
+              "istlmt_nrl_int_rate": {
+                "label": "分期正常利率",
+                "control": "currency",
+                "align": "left",
+                "span": 8,
+                "width": "140px",
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请输入分期正常利率"
+                  }
+                ]
+              },
+              "istlmt_pnly_int_rate": {
+                "label": "分期罚息利率",
+                "control": "currency",
+                "align": "left",
+                "span": 8,
+                "width": "140px",
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请输入分期罚息利率"
+                  }
+                ]
+              },
+              "pstp_nrl_int_rate": {
+                "label": "延期正常利率",
+                "control": "currency",
+                "align": "left",
+                "span": 8,
+                "width": "140px",
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请输入延期正常利率"
+                  }
+                ]
+              },
+              "pstp_pnly_int_rate": {
+                "label": "延期罚息利率",
+                "control": "currency",
+                "align": "left",
+                "span": 8,
+                "width": "140px",
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请输入延期罚息利率"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

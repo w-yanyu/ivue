@@ -1,0 +1,300 @@
+{
+  "module": "v-realonlyForm-btn",
+  "layout": {
+    "form": {
+      "initRequest": "${{params}}",
+      "controls": [
+        {
+          "appt_no": {
+            "control": "hidden",
+            "label": "申请人序号",
+            "width": "200px",
+            "span": 7
+          },
+          "apply_no": {
+            "control": "hidden",
+            "label": "申请号",
+            "width": "200px",
+            "span": 7
+          },
+          "cust_no": {
+            "control": "hidden",
+            "label": "客户编号",
+            "width": "200px",
+            "span": 7
+          }
+        },
+        {
+          "cust_name": {
+            "control": "text",
+            "label": "客户姓名",
+            "width": "200px",
+            "span": 7,
+            "edit": true,
+            "disabled": true,
+            "rules": [
+              {
+                "required": false,
+                "message": "客户名称不能为空!"
+              }
+            ],
+            "keyField": {
+              "cust_name": "cust_name",
+              "cert_type": "cert_type",
+              "cert_no": "cert_no",
+              "cust_no": "cust_no"
+            },
+            "toRequest": {
+              "url": "/views/us/privateManage/customer_lookup.json",
+              "method": "get"
+            },
+            "props": {
+              "title": "选择客户",
+              "width": "75%"
+            }
+          },
+          "cert_type": {
+            "control": "select",
+            "label": "证件类型",
+            "width": "200px",
+            "disabled": true,
+            "span": 7,
+            "dict": {
+              "dictType": "MS_E_CRET_TYPE",
+              "dictKey": [
+                "MS_E_CRET_TYPE"
+              ],
+              "format": "label"
+            }
+          },
+          "cert_no": {
+            "control": "text",
+            "label": "证件号码",
+            "width": "200px",
+            "disabled": true,
+            "span": 7
+          }
+        },
+        {
+          "applicant_type": {
+            "control": "select",
+            "label": "保证人类型",
+            "width": "200px",
+            "span": 7,
+            "disabled": true,
+            "rules": [
+              {
+                "required": false,
+                "message": "请选择保证人类型!"
+              }
+            ],
+            "dict": {
+              "dictType": "AR_E_APPLICANT_TYPE",
+              "dictKey": [
+                "AR_E_APPLICANT_TYPE"
+              ],
+              "format": "label"
+            }
+          },
+          "guar_section": {
+            "control": "select",
+            "label": "保证期间",
+            "width": "200px",
+            "span": 7,
+            "disabled": true,
+            "rules": [
+              {
+                "required": false,
+                "message": "请选择保证期间!"
+              }
+            ],
+            "dict": {
+              "dictType": "AR_E_GUAR_SECTION",
+              "dictKey": [
+                "AR_E_GUAR_SECTION"
+              ],
+              "format": "label"
+            }
+          },
+          "guar_modality": {
+            "control": "select",
+            "label": "担保形式",
+            "width": "200px",
+            "disabled": true,
+            "span": 7,
+            "rules": [
+              {
+                "required": false,
+                "message": "请选择担保类型!"
+              }
+            ],
+            "dict": {
+              "dictType": "AR_E_GUAR_CATG",
+              "dictKey": [
+                "AR_E_GUAR_CATG"
+              ],
+              "format": "label"
+            }
+          }
+        },
+        {
+          "guar_ratio": {
+            "control": "text",
+            "label": "担保比例",
+            "width": "200px",
+            "disabled": true,
+            "span": 7,
+            "rules": [
+              {
+                "pattern": "^(((\\d|[1-9]\\d)(\\.\\d{1,3})?)|100|100.0|100.00|100.000)$",
+                "message": "0-100三位小数以内的数字!"
+              }
+            ]
+          },
+          "guar_ccy": {
+            "control": "select",
+            "label": "担保币种",
+            "width": "200px",
+            "span": 7,
+            "disabled": true,
+            "dict": {
+              "dictType": "MS_CURRENCY",
+              "dictKey": [
+                "MS_CURRENCY"
+              ],
+              "format": "label"
+            }
+          },
+          "guar_amt": {
+            "control": "currency",
+            "label": "担保金额",
+            "width": "200px",
+            "disabled": true,
+            "span": 7,
+            "rules": [
+              {
+                "required": false,
+                "message": "请输入担保金额"
+              }
+            ],
+            "align": "left",
+            "format": {
+              "thousand": ","
+            }
+          },
+          "base_ccy": {
+            "control": "select",
+            "label": "基准币种",
+            "disabled": true,
+            "width": "200px",
+            "span": 7,
+            "dict": {
+              "dictType": "MS_CURRENCY",
+              "dictKey": [
+                "MS_CURRENCY"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId",
+              "format": "label"
+            }
+          },
+          "exchange_rate": {
+            "control": "currency",
+            "label": "汇率",
+            "disabled": true,
+            "width": "200px",
+            "span": 7,
+            "rules": [
+              {
+                "required": false,
+                "message": "请输入汇率"
+              }
+            ],
+            "align": "left",
+            "format":{
+              "thousand": ","
+            }
+          },
+          "guar_base_amt": {
+            "control": "currency",
+            "label": "担保金额(折基准币种)",
+            "width": "200px",
+            "disabled": true,
+            "span": 7,
+            "compute": "${{form.guar_amt}}*${{form.exchange_rate}}",
+            "rules": [
+              {
+                "message": "请输入担保金额(折基准币种)",
+                "required": false
+              }
+            ],
+            "align": "left",
+            "format":{
+              "thousand": ","
+            }
+          },
+          "rela_public_type": {
+            "control": "select",
+            "label": "与申请人关系",
+            "width": "200px",
+            "disabled": true,
+            "span": 7,
+            "dict": {
+              "dictType": "AR_E_RELATION_TYPE",
+              "dictKey": [
+                "AR_E_RELATION_TYPE"
+              ],
+              "format": "label"
+            }
+          },
+          "is_guar_company": {
+            "control": "select",
+            "label": "是否担保公司担保",
+            "width": "200px",
+            "span": 7,
+            "disabled": true,
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            }
+          },
+          "is_guar_union": {
+            "control": "select",
+            "label": "与申请人是否互保",
+            "width": "200px",
+            "disabled": true,
+            "span": 7,
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            }
+          }
+        },
+        {
+          "remark": {
+            "label": "备注",
+            "control": "textarea",
+            "width": "130px",
+            "disabled": true,
+            "span": 21,
+            "autosize": {
+              "minRows": 4
+            },
+            "rules": [
+              {
+                "max": "200",
+                "message": "长度不能超过200个字符"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

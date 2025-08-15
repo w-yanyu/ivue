@@ -1,0 +1,159 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "scope": "formData",
+            "controls": [
+                {
+                    "coll_result_code": {
+                        "control": "text",
+                        "label": "催收结果代码"
+                    },
+                    "coll_result_name": {
+                        "control": "text",
+                        "label": "催收结果名称"
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "icon": "el-icon-circle-plus",
+                    "target": "dialog",
+                    "label": "新增",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/cs/paramManage/business/contact/contact_add.json"
+                    },
+                    "props": {
+                        "width": "65%",
+                        "title": "新增催收结果定义"
+                    }
+                },
+                {
+                  "type": "add",
+                  "icon": "el-icon-circle-plus",
+                  "target": "dialog",
+                  "label": "个性化配置",
+                  "toRequest": {
+                    "url": "/views/cs/paramManage/business/contact/contact_assign_management.json",
+                    "method": "POST"
+                  },
+                  "props": {
+                    "width": "65%",
+                    "title": "个性化配置催收结果"
+                  }
+                }
+            ]
+        },
+        "datagrid": {
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "cb0038",
+                    "appId": "cbOnl"
+                }
+            },
+            "thead": [
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "催收结果代码",
+                    "prop": "coll_result_code"
+
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "催收结果名称",
+                    "prop": "coll_result_name"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "是否可联",
+                    "prop": "coll_result_type",
+                    "dict": {
+                        "dictType": "CS_E_YESORNO",
+                        "dictKey": [
+                            "CS_E_YESORNO"
+                        ],
+                        "format": "value-label"
+                    }
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "是否有效",
+                    "prop": "is_valid_result",
+                    "dict": {
+                        "dictType": "CS_E_YESORNO",
+                        "dictKey": [
+                            "CS_E_YESORNO"
+                        ],
+                        "format": "value-label"
+                    }
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "是否启用",
+                    "prop": "is_valid",
+                    "dict": {
+                        "dictType": "CS_E_YESORNO",
+                        "dictKey": [
+                            "CS_E_YESORNO"
+                        ],
+                        "format": "value-label"
+                    }
+                },
+
+                {
+                    "label": "操作",
+                    "align":"center",
+                    "fixed": "right",
+                    "btns": [
+                        {
+                            "type":"look",
+                            "label":"详情",
+                            "toRequest":{
+                                "url":"/views/cs/paramManage/business/contact/contact_info.json",
+                                "method":"POST"
+                            },
+                            "props":{
+                                "title":"催收结果详情"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/cs/paramManage/business/contact/contact_modify.json",
+                                "method": "POST"
+                            },
+                            "props": {
+                                "title": "催收结果维护"
+                            }
+                        },
+                        {
+                            "type": "delete",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "cb0035",
+                                    "appId": "cbOnl"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,135 @@
+{
+  "module": "v-form-editableDataGrid-btn",
+  "layout": {
+    "form": {
+      "controls": [
+        {}
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "新增",
+          "icon": "el-icon-plus"
+        },
+        {
+          "type": "batchDelete",
+          "label": "批量删除",
+          "icon": "el-icon-close"
+        },
+        {
+          "type": "save",
+          "label": "保存",
+          "icon": "el-icon-tickets",
+          "doRequest": {
+            "url": "/WEB/hpc/relation/manager",
+            "method": "POST",
+            "params": {
+              "homePageCode": "${{params.homePageCode}}"
+            }
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "doRequest": {
+        "url": "/WEB/hpc/relation/cards",
+        "method": "GET",
+        "params": {
+          "homePageCode": "${{params.homePageCode}}"
+        }
+      },
+      "pagination": {
+        "show": false,
+        "pageSizes": [
+          10,
+          15,
+          20,
+          50,
+          100
+        ],
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "type": "selection",
+          "width": "55"
+        },
+        {
+          "prop": "cardCode",
+          "type": "lookup",
+          "label": "模块",
+          "toRequest": {
+            "url": "/views/risk/web/homepage/card/homepage-card-lookup.json",
+            "method": "GET"
+          },
+          "props": {
+            "width": "60%",
+            "title": "选择模块"
+          },
+          "rules": [
+            {
+              "type": "required",
+              "message": "模块不能为空"
+            }
+          ]
+        },
+        {
+          "prop": "sequence",
+          "type": "inputNumber",
+          "label": "排序",
+          "controls": false
+        },
+        {
+          "prop": "width",
+          "type": "inputNumber",
+          "label": "宽度比例(x24)",
+          "min": 1,
+          "max": 24
+        },
+        {
+          "prop": "height",
+          "type": "inputNumber",
+          "label": "高度(px)",
+          "min": 1,
+          "max": 900
+        },
+        {
+          "prop": "border",
+          "type": "select",
+          "label": "显示边框",
+          "dict": {
+            "dictType": "WEB",
+            "dictKey": [
+              "WEB",
+              "boolean"
+            ],
+            "labelField": "dictName",
+            "valueField": "dictCode",
+            "doRequest": {
+              "url": "/WEB/dict/common",
+              "method": "post"
+            }
+          }
+        },
+        {
+          "prop": "description",
+          "type": "text",
+          "label": "备注"
+        },
+        {
+          "label": "操作",
+          "width": "80px",
+          "btns": [
+            {
+              "type": "delete",
+              "label": "删除",
+              "icon": "el-icon-close"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

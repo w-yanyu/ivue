@@ -1,0 +1,129 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "scope": "templateScope",
+            "initRequest":"${{params}}",
+            "initDataOnce":true,
+            "controls": [
+                {
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "target": "dialog",
+                    "label": "新增",
+                    "toRequest": {
+                        "method": "POST",
+                        "url": "/views/ismt/ct/PageFrameConfig/node_config_add.json",
+                        "params": {
+                            "frame_cd":"${{params.frame_cd}}"
+                        }
+                    },
+                    "props": {
+                        "width": "65%",
+                        "title": "框架节点基本信息录入"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "isInitSearch": true,
+            "initDataOnce":true,
+            "scope": "searchTable",
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "AS_ICMS_PB_PGFATR",
+                    "methcd":"${{params.frame_cd}}"
+                }
+            },
+            "thead": [
+
+
+                					
+                {
+                    "label": "序号",
+                    "type": "index"
+                },
+                {
+                    "label": "框架编号",
+                    "prop": "frame_cd"
+                },  
+                {
+                    "label": "功能编号",
+                    "prop": "funccode"
+                },  
+                {
+                    "label": "菜单名称",
+                    "prop": "tree_menu_name"
+                },  
+                 {
+                    "prop":"is_enabled",
+                    "control": "select",
+                    "label": "是否有效",
+                    "dict": {
+                        "dictType": "E_ISENBE",
+                        "dictKey": [
+                            "E_ISENBE"
+                        ],
+                        "format": "label"
+                    }
+                },
+
+                {
+                    "label": "是否子框架",
+                    "prop": "child_frame_flag",
+                    "type": "select",
+                    "dict": {
+                        "dictType": "E_ISCHFR",
+                        "dictKey": [
+                            "E_ISCHFR"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 200,
+                    "align":"center",
+                    "btns": [
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/ismt/ct/PageFrameConfig/node_config_edit.json",
+                                "method": "post"
+                            },
+                            "props": {
+                                "width": "65%",
+                                "title": "维护"
+                            }
+                        },
+                       
+                        {
+                            "type": "delete",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "post",
+                                "params": {
+                                    "servicecode": "AS_ICMS_PB_DEFATR"
+                                    
+                                }
+                            }
+                        }
+                    ]
+                }
+            ],
+            "pagination": {
+                "show": true
+            }
+        }
+    }
+}

@@ -1,0 +1,136 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "ware_house_code": {
+            "label": "库房编号",
+            "control": "text"
+          },
+          "wh_name": {
+            "label": "库房名称",
+            "control": "text"
+          }
+        },
+        {
+          "wh_level": {
+            "label": "库房级别",
+            "control": "select",
+            "dict": {
+              "dictType": "CO_E_WH_LEVEL",
+              "dictKey": [
+                "CO_E_WH_LEVEL"
+              ],
+              "format": "label"
+            }
+          },
+          "wh_user_name": {
+            "label": "库房主管",
+            "control": "lookup",
+            "edit": true,
+            "keyField": {
+              "wh_user_name": "user_name",
+              "wh_user_no": "user_id"
+            },
+            "toRequest": {
+              "url": "/views/co/colsProductManager/coltWarehouseManager/user-manager-lookup.json",
+              "method": "post",
+              "params": {
+
+              }
+            }
+          },
+          "wh_user_no": {
+            "label": "库房主管no",
+            "control": "hidden"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "co3021",
+          "params": {
+          }
+        }
+      },
+      "pagination": {
+        "pageSizes": [
+          10,
+          15,
+          20
+        ],
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "type": "index",
+          "align": "center"
+        },
+        {
+          "label": "库房编号",
+          "prop": "ware_house_code",
+          "align": "center",
+          "type": "leaf"
+        },
+        {
+          "label": "库房名称",
+          "prop": "wh_name",
+          "align": "center",
+          "type": "leaf"
+        },
+        {
+          "label": "库房级别",
+          "prop": "wh_level",
+          "dict": {
+            "dictType": "CO_E_WH_LEVEL",
+            "dictKey": [
+              "CO_E_WH_LEVEL"
+            ],
+            "format": "label"
+          },
+          "align": "center",
+          "type": "leaf"
+        },
+        {
+          "label": "库房地址",
+          "prop": "wh_address",
+          "align": "center",
+          "type": "leaf"
+        },
+        {
+          "label": "库房类型",
+          "prop": "wh_type",
+          "align": "center",
+          "dict": {
+            "dictType": "CO_E_WH_TYPE",
+            "dictKey": [
+              "CO_E_WH_TYPE"
+            ],
+            "format": "label"
+          },
+          "type": "leaf"
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "fixed": "right",
+          "btns": [{
+            "type": "bringback",
+            "label": "选择"
+          }]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,256 @@
+{
+  "module": "v-search-btn-datagrid",
+  "pageId": "rule_tree",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "treeCode": {
+            "label": "规则树代码",
+            "control": "text",
+            "span": 8,
+            "width": "auto",
+            "rules": [
+              {
+                "message": "字段长度超限",
+                "max": 40
+              }
+            ]
+          },
+          "treeName": {
+            "label": "规则树名称",
+            "width": "auto",
+            "control": "text",
+            "span": 8,
+            "rules": [
+              {
+                "message": "字段长度超限",
+                "max": 64
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "新增",
+          "authId": "rule_tree_add_btn",
+          "toRequest": {
+            "url": "/views/risk/rule_tree/root_rule_tree_add.json",
+            "method": "get",
+            "params": {}
+          },
+          "props": {
+            "width": "70%",
+            "title": "新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "deci040201",
+          "appId": "deciOnl"
+        }
+      },
+      "thead": [
+        {
+          "label": "序号",
+          "type": "index"
+        },
+        {
+          "label": "规则树代码",
+          "prop": "treeCode"
+        },
+        {
+          "label": "规则树名称",
+          "prop": "treeName"
+        },
+        {
+          "label": "操作类型",
+          "prop": "riskOperationType",
+          "dict": {
+            "dictType": "operationType2",
+            "dictKey": [],
+            "format": "label",
+            "doRequest": {
+              "url": "/views/risk/dictdata/operationType2.json",
+              "method": "get"
+            }
+          }
+        },
+        {
+          "label": "规则树状态",
+          "prop": "treeStatus",
+          "dict": {
+            "dictType": "riskStatus",
+            "dictKey": [],
+            "format": "label",
+            "doRequest": {
+              "url": "/views/risk/dictdata/riskStatus.json",
+              "method": "get"
+            }
+          }
+        },
+        {
+          "label": "备注",
+          "prop": "treeDesc"
+        },
+        {
+          "label": "最新维护时间",
+          "prop": "updateTime"
+        },
+        {
+          "label": "操作",
+          "width": "200px",
+          "btns": [
+            {
+              "type": "look",
+              "label": "查看",
+              "authId": "rule_tree_vie_btn",
+              "toRequest": {
+                "##url": "/views/risk/rule_tree/root_rule_tree_view.json",
+                "url": "@rootRuleTreeTmpView",
+                "method": "get",
+                "props": {
+                  "width": "85%"
+                }
+              },
+              "props": {
+                "width": "85%"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "authId": "rule_tree_edt_btn",
+              "toRequest": {
+                "url": "/views/risk/rule_tree/root_rule_tree_edit.json",
+                "method": "get"
+              },
+              "props": {
+                "width": "80%"
+              },
+              "show": {
+                "expression": "'${{current.riskOperationType}}'!== 'S' && '${{current.riskOperationType}}' !== 'D'"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "authId": "rule_tree_edt_btn",
+              "toRequest": {
+                "url": "@decisonRuleTreeVersionBack",
+                "method": "get"
+              },
+              "props": {
+                "width": "80%"
+              },
+              "show": {
+                "expression": "'${{current.riskOperationType}}'==='S'"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "节点编辑",
+              "authId": "rule_tree_nedt_btn",
+              "toRequest": {
+                "url": "@ruleTree",
+                "method": "get",
+                "target": "navTab"
+              },
+              "props": {
+                
+              },
+              "show": {
+                "expression": "'${{current.riskOperationType}}'!== 'S' && '${{current.riskOperationType}}' !== 'D'"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "版本切换",
+              "#authId": "general_rule_back_btn",
+              "#icon": "el-icon-delete",
+              "toRequest": {
+                "url": "@ruleTreeVersionBack",
+                "method": "get"
+              },
+              "props": {
+              
+              },
+              "show": {
+                "expression": "false"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "authId": "rule_tree_del_btn",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "deci040206"
+                }
+              },
+              "show": {
+                "expression": "true"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "还原",
+              "#authId": "general_rule_cancel_btn",
+              "#icon": "el-icon-delete",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "deci040115"
+                }
+              },
+              "show": {
+                "expression": "false"
+              },
+              "confirm": {
+                "title": "提示信息",
+                "msg": "确定要还原至最新生效版本吗?",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "提交审核",
+              "#authId": "general_rule_review_btn",
+              "#icon": "el-icon-edit",
+              "toRequest": {
+                "url": "/views/risk/rule_tree/root_rule_tree_tmp_review.json",
+                "method": "get",
+                "params": {
+                  "treeCode":"${{current.treeCode}}",
+                  "treeName":"${{current.treeName}}",
+                  "treeId":"${{current.treeId}}",
+                  "riskOperationType":"${{current.riskOperationType}}"
+                }
+              },
+              "props": {
+                "width": "40%"
+              },
+              "show": {
+                "expression": "true"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

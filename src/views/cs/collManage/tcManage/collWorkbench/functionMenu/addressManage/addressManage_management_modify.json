@@ -1,0 +1,268 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": "${{params}}",
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "cb0095",
+          "case_id": "${{params.case_id}}",
+          "case_no": "${{params.case_no}}",
+          "cust_id": "${{params.cust_id}}",
+          "org_id": "${{params.org_id}}",
+          "relation_cust_id": "${{params.relation_cust_id}}"
+        }
+      },
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "icon": "el-icon-tickets"
+        },
+        {
+          "type": "close",
+          "label": "取消"
+        }
+      ],
+      "controls": [
+        {
+          "relationship": {
+            "control": "select",
+            "span": "6",
+            "clearable": false,
+            "inputWidth": "200px",
+            "label": "客户关系",
+            "dict": {
+              "dictType": "CS_E_RELATIONSHIP",
+              "dictKey": [
+                "CS_E_RELATIONSHIP"
+              ],
+              "format": "value-label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ],
+            "events": {
+              "condition": {
+                "keyVals": {
+                  "001": "'${{form.relationship}}' === '9999' && '${{form.register_type}}' === 'M'",
+                  "002": "'${{form.relationship}}' !== '9999' && '${{form.register_type}}' === 'M'"
+                },
+                "switch": {
+                  "001": {
+                    "control": {
+                      "relation_cust_name": {
+                        "disabled": true
+                      },
+                      "addr_type": {
+                        "disabled": true
+                      }
+                    },
+                    "doRequest": {
+                      "url": "/SUMP/icmcall/icmRPCCall",
+                      "method": "POST",
+                      "params": {
+                        "servicecode": "cb0090",
+                        "case_id": "${{params.case_id}}"
+                      },
+                      "resultSet": {
+                        "relation_cust_name": "cust_name"
+                      }
+                    }
+                  },
+                  "002": {
+                    "control": {
+                      "relation_cust_name": {
+                        "disabled": false
+                      },
+                      "address_type": {
+                        "disabled": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "relation_cust_name": {
+            "control": "text",
+            "span": "8",
+            "inputWidth": "200px",
+            "label": "联系人姓名",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          },
+          "is_valid": {
+            "control": "select",
+            "span": "8",
+            "inputWidth": "200px",
+            "label": "是否有效",
+            "dict": {
+              "dictType": "CS_E_YESORNO",
+              "dictKey": [
+                "CS_E_YESORNO"
+              ],
+              "format": "value-label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          }
+        },
+        {
+          "address_type": {
+            "control": "select",
+            "span": "6",
+            "inputWidth": "200px",
+            "label": "地址类型",
+            "dict": {
+              "dictType": "CS_E_ADDRESS_TYPE",
+              "dictKey": [
+                "CS_E_ADDRESS_TYPE"
+              ],
+              "format": "value-label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ],
+            "####": "邮箱地址不显示省市区",
+            "showItem": {
+              "H": [
+                "city-picker3"
+              ],
+              "B": [
+                "city-picker3"
+              ]
+            }
+          },
+          "postal_code": {
+            "control": "text",
+            "span": "8",
+            "inputWidth": "200px",
+            "label": "邮编",
+            "#rules": [
+              {
+                "type": "email",
+                "message": "请输入正确邮箱地址！"
+              }
+            ]
+          },
+          "register_type": {
+            "control": "hidden",
+            "span": "8",
+            "label": "系统类型",
+            "disabled": false,
+            "inputWidth": "200px",
+            "dict": {
+              "dictType": "CS_E_REGISTER_TYPE",
+              "dictKey": [
+                "CS_E_REGISTER_TYPE"
+              ],
+              "format": "value-label"
+            },
+            "events": {
+              "condition": {
+                "keyVals": {
+                  "001": "'${{form.relationship}}' === '9999' && '${{form.register_type}}' === 'M'",
+                  "002": "'${{form.register_type}}' === 'B'"
+                },
+                "switch": {
+                  "001": {
+                    "control": {
+                      "relationship": {
+                        "disabled": true
+                      },
+                      "relation_cust_name": {
+                        "disabled": true
+                      },
+                      "address_type": {
+                        "disabled": true
+                      }
+                    },
+                    "doRequest": {
+                      "url": "/SUMP/icmcall/icmRPCCall",
+                      "method": "POST",
+                      "params": {
+                        "servicecode": "cb0090",
+                        "case_id": "${{params.case_id}}"
+                      },
+                      "resultSet": {
+                        "relation_cust_name": "cust_name"
+                      }
+                    }
+                  },
+                  "002": {
+                    "control": {
+                      "relationship": {
+                        "disabled": true
+                      },
+                      "relation_cust_name": {
+                        "disabled": true
+                      },
+                      "address_type": {
+                        "disabled": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "city-picker3": {
+            "control": "hidden",
+            "span": "6",
+            "initShow": false,
+            "inputWidth": "1000px",
+            "label": "省/市/区",
+            "###rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          }
+        },
+        {
+          "address": {
+            "control": "text",
+            "span": "6",
+            "inputWidth": "1000px",
+            "label": "地址",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          }
+        },
+        {
+          "remark": {
+            "control": "textarea",
+            "span": "6",
+            "inputWidth": "1000px",
+            "rows": "12",
+            "label": "备注"
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,177 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/icms/agriculturalGuarantee/agriculturalApply/agricultural_Main_Money_add.json",
+            "params": {
+              "apply_no": "${{params.apply_no}}",
+              "credit_prod_cd": "${{params.credit_prod_cd}}",
+              "cust_id":"${{params.cust_id}}"
+            }
+          },
+          "props": {
+            "width": "75%",
+            "title": "业务担保产品明细"
+          },
+          "show": {
+            "expression": "'${{params.pageType}}' != 'detail'"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ar0782",
+          "apply_no": "${{params.apply_no}}"
+        }
+      },
+      "thead": [
+        {
+          "label": "可售产品编号",
+          "prop": "loan_prod_cd",
+          "align": "center"
+        },
+        {
+          "label": "可售产品名称",
+          "prop": "prod_name",
+          "align": "center"
+        },
+        {
+          "label": "业务期限",
+          "prop": "credit_term",
+          "align": "center"
+        },
+        {
+          "label": "是否循环",
+          "prop": "cycling_flag",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "币种",
+          "prop": "ccy_code",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_CURRENCY",
+            "dictKey": [
+              "MS_CURRENCY"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "汇率",
+          "prop": "exchange_rate",
+          "align": "center"
+        },
+        {
+          "label": "担保金额",
+          "prop": "busi_assign_amt",
+          "align": "center",
+          "format":{
+            "thousand": ","
+          }
+        },
+        {
+          "label": "担保可用余额",
+          "prop": "avail_amt",
+          "align": "center",
+          "format":{
+            "thousand": ","
+          }
+        },
+        {
+          "label": "分配方式",
+          "prop": "cl_allocation_mode",
+          "align": "center",
+          "dict": {
+            "dictType": "PD_E_CLALLOCATION_MODE",
+            "dictKey": [
+              "PD_E_CLALLOCATION_MODE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": "180px",
+          "align": "center",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/icms/agriculturalGuarantee/agriculturalApply/agricultural_Main_Money_info.json",
+                "method": "POST",
+                "params": {
+                  "apply_no": "${{params.apply_no}}",
+                  "credit_prod_cd": "${{params.credit_prod_cd}}"
+                }
+              },
+              "props": {
+                "width": "75%",
+                "title": "业务担保明细详情"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/icms/agriculturalGuarantee/agriculturalApply/agricultural_Main_Money_update.json",
+                "method": "GET",
+                "params": {
+                  "apply_no": "${{params.apply_no}}",
+                  "credit_prod_cd": "${{params.credit_prod_cd}}"
+                }
+              },
+              "props": {
+                "width": "75%",
+                "title": "业务担保产品明细维护"
+              },
+              "show": {
+                "expression": "'${{params.pageType}}' != 'detail'"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "ar0783"
+                }
+              },
+              "confirm": {
+                "title": "确定删除",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              },
+              "show": {
+                "expression": "'${{params.pageType}}' != 'detail'"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

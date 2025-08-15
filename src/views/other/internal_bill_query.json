@@ -1,0 +1,108 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "acctno": {
+                        "control": "text",
+                        "label": "账号",
+                        "rules": [
+                            {
+                                "max": 10,
+                                "message": "长度不能超过10个字符"
+                            }
+                        ]
+                    },
+                    "acctna": {
+                        "control": "text",
+                        "label": "户名",
+                        "rules": [
+                            {
+                                "max": 100,
+                                "message": "长度不能超过100个字符"
+                            }
+                        ]
+                    },
+                    "crcycd": {
+                        "control": "hide",
+                        "value":"CNY"
+                    },
+                    "isrept": {
+                        "control": "hide",
+                        "value":"0"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "AS_ICMS_CU_QRINAC",
+                    "page_id": "/views/other/internal_bill_query.json"
+                }
+            },
+            "thead": [               
+                {
+                    "label": "内部账账号",
+                    "prop": "acctno"
+                },
+                {
+                    "label": "内部账名称",
+                    "prop": "acctna"
+                },
+                {
+                    "label": "币种",
+                    "prop": "crcycd"
+                },
+                {
+                    "label": "余额方向",
+                    "prop": "onlndn"
+                },
+                {
+                    "label": "昨日余额",
+                    "prop": "lastbl"
+                },
+                {
+                    "label": "当前余额",
+                    "prop": "onlnbl"
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 200,
+                    "align":"center",
+                    "btns": [
+                        {
+                            "type": "look",
+                            "label": "分户查询",
+                            "toRequest": {
+                                "url": "/views/other/internal_bill_query_single.json",
+                                "method": "POST"
+                            },
+                            "props": {
+                                "width": "85%",
+                                "title": "分户查询"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "交易明细查询",
+                            "toRequest": {
+                                "url": "/views/other/internal_transaction_details_query.json",
+                                "method": "GET"
+                            },
+                            "props": {
+                                "title": "交易明细查询"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

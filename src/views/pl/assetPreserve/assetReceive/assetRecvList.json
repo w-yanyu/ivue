@@ -1,0 +1,138 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "scope": "strForm",
+      "controls":
+      [
+        {
+          "cust_no": {
+            "control": "text",
+            "span": 12,
+            "label": "客户号"
+          },
+          "cust_nm": {
+            "control": "text",
+            "span": 12,
+            "label": "客户名称"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pl0277",
+          "apply_ste":"1"
+        }
+      },
+
+      "thead": [
+        {
+          "label": "客户编号",
+          "prop": "cust_no",
+          "align": "center"
+        },
+        {
+          "label": "客户名称",
+          "prop": "cust_nm",
+          "align": "center"
+        },
+        {
+          "label": "抵债资产编号",
+          "prop": "debt_asset_num",
+          "align": "center"
+        },
+        {
+          "label": "抵债资产名称",
+          "prop": "debt_asset_nm",
+          "align": "center"
+        },
+        {
+          "label": "抵债资产类别",
+          "prop": "hypth_debt_goods_mterls_class",
+          "align": "center",
+          "dict": {
+            "dictType": "Pl_E_HYPTH_DEBT_GOODS_MTERLS_CLASS",
+            "dictKey": [
+              "Pl_E_HYPTH_DEBT_GOODS_MTERLS_CLASS"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "label": "代保管抵债资产金额",
+          "prop": "wait_trfr_debt_asset",
+          "align": "center",
+          "format":{
+            "thousand": ",",
+            "decimal": 3
+          }
+        },
+        {
+          "label": "待处理抵债资产金额",
+          "prop": "wait_deal_debt_asset_amt",
+          "align": "center",
+          "format":{
+            "thousand": ",",
+            "decimal": 3
+          }
+        },
+        {
+          "label": "还费金额",
+          "prop": "fee_rpymt_amt",
+          "align": "center",
+          "format":{
+            "thousand": ",",
+            "decimal": 3
+          }
+        },
+        {
+          "label": "还本金额",
+          "prop": "prcpl_rpymt_amt",
+          "align": "center",
+          "format":{
+            "thousand": ",",
+            "decimal": 3
+          }
+        },
+        {
+          "label": "还息金额",
+          "prop": "int_rpymt_amt",
+          "align": "center",
+          "format":{
+            "thousand": ",",
+            "decimal": 3
+          }
+        },
+        {
+          "label": "操作",
+          "align":"center",
+          "fixed": "right",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/pl/assetPreserve/assetReceive/assetRecvMain.json",
+                "method": "Get",
+                "params": {
+                  "apply_no":"${{current.apply_no}}"
+                }
+              },
+              "props": {
+                "width": "65%",
+                "title":  "详情"
+              }
+            }
+          ]
+        }
+
+      ]
+    }
+  }
+}

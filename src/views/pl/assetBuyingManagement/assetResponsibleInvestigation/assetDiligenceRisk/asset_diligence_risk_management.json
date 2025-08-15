@@ -1,0 +1,101 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "icon": "el-icon-circle-plus",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "POST",
+            "url": "/views/pl/assetBuyingManagement/assetResponsibleInvestigation/assetDiligenceRisk/asset_diligence_risk_add.json",
+            "params": {
+              "diligence_no": "${{params.diligence_no}}"
+            }
+          },
+          "props": {
+            "width": "65%",
+            "title": "新增资产尽调风险"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pl0439",
+          "diligence_no": "${{params.diligence_no}}"
+        }
+      },
+      "thead": [
+        {
+          "type": "string",
+          "align": "center",
+          "label": "提示编号",
+          "prop": "warning_no"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "风险提示",
+          "prop": "risk_warning"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "风险具体内容",
+          "prop": "risk_content"
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "fixed": "right",
+          "width": "80",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/pl/assetBuyingManagement/assetResponsibleInvestigation/assetDiligenceRisk/asset_diligence_risk_info.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "65%",
+                "title": "资产尽调风险详情"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/pl/assetBuyingManagement/assetResponsibleInvestigation/assetDiligenceRisk/asset_diligence_risk_modify.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "65%",
+                "title": "资产尽调风险维护"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "pl0438"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

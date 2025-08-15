@@ -1,0 +1,313 @@
+{
+  "module": "v_search_btn_datagrid",
+  "title": "异常队列管理",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "lncfno": {
+            "control": "text",
+            "label": "借据号",
+            "rules": [
+              {
+                "max": 20,
+                "message": "长度不能超过80个字符"
+              }
+            ]
+          },
+          "acctna": {
+            "control": "text",
+            "label": "客户名称",
+            "rules": [
+              {
+                "max": 80,
+                "message": "长度不能超过80个字符"
+              }
+            ]
+          }
+        },
+        {
+          "min_balance": {
+            "control": "text",
+            "label": "最低贷款余额",
+            "rules": [
+              {
+                "max": 80,
+                "message": "长度不能超过80个字符"
+              }
+            ]
+          },
+          "max_balance": {
+            "control": "text",
+            "label": "最高贷款余额",
+            "rules": [
+              {
+                "max": 80,
+                "message": "长度不能超过80个字符"
+              }
+            ]
+          }
+        },
+        {
+          "min_overdue_days": {
+            "control": "text",
+            "label": "最小逾期天数",
+            "rules": [
+              {
+                "max": 80,
+                "message": "长度不能超过80个字符"
+              }
+            ]
+          },
+          "max_overdue_days": {
+            "control": "text",
+            "label": "最大逾期天数",
+            "rules": [
+              {
+                "max": 80,
+                "message": "长度不能超过80个字符"
+              }
+            ]
+          }
+        },
+        {
+          "phoneno": {
+            "control": "text",
+            "label": "手机号码",
+            "rules": [
+              {
+                "max": 80,
+                "message": "长度不能超过80个字符"
+              }
+            ]
+          },
+          "idtfno": {
+            "control": "text",
+            "label": "证件号码",
+            "rules": [
+              {
+                "max": 80,
+                "message": "长度不能超过18个字符"
+              }
+            ]
+          }
+        },
+        {
+          "clssst": {
+            "control": "select",
+            "label": "贷款状态",
+            "dict": {
+              "dictType": "E_CLSSST",
+              "dictKey": [
+                "E_CLSSST"
+              ],
+              "format": "label",
+              "labelField": "dictName",
+              "valueField": "dictId"
+            }
+          },
+          "case_status": {
+            "control": "select",
+            "label": "案件状态",
+            "dict": {
+              "dictType": "E_ANJIANSTATUS",
+              "dictKey": [
+                "E_ANJIANSTATUS"
+              ],
+              "format": "label",
+              "labelField": "dictName",
+              "valueField": "dictId"
+            }
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "PLMSKGS10581"
+        }
+      },
+      "thead": [
+        {
+          "label": "批次号",
+          "align": "center",
+          "prop": "batchnum"
+        },
+        {
+          "label": "借据号",
+          "align": "center",
+          "prop": "lncfno"
+        },
+        {
+          "label": "客户姓名",
+          "align": "center",
+          "prop": "acctna"
+        },
+        {
+          "label": "产品名称",
+          "prop": "prodna",
+          "align": "center"
+        },
+        {
+          "label": "贷款状态",
+          "align": "center",
+          "prop": "clssst",
+          "dict": {
+            "dictType": "E_CLSSST",
+            "dictKey": [
+              "E_CLSSST"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "证件号码",
+          "align": "center",
+          "prop": "idtfno"
+        },
+        {
+          "label": "手机号码",
+          "align": "center",
+          "prop": "phoneno"
+        },
+        {
+          "label": "贷款余额",
+          "align": "center",
+          "prop": "lendbl"
+        },
+        {
+          "label": "逾期天数",
+          "align": "center",
+          "prop": "modsdy"
+        },
+        {
+          "label": "放款金额",
+          "prop": "loanamt",
+          "align": "center"
+        },
+        {
+          "label": "异常类型",
+          "align": "center",
+          
+          "prop": "abnormal_type",
+          "dict": {
+            "dictType": "E_YICLXING",
+            "dictKey": [
+              "E_YICLXING"
+            ],
+            "format": "label",
+            "labelField": "dictName",
+            "valueField": "dictId"
+          }
+        },
+        {
+          "label": "最终异常类型",
+          "align": "center",
+          "prop": "last_abnormal_type"
+        },
+        {
+          "label": "案件状态",
+          "align": "center",
+          "prop": "case_status",
+          "dict": {
+            "dictType": "E_ANJIANSTATUS",
+            "dictKey": [
+              "E_ANJIANSTATUS"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 100,
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "认领",
+              "show": {
+                "expression": "'${{current.case_status}}' === '1'"
+              },
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "PLMSKGS10588",
+                  "lncfno": "${{current.lncfno}}",
+                  "batchnum": "${{current.batchnum}}"
+                }
+              },
+              "props": {
+                "width": "65%"
+              }
+            },
+            
+             {
+              "type": "edit",
+              "label": "异常处置",
+              "show": {
+                "expression": "'${{current.case_status}}' === '2'" 
+              },
+              "toRequest": {
+                "url": "@PictProductMange",
+                "method": "get",
+                "target": "navTab",
+                "params": {
+                 
+                }
+              },
+              "props": {
+                "width": "65%",
+                "title": "异常处置"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "处理中",
+              "show": {
+                "expression": "'${{current.case_status}}' === '3'"
+              },
+              "doRequest": {
+                "method": "get",
+      
+                "params": {
+                  "servicecode": "PLMSKGS10588",
+                  "lncfno": "${{current.lncfno}}",
+                  "batchnum": "${{current.batchnum}}",
+                  "case_status": "3"
+                }
+              }
+            },
+            {
+              "type": "edit",
+              "label": "查看处理结果",
+              "show": {
+                "expression": "'${{current.case_status}}' === '4'"
+              },
+              "toRequest": {
+                "url": "@ExceptHandleResult",
+                "method": "get",
+                "target": "navTab",
+                "params": {
+                  "lncfno": "${{current.lncfno}}",
+                  "batchnum": "${{current.batchnum}}",
+                  "case_status": "4"
+                }
+              },
+              "props": {
+                "width": "65%",
+                "title": "查看处理结果"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

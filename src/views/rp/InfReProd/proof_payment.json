@@ -1,0 +1,100 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+
+    "toolbar": {
+      "btns": [
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+          "url": "/SUMP/icmcall/icmRPCCall",
+          "method": "POST",
+          "params": {
+            "servicecode": "iterpay",
+            "payList": "${{params.fileList}}"
+              
+          }
+        },
+      
+      "pagination":{
+          "show":true,
+          "pageSize":10
+      },
+
+      "thead": [
+
+        {
+          "label": "文件名称",
+          "prop": "fileName",
+          "align":"center"
+        },
+        {
+          "label": "影像系统桶名",
+          "prop": "bucket",
+          "align":"center"
+        },
+        {
+          "label": "影像系统key信息",
+          "prop": "buctetKey",
+          "align":"center"
+        },
+        {
+          "label": "操作",
+          "width": 100,
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "查看",
+              "toRequest": {
+                "url": "@PdfPreview",
+                "method": "GET",
+                "params": {
+                  "path": "${{payList.buctetKey}}",
+                  "bucket": "${{payList.bucket}}"
+                }
+              },
+              "props": {
+                "width": "1200px",
+                "height": "600px",
+                "title": "文件预览"
+              },
+              "show": {
+                "prop": "phototype",
+                "is":[
+                  "2"
+                ]
+              }
+            },
+            {
+              "type": "edit",
+              "label": "查看",
+              "toRequest": {
+                "url": "@ImgPreview",
+                "method": "GET",
+                "params": {
+                  "path": "${{current.buctetKey}}",
+                  "bucket": "${{current.bucket}}"
+                }
+              },
+              "props": {
+                "width": "1200px",
+                "title": "文件预览"
+              },
+              "show": {
+                "prop": "phototype",
+                "is":[
+                  "1"
+                ]
+              }
+            }
+          ]
+      }
+      ]
+    }
+  }
+}
+

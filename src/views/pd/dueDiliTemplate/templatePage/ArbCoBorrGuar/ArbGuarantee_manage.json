@@ -1,0 +1,184 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "addlog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/pd/dueDiliTemplate/templatePage/ArbCoBorrGuar/ArbGuarantee_add.json",
+            "params": {
+              "apply_no": "${{params.apply_no}}",
+              "cust_no": "${{params.cust_no}}",
+              "due_item_no": "${{params.due_item_no}}"
+            }
+          },
+          "props": {
+            "width": "60%",
+            "title": "抵押物信息新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ar1804",
+          "apply_no": "${{params.apply_no}}",
+          "cust_no": "${{params.cust_no}}",
+          "due_item_no": "${{params.due_item_no}}"
+        }
+      },
+      "thead": [
+        {
+          "type": "string",
+          "label": "抵押物序号",
+          "prop": "guar_no",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "抵质押物名称",
+          "prop": "collateral_name",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "抵押物地址",
+          "prop": "pledge_address",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "财产所有人",
+          "prop": "property_owner",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "建筑面积(㎡)/车辆品牌",
+          "prop": "area_or_beand",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "产权证号",
+          "prop": "prop_rigc_no",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "购入日期",
+          "prop": "buy_date",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "币种",
+            "disabled": true,
+          "prop": "ccy_code",
+          "dict": {
+            "dictType": "MS_CURRENCY",
+            "dictKey": [
+              "MS_CURRENCY"
+            ],
+            "format": "label"
+          },
+          "align": "center"
+        },
+        {
+          "type": "currency",
+          "label": "购入时价值",
+          "prop": "purc_price",
+          "decimal": "2",
+          "format": {
+            "thousand": ","
+          },
+          "align": "center"
+        },
+        {
+          "type": "currency",
+          "label": "当前估值",
+          "prop": "curr_valu",
+          "decimal": "2",
+          "format": {
+            "thousand": ","
+          },
+          "align": "center"
+        },
+        {
+          "type": "currency",
+          "label": "抵押率",
+          "prop": "mortgage_rate",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "fixed":"right",
+          "width": "200px",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/pd/dueDiliTemplate/templatePage/ArbCoBorrGuar/ArbGuarantee_info.json",
+                "method": "GET",
+                "params": {
+                  "apply_no": "${{params.apply_no}}",
+                  "cust_no": "${{params.cust_no}}",
+                  "due_item_no": "${{params.due_item_no}}"
+                }
+              },
+              "props": {
+                "width": "60%",
+                "title": "抵押物信息详情"
+              }
+            },
+            {
+              "type": "look",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/pd/dueDiliTemplate/templatePage/ArbCoBorrGuar/ArbGuarantee_update.json",
+                "method": "GET",
+                "params": {
+                  "apply_no": "${{params.apply_no}}",
+                  "cust_no": "${{params.cust_no}}",
+                  "due_item_no": "${{params.due_item_no}}"
+                }
+              },
+              "props": {
+                "width": "60%",
+                "title": "抵押物信息维护"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "ar1807"
+                }
+              },
+              "confirm": {
+                "title": "删除",
+                "msg": "确定删除吗？",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

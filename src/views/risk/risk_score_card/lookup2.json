@@ -1,0 +1,89 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "score_card_code": {
+            "label": "评分卡代码",
+            "control": "text",
+            "span": 6
+          },
+          "score_card_name": {
+            "label": "评分卡名称",
+            "control": "text",
+            "span": 6
+          },
+          "busi_version": {
+            "label": "版本号",
+            "control": "inputNumber",
+            "decimal":"2",
+            "min":0,
+            "step": 0.1,
+            "span": 6
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          
+          "score_card_type": "${{params.scoreCardType}}",
+          "servicecode": "deci060113"
+        }
+      },
+      "pagination": {
+        "hideOnSinglePage": false,
+        "show": true,
+        "pageSizes": [
+          10,
+          15,
+          20,
+          50,
+          100
+        ],
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "label": "评分卡类型",
+          "prop": "scoreCardType",
+          "dict": {
+            "dictType": "scoreCardType",
+            "dictKey": [],
+            "format": "label",
+            "doRequest": {
+              "url": "/views/risk/dictdata/scoreCardType.json",
+              "method": "get"
+            }
+          }
+        },
+        {
+          "label": "评分卡代码",
+          "prop": "scoreCardCode"
+        },
+        {
+          "label": "评分卡名称",
+          "prop": "scoreCardName"
+        },
+        {
+          "label": "版本号",
+          "prop": "version"
+        },
+        {
+          "label": "操作",
+          "width": "150px",
+          "btns": [
+            {
+              "type": "bringback",
+              "label": "选择"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

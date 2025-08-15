@@ -1,0 +1,296 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "task_code": {
+            "control": "text",
+            "label": "任务代码",
+            "width": "auto"
+          },
+          "task_name": {
+            "control": "text",
+            "label": "任务名称",
+            "width": "auto"
+          },
+          "task_status": {
+            "control": "select",
+            "label": "任务状态",
+            "width": "auto",
+            "dict": {
+              "dictType": "RISK_BATCH_TASK_EXECUTE_STATUS",
+              "dictKey": [
+                "RISK_BATCH_TASK_EXECUTE_STATUS"
+              ],
+              "format": "label"
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/risk/test_center/batch_test/incoming/add_incoming_batch_test.json",
+            "params": {
+              "list01": []
+            }
+          },
+          "props": {
+            "title": "新增测试任务"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "deci050075",
+          "batch_test_type": "0"
+        }
+      },
+      "thead": [
+        {
+          "type": "string",
+          "label": "批量测试执行批次号",
+          "prop": "batch_execute_id",
+          "isShow": false,
+          "width": "auto",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "任务代码",
+          "prop": "task_code",
+          "width": "auto",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "任务名称",
+          "prop": "task_name",
+          "width": "auto",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "任务描述",
+          "prop": "task_desc",
+          "width": "auto",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "任务状态",
+          "prop": "task_status",
+          "width": "auto",
+          "align": "center",
+          "dict": {
+            "dictType": "RISK_BATCH_TASK_EXECUTE_STATUS",
+            "dictKey": [
+              "RISK_BATCH_TASK_EXECUTE_STATUS"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "string",
+          "label": "决策服务",
+          "prop": "service_name",
+          "width": "auto",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "沙箱",
+          "prop": "sandbox_name",
+          "width": "auto",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "报告模板",
+          "prop": "report_name",
+          "width": "auto",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "验证进度(%)",
+          "prop": "verify_progress",
+          "width": "auto",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "版本",
+          "prop": "test_version",
+          "width": "auto",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "创建人",
+          "prop": "data_create_user",
+          "width": "auto",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "创建时间",
+          "prop": "data_create_time",
+          "width": "auto",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "最近更新人",
+          "prop": "data_create_user",
+          "width": "auto",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "最近更新时间",
+          "prop": "data_update_time",
+          "width": "auto",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": "150px",
+          "btns": [
+            {
+              "type": "look",
+              "label": "开始验证",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "deci030203"
+                }
+              },
+              "show": {
+                "expression": "'${{current.taskExecuteStatus}}' == '0'"
+              },
+              "confirm": {
+                "title": "是否进行测试",
+                "cancelButtonText": "取消",
+                "confirmButtonText": "确定"
+              }
+            },
+            {
+              "type":"look",
+              "label":"维护",
+              "toRequest":{
+                "url":"/views/risk/test_center/batch_test/incoming/maintain_incoming_batch_test.json",
+                "method":"POST",
+                "params": {
+                  "batch_execute_id": "${{current.batch_execute_id}}"
+                }
+              },
+              "props":{
+                "title":"进件批量测试维护"
+              }
+            },
+            {
+              "type":"look",
+              "label":"查看",
+              "toRequest":{
+                "url":"/views/risk/test_center/batch_test/incoming/incoming_batch_test_view.json",
+                "method":"POST"
+              },
+              "props":{
+                "title":"进件批量测试查看"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                  "createUser": "$g{{user_info.userCode}}",
+                  "updateUser": "$g{{user_info.userCode}}",
+                  "servicecode": "deci050079"
+                }
+              },
+              "confirm": {
+                "title": "确定删除",
+                "cancelButtonText": "取消",
+                "confirmButtonText": "确定"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "开始验证",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "task_code": "${{current.task_code}}",
+                  "batch_execute_id": "${{current.batch_execute_id}}",
+                  "task_status": "${{current.task_status}}",
+                  "servicecode": "deci050080"
+                }
+              },
+              "confirm": {
+                "title": "是否确定开始验证",
+                "cancelButtonText": "取消",
+                "confirmButtonText": "确定"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "中止验证",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "deci050081",
+                  "task_code": "${{current.task_code}}",
+                  "batch_execute_id": "${{current.batch_execute_id}}",
+                  "task_status": "${{current.task_status}}"
+                }
+              },
+              "confirm": {
+                "title": "是否确定中止验证",
+                "cancelButtonText": "取消",
+                "confirmButtonText": "确定"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "验收报告",
+              "toRequest": {
+                "target": "drawer",
+                "method": "get",
+                "url": "@TemplateListIndex"
+              },
+              "props": {
+                "width": "65%",
+                "title": "验收报告",
+                "close": "",
+                "openType": "drawer",
+                "that": "this",
+                "position": "right"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

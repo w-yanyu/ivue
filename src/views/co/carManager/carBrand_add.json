@@ -1,0 +1,135 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "name": "detail",
+      "scope": "formData",
+      "controls": [
+        {
+          "brand_no": {
+            "label": "品牌编号",
+            "width": "140px",
+            "span": "12",
+            "control": "text",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入品牌编号"
+              }
+            ]
+          },
+          "brand_name": {
+            "label": "品牌名称",
+            "width": "140px",
+            "span": "12",
+            "control": "text",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入品牌名称"
+              }
+            ]
+          },
+          "brand_state": {
+            "label": "使用状态",
+            "width": "140px",
+            "span": "12",
+            "control": "select",
+            "value": "1",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择使用状态"
+              }
+            ]
+          },
+          "initial": {
+            "label": "品牌首字母",
+            "width": "140px",
+            "span": "12",
+            "control": "text",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入品牌首字母"
+              }
+            ]
+          },
+          "logo": {
+            "label": "品牌logo",
+            "width": "140px",
+            "span": "12",
+            "control": "text",
+            "events": {
+              "condition": {
+                "$default": {
+                  "control": {
+                    "img": {
+                      "value": "${{formData.logo}}"
+                    }
+                  }
+                },
+                "": {
+                  "control": {
+                    "img": {
+                      "value": "${{formData.logo}}"
+                    }
+                  }
+                }
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入品牌logo"
+              }
+            ]
+          },
+          "fileList": {
+            "control": "dynamic",
+            "isShowChildForm": true,
+            "span": 4,
+            "toRequest": {
+              "url": "@logoUploadButton",
+              "method": "get",
+              "params": {
+                "file_path": "logo",
+                "formKey": "fileList",
+                "formLabel": "附件上传"
+              }
+            }
+          },
+          "img": {
+            "control": "img",
+            "value": "${{formData.logo}}",
+            "span": "12",
+            "width": "150",
+            "height": "150",
+            "fit": "fill"
+          }
+        }
+      ],
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "doRequest": {
+            "url": "/SUMP/call/RPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "co0021",
+              "trans_type": "ADD"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

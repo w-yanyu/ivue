@@ -1,0 +1,99 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "pd1552",
+          "sale_prod_cd": "${{params.sale_prod_cd}}",
+          "prod_version": "${{params.prod_version}}",
+          "apply_type": "${{params.apply_type}}"
+        }
+      },
+      "controls": [
+        {
+          "tran_code": {
+            "control": "lookup",
+            "label": "批量交易编码",
+            "width": "120px",
+            "span": 8,
+            "keyField": {
+              "tran_code": "tran_code",
+              "tran_chinese_name": "tran_chinese_name"
+            },
+            "toRequest": {
+              "url": "/views/pd/prod/templatePage/batchTranConfig/batchTranConfig_manage_lookup.json",
+              "method": "get",
+              "params": {
+                "sale_prod_cd": "${{params.sale_prod_cd}}",
+                "prod_version": "${{params.prod_version}}",
+                "apply_type": "${{params.apply_type}}"
+              }
+            }
+          },
+          "check_type": {
+            "control": "select",
+            "label": "检查类型",
+            "width": "120px",
+            "span": 8,
+            "dict": {
+              "dictType": "PD_E_LHD_CHECK_TYPE",
+              "dictKey": [
+                "PD_E_LHD_CHECK_TYPE"
+              ],
+              "format": "label"
+            },
+            "value": "${{params.check_type}}",
+            "disabled": true,
+            "events": {
+              "condition": {
+                "01": {
+                  "control": {
+                    "source_file_local_path": {
+                      "initShow": true,
+                      "rules": [
+                        {
+                          "required": true
+                        }
+                      ]
+                    }
+                  }
+                },
+                "02": {
+                  "control": {
+                    "source_file_local_path": {
+                      "initShow": false,
+                      "rules": [
+                        {
+                          "required": false
+                        }
+                      ]
+                    }
+                  }
+                },
+                "$default": {
+                }
+              }
+            }
+          },
+          "tran_chinese_name": {
+            "control": "text",
+            "label": "批量交易名称",
+            "width": "120px",
+            "span": 24,
+            "disabled": true
+          },
+          "source_file_local_path": {
+            "control": "text",
+            "label": "贴源本地存放路径",
+            "width": "120px",
+            "span": 24,
+            "initShow": false
+          }
+        }
+      ]
+    }
+  }
+}

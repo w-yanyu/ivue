@@ -1,0 +1,85 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "initRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "ct2409",
+                  "authp_system_code":"${{params.authp_system_code}}",
+                  "authp_rule_code":"${{params.authp_rule_code}}",
+                  "auth_version": "${{params.auth_version}}",
+                  "appId":"${{params.appId}}"
+                }
+              },
+              "controls": [
+                {
+                    "authp_system_code": {
+                        "control": "string",
+                        "label": "授权体系编号"
+                    },
+                    "authp_rule_code": {
+                        "control": "string",
+                        "label": "规则编号"
+                    }
+                }
+            ],
+            "btns": []
+              
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "label": "关联角色修改",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/ismt/ct/busiAuth/authp_rule/role_contact_main.json",
+                        "params": {
+                            "authp_system_code": "${{form.authp_system_code}}",
+                            "authp_rule_code": "${{form.authp_rule_code}}",
+                            "auth_version": "${{params.auth_version}}",
+                            "appId":"${{params.appId}}"
+                        }
+                    },
+                    "props": {
+                        "title": "关联角色修改"
+                    }
+                },
+                {
+                    "type": "add",
+                    "label": "规则信息配置",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/ismt/ct/busiAuth/authp_rule/authp_rule_steps.json",
+                        "params": {
+                            "authp_system_code": "${{form.authp_system_code}}",
+                            "authp_rule_code": "${{form.authp_rule_code}}",
+                            "appId":"${{params.appId}}"
+                        }
+                    },
+                    "props": {
+                        "title": "规则信息配置"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ct2416",
+                    "authp_system_code": "${{form.authp_system_code}}",
+                    "authp_rule_code": "${{form.authp_rule_code}}",
+                    "dimension_type":"1",
+                    "appId":"${{params.appId}}"
+                }
+            },
+            "thead": []
+        }
+    }
+  }

@@ -1,0 +1,138 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "controls": [
+        {
+          "cust_name": {
+            "control": "text",
+            "default":"${{params.current.cust_name}}",
+            "disabled":true,
+            "label": "客户姓名"
+          },
+          "cert_no": {
+            "control": "text",
+            "default":"${{params.current.cert_no}}",
+            "disabled":true,
+            "label": "证件号码"
+          }
+        }
+      ],
+      "btns": []
+    },
+
+    "datagrid": {
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ce4715"
+        }
+      },
+      "thead": [
+        {
+          "type":"string",
+          "label": "记录日期",
+          "align":"center",
+          "width": "180",
+          "prop": "data_create_time"
+        },
+        {
+          "type":"string",
+          "label": "批次",
+          "align":"center",
+          "width": "150",
+          "prop": "batch_no"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "150",
+          "label": "委外公司",
+          "prop": "oa_org_code",
+          "dict": {
+            "dictKey": [
+              "oa_org_code"
+            ],
+            "format": "label",
+            "labelField": "coll_org_name",
+            "valueField": "coll_org_no",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ce0416"
+              }
+            }
+          }
+        },
+        {
+          "type":"string",
+          "label": "委外金额",
+          "align":"center",
+          "width": "150",
+          "prop": "outsourcing_amt"
+        },
+        {
+          "type":"string",
+          "label": "派案日期",
+          "align":"center",
+          "width": "150",
+          "prop": "outsourcing_start_date"
+        },
+        {
+          "type":"string",
+          "label": "回收日期",
+          "align":"center",
+          "width": "150",
+          "prop": "outsourcing_end_date"
+        },
+        {
+          "type":"string",
+          "label": "实际结束时间",
+          "align":"center",
+          "width": "150",
+          "prop": "actual_end_date"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "180px",
+          "label": "案件状态",
+          "prop": "casestate_code",
+          "dict": {
+            "dictKey": [
+              "casestate_code"
+            ],
+            "format": "label",
+            "labelField": "status_name",
+            "valueField": "casestate_code",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ce0411"
+              }
+            }
+          }
+        },
+        {
+          "type":"string",
+          "label": "派单状态",
+          "align":"center",
+          "width":"180px",
+          "prop": "outsourcing_status",
+          "dict": {
+            "dictType": "CE_E_OA_STATUS",
+            "dictKey": [
+              "CE_E_OA_STATUS"
+            ],
+            "format": "label"
+          }
+        }
+      ]
+    }
+  }
+}

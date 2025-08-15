@@ -1,0 +1,121 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "toolbar": {
+            "btns": [{
+                "type": "add",
+                "target": "dialog",
+                "label": "新增",
+                "toRequest": {
+                    "method": "GET",
+                    "url": "/views/ci/Equity_information/equity_add.json",
+                    "params": {
+                        "custid": "${{params.custid}}"
+                    }
+                },
+                "props": {
+                    "width": "80%",
+                    "title": "股本信息新增"
+                }
+            }]
+        },
+        "datagrid": {
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "IUMSCUTS0035",
+                    "custid": "${{params.custid}}"
+                }
+            },
+            "thead": [{
+                    "type": "index",
+                    "label": "序号",
+                    "align": "center"
+                },
+                {
+                    "label": "验资类别",
+                    "prop": "vetype",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "E_VETYPE",
+                        "dictKey": [
+                            "E_VETYPE"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "会计验资机构名称",
+                    "prop": "acfirm",
+                    "align": "center"
+                },
+                {
+                    "label": "注册资本金额",
+                    "prop": "regamt",
+                    "align": "center"
+                },
+                {
+                    "label": "总股本",
+                    "prop": "prosto",
+                    "align": "center"
+                },
+                {
+                    "label": "会计验资时间",
+                    "prop": "veridt",
+                    "align": "center"
+                },
+                {
+                    "label": "发布时间",
+                    "prop": "issudt",
+                    "align": "center"
+                },
+                {
+                    "label": "操作",
+                    "width": "160px",
+                    "btns": [{
+                            "type": "look",
+                            "label": "详情",
+                            "toRequest": {
+                                "url": "/views/ci/Equity_information/equity_details.json",
+                                "method": "post",
+                                "props": {
+                                    "width": "80%",
+                                    "title": "企业股本信息详情"
+                                }
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/ci/Equity_information/equity_modify.json",
+                                "method": "GET",
+                                "params": {
+                                    "custid": "${{params.custid}}"
+                                }
+                            },
+                            "props": {
+                                "width": "80%",
+                                "title": "股本信息维护"
+                            }
+                        },
+                        {
+                            "type": "delete",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "IUMSCUTS0038",
+                                    "capsid": "${{current.capsid}}"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

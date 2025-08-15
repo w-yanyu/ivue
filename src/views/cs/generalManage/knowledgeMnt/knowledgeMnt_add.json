@@ -1,0 +1,58 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "doRequest": {
+        "url": "/SUMP/iccsCall/iccsEurekaCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pl6641"
+        }
+      },
+      "controls": [
+        {
+          "doc_type": {
+            "control": "remoteSelect",
+            "label": "文件类型",
+            "labelField": "drop_list_desc",
+            "valueField": "drop_list_value",
+            "doRequest": {
+              "url": "/SUMP/iccsCall/iccsEurekaCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ap1071",
+                "drop_list_type": "doc_type"
+              }
+            },
+            "format": "value-label",
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择文件类型"
+              }
+            ]
+          },
+          "file_name": {
+            "control": "hidden"
+          },
+          "file_path": {
+            "control": "dynamic",
+            "isShowChildForm": true,
+            "span": 6,
+            "toRequest": {
+              "url": "@SingleUpload",
+              "method": "get",
+              "params": {
+                "path": "collRec",
+                "uploadType": "sftp",
+                "formKey": "file_path",
+                "formName": "file_name",
+                "formLabel": "文档文件"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

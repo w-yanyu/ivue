@@ -1,0 +1,130 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "branch_id": {
+            "control": "text",
+            "label": "机构号",
+            "rules": [
+              {
+                "max": 10,
+                "message": "长度不能超过10个字符"
+              }
+            ]
+          },
+          "branch_name": {
+            "control": "text",
+            "label": "机构名称",
+            "rules": [
+              {
+                "max": 100,
+                "message": "长度不能超过100个字符"
+              }
+            ]
+          }
+        },
+        {
+          "branch_function_class": {
+            "control": "select",
+            "label": "机构职能分类",
+            "rules": [
+              {
+                "max": 8,
+                "message": "长度不能超过8个字符"
+              }
+            ],
+            "dict": {
+              "dictType": "CT_E_BRCHTP",
+              "dictKey": [
+                "CT_E_BRCHTP"
+              ],
+              "format": "label"
+            }
+          },
+          "real_branch_ind": {
+            "control": "select",
+            "label": "实体机构标志",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            }
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "POST",
+        "params": {
+          "brch_relation_code": "${{params.brch_relation_code}}",
+          "user_id": "$g{{user_info.userCode}}",
+          "servicecode": "ct2155"
+        }
+      },
+      "thead": [
+        {
+          "type": "index"
+        },
+        {
+          "label": "机构号",
+          "prop": "branch_id"
+        },
+        {
+          "label": "机构名称",
+          "prop": "branch_name"
+        },
+        {
+          "label": "实体机构标志",
+          "prop": "real_branch_ind",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "机构职能分类",
+          "prop": "branch_function_class",
+          "dict": {
+            "dictType": "CT_E_BRCHTP",
+            "dictKey": [
+              "CT_E_BRCHTP"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "SWIFT代码",
+          "prop": "swift_no"
+        },
+        {
+          "label": "节假日代码",
+          "prop": "holiday_code"
+        },
+
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 150,
+          "align": "center",
+          "btns": [
+            {
+              "type": "bringback",
+              "label": "选择"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

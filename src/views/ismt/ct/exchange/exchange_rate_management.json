@@ -1,0 +1,221 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "controls": [
+        {
+          "ccy_code": {
+            "control": "select",
+            "label": "主币种",
+            "selectFirstValue":false,
+              "dict": {
+                  "dictType": "MS_CURRENCY",
+                  "dictKey": [
+                      "MS_CURRENCY"
+                  ],
+                  "format": "value-label"
+              }
+          },
+          "exchange_ccy_code": {
+            "control": "select",
+            "label": "折算币种",
+            "selectFirstValue":false,
+            "dict": {
+                "dictType": "MS_CURRENCY",
+                "dictKey": [
+                    "MS_CURRENCY"
+                ],
+                "format": "value-label"
+            }
+          },
+
+          "daterange": {
+              "control": "dateTimePicker",
+              "label": "请选择日期",
+              "type": "daterange",
+              "unlinkPanels": true,
+              "valueFormat": "yyyyMMdd",
+              "startPlaceholder": "选择开始时间",
+              "endPlaceholder": "选择结束时间",
+              "startField": "date_from",
+              "endField": "date_end",
+              "disabledDate": "dateAfter",
+              "events": {
+                "emit": [
+                  "top"
+                ]
+              }
+            },
+          "valid_state": {
+              "control": "select",
+              "label": "有效状态",
+              "selectFirstValue":false,
+              "dict": {
+                  "dictType": "MS_E_YESORNO",
+                  "dictKey": [
+                      "MS_E_YESORNO"
+                  ],
+                  "format": "value-label"
+              }
+          }
+        }
+      ]
+    },
+
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "icon": "el-icon-circle-plus",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/ismt/ct/exchange/exchange_rate_add.json",
+            "params": {
+              "appId":"deciOnl"
+            }
+          },
+          "props": {
+            "title": "新增折算汇率"
+          }
+        },
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "汇率文件导入",
+          "toRequest": {
+              "method": "GET",
+              "url": "/views/ismt/ct/exchange/exchange_rate_file_import.json",
+              "params": {
+                  "appId":"deciOnl"
+                }
+          },
+          "props": {
+              "width": "40%",
+              "title": "汇率文件导入"
+          }
+        }
+      ]
+    },
+
+    "datagrid": {
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "ct2301"
+        }
+      },
+      "thead": [
+        {
+          "type":"string",
+          "label": "主币种",
+          "align":"center",
+          "width":"100%",
+          "prop": "ccy_code",
+          "dict":{
+            "dictType": "MS_CURRENCY",
+            "dictKey": [
+              "MS_CURRENCY"
+            ],
+            "format": "value-label"
+
+          }
+        },
+        {
+          "type":"string",
+          "label": "折算币种",
+          "align":"center",
+          "prop": "exchange_ccy_code",
+          "dict":{
+            "dictType": "MS_CURRENCY",
+            "dictKey": [
+              "MS_CURRENCY"
+            ],
+            "format": "value-label"
+
+          }
+        },
+        {
+          "type":"datetime",
+          "label": "发布时间",
+          "width":"150%",
+          "align":"center",
+          "prop": "timestamp"
+        },
+        {
+          "type":"currency",
+          "label": "汇率(1)",
+          "align":"center",
+          "prop": "exchange_rate_1",
+          "format": {
+            "decimal": "4"
+          }
+        },
+        {
+          "type":"currency",
+          "label": "汇率(100)",
+          "align":"center",
+          "prop": "exchange_rate_100",
+          "format": {
+            "decimal": "2"
+          }
+        },
+        {
+          "type":"string",
+          "label": "生效标志",
+          "align":"center",
+          "width":"100%",
+          "prop": "valid_state",
+          "dict":{
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "value-label"
+
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width":"100%",
+          "align":"center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "维护",
+              "show": {"expression":"'${{current.valid_state}}'=== '1'"},
+              "toRequest": {
+                "url": "/views/ismt/ct/exchange/exchange_rate_modify.json",
+                "method": "POST"
+              },
+              "props": {
+                "title": "折算汇率维护"
+              }
+            },
+            {
+                "type": "look",
+                "label": "删除",
+                "doRequest": {
+                    "url": "/SUMP/icmcall/icmRPCCall",
+                    "method": "POST",
+                    "params": {
+                        "servicecode": "ct2304"
+                    }
+                },
+                "confirm": {
+                    "title": "确定删除",
+                    "confirmButtonText": "确定",
+                    "cancelButtonText": "取消"
+                }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

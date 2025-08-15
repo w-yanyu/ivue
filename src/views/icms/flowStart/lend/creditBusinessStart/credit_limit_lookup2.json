@@ -1,0 +1,148 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "sale_prod_name": {
+            "control": "lookup",
+            "label": "授信产品",
+            "width": "140px",
+            "span": 12,
+            "rules": [
+              {
+                "required": true,
+                "message": "可售产品不能为空!"
+              }
+            ],
+            "keyField": {
+              "sale_prod_name": "sale_prod_name",
+              "cl_prod_code": "sale_prod_cd"
+            },
+            "toRequest": {
+              "url": "/views/icms/flowStart/all_credit_sell_product_lookup.json",
+              "method": "get",
+              "params": {
+                "cust_class":"${{params.cust_class}}"
+              }
+            },
+            "props": {
+              "title": "选择授信产品",
+              "width": "75%"
+            }
+          },
+          "cl_prod_code": {
+            "control": "text",
+            "label": "授信产品编号",
+            "disabled": true,
+            "width": "40px",
+            "span": 12,
+            "rules": [
+              {
+                "required": false,
+                "message": "授信产品编号为空!"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": []
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ar3003",
+          "source_system": "${{params.source_system}}",
+          "cust_no": "${{params.cust_no}}",
+          "cl_prod_cd":"${{form.cl_prod_code}}",
+          "exceed_small_limit_ident": "${{params.exceed_small_limit_ident}}"
+
+        }
+      },
+      "pagination": {
+        "show": false
+      },
+      "thead": [
+        {
+          "width": "220px",
+          "label": "授信额度编号",
+          "prop": "source_credit_number",
+          "align": "center"
+        },{
+          "label": "额度编号",
+          "prop": "prod_credit_seq",
+          "align": "center",
+          "width": "220px"
+        },
+        {
+          "label": "可售产品编号",
+          "prop": "prod_code",
+          "align": "center"
+        },
+        {
+          "label": "可售产品名称",
+          "prop": "prod_name",
+          "align": "center"
+        },
+        {
+          "label": "额度金额",
+          "prop": "prod_total_credit",
+          "align": "center",
+          "width": "100px",
+          "format": {
+            "thousand": ","
+          }
+        },
+        {
+          "label": "可用余额",
+          "prop": "available_use_limit",
+          "align": "center",
+          "width": "100px",
+          "format": {
+            "thousand": ","
+          }
+        },
+        {
+          "label": "生效日期",
+          "prop": "effect_date",
+          "align": "center"
+        },
+        {
+          "label": "失效日期",
+          "prop": "expiry_date",
+          "align": "center"
+        },
+        {
+          "label": "额度状态",
+          "prop": "quota_status",
+          "width": "160px",
+          "align": "center",
+          "dict": {
+            "dictType": "UCCP_E_QUOTA_STATUS",
+            "dictKey": [
+              "UCCP_E_QUOTA_STATUS"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "fixed": "right",
+          "btns": [
+            {
+              "type": "bringback",
+              "label": "选择"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

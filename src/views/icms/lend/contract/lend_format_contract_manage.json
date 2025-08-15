@@ -1,0 +1,224 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "apply_no": {
+                        "label": {
+                            "default": "申请号",
+                           "i18n": "L0501.Application-number"
+                        },
+                        "control": "text"
+                    },
+                    "loan_contract_no": {
+                        "control": "text",
+                        "label": "贷款合同号"
+                    },
+                    "cust_no": {
+                        "control": "text",
+                        "label": {
+                            "default": "客户编号",
+                           "i18n": "L0501.custom-number"
+                        }
+                    },
+                    "contract_status": {
+                        "control": "select",
+                        "label": {
+                            "default": "合同状态",
+                           "i18n": "L0501.contract-status"
+                        },
+                        "dict": {
+                            "dictType": "AR_E_CONTRACT_STATUS",
+                            "dictKey": [
+                                "AR_E_CONTRACT_STATUS"
+                            ],
+                            "include": [
+                                "DF",
+                                "SB",
+                                "US",
+                                "YF"
+                            ],
+                            "format": "label"
+                        }
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": []
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ar0702"
+                }
+            },
+            "thead": [
+                {
+                   "label": {
+                            "default": "申请号",
+                           "i18n": "L0501.Application-number"
+                        },
+                    "prop": "apply_no",
+                    "align": "center"
+                },
+                {
+                    "label": "贷款合同号",
+                    "prop": "loan_contract_no",
+                    "align": "center"
+                },
+                {
+                    "label": {
+                        "default": "客户编号",
+                       "i18n": "L0501.custom-number"
+                    },
+                    "prop": "cust_no",
+                    "align": "center"
+                },
+                {
+                    "label": "客户名称",
+                    "prop": "cust_name",
+                    "align": "center"
+                },
+                {
+                    "label": {
+                        "default": "审批金额",
+                       "i18n": "L0501.Approval-amount"
+                    },
+                    "prop": "apply_amt",
+                    "align": "center",
+                    "format": {
+                        "thousand": ","
+                    }
+                },
+                {
+                    "label": {
+                        "default": "申请期限(月)",
+                       "i18n": "L0501.Application-deadline-months"
+                    },
+                    "prop": "periods",
+                    "align": "center"
+                },
+                {
+                    "label": "可售产品名称",
+                    "prop": "sale_prod_name",
+                    "align": "center"
+                },
+                {
+                    "label": {
+                        "default": "合同状态",
+                       "i18n": "L0501.contract-status"
+                    },
+                    "prop": "contract_status",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "AR_E_CONTRACT_STATUS",
+                        "dictKey": [
+                            "AR_E_CONTRACT_STATUS"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 140,
+                    "align": "center",
+                    "btns": [
+                        {
+                            "type": "custom",
+                            "label": "打印",
+                            "toRequest": {
+                                "url": "@lendManagePrinter",
+                                "params": {
+                                    "apply_no": "${{current.apply_no}}",
+                                    "sale_prod_cd": "${{current.sale_prod_cd}}",
+                                    "wf_inst_id": "${{current.wf_inst_id}}",
+                                    "cust_no": "${{current.cust_no}}",
+                                    "contract_no": "${{current.loan_contract_no}}",
+                                    "is_extend": "${{current.is_extend}}"
+                                }
+                            },
+                            "props": {
+                                "width": "95%",
+                                "height": "590px",
+                                "title": "打印详情"
+                            }
+                        },
+                        {
+                            "type": "custom",
+                            "label": {
+                                "default": "出账",
+                               "i18n": "L0501.Outgoing"
+                            },
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "post",
+                                "params": {
+                                    "servicecode": "ar0703"
+                                }
+                            },
+                            "show": {
+                                "expression": "'${{current.contract_status}}' == 'DF'"
+                            }
+                        },
+                        {
+                            "type": "custom",
+                            "label": "借据检查",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "post",
+                                "params": {
+                                    "servicecode": "ar0707"
+                                }
+                            },
+                            "show": {
+                                "expression": "'${{current.contract_status}}' == 'SB'"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "详情",
+                            "toRequest": {
+                                "url": "@CommAlreadyDoDetail",
+                                "method": "GET",
+                                "target": "navTab",
+                                "params": {
+                                    "frame_cd": "${{current.task_url2}}",
+                                    "cust_name": "${{current.cust_name}}",
+                                    "appl_state": "COMP",
+                                    "appl_date": "${{current.loan_contract_sign_date}}",
+                                    "task_inst_id": "${{current.task_inst_id}}",
+                                    "appId": "icmsOnl",
+                                    "appl_id": "${{current.apply_no}}",
+                                    "wf_inst_id": "${{current.wf_inst_id}}",
+                                    "cust_no": "${{current.cust_id}}"
+                                }
+                            },
+                            "props": {
+                                "title": "已办事项详情"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "借据列表",
+                            "toRequest": {
+                                "url": "/views/icms/lend/contract/IOU/IOU_list.json",
+                                "method": "GET",
+                                "params": {}
+                            },
+                            "props": {
+                                "title": "借据列表"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,211 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+      "form": {
+        "scope": "formData",
+        "controls": [
+          {
+            "quality_plan_type": {
+              "control": "select",
+              "label": "方案类型",
+              "dict": {
+                  "dictType": "CS_QUALITY_PLAN_TYPE",
+                  "dictKey": [
+                      "CS_QUALITY_PLAN_TYPE"
+                    ],
+                    "format": "value-label"
+                  }
+              },
+            "version": {
+              "control": "inputNumber",
+              "label": "版本"
+            }
+          },
+          {
+            "org_id": {
+                "control": "remoteSelect",
+                "label": "创建法人",
+                "labelField": "org_name",
+                "valueField": "org_id",
+                "doRequest": {
+                  "url": "/SUMP/icmcall/icmRPCCall",
+                  "method": "POST",
+                  "params": {
+                    "servicecode": "ct2311",
+                    "org_id": "$g{{user_info.org_id}}"
+                  }
+                },
+                "format": "value-label"
+              },
+              "branch_id": {
+                "control": "remoteSelect",
+                "label": "创建机构",
+                "labelField": "branch_name",
+                "valueField": "branch_id",
+                "doRequest": {
+                  "url": "/SUMP/icmcall/icmRPCCall",
+                  "method": "POST",
+                  "params": {
+                    "servicecode": "ct2142",
+                    "user_id": "$g{{user_info.userCode}}"
+                  }
+                },
+                "format": "value-label"
+              }
+          }
+        ]
+      },
+      "toolbar": {
+        "btns": [
+          {
+            "type": "add",
+            "icon": "el-icon-circle-plus",
+            "target": "dialog",
+            "label": "新增",
+            "toRequest": {
+              "method": "POST",
+              "url": "/views/cs/qualityManage/qualityPlan/qualityPlan_add.json"
+            },
+            "props": {
+              "width": "80%",
+              "title": "新增质检方案"
+            }
+          }
+        ]
+      },
+      "datagrid": {
+        "isInitSearch": false,
+        "doRequest": {
+          "url": "/SUMP/icmcall/icmRPCCall",
+          "method": "POST",
+          "params": {
+            "servicecode": "qc0005",
+            "appId": "qcOnl"
+          }
+        },
+        "thead": [
+          {
+            "type": "string",
+            "align": "center",
+            "label": "方案编号",
+            "prop": "quality_plan_no"
+          },
+          {
+            "type":"string",
+            "label": "方案类型",
+            "align":"center",
+            "prop": "quality_plan_type",
+            "width": "130px",
+            "dict": {
+                "dictType": "CS_QUALITY_PLAN_TYPE",
+                "dictKey": [
+                    "CS_QUALITY_PLAN_TYPE"
+                ],
+                "format": "value-label"
+            }
+          },
+          {
+            "type": "string",
+            "align": "center",
+            "label": "方案名称",
+            "prop": "quality_plan_name"
+          },
+          {
+            "type": "string",
+            "align": "center",
+            "label": "版本",
+            "prop": "version"
+          },
+          {
+            "type":"string",
+            "label": "状态",
+            "align":"center",
+            "prop": "is_enable",
+            "width": "130px",
+            "dict": {
+                "dictType": "CS_QUALITY_PLAN_STATE",
+                "dictKey": [
+                    "CS_QUALITY_PLAN_STATE"
+                ],
+                "format": "value-label"
+            }
+          },
+          {
+            "type": "string",
+            "align": "center",
+            "label": "创建法人",
+            "prop": "data_create_user"
+          },
+          {
+            "type": "string",
+            "align": "center",
+            "label": "创建机构",
+            "prop": "branch_id"
+          },
+          
+          {
+            "label": "操作",
+            "align": "center",
+            "fixed": "right",
+            "width": "250%",
+            "btns": [
+              {
+                "type": "look",
+                "label": "详情",
+                "toRequest": {
+                  "url": "/views/cs/qualityManage/qualityPlan/quality_plan_info.json"
+                },
+                "props": {
+                  "title": "质检方案详情"
+                }
+              },
+              {
+                "type": "look",
+                "label": "维护",
+                "toRequest": {
+                  "url": "/views/cs/qualityManage/qualityPlan/quality_plan_modify.json"
+                },
+                "props": {
+                  "title": "维护"
+                }
+              },
+              {
+                "type": "look",
+                "label": "质检方案维护",
+                "toRequest": {
+                  "url": "/views/cs/qualityManage/qualityPlan/qualityPlanRule_modify.json",
+                  "method": "POST",
+                  "params": {
+                    
+                  }
+                  
+                },
+                "props": {
+                  "title": "质检方案规则维护"
+                }
+              },
+              {
+                "type": "delete",
+                "label": "删除",
+                "doRequest": {
+                  "url": "/SUMP/call/RPCCall",
+                  "method": "POST",
+                  "params": {
+                    "servicecode": "qc0010",
+                    "appId": "qcOnl"
+                  }
+                },
+                "confirm": {
+                  "title": "提示信息",
+                  "msg": "确认删除质检方案？",
+                  "confirmButtonText": "确定",
+                  "cancelButtonText": "取消"
+                }
+              }
+              
+            ]
+          }
+        ]
+      }
+    }
+  }

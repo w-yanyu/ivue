@@ -1,0 +1,173 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+      "form": {
+          "controls": [
+            {
+              "lncfno": {
+                "control": "text",
+                "label": "借据号",
+                "rules": [
+                  {
+                    "max": 30,
+                    "message": "长度不能超过30个字符"
+                  }
+                ]
+              },
+              "acctna": {
+                "control": "text",
+                "label": "客户名称",
+                "rules": [
+                  {
+                    "max": 30,
+                    "message": "长度不能超过30个字符"
+                  }
+                ]
+              },
+              "prodna": {
+                "control": "text",
+                "label": "产品名称",
+                "rules": [
+                  {
+                    "max": 30,
+                    "message": "长度不能超过30个字符"
+                  }
+                ]
+              },
+              "initdt": {
+                "control": "text",
+                "label": "开户日期",
+                "rules": [
+                  {
+                    "max": 30,
+                    "message": "长度不能超过30个字符"
+                  }
+                ]
+              },
+              "lncfam": {
+                "control": "text",
+                "label": "借据金额",
+                "rules": [
+                  {
+                    "max": 30,
+                    "message": "长度不能超过30个字符"
+                  }
+                ]
+              },
+              "mobino": {
+                "control": "text",
+                "label": "手机号",
+                "rules": [
+                  {
+                    "max": 30,
+                    "message": "长度不能超过30个字符"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "toolbar": {
+          "btns": [
+              {
+                  "type": "export",
+                  "label": "导出",
+                  "icon": "iconfont icon-daochu",
+                  "doRequest": {
+                      "url": "/SUMP/icmcall/plms/exportpzlist",
+                      "method": "post",
+                      "params": {
+                         "list01":"${{data}}",
+                          "trandt":"${{form.trandt}}",
+                          "succes":"${{form.succes}}"
+                      }
+                  },
+                  "confirm":{
+                    "title":"提示信息",
+                    "msg":"确认导出吗？",
+                    "confirmButtonText":"确定",
+                    "cancelButtonText":"取消"
+                  }
+              }
+          ]
+      },
+      "datagrid": {
+          "scope":"data",
+          "isInitSearch": false,
+          "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST", 
+              "params": {
+                  "servicecode": "PLMSKGSS0092"
+                  
+              }
+          },
+          "thead": [
+
+              {
+                  "type": "text",
+                  "label": "借据号",
+                  "prop": "lncfno",
+                  "align": "center"
+              },
+              {
+                  "type": "text",
+                   "label": "客户姓名",
+                   "prop": "acctna",
+                   "align": "center"
+              },
+              {
+                   "type": "text",
+                   "label": "产品名称",
+                   "prop": "prodna",
+                   "align": "center"
+            },
+             {
+                   "type": "text",
+                   "label": "放款时间",
+                   "prop": "initdt",
+                   "align": "center"
+             },
+             {
+                     "type": "text",
+                     "label": "贷款金额",
+                     "prop": "lncfam",
+                     "align": "center"
+              },
+              {
+                      "type": "text",
+                      "label": "联系方式",
+                      "prop": "mobino",
+                      "align": "center"
+                    },
+                    {
+                      "type": "text",
+                      "label": "提供用途凭证的最晚时间",
+                      "prop": "latestdate",
+                      "align": "center"
+                    },
+                    {
+                      "type": "text",
+                      "label": "利率是否上浮",
+                      "prop": "ratesrisen",
+                      "align": "center"
+                    },
+                      {
+                      "label": "操作",
+                      "fixed": "right",
+                      "align": "center",
+                      "btns": [
+                            {
+                       "type": "edit",
+                       "label": "上传用途凭证",
+                       "toRequest": {
+                       "url": "@LoanPurposeControl",
+                       "method": "POST"
+                      }
+                    }
+              ]
+            }
+          ]
+      }
+  }
+}

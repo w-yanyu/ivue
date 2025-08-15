@@ -1,0 +1,123 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "新增",
+          "target": "dialog",
+          "toRequest": {
+            "method": "POST",
+            "url": "/views/icms/accept/araAcceptDraftApply/info/ara_accept_draft_apply_add.json",
+            "params": {
+              "apply_no": "${{params.apply_no}}"
+            },
+            "props": {
+              "width": "75%",
+              "title": "新增汇票信息"
+            }
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ar1583",
+          "apply_no": "${{params.apply_no}}"
+        }
+      },
+      "thead": [
+
+        {
+          "label": "承兑合同号",
+          "prop": "contract_no",
+          "align": "center"
+        },
+
+        {
+          "label": "汇票编号",
+          "prop": "draft_no",
+          "align": "center"
+        },
+        {
+          "label": "出票人名称",
+          "prop": "drawer_name",
+          "align": "center"
+        },
+
+        {
+          "label": "汇票金额",
+          "prop": "draft_amt",
+          "align": "center"
+        },
+        {
+          "label": "出票日期",
+          "prop": "drawer_start_date",
+          "align": "center"
+        },
+        {
+          "label": "到期日期",
+          "prop": "matu_date",
+          "align": "center"
+        },
+        {
+          "label": "批次号",
+          "prop": "batch_no",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "fixed": "right",
+          "width": 180,
+          "btns": [
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/icms/accept/araAcceptDraftApply/info/ara_accept_draft_apply_modify.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "75%",
+                "title": "维护汇票信息"
+              }
+            },
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/icms/accept/araAcceptDraftApply/info/ara_accept_draft_apply_detail.json",
+                "method": "get"
+              },
+              "props": {
+                "width": "75%",
+                "title": "汇票信息详情"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "ar1582"
+                }
+              },
+              "show": {
+                "expression": "'${{params.pageType}}' != 'detail'"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

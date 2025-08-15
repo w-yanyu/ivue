@@ -1,0 +1,145 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": "${{params}}",
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "icon": "",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "ct2414",
+              "appId":"${{params.appId}}"
+            }
+          }
+        }
+      ],
+      "controls": [
+          {
+            "authp_system_code": {
+              "control": "string",
+              "label": "授权体系编号"
+           },
+            "authp_rule_code": {
+              "control": "string",
+              "label": "规则编号"
+           },
+            "dimension_code": {
+               "control": "string",
+               "label": "业务指标编码"
+            },
+            "dimension_name": {
+              "control": "string",
+              "label": "业务指标名称"
+          },
+          "dimension_type": {
+              "control": "string",
+              "label": "业务指标类型",
+              "dict": {
+                  "dictType": "CT_E_DIMENSION_TYPE",
+                  "format": "label",
+                  "dictKey": [
+                      "CT_E_DIMENSION_TYPE"
+                  ]
+              },
+              "format": "label"
+          },
+          "field_code": {
+            "control": "string",
+            "label": "字段代码"
+          },
+          "retrun_value_type": {
+            "control": "string",
+            "label": "返回值类型",
+            "dict": {
+              "dictType": "CT_E_RESULT_TYPE",
+              "dictKey": [
+                  "CT_E_RESULT_TYPE"
+              ]
+            }
+          },
+          "opt_type": {
+              "control": "select",
+              "label": "操作模式",
+              "dict": {
+                  "format": "label",
+                  "dictKey": [
+                      "CT_E_OPERATE_MODE"
+                  ],
+                  "dictType": "CT_E_OPERATE_MODE"
+              },
+              "events" : {
+                "showItem": {
+                  "00" : ["max_value"],
+                  "01" : ["max_value"],
+                  "02" : ["min_value","string_value"],
+                  "03" : ["min_value"],
+                  "04" : ["min_value"],
+                  "05" : ["min_value","max_value"],
+                  "06" : ["min_value","max_value"],
+                  "07" : ["string_value"]
+                }
+              },
+              "rules": [
+                {
+                    "required": true,
+                    "message": "请选择操作模式"
+                }
+            ]
+          },
+          "string_value": {
+            "control": "text",
+            "label": "字符值",
+            "rules": [
+                {
+                    "required": true,
+                    "message": "请输入字符值"
+                },
+                {
+                    "max": "200",
+                    "message": "不能超过200"
+                }
+            ]
+        },
+        "min_value": {
+            "control": "text",
+            "label": "最小值",
+            "rules": [
+                {
+                    "required": true,
+                    "message": "请输入最小值"
+                }
+            ]
+        },
+        "max_value": {
+            "control": "text",
+            "label": "最大值",
+            "rules": [
+                {
+                    "required": true,
+                    "message": "请输入最大值"
+                }
+            ]
+        }
+        }
+      ]
+    },
+    "alert": {
+      "span": 8,
+        "title": "提示",
+        "description": [
+          "<p style = 'color:red'>【返回值类型】为金额或者数字类型的，【操作模式】不能选列举值。</p>",
+          "<p style = 'color:red'>【返回值类型】为金额或者数字类型的，【操作模式】配小于、小于等于时取【最大值】使用。</p>",
+          "<p style = 'color:red'>【返回值类型】为金额或者数字类型的，【操作模式】配等于时取【最小值】使用。</p>",
+          "<p style = 'color:red'>【返回值类型】为金额或者数字类型的，【操作模式】配大于、大于等于时取【最小值】使用。</p>",
+          "<p style = 'color:red'>【返回值类型】为金额或者数字类型的，【操作模式】配<大于，小于>或者<大于等于，小于等于>时同时取【最小值】【最大值】使用。</p>",
+          "<p style = 'color:red'>【返回值类型】为字符类型时，【操作模式】只能配等于或者列举值，取【字符值】使用</p>"
+      ],
+        "listStyle": "disc"
+    }
+  }
+}

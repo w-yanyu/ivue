@@ -1,0 +1,75 @@
+{
+    "module": "lr-tree-dynamic",
+    "initRequest": "${{params}}",
+    "layout": {
+        "tree": {
+            "title": "集团客户关系",
+            "lazy": false,
+            "hideDynamicArea": false,
+            "idField": "id",
+            "pIdField": "pid",
+            "labelField": "title",
+            "isLeafField": "isLeaf",
+            "nodeTypeField": "type",
+            "expandId": [
+                "-1",
+                "1QY-1",
+                "2JY-1",
+                "3CW-1",
+                "4ZD-1"
+            ],
+            "initRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POSt",
+                "params": {
+                    "servicecode": "us0604",
+                    "cust_no": "${{params.group_cust_no}}"
+                }
+            },
+            "root": {
+                "rootNode": {
+                    "name": "集团客户",
+                    "value": "-1"
+                }
+            },
+            "rootTypes": [
+                "dept"
+            ],
+            "nodeTypes": {
+                "leaf00": {
+                    "children": [
+                        "leaf00"
+                    ],
+                    "toRequest": {
+                        "url": "/views/uccp/quotaManager/gcreditGroup/group_info_dynamictabs.json",
+                        "params": {
+                            "group_credit_seq": "${{params.group_credit_seq}}",
+                            "group_cust_no": "${{params.group_cust_no}}",
+                            "method": "post"
+                        }
+                    },
+                    "contextMenu": [
+                        
+                    ]
+                },
+                "leaf02": {
+                    "children": [
+                        "leaf02"
+                    ],
+                    "toRequest": {
+                        "url": "@limitTabsMain",
+                        "target": "navTab",
+                        "params": {
+                            "customeNo": "${{current.id}}",
+                            "customeName": "${{current.title}}",
+                            "method": "post"
+                        }
+                    },
+                    "contextMenu": [
+                       
+                    ]
+                }
+            }
+        }
+    }
+}

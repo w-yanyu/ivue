@@ -1,0 +1,176 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+      "form": {
+          "controls": [
+              {
+                  "name": {
+                      "span": 12,
+                      "control": "text",
+                      "label": "名称"
+                  },
+                  "code": {
+                      "span": 12,
+                      "control": "text",
+                      "label": "编码"
+                  }
+              },
+              {
+                  "type": {
+                      "title": "类型",
+                      "control": "select",
+                      "label": "类型",
+                      "width": 150,
+                      "options": [
+                          {
+                              "value": "",
+                              "label": "请选择"
+                          },
+                          {
+                              "value": "NATIVE",
+                              "label": "原生变量"
+                          },
+                          {
+                              "value": "DERIVATION",
+                              "label": "衍生变量"
+                          }
+                      ]
+                  },
+                  "status": {
+                      "title": "状态",
+                      "control": "select",
+                      "label": "状态",
+                      "width": 150,
+                      "options": [
+                          {
+                              "value": true,
+                              "label": "启用"
+                          },
+                          {
+                              "value": false,
+                              "label": "停用"
+                          }
+                      ]
+                  }
+              }
+          ]
+      },
+      "toolbar": {
+          "btns": [
+              {
+                  "type": "import",
+                  "icon": "iconfont icon-daoru",
+                  "label": "变量导入",
+                  "props":{
+                      "title": "变量导入",
+                      "doRequest": {             
+                          "url":"/edsp_rule/variable/import",
+                          "method":"post",
+                          "params": {
+                              "appCode": "APP2"
+                          }
+                      },
+                      "allSize": 2048,
+                      "multiple": false,
+                      "accept":"xls"
+                  }
+              },
+              {
+                  "type": "export",
+                  "icon": "iconfont icon-daoru2",
+                  "label": "导入模板下载",
+                  "doRequest": {
+                      "url": "/edsp_rule/variable/template",
+                      "method": "get",
+                      "params": {
+                          "appCode": "APP2"
+                      }
+                  }
+              },
+              {
+                  "type": "export",
+                  "icon": "iconfont icon-daoru2",
+                  "label": "变量导出",
+                  "doRequest": {
+                      "url": "/edsp_rule/variable/export",
+                      "method": "get",
+                      "params": {
+                          "categoryId": "${{params.id}}"
+                      }
+                  }
+              }
+          ]
+      },
+      "datagrid": {
+          "doRequest": {
+              "url": "/edsp_rule/variable/page",
+              "method": "get",
+              "params": {
+
+              }
+          },
+          "pagination": {
+              "pageSizes": [
+                  10,
+                  30,
+                  50
+              ],
+              "pageSize": 10
+          },
+          "thead": [
+              {
+                  "type": "index",
+                  "label": "序号"
+              },
+              {
+                  "label": "上一级分类",
+                  "align": "left",
+                  "prop": "categoryCode"
+              },
+              {
+                  "label": "名称",
+                  "align": "left",
+                  "prop": "name"
+              },
+              {
+                  "label": "编码",
+                  "prop": "code",
+                  "align": "left"
+              },
+              {
+                  "label": "类型",
+                  "align": "left",
+                  "prop": "type",
+                  "dict": {
+                      "dictType": "RULE",
+                      "dictKey": [
+                        "variableType"
+                      ]
+                  }
+              },
+              {
+                  "label": "数据类型",
+                  "align": "left",
+                  "prop": "dataType",
+                  "dict": {
+                      "dictType": "RULE",
+                      "dictKey": [
+                        "dataType"
+                      ]
+                  }
+              },
+              {
+                  "label": "状态",
+                  "align": "left",
+                  "prop": "status",
+                  "dict": {
+                      "dictType": "RULE",
+                      "dictKey": [
+                        "status"
+                      ]
+                  }
+              }
+          ]
+      }
+  }
+}

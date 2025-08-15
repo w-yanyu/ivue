@@ -1,0 +1,161 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+      "form": {
+        "scope": "templateScope",
+        "initRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "pl0213",
+              "matrix_number": "${{params.matrix_number}}",
+              "matrix_name": "${{params.matrix_name}}"
+            }
+        },
+        "initDataOnce":true,
+
+
+          "btns": [
+              {
+                  "type": "submit",
+                  "label": "保存",
+                  "icon": "",
+                  "doRequest": {
+                      "url": "/SUMP/icmcall/icmRPCCall",
+                      "method": "POST",
+                      "params": {
+                          "servicecode": "pl0115"
+                      }
+                  }
+              }
+          ],
+          "controls": [
+            {   
+                "prim_key": {
+                    "label": "主键",
+                    "control": "hidden",
+                    "rules": [
+                        {
+                            "required": true
+                        }
+                    ]
+                },
+                "matrix_number": {
+                    "label": "矩阵编号",
+                    "control": "text",
+                    "disabled":"true",
+                    "rules": [
+                        {
+                            "required": true,
+                            "message": "请输入矩阵编号"
+                        }
+                    ]
+                },
+                "matrix_name": {
+                    "label": "矩阵名称",
+                    "control": "text",
+                    "rules": [
+                        {
+                            "required": true,
+                            "message": "请输入矩阵名称"
+                        }
+                    ]
+                },
+                "matrix_describe": {
+                    "label": "矩阵描述",
+                    "control": "text",
+                    "rules": [
+                        {
+                            "required": true,
+                            "message": "请输入矩阵描述"
+                        }
+                    ]
+                },
+                "is_need_flow": {
+                    "label": "是否需要流程",
+                    "control": "select",
+                    "multiple": false,
+                    "dict": {
+                        "dictKey": [
+                        "MS_E_YESORNO"
+                        ],
+                        "dictType": "MS_E_YESORNO",
+                        "format": "value-label"
+                    },
+                    "rules": [
+                        {
+                          "required": true,
+                          "message": "请选择是否需要流程"
+                        }
+                      ]
+                },
+                "flow_select": {
+                    "label": "流程选取",
+                    "control": "text",
+                    "rules": [
+                        {
+                            "required": true,
+                            "message": "请输入流程选取"
+                        }
+                    ]
+                },
+                "rule_code": {
+                    "label": "规则代码",
+                    "control": "lookup",
+                    "edit": false,
+                    "keyField": {
+                        "rule_code": "rule_code",
+                        "rule_name": "rule_name",
+                        "rule_type": "rule_type"
+                    },
+                    "toRequest": {
+                        "url": "/views/pd/prod/templatePage/prodRuleInfoCheck/prod_ruleInfo_lookup.json",
+                        "method": "post"
+                    },
+                    "props": {
+                        "title": "规则信息查询"
+                    },
+                    "format": "label",
+                    "rules": [
+                        {
+                            "required": true,
+                            "message": "请输入规则代码"
+                        }
+                    ]
+                },
+
+                "rule_name": {
+                    "label": "规则名称",
+                    "control": "text",
+                    "disabled": "true",
+                    "rules": [
+                        {
+                            "required": false,
+                            "message": "请输入规则名称"
+                        }
+                    ]
+                },
+                "rule_type": {
+                    "label": "规则类型",
+                    "control": "select",
+                    "disabled": "true",
+                    "rules": [
+                        {
+                            "required": false,
+                            "message": "请选择规则类型"
+                        }
+                    ],
+                    "dict": {
+                        "dictType": "PD_E_RULE_TYPE",
+                        "dictKey": [
+                            "PD_E_RULE_TYPE"
+                        ]
+                    }
+                }
+
+               
+             }
+        ]
+      }
+  }
+}

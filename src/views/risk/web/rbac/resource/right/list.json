@@ -1,0 +1,190 @@
+{
+  "module": "v-search-btn-datagrid",
+  "pageId": "resource-list",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "resourceCode": {
+            "control": "text",
+            "label": "资源编码"
+          },
+          "resourceName": {
+            "control": "text",
+            "label": "资源名称"
+          }
+        },
+        {
+          "application": {
+            "control": "select",
+            "label": "所属应用",
+            "dict": {
+              "dictType": "WEB",
+              "dictKey": [
+                "homepage",
+                "application"
+              ],
+              "labelField": "appName",
+              "valueField": "appCode",
+              "doRequest": {
+                "url": "/WEB/application/list",
+                "method": "GET"
+              }
+            }
+          },
+          "resourceType": {
+            "control": "select",
+            "label": "资源类型",
+            "dict": {
+              "dictType": "WEB",
+              "dictKey": [
+                "WEB",
+                "resourceType"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictCode",
+              "doRequest": {
+                "url": "/WEB/dict/common",
+                "method": "post"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "#type": "add",
+          "label": "新增",
+          "toRequest": {
+            "url": "/views/risk/web/rbac/resource/right/view-add.json",
+            "method": "get"
+          },
+          "props": {
+            "width": "65%",
+            "title": "新增资源",
+            "close": ""
+          }
+        },
+        {
+          "type": "delete",
+          "label": "删除",
+          "doRequest": {
+            "url": "/WEB/resource/ttt",
+            "method": "POST"
+          }
+        },
+        {
+          "authId": "btn001",
+          "type": "import",
+          "label": "导入",
+          "icon": "iconfont icon-daoru1",
+          "props": {
+            "width": "600px",
+            "title": "导入",
+            "doRequest": {
+              "url": "/demo/user/import",
+              "method": "post",
+              "params": {}
+            },
+            "multiple": true,
+            "name": "import",
+            "accept": ".xls,.xlsx",
+            "limit": 4,
+            "size": 1,
+            "allSize": 4
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "doRequest": {
+        "url": "/WEB/resource/page",
+        "method": "get"
+      },
+      "pagination": {
+        "show": true,
+        "pageSizes": [
+          10,
+          20,
+          50,
+          100
+        ],
+        "pageSize": 10
+      },
+      "maxHeight": 500,
+      "thead": [
+        {
+          "type": "selection",
+          "width": "55"
+        },
+        {
+          "type": "index",
+          "label": "序号"
+        },
+        {
+          "label": "资源编码",
+          "prop": "resourceCode"
+        },
+        {
+          "label": "资源名称",
+          "prop": "resourceName"
+        },
+        {
+          "label": "资源类型",
+          "prop": "resourceType",
+          "dict": {
+            "dictType": "WEB",
+            "dictKey": [
+              "WEB",
+              "resourceType"
+            ]
+          }
+        },
+        {
+          "label": "所属应用",
+          "prop": "application",
+          "dict": {
+            "dictType": "WEB",
+            "dictKey": [
+              "homepage",
+              "application"
+            ],
+            "labelField": "appName",
+            "valueField": "appCode",
+            "doRequest": {
+              "url": "/WEB/application/list",
+              "method": "GET"
+            }
+          }
+        },
+        {
+          "label": "操作",
+          "width": "100px",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "编缉",
+              "toRequest": {
+                "url": "/views/risk/web/rbac/resource/right/view-update.json",
+                "method": "get",
+                "params": {}
+              },
+              "props": {
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "",
+                "method": "get"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

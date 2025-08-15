@@ -1,0 +1,91 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest":"${{params}}",
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "us1265",
+          "cust_no": "${{params.cust_no}}",
+          "file_no": "${{params.file_no}}"
+        }
+      },
+      "controls": [
+        {
+          "file_name": {
+            "control": "text",
+            "label": "文件名称",
+            "span": 7,
+            "width": "25px",
+            "rules": [
+              {
+                "min": 0,
+                "max": 20,
+                "message": "长度不能超过20个字符"
+              },
+              {
+                "required": true
+              }
+            ]
+          },
+          "file_type": {
+            "control": "select",
+            "label": "文件类型",
+            "span": 7,
+            "width": "25px",
+            "dict": {
+              "dictType": "US_E_FILE_TYPE",
+              "dictKey": [
+                "US_E_FILE_TYPE"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择业务类型"
+              }
+            ]
+          },
+          "file_path": {
+            "control": "string",
+            "label": "文件路径",
+            "span": 7,
+            "width": "25px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请上传协议模板"
+              }
+            ]
+          },
+          "fileList": {
+            "control": "dynamic",
+            "isShowChildForm": true,
+            "span": 3,
+            "toRequest": {
+              "url": "@minioUploadButton",
+              "method": "get",
+              "params": {
+                "file_path": "file_path",
+                "formKey": "fileList",
+                "formLabel": "附件上传"
+              }
+            }
+          }
+        },
+        {
+          "description": {
+            "control": "textarea",
+            "span": "24",
+            "width": "25px",
+            "rows": "4",
+            "label": "说明"
+          }
+        }
+      ]
+    }
+  }
+}

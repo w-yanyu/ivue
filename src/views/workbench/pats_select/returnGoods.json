@@ -1,0 +1,215 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "ownChannelCode": {
+            "label": "渠道类型",
+            "control": "select",
+            "dict": {
+              "format": "label",
+              "dictKey": [
+                "E_OWN_CHANNEL_CODE6_STATUS"
+              ],
+              "dictType": "E_OWN_CHANNEL_CODE6_STATUS"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择渠道类型"
+              }
+            ]
+          },
+          "loanNo": {
+            "control": "text",
+            "label": "借记号",
+            "rules": [
+              {
+                "max": 28,
+                "message": "长度不能超过18个字符"
+              }
+            ]
+          },
+          "stardt": {
+            "control": "dateTimePicker",
+            "label": "起始日期",
+            "editable": true,
+            "format": "yyyyMMdd"
+          },
+          "enddt": {
+            "control": "dateTimePicker",
+            "label": "结束日期",
+            "editable": true,
+            "format": "yyyyMMdd"
+          },
+          "trxnStatus": {
+            "label": "退货状态",
+            "control": "select",
+            "dict": {
+              "format": "label",
+              "dictKey": [
+                "E_TRANS_STATUS"
+              ],
+              "dictType": "E_TRANS_STATUS"
+            }
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "PATSIMSS3001"
+        }
+      },
+      "pagination": {
+        "show": true,
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "type": "index"
+        },
+        {
+          "label": "交易日期",
+          "prop": "tranDate"
+        },
+        {
+          "label": "订单号",
+          "prop": "orderNo"
+        },
+        {
+          "label": "渠道号",
+          "prop": "ownChannelCode"
+        },
+        {
+          "label": "项目编码",
+          "prop": "productCode"
+        },
+        {
+          "label": "退货流水号",
+          "prop": "requestNo"
+        },
+        {
+          "label": "借记号",
+          "prop": "loanNo"
+        },
+        {
+          "label": "客户姓名",
+          "prop": "userName"
+        },
+        {
+          "label": "申请退货金额",
+          "prop": "retAmt"
+        },
+        {
+          "label": "退货状态",
+          "prop": "trxnStatus",
+          "dict": {
+            "dictType": "E_TRANS_STATUS",
+            "dictKey": [
+              "E_TRANS_STATUS"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "退货类型",
+          "prop": "retType",
+          "dict": {
+            "dictType": "E_RET_TYPE",
+            "dictKey": [
+              "E_RET_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "审核状态",
+          "prop": "checkStatus",
+          "dict": {
+            "dictType": "E_CHECK_STATUS",
+            "dictKey": [
+              "E_CHECK_STATUS"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "审批用户",
+          "prop": "checkTeller"
+        },
+        {
+          "label": "支付状态",
+          "prop": "batStatus",
+          "dict": {
+            "dictType": "E_TRANS_STATUS_COMM",
+            "dictKey": [
+              "E_TRANS_STATUS_COMM"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "资金处理方式",
+          "prop": "capitalType",
+          "dict": {
+            "dictType": "E_CAPITAL_TYPE",
+            "dictKey": [
+              "E_CAPITAL_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "卡号",
+          "prop": "cardNo"
+        },
+        {
+          "label": "实际退款金额",
+          "prop": "retRealAmt"
+        },
+        {
+          "label": "贷余",
+          "prop": "loanBal"
+        },
+        {
+          "label": "剩余息费",
+          "prop": "remainderFee"
+        },
+        {
+          "label": "创建时间",
+          "prop": "createTime"
+        },
+        {
+          "label": "更新时间",
+          "prop": "updateTime"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 150,
+          "align": "center",
+          "btns": [
+            {
+              "type": "look",
+              "label": "处理",
+              "toRequest": {
+                "url": "/views/workbench/pats_select/returnGoods_detail.json",
+                "method": "POST"
+              },
+              "props": {
+                "title": "退货信息详情"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

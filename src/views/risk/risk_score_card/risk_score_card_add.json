@@ -1,0 +1,73 @@
+{
+  "module": "v-inputDataForm-btn",
+  "layout": {
+    "form": {
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "scoreCardType": "0",
+          "servicecode": "deci020126"
+        }
+      },
+      "controls": [
+        {
+          "scoreCardCode": {
+            "label": "简单评分卡代码",
+            "control": "text",
+            "span": 10,
+            "disabled":true,
+            "rules": [
+              {
+                "required": true,
+                "pattern": "^[A-Za-z][A-Za-z\\d_]{0,39}$",
+                "message": "请正确输入"
+              }
+            ]
+          },
+          "scoreCardName": {
+            "label": "简单评分卡名称",
+            "control": "text",
+            "span": 10,
+            "maxlength": 125,
+            "rules": [
+              {
+                "required": true,
+                "message": "请正确输入",
+                "max": 125
+              }
+            ]
+          }
+        },
+        {
+          "description": {
+            "label": "备注",
+            "control": "textarea",
+            "span": 24,
+            "showWordLimit": 500,
+            "maxlength": 500,
+            "rows": 5,
+            "rules": [
+              {
+                "message": "请正确输入",
+                "max": 500
+              }
+            ]
+          }
+        }
+      ],
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "scoreCardType": "${{params.scoreCardType}}",
+          "riskOperationType": "A",
+          "createUser": "$g{{user_info.userCode}}",
+          "updateUser": "$g{{user_info.userCode}}",
+          "servicecode": "deci020101"
+          
+        }
+      }
+    }
+  }
+}

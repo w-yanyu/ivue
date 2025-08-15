@@ -1,0 +1,90 @@
+{
+    "module": "v-search-btn-datagrid",
+    "layout": {
+      "form": {
+        "initRequest": "${{params}}",
+        "btns":[],
+        "controls": []
+      },
+      "datagrid": {
+        "isInitSearch": true,
+        "doRequest": {
+          "url": "/SUMP/icmcall/icmRPCCall",
+          "method": "post",
+          "params":{
+            "trxn_seq": "${{params.trxn_seq}}",
+            "group_code": "${{params.group_code}}",
+            "rule_id": "${{params.rule_id}}",
+            "servicecode": "deci060105",
+            "isList": true
+          }
+        },
+        "pagination": {
+          "hideOnSinglePage":false,
+          "show": true,
+          "pageSizes": [
+            10,
+            15,
+            20,
+            50,
+            100
+          ],
+          "pageSize": 10
+        },
+        "thead": [
+          {
+            "label": "规则代码",
+            "prop": "rule_code",
+            "value":"${{params.rule_code}}"
+          },
+          {
+            "label": "规则名称",
+            "prop": "rule_name",
+            "value":"${{params.rule_name}}"
+          },
+
+          {
+            "label": "动作类型",
+            "prop": "action_type",
+            "dict":{
+              "dictType":"action_type",
+              "dictKey":[],
+              "doRequest": {
+                "url": "/views/risk/dictdata/actionType.json",
+                "method": "get"
+              }
+            }
+          },
+          {
+            "label": "属性代码",
+            "prop": "action_string"
+          },
+          {
+            "label": "属性名称",
+            "prop": "action_name"
+          },
+          {
+            "label": "数据类型",
+            "prop": "action_data_type",
+            "dict": {
+              "dictType": "dataType",
+              "dictKey": [],
+              "format": "value-label",
+              "doRequest": {
+                "url": "/views/risk/dictdata/dataType.json",
+                "method": "get"
+              }
+            }
+          },
+          {
+            "label": "动作值",
+            "prop": "action_value"
+          },
+          {
+            "label": "交易时间",
+            "prop": "data_create_time"
+          }
+        ]
+      }
+    }
+  }

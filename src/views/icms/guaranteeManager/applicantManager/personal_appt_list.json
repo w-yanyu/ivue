@@ -1,0 +1,89 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ar0721",
+          "apply_no":"${{params.apply_no}}",
+          "applicant_type":"PRI"
+        }
+      },
+      "thead": [
+        {
+          "type": "index",
+          "label": "序号"
+        },
+        {
+          "label": "客户号",
+          "prop": "cust_no",
+          "align": "center"
+        },
+        {
+          "label": "客户名称",
+          "prop": "cust_name",
+          "align": "center"
+        },
+        {
+          "label": "证件类型",
+          "prop": "cert_type",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_CRET_TYPE",
+            "dictKey": [
+              "MS_E_CRET_TYPE"
+            ],
+            "labelField": "dictName",
+            "valueField": "dictId"
+          }
+        },
+        {
+          "label": "客户类型",
+          "prop": "cust_type",
+          "align": "center",
+          "dict": {
+            "dictType": "US_E_CUST_TYPE",
+            "dictKey": [
+              "US_E_CUST_TYPE"
+            ],
+            "labelField": "dictName",
+            "valueField": "dictId"
+          }
+        },
+        {
+          "label": "证件号码",
+          "prop": "cert_no",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "btns": [
+            {
+              "type": "custom",
+              "label": "详细信息",
+              "toRequest": {
+                "url": "@CustInfo",
+                "params":{
+                 
+                  "cust_no":"${{params.cust_id}}",
+                  "grupno": "0011"
+                  
+                }
+              },
+              "props": {
+                "width": "95%",
+                "height": "590px",
+                "title": "查看"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

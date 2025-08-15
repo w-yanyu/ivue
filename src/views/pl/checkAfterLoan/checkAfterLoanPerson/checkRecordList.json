@@ -1,0 +1,113 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/pl/checkAfterLoan/checkAfterLoanPerson/addcheckRecordList.json"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "AS_PLMS_KG_MACURD"
+        }
+      },
+      "thead": [
+        {
+          "type": "index"
+        },
+        {
+          "prop": "matrix",
+          "label": "检查性质",
+          "align": "center"
+        },
+        {
+          "prop": "matmax",
+          "label": "检查频率",
+          "align": "center"
+        },
+        {
+          "prop": "codesc",
+          "label": "检查月份",
+          "align": "center"
+        },
+        {
+          "prop": "codesc",
+          "label": "检查季度",
+          "align": "center"
+        },
+        {
+          "prop": "codesc",
+          "label": "检查人员",
+          "align": "center"
+        },
+        {
+          "prop": "codesc",
+          "label": "检查地点",
+          "align": "center"
+        },
+        {
+          "prop": "codesc",
+          "label": "检查时间",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": "200",
+          "align": "center",
+          "btns": [
+            {
+              "toRequest": {
+                "method": "POST",
+                "url": "/views/pl/checkAfterLoan/checkAfterLoanPerson/updcheckRecordList.json"
+              },
+              "label": "修改",
+              "type": "edit"
+            },
+            {
+              "doRequest": {
+                "method": "POST",
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "params": {
+                  "servicecode": "AS_PLMS_KG_MACURD",
+                  "method": "del"
+                }
+              },
+              "label": "删除",
+              "type": "delete"
+            },
+            {
+              "type": "edit",
+              "label":  "业务提交",
+              "show": {
+                "expression": "'${{current.hndov_ste}}' === '1'"
+              },
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "pl0023",
+                  "hndov_code": "${{current.hndov_code}}",
+                  "hand_prod_code": "${{current.hand_prod_code}}"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

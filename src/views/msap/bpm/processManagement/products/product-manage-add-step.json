@@ -1,0 +1,106 @@
+{
+  "module": "d-steps",
+  "layout": {
+    "steps": {
+      "scope": "formObj",
+      "direction": "horizontal",
+      "alignCenter": true,
+      "finishStatus": "success",
+      "simpleType": false,
+      "nextStepType": "validate",
+      "list": [
+        {
+          "scope": "step1",
+          "title": "流程定义",
+          "icon": "el-icon-edit",
+          "refresh": "false",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/msap/bpm/processManagement/products/product-manage-add.json",
+            "params": {
+              "appId": "${{params.appId}}",
+              "wf_prod_no": "${{params.wf_prod_no}}",
+              "wf_prod_name": "${{params.wf_prod_name}}",
+              "wf_define_name": "${{params.wf_define_name}}",
+              "wf_prod_tp": "${{params.wf_prod_tp}}",
+              "bpm_version": "${{params.bpm_version}}",
+              "wf_prod_st": "${{params.wf_prod_st}}",
+              "data_update_user": "${{params.data_update_user}}",
+              "data_update_time": "${{params.data_update_time}}",
+              "wf_define_id": "${{params.wf_define_id}}",
+              "start_mode":"${{params.start_mode}}"
+              
+            }
+          },
+          "doRequest": {
+            "url": "/SUMP/call/aOrUProcess",
+            "method": "POST",
+            "params": {
+              "servicecode": "bpm4001",
+              "appId": "${{params.appId}}"
+            },
+            "resultSet": {
+              "wf_prod_no": "wf_prod_no",
+              "bpm_version": "bpm_version"
+            }
+          }
+        },
+        {
+          "scope": "step2",
+          "title": "配置管理",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "url": "@flowDesigner",
+            "method": "get",
+            "params": {
+              "wf_prod_no": "${{formObj.step1.wf_prod_no}}",
+              "bpm_version": "1",
+              "appId": "${{params.appId}}",
+              "isEdit": true,
+              "onlyRead": true,
+              "isFormal":"0"
+            }
+          }
+        },
+        {
+          "scope": "step3",
+          "title": "适用机构",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "url": "/views/msap/bpm/processManagement/products/process_branch_manager.json",
+            "params": {
+              "appId": "${{params.appId}}",
+              "wf_prod_no": "${{formObj.step1.wf_prod_no}}",
+              "bpm_version": "1"
+            },
+            "method": "get"
+          }
+        },
+        {
+          "scope": "step4",
+          "title": "流程检测",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "url": "@processProdTemCheck",
+            "params": {
+              "appId": "${{params.appId}}",
+              "wf_prod_no": "${{formObj.step1.wf_prod_no}}",
+              "bpm_version": "1"
+            },
+            "method": "get"
+          },
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "bpm4023",
+              "appId": "${{params.appId}}",
+              "wf_prod_no": "${{formObj.step1.wf_prod_no}}",
+              "bpm_version": "1"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

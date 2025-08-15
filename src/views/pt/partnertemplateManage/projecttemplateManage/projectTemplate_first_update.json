@@ -1,0 +1,129 @@
+{
+  "module": "d-steps",
+  "layout": {
+    "steps": {
+      "scope": "newPart",
+      "direction": "horizontal",
+      "alignCenter": true,
+      "finishStatus": "success",
+      "simpleType": false,
+      "nextStepType": "validate",
+      "skip": true,
+      "list": [
+        {
+          "title": "合作项目模版",
+          "scope": "baseInfo",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "url": "/views/pt/partnertemplateManage/projecttemplateManage/projectTemplate_update.json",
+            "method": "POST",
+            "params": {
+              "project_template_no": "${{params.project_template_no}}",
+              "version": "${{params.version}}"
+            }
+          },
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "pt0091",
+              "protocol_template_no": "${{params.protocol_template_no}}",
+              "version": "${{params.version}}"
+            }
+          }
+        },
+        {
+          "title": "模版关联部件",
+          "##forbidBack": true,
+          "scope": "baseInfo1",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "url": "/views/pt/partnertemplateManage/projecttemplaterelapartsManage/projecttemplaterelaParts_middle_list.json",
+            "params": {
+              "project_template_no": "${{newPart.baseInfo.project_template_no}}",
+              "version": "${{newPart.baseInfo.version}}",
+              "servicecode": "pt0133"
+            }
+          },
+          "doRequest": {
+            "url": "/pte/json/layout/success.json",
+            "method": "post",
+            "eventAfter": {
+              "doParentCallback": true
+            }
+          }
+        },
+        {
+          "title": "模版关联协议模版",
+          "##forbidBack": true,
+          "scope": "baseInfo3",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "url": "/views/pt/partnertemplateManage/projecttemplaterelaagreeManage/projecttemplaterelaAgree_middle_list.json",
+            "params": {
+              "project_template_no": "${{newPart.baseInfo1.project_template_no}}",
+              "project_mould_name": "${{newPart.baseInfo.project_mould_name}}",
+              "version": "${{newPart.baseInfo1.version}}",
+              "servicecode": "pt0143"
+            }
+          },
+          "doRequest": {
+            "url": "/pte/json/layout/success.json",
+            "method": "post",
+            "eventAfter": {
+              "doParentCallback": true
+            }
+          }
+        },
+        {
+          "title": "模版管理流程产品",
+          "##forbidBack": true,
+          "scope": "baseInfo4",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "url": "/views/pt/partnertemplateManage/CooperatItemFlowRelaManage/CooperatItemFlowRela_middle_list.json",
+            "params": {
+              "project_template_no": "${{newPart.baseInfo1.project_template_no}}",
+              "version": "${{newPart.baseInfo1.version}}",
+              "servicecode": "pt0153"
+            }
+          },
+          "doRequest": {
+            "url": "/pte/json/layout/success.json",
+            "method": "post",
+            "eventAfter": {
+              "doParentCallback": true
+            }
+          }
+        },
+        {
+          "title": "提交审核",
+          "##forbidBack": true,
+          "scope": "baseInfo2",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "url": "/views/pt/partnertemplateManage/projecttemplateManage/projectTemplate_submit.json",
+            "params": {
+              "project_template_no": "${{newPart.baseInfo4.project_template_no}}",
+              "version": "${{newPart.baseInfo4.version}}",
+              "approve_status": "01"
+            }
+          },
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "pt0074",
+              "sale_prod_cd": "${{newPart.baseInfo4.project_template_no}}",
+              "version": "${{newPart.baseInfo4.version}}",
+              "approve_comments": "1",
+              "approve_link": "02",
+              "approve_status": "01",
+              "mould_code": "2"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

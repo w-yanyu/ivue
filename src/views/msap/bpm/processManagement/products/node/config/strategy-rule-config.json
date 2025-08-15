@@ -1,0 +1,106 @@
+{
+  "module": "v-form-editableDataGrid-btn",
+  "layout": {
+    "form": {
+
+    },
+    "toolbar": {
+
+    },
+    "datagrid": {
+      "doRequest": {
+        "url":"/SUMP/icmcall/icmRPCCall",
+        
+        "method":"POST",
+        "params": {
+          "wf_task_no": "${{params.wf_task_no}}",
+          "servicecode": "bpm0014",
+          "appId":"${{params.appId}}"
+        }
+      },
+      "pagination": {
+        "show": false
+      },
+      "allData":true,
+      "thead": [
+        {
+          "type": "selection",
+          "align": "center",
+          "width": "55",
+          "fixed": "left",
+          "show": {
+            "prop": "changkuan",
+            "is": [
+              "0"
+            ]
+          }
+        },
+        {
+          "prop": "route_id",
+          "type": "string",
+          "label": "序号"
+        },
+        {
+          "prop": "next_task_define_name",
+          "type": "string",
+          "label": "下一节点名称"
+        },
+        {
+          "prop": "policy_rule_config",
+          "type": "lookup",
+          "label": "配置规则",
+          "edit": true,
+          "keyField": {
+            "policy_rule_config": "policy_id"
+          },
+          "toRequest": {
+            "url": "/views/msap/bpm/processManagement/products/node/config/strategy-rule-lookup.json",
+            "method": "post",
+            "params": {
+              "wf_task_no": "${{params.wf_task_no}}",
+              "appId":"${{params.appId}}"
+            }
+          },
+          "props": {
+            "title": "选择规则"
+          }
+        },
+        {
+          "prop": "is_def_flow",
+          "type": "select",
+          "label": "是否默认路线",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "prop": "check_seq",
+          "type": "text",
+          "label": "校验序号"
+        }
+      ]
+    },
+    "footer": {
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "icon": "el-icon-tickets",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "wf_task_no": "${{params.wf_task_no}}",
+              "servicecode": "bpm0060",
+              "appId":"${{params.appId}}"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

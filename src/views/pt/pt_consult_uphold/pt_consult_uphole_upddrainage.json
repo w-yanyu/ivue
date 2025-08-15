@@ -1,0 +1,107 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+
+      "initDataOnce":true,
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pt0100",
+          "part_protocol_no": "${{params.part_protocol_no}}"
+        }
+      },
+
+      "btns": [
+        {
+          "type": "submit",
+          "label": "保存",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "pt0102",
+              "drainage_protocol": "${{params.drainage_protocol}}"
+            }
+          }
+        }
+      ],
+      "controls": [
+          {
+            "part_protocol_no": {
+              "control": "text",
+              "label": "合作方协议编号",
+              "width": "50%",
+              "disabled": true,
+              "value": "${{params.part_protocol_no}}",
+              "rules": [
+                {
+                  "required": true,
+                  "message": "合作方协议编号不得为空"
+                }
+              ]
+            },
+            "channel_part_medol": {
+              "control": "select",
+              "label": "渠道合作模式",
+              "width": "50%",
+              "dict": {
+                "dictType": "PT_E_CHANNEL_PART_MEDOL",
+                "dictKey": [
+                  "PT_E_CHANNEL_PART_MEDOL"
+                ],
+                "format": "label"
+              }
+            }
+          },
+          {
+            "lee_payment": {
+              "control": "select",
+              "disabled": false,
+              "label": "放款支付方",
+              "width": "50%",
+              "dict": {
+                "dictType": "PT_E_LEE_PAYMENT",
+                "dictKey": [
+                  "PT_E_LEE_PAYMENT"
+                ],
+                "format": "label"
+              }
+            },
+            "repayment_deduction": {
+              "control": "select",
+              "label": "还款划扣方",
+              "width": "50%",
+              "dict": {
+                "dictType": "PT_E_LEE_PAYMENT",
+                "dictKey": [
+                  "PT_E_LEE_PAYMENT"
+                ],
+                "format": "label"
+              }
+            }
+          },
+          {
+            "push_repayment_list": {
+              "control": "select",
+              "label": "推送还款列表",
+              "width": "50%",
+              "dict": {
+                "dictType": "MS_E_YESORNO",
+                "dictKey": [
+                  "MS_E_YESORNO"
+                ],
+                "format": "label"
+              }
+            },
+            "pre_repayment_day": {
+              "control": "text",
+              "label": "提前推送还款列表天数",
+              "width": "50%"
+            }
+          }
+        ]
+      }
+  }
+}

@@ -1,0 +1,157 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "toolbar": {
+            "btns": [{
+                "type": "add",
+                "target": "dialog",
+                "label": "新增",
+                "toRequest": {
+                    "method": "GET",
+                    "url": "/views/pt/partnertemplateManage/projecttemplaterelapartsManage/projecttemplaterelaParts_add.json",
+                    "params": {
+                        "project_template_no": "${{params.project_template_no}}",
+                        "version": "${{params.version}}"
+                    }
+                },
+                "show": {
+                    "expression": "'${{params.show_flash}}' == '1'"
+                },
+                "props": {
+                    "title": "新增项目模版关联部件",
+                    "width": "75%"
+                }
+            }]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "##servicecode": "pt0133",
+                    "servicecode": "${{params.servicecode}}",
+                    "project_template_no": "${{params.project_template_no}}",
+                    "parts_no": "${{params.parts_no}}",
+                    "version": "${{params.version}}"
+                }
+            },
+            "thead": [
+                {
+                    "type": "index",
+                    "width": 50,
+                    "label": "序号"
+                },
+                {
+                    "label": "项目模版编号",
+                    "prop": "project_template_no",
+                    "align": "center",
+                    "disabled": true
+                },
+                {
+                    "label": "部件编号",
+                    "prop": "parts_no",
+                    "align": "center"
+                },
+                {
+                    "label": "项目部件类型",
+                    "prop": "cooperate_project_type",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "PT_E_COOPERATE_PROJECT_TYPE",
+                        "dictKey": [
+                            "PT_E_COOPERATE_PROJECT_TYPE"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "是否必填",
+                    "prop": "is_must",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                            "MS_E_YESORNO"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "项目模板版本",
+                    "prop": "version",
+                    "align": "center"
+                },
+
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 160,
+                    "align": "center",
+                    "btns": [{
+                            "type": "look",
+                            "label": "详情",
+                            "toRequest": {
+                                "url": "/views/pt/partnertemplateManage/projecttemplaterelapartsManage/projecttemplaterelaParts_info.json",
+                                "method": "POST"
+                            },
+                            "props": {
+                                "width": "75%",
+                                "title": "部件详情"
+                            }
+                        },
+                        {
+                            "type": "look",
+                            "label": "预览",
+                            "toRequest": {
+                                "url": "${{current.info_url}}",
+                                "method": "POST"
+                            },
+                            "props": {
+                                "title": "页面预览"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/pt/partnertemplateManage/projecttemplaterelapartsManage/projecttemplaterelaParts_update.json",
+                                "method": "GET"
+                            },
+                            "show": {
+                                "expression": "'${{params.show_flash}}' == '1'"
+                            },
+                            "props": {
+                                "width": "75%",
+                                "title": "项目模版关联部件维护"
+                            }
+                        },
+                        {
+                            "type": "custom",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "pt0132"
+
+                                }
+                            },
+                            "confirm": {
+                                "title": "确定删除",
+                                "confirmButtonText": "确定",
+                                "cancelButtonText": "取消"
+                            },
+                            "show": {
+                                "expression": "'${{params.show_flash}}' == '1'"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

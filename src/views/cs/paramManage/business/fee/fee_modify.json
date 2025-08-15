@@ -1,0 +1,170 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "scope":"formData",
+            "initRequest": "${{params}}",
+            "doRequest": {
+                "url": "/SUMP/iccsCall/iccsEurekaCall",
+
+                "method": "POST",
+                "params": {
+                    "servicecode": "cs0082"
+                }
+            },
+            "btns": [
+                {
+                    "type": "submit",
+                    "label": "提交",
+                    "icon": "el-icon-tickets"
+                }
+            ],
+            "controls": [
+                {
+                  "fee_id": {
+                    "control": "hidden"
+                  }
+                },
+                {
+                    "fee_type": {
+                        "control": "remoteSelect",
+                        "label": "费率类型",
+                        "disabled":true,
+                        "default":"OA",
+                        "width": "130px",
+                        "labelField": "drop_list_desc",
+                        "valueField": "drop_list_value",
+                        "doRequest": {
+                            "url": "/SUMP/iccsCall/iccsEurekaCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "ap1071",
+                                "drop_list_type": "fee_type_pl"
+                            }
+                        },
+                        "format": "value-label",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入"
+                            }
+                        ]
+                    },
+                    "fee_cd": {
+                        "control": "text",
+                        "label": "费率代码",
+                        "disabled":true,
+                        "width": "130px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入"
+                            },
+                            {
+                                "max": 30,
+                                "message": "最多可以输入 30 个字节"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "rate_type": {
+                        "control": "remoteSelect",
+                        "label": "费率类别",
+                        "default":"A",
+                        "width": "130px",
+                        "labelField": "drop_list_desc",
+                        "valueField": "drop_list_value",
+                        "doRequest": {
+                            "url": "/SUMP/iccsCall/iccsEurekaCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "ap1071",
+                                "drop_list_type": "RATE_TYPE_LOAN"
+                            }
+                        },
+                        "format": "value-label",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入"
+                            }
+                        ]
+                    },
+                    "stage": {
+                        "control": "remoteSelect",
+                        "label": "阶段释义",
+                        "disabled":true,
+                        "default":"A3",
+                        "width": "130px",
+                        "labelField": "drop_list_desc",
+                        "valueField": "drop_list_value",
+                        "doRequest": {
+                            "url": "/SUMP/iccsCall/iccsEurekaCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "ap1071",
+                                "drop_list_type": "STAGE_LOAN"
+                            }
+                        },
+                        "format": "value-label",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "principal_rate": {
+                        "control": "inputNumber",
+                        "label": "本金费率(%)",
+                        "width": "130px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入"
+                            },
+                            {
+                                "expression":"'${{formData.principal_rate}}'.length <= 21",
+                                "message":"最多可以输入 21 个字节"
+                            }
+                        ]
+                    },
+                    "lev_rate": {
+                        "control": "inputNumber",
+                        "label": "利费费率(%)",
+                        "width": "130px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入"
+                            },
+                            {
+                                "expression":"'${{formData.lev_rate}}'.length <= 21",
+                                "message":"最多可以输入 21 个字节"
+                            }
+                        ]
+                    }
+                },
+                {
+                "hands": {
+                  "control": "inputNumber",
+                  "width": "130px",
+                  "label": "手别",
+                  "min": 0,
+                  "step": 1,
+                  "max": 10,
+                  "rules": [
+                    {
+                      "required": true,
+                      "message": "请输入"
+                    }
+                  ]
+                }
+              }
+            ]
+        }
+    }
+}

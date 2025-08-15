@@ -1,0 +1,129 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+      "form": {
+        "controls": [
+          {
+            "flow_aply_mun": {
+              "control": "text",
+              "label": "流程申请号",
+              "rules": [
+                {
+                  "max": 18,
+                  "message": "长度不能超过18个字符"
+                }
+              ]
+            },
+            "loan_no": {
+              "control": "text",
+              "label": "借据号",
+              "rules": [
+                {
+                  "max": 80,
+                  "message": "长度不能超过80个字符"
+                }
+              ]
+            }
+          },
+          {
+            "apply_no": {
+              "control": "text",
+              "label": "申请号",
+              "rules": [
+                {
+                  "max": 80,
+                  "message": "长度不能超过80个字符"
+                }
+              ]
+            }
+          }
+        ]
+      },
+     
+      "datagrid": {
+        "scope": "searchTable",
+        "isInitSearch": true,
+        "doRequest": {
+          "url": "/SUMP/icmcall/icmRPCCall",
+          "method": "POST",
+          "params": {
+            "servicecode": "pl0056",
+            "loan_no": "${{current.loan_no}}",
+             "flow_aply_mun": "${{current.flow_aply_mun}}",
+             "apply_no": "${{current.apply_no}}"
+          }
+        },
+        "thead": [
+          {
+            "label": "流程申请号",
+            "prop": "flow_aply_mun",
+            "align": "center"
+          },
+          {
+            "label": "借据号",
+            "prop": "loan_no",
+            "align": "center"
+          },
+          {
+            "label": "申请号",
+            "prop": "apply_no",
+            "align": "center"
+          },
+          {
+            "label": "来源渠道",
+            "prop": "src_chnl",
+            "align": "center"
+          },
+          {
+            "label": "客户号",
+            "prop": "cust_no",
+            "align": "center"
+          },
+          {
+            "label": "错误信息",
+            "prop": "error_text",
+            "align": "center"
+          },
+          {
+            "label": "解锁状态",
+            "prop": "unlk_ste",
+            "align": "center",
+            "dict": {
+              "dictType": "PL_E_LOCKST",
+              "dictKey": [
+                "PL_E_LOCKST"
+              ],
+              "format": "label",
+              "labelField": "dictName",
+              "valueField": "dictId"
+            }
+          },
+      
+        {
+            "label": "操作",
+            "fixed": "right",
+            "width": 100,
+            "align": "center",
+            "btns": [
+                {
+                    "type": "edit",
+                    "label": "解锁",
+                    "doRequest": {
+                      "url": "/SUMP/icmcall/icmRPCCall",
+                      "method": "POST",
+                      "params": {
+                        "servicecode": "pl0058",
+                        "flow_aply_mun": "${{current.flow_aply_mun}}"
+                
+                      }
+                    },
+                    "props": {
+                      "title": "解锁"
+                    }
+                  }
+            ]
+          }
+        ]
+      }
+    }
+  }

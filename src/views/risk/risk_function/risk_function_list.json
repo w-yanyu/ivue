@@ -1,0 +1,147 @@
+{
+  "module": "v-search-btn-datagrid",
+  "pageId": "functionManage",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "controls": [
+        {
+          "functionCode": {
+            "label": "函数代码",
+            "control": "text",
+            "span": 8
+          },
+          "functionName": {
+            "label": "函数名称",
+            "control": "text",
+            "span": 8
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "新增",
+          "authId": "function_manage_add_btn",
+          "toRequest": {
+            "url": "/views/risk/risk_function/risk_function_add.json",
+            "method": "get",
+            "params": {}
+          },
+          "props": {
+            "width": "70%",
+            "title": "新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "deci010302",
+          "isList": true
+        }
+      },
+      "pagination": {
+        "hideOnSinglePage":false,
+        "show": true,
+        "pageSizes": [
+          10,
+          15,
+          20
+        ],
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "label": "序号",
+          "type": "index"
+        },
+        {
+          "label": "函数代码",
+          "prop": "functionCode"
+        },
+        {
+          "label": "函数名称",
+          "prop": "functionName"
+        },
+        {
+          "label": "返回类型",
+          "prop": "resultType",
+          "dict": {
+            "dictType": "resultType",
+            "dictKey": [],
+            "labelField": "label",
+            "valueField": "value",
+            "format":"label",
+            "doRequest": {
+              "url": "/views/risk/dictdata/dataType.json",
+              "method": "get"
+            }
+          }
+        },
+        {
+          "label": "最后维护时间",
+          "prop": "updateTime"
+        },
+        {
+          "label": "备注",
+          "prop": "description"
+        },
+        {
+          "label": "操作",
+          "width": "150px",
+          "btns": [
+            {
+              "type": "openVerify",
+              "label": "维护",
+              "authId": "function_manage_edt_btn",
+              "doRequest": { "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "deci010309"
+                }
+              },
+              "toRequest": {
+                "url": "/views/risk/risk_function/risk_function_edit.json",
+                "method": "get"
+              },
+              "props": {
+                "width": "70%"
+              }
+            },
+            {
+              "type": "look",
+              "label": "查看",
+              "authId": "function_manage_vie_btn",
+              "toRequest": {
+                "url": "/views/risk/risk_function/risk_function_view.json",
+                "method": "get"
+              },
+              "props": {
+                "width": "70%"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "authId": "function_manage_del_btn",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "deci010304"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

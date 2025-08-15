@@ -1,0 +1,122 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "prod_tplt_code": {
+            "control": "text",
+            "label": "产品模板代码",
+            "rules": [
+              {
+                "max": 10,
+                "message": "长度不能超过10个字符"
+              }
+            ]
+          },
+          "tplt_nm": {
+            "control": "text",
+            "label": "模板名称",
+            "rules": [
+              {
+                "max": 750,
+                "message": "长度不能超过750个字符"
+              }
+            ]
+          }
+        },
+        {
+          "core_busi_dman": {
+            "control": "hidden",
+            "label": "业务领域",
+            "value": "01",
+            "dict": {
+                "dictType": "LN_E_BUSI_DMAN",
+                "dictKey": [
+                    "LN_E_BUSI_DMAN"
+                ],
+                "format": "label"
+            }
+          },
+          "loan_tplt_ste": {
+            "control": "select",
+            "label": "贷款模板状态",
+            "dict": {
+                "dictType": "LN_E_LOAN_CMPT_STE",
+                "dictKey": [
+                    "LN_E_LOAN_CMPT_STE"
+                ],
+                "format": "label"
+            }
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ln3260",
+          "outlistid": "lstTpltInfo"
+        }
+      },
+      "thead": [
+        {
+          "label": "产品模版代码",
+          "prop": "prod_tplt_code",
+          "align": "center"
+        },
+        {
+          "label": "模版名称",
+          "prop": "tplt_nm",
+          "align": "center"
+        },
+        {
+          "label": "模版描述",
+          "prop": "tplt_dsc",
+          "align": "center"
+        },
+        {
+          "label": "业务领域",
+          "prop": "core_busi_dman",
+          "align": "center",
+          "dict": {
+            "dictType": "LN_E_BUSI_DMAN",
+            "dictKey": [
+              "LN_E_BUSI_DMAN"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "模板原型代码",
+          "prop": "tplt_protp_code",
+          "align": "center"
+        },{
+          "label": "贷款模板状态",
+          "prop": "loan_tplt_ste",
+          "align": "center",
+          "dict": {
+            "dictType": "LN_E_LOAN_CMPT_STE",
+            "dictKey": [
+              "LN_E_LOAN_CMPT_STE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "fixed": "right",
+          "btns": [{
+            "type": "bringback",
+            "label": "选择"
+          }]
+        }
+      ]
+    }
+  }
+}

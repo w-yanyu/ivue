@@ -1,0 +1,150 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+      
+        {
+          "card_name": {
+            "control": "text",
+            "label": "卡片名称"
+          },
+          "card_id": {
+            "control": "text",
+            "label": "卡片编号"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "新增卡片",
+          "toRequest": {
+            "target": "navTab",
+            "url": "@dynamicScreemCardAdd",
+            "method": "GET",
+            "params": {
+              "type": "add",
+              "appId": "${{form.appId}}"
+            }
+          },
+          "props": {
+            "width": "80%",
+            "title": "新增卡片"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ct2602",
+          "sizePage": 10
+      
+        }
+      },
+      "thead": [
+        {
+          "label": "序号",
+          "type": "index"
+        },
+        {
+          "label": "卡片编号",
+          "prop": "card_id",
+          "width": "200"
+        },
+        {
+          "label": "卡片名称",
+          "prop": "card_name"
+        },
+        {
+          "type":"image",
+          "label": "卡片预览",
+          "prop": "card_img",
+          "width": "350"
+        },
+        {
+          "label": "卡片权限",
+          "prop": "card_tags"
+        },
+        {
+          "label": "接口编号",
+          "prop": "card_service_code",
+          "width": "120"
+        },
+        {
+          "label": "创建时间",
+          "prop": "data_create_time"
+        },
+        {
+          "label": "业务类型",
+          "prop": "busi_card_type",
+          "dict": {
+            "dictType": "CT_E_BUSI_CARD_TYPE",
+            "dictKey": [
+              "CT_E_BUSI_CARD_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "机构",
+          "prop": "branch_id"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "编辑",
+              "toRequest": {
+                "target": "navTab",
+                "url": "@dynamicScreemCardEdit",
+                "method": "GET",
+                "params": {
+                  "appId": "${{form.card_id}}"
+                },
+                "eventAfter": {
+                  "doParentCallback": true,
+                  "callback": "customCallback"
+                }
+              }, "props": {
+                "width": "80%",
+                "title": "编辑"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "ct2603",
+                  "appId": "${{form.card_id}}",
+                  "method": "del"
+                }
+              },
+              "confirm": {
+                "title": "提示信息",
+                "msg": "确定删除该信息吗？",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            }
+           
+          ]
+        }
+      ]
+    }
+  }
+}

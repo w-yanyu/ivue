@@ -1,0 +1,205 @@
+{
+  "module": "lr_transferTable",
+  "layout": {
+    "transfer": {
+      "height":"500px",
+      "left": {
+        "filterable":false,
+        "title": "可关联部件",
+        "btn":{
+          "label": "选择",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "syln0004",
+              "prod_code": "${{params.tplt_protp_code}}",
+              "rgstn_tp":"0",
+              "lstklnf_cmpt": "${{current.selectedList}}"
+            }
+          },
+          "eventAfter": {
+            "callback": "restCallBack"
+          }
+        },
+        "datagrid": {
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "syln3250",
+              "prod_code": "${{params.tplt_protp_code}}",
+              "outlistid": "lstKlnf_cmpt"
+            }
+          },
+          "checked":"checked",
+          "thead": [
+            {
+              "label": "序号",
+              "type": "index",
+              "align": "center"
+            },
+            {
+              "label": "部件id",
+              "prop": "cmpt_id",
+              "align": "center"
+            },
+            {
+              "label": "部件对象",
+              "prop": "cmpt_obj",
+              "align": "center",
+              "dict": {
+                "dictType": "LN_E_CMPT_OBJ",
+                "dictKey": [
+                  "LN_E_CMPT_OBJ"
+                ],
+                "format": "label-value"
+              }
+            },
+            {
+              "label": "贷款币种规则",
+              "prop": "loan_ccy_rule",
+              "align": "center",
+              "dict": {
+                "dictType": "LN_E_CCY_RULE",
+                "dictKey": [
+                  "LN_E_CCY_RULE"
+                ],
+                "format": "label-value"
+              }
+            },
+            {
+              "label": "指定币种",
+              "prop": "asgn_ccy",
+              "align": "center",
+              "dict": {
+                "dictType": "MS_CURRENCY",
+                "dictKey": [
+                  "MS_CURRENCY"
+                ],
+                "format": "label-value"
+              }
+            },
+            {
+              "label": "操作",
+              "fixed": "right",
+              "width": 100,
+              "align": "center",
+              "btns": [
+                {
+                  "type": "custom",
+                  "label": "详情",
+                  "toRequest": {
+                    "url": "/views/product/productModel/productTemplate/prod_cmpt_id_qry.json",
+                    "method": "GET",
+                    "params": {
+                      "path": "${{current.cmpt_id}}"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "right": {
+        "filterable":false,
+        "title":"已关联部件",
+        "btn":{
+          "label":"取消关联",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "syln0003",
+              "prod_code": "${{params.tplt_protp_code}}",
+              "lstklnf_cmpt_rgstn": "${{current.selectedList}}"
+            }
+          },
+          "eventAfter": {
+            "callback": "restCallBack"
+          }
+        },
+        "datagrid": {
+          "scope": "right",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "syln0005",
+              "outlistid": "lstKlnf_cmpt_rgstn",
+              "prod_code": "${{params.tplt_protp_code}}"
+            }
+          },
+          "thead": [
+            {
+              "label": "序号",
+              "type": "index",
+              "align": "center"
+            },
+            {
+              "label": "部件id",
+              "prop": "cmpt_id",
+              "align": "center"
+            },
+            {
+              "label": "部件对象",
+              "prop": "cmpt_obj",
+              "align": "center",
+              "dict": {
+                "dictType": "LN_E_CMPT_OBJ",
+                "dictKey": [
+                  "LN_E_CMPT_OBJ"
+                ],
+                "format": "label-value"
+              }
+            },
+            {
+              "label": "贷款币种规则",
+              "prop": "loan_ccy_rule",
+              "align": "center",
+              "dict": {
+                "dictType": "LN_E_CCY_RULE",
+                "dictKey": [
+                  "LN_E_CCY_RULE"
+                ],
+                "format": "label-value"
+              }
+            },
+            {
+              "label": "指定币种",
+              "prop": "asgn_ccy",
+              "align": "center",
+              "dict": {
+                "dictType": "MS_CURRENCY",
+                "dictKey": [
+                  "MS_CURRENCY"
+                ],
+                "format": "label-value"
+              }
+            },
+            {
+              "label": "操作",
+              "fixed": "right",
+              "width": 100,
+              "align": "center",
+              "btns": [
+                {
+                  "type": "custom",
+                  "label": "详情",
+                  "toRequest": {
+                    "url": "/views/product/productModel/productTemplate/prod_cmpt_id_qry.json",
+                    "method": "GET",
+                    "params": {
+                      "path": "${{current.cmpt_id}}"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

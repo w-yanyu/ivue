@@ -1,0 +1,146 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [],
+      "btns": []
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "custom",
+          "label": "自动获取",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "bpm0004",
+              "wf_prod_no": "${{params.wf_prod_no}}",
+              "wf_prod_name": "${{params.wf_prod_name}}",
+              "wf_define_id": "${{params.wf_define_id}}",
+              "updway": "TASK",
+              "appId":"${{params.appId}}"
+            }
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "bpm0005",
+          "wf_prod_no": "${{params.wf_prod_no}}",
+          "appId":"${{params.appId}}"
+        }
+      },
+      "thead": [
+        {
+          "label": "任务编号",
+          "prop": "wf_task_no"
+        },
+        {
+          "label": "流程编号",
+          "prop": "wf_prod_no"
+        },
+        {
+          "label": "流程名称",
+          "prop": "wf_prod_name"
+        },
+        {
+          "label":"活动定义id",
+          "prop":"task_define_id",
+          "align": "center"
+        },
+        {
+          "label":"活动定义名称",
+          "prop":"task_define_name"
+        },
+        {
+          "label":"任务类型",
+          "prop":"task_type",
+          "dict": {
+            "dictType": "BPM_E_TASK_TYPE",
+            "dictKey": [
+              "BPM_E_TASK_TYPE"
+            ],
+            "format": "label"
+          }
+        },{
+          "label":"版本号",
+          "prop":"data_version"
+        },{
+          "label":"修改时间",
+          "prop":"data_update_time"
+        },{
+          "label":"修改人",
+          "prop":"data_update_user"
+        },{
+          "label": "操作",
+          "width": "240px",
+          "fixed": "right",
+          "align":"center",
+          "btns": [{
+            "type": "edit",
+            "label": "查看",
+            "toRequest": {
+              "url": "/views/msap/bpm/processManagement/products/node/node-view.json",
+              "method": "GET",
+              "params": {
+                "appId":"${{params.appId}}"
+              }
+            },
+            "props": {
+              "width": "70%",
+              "title": "查看节点详情"
+            }
+          },{
+            "type": "edit",
+            "label": "维护",
+            "toRequest": {
+              "url": "/views/msap/bpm/processManagement/products/node/node-modify.json",
+              "method": "GET",
+              "params": {
+                "appId":"${{params.appId}}"
+              }
+            },
+            "props": {
+              "width": "70%",
+              "title": "流程节点维护"
+            }
+          },{
+            "type": "edit",
+            "label": "配置策略",
+            "toRequest": {
+              "url": "/views/msap/bpm/processManagement/products/node/node-config.json",
+              "method": "GET",
+              "params": {
+                "appId":"${{params.appId}}"
+              }
+            },
+            "props": {
+              "width": "75%",
+              "title": "策略管理"
+            }
+          },
+          {
+            "type": "edit",
+            "label": "生成模板",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "bpm3013",
+                "appId":"${{params.appId}}"
+              }
+            }
+          }
+          ]
+        }
+      ]
+    }
+  }
+}

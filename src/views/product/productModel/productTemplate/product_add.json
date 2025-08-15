@@ -1,0 +1,51 @@
+{
+    "module": "d-steps",
+    "layout": {
+        "steps": {
+            "scope": "merchJoin",
+            "direction": "horizontal",
+            "alignCenter": true,
+            "finishStatus": "success",
+            "simpleType": false,
+            "nextStepType": "submit",
+            "list": [
+                {
+                    "title": "产品模版",
+                    "scope": "actBaseInfo",
+                    "icon": "el-icon-document",
+                    "toRequest": {
+                        "url": "/views/product/productModel/productTemplate/product_klnf_tplt.json",
+                        "method": "get"
+                    },
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "syln3262"
+                        }
+                    }
+                },
+                {
+                    "title": "关联部件",
+                    "scope": "actRules",
+                    "icon": "el-icon-document",
+                    "toRequest": {
+                        "url": "/views/product/productModel/productTemplate/product_assembly_unit.json",
+                        "method": "get",
+                        "params": {
+                            "prod_tplt_code": "${{merchJoin.actBaseInfo.prod_tplt_code}}",
+                            "rgstn_tp": 1
+                        }
+                    },
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "ln3260"
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

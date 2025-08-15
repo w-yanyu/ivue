@@ -1,0 +1,204 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "loan_no": {
+            "label": "借据号",
+            "control": "text"
+          }
+          
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/pl/repayAcctChange/change/account_add.json"
+          },
+          "props": {
+            "width": "65%",
+            "title":  "还款账户变更启动新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pl0001"
+        }
+      },
+      "thead": [
+        {
+          "type": "selection",
+          "align": "center"
+        },
+        {
+          "label": "借据号",
+          "width": "160px",
+          "prop": "loan_no",
+          "align": "center"
+        },
+        {
+          "label": "贷款产品",
+          "prop": "prod_no",
+          "align": "center"
+        },
+        {
+          "label": "还款账号",
+          "prop": "change_aft_acct",
+          "align": "center",
+          "width": "160px"
+        },
+        {
+          "label": "账户类型",
+          "prop": "change_aft_acct_tp",
+          "align": "center",
+          "dict": {
+            "dictType": "PL_E_PAYACT",
+            "dictKey": [
+              "PL_E_PAYACT"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "币种",
+          "prop": "ccy_code",
+          "dict": {
+            "dictType": "MS_CURRENCY",
+            "dictKey": [
+              "MS_CURRENCY"
+            ],
+            "format": "label"
+          },
+          "align": "center"
+        },
+        {
+          "label": "账户名称",
+          "align": "center",
+          "prop": "change_aft_acct_nm"
+        },
+        {
+          "label": "自动付款状态",
+          "align": "center",
+          "prop": "auto_pymt_tp",
+          "dict": {
+            "dictType": "PL_E_AUTO_PAY_TYPE",
+            "dictKey": [
+              "PL_E_AUTO_PAY_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "支付优先级",
+          "align": "center",
+          "prop": "pay_prty",
+          "dict": {
+            "dictType": "PL_E_PAY_PRIORITY",
+            "dictKey": [
+              "PL_E_PAY_PRIORITY"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "审批状态",
+          "align": "center",
+          "prop": "change_ste",
+          "dict": {
+            "dictType": "PL_E_ALTER_STATUS",
+            "dictKey": [
+              "PL_E_ALTER_STATUS"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align":"center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/pl/repayAcctChange/change/account_detail.json",
+                "method": "GET",
+                "params": {
+                  "change_num": "${{current.change_num}}"
+                }
+              },
+              "props": {
+                "width": "65%",
+                "title": "还款账户变更启动详情"
+              }
+            },
+            {
+              "type": "edit",
+              "label":  "维护",
+              "show": {
+                "expression": "'${{current.change_ste}}' === '1'"
+              },
+              "toRequest": {
+                "url": "/views/pl/repayAcctChange/change/account_modify.json",
+                "method": "GET",
+                "params": {
+                  "change_num": "${{current.change_num}}"
+                }
+              },
+              "props": {
+                "width": "65%",
+                "title": "还款账户变更启动维护"
+              }
+            },
+            {
+              "type": "delete",
+              "label":  "删除",
+              "show": {
+                "expression": "'${{current.change_ste}}' === '1'"
+              },
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "pl0003",
+                  "trantp": "DELETE",
+                  "change_num": "${{current.change_num}}"
+                }
+              }
+            },
+            {
+              "type": "edit",
+              "label":  "流程启动",
+              "show": {
+                "expression": "'${{current.change_ste}}' === '1'"
+              },
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "pl0007",
+                  "change_num": "${{current.change_num}}"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

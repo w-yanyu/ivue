@@ -1,0 +1,108 @@
+{
+  "module":"v_search_btn_datagrid",
+  "layout":{
+    "form":{
+
+      "controls":[
+        {
+          "apply_no":{
+            "label":"减免申请流程号",
+            "control":"text",
+            "name":"apply_no",
+            "rules":[
+              {
+                "required":false
+              },
+              {
+                "max":40,
+                "message":"长度不能超过40个字符"
+              }
+            ]
+          }
+        }
+
+      ]
+    },
+    "datagrid":{
+      "isInitSearch":false,
+      "scope":"searchTable",
+      "doRequest":{
+        "url":"/SUMP/icmcall/icmRPCCall",
+        "method":"POST",
+        "params":{
+          "servicecode":"pl0071"
+        }
+      },
+      "pagination":{
+        "show":true
+      },
+      "thead":[
+
+        {
+          "label":"申请流程号",
+          "prop":"apply_no"
+        },
+        {
+          "label":"贷款借据号",
+          "prop":"loan_no"
+        },
+        {
+          "label":"客户号",
+          "prop":"cust_no"
+        },
+        {
+          "label":"客户名",
+          "prop":"cust_name"
+        },
+        {
+          "label": "贷款形态",
+          "prop": "loan_form",
+          "dict": {
+            "dictType": "PL_E_CLSSST",
+            "dictKey": [
+              "PL_E_CLSSST"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label":"贷款余额",
+          "prop":"loan_bal"
+        },
+        {
+          "label":"减免金额",
+          "prop":"dert_amt"
+ 
+        },
+
+      
+        {
+          "label":"备注信息",
+          "prop":"remark"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "详情",
+              "toRequest": {
+                "url": "@ZManualDerateApplyDetail",
+                "method": "POST",
+                "params": {
+                  "servicecode": "pl0074"
+                }
+              },
+              "props": {
+                "width": "80%",
+                "title": "减免申请详情"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

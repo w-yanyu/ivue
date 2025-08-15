@@ -1,0 +1,320 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "cust_no": {
+            "label": "客户编号",
+            "control": "text",
+            "width": "130px"
+          },
+          "cust_name": {
+            "label": "客户名称",
+            "control": "text",
+            "width": "130px"
+          },
+          "cert_type": {
+            "label": "证件类型",
+            "control": "select",
+            "width": "130px",
+            "dict": {
+              "dictType": "MS_E_CRET_TYPE",
+              "dictKey": [
+                "MS_E_CRET_TYPE"
+              ],
+              "format": "label"
+            }
+          },
+          "cert_no": {
+            "label": "证件号码",
+            "control": "text",
+            "width": "130px"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "POST",
+            "url": "/views/pt/partnerProjrctManage/patrs/whitelist/public/whitelist_public_add.json",
+            "params": {
+              "part_protocol_no":"${{params.part_protocol_no}}",
+              "part_project_no":"${{params.part_project_no}}",
+              "version":"${{params.version}}"
+            }
+          },
+          "props": {
+            "width": "80%",
+            "title": "邀约白名单新增"
+          }
+        },
+        {
+          "type": "add",
+          "label": "导入",
+          "toRequest": {
+            "url": "/views/pt/partnerProjrctManage/patrs/whitelist/import_excel.json",
+            "method": "get",
+            "params": {
+              "servicecode": "pt0451",
+              "appId": "ptOnl",
+              "part_protocol_no":"${{params.part_protocol_no}}",
+              "part_project_no":"${{params.part_project_no}}",
+              "cust_type":"20",
+              "version":"${{params.version}}"
+            }
+          },
+          "props": {
+            "title": "导入邀约白名单信息",
+            "width": "80%"
+          }
+        },
+        {
+          "type": "export",
+          "label": "下载模板",
+          "icon": "iconfont icon-daochu",
+          "doRequest": {
+            "url": "/SUMP/rest/file/exportNullExcel",
+            "method": "get",
+            "params": {
+              "header": "客户编号,客户姓名,客户类型,证件类型,证件号码,注册资本,成立年份,法定代表人,行业分类（征）,固定电话,货币代码,贷款期限,最大授信额度,最小授信额度,授信额度,利率,还款方式",
+              "fileName": "邀约白名单信息表（对公）.xls"
+            }
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": true,
+      "scope": "searchTable",
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pt0448",
+          "part_protocol_no":"${{params.part_protocol_no}}",
+          "part_project_no":"${{params.part_project_no}}",
+          "version":"${{params.version}}",
+          "cust_type": "20"
+        }
+      },
+      "thead": [
+        {
+          "label": "序号",
+          "type": "index"
+        },
+        {
+          "type": "string",
+          "label": "客户姓名",
+          "prop": "cust_name",
+          "align": "center",
+          "width": "180px"
+        },
+        {
+          "type": "string",
+          "label": "客户编号",
+          "prop": "cust_no",
+          "align": "center",
+          "width": "200px"
+        },
+        {
+          "type": "string",
+          "label": "客户类型",
+          "prop": "cust_type",
+          "align": "center",
+          "dict": {
+            "dictType": "PT_E_CUST_CLASS",
+            "dictKey": [
+              "PT_E_CUST_CLASS"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "string",
+          "label": "证件类型",
+          "prop": "cert_type",
+          "align": "center",
+          "width": "180px",
+          "dict": {
+            "dictType": "MS_E_CRET_TYPE",
+            "dictKey": [
+              "MS_E_CRET_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "string",
+          "label": "证件号码",
+          "prop": "cert_no",
+          "align": "center",
+          "width": "200px"
+        },
+        {
+          "type": "string",
+          "label": "注册资本",
+          "prop": "registered_capital",
+          "align": "center",
+          "width": "200px"
+        },
+        {
+          "type": "string",
+          "label": "成立年份",
+          "prop": "year_established",
+          "align": "center",
+          "width": "200px"
+        },
+        {
+          "type": "string",
+          "label": "法定代表人",
+          "prop": "legal_representative",
+          "align": "center",
+          "width": "200px"
+        },
+        {
+          "type": "string",
+          "label": "行业分类（征）",
+          "prop": "new_busi_class_std",
+          "align": "center",
+          "width": "200px"
+        },
+        {
+          "type": "string",
+          "label": "固定电话",
+          "prop": "phone_no",
+          "align": "center",
+          "width": "200px"
+        },
+        {
+          "type": "string",
+          "label": "币种",
+          "prop": "ccy_code",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_CURRENCY",
+            "dictKey": [
+              "MS_CURRENCY"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "string",
+          "label": "贷款期限（月）",
+          "prop": "loan_term",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "最大授信额度（元）",
+          "prop": "max_credit_amt",
+          "align": "center",
+          "format": {
+            "thousand": ",",
+            "decimal": "2"
+          }
+        },
+        {
+          "type": "string",
+          "label": "最小授信额度（元）",
+          "prop": "min_credit_amt",
+          "align": "center",
+          "format": {
+            "thousand": ",",
+            "decimal": "2"
+          }
+        },
+        {
+          "type": "string",
+          "label": "授信额度（元）",
+          "prop": "credit_amt",
+          "align": "center",
+          "format": {
+            "thousand": ",",
+            "decimal": "2"
+          }
+        },
+        {
+          "type": "string",
+          "label": "年利率（%）",
+          "prop": "interest_rate",
+          "align": "center",
+          "format": {
+            "thousand": ",",
+            "decimal": "2"
+          }
+        },
+        {
+          "type": "string",
+          "label": "还款方式",
+          "prop": "repay_type_list",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_REPAY_WAY",
+            "dictKey": [
+              "MS_E_REPAY_WAY"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 150,
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/pt/partnerProjrctManage/patrs/whitelist/public/whitelist_public_modify.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "80%",
+                "title": "邀约白名单维护"
+              }
+            },
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/pt/partnerProjrctManage/patrs/whitelist/public/whitelist_public_info.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "80%",
+                "title": "邀约白名单详情"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "pt0452"
+                }
+              },
+              "confirm": {
+                "title": "确定删除",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            }
+          ]
+        }
+      ],
+      "pagination": {
+        "show": true
+      }
+    }
+  }
+}

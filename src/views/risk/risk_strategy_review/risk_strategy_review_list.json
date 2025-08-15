@@ -1,0 +1,171 @@
+{
+  "module": "v-search-btn-datagrid",
+  "pageId": "risk_strategy_review",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "reviewId": {
+            "label": "审核ID",
+            "control": "text",
+            "span": 8,
+            "rules": [
+              {
+                "message": "请正确输入",
+                "max": 40
+              }
+            ]
+          },
+          "strategyId": {
+            "label": "策略ID",
+            "control": "text",
+            "span": 8,
+            "rules": [
+              {
+                "message": "请正确输入",
+                "max": 8
+              }
+            ]
+          },
+          "reviewStatus": {
+            "label": "审核状态",
+            "control": "select",
+            "span": 8,
+            "value":"1",
+            "dict": {
+              "dictType": "reviewStatus",
+              "dictKey": [],
+              "format": "value-label",
+              "doRequest": {
+                "url": "/views/risk/dictdata/reviewStatus.json",
+                "method": "get"
+              }
+            }
+          }
+        },
+        {
+          "reviewType": {
+            "label": "审核类型",
+            "control": "select",
+            "span": 8,
+            "dict": {
+              "dictType": "reviewType",
+              "dictKey": [],
+              "format": "value-label",
+              "doRequest": {
+                "url": "/views/risk/dictdata/reviewType.json",
+                "method": "get"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/API/risk-management-service/risk_strategy_review/page-select",
+        "method": "post"
+      },
+      "thead": [
+        {
+          "label": "审核ID",
+          "prop": "reviewId"
+        },
+        {
+          "label": "策略ID",
+          "prop": "strategyId"
+        },
+        {
+          "label": "策略名称(新)",
+          "prop": "strategyNameNew"
+        },
+        {
+          "label": "交易种类(新)",
+          "prop": "transTypeNew",
+          "dict": {
+            "dictType": "transType",
+            "dictKey": [],
+            "doRequest": {
+              "url": "/views/risk/dictdata/transType.json",
+              "method": "get"
+            }
+          }
+        },
+        {
+          "label": "交易类型(新)",
+          "prop": "transClassNew",
+          "dict": {
+            "dictType": "transClass",
+            "dictKey": [],
+            "doRequest": {
+              "url": "/views/risk/dictdata/transClass.json",
+              "method": "get"
+            }
+          }
+        },
+        {
+          "label": "审核类型",
+          "prop": "reviewType",
+          "dict": {
+            "dictType": "reviewType",
+            "dictKey": [],
+            "doRequest": {
+              "url": "/views/risk/dictdata/reviewType.json",
+              "method": "get"
+            }
+          }
+        },
+        {
+          "label": "审核状态",
+          "prop": "reviewStatus",
+          "dict": {
+            "dictType": "reviewStatus",
+            "dictKey": [],
+            "doRequest": {
+              "url": "/views/risk/dictdata/reviewStatus.json",
+              "method": "get"
+            }
+          }
+        },
+        {
+          "label": "审核人",
+          "prop": "reviewUser"
+        },
+        {
+          "label": "操作",
+          "width": "170px",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "审核",
+              "authId": "strategy_review_btn",
+              "toRequest": {
+                "url": "/views/risk/risk_strategy_review/risk_strategy_review_audit.json",
+                "method": "get"
+              },
+              "show":{
+                "prop":"reviewStatus",
+                "is":["1"]
+              },
+              "props": {
+                "width": "70%"
+              }
+            },
+            {
+              "type": "look",
+              "label": "查看",
+              "toRequest": {
+                "url": "/views/risk/risk_strategy_review/risk_strategy_review_view.json",
+                "method": "get"
+              },
+              "props": {
+                "width": "70%"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

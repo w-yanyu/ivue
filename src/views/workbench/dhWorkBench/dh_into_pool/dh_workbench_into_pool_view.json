@@ -1,0 +1,189 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+
+    "toolbar": {
+      "#btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "随机认领",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/workbench/dh_into_pool/dh_workbench_into_pool_random.json"
+          },
+          "props": {
+            "title": "随机认领",
+            "width": "600px"
+          }
+        }
+      ]
+    },
+    "form": {
+      "controls": [
+        {
+          "custna": {
+            "span": 6,
+            "control": "text",
+            "label": "客户姓名",
+            "rules": [
+              {
+                "max": 13,
+                "message": "长度不能超过13个字符"
+              }
+            ]
+          },
+          "applid": {
+            "span": 6,
+            "control": "text",
+            "label": "申请编号"
+          },
+          "certno": {
+            "span": 6,
+            "control": "text",
+            "label": "证件号",
+            "rules": [
+              {
+                "max": 18,
+                "message": "长度不能超过18个字符"
+              }
+            ]
+          },
+          "lncatp": {
+            "control": "select",
+            "label": "流程类型:",
+            "align":"center",
+            "span": 6,
+            "dict": {
+              "dictType": "E_LNCATP2",
+              "dictKey": [
+                "E_LNCATP2"
+              ],
+              "format": "label"
+            }
+          }
+        },
+        {
+          "apstdt": {
+            "span": 6,
+            "control": "dateTimePicker",
+            "label": "进件起始日期",
+            "format": "yyyyMMdd"
+          },
+          "apendt": {
+            "span": 6,
+            "control": "dateTimePicker",
+            "label": "进件截止日期",
+            "format": "yyyyMMdd"
+          },
+
+          "lncfno": {
+            "control": "text",
+            "label": "借据号",
+            "span": 6
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "plms_seleqj"
+        }
+      },
+      "thead": [
+        {
+          "label": "序号",
+          "type" :  "index"
+        },
+        {
+          "label": "任务ID",
+          "prop": "task_inst_id",
+          "visible": "true",
+          "align":"center"
+        },
+        {
+          "label": "借据号",
+          "align":"center",
+          "prop": "lncfno"
+        },
+        {
+          "label": "申请编号",
+          "prop": "appl_id",
+          "align":"center"
+        },
+        {
+          "label": "客户姓名",
+          "prop": "custna",
+          "align":"center"
+        },
+        {
+          "label": "证件号码",
+          "prop": "idtfno",
+          "align":"center"
+        },
+        {
+          "label": "申请人",
+          "prop": "creator",
+          "align":"center"
+        },
+        {
+          "label": "进件时间",
+          "prop": "create_time",
+          "align":"center"
+        },
+        {
+          "label": "流程类型",
+          "prop": "lncatp",
+          "align": "center",
+          "dict": {
+            "dictType": "E_LNCATP2",
+            "dictKey": [
+              "E_LNCATP2"
+            ],
+            "format": "label",
+            "labelField": "dictName",
+            "valueField": "dictId"
+          }
+        },
+        {
+          "label": "当前节点",
+          "prop": "taskna",
+          "align":"center"
+        },
+
+        {
+          "label": "流程名称",
+          "prop": "proc_inst_name",
+          "align":"center"
+        },
+
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 80,
+          "align":"center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "领取任务",
+              "toRequest": {
+                "url": "@TaskGetConfirm",
+                "method": "GET",
+                "params": {}
+              },
+              "props": {
+                "title": "提示信息",
+                "width": "600px"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

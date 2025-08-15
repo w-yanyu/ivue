@@ -1,0 +1,184 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "applyNo": {
+            "span": 6,
+            "control": "text",
+            "label": "申请编号"
+          },
+          "name": {
+            "span": 6,
+            "control": "text",
+            "label": "客户姓名",
+            "rules": [
+              {
+                "max": 13,
+                "message": "长度不能超过13个字符"
+              }
+            ]
+          },
+          "prodCode": {
+            "span": 6,
+            "label": "产品编号",
+            "control": "remoteSelect",
+            "valueField": "crdtcd",
+            "labelField": "prodna",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "post",
+              "params": {
+                "servicecode": "AS_ICMS_PD_QRPDLS",
+                "length": 100
+              }
+            }
+          }
+        },
+        {
+          "startApplyTime": {
+            "span": 6,
+            "control": "dateTimePicker",
+            "label": "进件起始日期",
+            "format": "yyyy-MM-dd HH:mm:ss"
+          },
+          "endApplyTime": {
+            "span": 6,
+            "control": "dateTimePicker",
+            "label": "进件截止日期",
+            "format": "yyyy-MM-dd HH:mm:ss"
+          },
+          "wfrlid": {
+            "label": "审批角色",
+            "control": "remoteSelect",
+            "valueField": "wfrlid",
+            "labelField": "wfrlnm",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "post",
+              "params": {
+                "servicecode": "ICMSJKTS0168",
+                "length": 100,
+                "usercd":"$g{{user_info.userCode}}"
+              }
+            }
+          }
+        },
+        {
+          "processStatus": {
+            "control": "select",
+            "label": "步骤状态:",
+            "align":"center",
+            "span": 6,
+            "dict": {
+              "dictType": "E_STEPST",
+              "dictKey": [
+                "E_STEPST"
+              ],
+              "format": "label"
+            }
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ICMSJKTS0166"
+        }
+      },
+      "thead": [
+        {
+          "label": "申请编号",
+          "prop": "applyId",
+          "align":"center"
+        },
+        {
+          "label": "进件编号",
+          "prop": "applyNo",
+          "align":"center"
+        },
+        {
+          "label": "客户姓名",
+          "prop": "name",
+          "align":"center"
+        },
+        {
+          "label": "配偶信息",
+          "prop": "spoName",
+          "align":"center"
+        },
+        {
+          "label": "手机号码",
+          "prop": "mobileNo",
+          "align":"center"
+        },
+        {
+          "label": "产品",
+          "prop": "prodName",
+          "align":"center"
+        },
+        {
+          "label": "区域中心",
+          "prop": "merchName",
+          "align":"center"
+        },
+        {
+          "label": "进件时间",
+          "prop": "applyTime",
+          "align":"center",
+          "format": "yyyy-MM-dd HH:mm:ss"
+        },
+        {
+          "label": "收到时间",
+          "prop": "faceSignTime",
+          "align":"center",
+          "format": "yyyy-MM-dd HH:mm:ss"
+        },
+        {
+          "label": "状态",
+          "prop": "stepStatus",
+          "align": "center",
+          "dict": {
+            "dictType": "E_STEPST",
+            "dictKey": [
+              "E_STEPST"
+            ],
+            "format": "label",
+            "labelField": "dictName",
+            "valueField": "dictId"
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 80,
+          "align":"center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "认领",
+              "toRequest": {
+                "url": "@BpmTaskGetConfirm",
+                "method": "GET",
+                "params": {
+                  "applyId":"${{currect.applyId}}",
+                  "taskInstId":"${{currect.taskInstId}}"
+                }
+              },
+              "props": {
+                "title": "提示信息",
+                "width": "600px"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

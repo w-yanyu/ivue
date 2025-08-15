@@ -1,0 +1,105 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "colt_no": {
+            "control": "text",
+            "label": "抵质押品编号",
+            "rules": [
+              {
+                "max": 19,
+                "message": "长度不能超过19个字符"
+              }
+            ]
+          } 
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "co4011",
+          "page_id": "/views/cols/colsQuotaFrz/colsQuotaUnFrz/colsQuota_unfrz.json"
+        }
+      },
+      "thead": [
+        {
+          "label": "序号",
+          "type" :  "index"
+        },
+        {
+          "label": "抵质押品编号",
+          "prop": "colt_no",
+          "align":"center"
+        },
+        {
+          "label": "押品总价值",
+          "prop": "cletal_value",
+          "align":"center"
+        },
+        {
+          "label":"已占用额度",
+          "prop": "cletal_occupy",
+          "align":"center"
+        },
+        {
+          "label": "剩余额度",
+          "prop": "cletal_remain",
+          "align":"center"
+        },
+        {
+          "label": "冻结额度",
+          "prop": "fr_quota",
+          "align":"center"
+        },
+        {
+          "label": "解冻金额",
+          "prop": "unfr_quota",
+          "align":"center"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align":"center",
+          "btns": [
+            {
+              "type": "look",
+              "label": "解冻申请",
+              "toRequest": {
+                "url": "/views/cols/colsQuotaFrz/colsQuotaUnFrz/colsQuota_unfrzsubmit.json",
+                "method": "POST",
+                "params": {
+            }
+              },
+              "props": {
+                "width": "65%",
+                "title": "解冻申请"
+              }
+            },
+            {
+              "type": "look",
+              "label": "审核记录",
+              "toRequest": {
+                "url": "",
+                "method": "POST",
+                "params": {
+            }
+              },
+              "props": {
+                "width": "65%",
+                "title": "审核记录"
+              }
+            }
+          ]
+        }                  
+      ]
+    }
+  }
+}

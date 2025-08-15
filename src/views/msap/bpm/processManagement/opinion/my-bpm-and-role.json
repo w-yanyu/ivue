@@ -1,0 +1,134 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "appId": {
+            "control": "select",
+            "label": "业务模块",
+            "selectFirstValue": true,
+            "dict": {
+              "dictType": "MS_APPID",
+              "dictKey": [
+                "MS_APPID"
+              ],
+              "format": "value-label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择业务模块"
+              }
+            ]
+          }
+        },
+        {
+          "wf_prod_name": {
+            "control": "text",
+            "label": "流程名称"
+          },
+          "task_define_name": {
+            "control": "text",
+            "label": "节点定义名称"
+          }
+        }
+      ]
+    },
+    "toolbar": {},
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "pagination": {
+        "show": true
+      },
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "bpm6007",
+          "appId": "${{form.appId}}",
+          "opinion_belong": "1"
+        }
+      },
+      "thead": [
+        {
+          "label": "流程编号",
+          "align": "center",
+          "prop": "wf_prod_no"
+        },
+        {
+          "label": "流程名称",
+          "align": "center",
+          "prop": "wf_prod_name"
+        },
+        {
+          "label": "节点编号",
+          "align": "center",
+          "prop": "task_define_id"
+        },
+        {
+          "label": "节点定义名称",
+          "align": "center",
+          "prop": "task_define_name"
+        },
+        {
+          "label": "角色编号",
+          "align": "center",
+          "prop": "role_id"
+        },
+        {
+          "label": "角色名称",
+          "align": "center",
+          "prop": "role_name"
+        },
+        {
+          "label": "设置审批意见",
+          "width": "280px",
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "同意",
+              "toRequest": {
+                "url": "@taskOpinion",
+                "method": "POST",
+                "params": {
+                  "appId": "${{form.appId}}",
+                  "opinion_belong": "1",
+                  "appv_opinion_type": "0"
+                }
+              }
+            },
+            {
+              "type": "edit",
+              "label": "部分同意",
+              "toRequest": {
+                "url": "@taskOpinion",
+                "method": "POST",
+                "params": {
+                  "appId": "${{form.appId}}",
+                  "opinion_belong": "1",
+                  "appv_opinion_type": "1"
+                }
+              }
+            },
+            {
+              "type": "edit",
+              "label": "否决",
+              "toRequest": {
+                "url": "@taskOpinion",
+                "method": "POST",
+                "params": {
+                  "appId": "${{form.appId}}",
+                  "opinion_belong": "1",
+                  "appv_opinion_type": "2"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

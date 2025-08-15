@@ -1,0 +1,195 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params":{
+          "servicecode":"ar0610",
+          "apply_no": "${{params.apply_no}}"
+        }
+      },
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交"
+        }
+      ],
+      "controls": [
+        {
+          "rpymt_acct_num": {
+            "control": "text",
+            "label": "还款账号",
+            "span": 12,
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入还款账号"
+              }
+            ]
+          },
+          "rpymt_acct_nm": {
+            "control": "text",
+            "label": "还款账户名称",
+            "span": 12,
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入还款账户名称"
+              }
+            ]
+          }
+        },
+        {
+          "prty": {
+            "control": "select",
+            "label": "扣款优先等级",
+            "span": 12,
+            "dict": {
+              "dictType": "AR_E_PAYMENT_PRIORITY",
+              "dictKey": [
+                "AR_E_PAYMENT_PRIORITY"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "此项不能为空"
+              }
+            ]
+          },"rpymt_acct_rule": {
+            "control": "select",
+            "label": "还款账户规则",
+            "span": 12,
+            "dict": {
+              "dictType": "LN_E_RPYMT_ACCT_RULE",
+              "dictKey": [
+                "LN_E_RPYMT_ACCT_RULE"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "此项不能为空"
+              }
+            ],"events": {
+              "condition": {
+                "1": {
+                  "control": {
+                    "rpymt_base_num_catg": {
+                      "value": "${{form.rpymt_base_num_catg}}",
+                      "disabled":false
+                    },"rpymt_pcnt": {
+                      "value": "${{form.rpymt_pcnt}}",
+                      "disabled":false
+                    },"rpymt_tp":{
+                      "value": "${{form.rpymt_tp}}",
+                      "disabled":false
+                    }
+                  }
+                },
+                "2": {
+                  "control": {
+                    "rpymt_base_num_catg": {
+                      "value": "5",
+                      "disabled":true
+                    },"rpymt_pcnt": {
+                      "value": "100",
+                      "disabled":true
+                    },"rpymt_tp":{
+                      "value": "",
+                      "disabled":true
+                    }
+                  }
+                }
+              }
+            }
+          }
+          
+        },
+        {
+          "rpymt_base_num_catg": {
+            "control": "select",
+            "label": "还款基数种类",
+            "span": 12,
+            "dict": {
+              "dictType": "LN_E_RPYMT_BASE_NUM_CATG",
+              "dictKey": [
+                "LN_E_RPYMT_BASE_NUM_CATG"
+              ],
+              "format": "label"
+            }
+          },
+          "rpymt_acct_catg": {
+            "control": "select",
+            "label": "还款账户种类",
+            "span": 12,
+            "dict": {
+              "dictType": "LN_E_RPYMT_ACCT_CATG",
+              "dictKey": [
+                "LN_E_RPYMT_ACCT_CATG"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "此项不能为空"
+              }
+            ]
+          }
+        },
+        {
+          
+          "rpymt_tp": {
+            "control": "select",
+            "label": "还款类型",
+            "span": 12,
+            "dict": {
+              "dictType": "LN_E_RPYMT_TP",
+              "dictKey": [
+                "LN_E_RPYMT_TP"
+              ],
+              "format": "label"
+            }
+          },"rpymt_pcnt": {
+            "control": "text",
+            "label": "还款比例",
+            "span": 12
+          }
+        },
+        {
+          "defcy_ddc_mny_way": {
+            "control": "select",
+            "label": "不足额扣款方式",
+            "span": 12,
+            "dict": {
+              "dictType": "LN_E_DEFCY_DDC_MNY_WAY",
+              "dictKey": [
+                "LN_E_DEFCY_DDC_MNY_WAY"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "此项不能为空"
+              }
+            ]
+          }
+        },
+        {
+          "apply_no": {
+            "control": "hidden",
+            "label": "申请号",
+            "span": 12,
+            "value":"${{params.apply_no}}"
+          }
+        }
+      ]
+    }
+  }
+}

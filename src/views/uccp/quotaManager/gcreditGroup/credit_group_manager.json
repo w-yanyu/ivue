@@ -1,0 +1,163 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "group_credit_seq": {
+                        "control": "text",
+                        "label": "集团额度编号"
+                    },
+                    "source_credit_number": {
+                        "control": "text",
+                        "label": "源系统授信额度编号"
+                    },
+                    "group_cust_no": {
+                        "control": "text",
+                        "label": "集团客户编号"
+                    },
+                    "group_cust_name": {
+                        "control": "text",
+                        "label": "集团客户名称"
+                    }
+                }
+            ]
+          },
+        "toolbar": {
+            
+        },
+        "datagrid": {
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "uccp3091",
+                    "appId":"uccpOnl"
+                }
+            },
+            "thead": [
+                {
+                    "label": "集团额度编号",
+                    "prop": "group_credit_seq",
+                    "width": "170px",
+                    "align": "center"
+                },
+                {
+                    "label": "源系统授信额度编号",
+                    "prop": "source_credit_number",
+                    "align": "center"
+                },
+                {
+                    "label": "集团客户编号",
+                    "prop": "group_cust_no",
+                    "width": "150px",
+                    "align": "center"
+                },
+                {
+                    "label": "集团客户名称",
+                    "prop": "group_cust_name",
+                    "align": "center"
+                },
+                {
+                    "label": "集团总额度",
+                    "prop": "group_total_limit",
+                    "format": {
+                        "decimal": "2"
+                    },
+                    "align": "center"
+                },
+                {
+                    "label": "已用集团总额度",
+                    "prop": "used_group_total_limit",
+                    "format": {
+                        "decimal": "2"
+                    },
+                    "align": "center"
+                },
+                {
+                    "label": "集团总敞口额度",
+                    "prop": "group_total_exposure_limit",
+                    "format": {
+                        "decimal": "2"
+                    },
+                    "align": "center"
+                },
+                {
+                    "label": "已用集团总敞口额度",
+                    "prop": "used_group_total_exposure_limit",
+                    "format": {
+                        "decimal": "2"
+                    },
+                    "align": "center"
+                },
+                {
+                    "label": "额度产品编号",
+                    "prop": "cl_prod_code",
+                    "align": "center"
+                },
+                {
+                    "label": "额度产品名称",
+                    "prop": "cl_prod_name",
+                    "align": "center"
+                },
+                {
+                    "label": "额度状态",
+                    "prop": "quota_status",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "UCCP_E_QUOTA_STATUS",
+                        "dictKey": [
+                            "UCCP_E_QUOTA_STATUS"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 200,
+                    "align": "center",
+                    "btns": [
+                        {
+                            "type": "custom",
+                            "label": {
+                                "default": "刷新", 
+                                "i18n": "T302.refresh"
+                             },
+                            "doRequest": {
+                              "url": "/SUMP/icmcall/icmRPCCall",
+                              "method": "POST",
+                              "loading":"true",
+                              "params": {
+                                "servicecode": "uccp3095",
+                                "appId": "uccpOnl"
+                              }
+                            },
+                            "confirm": {
+                              "title": "确定删除",
+                              "confirmButtonText": "确定",
+                              "cancelButtonText": "取消"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "详细信息",
+                            "toRequest": {
+                                "target": "navTab",
+                                "url": "/views/uccp/quotaManager/gcreditGroup/group_cust_tree.json",
+                                "method": "GET",
+                                "params": {
+                                    
+                                }
+                            },
+                            "props": {
+                                "width": "90%",
+                                "title": "详细信息查看"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

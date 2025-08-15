@@ -1,0 +1,135 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "initRequest": "${{params}}",
+            "bringBack": true,
+            "btns": [
+                {
+                    "type": "submit",
+                    "label": "提交",
+                    "icon": ""
+                }
+            ],
+            "controls": [
+                {
+                    "term": {
+                        "control": "select",
+                        "label": "期限",
+                        "dict": {
+                            "dictType": "CT_E_TERM",
+                            "dictKey": [
+                              "CT_E_TERM"
+                            ],
+                            "format": "label"
+                          },
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请选择期限"
+                            }
+                        ]
+                    },
+                    "ccy_code": {
+                        "label": "币种",
+                        "control": "remoteSelect",
+                        "labelField": "ccy_name",
+                        "valueField": "ccy_code",
+                        "doRequest": {
+                            "url": "/SUMP/icmcall/icmRPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "ms0010",
+                                "appId" : "deciOnl",
+                                "org_id": "$g{{user_info.org_id}}"
+                            }
+                        },
+                        "format": "value-label",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请选择币种"
+                            }
+                        ]
+                    },
+                    
+                    
+                    "interest_rate_nature": {
+                        "control": "select",
+                        "label": "利率性质",
+                        "dict": {
+                            "dictType": "CT_E_INTEREST_RATE_UNIT",
+                            "dictKey": [
+                              "CT_E_INTEREST_RATE_UNIT"
+                            ],
+                            "format": "label"
+                          },
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请选择利率性质" 
+                            }
+                        ]
+                    }
+                },
+                {
+                    "interest_rate_value": {
+                        "control":  "text",
+                        "label": "利率",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入利率"
+                            }
+                        ]
+                    },
+                    "upper_limit": {
+                        "control": "text",
+                        "label": "浮动点数上限",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入浮动点数上限"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "lower_limit": {
+                        "control": "text",
+                        "label": "浮动点数下限",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入浮动点数下限"
+                            }
+                        ]
+                    },
+                    "effective_date": {
+                        "control": "dateTimePicker",
+                        "label": "生效日期",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请选择生效日期"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "effective_time": {
+                        "control": "timePicker",
+                        "label": "生效时间",
+                        "valueFormat":"HHmmss",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请选择生效时间"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    }
+}

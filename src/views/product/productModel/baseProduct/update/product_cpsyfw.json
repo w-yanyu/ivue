@@ -1,0 +1,110 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "target": "dialog",
+                    "label": "新增",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/product/productModel/baseProduct/update/product_cpsyfw_add.json",
+                        "params": {
+                            "prod_code": "${{params.prod_code}}",
+                            "prod_nm": "${{params.prod_nm}}",
+                            "eff_dt": "${{params.eff_dt}}",
+                            "invld_dt": "${{params.invld_dt}}",
+                            "prod_grp_code": "${{params.prod_grp_code}}",
+                            "prod_grp_nm": "${{params.prod_grp_nm}}",
+                            "prod_tplt_code": "${{params.prod_tplt_code}}"
+                        }
+                    },
+                    "props": {
+                        "title": "适用范围新增"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ln3271",
+                    "prod_code": "${{params.prod_code}}",
+                    "outlistid": "lstklnf_aplbl_scope_ctrl"
+                }
+            },
+            "pagination": {
+                "show": false
+            },
+            "thead": [
+                {
+                    "label": "产品适用类型",
+                    "prop": "prod_aplbl_tp",
+                    "align": "center",
+                    "disabled": true,
+                    "dict": {
+                        "dictType": "LN_E_APLBL_TP",
+                        "dictKey": [
+                            "LN_E_APLBL_TP"
+                        ],
+                        "format": "label-value"
+                    }
+                },
+                {
+                    "label": "机构适用标志",
+                    "prop": "org_aplbl_flg",
+                    "align": "center",
+                    "disabled": true,
+                    "dict": {
+                        "dictType": "LN_E_ORG_APLBL_FLG",
+                        "dictKey": [
+                            "LN_E_ORG_APLBL_FLG"
+                        ],
+                        "format": "label-value"
+                    }
+                },
+                {
+                    "label": "适用范围",
+                    "prop": "aplbl_scope",
+                    "align": "center"
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 130,
+                    "align": "center",
+                    "btns": [
+                        {
+                            "type": "custom",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "syln3273",
+                                    "prod_code": "${{params.prod_code}}",
+                                    "prod_nm": "${{params.prod_nm}}",
+                                    "eff_dt": "${{params.eff_dt}}",
+                                    "invld_dt": "${{params.invld_dt}}",
+                                    "prod_grp_code": "${{params.prod_grp_code}}",
+                                    "prod_grp_nm": "${{params.prod_grp_nm}}",
+                                    "prod_tplt_code": "${{params.prod_tplt_code}}",
+                                    "operation": 2
+                                }
+                            },
+                            "confirm": {
+                                "title": "确定删除",
+                                "confirmButtonText": "确定",
+                                "cancelButtonText": "取消"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

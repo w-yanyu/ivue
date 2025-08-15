@@ -1,0 +1,102 @@
+{
+  "module": "v-inputDataForm-btn",
+  "layout": {
+    "form": {
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pl0038",
+          "apply_no": "${{params.apply_no}}",
+          "asmt_asmt_code": "${{params.asmt_asmt_code}}",
+          "asmt_code": "${{params.asmt_code}}"
+        }
+      },
+      "btns": [{
+        "type": "submit",
+        "label": "提交",
+        "doRequest": {
+          "url": "/SUMP/icmcall/icmRPCCall",
+          "method": "POST",
+          "params": {
+            "servicecode": "pl0041",
+            "apply_no": "${{params.apply_no}}",
+            "asmt_asmt_code": "${{params.asmt_asmt_code}}",
+            "asmt_code": "${{params.asmt_code}}"
+          }
+        }
+      }],
+      "controls": [{
+        "cust_id": {
+          "control": "hidden"
+        },
+        "acctg_org": {
+          "control": "string",
+          "label": "账务机构",
+          "span": 7,
+          "rules": [{
+            "required": true,
+            "message": "账务机构不能为空!"
+          }]
+        },
+        "sell_amt": {
+          "control": "text",
+          "span": 7,
+          "label": "出售金额(元)",
+          "rules": [{
+              "required": true,
+              "pattern": "^[0-9]+(\\.[0-9]{2})?$",
+              "message": "请输入两位小数或整数数字"
+            },
+            {
+              "max": 21,
+              "message": "长度不能超过21个字符"
+            }
+          ]
+        },
+        "amt_acct_num": {
+          "span": 7,
+          "control": "text",
+          "label": "存款账号",
+          "rules": [{
+              "required": true,
+              "message": "请输入存款账号"
+            },
+            {
+              "pattern": "^[0-9]{15,19}$",
+              "message": "请输入正确的存款账号"
+            }
+          ]
+        },
+        "dept_acct_nm": {
+          "span": 7,
+          "control": "text",
+          "label": "存款户名",
+          "rules": [{
+              "required": true,
+              "message": "请输入存款户名"
+            },
+            {
+              "max": 100,
+              "message": "长度不能超过100个字符"
+            }
+          ]
+        },
+        "open_acct_bank": {
+          "span": 7,
+          "control": "text",
+          "label": "开户银行",
+          "rules": [{
+              "required": true,
+              "message": "请输入开户银行"
+            },
+            {
+              "max": 100,
+              "message": "长度不能超过100个字符"
+            }
+          ]
+        }
+      }]
+    }
+  }
+}

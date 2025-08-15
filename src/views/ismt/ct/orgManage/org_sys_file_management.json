@@ -1,0 +1,177 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "controls": [
+        {
+          "target_org_id": {
+            "control": "text",
+            "label": "新增法人号",
+            "value":"${{params.target_org_id}}",
+            "disabled": true
+          },
+          "system_id": {
+            "value":"${{params.system_id}}",
+            "disabled": true,
+            "control": "select",
+            "label": "子系统号",
+            "dict": {
+                "dictType": "MS_APPID",
+                "dictKey": [
+                    "MS_APPID"
+                ],
+                "format": "value-label"
+            }
+          },
+          "is_inited": {
+              "control": "select",
+              "label": "是否初始化",
+              "selectFirstValue":false,
+              "dict": {
+                  "dictType": "MS_E_YESORNO",
+                  "dictKey": [
+                      "MS_E_YESORNO"
+                  ],
+                  "format": "value-label"
+              }
+          },
+          "file_path": {
+            "control": "text",
+            "label": "脚本文件名"
+          }
+        }
+      ]
+    },
+
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "icon": "el-icon-circle-plus",
+          "target": "dialog",
+          "label": "新增sql文件",
+          "show": {"expression":"'${{params.is_inited}}'=== '0'"},
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/ismt/ct/orgManage/org_sys_file_add.json",
+            "params": {
+              "system_id":"${{params.system_id}}",
+              "target_org_id":"${{params.target_org_id}}"
+            }
+          },
+          "props": {
+            "title": "新增初始化系统"
+          }
+        }
+      ]
+    },
+
+    "datagrid": {
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "appId":"deciOnl",
+          "servicecode": "ms2361"
+        }
+      },
+      "thead": [
+        {
+          "type":"string",
+          "label": "新增法人号",
+          "width": "150%",
+          "align":"center",
+          "prop": "target_org_id"
+        },
+        {
+          "type":"string",
+          "label": "子系统",
+          "align":"center",
+          "prop": "system_id",
+          "dict": {
+            "dictType": "MS_APPID",
+            "dictKey": [
+                "MS_APPID"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type":"string",
+          "label": "文件ID",
+          "width": "100%",
+          "align":"center",
+          "prop": "file_id"
+        },
+        {
+          "type":"string",
+          "label": "脚本文件路径",
+          "align":"center",
+          "prop": "file_path"
+        },
+        {
+          "type":"string",
+          "label": "是否初始化",
+          "align":"center",
+          "width":"150%",
+          "prop": "is_inited",
+          "dict":{
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "value-label"
+
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width":"250%",
+          "align":"center",
+          "btns": [
+            {
+                "type": "look",
+                "label": "删除",
+                "show": {"expression":"'${{current.is_inited}}'=== '0'"},
+                "doRequest": {
+                    "url": "/SUMP/icmcall/icmRPCCall",
+                    "method": "POST",
+                    "params": {
+                        "servicecode": "ms2364",
+                        "appId": "deciOnl"
+                    }
+                },
+                "confirm": {
+                    "title": "确定删除",
+                    "confirmButtonText": "确定",
+                    "cancelButtonText": "取消"
+                }
+            },
+            {
+                "type": "look",
+                "label": "执行sql文件",
+                "initShow": false,
+                "show": {"expression":"'${{current.is_inited}}'=== '0'"},
+                "doRequest": {
+                    "url": "/SUMP/icmcall/icmRPCCall",
+                    "method": "POST",
+                    "params": {
+                        "servicecode": "ms0012",
+                        "appId": "deciOnl"
+                    }
+                },
+                "confirm": {
+                    "title": "确定初始化",
+                    "confirmButtonText": "确定",
+                    "cancelButtonText": "取消"
+                }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

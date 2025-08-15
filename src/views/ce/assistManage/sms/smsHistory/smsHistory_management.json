@@ -1,0 +1,309 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "foldLineNumber": 3,
+      "controls": [
+        {
+          "cust_name": {
+            "control": "text",
+            "label": "客户姓名"
+          },
+          "collector": {
+            "control": "text",
+            "label": "催收员"
+          }
+        },
+        {
+          "daterange": {
+            "control": "dateTimePicker",
+            "label": "发送时间",
+            "type": "daterange",
+            "unlinkPanels": true,
+            "valueFormat": "yyyyMMdd",
+            "startPlaceholder": "选择开始时间",
+            "endPlaceholder": "选择结束时间",
+            "startField": "start_time",
+            "endField": "expir_time",
+            "disabledDate": "dateAfter"
+          },
+          "cert_no": {
+            "control": "text",
+            "label": "证件号码"
+          }
+        },
+        {
+          "tel_no": {
+            "control": "text",
+            "label": "手机号码"
+          },
+          "cust_no": {
+            "control": "text",
+            "label": "客户号"
+          }
+        },
+        {
+          "loan_no": {
+            "control": "text",
+            "label": "借据号"
+          },
+          "busi_type_name": {
+            "control": "text",
+            "label": "业务品种"
+          }
+        },
+        {
+          "template_code": {
+            "control": "remoteSelect",
+            "label": "短信模板",
+            "labelField": "template_name",
+            "valueField": "template_code",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ce0414",
+                "coll_kind": "02",
+                "template_type": "SMS"
+              }
+            },
+            "format": "label"
+          },
+          "send_state": {
+            "control": "select",
+            "label": "发送状态",
+            "dict": {
+              "dictType": "CE_SENDSTATUS",
+              "dictKey": [
+                "CE_SENDSTATUS"
+              ],
+              "format": "value-label"
+            }
+          }
+        },
+        {
+          "cust_type": {
+            "control": "select",
+            "label": "客户类型",
+            "dict": {
+              "dictType": "CE_CASE_CUST_TYPE",
+              "dictKey": [
+                "CE_CASE_CUST_TYPE"
+              ],
+              "format": "value-label"
+            }
+          },
+          "classify_result": {
+            "control": "select",
+            "label": "本期五级分类",
+            "dict": {
+              "dictType": "MS_E_LEVEL5_TYPE",
+              "dictKey": [
+                "MS_E_LEVEL5_TYPE"
+              ],
+              "format": "value-label"
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "export",
+          "icon": "iconfont icon-daochu",
+          "label": "导出",
+          "doRequest": {
+            "method": "POST",
+            "url": "/SUMP/icmcall/export",
+            "params": {
+              "servicecode": "ce1505"
+            }
+          },
+          "confirm":{
+            "title":"提示信息",
+            "msg":"确认导出吗？",
+            "confirmButtonText":"确定",
+            "cancelButtonText":"取消"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ce1502"
+        }
+      },
+      "thead": [
+        {
+          "type": "string",
+          "align": "center",
+          "width":"180px",
+          "label": "客户姓名",
+          "prop": "cust_name"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width":"180px",
+          "label": "发送时间",
+          "prop": "send_date"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width":"180px",
+          "label": "短信模板",
+          "prop": "template_code",
+          "dict": {
+            "dictKey": [
+              "template_code"
+            ],
+            "format": "label",
+            "labelField": "template_name",
+            "valueField": "template_code",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ce0414",
+                "coll_kind": "02",
+                "template_type": "SMS"
+              }
+            }
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "180px",
+          "label": "短信内容",
+          "prop": "sms_content"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "180px",
+          "label": "证件类型",
+          "prop": "cert_type",
+          "dict": {
+            "dictType": "MS_E_CRET_TYPE",
+            "dictKey": [
+              "MS_E_CRET_TYPE"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "180px",
+          "label": "证件号码",
+          "prop": "cert_no"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "180px",
+          "label": "手机号码",
+          "prop": "tel_no"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "180px",
+          "label": "发送类型",
+          "prop": "send_type",
+          "dict": {
+            "dictType": "E_SENDTP",
+            "dictKey": [
+              "E_SENDTP"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "180px",
+          "label": "发送状态",
+          "prop": "send_state",
+          "dict": {
+            "dictType": "CE_SENDSTATUS",
+            "dictKey": [
+              "CE_SENDSTATUS"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "180px",
+          "label": "业务品种",
+          "prop": "busi_type_name"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "180px",
+          "label": "本期五级分类",
+          "prop": "classify_result",
+          "dict": {
+            "dictType": "MS_E_LEVEL5_TYPE",
+            "dictKey": [
+              "MS_E_LEVEL5_TYPE"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "180px",
+          "label": "借据号",
+          "prop": "loan_no"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "180px",
+          "label": "客户号",
+          "prop": "cust_no"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "180px",
+          "label": "客户类型",
+          "prop": "cust_type",
+          "dict": {
+            "dictType": "CE_CASE_CUST_TYPE",
+            "dictKey": [
+              "CE_CASE_CUST_TYPE"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "prop": "collector",
+          "align": "center",
+          "width": "180px",
+          "label": "催收员"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "180px",
+          "label": "审核人",
+          "prop": "approver"
+        }
+      ]
+    }
+  }
+}

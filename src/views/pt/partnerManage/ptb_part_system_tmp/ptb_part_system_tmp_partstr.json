@@ -1,0 +1,252 @@
+{
+  "module": "lr_tree_dynamic",
+  "layout": {
+    "##initReqeust": "${{params}}",
+    "tree": {
+      "scope": "productParam",
+      "title": "伙伴体系",
+      "lazy": false,
+      "idField": "node_no",
+      "pIdField": "parent_node_no",
+      "labelField": "node_name",
+      "isLeafField": "is_leaf",
+      "nodeTypeField": "node_level",
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "belorg":"${{params.belorg}}",
+          "part_no":"${{params.part_no}}",
+          "seqnum":"${{params.seqnum}}",
+          "version":"${{params.version}}",
+          "servicecode": "pt0171"
+        }
+      },
+      "#root": {
+        "rootNode": {
+          "name": "伙伴体系",
+          "value": "-1",
+          "icon": "xitongguanli",
+          "disabled": true
+
+        }
+      },
+      "nodeTypes": {
+        "1": {
+          "icon": "el-icon-news",
+          "children": [
+            "node_no",
+            "node_name"
+          ],
+          "toRequest": {
+            "method": "get",
+            "url": "/views/pt/partnerManage/ptb_part_system_tmp/ptb_part_system_tmp_partstrsee.json",
+            "params": {
+              "operater_ind": "M",
+              "part_no":"${{params.part_no}}",
+              "version":"${{params.version}}",
+              "prndid": "-1"
+            }
+          },
+          "props": {
+            "title": "合作伙伴体系详情",
+            "width":"600px"
+          },
+          "contextMenu": [
+            {
+              "type": "add",
+              "label": "下级合作伙伴新增",
+              "childNodeType": "1",
+              "icon": "el-icon-circle-plus-outline",
+              "toRequest": {
+                "url": "/views/pt/partnerManage/ptb_part_system_tmp/ptb_part_system_tmp_partstradd1.json",
+                "target": "dialog",
+                "params": {
+               
+                  "part_no":"${{params.part_no}}",
+                  "version":"${{params.version}}"
+                
+                }
+              },
+              "props": {
+                "title": "下级合作伙伴体系新增",
+                "width":"900px"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "合作伙伴体系更新",
+              "childNodeType": "1",
+              "icon": "el-icon-circle-plus-outline",
+              "params": {
+                "operater_ind": "M",
+                "part_no":"${{params.part_no}}",
+                "version":"${{params.version}}",
+                "node_no": "${{params.node_no}}"
+
+              },
+              "toRequest": {
+                "url": "/views/pt/partnerManage/ptb_part_system_tmp/ptb_part_system_tmp_partstrupdate.json",
+                "target": "dialog"          
+              },
+              "eventAfter": {
+                "callback": "renderTree"
+              },
+              "props": {
+                "title": "节点信息更新",
+                "width":"900px"
+              }
+            }
+          ]
+        },
+        "2": {
+          "icon": "el-icon-news",
+          "children": [
+            "node_no",
+            "node_name"
+          ],
+          "toRequest": {
+            "method": "get",
+            "url": "/views/pt/partnerManage/ptb_part_system_tmp/ptb_part_system_tmp_partstrseeto.json",
+            "params": {
+              "operater_ind": "M",
+              "part_no":"${{params.part_no}}",
+              "prndid": "${{productParam.prndid}}",
+              "version":"${{params.version}}"
+            }
+          },
+          "props": {
+            "title": "合作伙伴体系详情"
+          },
+          "contextMenu": [
+            {
+              "type": "delete",
+              "label": "删除当前节点",
+              "childNodeType": "2",
+              "icon": "el-icon-remove-outline",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "pt0174",
+                  "version":"${{params.version}}"
+                }
+              },
+              "confirm": {
+                "title": "提示信息",
+                "msg": "确定删除该目录吗?",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            },
+            {
+              "type": "add",
+              "label": "下级合作伙伴新增",
+              "childNodeType": "2",
+              "icon": "el-icon-circle-plus-outline",
+              "toRequest": {
+                "url": "/views/pt/partnerManage/ptb_part_system_tmp/ptb_part_system_tmp_partstradd2.json",
+                "target": "dialog"
+
+              },
+              "props": {
+                "title": "下级合作伙伴体系新增",
+                "width":"900px"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "节点信息更新",
+              "childNodeType": "2",
+              "icon": "el-icon-circle-plus-outline",
+              "params": {
+                "operater_ind": "M",
+                "part_no":"${{params.part_no}}",
+                "version":"${{params.version}}"
+
+              },
+              "toRequest": {
+                "url": "/views/pt/partnerManage/ptb_part_system_tmp/ptb_part_system_tmp_partstrupdate.json",
+                "target": "dialog"
+
+              },
+              "eventAfter": {
+                "callback": "renderTree"
+              },
+              "props": {
+                "title": "节点信息更新",
+                "width":"900px"
+              }
+            }
+          ]
+        },
+        "3": {
+          "icon": "el-icon-news",
+          "children": [
+            "node_no",
+            "node_name"
+          ],
+          "toRequest": {
+            "method": "get",
+            "url": "/views/pt/partnerManage/ptb_part_system_tmp/ptb_part_system_tmp_partstrseeto.json",
+            "params": {
+              "operater_ind": "M",
+              "part_no":"${{params.part_no}}",
+              "prndid": "${{productParam.prndid}}",
+              "version":"${{params.version}}"
+            }
+          },
+          "props": {
+            "title": "合作伙伴体系详情"
+          },
+          "contextMenu": [
+            {
+              "type": "delete",
+              "label": "删除当前节点",
+              "childNodeType": "3",
+              "icon": "el-icon-remove-outline",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "pt0174"
+                }
+              },
+              "confirm": {
+                "title": "提示信息",
+                "msg": "确定删除该目录吗?",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "节点信息更新",
+              "childNodeType": "3",
+              "icon": "el-icon-circle-plus-outline",
+              "params": {
+                "operater_ind": "M",
+                "part_no":"${{params.part_no}}",
+                "node_no": "${{params.node_no}}",
+                "version":"${{params.version}}"
+
+              },
+              "toRequest": {
+                "url": "/views/pt/partnerManage/ptb_part_system_tmp/ptb_part_system_tmp_partstrupdate.json",
+                "target": "dialog"
+
+              },
+              "eventAfter": {
+                "callback": "renderTree"
+              },
+              "props": {
+                "title": "节点信息更新",
+                "width":"900px"
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

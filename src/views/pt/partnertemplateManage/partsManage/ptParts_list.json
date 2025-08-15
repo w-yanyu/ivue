@@ -1,0 +1,255 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "scope": "formData",
+            "controls": [
+                {
+                    "parts_no": {
+                        "control": "text",
+                        "label": "部件编号"
+                    },
+                    "parts_class": {
+                        "control": "select",
+                        "label": "部件种类",
+                        "dict": {
+                            "dictType": "PT_E_PARTS_CLASS",
+                            "dictKey": [
+                                "PT_E_PARTS_CLASS"
+                            ],
+                            "format": "value-label"
+                        }
+                    }
+                },
+                {
+                    "parts_name": {
+                        "control": "text",
+                        "label": "部件名称"
+                    },
+                    "parts_status": {
+                        "control": "select",
+                        "label": "部件状态",
+                        "dict": {
+                            "dictType": "PT_E_STATUS",
+                            "dictKey": [
+                                "PT_E_STATUS"
+                            ],
+                            "format": "value-label"
+                        }
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "icon": "el-icon-circle-plus",
+                    "target": "dialog",
+                    "label": "新增",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/pt/partnertemplateManage/partsManage/ptParts_add.json"
+                    },
+                    "props": {
+                        "title": "新增部件"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "pt0063"
+                }
+            },
+            "thead": [
+                {
+                    "type": "string",
+                    "align": "center",
+                    "label": "部件编号",
+                    "prop": "parts_no"
+                },
+                {
+                    "type": "string",
+                    "align": "center",
+                    "label": "部件名称",
+                    "prop": "parts_name"
+                },
+                {
+                    "type": "string",
+                    "align": "center",
+                    "label": "部件种类",
+                    "prop": "parts_class",
+                    "dict": {
+                        "dictType": "PT_E_PARTS_CLASS",
+                        "dictKey": [
+                            "PT_E_PARTS_CLASS"
+                        ],
+                        "format": "value-label"
+                    }
+                },
+                {
+                    "type": "string",
+                    "align": "center",
+                    "label": "协议部件类型",
+                    "prop": "agree_parts_type",
+                    "dict": {
+                        "dictType": "PT_E_AGREE_PARTS_TYPE",
+                        "dictKey": [
+                            "PT_E_AGREE_PARTS_TYPE"
+                        ],
+                        "format": "value-label"
+                    }
+                },
+                {
+                    "type": "string",
+                    "align": "center",
+                    "label": "项目部件类型",
+                    "prop": "cooperate_project_type",
+                    "dict": {
+                        "dictType": "PT_E_COOPERATE_PROJECT_TYPE",
+                        "dictKey": [
+                            "PT_E_COOPERATE_PROJECT_TYPE"
+                        ],
+                        "format": "value-label"
+                    }
+                },
+                {
+                    "type": "string",
+                    "align": "center",
+                    "label": "部件状态",
+                    "prop": "parts_status",
+                    "dict": {
+                        "dictType": "PT_E_STATUS",
+                        "dictKey": [
+                            "PT_E_STATUS"
+                        ],
+                        "format": "value-label"
+                    }
+                },
+                {
+                    "label": "操作",
+                    "align": "center",
+                    "fixed": "right",
+                    "width": "150%",
+                    "btns": [
+                      {
+                        "type": "edit",
+                        "label": "预览",
+                        "toRequest": {
+                          "url": "${{current.info_url}}",
+                          "method": "post",
+                          "params": {
+
+                          }
+                        },
+                        "props": {
+                          "width": "65%",
+                          "title": "部件预览"
+                        }
+                      },
+                        {
+                            "type": "look",
+                            "label": "详情",
+                            "toRequest": {
+                                "url": "/views/pt/partnertemplateManage/partsManage/ptParts_info.json",
+                                "method": "POST"
+                            },
+                            "props": {
+                                "title": "部件详情"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/pt/partnertemplateManage/partsManage/ptParts_upd.json",
+                                "method": "POST"
+                            },
+                            "props": {
+                                "title": "部件维护"
+                            }
+                        },
+                        {
+                            "type": "custom",
+                            "label": "启用",
+                            "show": {
+                                "prop": "parts_status",
+                                "is": [
+                                    "2"
+                                ]
+                            },
+                            "doRequest": {
+                                "url": "/SUMP/call/RPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "pt0065",
+                                    "parts_status": "1",
+                                    "parts_no": "${{current.parts_no}}"
+                                },
+                                "confirm": {
+                                    "title": "确定启用",
+                                    "confirmButtonText": "确定",
+                                    "cancelButtonText": "取消"
+                                }
+                            }
+                        },
+                        {
+                            "type": "custom",
+                            "label": "停用",
+                            "show": {
+                                "prop": "parts_status",
+                                "is": [
+                                    "1"
+                                ]
+                            },
+                            "doRequest": {
+                                "url": "/SUMP/call/RPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "pt0065",
+                                    "parts_no": "${{current.parts_no}}",
+                                    "parts_status": "2"
+                                },
+                                "confirm": {
+                                    "title": "确定停用",
+                                    "confirmButtonText": "确定",
+                                    "cancelButtonText": "取消"
+                                }
+                            }
+                        },
+
+                        {
+                            "type": "delete",
+                            "show": {
+                                "prop": "parts_status",
+                                "is": [
+                                    "2",
+                                    null,
+                                    ""
+                                ]
+                            },
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/call/RPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "pt0062"
+                                }
+                            },
+                            "confirm": {
+                                "title": "确定删除",
+                                "confirmButtonText": "确定",
+                                "cancelButtonText": "取消"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,155 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "scope": "strForm",
+      "controls":
+      [
+        {
+          "business_tp": {
+            "control": "select",
+            "span": 8,
+            "label": "商户类型",
+            "dict": {
+              "dictType": "PT_E_BUSINESS_TYPE",
+              "dictKey": [
+                "PT_E_BUSINESS_TYPE"
+              ],
+              "format": "label"
+            }
+          },
+          "approve_status": {
+            "control": "select",
+            "span": 8,
+            "label": "审批状态",
+            "dict": {
+              "dictType": "PT_E_APPROVE_STATUS",
+              "dictKey": [
+                "PT_E_APPROVE_STATUS"
+              ],
+              "format": "label"
+            }
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "pt0903",
+          "partner_no": "${{params.partner_no}}"
+        }
+      },
+      "thead": [
+        {
+          "type": "index",
+          "label": "序号"
+        },
+        {
+          "label": "商户号",
+          "prop": "partner_no"
+        },
+        {
+          "label": "商户名称",
+          "prop": "partner_name"
+        },
+        {
+          "label":"省份",
+          "prop": "province_name"
+        },
+        {
+          "label":  "市区",
+          "prop": "city_name"
+        },
+        {
+          "label":  "镇区",
+          "prop": "district_name"
+        },
+        {
+          "label": "商户类型",
+          "prop": "business_tp",
+          "dict": {
+            "dictType": "PT_E_BUSINESS_TYPE",
+            "dictKey": ["PT_E_BUSINESS_TYPE"],
+            "format": "label"
+          }
+
+        },
+        {
+          "label":  "法定代表人",
+          "prop": "partner_corp_name"
+        },
+        {
+          "label":  "法定代表人联系方式",
+          "prop": "contact_info"
+        },
+        {
+          "label":  "维护类型",
+          "prop": "mainten_tp",
+          "dict": {
+            "dictType": "PT_E_MAINTEN_TP",
+            "dictKey": ["PT_E_MAINTEN_TP"],
+            "format": "label"
+          }
+
+        },
+        {
+          "type": "string",
+          "label":  "审批状态",
+          "prop": "approve_status",
+          "dict": {
+            "dictType": "PT_E_APPROVE_STATUS",
+            "dictKey": ["PT_E_APPROVE_STATUS"],
+            "format": "label"
+          }
+        },
+        {
+          "label":  "审批意见",
+          "prop": "approve_comments"
+        },
+        {
+          "label":  "审批类型",
+          "prop": "approve_tp",
+          "dict": {
+            "dictType": "PT_E_APPROVE_TP",
+            "dictKey": ["PT_E_APPROVE_TP"],
+            "format": "label"
+          }
+        },
+
+        {
+          "label":  "操作日期",
+          "prop": "data_update_time"
+        },
+        {
+          "label":  "操作人",
+          "prop": "data_update_user"
+        },
+        {
+          "label":  "审批人",
+          "prop": "approve_user"
+        },
+        {
+          "label": "操作",
+          "width": "260px",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "@BusinesshsDetail",
+                "method": "GET"
+              },
+              "props": {
+                "width": "65%",
+                "title":  "查看详情"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

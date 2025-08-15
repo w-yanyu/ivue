@@ -1,0 +1,149 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "certno": {
+                        "label": "证件号码",
+                        "control": "text",
+                        "width": "500px",
+                        "rules": [{
+                            "required": true,
+                            "message": "请输入证件号码"
+                          }]
+                    },
+                    "idtftp": {
+                        "span": 8,
+                        "label": "证件类型",
+                        "control": "select",
+                        "dict": {
+                          "format": "label",
+                          "dictKey": [
+                            "E_IDTFTP"
+                          ],
+                          "dictType": "E_IDTFTP"
+                        },
+                        "rules": [{
+                            "required": true,
+                            "message": "请选择证件类型"
+                          }]
+                      }
+                    
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+
+                {
+                    "type": "add",
+                    "target": "dialog",
+                    "label": "还款",
+                    "toRequest": {
+                        "method": "POST",
+                        "url": "views/dh/advanceSpecial/ActiveRepayment/Repayment.json"
+                    },
+                    "props": {
+                        "width": "65%",
+                        "title": "还款窗口"
+                    },
+                    "eventAfter": {
+                        "callback": "doValidatorForm"
+                    }
+                    
+                }
+            ]
+        },
+        "datagrid": {
+            "isInitSearch": false,
+            "scope": "searchTable",
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "qrrpls",
+                    "servno":"NULL"
+                }
+            },
+            "thead": [
+                {
+                    "label": "序号",
+                    "type": "index",
+                    "align": "center", 
+                    "width": "100px"
+                },
+                {
+                    "label": "额度编号",
+                    "prop": "crdlno",
+                    "align": "center",
+                    "width": "250px"
+
+                },
+                {
+                    "label": "还款状态",
+                    "prop": "paysta",
+                    "align": "center",
+                    "width": "150px",
+                    "dict": {
+                        "dictType": "E_PAYSTA",
+                        "dictKey": [
+                            "E_PAYSTA"
+                        ]
+                    }
+                },
+                {
+                    "label": "交易日期",
+                    "align": "center",
+                    "prop": "trandt"
+
+                },
+                {
+                    "label": "还款金额",
+                    "align": "center",
+                    "prop": "repayAmt"
+                },
+                {
+                    "label": "交易流水",
+                    "align": "center",
+                    "prop": "transq"
+                },
+                {
+                    "label": "还款本金",
+                    "prop": "repayPrinc",
+                    "align": "center",
+                    "width": "160px"
+                },
+                {
+                    "label": "还款利息",
+                    "prop": "repayInt",
+                    "align": "center",
+                    "width": "160px"
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 150,
+                    "align":"center",
+                    "btns": [
+                        {
+                            "type": "look",
+                            "label": "详情",
+                            "toRequest": {
+                                "url": "views/dh/advanceSpecial/ActiveRepayment/Repayment_detail.json",
+                                "method": "POST"
+                            },
+                            "props": {
+                                "width": "65%",
+                                "title": "还款记录详情"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "pagination": {
+                "show": true
+            }
+        }
+    }
+}

@@ -1,0 +1,54 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "doRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ce6641"
+        }
+      },
+      "controls": [
+        {
+          "doc_type": {
+              "control": "select",
+              "label": "文档类型",
+              "dict": {
+                "dictType": "CE_E_DOC_TYPE",
+                "dictKey": [
+                  "CE_E_DOC_TYPE"
+                ],
+                "format": "value-label",
+                "rules": [
+                  {
+                    "required": true,
+                    "message":"请选择文件类型"
+                  }
+                ]
+              }
+          },
+          "file_name": {
+            "control": "hidden"
+          },
+          "file_path": {
+            "control": "dynamic",
+            "isShowChildForm": true,
+            "span": 6,
+            "toRequest": {
+              "url": "@SingleUpload",
+              "method": "get",
+              "params": {
+                "path":"collRec",
+                "uploadType":"sftp",
+                "formKey": "file_path",
+                "formName": "file_name",
+                "formLabel":"文档文件"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

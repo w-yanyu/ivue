@@ -1,0 +1,79 @@
+{
+  "module": "v_form_btn_dynamic",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "reviewRemark": {
+            "control": "textarea",
+            "label": "审核意见",
+            "span": 20,
+            "autosize": true,
+            "rules": [
+              {
+                "required": true,
+                "message": "请正确输入",
+                "max": 500
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "submit",
+          "label": "审核通过",
+          "doRequest": {
+            "url": "/API/risk-management-service/risk-alert-review/auditAuditInfo",
+            "method": "post",
+            "params": {
+              "reviewId": "${{params.reviewId}}",
+              "reviewOperator": "$g{{user_info.userCode}}",
+              "status": "1",
+              "alertId": "${{params.alertId}}",
+              "createUser": "$g{{user_info.userCode}}"
+            }
+          },
+          "confirm": {
+            "title": "提示信息",
+            "msg": "确定审核通过吗？",
+            "confirmButtonText": "确定",
+            "cancelButtonText": "取消"
+          }
+        },
+        {
+          "type": "submit",
+          "label": "审核拒绝",
+          "doRequest": {
+            "url": "/API/risk-management-service/risk-alert-review/auditAuditInfo",
+            "method": "post",
+            "params": {
+              "reviewId": "${{params.reviewId}}",
+              "reviewOperator": "$g{{user_info.userCode}}",
+              "status": "2",
+              "alertId": "${{params.alertId}}",
+              "createUser": "$g{{user_info.userCode}}"
+            }
+          },
+          "confirm": {
+            "title": "提示信息",
+            "msg": "确定审核拒绝吗？",
+            "confirmButtonText": "确定",
+            "cancelButtonText": "取消"
+          }
+        },
+        {
+          "type": "reset",
+          "btnStyle": "success",
+          "label": "重置"
+        },
+        {
+          "type": "close",
+          "label": "关闭"
+        }
+      ]
+    }
+  }
+}

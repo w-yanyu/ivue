@@ -1,0 +1,130 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "initRequest": "${{params}}",
+            "btns": [
+                {
+                    "type": "submit",
+                    "label": "提交",
+                    "icon": "",
+                    "doRequest": {
+                        "url": "/SUMP/call/RPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "ct2048",
+                            "operater_ind": "M"
+                        }
+                    }
+                }
+            ],
+            "controls": [
+                {
+                    "route_id": {
+                        "control": "string",
+                        "label": "工作路线ID",
+                        "width": "170px",
+                        "rules": [
+                            {
+                                "max": 32,
+                                "message": "长度不能超过32个字符"
+                            }
+                        ]
+                    },
+                    "route_desc": {
+                        "control": "text",
+                        "label": "工作路线描述",
+                        "width": "170px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入工作路线描述"
+                            },
+                            {
+                                "max": 100,
+                                "message": "长度不能超过100个字符"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "workjob_id": {
+                        "control": "lookup",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入工作任务ID"
+                            },
+                            {
+                                "max": 32,
+                                "message": "长度不能超过32个字符"
+                            }
+                        ],
+                        "label": "工作任务ID",
+                        "width": "170px",
+                        "edit": false,
+                        "keyField": {
+                            "workjob_id": "workjob_id"
+                        },
+                        "toRequest": {
+                            "url": "/views/ismt/ct/ParameterManagement/WorkTasksInformation/WorkTasksManager_lookup.json",
+                            "method": "post",
+                            "params": "${{form.workjob_id}}"
+                        },
+                        "props": {
+                            "title": "工作任务ID查询"
+                        },
+                        "format": "label"
+                    },
+                    "route_type": {
+                        "control": "select",
+                        "label": "工作路线种类",
+                        "width": "170px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入工作路线种类"
+                            }
+                        ],
+                        "dict": {
+                            "dictType": "E_LINETYPE",
+                            "dictKey": [
+                                "E_LINETYPE"
+                            ],
+                            "format": "label"
+                        }
+                    }
+                },
+                {
+                    "next_job_id": {
+                        "control": "lookup",
+                        "edit": false,
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入工作任务ID"
+                            },
+                            {
+                                "max": 32,
+                                "message": "长度不能超过32个字符"
+                            }
+                        ],
+                        "label": "下一工作任务ID",
+                        "width": "170px",
+                        "keyField": {
+                            "next_job_id": "workjob_id"
+                        },
+                        "toRequest": {
+                            "url": "/views/ismt/ct/ParameterManagement/WorkTasksInformation/WorkTasksManager_lookup.json",
+                            "method": "post",
+                            "params": "${{form.workjob_id}}"
+                        },
+                        "props": {
+                            "title": "下一工作任务ID查询"
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

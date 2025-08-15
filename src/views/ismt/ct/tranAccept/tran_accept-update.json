@@ -1,0 +1,151 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "initRequest": "${{params}}",
+            "btns": [
+                {
+                    "type": "submit",
+                    "label": "提交",
+                    "icon": "",
+                    "doRequest": {
+                        "url": "/SUMP/call/RPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "ct2065",
+                            "operater_ind": "M"
+                        }
+                    }
+                }
+            ],
+            "controls": [
+                {
+                    "trxn_code": {
+                        "control": "string",
+                        "label": "柜面交易码",
+                        "width": "220px",
+                        "rules": [
+                            {
+                                "max": 20,
+                                "message": "长度不能超过10个字符"
+                            }
+                        ]
+                    },
+                    "trxn_code_name": {
+                        "control": "string",
+                        "label": "柜面交易码名称",
+                        "width": "220px",
+                        "rules": [
+                            {
+                                "max": 100,
+                                "message": "长度不能超过100个字符"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "trxn_hdlg_method": {
+                        "control": "select",
+                        "rules": [
+                            {
+                                "required": "true",
+                                "message": "请输入受理方式"
+                            }
+                        ],
+                        "dict": {
+                            "dictType": "CT_E_TEXNTYLE",
+                            "dictKey": [
+                                "CT_E_TEXNTYLE"
+                            ],
+                            "format": "label"
+                        },
+                        "label": "受理方式",
+                        "width": "220px",
+                        "events": {
+                            "condition": {
+                                "A": {
+                                    "control": {
+                                        "fun_auth_id": {   
+                                            "disabled":true
+                                        },
+                                        "workflow_id": {  
+                                            "disabled":true
+                                        }
+                                    }
+                                },
+                                "B": {
+                                    "control": {
+                                        "workflow_id": {  
+                                            "disabled":true
+                                        },
+                                        "fun_auth_id": {
+                                            "disabled":false,
+                                            "rules": [
+                                                {   
+                                                    "required": true,
+                                                    "message": "请输入功能授权ID"
+                                                }
+                                            ] 
+                                        }
+                                    }
+                                },
+                                "C": {
+                                    "control": {
+                                        "fun_auth_id": {
+                                            "disabled":true
+                                        },
+                                        "workflow_id": {
+                                            "disabled":false,
+                                            "rules": [
+                                                {   
+                                                    "required": true,
+                                                    "message": "请输入工作流ID"
+                                                }
+                                            ] 
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "fun_auth_id": {
+                        "control": "lookup",
+                        "label": "功能授权ID",
+                        "width": "220px",
+                        "keyField": {
+                            "fun_auth_id": "auth_id"
+                        },
+                        "toRequest": {
+                            "url":"/views/ismt/ct/authorizatio/authorizatio-info-manager_lookup.json",
+                            "method": "post",
+                            "params": "${{form.auth_id}}"
+                        },
+                        "props":{
+                            "title":"功能授权ID查询"
+                        },
+                        "format": "label"
+                    }
+                },
+                {
+                    "workflow_id": {
+                        "control": "lookup",
+                        "edit": false,
+                        "label": "工作流ID",
+                        "width": "220px",
+                        "keyField": {
+                            "workflow_id": "workflow_id"
+                        },
+                        "toRequest": {
+                            "url":"/views/ismt/ct/ParameterManagement/WorkflowDefinitionMaintenance/WorkflowDefinitionManager_lookup.json",
+                            "method": "post",
+                            "params": "${{form.workflow_id}}"
+                        },
+                        "props":{
+                            "title":"工作流ID查询"
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

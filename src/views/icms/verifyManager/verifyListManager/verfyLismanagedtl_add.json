@@ -1,0 +1,101 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "verify_list_cd": {
+            "label": "核实项检查列表序列号",
+            "control": "hidden",
+            "value": "${{params.verify_list_cd}}",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入核实项检查列表序列号"
+              }
+            ]
+          },
+          "verify_cd": {
+            "label": "核实项代码",
+            "control": "lookup",
+            "edit": true,
+            "disable": "true",
+            "keyField": {
+              "verify_cd": "verify_cd"
+            },
+            "toRequest": {
+              "url": "/views/icms/verifyManager/verifyListManager/verifyList_lookup.json",
+              "method": "post"
+            },
+            "props": {
+              "title": "核实项代码"
+            },
+            "format": "label",
+            "rules": [
+              {
+                "required": true,
+                "message": "核实项代码"
+              }
+            ]
+          },
+          "is_must": {
+            "label": "是否必须",
+            "control": "select",
+            "multiple": false,
+            "value": "",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择是否显示"
+              }
+            ]
+          },
+          "verify_sort": {
+            "label": "排序序号",
+            "control": "text",
+            "multiple": false
+          },
+          "check_state": {
+            "label": "核实项复核检查状态",
+            "control": "select",
+            "multiple": false,
+            "value": "",
+            "dict": {
+              "dictType": "AR_E_APPL_STATE",
+              "dictKey": [
+                "AR_E_APPL_STATE"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择核实项查收状态"
+              }
+            ]
+          }
+        }
+      ],
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "doRequest": {
+            "url": "/SUMP/call/RPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "ar1162"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

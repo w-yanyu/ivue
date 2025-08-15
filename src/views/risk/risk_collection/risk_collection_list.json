@@ -1,0 +1,118 @@
+{
+  "module": "v-search-btn-datagrid",
+  "pageId": "risk_collection",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "collectionName": {
+            "label": "集合中文名称",
+            "control": "text",
+            "span": 8,
+            "rules": [
+              {
+                "message": "字段长度超限",
+                "max": 100
+              }
+            ]
+          },
+          "collectionCode": {
+            "label": "集合代码",
+            "control": "text",
+            "span": 8,
+            "rules": [
+              {
+                "message": "字段长度超限",
+                "max": 40
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "authId": "collection_add_btn",
+          "label": "新增",
+          "toRequest": {
+            "url": "/views/risk/risk_collection/risk_collection_add.json",
+            "method": "get"
+          },
+          "props": {
+            "width": "70%",
+            "title": "新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/API/risk-management-service/risk-collection/page-select",
+        "method": "post"
+      },
+      "thead": [
+        {
+          "label": "集合中文名称",
+          "prop": "collectionName"
+        },
+        {
+          "label": "集合代码",
+          "prop": "collectionCode"
+        },
+        {
+          "label": "元素数据类型",
+          "prop": "dataType",
+          "dict": {
+            "dictType": "dataType",
+            "dictKey": [],
+            "doRequest": {
+              "url": "/views/risk/dictdata/dataType.json",
+              "method": "get"
+            }
+          }
+        },
+        {
+          "label": "操作",
+          "width": "150px",
+          "btns": [
+            {
+              "type": "edit",
+              "authId": "collection_upd_btn",
+              "label": "编缉",
+              "toRequest": {
+                "url": "/views/risk/risk_collection/risk_collection_edit.json",
+                "method": "get"
+              },
+              "props": {
+                "width": "70%"
+              }
+            },
+            {
+              "type": "look",
+              "label": "查看",
+              "toRequest": {
+                "url": "/views/risk/risk_collection/risk_collection_view.json",
+                "method": "get"
+              },
+              "props": {
+                "width": "70%"
+              }
+            },
+            {
+              "type": "delete",
+              "authId": "collection_del_btn",
+              "label": "删除",
+              "doRequest": {
+                "url": "/API/risk-management-service/risk-collection/delete",
+                "method": "post"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,98 @@
+{
+    "module": "v-inputDataForm-btn",
+    "layout": {
+        "form": {
+            "initRequest": "${{params}}",
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "uccp0003"
+                   
+                }
+            },
+            "controls": [
+                {
+                    
+                    "prod_group_code": {
+                        "control": "string",
+                        "label": "产品组编号"
+                    },
+                    "prod_group_name": {
+                        "control": "text",
+                        "label": "产品组名称",
+                        "rules": [{
+                            "required": true,
+                            "message": "产品组名称不能为空!"
+                        }]
+                    },
+                    "quota_calculation_rule": {
+                        "control": "select",
+                        "label": "额度默认计算规则",
+                        "align": "center",
+                        "dict": {
+                            "dictType": "UCCP_E_QUOTA_CALCULATION_RULE",
+                            "dictKey": [
+                                "UCCP_E_QUOTA_CALCULATION_RULE"
+                            ],
+                            "format": "label"
+                        },
+                        "rules": [{
+                            "required": true,
+                            "message": "请选择额度默认计算规则"
+                        }]
+                    },
+                    "prod_group_limit": {
+                        "control": "currency",
+                        "label": "产品组限额",
+                        "align":"left",
+                        "format": {
+                            "decimal": "2"
+                          },
+                        "rules": [{
+                            "required": true,
+                            "message": "请输入产品组限额"
+                        }]
+                    },
+                    "valid_flag": {
+                        "control": "select",
+                        "label": "有效标识",
+                        "align": "center",
+                        "dict": {
+                            "dictType": "UCCP_E_VALID_FLAG",
+                            "dictKey": [
+                                "UCCP_E_VALID_FLAG"
+                            ],
+                            "format": "label"
+                        },
+                        "rules": [{
+                            "required": true,
+                            "message": "请选择有效标识"
+                        }]
+                    },
+                    "flag": {
+                        "control": "hidden",
+                        "label": "标识判断：上级产品组编号是否可编辑",
+                        "align":"center",
+                        "events": {
+                          "condition": {
+                            "0": {
+                              "control": {
+                                "sup_prod_group_code": {
+                                  "disabled": true
+                                }
+                              }
+                            }
+                          }
+                        }
+                    },
+                    "sup_prod_group_code": {
+                        "control": "text",
+                        "label": "上级产品组编号",
+                        "align":"center"
+                    }
+                }
+            ]
+        }
+    }
+}

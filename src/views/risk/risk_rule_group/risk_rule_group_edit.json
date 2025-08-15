@@ -1,0 +1,115 @@
+{
+  "module": "v-form-editableDataGrid-btn",
+  "init":{
+    "initRequest": {
+      "url": "/API/risk-management-service/risk-rule-group/query",
+      "method": "post"
+    }
+  },
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "groupId": {
+            "label": "规则组id",
+            "control": "string",
+            "span": 12
+          },
+          "groupName": {
+            "label": "规则组名称",
+            "control": "text",
+            "span": 12,
+            "rules": [
+              {
+                "required": true,
+                "message": "请正确输入",
+                "max": 100
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "新增",
+          "icon": "el-icon-plus",
+          "keyField": {
+            "eruleId":"eruleId",
+            "eruleName":"eruleName"
+          },
+          "toRequest":{
+            "url": "/views/risk/risk_rule_group/executable_info.json",
+            "method": "get",
+            "params": {
+            }
+          },
+          "props": {
+            "width": "55%",
+            "title": "可执行规则ID列表",
+            "close": "",
+            "target": ""
+          }
+        },
+        {
+          "type": "batchDelete",
+          "label": "批量删除",
+          "icon": "el-icon-close"
+        },
+        {
+          "type": "submit",
+          "label": "保存",
+          "icon": "el-icon-tickets",
+          "doRequest": {
+            "url": "/API/risk-management-service/risk-rule-group/update",
+            "method": "post",
+            "params":{
+              "updateUser": "$g{{user_info.userCode}}"
+            }
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "pagination": {
+        "show": false
+      },
+      "name":"allData",
+      "allData": true,
+      "thead": [
+        {
+          "type": "selection",
+          "width": "50",
+          "prop": {
+            "matchKey": "string",
+            "selectVal": "2a"
+          }
+        },
+        {
+          "label": "可执行规则ID",
+          "prop": "eruleId",
+          "type": "string",
+          "rules": [
+            {
+              "required": true,
+              "message": "该控件必填"
+            }
+          ]
+        },
+        {
+          "label": "可执行规则名称",
+          "prop": "eruleName",
+          "type": "string",
+          "rules": [
+            {
+              "required": true,
+              "message": "该控件必填"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

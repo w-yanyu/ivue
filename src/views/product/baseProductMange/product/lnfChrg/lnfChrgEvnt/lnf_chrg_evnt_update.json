@@ -1,0 +1,131 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/product/baseProductMange/product/lnfChrg/lnfChrgEvnt/lnf_chrg_evnt_add.json",
+            "params": {
+              "prodcd": "${{params.prodcd}}"
+            }
+          },
+          "props": {
+            "width": "70%",
+            "title": "新增产品收费事件属性"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "CORELNTS9028",
+          "prodcd": "${{params.prodcd}}"
+        }
+      },
+      "thead": [
+        {
+          "label": "产品代码",
+          "prop": "prodcd"
+        },
+        {
+          "label": "货币代号",
+          "prop": "crcycd",
+          "dict": {
+            "dictType": "MS_CURRENCY",
+            "dictKey": [
+              "MS_CURRENCY"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "收费事件",
+          "prop": "envtcd"
+        },
+        {
+          "label": "收费事件名称",
+          "prop": "envtna"
+        },
+        {
+          "label": "收费种类",
+          "prop": "chrgfg",
+          "dict": {
+            "dictType": "E_CHRGFG",
+            "dictKey": [
+              "E_CHRGFG"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "记录状态",
+          "prop": "recdst",
+          "dict": {
+            "dictType": "E_RECDST",
+            "dictKey": [
+              "E_RECDST"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "收费代码",
+          "prop": "chrgcd"
+        },
+        {
+          "label": "收费代码名称",
+          "prop": "chrgna"
+        },
+        {
+          "label": "收费金额",
+          "prop": "chrgam"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "修改",
+              "toRequest": {
+                "url": "/views/product/baseProductMange/product/lnfChrg/lnfChrgEvnt/lnf_chrg_evnt_update_sub.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "70%",
+                "title": "修改产品收费事件属性"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "CORELNTS9030"
+                }
+              },
+              "confirm": {
+                "title": "确定删除",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

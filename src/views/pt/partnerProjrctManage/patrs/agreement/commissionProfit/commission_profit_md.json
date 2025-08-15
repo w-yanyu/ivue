@@ -1,0 +1,375 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pt0005",
+          "part_protocol_no": "${{params.part_protocol_no}}",
+          "version": "${{params.version}}"
+        }
+      },
+      "btns": [
+        {
+          "type": "submit",
+          "label": "保存",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "pt0007",
+              "part_protocol_no": "${{params.part_protocol_no}}",
+              "part_project_no": "${{params.part_project_no}}",
+              "version": "${{params.version}}"
+            }
+          },
+          "eventAfter": {
+            "doLastCallback": false
+          }
+        }
+      ],
+      "controls": [
+        {
+          "profit_cumulative_rule": {
+            "control": "select",
+            "label": "分润累计规则",
+            "width": "120px",
+            "dict": {
+              "dictKey": [
+                "PT_E_SUMMARY_CUMULATIVE_RULE"
+              ],
+              "dictType": "PT_E_SUMMARY_CUMULATIVE_RULE",
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择分润累计规则"
+              }
+            ]
+          },
+          "start_billing_date": { 
+            "control": "dateTimePicker",
+            "format": "yyyy-MM-dd",
+            "label": "开始结算日期",
+            "valueFormat": "yyyyMMdd",
+            "width": "120px",
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "profit_baseline": {
+            "control": "select",
+            "label": "分润基准",
+            "width": "120px",
+            "disabled": false,
+            "dict": {
+              "dictType": "PT_E_PROFIT_BASELINE",
+              "dictKey": [
+                "PT_E_PROFIT_BASELINE"
+              ],
+              "format": "label",
+              "include": [
+                "01",
+                "03",
+                "04",
+                "05",
+                "06",
+                "07",
+                "08"
+              ]
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入分润基准"
+              }
+            ],
+            "events": {
+              "condition": {
+                "keyVals": {
+                  "001": "'${{form.profit_baseline}}' === '01' || '${{form.profit_baseline}}' === '03'",
+                  "002": "'${{form.profit_baseline}}' === '04' || '${{form.profit_baseline}}' === '05'||'${{form.profit_baseline}}' === '06' || '${{form.profit_baseline}}' === '07'||'${{form.profit_baseline}}' === '08'"
+                },
+                "switch": {
+                  "001": {
+                    "control": {
+                      "profit__calculation_method": {
+                        "value": "01"
+                      }
+                    }
+                  },
+                  "002": {
+                    "control": {
+                      "profit__calculation_method": {
+                        "value": "02"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+        
+          "profit__calculation_method": {
+            "control": "select",
+            "disabled": true,
+            "label": "分润计算方式",
+            "width": "120px",
+            "dict": {
+              "dictType": "PT_E_PROFIT__CALCULATION_METHOD",
+              "dictKey": [
+                "PT_E_PROFIT__CALCULATION_METHOD"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择"
+              }
+            ]
+          },
+          "profit_value": {
+            "control": "text",
+            "disabled": false,
+            "label": "分润数值",
+            "width": "120px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入分润数值"
+              }
+            ]
+          },
+          "payment_method": {
+            "control": "select",
+            "disabled": false,
+            "label": "结算方式",
+            "width": "120px",
+            "dict": {
+              "dictType": "PT_E_PAYMENT_METHOD",
+              "dictKey": [
+                "PT_E_PAYMENT_METHOD"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择"
+              }
+            ],
+            "showItem": {
+              "01": [
+                "billing_frequency"
+              ]
+            },
+            "events": {
+              "condition": {
+                "01": {
+                  "control": {
+                    "billing_frequency": {
+                      "initShow": true
+                    }
+                  }
+                },
+                "02": {
+                  "control": {
+                    "billing_frequency": {
+                      "initShow": false
+                    },
+                    "payment_period1": {
+                      "initShow": false
+                    },
+                    "payment_period2": {
+                      "initShow": false
+                    },
+                    "billing_period_unit": {
+                      "initShow": false
+                    }
+                  }
+                }
+
+              }
+            }
+          },
+          "billing_frequency": {
+            "control": "select",
+            "initShow": false,
+            "disabled": false,
+            "label": "结算频率",
+            "width": "120px",
+            "dict": {
+              "dictType": "PT_E_BILLING_PREQ",
+              "dictKey": [
+                "PT_E_BILLING_PREQ"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择"
+              }
+            ],
+            "events": {
+              "condition": {
+                "1": {
+                  "control": {
+                    "payment_period1": {
+                      "label": "结算日期",
+                      "width": "120px",
+                      "initShow": true,
+                      "rules": [
+                        {
+                          "required": true,
+                          "message": "请输入结算日期"
+                        }
+                      ]
+                    },
+                    "payment_period2": {
+                      "label": "结算周期值",
+                      "width": "120px",
+                      "initShow": false,
+                      "rules": [
+                        {
+                          "expression": " ${{form.payment_period}} > 0 ",
+                          "message": "结算周期初值不能小于等于零"
+                        },
+                        {
+                          "pattern": "^[1-9]+[0-9]*$",
+                          "message": "请输入整数"
+                        },
+                        {
+                          "required": true,
+                          "message": "请输入结算周期值"
+                        }
+                      ]
+                    },
+                    "billing_period_unit": {
+                      "label": "周期单位",
+                      "width": "120px",
+                      "initShow": false
+                    }
+                  }
+                },
+                "2": {
+                  "control": {
+                    "payment_period1": {
+                      "label": "结算日期",
+                      "width": "120px",
+                      "initShow": false,
+                      "rules": [
+                        {
+                          "required": true,
+                          "message": "请输入结算日期"
+                        }
+                      ]
+                    },
+                    "payment_period2": {
+                      "label": "结算周期",
+                      "width": "120px",
+                      "initShow": true,
+                      "rules": [
+                        {
+                          "expression": " ${{form.payment_period}} > 0 ",
+                          "message": "结算周期初值不能小于等于零"
+                        },
+                        {
+                          "pattern": "^[1-9]+[0-9]*$",
+                          "message": "请输入整数"
+                        },
+                        {
+                          "required": true,
+                          "message": "请输入结算日期"
+                        }
+                      ]
+                    },
+                    "billing_period_unit": {
+                      "label": "周期单位",
+                      "width": "120px",
+                      "initShow": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "billing_period_unit": {
+            "initShow": false,
+            "control": "select",
+            "disabled": false,
+            "label": "周期单位",
+            "width": "120px",
+            "dict": {
+              "dictType": "PT_E_CYCLETYPE",
+              "dictKey": [
+                "PT_E_CYCLETYPE"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择"
+              }
+            ]
+          },
+          "payment_period1": {
+            "initShow": false,
+            "control": "dateTimePicker",
+            "startPlaceholder": "起始日期",
+            "startField": "start_billing_date",
+           
+            "label": "结算日期",
+            "width": "120px"
+          },
+          "payment_period2": {
+            "initShow": false,
+            "control": "text",
+            "label": "结算周期值",
+            "width": "120px"
+          },
+          "profit_account_no": {
+            "control": "lookup",
+            "edit": true,
+            "label": "分润账户",
+            "width": "120px",
+            "keyField": {
+              "profit_account_no": "part_center_no"
+            },
+            "events": {
+              "set": {
+                "temp_name": ""
+              }
+            },
+            "toRequest": {
+              "url": "/views/pt/partnerProjrctManage/patrs/agreement/commissionProfit/account_lookup.json",
+              "method": "GET",
+              "params": {
+                "part_no": "${{params.part_no}}"
+              }
+            },
+            "props": {
+              "width": "50%",
+              "title": "查询账户"
+            },
+            "format": "label",
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,203 @@
+{
+  "module": "v-search-btn-datagrid",
+  "pageId": "risk_score_card",
+  "layout": {
+    "form": {
+      "controls": [{
+        "scoreCardId": {
+          "label": "评分卡ID",
+          "control": "text",
+          "span": 8,
+          "rules": [{
+            "message": "字段长度超限",
+            "max": 8
+          }]
+        },
+        "scoreCardCode": {
+          "label": "评分卡代码",
+          "control": "text",
+          "span": 8,
+          "rules": [{
+            "message": "字段长度超限",
+            "max": 40
+          }]
+        },
+        "scoreCardName": {
+          "label": "评分卡名称",
+          "control": "text",
+          "span": 8,
+          "rules": [{
+            "message": "字段长度超限",
+            "max": 40
+          }]
+        }
+      }]
+    },
+    "toolbar": {
+      "btns": [{
+          "type": "add",
+          "label": "新增",
+          "authId": "score_card_add_btn",
+          "toRequest": {
+            "url": "/views/risk/risk_score_card/risk_score_card_add.json",
+            "method": "get",
+            "params": {}
+          },
+          "props": {
+            "width": "70%",
+            "title": "新增"
+          }
+        },
+        {
+          "##type": "export",
+          "##label": "下载导入模板",
+          "##authId": "score_card_inm_btn",
+          "##icon": "iconfont icon-daochu",
+          "##doRequest": {
+            "##url": "/API/risk-management-service/risk-score-card/downloadImportTemplate",
+            "##method": "post"
+          }
+        },
+        {
+          "##type": "import",
+          "##label": "导入",
+          "##authId": "score_card_in_btn",
+          "##icon": "iconfont icon-daoru1",
+          "##props": {
+            "##width": "600px",
+            "##title": "导入",
+            "##doRequest": {
+              "##url": "/API/risk-management-service/risk-score-card/import",
+              "##method": "post"
+            },
+            "##multiple": false,
+            "##name": "import",
+            "##accept": ".xls,.xlsx",
+            "##limit": 1,
+            "##size": 1024,
+            "##allSize": 1
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/API/risk-management-service/risk-score-card/page-select",
+        "method": "post"
+      },
+      "pagination": {
+        "hideOnSinglePage": false,
+        "show": true,
+        "pageSizes": [
+          10,
+          15,
+          20,
+          50,
+          100
+        ],
+        "pageSize": 10
+      },
+      "thead": [{
+          "label": "评分卡ID",
+          "prop": "scoreCardId"
+        },
+        {
+          "label": "评分卡代码",
+          "prop": "scoreCardCode"
+        },
+        {
+          "label": "评分卡名称",
+          "prop": "scoreCardName"
+        },
+        {
+          "label": "评分卡状态",
+          "prop": "scoreCardStatus",
+          "dict": {
+            "dictType": "activeStatus",
+            "dictKey": [],
+            "format": "label",
+            "doRequest": {
+              "url": "/views/risk/dictdata/activeStatus.json",
+              "method": "get"
+            }
+          }
+        },
+        {
+          "label": "备注",
+          "prop": "description"
+        },
+        {
+          "label": "修改人",
+          "prop": "updateUser"
+        },
+        {
+          "label": "修改日期",
+          "prop": "updateTime",
+          "format": "yyyy-MM-dd HH:mm:ss"
+        },
+        {
+          "label": "操作",
+          "width": "300px",
+          "btns": [{
+              "type": "export",
+              "label": "导出PDF",
+              "authId": "score_card_outp_btn",
+              "icon": "iconfont icon-daochu",
+              "doRequest": {
+                "url": "/API/risk-management-service/risk-score-card/outputPDF",
+                "method": "post"
+              }
+            },
+            {
+              "type": "export",
+              "label": "导出Excel",
+              "authId": "score_card_oute_btn",
+              "icon": "iconfont icon-daochu",
+              "doRequest": {
+                "url": "/API/risk-management-service/risk-score-card/outputExcel",
+                "method": "post"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "编缉",
+              "authId": "score_card_edt_btn",
+              "toRequest": {
+                "##url": "@riskScoreCardModelEdit",
+                "url": "@riskScoreCardModelEditNew",
+                "method": "get"
+              },
+              "props": {
+                "width": "90%",
+                "top": "4vh"
+              }
+            },
+            {
+              "type": "look",
+              "label": "查看",
+              "authId": "score_card_vie_btn",
+              "toRequest": {
+                "url": "@riskScoreCardModelView",
+                "method": "get"
+              },
+              "props": {
+                "width": "90%",
+                "top": "4vh"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "authId": "score_card_del_btn",
+              "doRequest": {
+                "url": "/API/risk-management-service/risk-score-card/del",
+                "method": "post"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

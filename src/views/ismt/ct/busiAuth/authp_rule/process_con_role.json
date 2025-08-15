@@ -1,0 +1,89 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "wf_prod_no": {
+                        "control": "lookup",
+                        "span": 12,
+                        "label": "流程产品编号",
+                        "keyField": {
+                          "wf_prod_no": "wf_prod_no"
+                        },
+                        "toRequest": {
+                          "url": "/views/ismt/ct/busiAuth/authp_rule/process_product_lookup.json",
+                          "method": "get",
+                          "params":{
+                            "appId":"${{params.appId}}"
+                          }
+                        },
+                        "props": {
+                          "title": "流程产品编号"
+                        },
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入流程产品编号"
+                            }
+                        ]
+                      }
+                }
+                
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "target": "dialog",
+                    "label": "提交",
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                          "servicecode": "ct2422",
+                          "authp_system_code": "${{params.authp_system_code}}",
+                          "appId":"${{params.appId}}",
+                          "role_id":"${{current..role_id}}"
+                        }
+                    },
+                     "eventAfter": {
+                        "doParentCallback": true,
+                        "doLastCallback": true
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "bpm0068",
+                  "appId":"${{params.appId}}"
+                }
+            },
+            "pagination": {
+                "show": false,
+                "pageSize": 10
+            },
+            "thead": [
+                {
+                    "type": "selection",
+                    "align": "center"
+                },
+                {
+                    "label": "角色id",
+                    "prop": "role_id"
+                },
+                {
+                    "label": "角色名称",
+                    "prop": "role_name"
+                }
+            ]
+        }
+    }
+  }

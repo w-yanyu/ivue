@@ -1,0 +1,96 @@
+{
+	"module": "v-approval",
+	"layout": {
+		"approvalHeader": {
+			"initRequest": {
+				"url": "/SUMP/workflow/ct2026",
+				"method": "post",
+				"params": {
+					"ince_id": "${{params.ince_id}}",
+					"servicecode": "ct2026"
+				},
+				"resultSet": {
+					"urlField": "toUrl",
+					"dataField": "data"
+				}
+			}
+		},
+		"approvalPage": {},
+		"toolbar": {
+			"btns": [{
+					"type": "approval",
+					"label": "审批",
+					"toRequest": {
+						"url": "@BuildTodoNext",
+						"method": "get",
+						"params": {
+							"route_id": "${{params.route_id}}",
+							"schedule_id": "${{params.schedule_id}}",
+							"ince_id": "${{params.ince_id}}",
+							"xxx": "${{form}}"
+						}
+					},
+					"icon": "",
+					"props": {
+						"title": "标题",
+						"close": ""
+					},
+					"show": {
+						"prop": "route_type",
+						"edit":"true",
+						"is": [
+							"B"
+						]
+					}
+				},
+				{
+					"type": "approval",
+					"label": "审批",
+					"toRequest": {
+						"url": "@BuildTodoNext",
+						"method": "get",
+						"params": {
+							"route_id": "${{params.route_id}}",
+							"schedule_id": "${{params.schedule_id}}",
+							"ince_id": "${{params.ince_id}}",
+							"xxx": "${{form}}"
+						}
+					},
+					"icon": "",
+					"props": {
+						"title": "标题",
+						"close": "",
+						"width": "900px"
+
+					},
+					"show": {
+						"prop": "route_type",
+						"is": [
+							"C"
+						]
+					}
+				},
+				{
+					"type": "submit",
+					"label": "确认",
+					"doRequest": {
+						"url": "/SUMP/call/RPCCall",
+						"method": "POST",
+						"params": {
+							"servicecode": "ct2044",
+							"route_id": "${{params.route_id}}",
+							"schedule_id": "${{params.schedule_id}}"
+						}
+					},
+					"show": {
+						"prop": "route_type",
+						"is": [
+							"S",
+							"R"
+						]
+					}
+				}
+			]
+		}
+	}
+}

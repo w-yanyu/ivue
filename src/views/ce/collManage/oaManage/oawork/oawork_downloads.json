@@ -1,0 +1,111 @@
+{
+  "module": "v_search_btn_datagrid",
+
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "template_type": {
+            "control": "select",
+            "label": "模板类型",
+            "dict": {
+              "dictType": "E_TEMPLATE_TYPE",
+              "dictKey": [
+                "E_TEMPLATE_TYPE"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择模板类型"
+              }
+            ]
+          },
+          "template_name": {
+            "control": "text",
+            "label": "模板名称"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "close",
+          "label": "关闭"
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pl0095"
+        }
+      },
+
+      "thead": [
+        {
+          "type":"string",
+          "label": "模板类型",
+          "align":"center",
+          "prop": "template_type",
+          "dict": {
+            "dictType": "E_TEMPLATE_TYPE",
+            "dictKey": [
+              "E_TEMPLATE_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type":"string",
+          "label": "模板代码",
+          "align":"center",
+          "prop": "template_cd"
+        },
+        {
+          "type":"string",
+          "label": "模板名称",
+          "align":"center",
+          "prop": "template_name"
+        },
+        {
+          "type":"string",
+          "label": "模板用途",
+          "align":"center",
+          "prop": "template_desc"
+        },
+        {
+          "type":"string",
+          "label": "文件名称",
+          "align":"center",
+          "prop": "file_name"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "align":"center",
+          "btns": [
+            {
+              "type": "export",
+              "label": "下载",
+              "doRequest": {
+                "url": "/SUMP/icmcall/downloadStream",
+                "icon": "el-icon-download",
+                "method": "POST",
+                "params": {
+                  "fileName": "${{current.file_name}}",
+                  "filePath": "${{current.template_content}}"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

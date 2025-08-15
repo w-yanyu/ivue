@@ -1,0 +1,178 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": "${{params}}",
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pd0282"
+        }
+      },
+      "controls": [
+        {
+          "protocol_no": {
+            "control": "string",
+            "label": "协议编码",
+            "width": "130px",
+            "rules": [
+              {
+                "min": 0,
+                "max": 30,
+                "message": "长度不能超过30个字符"
+              },
+              {
+                "required": true
+              }
+            ]
+          },
+          "protocol_name": {
+            "control": "text",
+            "label": "协议名称",
+            "width": "130px",
+            "rules": [
+              {
+                "min": 0,
+                "max": 20,
+                "message": "长度不能超过20个字符"
+              },
+              {
+                "required": true
+              }
+            ]
+          },
+          "business_type": {
+            "control": "select",
+            "label": "业务类型",
+            "width": "130px",
+            "dict": {
+              "dictType": "PD_E_BUSI_TYPE",
+              "dictKey": [
+                "PD_E_BUSI_TYPE"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择业务类型"
+              }
+            ]
+          },
+          "suit_cust_type": {
+            "control": "select",
+            "label": "适用客户类型",
+            "width": "130px",
+            "dict": {
+              "dictType": "PD_E_CUST_CLASS",
+              "dictKey": [
+                "PD_E_CUST_CLASS"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择适用客户类型"
+              }
+            ]
+          },
+          "protocol_path": {
+            "control": "string",
+            "label": "协议模板路径",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请上传协议模板"
+              }
+            ]
+          },
+          "fileList": {
+            "control": "dynamic",
+            "isShowChildForm": true,
+            "span": 12,
+            "toRequest": {
+              "url": "@minioUploadButton",
+              "method": "get",
+              "params": {
+                "protocol_path": "protocol_path",
+                "formKey": "fileList",
+                "formLabel": "附件上传"
+              }
+            }
+          },
+          "protocol_status": {
+            "control": "select",
+            "label": "协议状态",
+            "width": "130px",
+            "dict": {
+              "dictType": "PD_E_PROTOCOL_STATUS",
+              "dictKey": [
+                "PD_E_PROTOCOL_STATUS"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择协议状态"
+              }
+            ]
+          },
+          "protocol_take_node": {
+            "control": "select",
+            "label": "协议签订节点",
+            "width": "130px",
+            "dict": {
+              "dictType": "PD_E_PROTOCOL_NODE",
+              "dictKey": [
+                "PD_E_PROTOCOL_NODE"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择协议签订节点"
+              }
+            ]
+          },
+          "protocol_take_type": {
+            "control": "select",
+            "label": "协议签订类型",
+            "width": "130px",
+            "dict": {
+              "dictType": "PD_E_PROTOCOL_TYPE",
+              "dictKey": [
+                "PD_E_PROTOCOL_TYPE"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择协议签订类型"
+              }
+            ]
+          },
+          "effect_date": {
+            "label": "生效日期",
+            "span": "8",
+            "width": "130px",
+            "control": "dateTimePicker",
+            "editable": true,
+            "format": "yyyyMMdd",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入生效日期"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

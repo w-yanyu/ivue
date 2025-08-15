@@ -1,0 +1,95 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ar0606",
+          "apply_no": "${{params.apply_no}}",
+          "lend_no": "${{params.lend_no}}"
+        }
+      },
+      "thead": [
+        {
+          "label": "本期期数",
+          "align": "center",
+          "type": "text",
+          "prop": "current_period_num"
+        },
+        {
+          "label": "每期还款总额(元)",
+          "align": "center",
+          "type": "text",
+          "prop": "repay_amt",
+          "format": {
+            "thousand": ",",
+            "decimal": "2"
+          }
+        },
+        {
+          "label": "还款日期",
+          "align": "center",
+          "type": "dateTimePicker",
+          "format": "yyyyMMdd",
+          "prop": "rpymt_dt"
+        },
+        {
+          "label": "收费金额(元)",
+          "align": "center",
+          "type": "text",
+          "prop": "chrg_amt",
+          "format": {
+            "thousand": ",",
+            "decimal": "2"
+          }
+        },
+        {
+          "label": "收费日期",
+          "align": "center",
+          "type": "dateTimePicker",
+          "format": "yyyyMMdd",
+          "prop": "chrg_dt"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/icms/lend/lendIOU/feePlan/feePlan_modify.json",
+                "method": "post"
+              },
+              "#show": {
+                "expression": "'${{params.pageType}}' !== 'info'"
+              },
+              "props": {
+                "width": "65%",
+                "title": "维护"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/icms/lend/lendIOU/feePlan/feePlan_info.json",
+                "method": "post"
+              },
+              "props": {
+                "width": "65%",
+                "title": "详情"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

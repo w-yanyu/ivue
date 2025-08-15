@@ -1,0 +1,169 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "scope": "templateScope",
+        "form": {
+            "initRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "pd0125",
+                    "page_template_no": "${{params.page_template_no}}",
+                    "prod_type": "${{params.prod_type}}"
+                }
+            },
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "pd0122"
+                }
+            },
+            "btns": [
+                {
+                    "type": "submit",
+                    "label": "提交"
+                }
+            ],
+            "controls": [
+                {
+                    
+                    "page_template_no": {
+                        "control": "lookup",
+                        "label": "页面模板编号",
+                        "width": "180px",
+                        "edit": false,
+                        "keyField": {
+                          "add_path": "add_path",
+                          "modify_path": "modify_path",
+                          "detail_path": "detail_path",
+                          "page_template_no": "page_template_no"
+                        },
+                        "toRequest": {
+                          "url": "/views/pd/prodTemplatePage/prodPageComponents/page_components_lookup.json",
+                          "method": "post",
+                          "params": {
+                            "apply_type": "${{params.apply_type}}",
+                            "prod_type": "${{current.prod_type}}"
+                        }
+                        },
+                        "props": {
+                          "width": "87%",
+                          "title": "页面组件选择"
+                        },
+                        "rules": [
+                          {
+                            "required": true,
+                            "message": "请选择页面模板编号"
+                          }
+                        ]
+                      },
+                    "page_template_name": {
+                        "width": "180px",
+                        "control": "text",
+                        "disabled": true,
+                        "label": "页面模板名称",
+                        "value": "${{params.page_template_name}}"
+                    }
+                },
+                {
+                    "id": {
+                        "width": "180px",
+                        "control": "hidden",
+                        "value": "${{params.id}}",
+                        "label": "页面模板码值"
+                    },
+                    "prod_type": {
+                        "width": "180px",
+                        "control": "hidden",
+                        "label": "产品类型"
+                    },
+                    "apply_type": {
+                        "width": "180px",
+                        "control": "hidden",
+                        "label": "申请类型",
+                        "value": "${{params.apply_type}}"
+                    }
+                },
+                {
+                    "prod_type_name": {
+                        "width": "180px",
+                        "control": "hidden",
+                        "label": "产品类型名称"
+                    },
+                    "apply_type_name": {
+                        "width": "180px",
+                        "control": "hidden",
+                        "label": "申请类型名称"
+                    }
+                },
+                {
+                    "must_flag": {
+                        "width": "180px",
+                        "control": "select",
+                        "label": "是否必须",
+                        "dict": {
+                            "dictType": "MS_E_YESORNO",
+                            "dictKey": [
+                                "MS_E_YESORNO"
+                            ],
+                            "format": "label"
+                        },
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "必填项"
+                            }
+                        ]
+                    },
+                    "valid_flag": {
+                        "width": "180px",
+                        "control": "select",
+                        "label": "是否有效",
+                        "dict": {
+                            "dictType": "MS_E_YESORNO",
+                            "dictKey": [
+                                "MS_E_YESORNO"
+                            ],
+                            "format": "label"
+                        },
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "必填项"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "add_path": {
+                        "control": "text",
+                        "width": "180px",
+                        "span": 24,
+                        "disabled": true,
+                        "label": "新增页面路径"
+                    }
+                },
+                {
+                    "modify_path": {
+                        "control": "text",
+                        "width": "180px",
+                        "disabled": true,
+                        "span": 24,
+                        "label": "维护页面路径"
+                    }
+                },
+                {
+                    "detail_path": {
+                        "control": "text",
+                        "width": "180px",
+                        "disabled": true,
+                        "span": 24,
+                        "label": "详情页面路径"
+                        
+                    }
+                }
+            ]
+        }
+    }
+}

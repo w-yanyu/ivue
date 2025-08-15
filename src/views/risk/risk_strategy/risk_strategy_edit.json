@@ -1,0 +1,197 @@
+{
+  "module": "v-inputDataForm-btn",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "strategyId": {
+            "label": "策略ID",
+            "control": "string",
+            "span": 12
+          },
+          "strategyName": {
+            "label": "策略名称",
+            "control": "text",
+            "span": 12,
+            "rules": [
+              {
+                "required": true,
+                "message": "请正确输入",
+                "max": 100
+              }
+            ]
+          }
+        },
+        {
+          "transType": {
+            "label": "交易种类",
+            "control": "select",
+            "span": 12,
+            "dict": {
+              "dictType": "transType",
+              "dictKey": [],
+              "format": "value-label",
+              "doRequest": {
+                "url": "/views/risk/dictdata/transType.json",
+                "method": "get"
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "该控件必填"
+              }
+            ]
+          },
+          "transClass": {
+            "label": "交易类型",
+            "control": "select",
+            "span": 12,
+            "dict": {
+              "dictType": "transClass",
+              "dictKey": [],
+              "format": "value-label",
+              "doRequest": {
+                "url": "/views/risk/dictdata/transClass.json",
+                "method": "get"
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "该控件必填"
+              }
+            ]
+          }
+        },
+        {
+          "businessScene": {
+            "label": "业务场景",
+            "control": "select",
+            "span": 12,
+            "dict": {
+              "dictType": "businessScene",
+              "dictKey": [],
+              "format": "value-label",
+              "doRequest": {
+                "url": "/views/risk/dictdata/businessScene.json",
+                "method": "get"
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "该控件必填"
+              }
+            ]
+          },
+          "handlerMode": {
+            "label": "判定模式",
+            "control": "select",
+            "span": 12,
+            "dict": {
+              "dictType": "handlerMode",
+              "dictKey": [],
+              "format": "value-label",
+              "doRequest": {
+                "url": "/views/risk/dictdata/handlerMode.json",
+                "method": "get"
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "该控件必填",
+                "max": 1
+              }
+            ]
+          }
+        },
+        {
+          "effectStatus": {
+            "label": "生效状态",
+            "control": "select",
+            "span": 12,
+            "dict": {
+              "dictType": "effectStatus",
+              "dictKey": [],
+              "format": "value-label",
+              "doRequest": {
+                "url": "/views/risk/dictdata/effectStatus.json",
+                "method": "get"
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "该控件必填",
+                "max": 1
+              }
+            ]
+          },
+          "deployStatus": {
+            "label": "部署状态",
+            "control": "string",
+            "span": 12,
+            "dict": {
+              "dictType": "deployStatus",
+              "dictKey": [],
+              "format": "value-label",
+              "doRequest": {
+                "url": "/views/risk/dictdata/deployStatus.json",
+                "method": "get"
+              }
+            }
+          }
+        },
+        {
+          "ruleGroupList": {
+            "label": "规则组",
+            "control": "select",
+            "multiple": true,
+            "span": 24,
+            "dict": {
+              "dictType": "rule-group",
+              "dictKey": [],
+              "format": "value-label",
+              "doRequest": {
+                "url": "/API/risk-management-service/combobox-select/rule-group",
+                "method": "post"
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "该控件必填"
+              }
+            ]
+          }
+        },
+        {
+          "description": {
+            "label": "描述",
+            "control": "textarea",
+            "span": 24,
+            "rules": [
+              {
+                "message": "请正确输入",
+                "max": 500
+              }
+            ]
+          }
+        }
+      ],
+      "initRequest": {
+        "url": "/API/risk-management-service/risk_strategy/query",
+        "method": "post"
+      },
+      "doRequest": {
+        "url": "/API/risk-management-service/risk_strategy/update",
+        "method": "post",
+        "params":{
+          "updateUser": "$g{{user_info.userCode}}"
+        }
+      }
+    }
+  }
+}

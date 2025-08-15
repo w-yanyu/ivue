@@ -1,0 +1,141 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "cust_name": {
+                        "control": "text",
+                        "label": "客户名称",
+                        "rules": [
+                            {
+                                "max": 10,
+                                "message": "长度不能超过10个字符"
+                            }
+                        ]
+                    },
+                    "apply_no": {
+                        "control": "text",
+                        "label": "申请书编号",
+                        "rules": [
+                            {
+                                "max": 32,
+                                "message": "长度不能超过32个字符"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+          "btns": [
+            {
+              "type": "add",
+              "target": "dialog",
+              "label": "任务清分列表",
+              "toRequest": {
+                "method": "GET",
+                "url": "/views/pl/archivesmgement/cleardata/cleardatalist.json"
+              },
+              "props": {
+                "width":"80%",
+                "title": "任务清分"
+              }
+            }
+          ]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "pl0350",
+                    "archives_status":"0"
+                }
+            },
+            "pagination": {
+                "show": true
+            },
+            "thead": [
+                {
+                    "type": "index"
+                },
+                {
+                    "label": "客户名称",
+                    "prop": "cust_name"
+                },
+                {
+                    "label": "业务品种",
+                    "prop": "busi_type"
+                },
+                {
+                    "label": "业务金额",
+                    "prop": "busi_amt",
+                    "rules": [
+                        {
+                            "max": 100,
+                            "message": "长度不能超过100个字符"
+                        }
+                    ]
+                },
+                {
+                    "label": "业务起始日",
+                    "prop": "busi_start"
+                },
+                {
+                    "label": "业务到期日",
+                    "prop": "busi_end"
+                },
+                {
+                    "label": "申请书编号",
+                    "prop": "apply_no",
+                    "dict": {
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "借据编号",
+                    "prop": "loan_no"
+                },
+                {
+                    "label": "放款审查员",
+                    "prop": "loan_examiner"
+                },
+                {
+                    "label": "放款经办机构",
+                    "prop": "loan_org"
+                },
+              {
+                "label": "归档编号",
+                "prop": "archive_no"
+              },
+              {
+                "label": "操作",
+                "fixed": "right",
+                "width": 120,
+                "align": "center",
+                "btns": [
+                  {
+                    "type": "custom",
+                    "target": "dialog",
+                    "label": "任务清分",
+                    "toRequest": {
+                      "method": "post",
+                      "url": "/views/pl/archivesmgement/cleardata/cleardatalist.json",
+                      "params": {
+                        "archive_no": "${{current.archive_no}}"
+                      }
+                    },
+                    "props": {
+                      "width":"80%",
+                      "title": "任务清分"
+                    }
+                  }
+                ]
+              }
+            ]
+        }
+    }
+}

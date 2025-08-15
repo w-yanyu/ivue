@@ -1,0 +1,177 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "doc_no": {
+            "control": "text",
+            "label": "影像资料编号",
+            "rules": [
+              {
+                "max": 64,
+                "message": "长度不能超过32个字符"
+              }
+            ]
+          },
+          "doc_name": {
+            "control": "text",
+            "label": "影像资料名称",
+            "rules": [
+              {
+                "max": 20,
+                "message": "长度不能超过20个字符"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/us/entManager/custDocManager/custDocManager_add.json",
+            "params": {
+              "cust_no":"${{params.cust_no}}"
+            }
+          },
+          "show": {
+            "expression": "'${{params.show_flash}}' == '1'"
+        },
+          "props": {
+            "title": "新增客户影像"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "us1110",
+          "cust_no":"${{params.cust_no}}"
+        }
+      },
+      "pagination": {
+        "pageSizes": [
+          10,
+          15,
+          20,
+          50,
+          100
+        ],
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "label": "序号",
+          "type": "index",
+          "align": "center"
+        },
+        {
+          "label": "影像资料编号",
+          "prop": "doc_no",
+          "align": "center"
+        },
+        {
+          "label": "影像资料名称",
+          "prop": "doc_name",
+          "align": "center",
+          "btns": [
+            {
+              "type": "look",
+              "toRequest": {
+                "url": "@lookImg",
+                "params": {
+                  "path": "${{current.doc_path}}"
+                }
+              },
+              "props": {
+                "width": "75%",
+                "title": "预览"
+              }
+            }
+          ]
+        },
+
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/us/entManager/custDocManager/custDocManager_update.json",
+                "method": "GET",
+                "params": {
+                  "doc_no": "${{current.doc_no}}"
+                }
+              },
+              "show": {
+                "expression": "'${{params.show_flash}}' == '1'"
+            },
+              "props": {
+                "width": "65%",
+                "title": "影像资料维护"
+              }
+            },
+            {
+              "type": "export",
+              "label": "下载",
+              "doRequest": {
+                "url": "/SUMP/minioCall/download",
+                "method": "GET",
+                "params": {
+                  "path": "${{current.doc_path}}",
+                  "fileName": "${{current.doc_name}}"
+                }
+              },
+              "eventAfter": {
+                "doParentCallback": true
+              }
+            },
+            {
+              "type": "look",
+              "label": "预览",
+              "toRequest": {
+                "url": "@lookImg",
+                "params": {
+                  "path": "${{current.doc_path}}"
+                }
+              },
+              "props": {
+                "width": "75%",
+                "title": "预览"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "us1113",
+                  "protocol_no": "${{current.doc_no}}"
+                }
+              },
+              "show": {
+                "expression": "'${{params.show_flash}}' == '1'"
+            }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

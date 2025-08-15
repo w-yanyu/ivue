@@ -1,0 +1,124 @@
+{
+  "module": "v_search_editableDataGrid",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "initRequest": "${{params}}",
+      "controls": [
+        {
+          "collector": {
+            "control": "text",
+            "label": "参数代码"
+          },
+          "collector_name": {
+            "control": "text",
+            "label": "参数名称"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "新增",
+          "icon": "el-icon-plus",
+          "disabled": "'${{params.pageType}}' === 'look'"
+        },
+        {
+          "type": "batchDelete",
+          "label": "批量删除",
+          "icon": "el-icon-close",
+          "disabled": "'${{params.pageType}}' === 'look'"
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "deci050058",
+          "variable_code": "${{params.variable_code}}"
+        }
+      },
+      "name": "paramsList",
+      "###initRequest": "${{params.paramsList}}",
+      "pagination": {
+        "show": false
+      },
+      "thead": [
+        {
+          "type": "selection",
+          "align": "center",
+          "width": "55",
+          "fixed": "left",
+          "disabled": "'${{params.pageType}}' === 'look'"
+        },
+        {
+          "align": "center",
+          "label": "参数代码",
+          "prop": "parm_code",
+          "type": "text",
+          "disabled": "'${{params.pageType}}' === 'look'"
+        },
+        {
+          "align": "center",
+          "label": "参数名称",
+          "prop": "parm_name",
+          "type": "text",
+          "disabled": "'${{params.pageType}}' === 'look'"
+        },
+        {
+          "align": "center",
+          "label": "数据类型",
+          "prop": "data_type",
+          "dict": {
+            "dictType": "DECI_E_DATA_TYPE",
+            "dictKey": ["DECI_E_DATA_TYPE"],
+            "format": "value-label"
+          },
+          "type": "select",
+          "disabled": "'${{params.pageType}}' === 'look'"
+        },
+        {
+          "align": "center",
+          "label": "描述",
+          "prop": "description",
+          "type": "text",
+          "disabled": "'${{params.pageType}}' === 'look'"
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "fixed": "right",
+          "width": "250px",
+          "btns": [
+            {
+              "type": "delete",
+              "label": "删除",
+              "show": {
+                "expression": "'${{params.pageType}}' === 'edit'"
+              }
+            },
+            {
+              "type": "look",
+              "label": "查看",
+              "toRequest": {
+                "url": "/views/risk/risk_variable_management/variable_list_add_paramter_view.json",
+                "method": "get",
+                "params": {
+                  "pageType": "look"
+                }
+              },
+              "props": {
+                "width": "70%"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

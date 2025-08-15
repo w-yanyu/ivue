@@ -1,0 +1,152 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "scope": "templateScope",
+            "initRequest":"${{params}}",
+            "initDataOnce":true,
+            "controls": [
+                {
+                    "cansfl": {
+                        "control": "select",
+                        "label": "参数分类",
+                        "width": "130px",
+                        "dict": {
+                            "dictType": "BPM_E_CANSFL",
+                            "dictKey": [
+                                "BPM_E_CANSFL"
+                            ],
+                            "format": "label"
+                        }
+                    },
+                    "methcd": {
+                        "label": "方法编号",
+                        "control": "hidden",
+                        "value":"${{params.methcd}}"
+                    }
+
+
+
+                }
+            ],
+            "foldLineNumber": 3
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "target": "dialog",
+                    "label": "新增",
+                    "toRequest": {
+                        "method": "POST",
+                        "url": "/views/cstm/policyManagement/method_parameters_add.json",
+                        "params": {
+                            "methcd":"${{params.methcd}}"
+                        }
+                    },
+                    "props": {
+                        "width": "65%",
+                        "title": "方法参数新增"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "isInitSearch": false,
+            "initDataOnce":true,
+            "scope": "searchTable",
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "AS_RLMS_CP_SEMTPA",
+                    "methcd":"${{params.methcd}}"
+                }
+            },
+            "thead": [
+                {
+                    "label": "参数序号",
+                  "align": "center",
+                    "prop": "sortno"
+                },
+                 {
+                    "prop":"cansfl",
+                   "align": "center",
+                    "control": "select",
+                    "label": "参数分类",
+                    "dict": {
+                        "dictType": "BPM_E_CANSFL",
+                        "dictKey": [
+                            "BPM_E_CANSFL"
+                        ],
+                        "format": "label"
+                    }
+                },
+
+                {
+                    "label": "参数类型",
+                    "align": "center",
+                    "prop": "canslx",
+                    "type": "select",
+                    "dict": {
+                        "dictType": "BPM_E_CANSLX",
+                        "dictKey": [
+                            "BPM_E_CANSLX"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "固定参数名",
+                    "align": "center",
+                    "prop": "gdcans",
+                    "type": "select",
+                    "dict": {
+                        "dictType": "BPM_E_INCSXX",
+                        "dictKey": [
+                            "BPM_E_INCSXX"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 200,
+                    "align":"center",
+                    "btns": [
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/cstm/policyManagement/method_parameters_edit.json",
+                                "method": "post"
+                            },
+                            "props": {
+                                "width": "65%",
+                                "title": "方法参数维护"
+                            }
+                        },
+
+                        {
+                            "type": "delete",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "post",
+                                "params": {
+                                    "servicecode": "AS_RLMS_CP_DEMTPA",
+                                    "trantp":"DELETE"
+
+                                }
+                            }
+                        }
+                    ]
+                }
+            ],
+            "pagination": {
+                "show": true
+            }
+        }
+    }
+}

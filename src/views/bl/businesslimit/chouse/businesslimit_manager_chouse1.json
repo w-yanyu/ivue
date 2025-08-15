@@ -1,0 +1,264 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initDataOnce":true,
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "bsquvi",
+          "qutaid": "${{params.qutaid}}"
+        }
+      },
+      "btns": [
+
+        {
+          "type": "submit",
+          "label": "修改",
+          "icon": "",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "bsquup",
+              "qutaid": "${{params.qutaid}}",
+              "brchcd": [
+                {
+                  "branch": "1"
+                }
+
+              ]
+            }
+          }
+        }
+      ],
+
+      "controls": [
+        {
+          "chgamo": {
+            "control": "text",
+            "label": "渠道规模限额(元)",
+            "width": "50%",
+            "rules": [
+              {
+                "required": true,
+                "message": "渠道规模限额(元)不得为空"
+              }
+            ]
+          },
+
+           "chanid": {
+            "control": "text",
+            "label": "渠道编号",
+             "disabled": true,
+
+            "width": "50%",
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择业务限额类型"
+              }
+
+            ]
+          }
+
+        },
+        {
+          "qutana": {
+            "control": "text",
+            "label": "限额对象名称",
+            "width": "50%",
+            "disabled": true,
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择业务限额类型"
+              }
+
+            ]
+          },
+          "channa": {
+            "control": "text",
+            "label": "渠道名称",
+            "disabled": true,
+            "width": "50%",
+
+            "rules": [
+              {
+                "required": true,
+                "message": "协议名称不得为空"
+              },
+              {
+                "max": 10,
+                "message": "长度不能超过10个字符"
+              }
+            ]
+          }
+        },
+        {
+
+          "chdamo": {
+            "control": "text",
+            "label": "单日最大放款限额(元)",
+            "width": "50%",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入法人名称"
+              }
+
+            ]
+
+          },
+          "chmoth": {
+            "control": "text",
+            "label": "月度最大放款限额(元)",
+            "width": "50%",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入法人名称"
+              }
+
+            ]
+
+          }
+        },
+        {
+
+
+          "idd": {
+
+            "control": "lookup",
+            "placeholder": "请选择信息...",
+            "label": "协议信息",
+            "prop": "id",
+            "width": "50%",
+            "edit": true,
+            "keyField":{
+              "chanid": "chanid",
+              "channa": "channa"
+            },
+            "toRequest": {
+              "url": "/views/bl/businesslimit/update/businesslimit_manager_update1.json",
+              "method": "post",
+              "params": {
+                "qutaid": "${{params.qutaid}}"
+              }
+            },
+            "props": {
+              "title": "协议信息选择"
+            }
+          },
+
+          "qutaty": {
+            "span": 8,
+            "control": "hidden",
+            "label": "业务限额类型",
+            "disabled": true,
+
+            "width": "50%",
+            "value": "${{params.qutaty}}",
+            "dict": {
+              "dictType": "E_LIMIT",
+              "dictKey": [
+                "E_LIMIT"
+              ],
+              "format": "label"
+            },
+            "events":{
+              "condition": {
+                "01":{
+                  "tabs":[
+                    {
+                      "id":"01",
+                      "type":"123"
+                    },{
+                      "id": "02",
+                      "type": "hide"
+                    },{
+                      "id": "03",
+                      "type": "hide"
+                    },
+                    {
+                      "id": "04",
+                      "type": "hide"
+                    }
+
+                  ]
+                },
+                "02":{
+                  "tabs":[
+                    {
+                      "id":"01",
+                      "type":"hide"
+                    },{
+                      "id": "02",
+                      "type": "123"
+                    },{
+                      "id": "03",
+                      "type": "hide"
+                    },
+                    {
+                      "id": "04",
+                      "type": "hide"
+                    }
+
+                  ]
+                },
+                "03":{
+                  "tabs":[
+                    {
+                      "id":"01",
+                      "type":"hide"
+                    },{
+                      "id": "02",
+                      "type": "hide"
+                    },{
+                      "id": "03",
+                      "type": "123"
+                    },
+                    {
+                      "id": "04",
+                      "type": "hide"
+                    }
+
+                  ]
+                },
+                "04":{
+                  "tabs":[
+                    {
+                      "id":"01",
+                      "type":"hide"
+                    },{
+                      "id": "02",
+                      "type": "hide"
+                    },{
+                      "id": "03",
+                      "type": "hide"
+                    },
+                    {
+                      "id": "04",
+                      "type": "123"
+                    }
+
+                  ]
+                }
+              }
+            }
+          },
+          "brchcd": {
+            "value": [
+              {
+                "branch": "1"
+              }
+
+            ]
+          }
+
+        }
+      ]
+    }
+  }
+}

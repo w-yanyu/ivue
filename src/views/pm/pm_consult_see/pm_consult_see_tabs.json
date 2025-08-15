@@ -1,0 +1,82 @@
+{
+  "module": "dynamicTabs",
+  "layout": {
+    "tabs": {
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "cgcoag",
+          "ofpacd": "${{params.ofpacd}}",
+          "seqnum": "${{params.seqnum}}",
+          "subtyp": "0",
+          "typet": "1"
+        },
+        "#condition":{
+          "switch":{
+            "200":{
+              "toRequest":{
+                "url":"/views/pm/pm_consult_see/pm_consult_update_tabs.json",
+                "target":"dialog",
+                "props":{
+                  "title":"信息变更",
+                  "width":"75%"
+                }
+              }
+            }
+          }
+        }
+      },
+      "confirm": {
+        "title": "提示信息",
+        "msg": "是否确定进行信息变更?变更后不可以再次变更。",
+        "confirmButtonText": "确定",
+        "cancelButtonText": "取消"
+      },
+      "btns": [
+        {
+          "type": "submit",
+          "label": "发起变更"
+        }
+      ],
+      "tabHeader": [
+        {
+          "id": "tab1",
+          "label": "基本信息",
+          "closable": false,
+          "disabled": false,
+          "icon": "el-icon-date",
+          "toRequest": {
+            "url": "/views/pm/pm_consult_see/pm_consult_see_tabs_baseInfo.json",
+            "method": "post"
+          }
+        },
+
+        {
+          "id": "tab3",
+          "label": "项目敞口信息",
+          "icon": "el-icon-date",
+          "closable": false,
+          "disabled": false,
+          "toRequest": {
+            "url": "/views/pm/pm_consult_see/pm_consult_see_tabs_openconfig.json",
+            "method": "post"
+          }
+        },
+        {
+          "id": "tab4",
+          "label": "协议文件",
+          "icon": "el-icon-date",
+          "closable": false,
+          "disabled": false,
+          "toRequest": {
+            "url": "@DocumentAgreementsee"
+          }
+        }
+      ],
+      "defaultActiveKey": "tab1",
+      "position": "top",
+      "styleClass": "card"
+    }
+  }
+}

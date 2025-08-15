@@ -1,0 +1,152 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "scope": "templateScope",
+      "initRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "pd0155",
+          "prod_version": "${{params.prod_version}}",
+          "template_id": "${{params.template_id}}"
+        }
+      },
+      "controls": [
+        {
+          "template_id": {
+            "control": "string",
+            "span": 12,
+            "label": "模板编号"
+          },
+          "template_name": {
+            "control": "string",
+            "label": "模板名称",
+            "value": "${{params.template_id}}",
+            "span": 12,
+            "#rules": [
+              {
+                "required": true,
+                "message": "必填项"
+              }
+            ]
+          },
+          "prod_version": {
+            "control": "hidden",
+            "label": "prod_version"
+          }
+        },
+        {
+          "cust_class": {
+            "label": "适用客户类型",
+            "control": "select",
+            "dict": {
+              "dictType": "PD_E_CUST_CLASS",
+              "dictKey": [
+                "PD_E_CUST_CLASS"
+              ]
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择适用客户类型"
+              }
+            ]
+          },
+          "prod_type": {
+            "control": "remoteSelect",
+            "disabled": "true",
+            "label": "产品类型",
+            "labelField": "title",
+            "valueField": "id",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "pd0144",
+                "grupno": "0006",
+                "pid": "KSCP"
+              }
+            },
+            "format": "label",
+            "span": 12,
+            "events": {
+              "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "pd0143",
+                  "grupno": "0006",
+                  "id": "${{templateScope.prod_type}}"
+                },
+                "resultSet": {
+                  "prod_type_name": "title"
+                }
+              }
+            },
+            "#rules": [
+              {
+                "required": true,
+                "message": "必填项"
+              }
+            ]
+          }
+        },
+        {
+          "apply_type_list": {
+            "control": "remoteSelect",
+            "disabled": "false",
+            "multiple": true,
+            "span": 12,
+            "label": "申请类型列表",
+            "labelField": "title",
+            "valueField": "id",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "pd0144",
+                "grupno": "0006",
+                "pid": "${{templateScope.prod_type}}"
+              }
+            },
+            "format": "label",
+            "#rules": [
+              {
+                "required": true,
+                "message": "必填项"
+              }
+            ]
+          },
+          "valid_flag": {
+            "control": "select",
+            "disabled": "true",
+            "value": "0",
+            "span": 12,
+            "label": "是否有效",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            },
+            "#rules": [
+              {
+                "required": true,
+                "message": "必填项"
+              }
+            ]
+          }
+        },
+        {
+          "prod_type_name": {
+            "control": "hidden",
+            "span": 12,
+            "label": "产品类型名称"
+          }
+        }
+      ]
+    }
+  }
+}

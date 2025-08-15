@@ -1,0 +1,53 @@
+{
+  "module": "d-steps",
+  "layout": {
+      "steps": {
+          "scope":"formObj",
+          "direction": "horizontal",
+          "alignCenter": true,
+          "finishStatus": "success",
+          "simpleType": false,
+        
+          "nextStepType": "validate",
+          "list": [
+              {
+                  "scope":"step1",
+                  "title": "业务指标定义新增",
+                  "icon": "el-icon-edit",
+                  "toRequest": { 
+                      "url": "/views/ismt/ct/busiAuth/authp_dimension/authp_dimension_add.json",
+                      "params": {
+                          "appId":"${{params.appId}}"
+                      },
+                      "method": "get"
+                  }
+              },
+              {
+                  "scope":"step2",
+                  "title": "业务指标参数新增",
+                  "icon": "el-icon-edit",
+                  "toRequest": {
+                      "url": "/views/ismt/ct/busiAuth/authp_dimension/authp_dimension_param_manager.json",
+                      "params": {
+                          "dimension_code": "${{formObj.step1.dimension_code}}",
+                          "appId":"${{params.appId}}",
+                          "dimension_name":"${{formObj.step1.dimension_name}}",
+                          "dimension_type":"${{formObj.step1.dimension_type}}",
+                          "dimension_busi_type":"${{formObj.step1.dimension_busi_type}}",
+                          "achive_type":"${{formObj.step1.achive_type}}",
+                          "service_path":"${{formObj.step1.service_path}}",
+                          "belonging_table":"${{formObj.step1.belonging_table}}",
+                          "query_condition":"${{formObj.step1.query_condition}}"
+                      },
+                      "method": "get"
+
+                  },
+                  "doRequest": {
+                    "url": "###",
+                    "method": "get"
+                  }
+              }
+          ]
+      }
+  }
+}

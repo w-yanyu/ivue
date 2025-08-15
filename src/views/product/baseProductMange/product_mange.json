@@ -1,0 +1,159 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "prod_code": {
+            "control": "text",
+            "label": "产品代码",
+            "rules": [
+              {
+                "max": 18,
+                "message": "长度不能超过18个字符"
+              }
+            ]
+          },
+          "prod_nm": {
+            "control": "text",
+            "label": "产品名称",
+            "rules": [
+              {
+                "max": 80,
+                "message": "长度不能超过80个字符"
+              }
+            ]
+          }
+        },
+        {
+          "proddp": {
+            "control": "select",
+            "label": "货币代号",
+            "dict": {
+                "dictType": "MS_CURRENCY",
+                "dictKey": [
+                    "MS_CURRENCY"
+                ],
+                "format": "label"
+            }
+          },
+          "crdtcd": {
+            "control": "text",
+            "label": "产品描述",
+            "rules": [
+              {
+                "max": 80,
+                "message": "长度不能超过80个字符"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/product/baseProductMange/product/product_add.json"
+          },
+          "props": {
+            "title": "基础产品信息新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "/ln3270"
+        }
+      },
+      "thead": [
+        {
+          "label": "产品代码",
+          "prop": "prodcd",
+          "align": "center"
+        },
+        {
+          "label": "产品名称",
+          "prop": "prodna",
+          "align": "center"
+        },
+        {
+          "label": "产品描述",
+          "prop": "prodtx",
+          "align": "center"
+        },
+        {
+          "label": "产品状态",
+          "prop": "prodst",
+          "align": "center",
+          "dict": {
+            "dictType": "E_PRODST",
+            "dictKey": [
+              "E_PRODST"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align": "center",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/product/baseProductMange/product/product_info.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "70%",
+                "title": "基础产品信息详情"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/product/baseProductMange/product/product_info_update.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "70%",
+                "title": "基础产品信息维护"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "CORELNTS9048",
+                  "crcycd": "CNY"
+                }
+              },
+              "confirm": {
+                "title": "确定删除",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

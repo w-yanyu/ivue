@@ -1,0 +1,153 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "POST",
+            "url": "/views/us/privateManage/baseInfo/socialFundInfo/social_add.json",
+            "params": {
+              "cust_no": "${{params.cust_no}}"
+            }
+          },
+          "show": {
+            "expression": "'${{params.show_flash}}' == '1'"
+          },
+          "props": {
+            "width": "75%",
+            "title": "个人社保信息新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "scope": "searchTable",
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "us0156",
+          "cust_no": "${{params.cust_no}}"
+        }
+      },
+      "thead": [
+        {
+          "label": "客户编号",
+          "align": "center",
+          "prop": "cust_no"
+        },
+        {
+          "type":"currency",
+          "label": "医疗保险",
+          "align": "center",
+          "prop": "medical_insurance",
+          "format": {
+            "thousand": ",",
+            "decimal": "2",
+            "type": "currency"
+          }
+        },
+        {
+          "type":"currency",
+          "label": "养老保险",
+          "prop": "endow_insurance",
+          "align": "center",
+          "format": {
+            "thousand": ",",
+            "decimal": "2",
+            "type": "currency"
+          }
+        },
+        {
+          "type":"currency",
+          "label": "生育保险",
+          "align": "center",
+          "prop": "matern_insurance",
+          "format": {
+            "thousand": ",",
+            "decimal": "2",
+            "type": "currency"
+          }
+        },
+        {
+          "type":"currency",
+          "label": "失业保险",
+          "align": "center",
+          "prop": "unemploy_insurance",
+          "format": {
+            "thousand": ",",
+            "decimal": "2",
+            "type": "currency"
+          }
+        },
+        {
+          "type":"currency",
+          "label": "工伤保险",
+          "align": "center",
+          "prop": "injury_insuranc",
+          "format": {
+            "thousand": ",",
+            "decimal": "2",
+            "type": "currency"
+          }
+        },
+        {
+          "label": "缴费日期",
+          "align": "center",
+          "prop": "insur_paymentdate"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 160,
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/us/privateManage/baseInfo/socialFundInfo/social_modify.json",
+                "method": "post"
+              },
+              "show": {
+                "expression": "'${{params.show_flash}}' == '1'"
+              },
+              "props": {
+                "width": "75%",
+                "title": "个人社保信息维护"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "us0158"
+                }
+              },
+              "show": {
+                "expression": "'${{params.show_flash}}' == '1'"
+              },
+              "confirm": {
+                "title": "确定删除",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            }
+          ]
+        }
+      ],
+      "pagination": {
+        "show": true
+      }
+    }
+  }
+}

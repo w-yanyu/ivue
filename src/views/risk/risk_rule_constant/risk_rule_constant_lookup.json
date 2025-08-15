@@ -1,0 +1,100 @@
+{
+  "module": "v-search-btn-datagrid",
+  "pageId": "risk_rule_constant",
+  "layout": {
+    "form": {
+      "controls": [{
+        "const_code": {
+          "label": "常量代码",
+          "control": "text",
+          "span": 8,
+          "rules": [{
+            "message": "请正确输入",
+            "max": 20
+          }]
+        },
+        "const_name": {
+          "label": "常量名称",
+          "control": "text",
+          "span": 8,
+          "rules": [{
+            "message": "请正确输入",
+            "max": 60
+          }]
+        }
+      }]
+    },
+    "datagrid": {
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+            "servicecode": "deci010201",
+             "isList": true
+        }
+      },
+      "thead": [
+        {
+        "label": "序号",
+        "type": "index"
+        },
+        {
+          "label": "常量代码",
+          "prop": "const_code"
+        },
+        {
+          "label": "常量名称",
+          "prop": "const_name"
+        },
+        {
+          "label": "数据类型",
+          "prop": "data_type",
+          "dict": {
+            "dictType": "data_type",
+            "dictKey": [],
+            "doRequest": {
+              "url": "/views/risk/dictdata/dataType.json",
+              "method": "get"
+            }
+          }
+        },
+        {
+          "label": "值类型",
+          "prop": "value_type",
+          "dict": {
+            "dictType": "value_type",
+            "dictKey": [],
+            "doRequest": {
+              "url": "/views/risk/dictdata/valueType.json",
+              "method": "get"
+            }
+          }
+        },
+        {
+          "label": "常量值",
+          "prop": "const_value"
+        },
+        {
+          "label": "最新维护时间",
+          "prop": "data_update_time"
+        }, {
+          "label": "备注",
+          "prop": "description"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": "100%",
+          "align": "center",
+          "btns": [
+            {
+              "type": "bringback",
+              "label": "选择"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

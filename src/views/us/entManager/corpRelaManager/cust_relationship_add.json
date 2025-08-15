@@ -1,0 +1,151 @@
+{
+    "module": "v-inputDataForm-btn",
+    "layout": {
+        "form": {
+            "initRequest": "${{params}}",
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "us0231",
+                    "rela_classify": "${{params.rela_classify}}"
+                }
+            },
+            "controls": [{
+                "cust_no": {
+                    "control": "hidden",
+                    "label": "当前客户编号",
+                    "disabled": true
+                },
+                "cust_name": {
+                    "control": "lookup",
+                    "width": "10px",
+                    "edit": true,
+                    "rules": [{
+                        "required": true,
+                        "message": "关联客户名称不能为空"
+                    }],
+                    "label": "关联客户名称",
+                    "keyField": {
+                        "cust_name": "cust_name",
+                        "recust_no": "cust_no"
+                    },
+                    "toRequest": {
+                        "url": "/views/us/entManager/ent_cust_lookup.json",
+                        "method": "post"
+                    },
+                    "props": {
+                        "title": "查询关联客户名称"
+                    },
+                    "format": "label"
+                },
+                "recust_no": {
+                    "control": "hidden",
+                    "label": "关联企业编号",
+                    "width": "10px",
+                    "rules": [{
+                            "max": 20,
+                            "message": "长度不能超过20个字符"
+                        },
+                        {
+                            "required": true,
+                            "message": "关联企业不能为空"
+                        }
+                    ]
+                },
+                "is_our_cust": {
+                    "control": "select",
+                    "label": "是否我行客户:",
+                    "width": "10px",
+                    "align": "center",
+                    "value": "1",
+                    "disabled": true,
+                    "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                            "MS_E_YESORNO"
+                        ],
+                        "format": "label"
+                    },
+                    "rules": [{
+                        "required": true,
+                        "message": "是否我行客户不能为空"
+                    }]
+                },
+                "ent_relation": {
+                    "control": "select",
+                    "label": "关联关系:",
+                    "width": "10px",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "US_E_ENT_RELATION",
+                        "dictKey": [
+                            "US_E_ENT_RELATION"
+                        ],
+                        "format": "label"
+                    },
+                    "rules": [{
+                        "required": true,
+                        "message": "关联关系不能为空"
+                    }]
+                },
+                "relate_level": {
+                    "control": "select",
+                    "label": "关联级别:",
+                    "width": "10px",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "US_E_RELATION_LEVEL",
+                        "dictKey": [
+                            "US_E_RELATION_LEVEL"
+                        ],
+                        "format": "label"
+                    },
+                    "rules": [{
+                        "required": true,
+                        "message": "关联级别不能为空"
+                    }]
+                },
+                "association_type": {
+                    "control": "select",
+                    "width": "10px",
+                    "label": "关联类型:",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "US_E_RELATION_TYPE",
+                        "dictKey": [
+                            "US_E_RELATION_TYPE"
+                        ],
+                        "format": "label"
+                    }
+                },
+                "is_relate": {
+                    "control": "select",
+                    "width": "10px",
+                    "label": "是否关联关系定义人:",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                            "MS_E_YESORNO"
+                        ],
+                        "format": "label"
+                    }
+                },
+                "remark": {
+                    "label": "备注",
+                    "control": "textarea",
+                    "width": "10px",
+                    "span": "24",
+                    "autosize": {
+                        "minRows": 4
+                    },
+                    "rules": [{
+                        "max": "100",
+                        "message": "长度不能超过100个字符"
+                    }]
+                }
+            }]
+        }
+    }
+}

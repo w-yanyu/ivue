@@ -1,0 +1,210 @@
+{
+  "module": "v-inputDataForm-btn",
+  "layout": {
+    "form": {
+      "doRequest": {
+        "url": "/API/risk-management-service/risk_rule_constant/add",
+        "method": "post",
+        "params":{
+          "createUser": "$g{{user_info.userCode}}",
+          "updateUser": "$g{{user_info.userCode}}"
+        }
+      },
+      "controls": [
+        {
+          "constCode": {
+            "label": "常量代码",
+            "control": "text",
+            "span": 12,
+            "rules": [
+              {
+                "required": true,
+                "message": "请正确输入",
+                "max": 20
+              }
+            ]
+          },
+          "constName": {
+            "label": "常量名称",
+            "control": "text",
+            "span": 12,
+            "rules": [
+              {
+                "required": true,
+                "message": "请正确输入",
+                "max": 60
+              }
+            ]
+          }
+        },
+        {
+          "dataType": {
+            "label": "数据类型",
+            "control": "select",
+            "span": 12,
+            "disabledOptions":["Boolean"],
+            "dict": {
+              "dictType": "dataType",
+              "dictKey": [],
+              "format": "value-label",
+              "doRequest": {
+                "url": "/views/risk/dictdata/dataType.json",
+                "method": "get"
+              }
+            },
+            "events": {
+              "condition": {
+                "switch": {
+                  "String":{
+                    "control": {
+                      "constValue": {
+                        "value": "",
+                        "rules": [
+                          {
+                            "required": true,
+                            "message": "请正确输入"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "Int":{
+                    "control":{
+                      "constValue":{
+                        "value":"",
+                        "rules":[
+                          {
+                            "required":true,
+                            "pattern":"^-?[0-9]+$",
+                            "message":"请正确输入整数"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "Decimal":{
+                    "control":{
+                      "constValue":{
+                        "value":"",
+                        "rules":[
+                          {
+                            "required":true,
+                            "pattern":"^(-?[0-9]+)(\\.[0-9]{1,2})?$",
+                            "message":"请正确输入可带两位小数的数字"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "Boolean":{
+                    "control":{
+                      "constValue":{
+                        "value":"",
+                        "rules":[
+                          {
+                            "required":true,
+                            "pattern":"(true)|(false)",
+                            "message":"请正确输入可带两位小数的数字"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "该控件必填"
+              }
+            ]
+          },
+          "status": {
+            "label": "状态",
+            "control": "radio",
+            "value":"0",
+            "span": 12,
+            "dict": {
+              "dictType": "constantStatus",
+              "dictKey": [],
+              "doRequest": {
+                "url": "/views/risk/dictdata/constantStatus.json",
+                "method": "get"
+              }
+            },
+            "disabled":true,
+            "rules": [
+              {
+                "required": true,
+                "message": "该控件必填"
+              }
+            ]
+          }
+        },
+        {
+          "description": {
+            "label": "描述",
+            "control": "textarea",
+            "span": 24,
+            "showWordLimit": 500,
+            "maxlength": 500,
+            "rules": [
+              {
+                "message": "请正确输入",
+                "max": 500
+              }
+            ]
+          }
+        },
+        {
+          "valueType": {
+            "label": "值类型",
+            "control": "radio",
+            "span": 12,
+            "dict": {
+              "dictType": "valueType",
+              "dictKey": [],
+              "doRequest": {
+                "url": "/views/risk/dictdata/valueType.json",
+                "method": "get"
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "该控件必填"
+              }
+            ],
+            "showItem": {
+              "":[],
+              "S":["constValue"],
+              "M":["constInfo"]
+            }
+          },
+          "constValue": {
+            "label": "常量值",
+            "initShow": false,
+            "control": "text",
+            "span": 12
+          },
+          "constInfo": {
+            "label": "常量值",
+            "initShow": false,
+            "span": 24,
+            "control": "dynamic",
+            "toRequest": {
+              "url": "/views/risk/risk_rule_constant/constant_add.json",
+              "method":"get",
+              "params":{
+                  "dataType":"${{form.dataType}}"    
+              }
+            },
+            "props": {
+            }
+          }
+        }
+      ]
+    }
+  }
+}

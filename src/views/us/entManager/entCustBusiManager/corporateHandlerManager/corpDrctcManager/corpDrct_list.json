@@ -1,0 +1,146 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "toolbar": {
+            "btns": [{
+                "type": "add",
+                "target": "dialog",
+                "label": "新增",
+                "toRequest": {
+                    "method": "POST",
+                    "url": "/views/us/entManager/entCustBusiManager/corporateHandlerManager/corpDrctcManager/corpDrct_add.json",
+                    "params": {
+                        "cust_no": "${{params.cust_no}}"
+                    }
+                },
+                "show": {
+                    "expression": "'${{params.show_flash}}' == '1'"
+                },
+                "props": {
+                    "width": "75%",
+                    "title": "董事会成员信息新增"
+                }
+            }]
+        },
+        "datagrid": {
+            "isInitSearch": true,
+            "scope": "searchTable",
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "us0360",
+                    "cust_no": "${{params.cust_no}}"
+                }
+            },
+            "thead": [{
+                    "label": "序号",
+                    "type": "index",
+                    "align": "center"
+                },
+                {
+                    "label": "姓名",
+                    "prop": "cust_name",
+                    "align": "center"
+                },
+                {
+                    "label": "证件类型",
+                    "prop": "cert_type",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "MS_E_CRET_TYPE",
+                        "dictKey": [
+                            "MS_E_CRET_TYPE"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "证件号码",
+                    "prop": "cert_no",
+                    "align": "center"
+                },
+                {
+                    "label": "董事会职务",
+                    "prop": "board_job",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "US_E_BOARD_JOB",
+                        "dictKey": [
+                            "US_E_BOARD_JOB"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "职务任职开始",
+                    "prop": "post_start",
+                    "align": "center"
+                },
+                {
+                    "label": "职务任职结束",
+                    "prop": "post_ent",
+                    "align": "center"
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 160,
+                    "align": "center",
+                    "btns": [{
+                            "type": "look",
+                            "label": "详情",
+                            "toRequest": {
+                                "url": "/views/us/entManager/entCustBusiManager/corporateHandlerManager/corpDrctcManager/corpDrct_info.json",
+                                "method": "POST"
+                            },
+                            "props": {
+                                "width": "75%",
+                                "title": "董事会成员信息详情"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/us/entManager/entCustBusiManager/corporateHandlerManager/corpDrctcManager/corpDrct_update.json",
+                                "method": "POST"
+                            },
+                            "show": {
+                                "expression": "'${{params.show_flash}}' == '1'"
+                            },
+                            "props": {
+                                "width": "75%",
+                                "title": "董事会成员信息维护"
+                            }
+                        },
+                        {
+                            "type": "delete",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "us0363"
+                                }
+                            },
+                            "confirm": {
+                                "title": "确定删除",
+                                "confirmButtonText": "确定",
+                                "cancelButtonText": "取消"
+                            },
+                            "show": {
+                                "expression": "'${{params.show_flash}}' == '1'"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "pagination": {
+                "show": true
+            }
+        }
+    }
+}

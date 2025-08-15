@@ -1,0 +1,248 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "addlog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/pd/dueDiliTemplate/templatePage/ArbBorrowerSeri/ArbBorrowerSeri_add.json",
+            "params": {
+              "apply_no": "${{params.apply_no}}",
+              "cust_no": "${{params.cust_no}}",
+              "due_item_no": "${{params.due_item_no}}"
+            }
+          },
+          "props": {
+            "width": "60%",
+            "title": "借款人投资服务业信息新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ar1860",
+          "apply_no": "${{params.apply_no}}",
+          "cust_no": "${{params.cust_no}}",
+          "due_item_no": "${{params.due_item_no}}"
+        }
+      },
+      "thead": [
+        {
+          "type": "string",
+          "label": "服务业编号",
+          "prop": "sere_no",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "投资企业名称",
+          "prop": "invb_name",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "format": "yyyyMMdd",
+          "label": "注册时间",
+          "prop": "regist_time",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "位置",
+          "prop": "position",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "币种",
+            "disabled": true,
+          "prop": "ccy_code",
+          "dict": {
+            "dictType": "MS_CURRENCY",
+            "dictKey": [
+              "MS_CURRENCY"
+            ],
+            "format": "label"
+          },
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "注册资金",
+          "decimal": "2",
+          "format": {
+            "thousand": ","
+          },
+          "prop": "reg_capital",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "股东构成",
+          "prop": "shar_form",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "出资份额",
+          "decimal": "2",
+          "format": {
+            "thousand": ","
+          },
+          "prop": "cont_amt",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "股权占比",
+          "prop": "equi_ratio",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "经营范围",
+          "prop": "business_area",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "主营项目",
+          "prop": "main_project",
+          "align": "center"
+        },
+        {
+          " type": "string",
+          "label": "经营项目",
+          "prop": "busi_item",
+          "align": "center"
+        },
+        {
+          " type": "string",
+          "label": "固定资产投资是否完成",
+          "prop": "is_inve_fixa",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          " type": "string",
+          "label": "经营规模",
+          "prop": "oper_scale",
+          "align": "center"
+        },
+        {
+          " type": "string",
+          "label": "知名度",
+          "prop": "popularity",
+          "align": "center"
+        },
+        {
+          " type": "string",
+          "label": "当地市场行业地位",
+          "prop": "locm_indp",
+          "align": "center"
+        },
+        {
+          " type": "string",
+          "label": "行业管理部门规定的各项经营许可证是否已办妥",
+          "prop": "is_oper_credit",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          " type": "string",
+          "label": "经营手续是否齐全",
+          "prop": "is_oper_proc",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "fixed":"right",
+          "width": "200px",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/pd/dueDiliTemplate/templatePage/ArbBorrowerSeri/ArbBorrowerSeri_info.json",
+                "method": "GET",
+                "params": {
+                  "apply_no": "${{params.apply_no}}",
+                  "cust_no": "${{params.cust_no}}",
+                  "due_item_no": "${{params.due_item_no}}"
+                }
+              },
+              "props": {
+                "width": "60%",
+                "title": "借款人投资服务业信息详情"
+              }
+            },
+            {
+              "type": "look",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/pd/dueDiliTemplate/templatePage/ArbBorrowerSeri/ArbBorrowerSeri_update.json",
+                "method": "GET",
+                "params": {
+                  "apply_no": "${{params.apply_no}}",
+                  "cust_no": "${{params.cust_no}}",
+                  "due_item_no": "${{params.due_item_no}}"
+                }
+              },
+              "props": {
+                "width": "60%",
+                "title": "借款人投资服务业信息维护"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "ar1863"
+                }
+              },
+              "confirm": {
+                "title": "删除",
+                "msg": "确定删除吗？",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

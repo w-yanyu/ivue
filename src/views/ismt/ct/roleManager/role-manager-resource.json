@@ -1,0 +1,69 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "btns": [{
+                "type": "submit",
+                "label": "提交",
+                "icon": "",
+                "doRequest": {
+                    "url": "/SUMP/call/RPCCall",
+                    "method": "POST",
+                    "params": {
+                        "servicecode": "ct2061"
+                    }
+                }
+            }],
+            "controls": [{
+                    "role_name": {
+                        "control": "text",
+                        "label": "角色名称",
+                        "disabled": true,
+                        "value": "${{params.role_name}}",
+                        "span": 24,
+                        "width": "120px",
+                        "format": "label"
+                    }
+                },
+                {
+                    "role_id": {
+                        "control": "text",
+                        "label": "角色ID",
+                        "value": "${{params.role_id}}",
+                        "span": 24,
+                        "width": "120px",
+                        "disabled": true,
+                        "format": "label"
+                    }
+                },
+                {
+                    "submitData": {
+                        "control": "lookup",
+                        "label": "菜单选择",
+                        "span": 24,
+                        "width": "120px",
+                        "multiple": true,
+                        "rules": [{
+                            "required": true,
+                            "message": "请选择菜单"
+                        }],
+                        "keyField": {
+                            "submitData": "menu_id"
+                        },
+                        "toRequest": {
+                            "url": "/views/ismt/ct/roleManager/role_menu_tree.json",
+                            "method": "post",
+                            "params": {
+                                "role_id": "${{params.role_id}}"
+                            }
+                        },
+                        "props": {
+                            "title": "菜单选择"
+                        },
+                        "format": "label"
+                    }
+                }
+            ]
+        }
+    }
+}

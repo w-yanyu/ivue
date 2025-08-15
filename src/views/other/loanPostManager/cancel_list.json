@@ -1,0 +1,103 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    
+                    "trandt": {
+                        "control": "dateTimePicker",
+                        "label": "处理日期"
+                       
+                      },
+                      "succes": {
+                        "label": "处理状态",
+                        "control": "select",
+                        "dict": {
+                          "format": "label",
+                          "dictKey": [
+                            "E_SUCCESS"
+                          ],
+                          "dictType": "E_SUCCESS"
+                        }
+                      }
+                }
+            ],
+            "foldLineNumber": 3
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "export",
+                    "label": "导出",
+                    "icon": "iconfont icon-daochu",
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/plms/exportRecord",
+                        "method": "post",
+                        "params": {
+                            "trandt":"${{form.trandt}}",
+                            "succes":"${{form.succes}}"
+                        }
+                    },
+                    "confirm":{
+                      "title":"提示信息",
+                      "msg":"确认导出吗？",
+                      "confirmButtonText":"确定",
+                      "cancelButtonText":"取消"
+                    }
+                }
+            ]
+        },
+        
+        "datagrid": {
+            "isInitSearch": false,
+            "scope": "searchTable",
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "PLMSKGSS0013"
+                }
+            },
+            "thead": [
+             
+                {
+                    "label": "姓名",
+                    "prop": "acctna",
+                    "align": "center"
+                },
+                {
+                    "label": "身份证号",
+                    "prop": "idtfno",
+                    "align": "center"
+                },
+                {
+                    "label": "借据号",
+                    "prop": "acctno",
+                    "align": "center"
+                },
+                {
+                    "label": "处理状态",
+                    "prop": "succes",
+                    "type": "select",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "E_SUCCESS",
+                        "dictKey": [
+                            "E_SUCCESS"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "错误原因",
+                    "prop": "failrs",
+                    "align": "center"
+                }
+            ],
+            "pagination": {
+                "show": true
+            }
+        }
+    }
+}

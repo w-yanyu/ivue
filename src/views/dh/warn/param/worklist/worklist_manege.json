@@ -1,0 +1,188 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+      "form": {
+        "controls": [
+          {
+            "task_name": {
+              "label": "预警任务名称",
+             
+              "control": "text"
+            },
+            "validity": {
+              "control": "select",
+              "label": "是否有效",
+            
+              "dict": {
+                "dictType": "MS_E_YESORNO",
+                "dictKey": [
+                  "MS_E_YESORNO"
+                ],
+                "format": "label"
+              }
+            }
+          },
+          {
+            "data_update_user": {
+              "label": "操作人",
+              "control": "hidden"
+            },
+            "start_date": {
+              "label": "操作开始时间",
+              "width": "140px",
+              "control": "hidden",
+              "format":"yyyyMMdd"
+            },
+            "end_date": {
+              "label": "操作结束时间",
+              "width": "140px",
+              "control": "hidden",
+              "format":"yyyyMMdd"
+            }
+          }
+        ]
+      },
+      "toolbar": {
+        "btns": [
+          {
+            "type": "add",
+            "label": "新增",
+            "toRequest": {
+                "url": "/views/dh/warn/param/worklist/worklist_add.json",
+                "method": "get",
+                "params": {
+                    
+                }
+            },
+            "props": {
+                "title": "预警任务单新增",
+                "width": "75%"
+            }
+          }
+        ]
+      },
+      "datagrid": {
+        "scope": "searchTable",
+        "isInitSearch": false,
+        "doRequest": {
+          "url": "/SUMP/icmcall/icmRPCCall",
+          "method": "POST",
+          "params": {
+            "servicecode": "wa1301"
+          }
+        },
+        "thead": [
+            {
+              "label": "序号",
+              "type" :  "index"
+            },
+            {
+              "label": "预警任务编号",
+
+              "prop": "task_id",
+              "align": "center"
+            },
+            {
+              "label": "预警任务名称",
+
+              "prop": "task_name",
+              "align": "center"
+            },
+            {
+              "label": "预警频率",
+
+              "prop": "warn_rate_num",
+              "align": "center"
+            },
+            {
+              "label": "预警频率类型",
+              "align": "center",
+              "prop": "warn_rate_style",
+              "dict": {
+                "dictType": "E_RATE_STAYLE",
+                "dictKey": [
+                  "E_RATE_STAYLE"
+                ],
+                "format": "label"
+              }
+            },
+            {
+              "label": "首次预警时间",
+
+              "prop": "first_warn_time",
+              "align": "center"
+            },
+            {
+                "label": "是否有效",
+                "align": "center",
+                "prop": "validity",
+                "dict": {
+                  "dictType": "MS_E_YESORNO",
+                  "dictKey": [
+                    "MS_E_YESORNO"
+                  ],
+                  "format": "label"
+                }
+            },
+            {
+              "label": "操作日期",
+
+              "prop": "data_update_time",
+              "align": "center"
+            },
+            {
+              "label": "操作",
+              "fixed": "right",
+              "width": 180,
+              "align":"center",
+              "btns": [
+                {
+                  "type": "edit",
+                  "label": "详情",
+                  "toRequest": {
+                      "url": "/views/dh/warn/param/worklist/worklist_detalis.json",
+                      "method": "get",
+                      "params": {
+                          
+                      }
+                  },
+                  "props": {
+                      "title": "预警任务单详情",
+                      "width": "75%"
+                  }
+                },
+                {
+                  "type": "edit",
+                  "label": "维护",
+                  "toRequest": {
+                      "url": "/views/dh/warn/param/worklist/worklist_modify.json",
+                      "method": "get",
+                      "params": {
+                          
+                      }
+                  },
+                  "props": {
+                      "title": "预警任务单维护",
+                      "width": "75%"
+                  }
+                },
+                {
+                  "type": "delete",
+                  "label": "删除",
+                  "doRequest": {
+                      "url": "/SUMP/icmcall/icmRPCCall",
+                      "method": "POST",
+                      "params": {
+                          "servicecode": "wa1305",
+                          "task_id": "${{current.task_id}}",
+                          "trantp": "DELETE"
+                      }
+                  }
+                }
+              ]
+            }
+        ]
+      }
+    }
+  }
+  

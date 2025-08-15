@@ -1,0 +1,136 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "toolbar": {
+            "btns": [{
+                "type": "add",
+                "target": "dialog",
+                "label": "新增",
+                "toRequest": {
+                    "method": "POST",
+                    "params": {
+                        "cust_no": "${{params.cust_no}}"
+                    },
+                    "url": "/views/us/peersManage/manage_index_add.json"
+                },
+                "show": {
+                    "expression": "'${{params.show_flash}}' == '1'"
+                },
+                "props": {
+                    "width": "75%",
+                    "title": "经营指标信息新增"
+                }
+            }]
+        },
+        "datagrid": {
+            "isInitSearch": true,
+            "scope": "searchTable",
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "us0954",
+                    "cust_no": "${{params.cust_no}}"
+                }
+            },
+            "thead": [
+                {
+                    "label": "序号",
+                    "type": "index",
+                    "align": "center"
+                },
+                {
+                    "label": "年份",
+                    "prop": "years",
+                    "align": "center"
+                },
+                {
+                    "label": "资本充足率(%)",
+                    "prop": "capital_adequacy_ratio",
+                    "align": "center"
+                },
+                {
+                    "label": "不良贷款率(%)",
+                    "prop": "non_performing_loan_ratio",
+                    "align": "center"
+                },
+                {
+                    "label": "总资产（亿元）",
+                    "prop": "total_assets_peer",
+                    "align": "center"
+                },
+                {
+                    "label": "净利润（亿元）",
+                    "prop": "net_profit_peer",
+                    "align": "center"
+                },{
+                    "label": "流动性比率(%)",
+                    "prop": "liquidity_ratio",
+                    "align": "center"
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 160,
+                    "align": "center",
+                    "btns": [{
+                            "type": "look",
+                            "label": "详情",
+                            "toRequest": {
+                                "url": "/views/us/peersManage/manage_index_info.json",
+                                "method": "POST",
+                                "params":{
+                                    "cust_no": "${{params.cust_no}}",
+                                    "years": "${{current.years}}"
+                                }
+                            },
+                            "props": {
+                                "width": "75%",
+                                "title": "经营指标信息详情"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/us/peersManage/manage_index_modify.json",
+                                "method": "post"
+                            },
+                            "show": {
+                                "expression": "'${{params.show_flash}}' == '1'"
+                            },
+                            "props": {
+                                "width": "75%",
+                                "title": "经营指标信息维护"
+                            }
+                        },
+                        {
+                            "type": "delete",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "us0956",
+                                    "cust_no": "${{params.cust_no}}",
+                                    "years": "${{current.years}}"
+                                }
+                            },
+                            "show": {
+                                "expression": "'${{params.show_flash}}' == '1'"
+                            },
+                            "confirm": {
+                                "title": "确定删除",
+                                "confirmButtonText": "确定",
+                                "cancelButtonText": "取消"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "pagination": {
+                "show": true
+            }
+        }
+    }
+}

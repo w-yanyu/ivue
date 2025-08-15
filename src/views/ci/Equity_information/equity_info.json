@@ -1,0 +1,125 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "initDataOnce": true,
+            "controls": [{
+                "capsid": {
+                    "label": "流水号",
+                    "control": "text",
+                    "rules": [{
+                        "max": 19,
+                        "message": "长度不能超过19个字符"
+                    }]
+                }
+            }]
+        },
+        "toolbar": {
+            "btns": [{
+                "type": "add",
+                "target": "dialog",
+                "label": "新增",
+                "toRequest": {
+                    "method": "GET",
+                    "url": "/views/ci/Equity_information/equity_add.json"
+                },
+                "props": {
+                    "width": "80%",
+                    "title": "股本信息新增"
+                }
+            }]
+        },
+        "datagrid": {
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "IUMSCUTS0035"
+                }
+            },
+            "thead": [{
+                    "type": "index",
+                    "label": "序号",
+                    "align": "center"
+
+                },
+                {
+                    "label": "验资类别",
+                    "prop": "vetype",
+                    "align": "center"
+
+                },
+                {
+                    "label": "会计验资机构名称",
+                    "prop": "acfirm",
+                    "align": "center"
+
+                },
+                {
+                    "label": "注册资本金额",
+                    "prop": "regamt",
+                    "align": "center"
+
+                },
+                {
+                    "label": "总股本",
+                    "prop": "prosto",
+                    "align": "center"
+
+                },
+                {
+                    "label": "会计验资时间",
+                    "prop": "veridt",
+                    "align": "center"
+
+                },
+                {
+                    "label": "发布时间",
+                    "prop": "issudt",
+                    "align": "center"
+
+                },
+                {
+                    "label": "操作",
+                    "width": "160px",
+                    "btns": [{
+                            "type": "edit",
+                            "label": "新增",
+                            "toRequest": {
+                                "url": "/views/ci/Equity_information/equity_modify.json",
+                                "method": "post"
+                            },
+                            "props": {
+                                "width": "80%",
+                                "title": "股本信息新增"
+                            }
+                        },
+                        {
+                            "type": "delete",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "IUMSCUTS0038"
+                                }
+                            }
+                        },
+                        {
+                            "type": "look",
+                            "label": "查看",
+                            "toRequest": {
+                                "url": "/views/ci/Equity_information/equity_details.json",
+                                "method": "GET",
+                                "props": {
+                                    "width": "65%",
+                                    "title": "企业股本信息查看"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

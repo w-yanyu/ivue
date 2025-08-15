@@ -1,0 +1,251 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "name": "info",
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "icon": "",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "us0003",
+              "mobile_no": "${{formData.mobile_no}}"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "cust_name": {
+            "control": "text",
+            "label": "客户名称（征）",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入客户名称（征）"
+              },
+              {
+                "max": 200,
+                "message": "长度不能超过200个字符"
+              }
+            ]
+          },
+          "country_code": {
+            "control": "select",
+            "label": "国籍",
+            "width": "130px",
+            "dict": {
+              "dictType": "US_E_INCTRY",
+              "dictKey": [
+                "US_E_INCTRY"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择"
+              }
+            ]
+          },
+          "cust_befor_name": {
+            "control": "text",
+            "label": "曾用名",
+            "width": "130px",
+            "rules": [
+              {
+                "required": false,
+                "message": "请输入客户曾用名"
+              },
+              {
+                "max": 80,
+                "message": "长度不能超过80个字符"
+              }
+            ]
+          },
+          "cust_english_name": {
+            "control": "text",
+            "label": "客户英文名称（征）",
+            "width": "130px",
+            "rules": [
+              {
+                "required": false,
+                "message": "请输入客户英文名称（征）"
+              },
+              {
+                "max": 80,
+                "message": "长度不能超过80个字符"
+              }
+            ]
+          },
+          "cust_class": {
+            "control": "select",
+            "label": "客户类别",
+            "width": "130px",
+            "dict": {
+              "dictType": "US_E_CUCLAS",
+              "dictKey": [
+                "US_E_CUCLAS"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择客户类别"
+              }
+            ]
+          },
+          "cust_type": {
+            "control": "select",
+            "label": "客户类型",
+            "width": "130px",
+            "dict": {
+              "dictType": "US_E_CUST_TYPE",
+              "dictKey": [
+                "US_E_CUST_TYPE"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择客户类型"
+              }
+            ]
+          },
+          "mobile_no": {
+            "control": "text",
+            "label": "电话号码",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入电话号码"
+              }
+            ]
+          },
+          "cert_type": {
+            "control": "select",
+            "label": "证件类型（征）",
+            "width": "130px",
+            "dict": {
+              "dictType": "MS_E_CRET_TYPE",
+              "dictKey": [
+                "MS_E_CRET_TYPE"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择证件类型（征）"
+              }
+            ]
+          },
+          "cert_no": {
+            "control": "text",
+            "label": "证件号码（征）",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入证件号码（征）"
+              },
+              {
+                "max": 30,
+                "message": "长度不能超过30个字符"
+              }
+            ]
+          },
+          "cert_day": {
+            "label": "证件签发日期",
+            "width": "130px",
+            "control": "dateTimePicker",
+            "editable": true,
+            "format": "yyyyMMdd",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入证件签发日期"
+              }
+            ]
+          },
+          "card_end_day": {
+            "label": "证件到期日期",
+            "width": "130px",
+            "control": "dateTimePicker",
+            "editable": true,
+            "format": "yyyyMMdd",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入证件到期日期"
+              }
+            ],
+            "disabledDate": {
+              "startRange": "${{formData.issuing_addr}}",
+              "endRange": "3000-01-01"
+            }
+          },
+          "issuing_addr": {
+            "control": "areaCascade",
+            "title": "请选择证件地址",
+            "label": "证件地址",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入证件地址"
+              },
+              {
+                "max": 80,
+                "message": "长度不能超过80个字符"
+              }
+            ]
+          },
+          "#indvfg": {
+            "control": "hidden",
+            "label": "是否个人客户",
+            "width": "130px",
+            "value": "Y",
+            "disabled": true,
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择是否个人客户"
+              }
+            ]
+          }
+        },
+        {
+          "islpac": {
+            "control": "hidden",
+            "label": "是否法人关联客户",
+            "width": "130px",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

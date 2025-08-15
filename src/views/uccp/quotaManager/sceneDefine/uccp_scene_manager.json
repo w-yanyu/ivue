@@ -1,0 +1,142 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "scene_number": {
+                        "control": "text",
+                        "label": "场景定义编号"
+                    },
+                    "scene_type": {
+                        "control": "select",
+                        "label": "场景定义类型",
+                        "align": "center",
+                        "dict": {
+                            "dictType": "UCCP_E_SCENE_TYPE",
+                            "dictKey": [
+                                "UCCP_E_SCENE_TYPE"
+                            ],
+                            "format": "label"
+                        }
+                    },
+                    "scene_status": {
+                        "control": "select",
+                        "label": "场景定义状态",
+                        "align": "center",
+                        "dict": {
+                            "dictType": "UCCP_E_SCENE_STATUS",
+                            "dictKey": [
+                                "UCCP_E_SCENE_STATUS"
+                            ],
+                            "format": "label"
+                        }
+                    }
+                }
+            ]
+          },
+        "toolbar": {
+            "btns": [{
+                "type": "add",
+                "label": "新增",
+                "target": "dialog",
+                "toRequest": {
+                    "method": "GET",
+                    "url": "/views/uccp/quotaManager/sceneDefine/uccp_scene_add.json",
+                    "params": {
+                        "dict_org_id": "$g{{user_info.org_id}}"
+                    }
+                },
+                "props": {
+                    "width": "80%",
+                    "title": "场景定义信息新增"
+                }
+            }]
+        },
+        "datagrid": {
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "uccp2009",
+                    "appId":"uccpOnl",
+                    "dict_org_id":"$g{{user_info.org_id}}"
+                }
+            },
+            "thead": [
+                {
+                    "label": "场景定义编号",
+                    "prop": "scene_number",
+                    "align": "center"
+                },
+                {
+                    "label": "场景定义类型",
+                    "prop": "scene_type",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "UCCP_E_SCENE_TYPE",
+                        "dictKey": [
+                            "UCCP_E_SCENE_TYPE"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "场景定义描述",
+                    "prop": "scene_desc",
+                    "align": "center"
+                },
+                {
+                    "label": "场景定义状态",
+                    "prop": "scene_status",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "UCCP_E_SCENE_STATUS",
+                        "dictKey": [
+                            "UCCP_E_SCENE_STATUS"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 230,
+                    "align": "center",
+                    "btns": [{
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/uccp/quotaManager/sceneDefine/uccp_scene_update.json",
+                                "method": "GET",
+                                "params": {
+                                    
+                                }
+                            },
+                            "props": {
+                                "width": "80%",
+                                "title": "场景定义信息维护"
+                            }
+                        },
+                        {
+                            "type": "custom",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/call/RPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "uccp2007"
+                                }
+                            },
+                            "confirm": {
+                                "title": "确定删除",
+                                "confirmButtonText": "确定",
+                                "cancelButtonText": "取消"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

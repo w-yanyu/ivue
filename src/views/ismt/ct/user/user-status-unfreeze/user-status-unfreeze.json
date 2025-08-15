@@ -1,0 +1,58 @@
+{
+  "module": "dynamicTabs",
+  "layout": {
+    "tabs": {
+      "doRequest": {
+        "url": "/SUMP/rest/auth/userManager",
+        "method": "POST",
+        "params": {
+          "servicecode": "ct2001",
+          "freeze_ind":"Y",
+          "operater_ind": "M",
+          "start": 1,
+          "length": 10
+        }
+      },
+      "scope": "templateScope",
+      "submitBtnPlace": "right",
+      "initDataOnce": true,
+      "initRequest": {
+        "url": "/SUMP/rest/auth/userManager",
+        "method": "post",
+        "params": {
+          "servicecode": "ct2022",
+          "user_id": "${{params.user_id}}",
+          "start": 1,
+          "length": 10
+        }
+      },
+      "tabHeader": [
+        {
+          "id": "baseInfo",
+          "label": "用户基础信息",
+          "closable": false,
+          "disabled": false,
+          "icon": "el-icon-date",
+          "toRequest": {
+            "url": "/views/ismt/ct/user/user-status-unfreeze/user-info-base.json",
+            "method": "post"
+          }
+        },
+        {
+          "id": "UserAffiliation",
+          "label": "用户隶属信息",
+          "icon": "el-icon-date",
+          "closable": false,
+          "disabled": false,
+          "toRequest": {
+            "url": "/views/ismt/ct/user/user-status-unfreeze/user-info-Affiliation.json",
+            "method": "post"
+          }
+        }
+      ],
+      "defaultActiveKey": "baseInfo",
+      "position": "top",
+      "styleClass": "card"
+    }
+  }
+}

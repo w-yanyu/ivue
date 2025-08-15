@@ -1,0 +1,141 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "scope": "formData",
+            "controls": [
+                {
+                    "dict_name": {
+                        "control": "text",
+                        "label": "字典名称"
+                    }
+                },
+                {
+                    "dict_type": {
+                        "control": "text",
+                        "label": "字典类型"
+                    },
+                    "dict_id": {
+                        "control": "text",
+                        "label": "字典id"
+                    }
+                }
+
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "target": "dialog",
+                    "label": "新增",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/ismt/dictionaryManagement/add/dictionary_type_add.json",
+                        "params": {}
+                    },
+                    "props": {
+                        "title": "字典类型新增"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ct3319"
+                }
+            },
+            "thead": [
+                {
+                    "type":"string",
+                    "label": "字典类型",
+                    "prop": "dict_type",
+                    "align": "center",
+                    "btns": [
+                        {
+                          "type": "look",
+                          "toRequest": {
+                            "url": "/views/ismt/dictionaryManagement/dictionary_management_lookup.json",
+                            "method": "POST",
+                            "params": {
+                              "dict_type": "${{current.dict_type}}",
+                              "dict_name": "${{current.dict_name}}"                           }
+                          },
+                          "props": {
+                            "width": "80%",
+                            "title": "数据字典"
+                          }
+                        }
+                      ]
+                },
+
+                {
+                    "type":"string",
+                    "label": "字典名称",
+                    "prop": "dict_name",
+                    "align": "center"
+                },
+                {
+                    "type":"string",
+                    "label": "业务模块",
+                    "prop": "ms_appid",
+                    "align": "center"
+                },
+  
+                {
+                    "type":"string",
+                    "label": "值类型",
+                    "prop": "value_type",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "CT_E_VALUE_TYPE",
+                        "dictKey": [
+                            "CT_E_VALUE_TYPE"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "type":"string",
+                    "label": "说明信息",
+                    "prop": "interest_rate_desc",
+                    "align": "center"
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "align": "center",
+                    "btns": [
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/ismt/dictionaryManagement/modify/dictionary_type_modify.json",
+                                "method": "POST",
+                                "params": {}
+                            },
+                            "props": {
+                                "title": "字典类型维护"
+                            }
+                        },
+                        {
+                          "type": "delete",
+                          "label": "删除",
+                          "doRequest": {
+                            "url": "/SUMP/icmcall/icmRPCCall",
+                            "method": "POST",
+                            "params": {
+                              "servicecode": "ct3320"
+                            }
+                          }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

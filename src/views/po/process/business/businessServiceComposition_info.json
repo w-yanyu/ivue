@@ -1,0 +1,167 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "lncatp": {
+            "control": "select",
+            "label": "业务类型",
+            "dict": {
+              "dictType": "E_LNCATP",
+              "dictKey": [
+                "E_LNCATP"
+              ]
+
+            }
+          },
+          "appltp": {
+            "control": "select",
+            "label": "申请类型",
+            "dict": {
+              "dictType": "E_APPLTP",
+              "dictKey": [
+                "E_APPLTP"
+              ]
+
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/po/process/business/businessServiceComposition_add.json"
+          },
+          "props": {
+            "width": "75%",
+            "title": "业务场景服务组合信息明细"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "qrbuse"
+        }
+      },
+      "thead": [
+        {
+          "label": "业务类型",
+          "prop": "lncatp",
+          "align": "center",
+          "dict": {
+            "dictType": "E_LNCATP",
+            "dictKey": [
+              "E_LNCATP"
+            ]
+          },
+          "format": "label"
+        },
+        {
+          "label": "申请类型",
+          "prop": "appltp",
+          "align": "center",
+          "dict": {
+            "dictType": "E_APPLTP",
+            "dictKey": [
+              "E_APPLTP"
+            ]
+
+          }
+        },
+        {
+          "label": "是否可用",
+          "prop": "isable",
+          "align": "center",
+          "dict": {
+            "dictType": "E_SHIFOUBZ",
+            "dictKey": [
+              "E_SHIFOUBZ"
+            ]
+
+          }
+        },
+        {
+          "label": "适应流程",
+          "prop": "suitwf",
+          "align": "center"
+        },
+        {
+          "label": "业务方法调用类型",
+          "prop": "call_busi_type",
+          "align": "center",
+          "dict": {
+            "dictType": "BPM_E_CALL_BUSI_TYPE",
+            "dictKey": [
+              "BPM_E_CALL_BUSI_TYPE"
+            ]
+          }
+        },
+        {
+          "label": "服务名称(绝对路径)",
+          "prop": "servnm",
+          "align": "center"
+        },
+        {
+          "label": "排序序号",
+          "prop": "sortno",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "align":"center",
+          "fixed": "right",
+          "btns": [
+
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/po/process/business/businessServiceComposition_details.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "75%",
+                "title": "业务场景服务组合信息明细"
+              }
+            },{
+              "type": "edit",
+              "label": "修改",
+              "toRequest": {
+                "url": "/views/po/process/business/businessServiceComposition_modify.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "75%",
+                "title": "业务场景服务组合信息明细"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "debuse"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

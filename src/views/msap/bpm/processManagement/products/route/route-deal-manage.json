@@ -1,0 +1,118 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [],
+      "btns": []
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/msap/bpm/processManagement/products/route/route-deal-add.json",
+            "params": {
+              "appId":"${{params.appId}}",
+              "wf_prod_no":"${{params.wf_prod_no}}",
+              "route_id": "${{params.route_id}}"
+            }
+          },
+          "props": {
+            "width": "75%",
+            "title": "路线处理新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "bpm0064",
+          "route_id": "${{params.route_id}}",
+          "appId":"${{params.appId}}"
+        }
+      },
+      "thead": [
+        {
+          "label": "路线处理编号",
+          "prop": "route_deal_no"
+        },
+        {
+          "label": "流程产品编号",
+          "prop": "wf_prod_no"
+        },
+        {
+          "label": "路线编号",
+          "prop": "route_id"
+        },
+        {
+          "label": "业务编号",
+          "prop": "busi_id"
+        },
+        {
+          "label": "业务名称",
+          "prop": "service_name"
+        },
+        {
+          "label": "参数序号",
+          "prop": "sort_no"
+        },
+        {
+          "label": "操作",
+          "width": "200px",
+          "fixed": "right",
+          "align":"center",
+          "btns": [{
+            "type": "edit",
+            "label": "查看",
+            "toRequest": {
+              "url": "/views/msap/bpm/processManagement/products/route/view-route-deal-detail.json",
+              "method": "GET",
+              "params": {
+                "appId":"${{params.appId}}"
+              }
+            },
+            "props": {
+              "width": "80%",
+              "title": "查看流程路线详情"
+            }
+          },{
+            "type": "edit",
+            "label": "维护",
+            "toRequest": {
+              "url": "/views/msap/bpm/processManagement/products/route/route-deal-modify.json",
+              "method": "GET",
+              "params": {
+                "appId":"${{params.appId}}"
+              }
+            },
+            "props": {
+              "width": "80%",
+              "title": "流程路线维护"
+            }
+          },
+          {
+            "type": "delete",
+            "label": "删除",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "bpm0067",
+                "appId":"${{params.appId}}"
+              }
+            }
+          }
+        ]
+        }
+      ]
+    }
+  }
+}

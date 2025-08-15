@@ -1,0 +1,159 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "ofpana": {
+
+            "control": "text",
+            "label": "合作方名称",
+            "rules": [
+              {
+                "max": 20,
+                "message": "长度不能超过10个字符"
+              }
+            ]
+          },
+          "cmcrno": {
+
+            "control": "text",
+            "label": "合作方证件号码",
+            "rules": [
+              {
+                "max": 100,
+                "message": "长度不能超过100个字符"
+              }
+            ]
+          },
+          "ofpacd": {
+
+            "control": "text",
+            "label": "合作方编号",
+            "rules": [
+              {
+                "max": 100,
+                "message": "长度不能超过100个字符"
+              }
+            ]
+          }
+        }
+
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "qrchin",
+
+          "page_id": "/views/pm/pm_consult_uphold/pm_consult_uphold.json"
+        }
+      },
+      "thead": [
+        {
+          "type": "index"
+        },
+        {
+          "label": "合作方名称",
+          "prop": "ofpana",
+          "align":"center"
+        },
+        {
+          "label": "合作方协议名称",
+          "prop": "pronam",
+          "align":"center"
+        },
+        {
+          "label":"合作方编号",
+          "prop": "ofpacd",
+          "align":"center"
+        },
+        {
+          "label": "合作方证件类型",
+          "prop": "opcred",
+          "align":"center",
+          "dict": {
+            "dictType": "E_IDTFTP",
+            "dictKey": [
+              "E_IDTFTP"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "合作方证件号码",
+          "prop": "cmcrno",
+          "align":"center"
+        },
+        {
+          "label": "合同编号",
+          "prop": "cortno",
+          "align":"center"
+        },
+        {
+          "label": "所属机构",
+          "prop": "orgnam",
+          "align":"center"
+        },
+        {
+          "label": "生效日期",
+          "prop": "effedt",
+          "align":"center"
+        },
+        {
+          "label": "失效日期",
+          "prop": "exprdt",
+          "align":"center"
+        },
+        {
+          "label": "创建操作员",
+          "prop": "tranus",
+          "align":"center"
+        },
+        {
+          "label": "创建日期",
+          "prop": "gmt_create",
+          "align":"center"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align":"center",
+          "btns": [
+            {
+              "type": "look",
+              "label": "审核记录",
+              "toRequest": {
+                "url": "/views/pm/pm_consult_uphold/pm_consult_uphole_see.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "65%",
+                "title": "审核记录"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "审核",
+
+              "toRequest": {
+                "url": "/views/pm/pm_consult_examine/pm_consult_examine_updata.json",
+                "method": "POST"
+
+              },
+              "props": {
+                "title": "合作方协议信息审核"
+              }
+            }
+
+          ]
+        }
+      ]
+    }
+  }
+}

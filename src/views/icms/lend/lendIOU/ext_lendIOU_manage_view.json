@@ -1,0 +1,89 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "toolbar": {
+      "btns": [
+      ]
+    },
+    "datagrid": {
+      "doRequest": {
+        "url": "SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ar0544",
+          "apply_no": "${{params.apply_no}}"
+        }
+      },
+      "thead": [
+        {
+          "label": "借据号",
+          "align": "center",
+          "prop": "lend_no"
+        },
+        {
+          "label": "还款方式",
+          "prop": "repay_type",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_REPAY_WAY",
+            "dictKey": [
+              "MS_E_REPAY_WAY"
+            ],
+            "labelField": "dictName",
+            "valueField": "dictId"
+          }
+        },
+        {
+          "label": "原期限(月)",
+          "align": "center",
+          "prop": "periods"
+        },
+        {
+          "label": "展期期限(月)",
+          "align": "center",
+          "prop": "ext_term"
+        },
+        {
+          "label": "原放款金额(元)",
+          "align": "center",
+          "prop": "lend_amt",
+          "format":{
+            "thousand":","
+          }
+        },
+        {
+          "label": "展期金额(元)",
+          "align": "center",
+          "prop": "ext_amt",
+          "format":{
+            "thousand":","
+          }
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "width": "200px",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "@ExtLendIOUTab",
+                "method": "GET",
+                "params": {
+                  "pageType": "info",
+                  "lend_no": "${{current.lend_no}}",
+                  "apply_no": "${{params.apply_no}}"
+                }
+              },
+              "props": {
+                "width": "90%",
+                "title": "贷款借据详情"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

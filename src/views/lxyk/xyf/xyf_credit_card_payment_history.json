@@ -1,0 +1,105 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "smilr_cr_card_loan_acct_num": {
+            "control": "hidden",
+            "value": "${{params.smilr_cr_card_loan_acct_num}}",
+            "label": "类信用卡贷款账号"
+          },
+          "txn_evt": {
+            "control": "select",
+            "label": "还款方式",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入还款方式"
+              }
+            ],
+            "value": "HK",
+            "options": [
+              {
+                "label": "类信用卡还款",
+                "value": "HK"
+              },
+              {
+                "label": "类信用卡归还欠款",
+                "value": "SM_GHQK"
+              },
+              {
+                "label": "主动归还",
+                "value": "SM_ZDGH"
+              },
+              {
+                "label": "自动还款",
+                "value": "SM_ZDHK"
+              }
+            ]
+          },
+          "bill_prds": {
+            "type": "month",
+            "control": "dateTimePicker",
+            "format": "yyyyMM",
+            "label": "账期"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "syln0011",
+          "outlistid": "list01"
+        }
+      },
+      "thead": [
+        {
+          "label": "账期",
+          "prop": "bill_prds",
+          "align": "center"
+        },
+        {
+          "label": "消费编号",
+          "prop": "loan_due_bill_num",
+          "align": "center"
+        },
+        {
+          "label": "明细序号",
+          "prop": "detl_serl_num",
+          "align": "center"
+        },
+        {
+          "label": "还款金额",
+          "prop": "txn_amt",
+          "format": {
+            "thousand": ","
+          },
+          "align": "center"
+        },
+        {
+          "label": "还款方式",
+          "prop": "txn_evt",
+          "align": "center",
+          "dict": {
+            "dictType": "LN_E_TXN_EVT",
+            "dictKey": [
+              "LN_E_TXN_EVT"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "还款日期",
+          "prop": "txn_dt_8",
+          "align": "center"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,335 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+      "form": {
+        "foldLineNumber": 2,
+        "scope": "formData",
+        "controls": [
+          {
+            "branch_id": {
+              "control": "remoteSelect",
+              "label": "机构号",
+              "labelField": "branch_idName",
+              "valueField": "branch_idNo",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "RLMSPLTS1068"
+                }
+              },
+              "format": "value-label"
+            },
+          "orgType": {
+            "control": "select",
+            "label": "机构类型",
+            "dict": {
+              "dictType": "E_ORGTYPES",
+              "dictKey": [
+                "E_ORGTYPES"
+              ],
+              "format": "value-label",
+              "labelField": "dictName",
+              "valueField": "dictId"
+            }
+          },
+          "###isorno_case": {
+            "#control": "select",
+            "#label": "是否进行实际委案",
+            "#dict": {
+              "dictType": "E_ISORNO_CASE",
+              "dictKey": [
+                "E_ISORNO_CASE"
+              ],
+              "#format": "value-label",
+              "#labelField": "dictName",
+              "#valueField": "dictId"
+            }
+          },
+          "current_year_date": {
+            "control": "dateTimePicker",
+            "label": "年度评价完成年份",
+            "type" : "year",
+            "format": "yyyy"
+          },
+          "mech_status": {
+            "control": "select",
+            "label": "机构状态",
+            "dict": {
+              "dictType": "E_MECHS_STATUS",
+              "dictKey": [
+                "E_MECHS_STATUS"
+              ],
+              "format": "value-label",
+              "labelField": "dictName",
+              "valueField": "dictId"
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "export",
+          "label": "导出",
+          "target": "dialog",
+          "icon": "iconfont icon-daochu",
+          "toRequest": {
+            "method": "post",
+            "url": "@exportfsFile",
+            "params": {
+              "servicecode": "RLMSPLTS1080",
+              "branch":"${{formData.branch}}",
+              "orgType":"${{formData.orgType}}",
+              "isorno_case":"${{formData.isorno_case}}",
+              "current_year_date":"${{formData.current_year_date}}",
+              "mech_status":"${{formData.mech_status}}"
+            }
+          },
+          "props": {
+            "width": "30%",
+            "title": "导出"
+          }
+        }
+      ]
+    },
+      "datagrid": {
+        "isInitSearch": true,
+        "doRequest": {
+          "url": "/SUMP/icmcall/icmRPCCall",
+          "method": "post",
+          "params": {
+            "servicecode": "RLMSPLTS1079"
+          }
+        },
+        "thead": [
+          {
+            "type": "string",
+            "align": "center",
+            "label": "机构号",
+            "prop": "branch_id"
+          },
+          {
+            "label": "合作机构类型",
+            "prop": "orgType",
+            "align": "center",
+            "dict": {
+              "dictType": "E_ORGTYPES",
+              "dictKey": [
+                "E_ORGTYPES"
+              ],
+              "format": "label",
+              "labelField": "dictName",
+              "valueField": "dictId"
+            }
+          },
+          {
+            "type": "string",
+            "align": "center",
+            "label": "机构名称",
+            "prop": "branch_name"
+          },
+          {
+            "type": "string",
+            "align": "center",
+            "label": "当前签约日期",
+            "prop": "signing_date"
+          },
+          {
+            "type": "string",
+            "align": "center",
+            "label": "当前合作开始时间",
+            "prop": "coopern_start_date"
+          },
+          {
+            "type": "string",
+            "align": "center",
+            "label": "当前合作终止时间",
+            "prop": "coopern_end_date"
+          },
+          {
+            "type": "string",
+            "align": "center",
+            "label": "首次签约日期",
+            "prop": "start_coopern_date"
+          },
+          {
+            "type": "string",
+            "align": "center",
+            "label": "年度评价完成年份",
+            "prop": "current_year_date"
+          },
+          {
+            "type": "string",
+            "align": "center",
+            "label": "年度评价状态",
+            "prop": "annual_evaluation_status",
+            "dict": {
+            "dictType": "E_ANNUAL_EVALRESULT",
+            "dictKey": [
+              "E_ANNUAL_EVALRESULT"
+            ],
+            "format": "label",
+            "labelField": "dictName",
+            "valueField": "dictId"
+            }
+          },
+          {
+            "type": "string",
+            "align": "center",
+            "label": "在库期限",
+            "prop": "time_limit"
+          },
+          {
+            "type": "string",
+            "align": "center",
+            "label": "引进模式",
+            "prop": "introductmode",
+          "dict": {
+            "dictType": "E_INTROMODE",
+            "dictKey": [
+              "E_INTROMODE"
+            ],
+            "format": "label",
+            "labelField": "dictName",
+            "valueField": "dictId"
+        }
+      },
+          {
+              "type": "string",
+              "align": "center",
+              "label": "机构状态",
+              "prop": "mech_status",
+            "dict": {
+              "dictType": "E_MECHS_STATUS",
+              "dictKey": [
+                "E_MECHS_STATUS"
+              ],
+              "format": "label",
+              "labelField": "dictName",
+              "valueField": "dictId"
+          }
+        },
+          {
+            "label": "操作",
+            "align": "center",
+            "fixed": "right",
+            "width": "130px",
+            "btns": [
+              {
+                "type": "custom",
+                "label": "协议签订",
+                "toRequest": {
+                  "url": "@legalOrgConfirm",
+                  "method": "POST",
+                  "params": {
+                },
+                "props": {
+                  "width": "80%",
+                  "title": "协议签订"
+                }
+              },
+              "show": {
+                "prop": "mech_status",
+                "expression": "'${{current.mech_status}}' === 'YDR' || '${{current.mech_status}}' === 'YQY'"
+              }
+              },
+              {
+                "type": "custom",
+                "label": "退出",
+                "toRequest": {
+                  "url": "@fasuOrgQuit",
+                  "method": "POST",
+                  "params": {
+                },
+                "props": {
+                  "width": "80%",
+                  "title": "退出"
+                }
+              },
+              "show": {
+                "prop": "mech_status",
+                "expression": "'${{current.mech_status}}' !== 'YDR' && '${{current.mech_status}}' !== 'YTC'"
+              }
+              },
+              {
+                "type": "custom",
+                "label": "年度评价",
+                "toRequest": {
+                  "url": "@annualEvaluation",
+                  "method": "POST",
+                  "params": {
+                },
+                "props": {
+                  "width": "80%",
+                  "title": "年度评价"
+                }
+              },
+              "show": {
+                "prop": "mech_status",
+                "expression": "'${{current.mech_status}}' !== 'YDR' && '${{current.mech_status}}' !== 'YTC'"
+              }
+              },
+              {
+                "type": "custom",
+                "label": "续签",
+                "toRequest": {
+                  "url": "@reConfirm",
+                  "method": "POST",
+                  "params": {
+                    "case_id": "${{current.case_id}}"
+                },
+                "props": {
+                  "width": "80%",
+                  "title": "续签"
+                }
+              },
+              "show": {
+                "prop": "mech_status",
+                "expression": "'${{current.mech_status}}' === 'YCX' || '${{current.mech_status}}' === 'YXQ' || '${{current.mech_status}}' === 'YQY'"
+              }
+              },
+              {
+                "type": "custom",
+                "label": "更名",
+                "toRequest": {
+                  "url": "@orgRename",
+                  "method": "POST",
+                  "params": {
+                  },
+                  "props": {
+                    "width": "80%",
+                    "title": "更名"
+                  }
+                },
+                "show": {
+                  "prop": "mech_status",
+                  "expression": "'${{current.mech_status}}' !== 'YDR' && '${{current.mech_status}}' !== 'YTC'"
+                }
+              },
+              {
+                "type": "custom",
+                "label": "详情",
+                "toRequest": {
+                  "url": "@orgInfoView",
+                  "method": "POST",
+                  "params": {
+                  },
+                  "props": {
+                    "width": "80%",
+                    "title": "详情"
+                  }
+                },
+                "show": {
+                  "prop": "mech_status",
+                  "expression": "'${{current.mech_status}}' !== 'YDR'"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+  

@@ -1,0 +1,177 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "btns": [
+        {
+          "type": "custom",
+          "label": "维护",
+          "icon": "",
+          "toRequest": {
+            "url": "/views/us/creditGroup/famliy/famliy_group_modify.json",
+            "method": "GET",
+            "target": "dialog",
+            "params": {
+              "cust_no": "${{params.cust_no}}",
+              "show_flash":"0"
+            }
+          },
+          "show": {
+            "expression": "'${{params.show_flash}}' == '1'"
+          },
+          "eventAfter": {
+            "callback": "resetCallback"
+          },
+          "props": {
+            "width": "90%",
+            "height": "600px",
+            "title": "客户开户信息维护"
+          }
+        }
+      ],
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "us1226",
+          "famliy_cd": "${{params.famliy_cd}}"
+        }
+      },
+      "controlsGroup": [
+        {
+          "title": "家庭信息",
+          "tooltip": "",
+          "titleIcon": "",
+          "showHint": "",
+          "accordion": false,
+          "expand": true,
+          "controls": [
+            {
+              "famliy_cd": {
+                "control": "text",
+                "label": "户口号",
+                "span": 8,
+                "width": "25px",
+                "disabled": true
+              },
+              "cust_name": {
+                "control": "text",
+                "label": "户主名",
+                "span": 8,
+                "width": "25px",
+                "disabled": true,
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请输入户主名"
+                  },
+                  {
+                    "max": 30,
+                    "message": "长度不能超过30个字符"
+                  }
+                ]
+              },
+              "famliy_num": {
+                "control": "text",
+                "label": "家庭人口（人）",
+                "span": 8,
+                "width": "25px",
+                "disabled": true,
+                "rules": [
+                  {
+                    "type": "number",
+                    "message": "请输入整数"
+                  }
+                ]
+              }
+            },
+            {
+              "sex_tp": {
+                "control": "select",
+                "label": "性别",
+                "span": 8,
+                "width": "25px",
+                "disabled": true,
+                "dict": {
+                  "dictType": "MS_E_GENDER",
+                  "dictKey": [
+                    "MS_E_GENDER"
+                  ],
+                  "format": "label"
+                },
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请输入性别"
+                  }
+                ]
+              },
+              "cert_type": {
+                "control": "select",
+                "label": "证件类型",
+                "span": 8,
+                "width": "25px",
+                "disabled": true,
+                "dict": {
+                  "dictType": "MS_E_CRET_TYPE",
+                  "dictKey": [
+                    "MS_E_CRET_TYPE"
+                  ],
+                  "format": "label"
+                },
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请输入证件类型"
+                  }
+                ]
+              },
+              "cert_no": {
+                "control": "text",
+                "label": "证件号码",
+                "span": 8,
+                "width": "25px",
+                "disabled": true,
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请输入证件号码"
+                  },
+                  {
+                    "max": 25,
+                    "message": "长度不能超过18个字符"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "title": "家庭成员",
+          "tooltip": "",
+          "titleIcon": "",
+          "showHint": "",
+          "accordion": false,
+          "expand": true,
+          "controls": [
+            {
+              "view2": {
+                "control": "dynamic",
+                "span": 24,
+                "isShowChildForm": true,
+                "toRequest": {
+                  "url": "/views/us/creditGroup/famliy/famliy_manage.json",
+                  "method": "get",
+                  "params": {
+                    "famliy_cd": "${{params.famliy_cd}}",
+                    "show_flash":"${{params.show_flash}}"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

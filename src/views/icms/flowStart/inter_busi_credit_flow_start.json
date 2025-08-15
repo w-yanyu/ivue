@@ -1,0 +1,198 @@
+{
+    "module": "v-inputDataForm-btn",
+    "layout": {
+        "form": {
+            "scope": "templateScope",
+            "btns": [],
+            "controls": [
+                {
+                    "sale_prod_name": {
+                        "control": "lookup",
+                        "label": "可售产品",
+                        "width": "140px",
+                        "span": 7,
+                        "edit": true,
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "可售产品不能为空!"
+                            }
+                        ],
+                        "keyField": {
+                            "sale_prod_name": "sale_prod_name",
+                            "sale_prod_cd": "sale_prod_cd",
+                            "busi_type": "prod_type"
+                        },
+                        "toRequest": {
+                            "url": "/views/icms/flowStart/inter_credit_sell_product_lookup.json",
+                            "method": "get"
+                        },
+                        "props": {
+                            "title": "选择授信产品",
+                            "width": "75%"
+                        }
+                    },
+                    "sale_prod_cd": {
+                        "control": "text",
+                        "label": "可售产品编号",
+                        "disabled": true,
+                        "width": "140px",
+                        "span": 7,
+                        "rules": [
+                            {
+                                "required": false,
+                                "message": "可售产品编号不能为空!"
+                            }
+                        ]
+                    },
+                    "busi_type": {
+                        "width": "140px",
+                        "span": 7,
+                        "disabled": true,
+                        "label": "业务类型",
+                        "control": "remoteSelect",
+                        "labelField": "title",
+                        "valueField": "id",
+                        "doRequest": {
+                            "url": "/SUMP/call/RPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "pd0144",
+                                "grupno": "0006",
+                                "pid": "KSCP"
+                            }
+                        }
+                    }
+                },
+                {
+                    "cust_name": {
+                        "control": "lookup",
+                        "label": "客户姓名",
+                        "width": "140px",
+                        "span": 7,
+                        "edit": true,
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "客户名称不能为空!"
+                            }
+                        ],
+                        "keyField": {
+                            "cust_name": "cust_name",
+                            "cert_type": "cert_type",
+                            "cert_no": "cert_no",
+                            "cust_no": "cust_no",
+                            "mobile_no": "phone_no",
+                            "cust_type": "cust_type"
+                        },
+                        "toRequest": {
+                            "url": "/views/us/entManager/ent_cust_lookup.json",
+                            "method": "get",
+                            "####params": {
+                                "valid_state": "1"
+                            }
+                        },
+                        "props": {
+                            "title": "选择客户",
+                            "width": "75%"
+                        }
+                    },
+                    "cust_no": {
+                        "control": "text",
+                        "label": "客户编号",
+                        "disabled": true,
+                        "width": "140px",
+                        "span": 7
+                    },
+                    "cust_type": {
+                        "control": "hidden"
+                    },
+                    "apply_type": {
+                        "control": "select",
+                        "span": 7,
+                        "label": "申请类型",
+                        "width": "140px",
+                        "disabled": true,
+                        "value": "C",
+                        "dict": {
+                            "dictType": "PD_E_APPLY_TYPE",
+                            "dictKey": [
+                                "PD_E_APPLY_TYPE"
+                            ],
+                            "format": "label-value"
+                        },
+                        "rules": [
+                            {
+                                "required": false,
+                                "message": "必填项"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "cert_type": {
+                        "control": "select",
+                        "label": "证件类型",
+                        "width": "140px",
+                        "disabled": true,
+                        "span": 7,
+                        "rules": [
+                            {
+                                "required": false,
+                                "message": "证件类型不能为空!"
+                            }
+                        ],
+                        "dict": {
+                            "dictType": "MS_E_CRET_TYPE",
+                            "dictKey": [
+                                "MS_E_CRET_TYPE"
+                            ],
+                            "format": "label"
+                        }
+                    },
+                    "cert_no": {
+                        "control": "text",
+                        "label": "证件号码",
+                        "disabled": true,
+                        "width": "140px",
+                        "span": 7,
+                        "rules": [
+                            {
+                                "required": false,
+                                "message": "证件号码不能为空!"
+                            }
+                        ]
+                    },
+                    "mobile_no": {
+                        "control": "text",
+                        "label": "电话号码",
+                        "disabled": true,
+                        "width": "140px",
+                        "span": 7
+                    }
+                    
+                },
+                {
+                    "toDbsx": {
+                        "span": 24,
+                        "unFieldList": [
+                            "apply_type"
+                        ],
+                        "control": "dynamic",
+                        "#isShowChildrenForm": false,
+                        "toRequest": {
+                            "method": "GET",
+                            "url": "@FlowSubmitBtn",
+                            "params": {
+                                "appId": "icmsOnl",
+                                "servicecode": "ar0011",
+                                "finalUrl": "@CommWaitToDoDeal",
+                                "trans_type": "ADD"
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

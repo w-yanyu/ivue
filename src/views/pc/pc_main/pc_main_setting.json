@@ -1,0 +1,93 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/pc/pc_main/pc_main_setting_add.json",
+            "params": {
+              "productParams": "${{params}}",
+              "prodCd": "${{params.prodCd}}",
+              "prodName": "${{params.prodName}}"
+            }
+          },
+          "props": {
+            "title": "新增兼容性产品"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "AS_ICMS_PD_QREXCD",
+          "prodCd": "${{params.prodCd}}",
+          "prodName": "${{params.prodName}}"
+        }
+      },
+      "thead": [
+        {
+          "label": "序号",
+          "type": "index",
+          "align": "center"
+        },
+        {
+          "label": "兼容产品号",
+          "prop": "exclusiveProdCd",
+          "align": "center"
+        },
+        {
+          "label": "兼容产品名称",
+          "prop": "exclusiveProdName",
+          "align": "center"
+        },
+        {
+          "label": "兼容老系统产品号",
+          "prop": "exclusiveProdCdOld",
+          "align": "center"
+        },
+        {
+          "label": "是否兼容",
+          "prop": "enable",
+          "align": "center",
+          "dict": {
+            "dictType": "E_PROENABLE",
+            "dictKey": [
+              "E_PROENABLE"
+            ],
+            "format": "label",
+            "value": "N"
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "align": "center",
+          "btns": [
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "AS_ICMS_PD_DEEXCD"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,210 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "initRequest": "${{params}}",
+      "controls": [
+        {
+          "certconf_id": {
+            "control": "text",
+            "label": "合格证编号",
+            "rules": [
+              {
+                "max": 64,
+                "message": "长度不能超过64个字符"
+              }
+            ]
+          },
+          "cert_status": {
+            "control": "select",
+            "label": "合格证状态",
+            "dict": {
+              "dictType": "AR_E_CERT_STATUS",
+              "dictKey": [
+                "AR_E_CERT_STATUS"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId",
+              "format": "label"
+            }
+          }
+        },
+        {
+          "vehicle_number": {
+            "control": "text",
+            "label": "车辆识别号/车架号",
+            "rules": [
+              {
+                "max": 17,
+                "message": "长度不能超过17个字符"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ar4000",
+          "appId": "icmsOnl"
+        }
+      },
+      "thead": [
+        {
+          "type": "index",
+          "align": "center"
+        },
+        {
+          "label": "合格证编号",
+          "prop": "certconf_id",
+          "width": 200,
+          "align": "center"
+        },
+        {
+          "label": "发证日期",
+          "prop": "issue_date",
+          "width": 200,
+          "align": "center"
+        },
+        {
+          "label": "车辆制造企业名称",
+          "prop": "vehicle_manuf",
+          "width": 200,
+          "align": "center"
+        },
+        {
+          "label": "车辆品牌",
+          "prop": "vehicle_brand",
+          "width": 200,
+          "align": "center"
+        },
+        {
+          "label": "车辆型号",
+          "prop": "vehicle_model",
+          "width": 200,
+          "align": "center"
+        },
+        {
+          "label": "车辆识别号/车架号",
+          "prop": "vehicle_number",
+          "width": 200,
+          "align": "center"
+        },
+        {
+          "label": "车身颜色",
+          "prop": "vehicle_color",
+          "width": 200,
+          "align": "center"
+        },
+        {
+          "label": "车辆制造日期",
+          "prop": "manuf_date",
+          "width": 200,
+          "align": "center"
+        },
+        {
+          "label": "合格证状态",
+          "prop": "cert_status",
+          "width": 200,
+          "dict": {
+            "dictType": "AR_E_CERT_STATUS",
+            "dictKey": [
+              "AR_E_CERT_STATUS"
+            ],
+            "format": "label"
+          },
+          "align": "center"
+        },
+        {
+          "label": "合格证保管时间",
+          "width": 200,
+          "prop": "cert_keep_date",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 240,
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "办理",
+              "show": {
+                "prop": "cert_status",
+                "is": [
+                  "5"
+                ]
+              },
+              "toRequest": {
+                "url": "/views/icms/certconf/certconf_hgzth_steps.json",
+                "method": "GET",
+                "##target": "navTab",
+                "params": {
+                  "certconf_id":"${{current.certconf_id}}",
+                  "issue_date":"${{current.issue_date}}",
+                  "vehicle_manuf":"${{current.vehicle_manuf}}",
+                  "vehicle_brand":"${{current.vehicle_brand}}",
+                  "vehicle_model":"${{current.vehicle_model}}",
+                  "vehicle_number":"${{current.vehicle_number}}",
+                  "vehicle_color":"${{current.vehicle_color}}",
+                  "manuf_date":"${{current.manuf_date}}",
+                  "cert_status":"${{current.cert_status}}",
+                  "cert_keep_date":"${{current.cert_keep_date}}",
+                  "engine_number":"${{current.engine_number}}",
+                  "cert_receiver":"${{current.cert_receiver}}",
+                  "issuing_time":"${{current.issuing_time}}",
+                  "issuing_per":"${{current.issuing_per}}",
+                  "distr_model":"${{current.distr_model}}",
+                  "delivery_num":"${{current.delivery_num}}",
+                  "cert_acce_time":"${{current.cert_acce_time}}",
+                  "cert_receives":"${{current.cert_receives}}",
+                  "vehicle_photo":"${{current.vehicle_photo}}",
+                  "apply_no":"${{current.apply_no}}",
+                  "return_time":"${{current.return_time}}",
+                  "return_per":"${{current.return_per}}",
+                  "manuf_time":"${{current.manuf_time}}",
+                  "manuf_per":"${{current.manuf_per}}"
+                }
+              },
+              "props": {
+                "title": "合格证退回"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/icms/certconf/certconf_edit.json",
+                "method": "GET",
+                "params": {
+                  "apply_no": "${{current.apply_no}}"
+                }
+              },
+              "props": {
+                "width": "1200px",
+                "title": "合格证流程办理"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "轨迹跟踪",
+              "toRequest": {
+                "url": "@certconf_timeline",
+                "method": "GET"
+              },
+              "props": {
+                "title": "轨迹跟踪"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

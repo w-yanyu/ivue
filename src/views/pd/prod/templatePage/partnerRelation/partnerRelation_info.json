@@ -1,0 +1,78 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "alert": {
+      "span": 8,
+      "title": "关联合作项目说明：",
+      "description": [
+        "当前仅支持关联一个合作项目"
+      ],
+      "listStyle": "disc"
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "detail,format=pd0614,temp=pd0615",
+          "pageTranType": "${{params.pageTranType}}",
+          "sale_prod_cd": "${{params.sale_prod_cd}}",
+          "prod_version": "${{params.prod_version}}"
+        }
+      },
+      "thead": [
+        {
+          "label": "序号",
+          "type": "index",
+          "align": "center"
+        },
+        {
+          "label": "合作项目编号",
+          "prop": "part_project_no",
+          "align": "center"
+        },
+        {
+          "label": "合作项目名称",
+          "prop": "part_project_name",
+          "align": "center",
+          "width": "180px"
+        },
+        {
+          "label": "合作项目版本",
+          "prop": "part_project_version",
+          "align": "center",
+          "width": "180px"
+        },
+        {
+          "label": "合作项目描述",
+          "prop": "part_project_describe",
+          "align": "center",
+          "width": "180px"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align": "center",
+          "btns": [
+            {
+              "type": "custom",
+              "label": "详情",
+              "toRequest": {
+                "url": "@projectAddLayout",
+                "method": "GET",
+                "params": {
+                  "tranType": "detail",
+                  "part_project_no": "${{current.part_project_no}}",
+                  "project_template_no":"${{current.project_template_no}}",
+                  "version": "${{current.part_project_version}}"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

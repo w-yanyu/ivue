@@ -1,0 +1,145 @@
+{
+    "module": "v-realonlyForm-btn",
+    "layout": {
+        "form": {
+            "initRequest": "${{params}}",
+            "controls": [
+                {
+                    "commission_plan_name": {
+                        "control": "string",
+                        "label": "佣金方案",
+                        "disabled": true
+                    }
+                },
+                {
+                    "daterange": {
+                        "disabled": true,
+                        "control": "dateTimePicker",
+                        "label": "生效时间",
+                        "type": "daterange",
+                        "unlinkPanels": true,
+                        "valueFormat": "yyyyMMdd",
+                        "startPlaceholder": "请选择开始时间",
+                        "endPlaceholder": "请选择结束时间",
+                        "startField": "start_date",
+                        "endField": "end_date"
+                    }
+                },
+                {
+                    "commission_calculation_plan": {
+                        "disabled": true,
+                        "control": "select",
+                        "label": "佣金计算方案",
+                        "options": [
+                            {
+                                "value": "001",
+                                "label": "按人头费用"
+                            },
+                            {
+                                "value": "002",
+                                "label": "按佣金比率"
+                            },
+                            {
+                                "value": "003",
+                                "label": "案件单价(元)"
+                            }
+                        ],
+                        "events": {
+                            "showItem": {
+                                "001": [
+                                    "head_expenses"
+                                ],
+                                "002": [
+                                    "commission_rate"
+                                ],
+                                "003": [
+                                    "case_unitPrice"
+                                ]
+                            }
+                        }
+                    }
+                },
+                {
+                    "commission_settings": {
+                        "disabled": true,
+                        "control": "radio",
+                        "label": "提成设置",
+                        "options": [
+                            {
+                                "value": "open",
+                                "label": "开启"
+                            },
+                            {
+                                "value": "close",
+                                "label": "关闭"
+                            }
+                        ],
+                        "events": {
+                            "showItem": {
+                                "open": [
+                                    "commission_settings_open"
+                                ],
+                                "close": [
+                                    "commission_settings_close"
+                                ]
+                            }
+                        }
+                    }
+                },
+                {
+                    "head_unitPrice": {
+                        "disabled": true,
+                        "control": "text",
+                        "label": "人头单价(元/人/月)"
+                    },
+                    "head_count": {
+                        "disabled": true,
+                        "control": "text",
+                        "label": "人头数量(个)"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "name": "allDatas",
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "xxxx"
+                }
+            },
+            "pagination": {
+                "show": false
+            },
+            "allData": true,
+            "thead": [
+                {
+                    "type": "selection",
+                    "show": {
+                        "prop": "changkuan",
+                        "is": [
+                            "0"
+                        ]
+                    }
+                },
+                {
+                    "prop": "overdue_status",
+                    "label": "逾期状态"
+                },
+                {
+                    "label": "超额基线值",
+                    "prop": "excess_baseline_value"
+                },
+                {
+                    "prop": "performance_evaluation_score",
+                    "label": "绩效考核评分"
+                },
+                {
+                    "prop": "commission_ratio",
+                    "label": "提成比例(%)"
+                }
+            ]
+        }
+    }
+}

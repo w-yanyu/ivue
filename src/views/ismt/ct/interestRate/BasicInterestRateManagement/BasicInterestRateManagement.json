@@ -1,0 +1,246 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "label": "新增",
+                    "target": "dialog",
+                    "toRequest": {
+                        "url": "/views/ismt/ct/interestRate/BasicInterestRateManagement/BasicInterestRateManagement-detail-add.json",
+                        "method": "get",
+                        "params": {
+                            "interest_rate_category":"${{params.interest_rate_category}}",
+                            "interest_rate_code":"${{params.interest_rate_code}}",
+                            "interest_rate_name":"${{params.interest_rate_name}}",
+                            "interest_rate_type":"${{params.interest_rate_type}}"
+                        }
+                    },
+                    "props": {
+                        "title": "基础利率信息新增",
+                        "width": "1200px"
+                    }
+                },
+                {
+                    "type": "add",
+                    "label": "利率复核",
+                    "target": "dialog",
+                    "checkCountMin": 1,
+                    "doRequest": {
+                        "url": "/SUMP/call/RPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "ct3256"
+                        }
+                    },
+                    "confirm": {
+                        "title": "提示信息",
+                        "msg": "该操作将对利率信息进行状态复核，确认信息无误吗？",
+                        "confirmButtonText": "确定",
+                        "cancelButtonText": "取消"
+                      }
+                }
+            ]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ct3254",
+                    "interest_rate_code":"${{params.interest_rate_code}}"
+                }
+            },
+            "thead": [
+          
+                {
+                    "type": "selection",
+                    "width": "55",
+                    "align":"center"
+                },
+                {
+                    "label": "法人代码",
+                    "prop": "org_id",
+                    "align":"center"
+                },
+                {
+                    "label": "利率类型",
+                    "align":"center",
+                    "prop": "interest_rate_type",
+                    "dict": {
+                        "dictType": "CT_E_INTEREST_RATE_TYPE",
+                        "dictKey": [
+                            "CT_E_INTEREST_RATE_TYPE"
+                        ],
+                        "format": "value-label"
+                    }
+                },
+                {
+                    "label": "利率代码",
+                    "prop": "interest_rate_code",
+                    "align":"value-label"
+                },
+                {
+                    "label": "利率种类",
+                    "prop": "interest_rate_category",
+                    "dict": {
+                        "dictType": "CT_E_INTEREST_RATE_CATEGORY",
+                        "dictKey": [
+                            "CT_E_INTEREST_RATE_CATEGORY"
+                        ],
+                        "format": "value-label"
+                    }
+                },
+                {
+                    "label": "币种",
+                    "align":"center",
+                    "prop": "ccy_code",
+                    "dict": {
+                        "format": "value-label",
+                        "dictKey": [
+                            "MS_CURRENCY"
+                        ],
+                        "dictType": "MS_CURRENCY"
+                    }
+                },
+                {
+                    "label": "期限",
+                    "prop": "term",
+                    "align":"center"
+,
+                    "dict": {
+                        "dictType": "CT_E_TERM",
+                        "dictKey": [
+                            "CT_E_TERM"
+                        ],
+                        "format": "value-label"
+                    }
+                },
+                {
+                    "label": "利率名称",
+                    "prop": "interest_rate_name",
+                    "align":"center"
+
+                },
+                {
+                    "label": "利率性质",
+                    "prop": "interest_rate_nature",
+                    "align":"center"
+                    ,
+                    "dict": {
+                        "dictType": "CT_E_INTEREST_RATE_UNIT",
+                        "dictKey": [
+                            "CT_E_INTEREST_RATE_UNIT"
+                        ],
+                        "format": "value-label"
+                    }
+                },
+                {
+                    "label": "利率",
+                    "prop": "interest_rate_value",
+                    "align":"center"
+
+                },
+                {
+                    "label": "生效日期",
+                    "type": "dateTimePicker",
+                    "prop": "effective_date",
+                    "format":"yyyy-MM-dd",
+                    "align":"center"
+
+                },
+                {
+                    "label": "生效时间",
+                    "type": "timePicker",
+                    "prop": "effective_time",
+                    "align":"center"
+
+                },
+                {
+                    "label": "失效日期",
+                    "type": "dateTimePicker",
+                    "prop": "expiration_date",
+                    "format":"yyyy-MM-dd",
+                    "align":"center"
+
+                },
+                {
+                    "label": "失效时间",
+                    "prop": "expiration_time",
+                    "align":"center"
+
+                },
+                {
+                    "label": "利率状态",
+                    "prop": "interest_rate_status",
+                    "align":"center",
+                    "dict": {
+                        "dictType": "CT_E_INTEREST_RATE_STATUS",
+                        "dictKey": [
+                            "CT_E_INTEREST_RATE_STATUS"
+                        ],
+                        "format": "value-label"
+                    }
+                },
+                {
+                    "label": "基础利率序号",
+                    "prop": "interest_rate_sort",
+                    "align":"center"
+                },
+                {
+                    "label": "交易用户",
+                    "prop": "trxn_teller",
+                    "align":"center"
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 240,
+                    "align": "center",
+                    "btns": [
+                        {
+                            "type": "look",
+                            "label": "历史记录",
+                            "toRequest": {
+                                "url": "/views/ismt/ct/interestRate/BasicInterestRateManagement/BasicInterestRateManagement-history.json",
+                                "method": "POST"
+                            },
+                            "props": {
+                                "width": "80%",
+                                "title": "基础利率管理-历史记录表"
+                            }
+                        },
+          
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/ismt/ct/interestRate/BasicInterestRateManagement/BasicInterestRateManagement-update.json",
+                                "method": "GET"
+                            },
+                            "props": {
+                                "width": "80%",
+                                "title": "基础利率管理-维护"
+                            }
+                        },
+                        {
+                            "type": "delete",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/call/RPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "ct3253"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

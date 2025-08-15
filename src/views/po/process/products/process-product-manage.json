@@ -1,0 +1,154 @@
+
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "wfprna": {
+            "control": "text",
+            "label": "流程产品名称",
+            "rules": [
+              {
+                "max": 50,
+                "message": "长度不能超过10个字符"
+              }
+            ]
+          },
+          "wfprcd": {
+            "control": "text",
+            "label": "流程产品编号",
+            "width": 100,
+            "rules": [
+              {
+                "max": 100,
+                "message": "长度不能超过100个字符"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增流程",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/po/process/products/product-manage-add.json"
+          },
+          "props": {
+            "title": "部署流程"
+          }
+        },
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "复制流程",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/po/process/products/process-product-select.json"
+          },
+          "props": {
+            "title": "复制流程"
+          }
+        }
+
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "bpm0040"
+        }
+      },
+      "thead": [
+        {
+          "label": "流程产品编号",
+          "prop": "prod_cd"
+        },
+        {
+          "label": "流程产品名称",
+          "prop": "prod_desc"
+        },
+        {
+          "label": "流程定义名称",
+          "prop": "wf_prod_name"
+        },
+        {
+          "label": "流程产品类型",
+          "width": 120,
+          "prop": "busi_type",
+          "dict": {
+            "dictType": "BPM_E_WFPDTP",
+            "dictKey": [
+              "BPM_E_WFPDTP"
+            ],
+            "format": "value-label"
+          }
+        },
+
+        {
+          "label":"版本号",
+          "prop":"ver",
+          "width": 80
+        },
+        {
+          "label":"修改日期",
+          "prop":"last_upd_dt"
+        },
+        {
+          "label":"修改人",
+          "prop":"last_upd_usr"
+        },
+        {
+          "label": "操作",
+          "width": "300px",
+          "align":"center",
+          "btns": [{
+            "type": "edit",
+            "label": "路线管理",
+            "toRequest": {
+              "url": "/views/po/process/products/route/route-manage.json",
+              "method": "GET",
+              "target": "navTab"
+            },
+            "props": {
+              "title": "流程路线管理"
+            }
+          }, {
+            "type": "edit",
+            "label": "节点管理",
+            "toRequest": {
+              "url": "/views/po/process/products/node/node-manage.json",
+              "method": "GET",
+              "target": "navTab"
+            },
+            "props": {
+              "title": "流程节点管理"
+            }
+          }, {
+            "type": "edit",
+            "label": "参与者管理",
+
+            "toRequest": {
+              "url": "/views/po/process/products/participant/participant-manage.json",
+              "method": "GET",
+              "target": "navTab"
+            },
+            "props": {
+              "title": "参与者管理"
+            }
+          }
+          ]
+        }
+      ]
+    }
+  }
+}

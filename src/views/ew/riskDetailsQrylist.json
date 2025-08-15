@@ -1,0 +1,299 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "controls": [
+        {
+          "case_id": {
+            "control": "text",
+            "span": 6,
+            "maxlength":22,
+            "label": "预警任务编号"
+          },
+          "cust_id": {
+            "control": "text",
+            "span": 6,
+            "label": "客户编号"
+          },
+          "custna": {
+            "control": "text",
+            "span": 6,
+            "label": "客户姓名"
+          },
+          "idtfno": {
+            "control": "text",
+            "maxlength":18,
+            "span": 6,
+            "label": "证件号码"
+          }
+        },
+        {
+          "level": {
+            "control": "select",
+            "label": "预警级别",
+            "span": 6,
+            "default": "",
+            "dict": {
+              "dictType": "css_level",
+              "dictKey": [
+                "css_level"
+              ],
+              "format": "label"
+            }
+          },
+          
+          "status": {
+            "control": "select",
+            "label": "处理状态",
+            "span": 6,
+            "default": "",
+            "dict": {
+              "dictType": "ew_status",
+              "dictKey": [
+                "ew_status"
+              ],
+              "format": "label"
+            }
+          },
+          "handle_results": {
+            "control": "select",
+            "label": "处理结果",
+            "span": 6,
+            "default": "",
+            "dict": {
+              "dictType": "result_code",
+              "dictKey": [
+                "result_code"
+              ],
+              "format": "label"
+            }
+          }
+        },
+        {
+          "csstatus": {
+            "control": "select",
+            "label": "超时状态",
+            "span": 6,
+            "default": "",
+            "dict": {
+              "dictType": "css_tatus",
+              "dictKey": [
+                "css_tatus"
+              ],
+              "format": "label"
+            }
+          },
+          "yjdate": {
+            "control": "dateTimePicker",
+            "label": "预警时间",
+            "span": 12,
+            "type": "daterange",
+            "valueFormat": "yyyyMMdd",
+            "startPlaceholder": "",
+            "endPlaceholder": "",
+            "unlinkPanels": true,
+            "startField": "start_date",
+            "endField": "end_date",
+            "computeType":"months",
+            "value": [
+              "today-3",
+              "today"
+            ]
+          },
+          "cmanager": {
+            "control": "text",
+            "span": 6,
+            "label": "客户经理"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "##type": "export",
+          "label": "导出",
+          "icon": "iconfont icon-daochu",
+          "doRequest": {
+            "method": "POST",
+            "url": "/SUMP/rest/file/commExport",
+            "params": {
+              "servicecode": "ew3169"
+            }
+          },
+          "confirm": {
+            "title": "提示信息",
+            "msg": "确认导出吗？",
+            "confirmButtonText": "确定",
+            "cancelButtonText": "取消"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ew3160"
+        }
+      },
+      "thead": [
+        {
+          "type": "string",
+          "align": "center",
+          "label": "预警任务编号",
+          "prop": "case_id"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "客户编号",
+          "prop": "cust_id"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "客户名称",
+          "prop": "custna"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "证件号码",
+          "prop": "idtfno"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "预警内容",
+          "prop": "content"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "180px",
+          "label": "预警级别",
+          "prop": "level",
+          "dict": {
+            "dictType": "css_level",
+            "dictKey": [
+              "css_level"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "180px",
+          "label": "预警分类",
+          "prop": "category"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "预警时间",
+          "prop": "yjdate"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "180px",
+          "label": "处理状态",
+          "prop": "status",
+          "dict": {
+            "dictType": "ew_status",
+            "dictKey": [
+              "ew_status"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "预警处理时间",
+          "prop": "cldate"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "处理结果",
+          "prop": "handle_results",
+          "dict": {
+            "dictType": "result_code",
+            "dictKey": [
+              "result_code"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "180px",
+          "label": "超时状态",
+          "prop": "csstatus",
+          "dict": {
+            "dictType": "css_tatus",
+            "dictKey": [
+              "css_tatus"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "预警超时时长",
+          "prop": "yjcssj"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "客户经理",
+          "prop": "cmanager"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "客户经理账号",
+          "prop": "cmanagerId"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "机构名称",
+          "prop": "jgname"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 120,
+          "align": "center",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/ew/alertQryTabForMx.json",
+                "method": "GET",
+                "params": {
+                  "case_id": "${{current.case_id}}"
+                }
+              },
+              "props": {
+                "width": "85%",
+                "height": "85%",
+                "title": "预警信息详情"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

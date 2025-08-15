@@ -1,0 +1,251 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "foldLineNumber": 3,
+      "scope": "formData",
+      "controls": [
+        {
+          "branch_id": {
+            "control": "inputTree",
+            "label": "机构",
+            "idField": "coll_team",
+            "nodeTypeField": "type",
+            "pIdField": "parent_coll_team",
+            "labelField": "coll_team_name",
+            "nodeTypes": {
+              "branchTeam": {
+                "icon": "el-icon-news",
+                "children": [
+                  "branchTeam"
+                ]
+              }
+            },
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "cb0041",
+                "query_type": "branchTeam"
+              }
+            },
+            "format": "value-label"
+          },
+          "cust_name": {
+            "control": "text",
+            "label": "客户姓名"
+          }
+        },
+        {
+          "cert_no": {
+            "control": "text",
+            "label": "证件号码"
+          },
+          "cust_id": {
+            "control": "text",
+            "label": "客户编号"
+          }
+        },
+        {
+          "stage_code": {
+            "control": "remoteSelect",
+            "label": "逾期阶段",
+            "labelField": "stage_name",
+            "valueField": "stage_code",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "cb0083"
+              }
+            },
+            "format": "value-label"
+          },
+          "queue_code": {
+            "control": "remoteSelect",
+            "label": "队列名称",
+            "labelField": "queue_name",
+            "valueField": "queue_code",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "cb0082"
+              }
+            },
+            "format": "value-label"
+          }
+        },
+        {
+          "case_id": {
+            "control": "text",
+            "label": "案件编号"
+          },
+          "case_status": {
+            "control": "select",
+            "label": "案件状态",
+            "dict": {
+              "dictType": "CS_E_STATUS_CD",
+              "dictKey": [
+                "CS_E_STATUS_CD"
+              ],
+              "format": "value-label"
+            }
+          }
+        },
+        {
+          "min_overdue_days": {
+            "control": "inputNumber",
+            "label": "逾期天数开始值",
+            "min": 1
+          },
+          "max_overdue_days": {
+            "control": "inputNumber",
+            "label": "逾期天数结束值",
+            "min": 1
+          }
+        },
+        {
+          "ovd_amt_total_1": {
+            "control": "currency",
+            "label": "欠款金额区间开始值",
+            "min": 1
+          },
+          "ovd_amt_total_2": {
+            "control": "currency",
+            "label": "欠款金额区间结束值",
+            "min": 1
+          }
+        },
+        {
+          "collect_date_1": {
+            "control": "inputNumber",
+            "label": "入催天数区间开始值",
+            "min": 1
+          },
+          "collect_date_2": {
+            "control": "inputNumber",
+            "label": "入催天数区间结束值",
+            "min": 1
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "custom",
+          "icon": "el-icon-edit",
+          "target": "dialog",
+          "checkCountMin": 1,
+          "label": "人工分配",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/cs/collManage/lgManage/lgAssign/lgAssign_manual_oper.json"
+          }
+        },
+        {
+          "type": "custom",
+          "icon": "el-icon-bell",
+          "target": "dialog",
+          "checkCountMin": 1,
+          "label": "自动分配",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/cs/collManage/lgManage/lgAssign/lgAssign_auto.json"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "cb0193",
+          "appId": "cbOnl",
+          "assign_status": "N",
+          "page_id": "/views/cs/collManage/lgManage/lgAssign/lgAssign_management.json"
+        }
+      },
+      "thead": [
+        {
+          "type": "selection",
+          "align": "center",
+          "width": "55",
+          "fixed": "left"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "机构",
+          "prop": "branch_id"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "案件编号",
+          "prop": "case_id"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "客户姓名",
+          "prop": "cust_name"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "证件类型",
+          "prop": "cert_type",
+          "dict": {
+            "dictType": "CS_E_CERT_TYPE",
+            "dictKey": [
+              "CS_E_CERT_TYPE"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "证件号码",
+          "prop": "cert_no"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "案件状态",
+          "prop": "case_status",
+          "dict": {
+            "dictType": "CS_E_STATUS_CD",
+            "dictKey": [
+              "CS_E_STATUS_CD"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "案件类型",
+          "prop": "classify_code",
+          "dict": {
+            "dictType": "CS_E_LOCATION_CD",
+            "dictKey": [
+              "CS_E_LOCATION_CD"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "逾期天数",
+          "prop": "overdue_days"
+        }
+      ]
+    }
+  }
+}

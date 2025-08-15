@@ -1,0 +1,234 @@
+{
+  "module": "v-form-editableDataGrid-btn",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "initRequest": "${{params}}",
+      "controls": [
+        {
+          "strategy_group_code": {
+            "control": "string",
+            "disabled": true,
+            "label": "策略组代码",
+            "width": "130px"
+          },
+          "strategy_group_name": {
+            "control": "string",
+            "disabled": true,
+            "label": "策略组名称",
+            "width": "130px"
+          },
+          "group_assign_ratio": {
+            "control": "inputNumber",
+            "label": "组分配比重",
+            "width": "130px",
+            "min": 1,
+            "max": 100,
+            "rules": [
+              {
+                "required": true,
+                "pattern": "^[0-9]",
+                "message": "请输入 1 到 100 之间的数字"
+              },
+              {
+                "expression": "'${{form.group_assign_ratio}}'.length < 4",
+                "message": "最多可以输入 4 个字节"
+              }
+            ]
+          },
+          "assign_algorithm": {
+            "control": "select",
+            "label": "分配算法",
+            "width": "130px",
+            "format": "value-label",
+            "selectFirstValue": false,
+            "dict": {
+              "dictType": "CS_ASSIGN_ALG",
+              "dictKey": [
+                "CS_ASSIGN_ALG"
+              ],
+              "format": "value-label"
+            }
+          },
+          "assign_ratio_mode": {
+            "control": "select",
+            "label": "分配比重模式",
+            "width": "130px",
+            "format": "value-label",
+            "selectFirstValue": false,
+            "dict": {
+              "dictType": "CS_ASSIGN_RATIO_MODE",
+              "dictKey": [
+                "CS_ASSIGN_RATIO_MODE"
+              ],
+              "format": "value-label"
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "icon": "el-icon-circle-plus",
+          "target": "dialog",
+          "label": "新增策略明细",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/cs/paramManage/strategy/automateStrategy/division_add.json",
+            "params": {
+              "strategy_group_code": "${{params.strategy_group_code}}"
+            }
+          },
+          "props": {
+            "width": "65%",
+            "title": "新增策略明细"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "name": "scheme",
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "py0012",
+          "appId": "pyOnl"
+        }
+      },
+      "thead": [
+        {
+          "type": "selection",
+          "align": "center",
+          "width": "55",
+          "fixed": "left",
+          "show": {
+            "prop": "changkuan",
+            "is": [
+              "0"
+            ]
+          }
+        },
+        {
+          "prop": "oa_org_id",
+          "type": "string",
+          "align": "center",
+          "label": "委外公司法人代码"
+        },
+        {
+          "prop": "oa_org_name",
+          "type": "string",
+          "align": "center",
+          "label": "委外公司名称"
+        },
+        {
+          "prop": "commission_plan_id",
+          "type": "string",
+          "align":"center",
+          "label": "佣金方案编号",
+          "format": "value-label",
+          "labelField": "common_scheme_name",
+          "valueField": "commission_plan_id",
+          "doRequest": {
+            "url": "/SUMP/iccsCall/iccsEurekaCall",
+            "method": "POST",
+            "params": {
+              "servicecode":"##委外公司佣金列表查询",
+              "coll_kind":"02",
+              "is_valid":"Y",
+              "oa_org_id":"##传入委外公司代码"
+            }
+          }
+        },
+        {
+          "prop": "oa_cycle",
+          "type": "string",
+          "align": "center",
+          "label": "委外周期"
+        },
+        {
+          "prop": "oa_cycle_unit",
+          "type": "string",
+          "align": "center",
+          "label": "委外周期单位",
+          "format": "value-label",
+          "dict": {
+            "dictType": "CS_OA_CYCLE_UNIT",
+            "dictKey": [
+              "CS_OA_CYCLE_UNIT"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "prop": "detail_assign_ratio",
+          "type": "string",
+          "align": "center",
+          "label": "明细分配比重"
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "fixed": "right",
+          "width": "180px",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/cs/paramManage/strategy/automateStrategy/division_info.json",
+                "method": "POST"
+              },
+              "props": {
+                "title": "详情"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/cs/paramManage/strategy/automateStrategy/division_detail_modify.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "70%",
+                "title": "维护"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "py0010",
+                  "appId": "pyOnl"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "footer": {
+      "btns": [
+        {
+          "type": "submit",
+          "label": "保存",
+          "icon": "el-icon-tickets",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "py0007",
+              "appId": "pyOnl"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,140 @@
+{
+  "module": "v-search-btn-datagrid",
+  "pageId": "risk_fact",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "fact_scene": {
+            "label": "事实场景",
+            "control": "select",
+            "span": 8,
+            "width": "100px",
+            "dict": {
+              "dictType": "RISK_E_FACTUAL_SCENARIO",
+              "dictKey": [
+                "RISK_E_FACTUAL_SCENARIO"
+              ],
+              "format": "label"
+            }
+          },
+          "fact_code": {
+            "label": "事实代码",
+            "control": "text",
+            "span": 8
+          },
+          "fact_name": {
+            "label": "事实名称",
+            "control": "text",
+            "span": 8
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "authId": "fact_add_btn",
+          "show": true,
+          "label": "新增",
+          "toRequest": {
+            "url": "/views/risk/risk_fact/risk_facts_add.json",
+            "method": "get"
+          },
+          "props": {
+            "width": "80%",
+            "title": "新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+        "doRequest": {
+          "url": "/SUMP/icmcall/icmRPCCall",
+          "method": "post",
+          "params": {
+            "servicecode": "deci010101",
+            "isList":true
+          }
+        },
+        "thead": [
+          {
+            "label": "序号",
+            "type": "index"
+            },
+            {
+              "label": "事实场景",
+              "prop": "fact_scene",
+              "dict": {
+                "dictType": "RISK_E_FACTUAL_SCENARIO",
+                "dictKey": [
+                  "RISK_E_FACTUAL_SCENARIO"
+                ],
+                "format": "label"
+              }
+            },
+          {
+            "label": "事实代码",
+            "prop": "fact_code"
+          },
+          {
+            "label": "事实名称",
+            "prop": "fact_name"
+          }, 
+          {
+            "label": "最新维护时间",
+            "prop": "data_update_time"
+          },
+          {
+            "label": "备注",
+            "prop": "description"
+          },
+          {
+            "label": "操作",
+            "width": "150px",
+            "btns": [
+              {
+                "type": "edit",
+                "authId": "fact_upd_btn",
+                "label": "维护",
+                "toRequest": {
+                  "###url": "/views/risk_fact/risk_facts_update.json",
+                  "url": "@riskFactsUpdate",
+                  "method": "get"
+                },
+                "props": {
+                  "width": "80%",
+                  "height":"80%"
+                }
+              },
+              {
+                "type": "look",
+                "label": "查看",
+                "toRequest": {
+                  "url": "/views/risk/risk_fact/risk_facts_view.json",
+                  "method": "get"
+                },
+                "props": {
+                  "width": "80%"
+                }
+              },
+              {
+                "type": "delete",
+                "authId": "fact_del_btn",
+                "label": "删除",
+                "doRequest": {
+                  "url": "/SUMP/icmcall/icmRPCCall",
+                  "method": "post",
+                  "params": {
+                    "servicecode": "deci010103"
+                  }
+                }
+              }
+            ]
+          }
+        ]
+    }
+  }
+}

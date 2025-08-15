@@ -1,0 +1,348 @@
+{
+  "module": "v_search_btn_datagrid",
+  "pageId": "page002",
+  "layout": {
+    "form": {
+      "foldLineNumber": 3,
+      "scope": "formData",
+      "controls": [
+        {
+          "branch_id": {
+            "control": "inputTree",
+            "label": "机构",
+            "idField": "coll_team",
+            "nodeTypeField": "type",
+            "pIdField": "parent_coll_team",
+            "labelField": "coll_team_name",
+            "nodeTypes": {
+              "branchTeam": {
+                "icon": "el-icon-news",
+                "children": [
+                  "branchTeam"
+                ]
+              }
+            },
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "appId": "cbOnl",
+                "servicecode": "cb0041",
+                "query_type": "branchTeam"
+              }
+            },
+            "format": "value-label"
+          },
+          "cust_name": {
+            "control": "text",
+            "label": "客户姓名"
+          }
+        },
+        {
+          "coll_team": {
+            "control": "inputTree",
+            "label": "催收组",
+            "idField": "coll_team",
+            "nodeTypeField": "type",
+            "pIdField": "parent_coll_team",
+            "labelField": "coll_team_name",
+            "events": {
+              "emit": [
+                "collector"
+              ]
+            },
+            "nodeTypes": {
+              "collTeam": {
+                "icon": "el-icon-news",
+                "children": [
+                  "collTeam"
+                ]
+              }
+            },
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "cb0041"
+              }
+            },
+            "format": "value-label"
+          },
+          "collector": {
+            "control": "remoteSelect",
+            "label": "催收员",
+            "labelField": "user_name",
+            "valueField": "user_id",
+            "lazy": true,
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "appId": "cbOnl",
+                "servicecode": "cb0084"
+              }
+            },
+            "format": "value-label"
+          }
+        },
+        {
+          "case_id": {
+            "control": "text",
+            "label": "案件编号"
+          },
+          "cust_id": {
+            "control": "text",
+            "label": "客户编号"
+          }
+        },
+        {
+          "cert_no": {
+            "control": "text",
+            "label": "证件号码"
+          },
+          "phone_no": {
+            "control": "text",
+            "label": "手机号码"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "appId": "cbOnl",
+          "servicecode": "cb0042"
+        }
+      },
+      "thead": [
+        {
+          "type": "string",
+          "align": "center",
+          "width": "180px",
+          "label": "客户编号",
+          "prop": "cust_id"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "180px",
+          "label": "客户姓名",
+          "prop": "cust_name"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "180px",
+          "label": "案件批次号",
+          "prop": "batch_no"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "180px",
+          "label": "案件编号",
+          "prop": "case_id"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "机构",
+          "prop": "branch_id"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "证件类型",
+          "width": "150",
+          "prop": "cert_type",
+          "dict": {
+            "dictType": "CS_E_CERT_TYPE",
+            "dictKey": [
+              "CS_E_CERT_TYPE"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "180px",
+          "label": "证件号码",
+          "prop": "cert_no"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "手机号码",
+          "prop": "phone_no"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "180px",
+          "label": "处理状态",
+          "prop": "handle_status",
+          "dict": {
+            "dictType": "CS_E_DEAL_STATE",
+            "dictKey": [
+              "CS_E_DEAL_STATE"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "案件类型"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "案件状态",
+          "prop": "case_status",
+          "dict": {
+            "dictType": "CS_E_STATUS_CD",
+            "dictKey": [
+              "CS_E_STATUS_CD"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "180px",
+          "label": "队列名称",
+          "prop": "queue_code",
+          "dict": {
+            "dictKey": [
+              "queue_code"
+            ],
+            "format": "value-label",
+            "labelField": "queue_name",
+            "valueField": "queue_code",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "appId": "cbOnl",
+                "servicecode": "cb0082"
+              }
+            }
+          }
+        },
+        {
+          "type": "currency",
+          "align": "center",
+          "label": "逾期阶段",
+          "prop": "stage_code"
+        },
+        {
+          "type": "currency",
+          "align": "center",
+          "label": "逾期金额",
+          "prop": "overdue_amount",
+          "format": {
+            "decimal": "2"
+          }
+        },
+        {
+          "type": "currency",
+          "align": "center",
+          "label": "当前余额",
+          "prop": "current_balance",
+          "format": {
+            "decimal": "2"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "逾期天数",
+          "prop": "overdue_days"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "催收组",
+          "prop": "coll_team"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "催收员",
+          "prop": "collector"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "180px",
+          "label": "跟催时间",
+          "prop": "handle_time"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "入催日期",
+          "prop": "collect_date"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "180px",
+          "label": "本期五级分类",
+          "prop": "five_level",
+          "dict": {
+            "dictType": "CS_E_CLASSIFYRESULT",
+            "dictKey": [
+              "CS_E_CLASSIFYRESULT"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "最近催收结果",
+          "prop": "last_coll_result",
+          "dict": {
+            "dictKey": [
+              "last_coll_result"
+            ],
+            "format": "value-label",
+            "labelField": "coll_result_name",
+            "valueField": "coll_result_code",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "cb0087",
+                "appId": "cbOnl"
+              }
+            }
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "案件标签",
+          "prop": "case_label"
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "fixed": "right",
+          "btns": [
+              {
+                  "type": "bringback",
+                  "label": "选择"
+              }
+          ]
+      }
+      ]
+    }
+  }
+}

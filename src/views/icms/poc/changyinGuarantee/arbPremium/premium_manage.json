@@ -1,0 +1,115 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "part_no": {
+            "label": "合作方编号",
+            "control": "text"
+          },
+          "premium_take_date": {
+            "label": "保费收取日期",
+            "control": "dateTimePicker"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "导入数据",
+          "toRequest": {
+            "url": "/views/icms/poc/changyinGuarantee/arbPremium/import_excel.json",
+            "method": "get",
+            "params": {
+              "servicecode": "ar1635",
+              "appId":"icmsOnl"
+            }
+          },
+          "props": {
+            "title": "导入保费信息",
+            "width": "80%"
+          }
+        },
+        {
+          "type": "export",
+          "label": "下载模板",
+          "icon": "iconfont icon-daochu",
+          "doRequest": {
+            "url": "/SUMP/rest/file/exportNullExcel",
+            "method": "get",
+            "params": {
+              "header": "合作方编号,保费收取交易流水号,证件号码,业务号,保费收取日期,保费金额（元）",
+              "fileName": "保费信息同步表.xls"
+            }
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "ar1630",
+          "params": {
+          }
+        }
+      },
+      "pagination": {
+        "pageSizes": [
+          10,
+          15,
+          20
+        ],
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "type": "index",
+          "align": "center"
+        },
+        {
+          "type": "leaf",
+          "label": "合作方编号",
+          "align": "center",
+          "prop": "part_no"
+        },
+        {
+          "label": "保费收取交易流水号",
+          "prop": "premium_trans_no",
+          "align": "center",
+          "type": "leaf"
+        },
+        {
+          "label": "证件号码",
+          "prop": "cert_no",
+          "align": "center",
+          "type": "leaf"
+        },
+        {
+          "label": "业务号",
+          "prop": "busi_no",
+          "align": "center",
+          "type": "leaf"
+        },
+        {
+          "label": "保费收取日期",
+          "prop": "premium_take_date",
+          "align": "center",
+          "type": "leaf"
+        },
+        {
+          "label": "保费金额（元）",
+          "prop": "premium_amnt",
+          "align": "center",
+          "type": "leaf",
+          "decimal": "2"
+        }
+      ]
+    }
+  }
+}

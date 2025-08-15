@@ -1,0 +1,186 @@
+{
+  "module": "v-form-editableDataGrid-btn",
+  "layout": {
+    "form": {
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode":"cs0063",
+          "appId": "iccsOnl",
+          "coll_kind": "02"
+        }
+      },
+      "scope": "formData",
+      "controls": [
+        {
+          "scheme_cd": {
+            "control": "string",
+            "disabled":true,
+            "label": "分配方案编号"
+          },
+          "scheme_name": {
+            "control": "string",
+            "label": "分配方案名称"
+          }
+        },
+        {
+          "scheme_type": {
+            "disabled":true,
+            "control": "select",
+            "label": "分配方案类型",
+            "dict": {
+              "dictType": "CS_COLL_TYPE",
+              "dictKey": [
+                "CS_COLL_TYPE"
+              ],
+              "format": "value-label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          },
+          "scheme_pattern": {
+            "disabled":true,
+            "control": "select",
+            "label": "分配方式",
+            "dict": {
+              "dictType": "CS_SCHEME_PATTERN",
+              "dictKey": [
+                "CS_SCHEME_PATTERN"
+              ],
+              "format": "value-label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          }
+        },
+        {
+          "priority": {
+            "control": "string",
+            "label": "优先级"
+          },
+          "is_valid": {
+            "control": "string",
+            "label": "是否启用",
+            "dict": {
+              "dictType": "CS_E_YESORNO",
+              "dictKey": [
+                "CS_E_YESORNO"
+              ],
+              "format": "value-label"
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+
+      ]
+    },
+    "datagrid": {
+      "name": "scheme",
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "cs0151",
+          "appId": "iccsOnl",
+          "coll_kind": "02"
+        }
+      },
+      "pagination": {
+        "show": false
+      },
+      "allData":true,
+      "thead": [
+        {
+          "type": "selection",
+          "align": "center",
+          "width": "55",
+          "fixed": "left",
+          "show": {
+            "prop": "changkuan",
+            "is": [
+              "0"
+            ]
+          }
+        },
+        {
+          "prop": "ca_queue_cd",
+          "type": "remoteSelect",
+          "align":"center",
+          "label": "分配队列",
+          "format": "value-label",
+          "labelField": "queue_name",
+          "valueField": "queue_cd",
+          "doRequest": {
+            "url": "/SUMP/iccsCall/iccsEurekaCall",
+            "method": "POST",
+            "params": {
+              "servicecode":"pl0402",
+              "coll_kind":"02",
+              "is_valid":"Y",
+              "coll_type": "${{formData.scheme_type}}"
+            }
+          }
+        },
+        {
+          "label": "分配组",
+          "align":"center",
+          "prop": "ca_team_id",
+          "type": "inputTree",
+          "idField": "coll_team",
+          "nodeTypeField": "type",
+          "pIdField": "parent_coll_team",
+          "labelField": "coll_team_name",
+          "root": {
+            "rootNode": {
+              "name": "BYB-BRANCH",
+              "value": "9999",
+              "disabled": true
+            }
+          },
+          "doRequest": {
+            "url": "/SUMP/iccsCall/iccsEurekaCall",
+            "method": "POST",
+            "params": {
+              "servicecode":"pl0180"
+            }
+          }
+        },
+        {
+          "prop": "ca_object_id",
+          "type": "remoteSelect",
+          "align":"center",
+          "label": "分配对象",
+          "format": "value-label",
+          "labelField": "collector_name",
+          "valueField": "collector",
+          "doRequest": {
+            "url": "/SUMP/iccsCall/iccsEurekaCall",
+            "method": "POST",
+            "params": {
+              "servicecode":"pl0184",
+              "coll_team": "${{current.ca_team_id}}"
+            }
+          }
+        },
+        {
+          "prop": "ca_ratio",
+          "type": "currency",
+          "align":"center",
+          "label": "分配比例(%)"
+        }
+      ]
+    }
+  }
+}

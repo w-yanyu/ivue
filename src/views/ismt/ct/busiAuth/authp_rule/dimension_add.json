@@ -1,0 +1,225 @@
+{
+    "module": "v_search_editableDataGrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "dimension_code": {
+                        "label": "业务指标编码",
+                        "control": "lookup",
+                        "keyField": {
+                          "dimension_code": "dimension_code",
+                          "dimension_name": "dimension_name",
+                          "dimension_type": "dimension_type",
+                          "dimension_busi_type":"dimension_busi_type",
+                          "achive_type":"achive_type",
+                          "service_path":"service_path",
+                          "belonging_table":"belonging_table",
+                          "retrun_value_type":"retrun_value_type",
+                          "query_condition":"query_condition",
+                          "opt_type":"opt_type",
+                          "string_value":"string_value",
+                          "min_value":"min_value",
+                          "max_value":"max_value"
+                        },
+                        "toRequest": {
+                          "url": "/views/ismt/ct/busiAuth/authp_dimension/dimension_code_lookup.json",
+                          "method": "post",
+                          "params": {
+                              "dimension_type": "0",
+                              "appId":"${{params.appId}}"
+                          }
+                        },
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入业务指标编码"
+                            }
+                        ],
+                        "multiple": false,
+                        "props": {
+                          "title": "业务指标编码选择"
+                        }
+                    },
+                    "dimension_name": {
+                        "control": "string",
+                        "label": "业务指标名称"
+                    },
+                    "dimension_type": {
+                        "control": "string",
+                        "label": "业务指标类型",
+                        "dict": {
+                            "dictType": "CT_E_DIMENSION_TYPE",
+                            "format": "label",
+                            "dictKey": [
+                                "CT_E_DIMENSION_TYPE"
+                            ]
+                        },
+                        "format": "label"
+                    },
+                    "dimension_busi_type": {
+                        "control": "string",
+                        "label": "所属业务类型",
+                        "dict": {
+                            "dictType": "CT_E_APPL_TYPE",
+                            "dictKey": [
+                              "CT_E_APPL_TYPE"
+                            ],
+                            "format": "label"
+                          }
+                    },
+                    "achive_type": {
+                        "control": "string",
+                        "label": "获取方式",
+                        "dict": {
+                            "dictType": "CT_E_MANNER",
+                            "dictKey": [
+                              "CT_E_MANNER"
+                            ],
+                            "format": "label"
+                          },
+                          "events" : {
+                            "showItem": {
+                              "java" : ["service_path"],
+                              "sql" : ["belonging_table","query_condition"],
+                              "$default" : []
+                            }
+                          }
+                    },
+                    "service_path": {
+                        "control": "string",
+                        "label": "服务路径"
+                    },
+                    "belonging_table": {
+                        "control": "string",
+                        "label": "所属表"
+                    },
+                    "query_condition": {
+                        "control": "string",
+                        "label": "查询条件"
+                    }
+
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "save",
+                    "label": "保存",
+                    "icon": "el-icon-tickets",
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "ct2413",
+                            "dimension_code": "${{form.dimension_code}}",
+                            "dimension_name": "${{form.dimension_name}}",
+                            "dimension_type": "${{form.dimension_type}}",
+                            "dimension_busi_type": "${{form.dimension_busi_type}}",
+                            "achive_type": "${{form.achive_type}}",
+                            "service_path": "${{form.service_path}}",
+                            "belonging_table": "${{form.belonging_table}}",
+                            "query_condition": "${{form.query_condition}}",
+                            "authp_rule_code": "${{params.authp_rule_code}}",
+                            "authp_system_code": "${{params.authp_system_code}}",
+                            "appId":"${{params.appId}}"
+                          }
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": false,
+            "##fieldPath": "list01",
+            "doRequest": {  
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ct2429",
+                    "appId":"${{params.appId}}",
+                    "authp_rule_code": "${{params.authp_rule_code}}",
+                    "authp_system_code": "${{params.authp_system_code}}"
+                }
+            },
+            "pagination": {
+                "show": false
+            },
+            "thead": [
+                {
+                    "type": "selection",
+                    "align": "center"
+                },
+                {
+                    "label": "字段代码",
+                    "type": "string",
+                    "prop": "field_code"
+                },
+                {
+                    "label": "字段名",
+                    "type": "string",
+                    "prop": "field_name"
+                },
+                {
+                    "label": "返回值类型",
+                    "type": "string",
+                    "prop": "retrun_value_type",
+                    "dict": {
+                      "dictType": "CT_E_RESULT_TYPE",
+                      "dictKey": [
+                          "CT_E_RESULT_TYPE"
+                      ],
+                      "format": "label"
+                    }
+                },
+                {
+                    "label": "操作模式",
+                    "type": "select",
+                    "prop": "opt_type",
+                    "dict": {
+                        "format": "label",
+                        "dictKey": [
+                            "CT_E_OPERATE_MODE"
+                        ],
+                        "dictType": "CT_E_OPERATE_MODE"
+                    },
+                    "rules": [
+                        {
+                            "required": true,
+                            "message": "请选择操作模式"
+                        }
+                    ]
+                },
+                {
+                    "label": "字符值",
+                    "type": "text",
+                    "prop": "string_value"
+                },
+                {
+                    "label": "最小值",
+                    "type": "text",
+                    "prop": "min_value"
+                },
+                {
+                    "label": "最大值",
+                    "type": "text",
+                    "prop": "max_value"
+                }
+            ]
+        },
+        "alert": {
+          "span": 8,
+            "title": "提示",
+            "description": [
+                "<p style = 'color:red'>【返回值类型】为金额或者数字类型的，【操作模式】不能选列举值。</p>",
+                "<p style = 'color:red'>【返回值类型】为金额或者数字类型的，【操作模式】配小于、小于等于时取【最大值】使用。</p>",
+                "<p style = 'color:red'>【返回值类型】为金额或者数字类型的，【操作模式】配等于时取【最小值】使用。</p>",
+                "<p style = 'color:red'>【返回值类型】为金额或者数字类型的，【操作模式】配大于、大于等于时取【最小值】使用。</p>",
+                "<p style = 'color:red'>【返回值类型】为金额或者数字类型的，【操作模式】配<大于，小于>或者<大于等于，小于等于>时同时取【最小值】【最大值】使用。</p>",
+                "<p style = 'color:red'>【返回值类型】为字符类型时，【操作模式】只能配等于或者列举值，取【字符值】使用</p>"
+            ],
+            "listStyle": "disc"
+        }
+    }
+}

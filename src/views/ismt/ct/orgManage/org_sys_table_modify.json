@@ -1,0 +1,97 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "initRequest": "${{params}}",
+            "btns": [
+                {
+                    "type": "submit",
+                    "label": "提交",
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "ct2343"
+                        }
+                    }
+                }
+            ],
+            "controls": [
+                {
+                    "table_name": {
+                        "control": "text",
+                        "disabled": true,
+                        "label": "表名",
+                        "width": "130px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入表名"
+                            }
+                        ]
+                    },
+                    "table_desc": {
+                        "control": "text",
+                        "label": "表描述",
+                        "width": "130px",
+                        "rules": [
+                            {
+                                "message": "请输入新增法人号"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "column_list": {
+                        "control": "text",
+                        "label": "替换字段信息",
+                        "width": "130px"
+                    },
+                    "org_field_name": {
+                        "control": "remoteSelect",
+                        "label": "法人字段",
+                        "width": "130px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请选择法人字段"
+                            }
+                        ],
+                        "labelField": "domain_name",
+                        "valueField": "domain_code",
+                        "format": "label[value]",
+                        "doRequest": {
+                            "url": "/SUMP/icmcall/icmRPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "ct3302",
+                                "domainName": "",
+                                "domainCode": ""
+                            }
+                        }
+                    }
+                },
+                {
+                    "system_list": {
+                        "width": "130px",
+                        "control": "remoteSelect",
+                        "label": "系统列表",
+                        "valueField": "system_id",
+                        "labelField": "system_name",
+                        "format": "value[label]",
+                        "multiple": true,
+                        "valueDataType": "string",
+                        "doRequest": {
+                            "url": "/SUMP/icmcall/icmRPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "ct2321",
+                                "length": 50
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

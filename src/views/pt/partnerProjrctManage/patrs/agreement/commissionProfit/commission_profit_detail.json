@@ -1,0 +1,342 @@
+{
+  "module": "v_realonlyForm_btn",
+  "layout": {
+    "form": {
+
+      "initDataOnce":false,
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pt0005",
+          "part_protocol_no": "${{params.part_protocol_no}}"
+        }
+      },
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pt0007",
+          "commission_rule_no": "${{params.commission_rule_no}}",
+          "version": "${{params.version}}"
+
+        }
+      },
+      "controls": [
+        {
+          "profit_cumulative_rule": {
+            "control": "string",
+            "label": "分润累计规则",
+            "width": "120px",
+            "dict": {
+              "dictKey": [
+                "PT_E_SUMMARY_CUMULATIVE_RULE"
+              ],
+              "dictType": "PT_E_SUMMARY_CUMULATIVE_RULE",
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": false,
+                "message": "请选择分润累计规则"
+              }
+            ]
+          },
+          "start_billing_date": {
+            "control": "string",
+            "format": "yyyy-MM-dd",
+            "valueFormat": "yyyyMMdd",
+            "label": "开始结算日期",
+            "width": "120px",
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "profit_baseline": {
+            "control": "string",
+            "label": "分润基准",
+            "width": "120px",
+            "disabled": false,
+            "dict": {
+              "dictType": "PT_E_PROFIT_BASELINE",
+              "dictKey": [
+                "PT_E_PROFIT_BASELINE"
+              ],
+              "format": "label",
+              "include": [
+                "01",
+                "03",
+                "04",
+                "05",
+                "06",
+                "07",
+                "08"
+              ]
+            },
+            "rules": [
+              {
+                "required": false,
+                "message": "请输入分润基准"
+              }
+            ],
+            "events": {
+              "condition": {
+                "keyVals": {
+                  "001": "'${{form.profit_baseline}}' === '01' || '${{form.profit_baseline}}' === '03'",
+                  "002": "'${{form.profit_baseline}}' === '04' || '${{form.profit_baseline}}' === '05'||'${{form.profit_baseline}}' === '06' || '${{form.profit_baseline}}' === '07'||'${{form.profit_baseline}}' === '08'"
+                },
+                "switch": {
+                  "001": {
+                    "control": {
+                      "profit__calculation_method": {
+                        "value": "01"
+                      }
+                    }
+                  },
+                  "002": {
+                    "control": {
+                      "profit__calculation_method": {
+                        "value": "02"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+        
+          "profit__calculation_method": {
+            "control": "string",
+            "disabled": true,
+            "label": "分润计算方式",
+            "width": "120px",
+            "dict": {
+              "dictType": "PT_E_PROFIT__CALCULATION_METHOD",
+              "dictKey": [
+                "PT_E_PROFIT__CALCULATION_METHOD"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": false,
+                "message": "请选择"
+              }
+            ]
+          },
+          "profit_value": {
+            "control": "string",
+            "disabled": false,
+            "label": "分润数值",
+            "width": "120px",
+            "rules": [
+              {
+                "required": false,
+                "message": "请输入分润数值"
+              }
+            ]
+          },
+          "payment_method": {
+            "control": "string",
+            "disabled": false,
+            "label": "结算方式",
+            "width": "120px",
+            "dict": {
+              "dictType": "PT_E_PAYMENT_METHOD",
+              "dictKey": [
+                "PT_E_PAYMENT_METHOD"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": false,
+                "message": "请选择"
+              }
+            ],
+            "showItem": {
+              "01": [
+                "billing_frequency"
+              ]
+            },
+            "events": {
+              "condition": {
+                "01": {
+                  "control": {
+                    "billing_frequency": {
+                      "initShow": true
+                    }
+                  }
+                },
+                "02": {
+                  "control": {
+                    "billing_frequency": {
+                      "initShow": false
+                    },
+                    "payment_period1": {
+                      "initShow": false
+                    },
+                    "payment_period2": {
+                      "initShow": false
+                    },
+                    "billing_period_unit": {
+                      "initShow": false
+                    }
+                  }
+                }
+
+              }
+            }
+          },
+          "billing_frequency": {
+            "control": "string",
+            "initShow": false,
+            "disabled": false,
+            "label": "结算频率",
+            "width": "120px",
+            "dict": {
+              "dictType": "PT_E_BILLING_PREQ",
+              "dictKey": [
+                "PT_E_BILLING_PREQ"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": false,
+                "message": "请选择"
+              }
+            ],
+            "events": {
+              "condition": {
+                "1": {
+                  "control": {
+                    "payment_period1": {
+                      "label": "结算日期",
+                      "width": "120px",
+                      "initShow": true,
+                      "rules": [
+                        {
+                          "required": false,
+                          "message": "请输入结算日期"
+                        }
+                      ]
+                    },
+                    "payment_period2": {
+                      "label": "结算周期",
+                      "width": "120px",
+                      "initShow": false,
+                      "rules": [
+                        {
+                          "expression": " ${{form.payment_period}} > 0 ",
+                          "message": "结算周期初值不能小于等于零"
+                        },
+                        {
+                          "pattern": "^[1-9]+[0-9]*$",
+                          "message": "请输入整数"
+                        },
+                        {
+                          "required": false,
+                          "message": "请输入结算日期"
+                        }
+                      ]
+                    },
+                    "billing_period_unit": {
+                      "label": "周期单位",
+                      "width": "120px",
+                      "initShow": false
+                    }
+                  }
+                },
+                "2": {
+                  "control": {
+                    "payment_period1": {
+                      "label": "结算日期",
+                      "width": "120px",
+                      "initShow": false,
+                      "rules": [
+                        {
+                          "required": false,
+                          "message": "请输入结算日期"
+                        }
+                      ]
+                    },
+                    "payment_period2": {
+                      "label": "结算周期",
+                      "width": "120px",
+                      "initShow": true,
+                      "rules": [
+                        {
+                          "expression": " ${{form.payment_period}} > 0 ",
+                          "message": "结算周期初值不能小于等于零"
+                        },
+                        {
+                          "pattern": "^[1-9]+[0-9]*$",
+                          "message": "请输入整数"
+                        },
+                        {
+                          "required": false,
+                          "message": "请输入结算日期"
+                        }
+                      ]
+                    },
+                    "billing_period_unit": {
+                      "label": "周期单位",
+                      "width": "120px",
+                      "initShow": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "billing_period_unit": {
+            "initShow": false,
+            "control": "string",
+            "disabled": false,
+            "label": "周期单位",
+            "width": "120px",
+            "dict": {
+              "dictType": "PT_E_CYCLETYPE",
+              "dictKey": [
+                "PT_E_CYCLETYPE"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": false,
+                "message": "请选择"
+              }
+            ]
+          },
+          "payment_period1": {
+            "initShow": false,
+            "control": "string",
+            "label": "结算日期",
+            "width": "120px"
+          },
+          "payment_period2": {
+            "initShow": false,
+            "control": "string",
+            "label": "结算周期值",
+            "width": "120px"
+          },
+          "profit_account_no": {
+            "control": "string",
+            "edit": true,
+            "label": "分润账户",
+            "width": "120px",
+            "events": {
+              "set": {
+                "temp_name": ""
+              }
+            }
+          }
+        }]
+    }
+  }
+}

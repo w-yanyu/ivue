@@ -1,0 +1,150 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "doRequest": {
+                "url": "",
+                "method": "POST",
+                "params": {}
+            },
+            "controls": [
+                {
+                    "auth_id": {
+                        "control": "text",
+                        "label": "授权ID",
+                        "rules": [
+                            {
+                                "max": 32,
+                                "message": "长度不能超过32个字符"
+                            }
+                        ]
+                    },
+                    "auth_name": {
+                        "control": "text",
+                        "label": "授权名称",
+                        "rules": [
+                            {
+                                "max": 100,
+                                "message": "长度不能超过100个字符"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "amount_exchange_ind": {
+                        "control": "select",
+                        "dict": {
+                            "dictType": "MS_E_YESORNO",
+                            "dictKey": [
+                                "MS_E_YESORNO"
+                            ],
+                            "format": "label"
+                        },
+                        "label": "自动折算标志"
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "target": "dialog",
+                    "label": "新增",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/ismt/ct/authorizatio/authorizatio-add/authorizatio-add.json"
+                    },
+                    "props": {
+                        "title": "授权信息新增"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ct2069"
+                }
+            },
+            "pagination": {
+                "show": true,
+                "pageSize": 10
+            },
+            "thead": [
+                {
+                    "type": "index"
+                },
+                {
+                    "label": "授权ID",
+                    "prop": "auth_id"
+                },
+                {
+                    "label": "授权名称",
+                    "prop": "auth_name"
+                },
+                {
+                    "label": "自动折算标志",
+                    "prop": "amount_exchange_ind",
+                    "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "format": "label",
+                        "dictKey": [
+                            "MS_E_YESORNO"
+                        ]
+                    },
+                    "format": "label"
+                },
+                {
+                    "prop": "auth_ccy",
+                    "label": "折算币种",
+                    "dict": {
+                        "dictType": "MS_CURRENCY",
+                        "dictKey": [
+                            "MS_CURRENCY"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "备注",
+                    "prop": "remark"
+                },
+                {
+                    "label": "操作",
+                    "width": 150,
+                    "align":"center",
+                    "fixed": "right",
+                    "btns": [
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/ismt/ct/authorizatio/authorizatio-maintenance/authorizatio-update.json",
+                                "method": "GET"
+                            },
+                            "props": {
+                                "title": "授权信息维护"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "删除",
+                            "toRequest": {
+                                "url": "/views/ismt/ct/authorizatio/authorizatio-delete/authorizatio-delete.json",
+                                "method": "GET"
+                            },
+                            "props": {
+                                "title": "授权信息删除"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

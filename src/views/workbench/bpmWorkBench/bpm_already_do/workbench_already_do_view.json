@@ -1,0 +1,197 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+      "form": {
+        "controls": [
+          {
+            "applyNo": {
+              "span": 6,
+              "control": "text",
+              "label": "申请编号"
+            },
+            "custna": {
+              "span": 6,
+              "control": "text",
+              "label": "客户姓名",
+              "rules": [
+                {
+                  "max": 13,
+                  "message": "长度不能超过13个字符"
+                }
+              ]
+            },
+            "prodcd": {
+              "span": 8,
+              "control": "select",
+              "dict": {
+                "format": "label",
+                "dictKey": [
+                  "E_PROD"
+                ],
+                "dictType": "E_PROD"
+              },
+              "label": "产品代码",
+              "rules": [
+                {
+                  "required": true,
+                  "message": "请输入产品代码"
+                },
+                {
+                  "max": 18,
+                  "message": "长度不能超过18个字符"
+                }
+              ],
+              "props": {
+                "title": "产品代码查询"
+              },
+              "format": "label"
+            }
+          },
+          {
+            "lncatp": {
+              "control": "select",
+              "label": "流程类型:",
+              "align":"center",
+              "span": 6,
+              "dict": {
+                "dictType": "E_LNCATP2---------------------daiding",
+                "dictKey": [
+                  "E_LNCATP2"
+                ],
+                "format": "label"
+              }
+            },
+            "apstdt": {
+              "span": 6,
+              "control": "dateTimePicker",
+              "label": "进件起始日期",
+              "format": "yyyyMMdd"
+            },
+            "apendt": {
+              "span": 6,
+              "control": "dateTimePicker",
+              "label": "进件截止日期",
+              "format": "yyyyMMdd"
+            }
+          }
+        ]
+      },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "AS_PLMS_BPM_QRDONE",
+                    "usercd": "$g{{user_info.userCode}}",
+                    "sizePage": 10
+                }
+            },
+            "thead": [
+                {
+                    "label": "序号",
+                    "type": "index"
+                },
+                {
+                    "label": "申请编号",
+                    "prop": "appl_id",
+
+                    "align": "center"
+                },
+              {
+                "label": "借据号",
+                "align":"center",
+                "prop": "lncfno"
+              },
+                {
+                    "label": "客户姓名",
+                    "prop": "custna",
+                    "align": "center"
+                },
+                {
+                    "label": "证件号码",
+                    "prop": "idtfno",
+
+                    "align": "center"
+                },
+                {
+                    "label": "申请人",
+                    "align": "center",
+                    "prop": "creator"
+                },
+                {
+                    "label": "申请日期",
+                    "prop": "appldt",
+                    "align": "center"
+                },
+                {
+                    "label": "结案时间",
+                    "prop": "end_time",
+                    "align": "center"
+                },
+                {
+                    "label": "当前节点",
+                    "prop": "taskna",
+                    "align": "center"
+                },
+                {
+                    "label": "当前处理人",
+                    "prop": "curusr",
+                    "align": "center"
+                },
+                {
+                  "label": "流程类型",
+                  "prop": "lncatp",
+                  "align": "center",
+                  "dict": {
+                    "dictType": "E_LNCATP2",
+                    "dictKey": [
+                      "E_LNCATP2"
+                    ],
+                    "format": "label",
+                    "labelField": "dictName",
+                    "valueField": "dictId"
+                  }
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "align": "center",
+                    "btns": [
+                        {
+                            "type": "edit",
+                            "label": "查看详情",
+                            "toRequest": {
+                              "url": "@AlredyToDoDetails",
+                              "method": "GET",
+                              "target":"navTab",
+                              "params": {
+                                "framecd": "warnMan"
+                              }
+                            },
+                            "props": {
+                              "title": "查看详情"
+                            }
+                          },
+                        {
+                            "type": "edit",
+                            "label": "流程跟踪",
+                            "toRequest": {
+                                "url": "@DHProcessImgView",
+                                "method": "GET",
+                                "params": {
+                                    "from": "doneList"
+                                }
+                            },
+                            "props": {
+                                "width": "1200px",
+                                "title": "流程跟踪图"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

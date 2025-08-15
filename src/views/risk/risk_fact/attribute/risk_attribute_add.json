@@ -1,0 +1,77 @@
+{
+    "module": "v-inputDataForm-btn",
+    "layout": {
+        "form": {
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                    "fact_code": "${{params.fact_code}}",
+                    "createUser": "$g{{user_info.userCode}}",
+                    "updateUser": "$g{{user_info.userCode}}",
+                    "servicecode": "deci010108"
+                }
+            },
+            "initRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "deci010110"
+                }
+            },
+            "controls": [
+                {
+                    "field_code": {
+                        "label": "属性代码",
+                        "control": "text",
+                        "disabled": true,
+                        "span": 12,
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入属性代码"
+                            }
+                        ]
+                    },
+                    "field_name": {
+                        "label": "属性名称",
+                        "control": "text",
+                        "span": 12,
+                        "rules": [
+                            {
+                                "required": true
+                            }
+                        ]
+                    }
+                },
+                {
+                    "field_type": {
+                        "label": "属性类型",
+                        "control": "select",
+                        "span": 12,
+                        "dict": {
+                            "labelField": "dictName",
+                            "valueField": "dictId",
+                            "dictType": "dataType",
+                            "dictKey": [
+                                "field"
+                            ],
+                            "format": "value-label",
+                            "doRequest": {
+                                "url": "/views/risk/dictdata/dataType.json",
+                                "method": "get"
+                            }
+                        },
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请选择属性类型",
+                                "max": 100
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    }
+}

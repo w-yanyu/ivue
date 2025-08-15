@@ -1,0 +1,112 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [{
+        "ref_no": {
+          "control": "text",
+          "label": "业务编号",
+          "rules": [{
+            "max": 50,
+            "message": "长度不能超过50个字符"
+          }]
+        },
+        "recv_usr_name": {
+          "control": "text",
+          "label": "受让人",
+          "rules": [{
+            "max": 50,
+            "message": "长度不能超过50个字符"
+          }]
+        }
+      }
+     ]
+    },
+    "toolbar": {
+      "btns": [{
+        
+      }]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "PLMSKGTS1000",
+          "appl_id": "${{params.appl_id}}"
+        }
+      },
+      "thead": [{
+          "type": "index",
+          "label": "序号"
+        },
+        {
+          "label": "业务编号",
+          "prop": "ref_no",
+          "width": "200px"
+        },
+        {
+          "label": "受让人",
+          "prop": "recv_usr_name"
+        },
+        {
+          "label": "转让资产原价(元)",
+          "prop": "asset_origin_price"
+        },
+        {
+          "label": "评估方式",
+          "prop": "evl_price_type",
+          "dict": {
+            "dictType": "E_EVALUATION_WAY",
+            "dictKey": [
+              "E_EVALUATION_WAY"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "转让价格(元)",
+          "prop": "sale_price"
+        },
+        {
+          "label": "转让日期",
+          "prop": "sale_dt"
+        },
+        {
+          "label": "申请人",
+          "prop": "apply_user"
+        },
+        {
+          "label": "申请日期",
+          "prop": "apply_date"
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "width": "260px",
+          "btns": [
+            {
+              "type": "look",
+              "label": "查看",
+              "toRequest": {
+                "url": "/views/dh/assetSale/inter/asset_transfer_info_details.json",
+                "method": "GET",
+                "params": {
+                  "appl_id": "${{params.appl_id}}",
+                  "asset_sale_id": "${{current.asset_sale_id}}",
+                  "sale_id": "${{current.sale_id}}"
+                }
+              },
+              "props": {
+                "width": "80%",
+                "title": "资产转让信息"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,55 @@
+{
+    "module": "v_realonlyForm_btn",
+    "layout": {
+        "form": {
+            "initRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "co2051",
+                    "colt_no": "${{params.colt_no}}"  
+                }
+            },      
+            "controls": [
+                {
+                    "colt_no": {
+                        "control": "string",       
+                        "label": "押品编号"
+                    },          
+                    "sec_type": {
+                        "control": "select",         
+                        "label": "担保方式",
+                        "disabled":true,
+                        "dict": {
+                            "dictType": "E_SECTP",
+                            "dictKey": [
+                                "E_SECTP"
+                            ],
+                            "format": "value-label"
+                        }
+                    },
+                    "colt_prod_cd": {
+                        "control": "select",        
+                        "label": "担保方式",
+                        "disabled":true,
+                        "dict": {
+                            "dictKey": [
+                                "E_COLT_PROD_CD"
+                            ],
+                            "format": "[value]label",
+                            "valueField": "colt_prod_cd",
+                            "labelField": "colt_prod_name",
+                            "doRequest": {
+                                "url": "/SUMP/call/RPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "co1013"
+                                }
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

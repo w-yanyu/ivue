@@ -1,0 +1,316 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "btns": [],
+      "controls": [
+        {
+          "template_id": {
+            "control": "hidden",
+            "label": "模板编号",
+            "value": "${{params.template_id}}"
+          },
+          "template_version": {
+            "control": "hidden",
+            "label": "模板版本",
+            "value": "${{params.template_version}}"
+          },
+          "prod_version": {
+            "control": "hidden",
+            "label": "授信产品版本",
+            "value": "${{params.prod_version}}"
+          },
+          "busi_seq": {
+            "control": "hidden",
+            "label": "业务流水",
+            "value": "${{params.busi_seq}}"
+          },
+          "sale_prod_cd": {
+            "control": "text",
+            "label": "授信产品编号",
+            "span": 8,
+            "rules": [
+              {
+                "required": true,
+                "message": "授信产品名称不得为空"
+              },
+              {
+                "max": 80,
+                "message": "长度不能超过80个字符"
+              }
+            ]
+          },
+          "sale_prod_name": {
+            "control": "text",
+            "label": "授信产品名称",
+            "span": 8,
+            "rules": [
+              {
+                "required": true,
+                "message": "授信产品名称不得为空"
+              },
+              {
+                "max": 80,
+                "message": "长度不能超过80个字符"
+              }
+            ]
+          },
+          "prod_type": {
+            "control": "remoteSelect",
+            "labelField": "title",
+            "valueField": "id",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "pd0144",
+                "grupno": "0006",
+                "pid": "KSCP"
+              }
+            },
+            "format": "label",
+            "label": "授信产品类型",
+            "value": "${{params.prod_type}}",
+            "disabled": true,
+            "span": 8,
+            "events": {
+              "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "pd0143",
+                  "grupno": "0006",
+                  "id": "${{params.prod_type}}"
+                },
+                "resultSet": {
+                  "prod_type_name": "title"
+                }
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "授信产品类型不得为空"
+              }
+            ]
+          },
+          "prod_type_name": {
+            "control": "hidden",
+            "label": "产品类型名称",
+            "span": 8
+          }
+        },
+        {
+          "sale_prod_attr": {
+            "control": "select",
+            "label": "授信产品属性",
+            "span": 8,
+            "dict": {
+              "dictType": "PD_E_PROD_ATTR",
+              "dictKey": [
+                "PD_E_PROD_ATTR"
+              ],
+              "format": "value-label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "基础产品名称不得为空"
+              }
+            ]
+          },
+          "prod_abbr_desc": {
+            "control": "text",
+            "label": "授信产品简称描述",
+            "span": 8,
+            "rules": [
+              {
+                "required": true,
+                "message": "授信产品简称描述不得为空"
+              }
+            ]
+          },
+          "prod_abbr_flag": {
+            "control": "text",
+            "label": "授信产品简称标志",
+            "span": 8,
+            "rules": [
+              {
+                "required": true,
+                "message": "授信产品简称标志不得为空"
+              }
+            ]
+          }
+        },
+        {
+          "prod_label": {
+            "control": "select",
+            "label": "产品标签",
+            "multiple": true,
+            "selectFirstValue": true,
+            "span": 8,
+            "dict": {
+              "dictType": "PD_E_PROD_LABEL",
+              "dictKey": [
+                "PD_E_PROD_LABEL"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId"
+            }
+          },
+          "prod_contents_name": {
+            "control": "lookup",
+            "label": "产品所属目录",
+            "span": 8,
+            "keyField": {
+              "prod_contents_name": "node_name",
+              "prod_contents_cd": "node_cd"
+            },
+            "toRequest": {
+              "url": "@prodContentsTree",
+              "method": "get",
+              "params": {
+                "treeTitle": "产品目录选择"
+              }
+            },
+            "props": {
+              "title": "产品目录选择"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "产品所属目录不得为空"
+              }
+            ]
+          },
+          "prod_contents_cd": {
+            "control": "hidden",
+            "label": "产品所属目录编号",
+            "span": 8,
+            "rules": [
+              {
+                "required": false,
+                "message": "产品所属目录编号不得为空"
+              }
+            ]
+          },
+          "cust_class": {
+            "control": "select",
+            "label": "适用客户类型",
+            "span": 8,
+            "value": "${{params.cust_class}}",
+            "dict": {
+              "dictType": "PD_E_CUST_CLASS",
+              "dictKey": [
+                "PD_E_CUST_CLASS"
+              ],
+              "exclude": [
+                "99"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId",
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择适用客户类型"
+              }
+            ]
+          },
+          "is_support_multicurr": {
+            "label": "是否支持多币种",
+            "control": "select",
+            "span": 8,
+            "disabled": "true",
+            "value": 1,
+            "rules": [
+              {
+                "required": false,
+                "message": "请选择是否支持多币种"
+              }
+            ],
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ]
+            }
+          },
+          "default_currency": {
+            "label": "默认币种",
+            "control": "select",
+            "span": 8,
+            "disabled": "true",
+            "value": 156,
+            "rules": [
+              {
+                "required": false,
+                "message": "请输入默认币种"
+              }
+            ],
+            "dict": {
+              "dictType": "MS_CURRENCY",
+              "dictKey": [
+                "MS_CURRENCY"
+              ]
+            }
+          },
+          "ccy_code_list": {
+            "label": "支持币种",
+            "control": "select",
+            "span": 8,
+            "multiple": true,
+            "rules": [
+              {
+                "required": false,
+                "message": "请输入支持币种"
+              }
+            ],
+            "dict": {
+              "dictType": "MS_CURRENCY",
+              "dictKey": [
+                "MS_CURRENCY"
+              ]
+            }
+          }
+        },
+        {
+          "amt_purpose_type_name": {
+            "label": "资金用途分类",
+            "control": "lookup",
+            "span": 8,
+            "edit": false,
+            "keyField": {
+              "amt_purpose_type_no": "amt_purpose_type_no",
+              "amt_purpose_type_name": "amt_purpose_type_name"
+            },
+            "toRequest": {
+              "url": "/views/icms/docManager/loanPurposeType/loanPurposeType_lookup.json",
+              "method": "get",
+              "params": {
+                "cust_class_list": "${{formData.cust_class}}|99"
+              }
+            },
+            "multiple": false,
+            "props": {
+              "title": "资金贷款用途分类"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          },
+          "amt_purpose_type_no": {
+            "control": "hidden",
+            "label": "资金用途分类编号",
+            "span": 8
+          }
+        }
+      ]
+    }
+  }
+}

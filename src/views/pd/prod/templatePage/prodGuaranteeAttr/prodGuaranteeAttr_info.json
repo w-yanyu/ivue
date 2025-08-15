@@ -1,0 +1,347 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "name": "info",
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "detail,format=pd0503,temp=pd0501",
+          "pageTranType": "${{params.pageTranType}}",
+          "sale_prod_cd": "${{params.sale_prod_cd}}",
+          "prod_version": "${{params.prod_version}}"
+        }
+      },
+      "btns": [],
+      "controls": [
+        {
+          "is_full_deposit": {
+            "label": "是否足额保证金",
+            "span": 8,
+            "control": "select",
+            "disabled": true,
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "是否足额保证金不得为空"
+              }
+            ]
+          },
+          "is_financing_guar": {
+            "label": "是否融资性保函",
+            "span": 8,
+            "control": "select",
+            "disabled": true,
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "是否融资性保函不得为空"
+              }
+            ]
+          },
+          "letter_guar_type": {
+            "label": "保函种类",
+            "span": 8,
+            "control": "select",
+            "disabled": true,
+            "dict": {
+              "dictType": "PD_E_LETTER_GUAR_TYPE",
+              "dictKey": [
+                "PD_E_LETTER_GUAR_TYPE"
+              ],
+              "format": "label"
+            }
+          }
+        },
+        {
+          "letter_guar_range": {
+            "label": "保函范围",
+            "span": 8,
+            "control": "select",
+            "disabled": true,
+            "dict": {
+              "dictType": "PD_E_NEGO_RANGE",
+              "dictKey": [
+                "PD_E_NEGO_RANGE"
+              ],
+              "format": "label"
+            }
+          },
+          "is_singe_letter_guar": {
+            "label": "是否独立性保函",
+            "span": 8,
+            "control": "select",
+            "disabled": true,
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            }
+          },
+          "is_transfer": {
+            "control": "select",
+            "disabled": true,
+            "label": "是否可转让",
+            "span": 8,
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "value-label"
+            }
+          }
+        },
+        {
+          "is_credit_quota": {
+            "control": "select",
+            "disabled": true,
+            "label": "是否需要授信额度",
+            "span": 8,
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "value-label"
+            }
+          },
+          "is_other_amount": {
+            "control": "select",
+            "disabled": true,
+            "label": "是否允许使用第三方额度",
+            "span": 8,
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "value-label"
+            }
+          },
+          "is_system_out": {
+            "control": "select",
+            "disabled": true,
+            "label": "是否由信贷系统发起解除",
+            "span": 8,
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "value-label"
+            }
+          }
+        },
+        {
+          "is_sure_deadline": {
+            "control": "select",
+            "disabled": true,
+            "label": "是否明确到期日",
+            "span": 8,
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "value-label"
+            }
+          },
+          "is_colt": {
+            "control": "select",
+            "disabled": true,
+            "label": "是否需要抵质押品",
+            "span": 8,
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "value-label"
+            },
+            "events": {
+              "condition": {
+                "1": {
+
+                }
+              }
+            }
+          },
+          "specify_colt_type": {
+            "control": "remoteSelect",
+            "label": "指定抵质押品类型",
+            "disabled": true,
+            "span": 8,
+            "labelField": "colt_name",
+            "valueField": "colt_type",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "co1012"
+              }
+            }
+          }
+        },
+        {
+          "default_rate": {
+            "control": "currency",
+            "disabled": true,
+            "align":"left",
+            "span": 8,
+            "label": "默认费率"
+          },
+          "default_advance_rate": {
+            "control": "currency",
+            "disabled": true,
+            "align":"left",
+            "span": 8,
+            "label": "默认垫款利率"
+          },
+          "is_high_limit": {
+            "control": "select",
+            "disabled": true,
+            "label": "是否支持最高额担保",
+            "span": 8,
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "value-label"
+            }
+          }
+        },
+        {
+          "credit_grace_days": {
+            "control": "string",
+            "span": 8,
+            "label": "授信宽限天数",
+            "rules": [
+              {
+                "type": "number",
+                "message": "请输入整数"
+              }
+            ]
+          },
+          "letter_guar_lowest_amt": {
+            "control": "currency",
+            "disabled": true,
+            "align":"left",
+            "span": 8,
+            "label": "保函最低金额",
+            "format":{
+              "symbol": "￥",
+              "thousand": ",",
+              "decimal": 2
+            }
+          },
+          "letter_guar_heighest_amt": {
+            "control": "currency",
+            "disabled": true,
+            "align":"left",
+            "span": 8,
+            "label": "保函最高金额",
+            "format":{
+              "symbol": "￥",
+              "thousand": ",",
+              "decimal": 2
+            }
+          }
+        },
+        {
+          "max_exposure_amt": {
+            "control": "currency",
+            "disabled": true,
+            "align":"left",
+            "span": 8,
+            "label": "最高敞口金额",
+            "format":{
+              "symbol": "￥",
+              "thousand": ",",
+              "decimal": 2
+            }
+          },
+          "margin_percent": {
+            "control": "currency",
+            "disabled": true,
+            "align":"left",
+            "span": 8,
+            "label": "首付保证金比例不低于"
+          },
+          "min_deadline": {
+            "control": "string",
+            "span": 8,
+            "label": "最小期限",
+            "rules": [
+              {
+                "type": "number",
+                "message": "请输入整数"
+              }
+            ]
+          }
+        },
+        {
+          "max_deadline": {
+            "control": "string",
+            "span": 8,
+            "label": "最大期限",
+            "rules": [
+              {
+                "type": "number",
+                "message": "请输入整数"
+              }
+            ]
+          },
+          "lowest_advance_rate": {
+            "control": "currency",
+            "disabled": true,
+            "span": 8,
+            "align":"left",
+            "label": "最低垫款利率"
+          },
+          "heighest_advance_rate": {
+            "control": "currency",
+            "disabled": true,
+            "span": 8,
+            "align":"left",
+            "label": "最高垫款利率"
+          }
+        },
+        {
+          "min_rate": {
+            "control": "currency",
+            "disabled": true,
+            "span": 8,
+            "align":"left",
+            "label": "最低费率"
+          },
+          "max_rate": {
+            "control": "currency",
+            "disabled": true,
+            "span": 8,
+            "align":"left",
+            "label": "最高费率"
+          }
+        }
+      ]
+    }
+  }
+}

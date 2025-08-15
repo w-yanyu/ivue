@@ -1,0 +1,228 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+      "form": {
+        "name": "detail",
+        "initRequest": "${{params}}",
+        "controls": [
+          {            
+            "colt_eval_no": {
+            "control": "text",
+            "label": "押品评估编号",
+            "width": "140px",
+            "disabled":true,
+            "rules": [
+                {
+                    "required": true,
+                    "message": "请输入押品评估编号"
+                }
+            ]
+        },
+            "is_need_reeval": {
+              "label": "是否需价值重估",
+              "width": "140px",
+              "control": "select",
+              "dict": {
+                "dictType": "MS_E_YESORNO",
+                "dictKey": [
+                  "MS_E_YESORNO"
+                ],
+                "format": "label"
+              },
+              "rules": [
+                {
+                  "required": true,
+                  "message": "请选择是否需价值重估"
+                }
+              ]
+            },
+            "eval_way": {
+              "label": "评估方式",
+              "width": "140px",
+              "control": "select",
+              "dict": {
+                "dictType": "CO_E_EVALTYPE",
+                "dictKey": [
+                  "CO_E_EVALTYPE"
+                ],
+                "format": "label"
+              },
+              "rules": [
+                {
+                  "required": true,
+                  "message": "请选择评估方式"
+                }
+              ],
+              "showItem": {
+                "0": ["in_eval_type","colt_eval_meth_type","auto_eval_freq","auto_eval_freq_unit"],
+                "1": []
+              },
+              "events": {
+                "condition": {
+                  "0": {
+                    "control": {
+                      "in_eval_type": {
+                        "disabled": false,
+                        "rules": [
+                          {
+                            "required": true
+                          }
+                        ]
+                      }
+  
+                    },
+                    "1": {
+                      "control": {
+                        "in_eval_type": {
+                          "disabled": true,
+                          "value":"",
+                          "rules": [
+                            {
+                              "required": false
+                            }
+                          ]
+                        },
+                        "colt_eval_meth_type": {
+                          "disabled": true,
+                          "rules": [
+                            {
+                              "required": false
+                            }
+                          ]
+                        },
+                        "auto_eval_freq": {
+                          "disabled": true,
+                          "rules": [
+                            {
+                              "required": false
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "colt_eval_meth_type": {
+              "label": "评估方法类型",
+              "control": "remoteSelect",
+              "width": "140px",
+              "labelField": "eval_meth_type_name",
+              "valueField": "colt_eval_meth_type",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "co4020"
+                }
+              },
+              "format": "label"
+            },
+            "in_eval_type": {
+              "label": "内部评估方式",
+              "width": "140px",
+              "control": "select",
+              "dict": {
+                "dictType": "CO_E_INEVALTYPE",
+                "dictKey": [
+                  "CO_E_INEVALTYPE"
+                ],
+                "format": "label"
+              },
+              "rules": [
+                {
+                  "required": true,
+                  "message": "请选择内部评估方式"
+                }
+              ],
+              "showItem": {
+                "0": ["auto_eval_freq","auto_eval_freq_unit"],
+                "1": []
+              },
+              "events": {
+                "condition": {    
+                  "0": {
+                    "control": {
+                      "auto_eval_freq_unit": {
+                        "disabled": false,
+                        "rules": [
+                          {
+                            "required": false
+                          }
+                        ]
+                      }
+  
+                    },
+                    "1": {
+                      "control": {
+                        "auto_eval_freq_unit": {
+                          "disabled": false,
+                          "rules": [
+                            {
+                              "required": false
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+                
+          },
+          {
+            "auto_eval_freq": {
+              "label": "自动评估频率",
+              "width": "140px",
+              "control": "text",           
+              "rules": [
+                {
+                  "required": true,
+                  "message": "请选择自动评估频率"
+                }
+              ]
+            },
+            "auto_eval_freq_unit": {
+              "label": "",
+              "width": "140px",
+              "span": 1,
+              "control": "select",
+              "dict": {
+                "dictType": "CO_E_PCYCLE",
+                "dictKey": [
+                  "CO_E_PCYCLE"
+                ],
+                "format": "label"
+              },
+              "rules": [
+                {
+                  "required": true,
+                  "message": "请选择自动评估频率单位"
+                }
+              ]
+            }
+          }
+        ],
+        "btns": [
+          {
+            "type": "submit",
+            "label": "提交",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "co1015",
+                "tran_type": "2"
+              }
+            }
+          },
+          {
+            "type": "reset",
+            "label": "重置"
+          }
+        ]
+      }
+    }
+  }

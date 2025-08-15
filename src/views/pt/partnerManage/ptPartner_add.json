@@ -1,0 +1,263 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "###initDataOnce": true,
+      "###initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pt0170",
+          "part_no": "${{params.part_no}}"
+        }
+      },
+      "btns": [
+        {
+          "type": "submit",
+          "target": "dialog",
+          "label": "流程启动",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "post",
+            "params": {
+              "servicecode": "pt0041"
+            },
+            "condition": {
+              "switch": {
+                "$default": {
+                  "toRequest": {
+                    "url": "/views/pt/pt_workbench/workbench_main_tabs.json",
+                    "method": "POST",
+                    "target": "navTab",
+                    "props":{
+                      "title": "工作台首页"
+                    }
+                  }
+                  
+                },
+                "200": {
+                  "toRequest": {
+                    "url": "/views/pt/pt_workbench/workbench_main_tabs.json",
+                    "target": "navTab",
+                    "method": "POST",
+                    "props":{
+                      "title": "工作台首页"
+                    }    
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "close",
+          "label": "取消"
+        }
+      ],
+      "controls": [
+        {
+          "part_no": {
+            "control": "hidden",
+            "label": "合作方编号",
+            "width": "130px",
+            "value": "${{params.part_no}}"
+          }
+        },
+        {
+          "center_name": {
+            "control": "lookup",
+            "edit": true,
+            "width": "130px",
+            "label": "合作方名称",
+            "keyField": {
+              "center_name": "cust_name",
+              "cust_no": "cust_no",
+              "center_cert_no": "cert_no",
+              "center_cert_type": "cert_type",
+              "cust_type": "cust_type",
+              "sex_tp": "sex_tp",
+              "education": "education",
+              "marr_state": "marr_state",
+              "corp_size": "corp_size",
+              "is_listed_company": "is_listed_company",
+              "is_group_company": "is_group_company",
+              "ind_credit": "ind_credit",
+              "cret_start_date": "cert_day",
+              "cret_end_date": "card_end_day",
+              "register_address": "issuing_addr",
+              "legal_representative": "legal_representative"
+            },
+            "toRequest": {
+              "url": "/views/pt/partnerManage/menu/ent_cust_lookup.json",
+              "method": "GET",
+              "params": {
+                "indvfg": "N",
+                "statss": "Y"
+              }
+            },
+            "props": {
+              "width": "80%",
+              "title": "查询关联客户名称"
+            },
+            "format": "label",
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择"
+              }
+            ]
+          },
+          "center_cert_type": {
+            "control": "select",
+            "label": "合作方证件类型",
+            "disabled": true,
+            "width": "130px",
+            "dict": {
+              "dictType": "MS_E_CRET_TYPE",
+              "dictKey": [
+                "MS_E_CRET_TYPE"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择合作方证件类型"
+              }
+            ]
+          }
+        },
+        {
+          "center_cert_no": {
+            "control": "text",
+            "label": "合作方证件号码",
+            "disabled": true,
+            "width": "130px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入合作方证件号码"
+              },
+              {
+                "max": 30,
+                "message": "长度不能超过30个字符"
+              }
+            ]
+          },
+          "cust_no": {
+            "control": "text",
+            "label": "客户编号",
+            "disabled": true,
+            "width": "130px"
+          }
+        },
+        {
+          "center_brand": {
+            "control": "text",
+            "label": "合作方品牌",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入合作方品牌"
+              },
+              {
+                "max": 30,
+                "message": "长度不能超过30个字符"
+              }
+            ]
+          },
+          "warn_status": {
+            "control": "select",
+            "label": "预警状态",
+            "width": "130px",
+            "dict": {
+              "dictType": "PT_E_WARN_STATUS",
+              "dictKey": [
+                "PT_E_WARN_STATUS"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择预警状态"
+              }
+            ]
+          }
+        },
+        {
+          "take_effect_date": {
+            "label": "生效日期",
+            "width": "130px",
+            "control": "dateTimePicker",
+            "editable": true,
+            "format": "yyyyMMdd",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入生效日期"
+              }
+            ]
+          },
+          "invalid_date": {
+            "label": "失效日期",
+            "width": "130px",
+            "control": "dateTimePicker",
+            "editable": true,
+            "format": "yyyyMMdd",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入失效日期"
+              }
+            ]
+          }
+        },
+        {
+          "start_date": {
+            "label": "登记日期",
+            "width": "130px",
+            "control": "dateTimePicker",
+            "editable": true,
+            "format": "yyyyMMdd",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入登记日期"
+              }
+            ]
+          },
+          "legal_representative": {
+            "control": "string",
+            "label": "法定代表人",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入法定代表人"
+              }
+            ]
+          }
+        },
+        {
+          "cret_start_date": {
+            "label": "证件签发日期",
+            "width": "130px",
+            "control": "hidden"
+          },
+          "cret_end_date": {
+            "label": "证件到期日期",
+            "width": "130px",
+            "control": "hidden"
+          },
+          "register_address": {
+            "label": "注册地址",
+            "width": "130px",
+            "control": "hidden"
+          }
+        }
+      ]
+    }
+  }
+}

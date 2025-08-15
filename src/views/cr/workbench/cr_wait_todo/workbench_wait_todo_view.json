@@ -1,0 +1,179 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+
+                    "appl_id": {
+                        "control": "text",
+                        "label": "申请编号"
+                    },
+                    "cust_name": {
+                        "control": "text",
+                        "label": "客户名称",
+                        "rules": [{
+                            "max": 18,
+                            "message": "长度不能超过18个字符"
+                        }]
+                    }
+                }
+
+            ]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "bpm1001",
+                    "cur_user_id": "$g{{user_info.userCode}}",
+                    "appId":"crOnl"
+                }
+            },
+            "thead": [{
+                    "label": "申请编号",
+                    "prop": "appl_id"
+                },
+                {
+                    "label": "客户名称",
+                    "prop": "cust_name"
+                },
+                {
+                    "label": "证件号码",
+                    "prop": "cert_no",
+                    "width": 200
+                },
+                {
+                    "label": "流程产品名称",
+                    "prop": "wf_prod_name"
+                },
+                {
+                    "label": "进件日期",
+                    "prop": "system_date"
+                },
+                {
+                    "label": "当前节点",
+                    "prop": "task_define_name"
+                },
+                {
+                    "label": "处理状态",
+                    "prop": "appl_state",
+                    "dict": {
+                        "dictType": "CT_E_APPLST",
+                        "dictKey": [
+                          "CT_E_APPLST"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                  "label": "当前处理用户名称",
+                  "prop": "user_name",
+                  "value": "${{current.cur_user_id}}-${{current.user_name}}"
+                },
+                {
+                  "label": "当前处理角色名称",
+                  "prop": "role_name",
+                  "value": "${{current.cur_wfrl_id}}-${{current.role_name}}"
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 240,
+                    "align": "center",
+                    "btns": [{
+                            "type": "edit",
+                            "label": "办理",
+                            "toRequest": {
+                                "url": "@CommWaitToDoDeal",
+                                "method": "GET",
+                                "target": "navTab",
+                                "params": {
+                                    "frame_cd": "${{current.task_url1}}",
+                                    "cust_name": "${{current.cust_name}}",
+                                    "appl_state": "${{current.appl_state}}",
+                                    "appl_date": "${{current.appl_date}}",
+                                    "task_inst_id":"${{current.task_inst_id}}",
+                                    "cust_no": "${{current.cust_no}}",
+                                    "temp_type": "${{current.reserve1}}",
+                                    "cur_wfrl_id" : "${{current.cur_wfrl_id}}",
+                                    "appId":"crOnl"
+                                }
+                            },
+                            "props": {
+                                "title": "待办事项办理"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "流程跟踪",
+                            "toRequest": {
+                                "url": "@ProcessImgView",
+                                "method": "GET",
+                                "params": {
+                                    "from": "backlog",
+                                    "appId":"crOnl"
+                                }
+                            },
+                            "props": {
+                                "width": "1200px",
+                                "title": "流程跟踪图"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "转签",
+                            "show": {
+                                "prop": "sign_tran_flag",
+                                "is": [
+                                  "1"
+                                ]
+                            },
+                            "toRequest": {
+                                "url": "/views/msap/bpm/processManagement/design/process_transign_manager.json",
+                                "method": "GET",
+                                "params": {
+                                    "appId":"crOnl",
+                                    "task_inst_id": "${{current.task_inst_id}}",
+                                    "sign_mode":"0"
+                                }
+                            },
+                            "props": {
+                                "title": "流程转签"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "取消签收",
+                            "show": {
+                                "prop": "sign_cancel_flag",
+                                "is": [
+                                  "1"
+                                ]
+                              },
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "bpm1021",
+                                    "task_inst_id": "${{current.task_inst_id}}",
+                                    "appId": "crOnl"
+                                }
+                            },
+                            "confirm":{
+                                "title":"提示信息",
+                                "msg":"确认要取消签收吗？",
+                                "confirmButtonText":"确定",
+                                "cancelButtonText":"取消"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}
+

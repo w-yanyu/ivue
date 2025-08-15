@@ -1,0 +1,159 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "scope": "formData",
+            "controls": [
+                {
+                    "tran_flow_id": {
+                        "control": "text",
+                        "label": "流程ID"
+                    },
+                    "tran_state": {
+                        "control": "text",
+                        "label": "批次状态"
+                    }
+                },
+                {
+                    "task_num": {
+                        "control": "text",
+                        "label": "批次号"
+                    },
+                    "transaction_date": {
+                        "control": "dateTimePicker",
+                        "label": "交易日期"
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "target": "dialog",
+                    "width": "30%",
+                    "label": "登记批量流程",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/pl/batchManage/systemTask/task_instance_add.json",
+                        "params": {
+
+                        }
+                    },
+                    "props": {
+                        "title": "登记批量流程"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ap1304"
+                }
+            },
+            "thead": [
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "批次号",
+                    "prop": "task_num"
+
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "流程ID",
+                    "prop": "tran_flow_id"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "交易日期",
+                    "prop": "transaction_date"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "开始时间",
+                    "prop": "tran_start_time"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "结束时间",
+                    "prop": "tran_end_time"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "批次状态",
+                    "prop": "tran_state"
+                },
+                {
+                    "label": "操作",
+                    "align":"center",
+                    "fixed": "right",
+                    "width": "330px",
+                    "btns": [
+                        {
+                            "type": "edit",
+                            "label": "运行详情",
+                            "toRequest": {
+                                "url": "/views/pl/batchManage/systemTask/task_run_info.json",
+                                "method": "POST",
+                                "params": {}
+                            },
+                            "props": {
+                                "width": "80%",
+                                "height": "800px",
+                                "title": "运行详情"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "交易详情",
+                            "toRequest": {
+                                "url": "/views/pl/batchManage/systemTask/task_tran_run_info.json",
+                                "method": "POST",
+                                "params": {}
+                            },
+                            "props": {
+                                "width": "70%",
+                                "height": "700px",
+                                "title": "批量交易运行日志"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "重置",
+                            "toRequest": {
+                                "url": "/views/pl/paramManage/product/function/function_modify.json",
+                                "method": "POST",
+                                "params": {}
+                            },
+                            "props": {
+                                "title": "案件详情"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "中断",
+                            "toRequest": {
+                                "url": "/views/pl/paramManage/product/function/function_modify.json",
+                                "method": "POST",
+                                "params": {}
+                            },
+                            "props": {
+                                "title": "案件详情"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

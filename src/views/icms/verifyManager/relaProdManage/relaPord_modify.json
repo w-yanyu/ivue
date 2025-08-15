@@ -1,0 +1,102 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": "${{params}}",
+      "scope": "templateScope",
+      "controls": [
+        {
+          "verify_list_cd": {
+            "label": "核实项列表组代码",
+            "control": "lookup",
+            "edit": true,
+            "disable": "true",
+            "keyField": {
+              "verify_list_cd": "verify_list_cd"
+            },
+            "toRequest": {
+              "url": "/views/icms/verifyManager/relaProdManage/verifyList_lookup.json",
+              "method": "post"
+            },
+            "props": {
+              "title": "选择核实项组"
+            },
+            "format": "label",
+            "rules": [
+              {
+                "required": true,
+                "message": "选择核实项组"
+              }
+            ]
+          },
+          "sale_prod_cd": {
+            "label": "可售产品",
+            "control": "text",
+            "disabled": true,
+            "format": "label",
+            "rules": [
+              {
+                "required": true,
+                "message": "选择可售产品"
+              }
+            ]
+          }
+        },
+        {
+          "busi_type": {
+            "label": "业务类型",
+            "disabled": true,
+            "multiple": false,
+            "rules": [
+              {
+                "required": true,
+                "message": "选择业务类型"
+              }
+            ],
+            "control": "remoteSelect",
+            "labelField": "title",
+            "valueField": "id",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "pd0144",
+                "grupno": "0006",
+                "pid": "KSCP"
+              }
+            }
+          },
+          "apply_type": {
+            "label": "审批类型",
+            "control": "remoteSelect",
+            "disabeld": true,
+            "labelField": "title",
+            "valueField": "id",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "pd0144",
+                "grupno": "0006",
+                "pid": "${{templateScope.prod_type}}"
+              }
+            }
+          }
+        }
+      ],
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "ar1184"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

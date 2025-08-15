@@ -1,0 +1,163 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "toolbar": {
+      "btns": [
+        {
+          "type": "edit",
+          "label": "新增",
+          "icon": "el-icon-service",
+          "target": "dialog",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/cs/collManage/tcManage/collWorkbench/functionMenu/phoneManage/phoneManage_management_add.json",
+            "params": {
+              "case_id": "${{params.case_id}}",
+              "case_no": "${{params.case_no}}",
+              "cust_id": "${{params.cust_id}}",
+              "org_id": "${{params.org_id}}",
+              "oa_org_id": "${{params.oa_org_id}}"
+            }
+          },
+          "props": {
+            "title": "新增联系人",
+            "width": "60%"
+          }
+        },
+        {
+          "type": "edit",
+          "target": "dialog",
+          "icon": "el-icon-service",
+          "label": "失联修复",
+          "toRequest": {
+            "method": "GET",
+            "url": "",
+            "params": {
+              "case_id": "${{params.case_id}}",
+              "case_no": "${{params.case_no}}",
+              "cust_id": "${{params.cust_id}}",
+              "org_id": "${{params.org_id}}",
+              "oa_org_id": "${{params.oa_org_id}}"
+            }
+          },
+          "props": {
+            "title": "失联修复",
+            "width": "60%"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "cb0107",
+          "case_id": "${{params.case_id}}",
+          "case_no": "${{params.case_no}}",
+          "cust_id": "${{params.cust_id}}",
+          "org_id": "${{params.org_id}}",
+          "oa_org_id": "${{params.oa_org_id}}"
+        }
+      },
+      "pagination": {
+        "show": true,
+        "pageSizes": [
+          5,
+          10,
+          15,
+          20
+        ],
+        "pageSize": 5
+      },
+      "thead": [
+        {
+          "type": "string",
+          "label": "联系人姓名",
+          "align": "center",
+          "prop": "relation_cust_name"
+        },
+        {
+          "type": "string",
+          "label": "联系人关系",
+          "align": "center",
+          "prop": "relationship",
+          "dict": {
+            "dictType": "CS_E_RELATIONSHIP",
+            "dictKey": [
+              "CS_E_RELATIONSHIP"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "label": "电话类型",
+          "align": "center",
+          "prop": "phone_type",
+          "dict": {
+            "dictType": "CS_E_PHONE_TYPE",
+            "dictKey": [
+              "CS_E_PHONE_TYPE"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "label": "电话号码",
+          "align": "center",
+          "prop": "phone_no"
+        },
+        {
+          "type": "string",
+          "label": "是否有效",
+          "align": "center",
+          "prop": "is_valid",
+          "dict": {
+            "dictType": "CS_E_YESORNO",
+            "dictKey": [
+              "CS_E_YESORNO"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "align": "center",
+          "width": "150px",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "维护",
+              "icon": "el-icon-edit",
+              "toRequest": {
+                "url": "/views/cs/collManage/tcManage/collWorkbench/functionMenu/phoneManage/phoneManage_management_modify.json",
+                "method": "POST",
+                "params": {
+                  "org_id": "${{params.org_id}}",
+                  "case_id": "${{params.case_id}}",
+                  "case_no": "${{params.case_no}}",
+                  "cust_id": "${{params.cust_id}}",
+                  "oa_org_id": "${{params.oa_org_id}}",
+                  "relation_cust_id": "${{current.relation_cust_id}}"
+                }
+              },
+              "props": {
+                "title": "联系人电话维护",
+                "width": "80%"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "拨打",
+              "icon": "el-icon-service"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

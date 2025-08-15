@@ -1,0 +1,114 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "scope": "searchTable",
+            "controls": [
+                
+                {
+                    "rateCode": {
+                        "control": "string",
+                        "label":  "定价方案编号",
+                        "value":"${{params.rate_code}}"
+                    },
+                    "periods": {
+                        "control": "string",
+                        "value":"${{params.periods}}",
+                        "label":  "期数"
+                    }
+                }
+               
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                  
+                {
+                    "type": "add",
+                    "target": "dialog",
+                    "label": "新增",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/cm/InterestRateCenter/RatePlanManagement/RatePlanMnManage_add_1.json",
+                        "params": {
+                            "rate_code": "${{params.rate_code}}",
+                            "periods": "${{params.periods}}"
+                          }
+                    },
+                    "props": {
+                        "width": "65%",
+                        "title":  "新增利率方案信息"
+                    }
+                }
+            
+            ]
+        }
+        ,
+        "datagrid": {
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    
+                    "servicecode": "initMnplan"
+                }
+            },
+            "pagination": {
+                "pageSizes": [
+                    10,
+                    15,
+                    20
+                ],
+                "pageSize": 10
+            },
+            "thead": [
+              
+                {
+                    "label":  "期数",
+                    "prop": "subTerm"
+                },
+                {
+                    "label":  "利率",
+                    "prop": "subRate"
+                },
+                {
+                    "label":"备注信息",
+                    "prop":"mark"
+                },
+                
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 100,
+                    "align":"center",
+                    "btns": [  
+                        {
+                            "type": "edit",
+                            "label": "修改",
+                            "toRequest": {
+                              "url": "/views/cm/InterestRateCenter/RatePlanManagement/RatePlanMnManagement_update.json",
+                              "method": "POST"
+                            },
+                            "props": {
+                              "width": "75%",
+                              "title": "MN模式分段利率信息修改"
+                            }
+                          },
+                      {
+                          "type": "delete",
+                          "label": "删除",
+                          "doRequest": {
+                              "url": "/SUMP/call/RPCCall",
+                              "method": "POST",
+                              "params": {
+                                  "servicecode": "delMnplan"
+                              }
+                          }
+                      }
+                    ]
+                  }
+            ]
+        }
+    }
+}

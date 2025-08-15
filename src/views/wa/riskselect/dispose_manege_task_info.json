@@ -1,0 +1,135 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "controls": [
+        {
+          "cust_no": {
+            "control": "text",
+            "label": "客户号"
+          },
+          "task_id": {
+            "control": "text",
+            "label": "任务单编号"
+          }
+        },
+        {
+          "screen_style": {
+            "control": "select",
+            "label": "预警对象筛选方式",
+            "dict":{
+              "dictType": "WA_E_SCREEN_STYLE",
+              "dictKey": [
+                "WA_E_SCREEN_STYLE"
+              ],
+              "format": "value-label"
+            }
+          },
+          "warn_user_id": {
+            "control": "text",
+            "label": "预警处理人"
+          }
+        },
+        {
+          "start_date": {
+            "label": "起始日期",
+            "control": "dateTimePicker",
+            "format": "yyyyMMdd"
+
+          },
+          "end_date": {
+            "label": "到期日期",
+            "control": "dateTimePicker",
+            "format": "yyyyMMdd"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "wa0025"
+        }
+      },
+      "thead": [
+        {
+          "label": "预警任务单编号",
+          "align": "center",
+          "prop": "task_id"
+        },
+        {
+          "label": "客户号",
+          "align": "center",
+          "prop": "cust_no"
+        },
+        {
+          "label": "预警日期",
+          "width": "160px",
+          "prop": "warn_date",
+          "align": "center"
+        },
+        {
+          "label": "客户姓名",
+          "width": "160px",
+          "prop": "case_cust_name",
+          "align": "center"
+        },
+        {
+          "label": "预警对象筛选方式",
+          "width": "160px",
+          "prop": "screen_style",
+          "align": "center",
+          "dict":{
+            "dictType": "WA_E_SCREEN_STYLE",
+            "dictKey": [
+              "WA_E_SCREEN_STYLE"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "label": "预警处理人",
+          "align": "center",
+          "prop": "warn_user_id"
+        },
+        {
+          "label": "首次预警日期",
+          "width": "160px",
+          "prop": "first_warn_date",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align":"center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "详情",
+              "toRequest": {
+                  "url": "/views/wa/riskselect/task_detalis.json",
+                  "method": "get",
+                  "params": {
+
+                  }
+              },
+              "props": {
+                  "title": "预警任务单详情",
+                  "width": "75%"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

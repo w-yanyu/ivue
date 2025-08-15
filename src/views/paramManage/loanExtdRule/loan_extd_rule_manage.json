@@ -1,0 +1,204 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "extd_rule_num": {
+            "control": "text",
+            "label": "展期规则编号",
+            "rules": [
+              {
+                "max": 10,
+                "message": "长度不能超过10个字符"
+              }
+            ]
+          },
+          "extd_rule_dsc": {
+            "control": "text",
+            "label": "展期规则描述",
+            "rules": [
+              {
+                "max": 80,
+                "message": "长度不能超过80个字符"
+              }
+            ]
+          }
+        },
+        {
+          "bchmk_int_rate_val_rule": {
+            "control": "select",
+            "label": "基准利率取值规则",
+            "dict":{
+              "dictType": "LN_E_BCHMK_INT_RATE_VAL_RULE",
+              "dictKey": [
+                "LN_E_BCHMK_INT_RATE_VAL_RULE"
+              ],
+              "format": "label"
+            }
+          },
+          "extd_int_rate_flt_ctrl": {
+            "control": "select",
+            "label": "展期利率浮动控制",
+            "dict":{
+              "dictType": "LN_E_EXTD_INT_RATE_FLT_CTRL",
+              "dictKey": [
+                "LN_E_EXTD_INT_RATE_FLT_CTRL"
+              ],
+              "format": "label"
+            }
+          }
+        },
+        {
+          "extd_int_rate_flt_val_ctrl": {
+            "control": "select",
+            "label": "展期利率浮动值控制",
+            "dict":{
+              "dictType": "LN_E_EXTD_INT_RATE_FLT_VAL_CTRL",
+              "dictKey": [
+                "LN_E_EXTD_INT_RATE_FLT_VAL_CTRL"
+              ],
+              "format": "label"
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/paramManage/loanExtdRule/loan_extd_rule_add.json"
+          },
+          "props": {
+            "title": "新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ap0000",
+          "parm_tab_nm": "klnp_extd_rule",
+          "dtbs_oprn_flg": "3",
+          "data_pkg": "${{current}}"
+        }
+      },
+      "thead": [
+        {
+          "label": "展期规则编号",
+          "prop": "extd_rule_num",
+          "align": "center"
+        },
+        {
+          "label": "展期规则描述",
+          "prop": "extd_rule_dsc",
+          "align": "center"
+        },
+        {
+          "label": "基准利率取值规则",
+          "prop": "bchmk_int_rate_val_rule",
+          "align": "center",
+          "dict": {
+            "dictType": "LN_E_BCHMK_INT_RATE_VAL_RULE",
+            "dictKey": [
+              "LN_E_BCHMK_INT_RATE_VAL_RULE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "展期利率浮动控制",
+          "prop": "extd_int_rate_flt_ctrl",
+          "align": "center",
+          "dict": {
+            "dictType": "LN_E_EXTD_INT_RATE_FLT_CTR",
+            "dictKey": [
+              "LN_E_EXTD_INT_RATE_FLT_CTR"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "展期利率浮动值控制",
+          "prop": "extd_int_rate_flt_val_ctrl",
+          "align": "center",
+          "dict": {
+            "dictType": "LN_E_EXTD_INT_RATE_FLT_VAL_CTRL",
+            "dictKey": [
+              "LN_E_EXTD_INT_RATE_FLT_VAL_CTRL"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "序号",
+          "prop": "serl_num_long",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 300,
+          "align": "center",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/paramManage/loanExtdRule/loan_extd_rule_info.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "50%",
+                "title": "信息详情"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/paramManage/loanExtdRule/loan_extd_rule_update.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "50%",
+                "title": "信息维护"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "ap0000",
+                  "parm_tab_nm": "klnp_extd_rule",
+                  "dtbs_oprn_flg": "2",
+                  "data_pkg": {
+                    "extd_rule_num":"${{current.extd_rule_num}}"
+                  }
+                }
+              },
+              "confirm": {
+                "title": "确定删除",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

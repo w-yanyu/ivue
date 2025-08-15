@@ -1,0 +1,206 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "part_protocol_no": {
+            "control": "text",
+            "label": "合作方协议编号"
+
+          },
+          "protocol_name": {
+            "control": "text",
+            "label": "协议名称",
+            "rules": [
+              {
+                "max": 100,
+                "message": "长度不能超过100个字符"
+              }
+            ]
+          }
+        }
+
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/pt/pt_consult_uphold/pt_consult_uphole_add.json"
+          },
+          "props": {
+            "title": "新增合作方协议"
+          }
+        }
+
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pt0001",
+
+          "page_id": "/views/pt/pt_consult_uphold/pt_consult_uphold.json"
+        }
+      },
+      "thead": [
+        {
+          "type": "index"
+        },
+        {
+          "label": "合作方协议编号",
+          "prop": "part_protocol_no",
+          "align":"center"
+        },
+        {
+          "label":"合作方名称",
+          "prop": "partner_name",
+          "align":"center"
+        },
+        {
+          "label": "合作方式",
+          "prop": "part_method",
+          "align":"center",
+          "dict": {
+            "dictType": "PT_E_PART_METHOD",
+            "dictKey": [
+              "PT_E_PART_METHOD"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "协议名称",
+          "prop": "protocol_name",
+          "align":"center"
+        },
+        {
+          "label": "生效日期",
+          "prop": "effect_date",
+          "align":"center"
+        },
+        {
+          "label": "失效日期",
+          "prop": "expiry_date",
+          "align":"center"
+        },
+        {
+          "label": "协议有效状态",
+          "prop": "protocol_status",
+          "align":"center",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "续签提示提前天数",
+          "prop": "continued_day_advan",
+          "align":"center"
+        },
+        {
+          "label": "原协议编号",
+          "prop": "original_protocol_no",
+          "align":"center"
+        },
+        {
+          "label": "是否敞口管控",
+          "prop": "is_exposure_control",
+          "align":"center",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "是否有保证金",
+          "prop": "is_margin",
+          "align":"center",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "是否分佣分润",
+          "prop": "is_commission",
+          "align":"center",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "协议地址1",
+          "prop": "protocol_addr1",
+          "align":"center"
+        },
+        {
+          "label": "协议地址2",
+          "prop": "protocol_addr2",
+          "align":"center"
+        },
+        {
+          "label": "协议地址3",
+          "prop": "protocol_addr3",
+          "align":"center"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align":"center",
+          "btns": [
+            {
+              "type": "look",
+              "label": "维护",
+
+              "toRequest": {
+                "url": "/views/pt/pt_consult_uphold/pt_consult_tab/pt_consult_tab_manage.json",
+                "method": "POST"
+
+              },
+              "props": {
+                "title": "合作方协议信息维护"
+              }
+            },
+
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "pt0004"
+                }
+              }
+            }
+
+          ]
+        }
+      ]
+    }
+  }
+}

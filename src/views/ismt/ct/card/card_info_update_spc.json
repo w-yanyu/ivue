@@ -1,0 +1,203 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": "${{params}}",
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交审批",
+          "icon": "",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "ct3011",
+              "appId": "deciOnl",
+              "opera_type": "0",
+              "oper_tp": "U"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "card_id": {
+            "control": "string",
+            "label": "卡片编号",
+            "width": "240px"
+          },
+          "card_name": {
+            "control": "string",
+            "label": "卡片名称",
+            "width": "240px"
+          },
+          "card_type": {
+            "control": "select",
+            "label": "卡片类型",
+            "width": "240px",
+            "dict": {
+              "dictType": "CT_E_CARD_TYPE",
+              "dictKey": ["CT_E_CARD_TYPE"],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择卡片类型"
+              }
+            ],
+            "showItem": {
+              "2": ["scope_range_str"]
+            }
+          },
+          "scope_range_str": {
+            "initShow": false,
+            "control": "lookup",
+            "label": "适用角色名称",
+            "width": "240px",
+            "multiple": true,
+            "valueDataType": "string",
+            "value": "",
+            "toRequest": {
+              "url": "/views/ismt/ct/card/role-manager_lookup.json",
+              "method": "post",
+              "params": {
+                "appId": "${{params.appId}}"
+              }
+            },
+            "#keyField": {
+              "wf_role_no": "role_id",
+              "role_name": "role_name"
+            },
+            "edit": false,
+            "events": {
+              "set": {
+                "scope_range": "role_id",
+                "scope_range_str": "role_name"
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择适用角色名称"
+              }
+            ]
+          },
+          "scope_range": {
+            "initShow": false,
+            "control": "lookup",
+            "label": "适用角色编号",
+            "width": "240px",
+            "multiple": true,
+            "valueDataType": "string",
+            "value": "",
+            "toRequest": {
+              "url": "/views/ismt/ct/card/role-manager_lookup.json",
+              "method": "post",
+              "params": {
+                "appId": "${{params.appId}}"
+              }
+            },
+            "#keyField": {
+              "wf_role_no": "role_id",
+              "role_name": "role_name"
+            },
+            "edit": false,
+            "events": {
+              "set": {
+                "scope_range": "role_id"
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择适用角色编号"
+              }
+            ]
+          },
+          "card_status": {
+            "control": "select",
+            "label": "卡片状态",
+            "width": "240px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择卡片状态"
+              }
+            ],
+            "dict": {
+              "dictType": "CT_E_CARD_STATUS",
+              "dictKey": ["CT_E_CARD_STATUS"],
+              "format": "label"
+            }
+          },
+          "effe_type": {
+            "control": "select",
+            "label": "生效类型",
+            "width": "240px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择生效类型"
+              }
+            ],
+            "dict": {
+              "dictType": "CT_E_EFFE_TP",
+              "dictKey": ["CT_E_EFFE_TP"],
+              "format": "label"
+            },
+            "showItem": {
+              "1": ["effe_date"]
+            }
+          },
+          "effe_date": {
+            "initShow": false,
+            "control": "dateTimePicker",
+            "disabled": "false",
+            "label": "生效日期",
+            "prop": "effe_date",
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择生效日期"
+              }
+            ],
+            "disabledDate": "dateBefore"
+          }
+        },
+        {
+          "params": {
+            "control": "textarea",
+            "disabled": false,
+            "label": "参数",
+            "span": 20,
+            "align": "left"
+          }
+        },
+        {
+          "remark": {
+            "control": "textarea",
+            "disabled": true,
+            "label": "备注信息",
+            "span": 20,
+            "align": "left",
+            "rules": [
+              {
+                "max": 100,
+                "message": "长度不能超过100个字符"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "alert": {
+      "title": "参数列表样例",
+      "description": [
+        "单值传参：{ param1: 123, param2: 456 }",
+        "多值传参：{ param1: [ 123, 456, 789 ], param2: abc }"
+      ]
+    }
+  }
+}

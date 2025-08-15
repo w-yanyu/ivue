@@ -1,0 +1,140 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "doRequest": {
+                "url": "",
+                "method": "POST",
+                "params": {}
+            },
+            "controls": [{
+                "role_id": {
+                    "control": "text",
+                    "label": "角色ID",
+                    "rules": [{
+                        "max": 64,
+                        "message": "长度不能超过64个字符"
+                    }]
+                },
+                "role_name": {
+                    "control": "text",
+                    "label": "角色名称",
+                    "rules": [{
+                        "max": 100,
+                        "message": "长度不能超过100个字符"
+                    }]
+                }
+            }]
+        },
+        "toolbar": {
+            "btns": [{
+                "type": "add",
+                "target": "dialog",
+                "label": "新增",
+                "toRequest": {
+                    "method": "GET",
+                    "url": "/views/ismt/ct/roleManager/role-info-add.json"
+                },
+                "props": {
+                    "title": "角色信息新增"
+                }
+            }]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ct2050",
+                    "user_id": "$g{{user_info.userCode}}"
+                }
+            },
+            "pagination": {
+                "show": true,
+                "pageSize": 10
+            },
+            "thead": [{
+                    "type": "index"
+                },
+                {
+                    "label": "角色ID",
+                    "prop": "role_id"
+                },
+                {
+                    "label": "角色名称",
+                    "prop": "role_name"
+                },
+                {
+                  "label": "角色权限",
+                  "prop": "role_type",
+                  "align": "center",
+                  "dict": {
+                    "dictType": "CT_E_ROLE_TYPE",
+                    "dictKey": [
+                      "CT_E_ROLE_TYPE"
+                    ],
+                    "format": "label"
+                  }
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 220,
+                    "align": "center",
+                    "btns": [{
+                            "type": "edit",
+                            "label": "用户绑定",
+                            "toRequest": {
+                                "url": "/views/ismt/ct/roleManager/role-user-bind.json",
+                                "method": "GET",
+                                "params": {
+                                    "role_id": "${{current.role_id}}"
+                                }
+                            },
+                            "props": {
+                                "width": "70%",
+                                "title": "用户绑定"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "资源配置",
+                            "toRequest": {
+                                "url": "/views/ismt/ct/roleManager/role_menu_tree.json",
+                                "method": "GET"
+                            },
+                            "props": {
+                                "title": "角色资源配置",
+                                "width": "65%"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/ismt/ct/roleManager/role-info-update.json",
+                                "method": "GET"
+                            },
+                            "props": {
+                                "title": "角色维护"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "删除",
+                            "toRequest": {
+                                "url": "/views/ismt/ct/roleManager/role-info-delete.json",
+                                "method": "GET"
+                            },
+                            "props": {
+                                "title": "角色信息删除"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

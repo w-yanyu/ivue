@@ -1,0 +1,143 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "scope": "formData",
+            "controls": [
+                {
+                    "cnct_rslt_code": {
+                        "control": "text",
+                        "label": "催收结果代码"
+                    },
+                    "cnct_rslt_name": {
+                        "control": "text",
+                        "label": "催收结果名称"
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "icon": "el-icon-circle-plus",
+                    "target": "dialog",
+                    "label": "新增",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/ce/paramManage/business/contact/contact_add.json"
+                    },
+                    "props": {
+                        "title": "新增催收结果定义"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ce0074"
+                }
+            },
+            "thead": [
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "催收结果代码",
+                    "prop": "cnct_rslt_code"
+
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "催收结果名称",
+                    "prop": "cnct_rslt_name"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "是否可联",
+                    "prop": "cnct_rslt_type",
+                    "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                            "MS_E_YESORNO"
+                        ],
+                        "format": "value-label"
+                    }
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "是否有效",
+                    "prop": "is_validresult",
+                    "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                            "MS_E_YESORNO"
+                        ],
+                        "format": "value-label"
+                    }
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "是否启用",
+                    "prop": "is_valid",
+                    "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                            "MS_E_YESORNO"
+                        ],
+                        "format": "value-label"
+                    }
+                },
+
+                {
+                    "label": "操作",
+                    "align":"center",
+                    "fixed": "right",
+                    "btns": [
+                        {
+                            "type":"look",
+                            "label":"详情",
+                            "toRequest":{
+                                "url":"/views/ce/paramManage/business/contact/contact_info.json",
+                                "method":"POST"
+                            },
+                            "props":{
+                                "title":"催收结果详情"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/ce/paramManage/business/contact/contact_modify.json",
+                                "method": "POST"
+                            },
+                            "props": {
+                                "title": "催收结果维护"
+                            }
+                        },
+                        {
+                            "type": "delete",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/call/RPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "ce0071",
+                                    "coll_kind":"02"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

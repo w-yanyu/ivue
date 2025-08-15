@@ -1,0 +1,230 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "tran_code": {
+            "label": "批量交易码",
+            "control": "text",
+            "width": "120px",
+            "span": "12"
+          },
+          "tran_chinese_name": {
+            "label": "批量交易名称",
+            "control": "text",
+            "width": "120px",
+            "span": "12",
+            "rules": [
+              {
+                "max": "30",
+                "message": "长度不能超过30个字符"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pd1581",
+          "pageTranType": "${{params.pageTranType}}",
+          "sale_prod_cd": "${{params.sale_prod_cd}}",
+          "prod_version": "${{params.prod_version}}",
+          "apply_type": "${{params.apply_type}}"
+        }
+      },
+      "thead": [
+        {
+          "type": "string",
+          "label": "步骤号",
+          "prop": "step_id",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "批量交易码",
+          "prop": "tran_code",
+          "align": "center",
+          "width": "150px"
+        },
+        {
+          "type": "string",
+          "label": "批量交易中文名称",
+          "prop": "tran_chinese_name",
+          "align": "center",
+          "width": "300px"
+        },
+        {
+          "type": "string",
+          "label": "批量交易组ID",
+          "prop": "tran_group_id",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "执行标识",
+          "prop": "execution_code",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "string",
+          "label": "重连次数",
+          "prop": "reconnection_num",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "失败中断标识",
+          "prop": "fail_interrupt_code",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "string",
+          "label": "事务提交间隔（单位：笔数）",
+          "prop": "transactions_submit_num",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "数据拆分模式",
+          "prop": "data_split_mode",
+          "align": "center",
+          "dict": {
+            "dictType": "PD_E_SPLITMOD",
+            "dictKey": [
+              "PD_E_SPLITMOD"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "string",
+          "label": "批量作业执行模式",
+          "prop": "job_execution_mode",
+          "align": "center",
+          "dict": {
+            "dictType": "PD_E_RUNMOD",
+            "dictKey": [
+              "PD_E_RUNMOD"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "string",
+          "label": "最大作业并发数",
+          "prop": "max_job_concurrency_num",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "日志级别",
+          "prop": "log_level",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "批量任务运行模式",
+          "prop": "task_run_mode",
+          "align": "center",
+          "dict": {
+            "dictType": "PD_E_PLJYYXMS",
+            "dictKey": [
+              "PD_E_PLJYYXMS"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "string",
+          "label": "能否跳过",
+          "prop": "is_skip",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "string",
+          "label": "是否文件批量",
+          "prop": "is_batch_file",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "string",
+          "label": "交易类型",
+          "prop": "tran_type",
+          "align": "center",
+          "width": "150px",
+          "dict": {
+            "dictType": "PD_E_JIAOYILX",
+            "dictKey": [
+              "PD_E_JIAOYILX"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "fixed": "right",
+          "width": "200px",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/pd/prod/templatePage/batchTranConfig/batchTranConfig_info.json",
+                "method": "GET",
+                "params": {
+                  "sale_prod_cd": "${{params.sale_prod_cd}}",
+                  "prod_version": "${{params.prod_version}}",
+                  "apply_type": "${{params.apply_type}}"
+                }
+              },
+              "props": {
+                "width": "60%",
+                "title": "批量交易配置详情"
+              }
+            },
+            {
+              "type": "bringback",
+              "label": "选择"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,85 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "scope": "formData",
+            "btns": [{
+                "type": "submit",
+                "label": "保存",
+                "doRequest": {
+                    "url": "/SUMP/icmcall/icmRPCCall",
+                    "method": "POST",
+                    "params": {
+                        "servicecode": "wa1202"
+                    }
+                }
+            }],
+            "controls": [
+                {
+                    "assign_code": {
+                        "label": "预警案件分配编码",
+                        "control": "lookup",
+                        "width": "130px",
+                        "span": "10",
+                        "edit": true,
+                        "disable": "true",
+                        "keyField": {
+                          "assign_code": "assign_code"
+                        },
+                        "toRequest": {
+                          "url": "/views/dh/warn/param/assign/assign_Product.json",
+                          "method": "post",
+                          "params": {
+                            "qutaid": "${{params.qutaid}}"
+                          }
+                        },
+                        "props": {
+                          "title": "选择预警案件分配编码"
+                        },
+                        "format": "label"
+                     },
+                    "assign_obj": {
+                        "control": "text",
+                        "label": "预警案件分配对象",
+                        "width": "130px",
+                        "rules": [{
+                            "required": true
+                        }],
+                        "span": "10"
+                    }
+
+                },
+                {
+                    "scheme_id": {
+                        "control": "text",
+                        "label": "案件分配方案编号",
+                        "width": "130px",
+                        "disabled":true,
+                        "value":"${{params.scheme_id}}",
+                        "rules": [{
+                            "required": true
+                        }],
+                        "span": "10"
+                    },
+                    "is_valid": {
+                        "control": "select",
+                        "label": "是否有效",
+                        "width": "130px",
+                        "span": "10",
+                        "rules": [{
+                            "required": true
+                        }],
+                        "dict": {
+                            "dictType": "MS_E_YESORNO",
+                            "dictKey": [
+                                "MS_E_YESORNO"
+                            ],
+                            "format": "label"
+                        }
+                    }
+                }
+
+            ]
+        }
+    }
+}

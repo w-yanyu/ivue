@@ -1,0 +1,63 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "scope": "templateScope",
+            "initRequest":"${{params}}",
+            "initDataOnce":true,
+            
+            "controls": [
+                {                    
+                    "active_id": {
+                        "control": "text",
+                        "label": "活动编号",
+                        "width": "25px",
+                        "disabled": true,
+                        "rules": [{
+                            "required": true
+                        }]
+                    },
+                    "tool_id": {
+                        "label": "营销工具",
+                        "control": "remoteSelect",
+                        "labelField": "tool_name",
+                        "valueField": "tool_id",
+                        "doRequest": {
+                            "url": "/SUMP/call/RPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "mk0009",
+                                "tool_state": "0"
+                            }
+                        },
+                        "width": "25px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "必填项"
+                            }
+                        ]
+                    }
+                },
+                {                    
+                    "active_count": {
+                        "control": "text",
+                        "label": "活动数量",
+                        "width": "25px",
+                        "rules": [
+                          ]
+                    },
+                    "active_amt": {
+                        "label": "活动金额",
+                        "control": "currency",
+                        "suffix": "元",
+                        "width": "25px",
+                        "thousand": ",",
+                        "rules": [
+                        ]
+                    } 
+                }
+            ]
+        }
+    }
+}

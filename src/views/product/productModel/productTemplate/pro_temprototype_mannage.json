@@ -1,0 +1,101 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "tplt_protp_code": {
+            "control": "text",
+            "label": "模板原型代码",
+            "rules": [
+              {
+                "max": 18,
+                "message": "长度不能超过18个字符"
+              }
+            ]
+          },
+          "tplt_protp_nm": {
+            "control": "text",
+            "label": "模板原型名称",
+            "rules": [
+              {
+                "max": 80,
+                "message": "长度不能超过80个字符"
+              }
+            ]
+          }
+        },
+        {
+          "tplt_protp_ste": {
+            "control": "select",
+            "label": "模板原型状态",
+            "dict": {
+              "dictType": "LN_E_TPLT_PROTP_STE",
+              "dictKey": [
+                "LN_E_TPLT_PROTP_STE"
+              ],
+              "format": "label"
+            }
+          },
+          "core_busi_dman": {
+            "control": "text",
+            "label": "业务领域（默认01-贷款）",
+            "width": "100px",
+            "initShow": false,
+            "value": "01"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ln3255",
+          "outlistid": "lstKlnf_tplt_protp"
+        }
+      },
+      "thead": [
+        {
+          "label": "模板原型代码",
+          "prop": "tplt_protp_code",
+          "align": "center"
+        },
+        {
+          "label": "模板原型名称",
+          "prop": "tplt_protp_nm",
+          "align": "center"
+        },
+        {
+          "label": "模板原型描述",
+          "prop": "tplt_protp_dsc",
+          "align": "center"
+        },
+        {
+          "label": "模板原型状态",
+          "prop": "tplt_protp_ste",
+          "align": "center",
+          "dict": {
+            "dictType": "LN_E_TPLT_PROTP_STE",
+            "dictKey": [
+              "LN_E_TPLT_PROTP_STE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "fixed": "right",
+          "btns": [{
+            "type": "bringback",
+            "label": "选择"
+          }]
+        }
+      ]
+    }
+  }
+}

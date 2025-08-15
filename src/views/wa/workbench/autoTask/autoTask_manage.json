@@ -1,0 +1,116 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "controls": [
+        {
+          "case_id": {
+            "control": "text",
+            "label": "案件编号"
+          },
+          "case_cust_name": {
+            "control": "text",
+            "label": "客户姓名"
+          }
+        },
+        {
+          "cert_no": {
+            "control": "text",
+            "label": "证件号码"
+          },
+          "wf_prod_no": {
+            "control": "select",
+            "label": "工作流产品",
+            "dict":{
+              "dictType": "WF_PRODUCT_CODE",
+              "dictKey": [
+                "WF_PRODUCT_CODE"
+              ],
+              "format": "value-label"
+            }
+          }
+
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "wa0042"
+        }
+      },
+      "thead": [
+          {
+            "label": "工作流产品",
+            "width": "160px",
+            "prop": "risk_rate_code",
+            "align": "center",
+            "dict":{
+              "dictType": "E_WFPDTP",
+              "dictKey": [
+                "E_WFPDTP"
+              ],
+              "format": "value-label"
+            }
+          },
+          {
+              "label": "案件编号",
+              "width": "160px",
+              "align": "center",
+              "prop": "task_id"
+          },
+          {
+            "label": "客户姓名",
+            "width": "160px",
+            "prop": "warn_date",
+            "align": "center"
+          },
+          {
+            "label": "证件号码",
+            "width": "160px",
+            "prop": "custid",
+            "align": "center"
+          },
+          {
+            "label": "异常描述",
+            "width": "350px",
+            "prop": "case_custna",
+            "align": "center"
+          },
+          {
+            "label": "操作",
+            "fixed": "right",
+            "width": 200,
+            "align":"center",
+            "btns": [
+              {
+                "type": "custom",
+                "label": "办理",
+                "doRequest": {
+                  "url": "/SUMP/icmcall/icmRPCCall",
+                  "method": "POST",
+                  "params": {
+                    "servicecode": "wa0042",
+                    "clstat": "00"
+                  }
+                },
+                "confirm": {
+                  "title": "确定重新执行吗",
+                  "confirmButtonText": "确定",
+                  "cancelButtonText": "取消"
+                },
+                "###show": {
+                  "expression": "'${{current.clstat}}' == '01'"
+                }
+              }
+            ]
+          }
+      ]
+    }
+  }
+}

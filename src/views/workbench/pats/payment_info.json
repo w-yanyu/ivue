@@ -1,0 +1,196 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "initDataOnce":true,
+      "initRequest": {
+          "url": "/SUMP/icmcall/icmRPCCall",
+          "method": "POST",
+          "params": {
+              "servicecode": "PATSCMSS3002",
+              "orderNo": "${{params.orderNo}}",
+              "tranType": "${{params.tranType}}"
+          }
+      },
+      "controls": [
+        {
+          "orderNo": {
+            "control": "text",
+            "label": "内部订单号",
+            "disabled": true
+          },
+          "paymentNo": {
+            "control": "text",
+            "label": "外部订单号",
+            "disabled": true
+          },
+          "paymentAmount": {
+            "label": "提现金额",
+            "control": "text",
+            "disabled": true
+          },
+          "ownChannelCode": {
+            "control": "select",
+            "label": "渠道",
+            "dict": {
+              "format": "label",
+              "dictKey": [
+                "E_CHANNELCODE"
+              ],
+              "dictType": "E_CHANNELCODE"
+            },
+            "disabled": true
+          },
+          "applyNo": {
+            "control": "text",
+            "label": "授信申请单号",
+            "disabled": true
+          },
+          "notifyStatus": {
+            "control": "select",
+            "label": "渠道方通知状态",
+            "dict": {
+              "dictType": "E_NOTIFY_STATUS",
+              "dictKey": [
+                "E_NOTIFY_STATUS"
+              ],
+              "format": "label"
+            },
+            "disabled": true
+          },
+          "ipmsStatus": {
+            "control": "select",
+            "label": "伙伴中心状态",
+            "dict": {
+              "dictType": "E_IPMS_STATUS",
+              "dictKey": [
+                "E_IPMS_STATUS"
+              ],
+              "format": "label"
+            },
+            "disabled": true
+          },
+          "trxnStatus":{
+            "label": "交易状态",
+            "control": "select",
+            "dict": {
+              "format": "label",
+              "dictKey": [
+                "E_TRXN_STATUS"
+              ],
+              "dictType": "E_TRXN_STATUS"
+            },
+            "disabled": true
+          }
+        },
+        {
+          "paymentTime":{
+            "label": "提现时间",
+            "control": "dateTimePicker",
+            "disabled": true,
+            "valueFormat": "yyyyMMdd HHmmss",
+            "format": "yyyy-MM-dd HH:mm:ss"
+          }
+        }
+    ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "PATSCMSS3003"
+        }
+      },
+
+      "thead": [
+        {
+          "type": "index",
+          "align": "center"
+        },
+        {
+          "label": "流水号",
+          "width": 200,
+          "prop": "transeq",
+          "align": "center"
+        },
+        {
+          "label": "订单号",
+          "width": 200,
+          "prop": "orderNo",
+          "align": "center"
+        },
+        {
+          "label": "原金额",
+          "width": 100,
+          "prop": "amount",
+          "align": "center"
+        },
+        {
+          "label": "修改后金额",
+          "width": 100,
+          "prop": "afAmount",
+          "align": "left"
+        },
+        {
+          "label": "外部订单号",
+          "width": 200,
+          "prop": "paymentNo",
+          "align": "left"
+        },
+        {
+          "label": "处理标志",
+          "width": 80,
+          "prop": "dealStatus",
+          "align": "center",
+          "dict": {
+            "dictType": "E_DEALSTATUS",
+            "dictKey": [
+              "E_DEALSTATUS"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "交易渠道",
+          "width": 100,
+          "prop": "trxnchannel",
+          "align": "center"
+        },
+        {
+          "label": "异常错误码",
+          "width": 100,
+          "prop": "errocode",
+          "align": "center"
+        },
+        {
+          "label": "异常错误信息",
+          "width": 200,
+          "prop": "errorMsg",
+          "align": "left"
+        },
+        {
+          "label": "机构号",
+          "width": 100,
+          "prop": "trxnbranch",
+          "align": "left"
+        },
+        {
+          "label": "用户号",
+          "width": 100,
+          "prop": "trxnteller",
+          "align": "left"
+        }
+      ]
+    },
+    "alert": {
+      "title": "说明",
+      "description": [
+          "表格内数据是重入帐操作记录"
+      ],
+      "listStyle": "disc"
+    }
+  }
+}

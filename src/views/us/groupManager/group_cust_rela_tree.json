@@ -1,0 +1,260 @@
+{
+    "module": "lr-tree-dynamic",
+    "initRequest": "${{params}}",
+    "layout": {
+        "tree": {
+            "title": "集团客户关系",
+            "lazy": false,
+            "hideDynamicArea": false,
+            "idField": "id",
+            "pIdField": "pid",
+            "labelField": "title",
+            "isLeafField": "isLeaf",
+            "nodeTypeField": "type",
+            "expandId": [
+                "-1",
+                "1QY-1",
+                "2JY-1",
+                "3CW-1",
+                "4ZD-1"
+            ],
+            "initRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POSt",
+                "params": {
+                    "servicecode": "us0604",
+                    "cust_no": "${{params.cust_no}}"
+                }
+            },
+            "root": {
+                "rootNode": {
+                    "name": "集团客户",
+                    "value": "-1"
+                },"toRequest": {
+                    "url": "/views/us/groupManager/group_cust_info_tab.json",
+                    "params": {
+                      "cust_no": "${{params.cust_no}}",
+                      "id": "${{params.cust_no}}",
+                      "show_flash": "${{params.show_flash}}",
+                      "method": "post"
+                    }
+                  }
+            },
+            "rootTypes": [
+                "dept"
+            ],
+            "nodeTypes": {
+                "leaf00": {
+                    "children": [
+                        "leaf00"
+                    ],
+                    "toRequest": {
+                        "url": "/views/us/groupManager/group_cust_info_tab.json",
+                        "params": {
+                            "cust_no": "${{params.cust_no}}",
+                            "method": "post"
+                        }
+                    },
+                    "contextMenu": [
+                        {
+                            "type": "add",
+                            "label": "新增子公司",
+                            "childNodeType": "dept",
+                            "icon": "el-icon-circle-plus-outline",
+                            "toRequest": {
+                                "url": "/views/us/groupManager/group_cust_add_in_tree.json",
+                                "method": "get",
+                                "params": {
+                                    "cust_up_no":"${{current.id}}",
+                                    "cust_up_name":"${{current.title}}"
+                                }
+                            },
+                            "props": {
+                                "width": "65%",
+                                "title": "新增子公司"
+                            },
+                            "eventAfter": {
+                                "callback": "renderTree"
+                            }
+                        },
+                        {
+                            "type": "divider"
+                        }
+                    ]
+                },
+                "leaf01": {
+                    "children": [
+                        "leaf01"
+                    ],
+                    "toRequest": {
+                        "url": "/views/us/groupManager/group_cust_info_tab.json",
+                        "params": {
+                            "cust_no": "${{params.cust_no}}",
+                            "method": "post"
+                        }
+                    },
+                    "contextMenu": [
+                        {
+                            "type": "add",
+                            "label": "新增子公司",
+                            "childNodeType": "dept",
+                            "icon": "el-icon-circle-plus-outline",
+                            "toRequest": {
+                                "url": "/views/us/groupManager/group_cust_add_in_tree.json",
+                                "method": "get",
+                                "params": {
+                                    "cust_up_no":"${{current.id}}",
+                                    "cust_up_name":"${{current.title}}"
+                                }
+                            },
+                            "props": {
+                                "width": "65%",
+                                "title": "新增子公司"
+                            },
+                            "eventAfter": {
+                                "callback": "renderTree"
+                            }
+                        },
+                        {
+                            "type": "divider"
+                        },
+                        {
+                            "type": "edit",
+                              "label": "维护集团关系",
+                            "childNodeType": "dept",
+                            "icon": "el-icon-edit",
+                            "toRequest": {
+                                "url": "/views/us/groupManager/group_cust_update.json",
+                                "method": "get",
+                                "params": {
+                                    "cust_no":"${{current.id}}"
+                                }
+                            },
+
+                            "props": {
+                                "width": "65%",
+                                "title": "集团关系维护"
+                            },
+                            "eventAfter": {
+                                "callback": "renderTree"
+                            }
+                        }
+                        ,
+                        {
+                            "type": "divider"
+                        },
+                        {
+                            "type": "delete",
+                            "label": "删除子公司",
+                            "childNodeType": "2",
+                            "icon": "el-icon-remove-outline",
+                            "doRequest": {
+                              "url": "/SUMP/icmcall/icmRPCCall",
+                              "method": "POST",
+                              "params": {
+                                "servicecode": "us0607",
+                                "cust_no":"${{current.id}}"
+                              }
+                            },
+                            "confirm": {
+                              "title": "提示信息",
+                              "msg": "确定删除该子公司吗?",
+                              "confirmButtonText": "确定",
+                              "cancelButtonText": "取消"
+                            },
+                            "eventAfter": {
+                                "callback": "renderTree"
+                            }
+                          }
+                    ]
+                },
+                "leaf02": {
+                    "children": [
+                        "leaf02"
+                    ],
+                    "toRequest": {
+                        "url": "/views/us/groupManager/group_cust_info_tab2.json",
+                        "params": {
+                            "cust_no": "${{params.cust_no}}",
+                            "method": "post"
+                        }
+                    },
+                    "contextMenu": [
+                        {
+                            "type": "add",
+                            "label": "新增子公司",
+                            "childNodeType": "dept",
+                            "icon": "el-icon-circle-plus-outline",
+                            "toRequest": {
+                                "url": "/views/us/usManager/group/group_cust_add_in_tree.json",
+                                "method": "get",
+                                "params": {
+                                    "cust_up_no":"${{current.id}}",
+                                    "cust_up_name":"${{current.title}}"
+                                }
+                            },
+                            "props": {
+                                "width": "65%",
+                                "title": "新增子公司"
+                            },
+                            "eventAfter": {
+                                "callback": "renderTree"
+                            }
+                        },
+                        {
+                            "type": "divider"
+                        },
+                        {
+                            "type": "edit",
+                            "label": "维护集团关系",
+                            "childNodeType": "dept",
+                            "icon": "el-icon-edit",
+                            "toRequest": {
+                                "url": "/views/us/groupManager/group_cust_update.json",
+                                "method": "get",
+                                "params": {
+                                    "cust_no":"${{current.id}}"
+                                }
+                            },
+
+                            "props": {
+                                "width": "65%",
+                                "title": "维护集团关系"
+                            },
+                            "eventAfter": {
+                                "callback": "renderTree"
+                            }
+                        }
+                        ,
+                        {
+                            "type": "divider"
+                        },
+                        {
+                            "type": "delete",
+                            "label": "删除子公司",
+                            "childNodeType": "2",
+                            "icon": "el-icon-remove-outline",
+                            "doRequest": {
+                              "url": "/SUMP/icmcall/icmRPCCall",
+                              "method": "POST",
+                              "params": {
+                                "servicecode": "us0607",
+                                "cust_no":"${{current.id}}"
+                              }
+                            },
+                            "confirm": {
+                              "title": "提示信息",
+                              "msg": "确定删除该子公司吗?",
+                              "confirmButtonText": "确定",
+                              "cancelButtonText": "取消"
+                            },
+                            "eventAfter": {
+                                "callback": "renderTree"
+                            }
+                          }
+                    ]
+                }
+            }
+        }
+    }
+}

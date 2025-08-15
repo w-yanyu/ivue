@@ -1,0 +1,75 @@
+{
+  "module": "v_realonlyForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "cb0096",
+          "case_id": "${{params.case_id}}"
+        }
+      },
+      "controls": [
+        {
+          "stage_code": {
+            "control": "hidden"
+          },
+          "call_reference_list": {
+            "control": "remoteSelect",
+            "clearable": false,
+            "filterable": false,
+            "selectFirstValue": true,
+            "label": "",
+            "width": "100px",
+            "span": "12",
+            "labelField": "call_reference_name",
+            "valueField": "call_reference_id",
+            "format": "value-label",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "cb0100",
+                "stage_code": "${{form.stage_code}}",
+                "case_id": "${{params.case_id}}",
+                "case_no": "${{params.case_no}}",
+                "cust_id": "${{params.cust_id}}",
+                "org_id": "${{params.org_id}}",
+                "oa_org_id": "${{params.oa_org_id}}"
+              }
+            },
+            "events": {
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "cb0101",
+                  "call_reference_id": "${{form.call_reference_list}}",
+                  "case_id": "${{params.case_id}}",
+                  "case_no": "${{params.case_no}}",
+                  "cust_id": "${{params.cust_id}}",
+                  "org_id": "${{params.org_id}}",
+                  "oa_org_id": "${{params.oa_org_id}}"
+                },
+                "resultSet": {
+                  "call_reference_desc": "call_reference_desc"
+                }
+              }
+            }
+          },
+          "call_reference_desc": {
+            "control": "textarea",
+            "resize": "none",
+            "disabled": true,
+            "label": "",
+            "width": "100px",
+            "rows": 15,
+            "span": "24",
+            "className": "PL_style.www"
+          }
+        }
+      ]
+    }
+  }
+}

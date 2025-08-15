@@ -1,0 +1,126 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [{
+        "asge": {
+          "control": "text",
+          "label": "受让人",
+          "rules": [{
+            "max": 50,
+            "message": "长度不能超过50个字符"
+          }]
+        }
+      }
+     ]
+    },
+    "toolbar": {
+      "btns": []
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pl0035",
+          "apply_no": "${{params.apply_no}}"
+          
+        }
+      },
+      "thead": [{
+          "type": "index",
+          "label": "序号"
+        },
+        {
+          "label": "转让类型",
+          "prop": "transfer_type",
+          "width": "200px",
+          "dict": {
+            "dictType": "PL_E_TRANSFER_TYPE",
+            "dictKey": [
+              "PL_E_TRANSFER_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "借据号",
+          "prop": "busi_num",
+          "width": "200px"
+        },
+        {
+          "label": "资产包",
+          "prop": "busi_num1",
+          "width": "200px"
+        },
+        {
+          "label": "受让人",
+          "prop": "asge"
+        },
+        {
+          "label": "转让资产原价(元)",
+          "prop": "asmt_asset_orig_prc",
+          "format":{
+						"decimal":2,
+						"decimalPoint":".",
+						"thousandsPoint":","
+					}
+        },
+        {
+          "label": "评估方式",
+          "prop": "evlan_way",
+          "dict": {
+            "dictType": "PL_E_EVALUATION_WAY",
+            "dictKey": [
+              "PL_E_EVALUATION_WAY"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "转让价格(元)",
+          "prop": "asmt_prc",
+          "format":{
+						"decimal":2,
+						"decimalPoint":".",
+						"thousandsPoint":","
+					}
+        },
+        {
+          "label": "申请人",
+          "prop": "appt"
+        },
+        {
+          "label": "申请日期",
+          "prop": "aply_dt"
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "width": "260px",
+          "btns": [
+            {
+              "type": "look",
+              "label": "查看",
+              "toRequest": {
+                "url": "/views/pl/assetAssignment/query/asset_transfer_info_details.json",
+                "method": "GET",
+                "params": {
+                  "prim_key": "${{current.prim_key}}",
+                  "apply_no": "${{current.apply_no}}",
+                  "busi_num": "${{current.busi_num}}"
+                }
+              },
+              "props": {
+                "width": "80%",
+                "title": "资产转让信息"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

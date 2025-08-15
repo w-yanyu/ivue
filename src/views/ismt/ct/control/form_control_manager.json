@@ -1,0 +1,133 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "initRequest": "${{params}}",
+            "controls": [
+                {
+                    "menu_id": {
+                        "control": "string",
+                        "label": "菜单编号",
+                        "rules": [
+                            {
+                                "max": 32,
+                                "message": "长度不能超过32个字符"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "btns": []
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "target": "dialog",
+                    "label": "新增",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/ismt/ct/control/form_control_add_new.json",
+                        "params": {
+                            "menu_id": "${{params.menu_id}}"
+                        }
+                    },
+                    "props": {
+                        "title": "控件信息新增"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ct3150"
+                }
+            },
+            "pagination": {
+                "show": true
+            },
+            "thead": [
+                {
+                    "type": "index"
+                },
+                {
+                    "label": "控件编号",
+                    "prop": "control_id"
+                },
+                {
+                    "label": "菜单编号",
+                    "prop": "menu_id"
+                },
+                {
+                    "label": "控件名称",
+                    "prop": "control_name"
+                },
+                {
+                    "label": "控件类型",
+                    "prop": "control_type",
+                    "dict": {
+                        "dictType": "CT_E_CONTROL_TYPE",
+                        "dictKey": [
+                            "CT_E_CONTROL_TYPE"
+                        ],
+                        "format": "value-label"
+                    }
+                },
+                {
+                    "label": "控件交易类型",
+                    "prop": "trxn_type",
+                    "dict": {
+                        "dictType": "MS_E_TRXNTYPE",
+                        "dictKey": [
+                            "MS_E_TRXNTYPE"
+                        ],
+                        "format": "value-label"
+                    }
+                },
+                {
+                    "label": "对应交易码",
+                    "prop": "tran_code"
+                },
+                {
+                    "label": "控件描述",
+                    "prop": "control_desc"
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 220,
+                    "align": "center",
+                    "btns": [
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/ismt/ct/control/form_control_update.json",
+                                "method": "GET"
+                            },
+                            "props": {
+                                "title": "角色维护"
+                            }
+                        },
+                        {
+                            "type": "delete",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "ct3153"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,149 @@
+{
+    "module": "v_search_btn_datagrid",
+    
+    "layout": {
+        "form": {
+            "initRequest": "${{params}}",
+            "btns": [],
+            "controls": [
+                {
+                    "cust_no": {
+                        "control": "string",
+                        "label": "客户编号"
+                    },
+                     "tran_seq": {
+                        "control": "text",
+                        "label": "交易流水"
+                    }
+                },
+                {
+                    "prod_credit_seq": {
+                        "control": "text",
+                        "label": "产品授信额度编号"
+                    },
+                     "cust_credit_seq": {
+                        "control": "text",
+                        "label": "客户层授信额度编号"
+                    }
+                },
+                {
+                    "start_date": {
+                        "control": "dateTimePicker",
+                        "valueFormat": "yyyyMMdd",
+                        "label": "开始日期"
+                    },
+                     "end_date": {
+                        "control": "dateTimePicker",
+                        "valueFormat": "yyyyMMdd",
+                        "label": "结束日期"
+                    }
+                }
+            ]
+          },
+        "toolbar": {
+            "btns": []
+        },
+        "datagrid": {
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "uccp4014",
+                    "appId":"uccpOnl"
+                }
+            },
+            "thead": [
+                {
+                    "label": "客户编号",
+                    "prop": "cust_no",
+                    "align": "center"
+                },
+                {
+                    "label": "产品授信额度编号",
+                    "prop": "prod_credit_seq",
+                    "align": "center"
+                },
+                {
+                    "label": "客户层授信额度编号",
+                    "prop": "cust_credit_seq",
+                    "align": "center"
+                },
+                {
+                    "label": "源系统授信额度编号",
+                    "prop": "source_credit_number",
+                    "align": "center"
+                },
+                {
+                    "label": "交易流水",
+                    "prop": "tran_seq",
+                    "align": "center"
+                },
+                {
+                    "label": "交易日期",
+                    "prop": "tran_date",
+                    "align": "center"
+                },
+                {
+                    "label": "来源系统",
+                    "prop": "source_system",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "UCCP_E_SOURCE_SYSTEM",
+                        "dictKey": [
+                            "UCCP_E_SOURCE_SYSTEM"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "额度类型",
+                    "prop": "quota_type",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "UCCP_E_QUOTA_TYPE",
+                        "dictKey": [
+                            "UCCP_E_QUOTA_TYPE"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "额度操作类型",
+                    "prop": "credit_operation_type",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "UCCP_E_CREDIT_OPERATION_TYPE",
+                        "dictKey": [
+                            "UCCP_E_CREDIT_OPERATION_TYPE"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 100,
+                    "align": "center",
+                    "btns": [{
+                            "type": "edit",
+                            "label": "详情",
+                            "toRequest": {
+                                "url": "/views/uccp/quotaManager/quotaVeiw/components/LimitOperationRecord/uccp_opt_detail_detail.json",
+                                "method": "GET",
+                                "params": {
+                                    
+                                }
+                            },
+                            "props": {
+                                "width": "80%",
+                                "title": "详情"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

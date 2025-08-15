@@ -1,0 +1,204 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "buckcd": {
+                        "control": "text",
+                        "label":  "扣款参数编号",
+                        "rules": [
+                            {
+                                "max": 18,
+                                "message": "长度不能超过18个字符"
+                            }
+                        ]
+                    },
+                    "clssst": {
+                        "control": "select",
+                        "label":  "贷款形态",
+                        "dict": {
+                          "dictType": "E_CLSSST",
+                          "dictKey": [
+                            "E_CLSSST"
+                          ],
+                          "format": "label",
+                        "labelField":"dictName",
+                        "valueField":"dictId"
+                      }
+                    }
+                },
+                {
+                    "prlntg": {
+                        "control": "select",
+                        "label":  "应计非应计状态",
+                        "dict": {
+                          "dictType": "E_PRLNTG",
+                          "dictKey": [
+                            "E_PRLNTG"
+                          ],
+                          "format": "label",
+                        "labelField":"dictName",
+                        "valueField":"dictId"
+                      }
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                  "type": "add",
+                  "target": "dialog",
+                  "label": "新增",
+                  "toRequest": {
+                      "method": "GET",
+                      "url": "/views/loanManager/repaymentOrder/repaymentOrder_add.json"
+                  },
+                  "props": {
+                      "width": "65%",
+                      "title":  "新增还款顺序参数"
+                  }
+              },
+                {
+                    "type": "delete",
+                    "label":  "删除",  
+                    "icon": "el-icon-close",
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                          "servicecode": "deprio",
+                          "prioif":"${{current.selectedData}}"
+                        }
+                      }
+                }
+            ]
+        }
+        ,
+        "datagrid": {
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "qrprio"
+                }
+            },
+            "pagination": {
+                "pageSizes": [
+                    10,
+                    15,
+                    20
+                ],
+                "pageSize": 10
+            },
+            "thead": [
+                {
+                    "type": "selection",
+                    "width": "35"
+                },
+                {
+                    "label":  "序号",
+                    "prop": "sequno"
+                },
+                {
+                    "label": "扣款参数编号",
+                    "prop": "buckcd"
+                },
+                {
+                    "label": "扣款参数描述",
+                    "prop": "buckds"
+                },
+                {
+                    "label":"贷款形态",
+                    "prop": "clssst",
+                    "dict": {
+                      "dictType": "E_CLSSST",
+                      "dictKey": [
+                        "E_CLSSST"
+                      ],
+                      "format": "label",
+                    "labelField":"dictName",
+                    "valueField":"dictId"
+                  }
+                },
+                {
+                    "label":  "应计非应计状态",
+                    "prop": "prlntg",
+                    "dict": {
+                      "dictType": "E_PRLNTG",
+                      "dictKey": [
+                        "E_PRLNTG"
+                      ],
+                      "format": "label",
+                    "labelField":"dictName",
+                    "valueField":"dictId"
+                  }
+                },
+                {
+                    "label":  "还款属性",
+                    "prop": "reipro",
+                    "dict": {
+                      "dictType": "E_REIPRO",
+                      "dictKey": [
+                        "E_REIPRO"
+                      ],
+                      "format": "label",
+                    "labelField":"dictName",
+                    "valueField":"dictId"
+                  }
+                },
+                {
+                    "label":  "还款状态规则",
+                    "prop": "reista",
+                    "dict": {
+                      "dictType": "E_REISTA",
+                      "dictKey": [
+                        "E_REISTA"
+                      ],
+                      "format": "label",
+                    "labelField":"dictName",
+                    "valueField":"dictId"
+                  }
+                },
+                {
+                    "label":  "还款顺序编号",
+                    "prop": "repysq"
+                },
+                {
+                    "label":  "数据说明",
+                    "prop": "datads"
+                },
+                {
+                  "label": "操作",
+                  "fixed": "right",
+                  "width": 100,
+                  "align":"center",
+                  "btns": [
+                    {
+                      "type": "edit",
+                      "label": "维护",
+                      "toRequest": {
+                        "url": "/views/loanManager/repaymentOrder/repaymentOrder_update.json",
+                        "method": "POST"
+                      },
+                      "props": {
+                        "width": "75%",
+                        "title": "还款顺序信息维护"
+                      }
+                    }
+                  ]
+                }
+            ]
+        },
+        "alert": {
+          "span": 8,
+            "title": "还款顺序编号说明：",
+            "description": [
+                "0-本金；1-应收应计利息；2-催收应计利息；3-应收欠息；4-催收欠息；5-应收应计罚息；6-催收应计罚息；7-应收罚息；8-催收罚息；9-应计复息；a-复息；b-应收罚金；c-应收费用。"
+            ],
+            "listStyle": "disc"
+        }
+    }
+}

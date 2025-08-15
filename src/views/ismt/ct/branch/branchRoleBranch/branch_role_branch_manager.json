@@ -1,0 +1,101 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "新增",
+          "target": "dialog",
+          "toRequest": {
+            "method": "POST",
+            "url": "/views/ismt/ct/branch/branchRoleBranch/branch_role_branch_add.json",
+            "params": {
+              "branch_id": "${{params.branch_id}}",
+              "role_id": "${{params.role_id}}"
+            },
+            "props": {
+              "width": "65%",
+              "title": "新增关联机构"
+            }
+          },
+          "props": {
+            "width": "80%"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "initRequest": "${{params}}",
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ct2188",
+          "branch_id": "${{params.branch_id}}",
+          "role_id": "${{params.role_id}}"
+
+        }
+      },
+
+      "thead": [
+        {
+          "prop": "branch_id",
+          "label": "机构号",
+          "align": "center"
+        },
+        {
+          "label": "管理员角色id",
+          "prop": "role_id",
+          "align": "center"
+        },
+        {
+          "label": "关联机构号",
+          "prop": "related_branch_id",
+          "align": "center"
+        },
+        {
+          "label": "关联机构名称",
+          "prop": "branch_name",
+          "align": "center"
+        },
+        {
+          "label": "关联机构级别",
+          "prop": "branch_level",
+          "align": "center",
+          "dict": {
+            "dictType": "CT_E_BRANCHLEVEL",
+            "dictKey": [
+              "CT_E_BRANCHLEVEL"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "关联机构地址",
+          "prop": "branch_address",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "btns": [
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "ct2187"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

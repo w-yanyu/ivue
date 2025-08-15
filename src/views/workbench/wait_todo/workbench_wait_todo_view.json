@@ -1,0 +1,116 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [{
+
+                    "appl_id": {
+                        "control": "text",
+                        "label": "申请编号"
+                    },
+                    "busi_type": {
+                        "control": "text",
+                        "label": "业务类型",
+                        "rules": [{
+                            "max": 18,
+                            "message": "长度不能超过18个字符"
+                        }]
+                    },
+                    "appId": {
+                        "control": "hidden",
+                        "label": "业务模块",
+                        "selectFirstValue":true,
+                        "value":"icmsOnl",
+                        "dict": {
+                            "dictType": "MS_APPID",
+                            "dictKey": [
+                                "MS_APPID"
+                            ],
+                            "format": "value-label"
+                        },
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请选择业务模块"
+                            }]
+                    }
+                }
+
+            ]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "bpm1001",
+                    "cur_user_id": "$g{{user_info.userCode}}",
+                    "appId":"${{form.appId}}"
+                }
+            },
+            "thead": [{
+                    "label": "申请编号",
+                    "prop": "appl_id",
+                    "width": 160
+                },
+
+                {
+                    "label": "流程产品名称",
+                    "prop": "wf_prod_name"
+                },
+                {
+                    "label": "当前节点",
+                    "prop": "cur_name"
+                },
+                {
+                    "label": "当前处理人",
+                    "prop": "cur_user_id"
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 130,
+                    "align": "left",
+                    "btns": [{
+                            "type": "edit",
+                            "label": "办理",
+                            "toRequest": {
+                                "url": "@CommWaitToDoDeal",
+                                "method": "GET",
+                                "target": "navTab",
+                                "params": {
+                                    "frame_cd": "${{current.task_url1}}",
+                                    "cust_name": "${{current.cust_name}}",
+                                    "appl_state": "${{current.appl_state}}",
+                                    "appl_date": "${{current.appl_date}}",
+                                    "appId":"icmsOnl"
+                                }
+                            },
+                            "props": {
+                                "title": "待办事项办理"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "流程跟踪",
+                            "toRequest": {
+                                "url": "@ProcessImgView",
+                                "method": "GET",
+                                "params": {
+                                    "from": "backlog"
+                                }
+                            },
+                            "props": {
+                                "width": "1200px",
+                                "title": "流程跟踪图"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}
+

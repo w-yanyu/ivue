@@ -1,0 +1,161 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "btns": [{
+                "type": "submit",
+                "label": "提交",
+                "icon": "",
+                "doRequest": {
+                    "url": "/SUMP/call/RPCCall",
+                    "method": "POST",
+                    "params": {
+                        "servicecode": "ct2064"
+                    }
+                }
+            }],
+            "controls": [{
+                    "trxn_code": {
+                        "width": "200px",
+                        "control": "lookup",
+                        "edit": true,
+                        "rules": [{
+                                "required": true,
+                                "message": "请输入柜面交易码"
+                            },
+                            {
+                                "max": 20,
+                                "message": "长度不能超过20个字符"
+                            }
+                        ],
+                        "label": "柜面交易码",
+                        "toRequest": {
+                            "url": "views/ismt/ct/tranAccept/trxncode-query.json",
+                            "method": "post",
+                            "params": {
+                                "trxn_code": "${{form.trxn_code}}"
+                            }
+                        }
+                    },
+                    "trxn_hdlg_method": {
+                        "width": "200px",
+                        "control": "select",
+                        "rules": [{
+
+                            "required": true,
+                            "message": "请输入受理方式"
+                        }],
+                        "dict": {
+                            "dictType": "CT_E_TEXNTYLE",
+                            "dictKey": [
+                                "CT_E_TEXNTYLE"
+                            ],
+                            "format": "label"
+                        },
+                        "label": "受理方式",
+                        "events": {
+                            "condition": {
+                                "A": {
+                                    "control": {
+                                        "fun_auth_id": {
+                                            "disabled": true,
+                                            "rules": [{
+                                                "required": false
+                                            }]
+                                        },
+                                        "workflow_id": {
+                                            "disabled": true,
+                                            "rules": [{
+                                                "required": false
+                                            }]
+                                        }
+                                    }
+                                },
+                                "B": {
+                                    "control": {
+                                        "workflow_id": {
+                                            "disabled": true,
+                                            "rules": [{
+                                                "required": false
+                                            }]
+                                        },
+                                        "fun_auth_id": {
+                                            "disabled": false,
+                                            "rules": [{
+                                                "required": true,
+                                                "message": "请输入功能授权ID"
+                                            }]
+                                        }
+                                    }
+                                },
+                                "C": {
+                                    "control": {
+                                        "fun_auth_id": {
+                                            "disabled": true,
+                                            "rules": [{
+                                                "required": false
+                                            }]
+                                        },
+                                        "workflow_id": {
+                                            "disabled": false,
+                                            "rules": [{
+                                                "required": true,
+                                                "message": "请输入工作流ID"
+                                            }]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    "fun_auth_id": {
+                        "control": "lookup",
+                        "label": "功能授权ID",
+                        "disabled": true,
+                        "width": "200px",
+                        "rules": [{
+                            "max": 32,
+                            "message": "长度不能超过32个字符"
+                        }],
+                        "keyField": {
+                            "fun_auth_id": "auth_id"
+                        },
+                        "toRequest": {
+                            "url": "/views/ismt/ct/authorizatio/authorizatio-info-manager_lookup.json",
+                            "method": "post",
+                            "params": "${{form.auth_id}}"
+                        },
+                        "props": {
+                            "title": "功能授权ID查询"
+                        },
+                        "format": "label"
+                    },
+                    "workflow_id": {
+                        "control": "lookup",
+                        "edit": false,
+                        "label": "工作流ID",
+                        "width": "200px",
+                        "disabled": true,
+                        "rules": [{
+                            "max": 32,
+                            "message": "长度不能超过32个字符"
+                        }],
+                        "keyField": {
+                            "workflow_id": "workflow_id"
+                        },
+                        "toRequest": {
+                            "url": "/views/ismt/ct/ParameterManagement/WorkflowDefinitionMaintenance/WorkflowDefinitionManager_lookup.json",
+                            "method": "post",
+                            "params": "${{form.workflow_id}}"
+                        },
+                        "props": {
+                            "title": "工作流ID查询"
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

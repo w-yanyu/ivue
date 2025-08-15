@@ -1,0 +1,422 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "foldLineNumber": 3,
+      "scope": "formData",
+      "controls": [
+        {
+          "coll_team": {
+            "control": "inputTree",
+            "label": "催收组",
+            "idField": "coll_team",
+            "nodeTypeField": "type",
+            "pIdField": "parent_coll_team",
+            "labelField": "coll_team_name",
+            "events": {
+              "emit": [
+                "collector"
+              ]
+            },
+            "nodeTypes": {
+              "collTeam": {
+                "icon": "el-icon-news",
+                "children": [
+                  "collTeam"
+                ]
+              }
+            },
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "cb0041"
+              }
+            },
+            "format": "value-label"
+          },
+          "collector": {
+            "control": "remoteSelect",
+            "label": "催收员",
+            "labelField": "user_name",
+            "valueField": "user_id",
+            "lazy": true,
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "cb0084"
+              }
+            },
+            "format": "value-label"
+          }
+        },
+        {
+          "cust_name": {
+            "control": "text",
+            "label": "客户姓名"
+          },
+          "check_status": {
+            "control": "select",
+            "label": "审核状态",
+            "default": "NC",
+            "dict": {
+              "dictType": "CS_E_CHECK_STATUS",
+              "dictKey": [
+                "CS_E_CHECK_STATUS"
+              ],
+              "format": "value-label"
+            }
+          }
+        },
+        {
+          "cert_no": {
+            "control": "text",
+            "label": "证件号码"
+          },
+          "cust_id": {
+            "control": "text",
+            "label": "客户号"
+          }
+        },
+        {
+          "over_due_day": {
+            "control": "inputNumber",
+            "label": "最大逾期天数"
+          },
+          "cert_type": {
+            "control": "select",
+            "label": "证件类型",
+            "dict": {
+              "dictType": "MS_E_CRET_TYPE",
+              "dictKey": [
+                "MS_E_CRET_TYPE"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId"
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "custom",
+          "icon": "el-icon-edit",
+          "target": "dialog",
+          "checkCountMin": 1,
+          "label": "批量操作",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/cs/assistManage/plturncheck/plturncheck_auditing.json"
+          }
+        },
+        {
+          "type": "custom",
+          "icon": "el-icon-circle-check",
+          "target": "dialog",
+          "label": "全部核准",
+          "disabled": "'${{formData.check_status}}' === 'P' || '${{formData.check_status}}' === 'R' || '${{formData.check_status}}' === ''",
+          "doRequest": {
+            "method": "POST",
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "params": {
+              "servicecode": "cb0270",
+              "submit_type": "P",
+              "check_status": "NC",
+              "appId": "cbOnl",
+              "coll_team": "${{formData.coll_team}}",
+              "collector": "${{formData.collector}}",
+              "cust_name": "${{formData.cust_name}}",
+              "id_no": "${{formData.cert_no}}",
+              "cust_id": "${{formData.cust_id}}",
+              "over_due_day": "${{formData.over_due_day}}",
+              "id_type": "${{formData.cert_type}}"
+            }
+          },
+          "confirm": {
+            "title": "提醒",
+            "msg": "确定将案件全部核准？",
+            "confirmButtonText": "确定",
+            "cancelButtonText": "取消"
+          }
+        },
+        {
+          "type": "custom",
+          "icon": "el-icon-circle-close",
+          "target": "dialog",
+          "label": "全部拒绝",
+          "disabled": "'${{formData.check_status}}' === 'P' || '${{formData.check_status}}' === 'R' || '${{formData.check_status}}' === ''",
+          "doRequest": {
+            "method": "POST",
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "params": {
+              "servicecode": "cb0270",
+              "submit_type": "R",
+              "check_status": "NC",
+              "appId": "cbOnl",
+              "coll_team": "${{formData.coll_team}}",
+              "collector": "${{formData.collector}}",
+              "cust_name": "${{formData.cust_name}}",
+              "id_no": "${{formData.cert_no}}",
+              "cust_id": "${{formData.cust_id}}",
+              "over_due_day": "${{formData.over_due_day}}",
+              "id_type": "${{formData.cert_type}}"
+            }
+          },
+          "confirm": {
+            "title": "提醒",
+            "msg": "确定将案件全部拒绝？",
+            "confirmButtonText": "确定",
+            "cancelButtonText": "取消"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "cb0268",
+          "appId": "cbOnl"
+        }
+      },
+      "thead": [
+        {
+          "type": "selection",
+          "align": "center",
+          "width": "55",
+          "fixed": "left",
+          "show": {
+            "expression": "'${{check_status}}' === 'NC'"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "催收组",
+          "prop": "coll_team",
+          "dict": {
+            "dictKey": [
+              "coll_team"
+            ],
+            "format": "value-label",
+            "labelField": "coll_team_name",
+            "valueField": "coll_team",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "cs0180"
+              }
+            }
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "催收员",
+          "prop": "collector",
+          "dict": {
+            "dictKey": [
+              "collector"
+            ],
+            "format": "value-label",
+            "labelField": "user_name",
+            "valueField": "user_id",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "cb0084",
+                "appId": "cbOnl"
+              }
+            }
+          }
+        },
+        {
+          "type": "string",
+          "label": "案件编号",
+          "align": "center",
+          "prop": "case_id"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "客户姓名",
+          "prop": "cust_name"
+        },
+        {
+          "label": "证件类型",
+          "prop": "cert_type",
+          "align": "center",
+          "width": "160px",
+          "dict": {
+            "dictType": "MS_E_CRET_TYPE",
+            "dictKey": [
+              "MS_E_CRET_TYPE"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "证件号码",
+          "prop": "cert_no"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "转出队列",
+          "prop": "diretor_queue_cd",
+          "dict": {
+            "dictKey": [
+              "diretor_queue_cd"
+            ],
+            "format": "value-label",
+            "labelField": "queue_name",
+            "valueField": "queue_code",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "cb0082"
+              }
+            }
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "转入队列",
+          "prop": "queue_code",
+          "dict": {
+            "dictKey": [
+              "queue_code"
+            ],
+            "format": "value-label",
+            "labelField": "queue_name",
+            "valueField": "queue_code",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "cb0082"
+              }
+            }
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "申请人",
+          "prop": "apply_user",
+          "dict": {
+            "dictKey": [
+              "apply_user"
+            ],
+            "format": "value-label",
+            "labelField": "user_name",
+            "valueField": "user_id",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "pl0403"
+              }
+            }
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "申请时间",
+          "prop": "apply_time"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "客户号",
+          "prop": "cust_id"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "最大逾期天数",
+          "prop": "overdue_days"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "本期五级分类",
+          "prop": "five_level",
+          "dict": {
+            "dictType": "CS_E_CLASSIFYRESULT",
+            "dictKey": [
+              "CS_E_CLASSIFYRESULT"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "审核状态",
+          "prop": "check_status",
+          "dict": {
+            "dictType": "CS_E_CHECK_STATUS",
+            "dictKey": [
+              "CS_E_CHECK_STATUS"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "审核人",
+          "prop": "check_user"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "审核时间",
+          "prop": "check_time"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "审核说明",
+          "prop": "check_desc"
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "fixed": "right",
+          "width": "130px",
+          "btns": [
+            {
+              "type": "custom",
+              "label": "案件详情",
+              "toRequest": {
+                "url": "/views/cs/assistManage/caseDetail/caseDetail_2/case_detail_main.json",
+                "method": "POST",
+                "params": {
+                  "case_id": "${{current.case_id}}"
+                }
+              },
+              "props": {
+                "width": "80%",
+                "title": "案件详情"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

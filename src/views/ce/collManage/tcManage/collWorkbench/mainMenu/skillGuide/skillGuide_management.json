@@ -1,0 +1,71 @@
+{
+    "module": "v_realonlyForm_btn",
+    "layout": {
+        "form": {
+            "initRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "ce3601",
+                  "case_no": "${{params.case_no}}"
+                }
+              },
+            "controls": [
+                {
+                    "overdue_stage_code":{
+                        "control":"hidden"
+                    },
+                    "skill_list": {
+                        "control": "remoteSelect",
+                        "clearable":false,
+                        "selectFirstValue":true,
+                        "filterable":false,
+                        "label": "",
+                        "width": "100px",
+                        "span": "24",
+                        "labelField": "skill_name",
+                        "valueField": "skill_id",
+                        "format": "label",
+                        "doRequest": {
+                            "url": "/SUMP/call/RPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "ce0124",
+                                "coll_kind":"02",
+                                "overdue_stage_code":"${{form.overdue_stage_code}}",
+                                "skill_type":"C"
+                            }
+                        },
+
+                        "events": {
+                            "doRequest": {
+                                "url": "/SUMP/call/RPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "ce0126",
+                                    "skill_id":"${{form.skill_list}}",
+                                    "coll_kind":"02",
+                                    "case_no": "${{params.case_no}}"
+                                },
+                                "resultSet": {
+                                    "skill_desc": "skill_desc"
+                                }
+                            }
+                        }
+                    },
+
+                    "skill_desc": {
+                        "control": "textarea",
+                        "disabled":true,
+                        "resize":"none",
+                        "label": "",
+                        "width": "100px",
+                        "rows": 15,
+                        "span":"24",
+                        "className": "PL_style.www"
+                    }
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,167 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "issue_date": {
+            "control": "dateTimePicker",
+            "label": "发行日期",
+            "span": "8",
+            "width": "25px",
+            "format": "yyyyMMdd"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/us/peersManage/bondIssuance/bondIssuance_add.json",
+            "params": {
+              "cust_no": "${{params.cust_no}}"
+            }
+          },
+          "props": {
+            "width": "80%",
+            "title": "客户债券发行信息新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "us0892",
+          "cust_no": "${{params.cust_no}}"
+        }
+      },
+      "thead": [
+        {
+          "type": "index",
+          "label": "序号"
+        },
+        {
+          "label": "发行日期",
+          "prop": "issue_date",
+          "align": "center"
+        },
+        {
+          "label": "债券类型",
+          "prop": "bond_type",
+          "align": "center",
+          "dict": {
+            "dictType": "E_BOND_TYPE",
+            "dictKey": [
+              "E_BOND_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "发行币种",
+          "prop": "ccy_code",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_CURRENCY",
+            "dictKey": [
+              "MS_CURRENCY"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "发行金额",
+          "prop": "issue_amount",
+          "align": "center",
+          "format":{
+            "thousand": ",",
+            "decimal": 2
+          }
+        },
+        {
+          "label": "利率",
+          "prop": "interest_rate",
+          "align": "center",
+          "format":{
+            "thousand": ",",
+            "decimal": 2
+          }
+        },
+        {
+          "label": "债券期限（年）",
+          "prop": "bond_term",
+          "align": "center"
+        },
+        {
+          "label": "是否上市",
+          "prop": "is_listed",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作",
+          "width": "180px",
+          "align": "center",
+          "btns": [
+            {
+              "type": "custom",
+              "label": "详请",
+              "toRequest": {
+                "url": "/views/us/peersManage/bondIssuance/bondIssuance_info.json",
+                "params": {
+                  "cust_no": "${{params.cust_no}}"
+                },
+                "props": {
+                  "width": "80%",
+                  "title": "债券发行信息详情"
+                }
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/us/peersManage/bondIssuance/bondIssuance_modify.json",
+                "params": {
+                  "cust_no": "${{params.cust_no}}"
+                },
+                "props": {
+                  "width": "80%",
+                  "title": "债券发行信息维护"
+                }
+              }
+            },
+            {
+              "type": "custom",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "us0895",
+                  "cust_no": "${{params.cust_no}}"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "module": "dynamicTabs",
+  "layout":
+  {
+    "tabs":
+    {
+      "scope": "templateScope",
+      "tabHeader": [
+        {
+          "id": "applyInfo",
+          "scope": "applyInfo",
+          "label": "抵债资产接收信息",
+          "closable": false,
+          "disabled": false,
+          "icon": "el-icon-date",
+          "toRequest":
+          {
+            "url": "/views/pl/assetPreserve/assetReceive/assetRecInfoRew.json",
+            "method": "get",
+            "params":
+            {
+              "limit_code": "${{templateScope.loanInfo.limit_code}}",
+              "apply_no": "${{params.apply_no}}"
+            }
+          }
+        },
+        {
+          "id": "loanInfo",
+          "label": "抵债资产对应的信贷业务",
+          "icon": "el-icon-date",
+          "closable": false,
+          "disabled": false,
+          "toRequest":
+          {
+            "url": "/views/pl/assetPreserve/assetReceive/assetLoanInfoRew.json",
+            "method": "post",
+            "params":
+            {
+              "limit_code": "${{templateScope.loanInfo.limit_code}}",
+              "apply_no": "${{params.apply_no}}"
+            }
+          }
+        },
+        {
+          "id": "dealFeeInfo",
+          "label": "处置费用",
+          "icon": "el-icon-date",
+          "closable": false,
+          "disabled": false,
+          "toRequest":
+          {
+            "url": "/views/pl/assetPreserve/assetReceive/feeInfoRew.json",
+            "method": "post",
+            "params":
+            {
+              "limit_code": "${{templateScope.dealFeeInfo.limit_code}}",
+              "apply_no": "${{params.apply_no}}"
+            }
+          }
+        }
+      ],
+      "defaultActiveKey": {
+        "condition": {
+          "conditionField": "${{params.id}}",
+          "switch": {
+            "110": "applyInfo",
+            "120": "loanInfo",
+            "119": "assetDetailInfo"
+          }
+        }
+      },
+      "position": "top",
+      "styleClass": "card"
+    }
+  }
+}

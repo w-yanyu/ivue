@@ -1,0 +1,124 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "sale_prod_cd": {
+            "control": "text",
+            "label": "可售产品编号",
+            "rules": [
+              {
+                "max": 32,
+                "message": "长度不能超过32个字符"
+              }
+            ]
+          },
+          "prod_type": {
+            "label": "产品类型",
+            "control": "remoteSelect",
+            "labelField": "title",
+            "valueField": "id",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "pd0144",
+                "grupno": "0006",
+                "pid": "KSCP"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/pd/prod/templatePage/creditRelaSaleProd/add/creditRelaSaleProd_add.json",
+            "params": {
+              "credit_prod_cd": "${{params.sale_prod_cd}}",
+              "prod_version": "${{params.prod_version}}",
+              "busi_seq": "${{params.busi_seq}}",
+              "cust_class":"${{params.cust_class}}",
+              "apply_type": "${{params.apply_type}}"
+            }
+          },
+          "props": {
+            "title": "适用产品新增",
+            "width": "87%",
+            "height": "20%"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pd0325",
+          "credit_prod_cd": "${{params.sale_prod_cd}}",
+          "prod_version": "${{params.prod_version}}"
+        }
+      },
+      "pagination": {
+        "pageSizes": [
+          10,
+          15,
+          20,
+          50,
+          100
+        ],
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "label": "序号",
+          "type": "index",
+          "align": "center"
+        },
+        {
+          "label": "可售产品编号",
+          "prop": "sale_prod_cd",
+          "align": "center"
+        },
+        {
+          "label": "可售产品名称",
+          "prop": "sale_prod_name",
+          "align": "center"
+        },
+        {
+          "label": "产品类型",
+          "prop": "prod_type_name",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align": "center",
+          "btns": [
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "pd0328"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

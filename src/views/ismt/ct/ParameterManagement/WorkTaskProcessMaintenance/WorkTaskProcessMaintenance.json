@@ -1,0 +1,162 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "route_id": {
+                        "control": "text",
+                        "label": "工作路线ID",
+                        "rules": [
+                            {
+                                "max": 32,
+                                "message": "长度不能超过32个字符"
+                            }
+                        ]
+                    },
+                    "workjob_id": {
+                        "control": "text",
+                        "label": "工作任务ID",
+                        "labelField": "drop_list_desc",
+                        "valueField": "drop_list_value",
+                        "format": "label",
+                        "rules": [
+                            {
+                                "max": 32,
+                                "message": "长度不能超过32个字符"
+                            }
+                        ],
+                        "doRequest": {
+                            "url": "/SUMP/call/RPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "ms9999",
+                                "dynamic_drop_list_type": "CT0003"
+                            }
+                        }
+                    }
+                },
+                {
+                    "route_type": {
+                        "control": "select",
+                        "label": "工作路线种类",
+                        "dict": {
+                            "format": "label",
+                            "dictType": "E_LINETYPE",
+                            "dictKey": [
+                                "E_LINETYPE"
+                            ]
+                        }
+                    },
+                    "next_job_id": {
+                        "control": "text",
+                        "label": "下一工作任务ID",
+                        "labelField": "drop_list_desc",
+                        "valueField": "drop_list_value",
+                        "format": "label",
+                        "doRequest": {
+                            "url": "/SUMP/call/RPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "ms9999",
+                                "dynamic_drop_list_type": "CT0003"
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "target": "dialog",
+                    "label": "新增",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/ismt/ct/ParameterManagement/WorkTaskProcessMaintenance/WorkTaskProcessAdd.json"
+                    },
+                    "props": {
+                        "title": "工作任务路线新增"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ct2028"
+                }
+            },
+            "pagination": {
+                "show": true
+            },
+            "thead": [
+                {
+                    "type": "index"
+                },
+                {
+                    "label": "工作路线ID",
+                    "prop": "route_id"
+                },
+                {
+                    "label": "工作路线描述",
+                    "prop": "route_desc"
+                },
+                {
+                    "label": "工作任务ID",
+                    "prop": "workjob_id"
+                },
+                {
+                    "label": "工作路线种类",
+                    "prop": "route_type",
+                    "dict": {
+                        "format": "label",
+                        "dictType": "E_LINETYPE",
+                        "dictKey": [
+                            "E_LINETYPE"
+                        ]
+                    }
+                },
+                {
+                    "label": "下一工作任务ID",
+                    "prop": "next_job_id"
+                },
+                {
+                    "label": "操作",
+                    "width": 150,
+                    "fixed": "right",
+                    "align": "center",
+                    "btns": [
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/ismt/ct/ParameterManagement/WorkTaskProcessMaintenance/WorkTaskProcessUpdate.json",
+                                "method": "GET"
+                            },
+                            "props": {
+                                "title": "工作任务路线维护"
+                            }
+                        },
+                        {
+                            "type": "look",
+                            "label": "删除",
+                            "toRequest": {
+                                "url": "/views/ismt/ct/ParameterManagement/WorkTaskProcessMaintenance/work_task_process_delete.json",
+                                "method": "post"
+                            },
+                            "props": {
+                                "title": "工作任务路线删除"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

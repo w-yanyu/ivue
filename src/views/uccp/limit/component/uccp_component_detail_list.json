@@ -1,0 +1,120 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [],
+            "btns": []  
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "label": "新增",
+                    "target": "dialog",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/uccp/limit/component/uccp_component_detail_add.json",
+                        "params": {
+                            "limit_component_code":"${{params.limit_component_code}}"
+                        }
+                    },
+                    "props": {
+                        "width": "80%",
+                        "title": "限额维度新增"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "uccp5010",
+                    "limit_component_code":"${{params.limit_component_code}}"
+                }
+            },
+            "pagination": {
+                "show": false
+            },
+            "thead": [
+              
+                {
+                    "label": "限额维度名称",
+                    "prop": "limit_dimension_name",
+                    "align": "center"
+                },
+                {
+                    "label": "限额维度展示序号",
+                    "prop": "limit_dimension_view_sort",
+                    "align": "center"
+                },
+                {
+                    "label": "限额维度是否必选",
+                    "prop": "dimension_must_sel",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                            "MS_E_YESORNO"
+                        ],
+                        "format": "label"
+                    }
+                   
+                },
+                {
+                    "label": "有效标识",
+                    "prop": "valid_flag",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "UCCP_E_VALID_FLAG",
+                        "dictKey": [
+                            "UCCP_E_VALID_FLAG"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 230,
+                    "align": "center",
+                    "btns": [
+                       
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/uccp/limit/component/uccp_component_detail_upd.json",
+                                "method": "GET",
+                                "params": {}
+                            },
+                            "props": {
+                                "width": "80%",
+                                "title": "限额维度维护"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/call/RPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "uccp5013"
+                                }
+                            },
+                            "confirm": {
+                                "title": "确定删除",
+                                "confirmButtonText": "确定",
+                                "cancelButtonText": "取消"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,83 @@
+{
+    "module": "d-steps",
+    "layout": {
+        "steps": {
+            "scope":"formObj",
+            "direction": "horizontal",
+            "alignCenter": true,
+            "finishStatus": "success",
+            "simpleType": false,
+          
+            "nextStepType": "validate",
+            "list": [
+                {
+                    "scope":"step1",
+                    "title": "关联角色配置",
+                    "icon": "el-icon-edit",
+                    "toRequest": { 
+                        "method": "GET",
+                        "url": "/views/ismt/ct/busiAuth/authp_rule/role_manager.json",
+                        "params": {
+                            "authp_system_code": "${{params.authp_system_code}}",
+                            "authp_rule_code": "${{params.authp_rule_code}}",
+                            "appId":"${{params.appId}}"
+                        }
+                    }
+                },
+                {
+                    "scope":"step2",
+                    "title": "规则条件配置",
+                    "icon": "el-icon-edit",
+                    "toRequest": { 
+                        "url": "/views/ismt/ct/busiAuth/authp_rule/condition_main.json",
+                        "params": {
+                            "authp_system_code": "${{params.authp_system_code}}",
+                            "authp_rule_code": "${{params.authp_rule_code}}",
+                            "appId":"${{params.appId}}"
+                        },
+                        "method": "get"
+                    }
+                },
+                {
+                    "scope":"step3",
+                    "title": "规则维度配置",
+                    "icon": "el-icon-edit",
+                    "toRequest": {
+                        "url": "/views/ismt/ct/busiAuth/authp_rule/dimension_main.json",
+                        "params": {
+                            "authp_system_code": "${{params.authp_system_code}}",
+                            "authp_rule_code": "${{params.authp_rule_code}}",
+                            "appId":"${{params.appId}}"
+                        },
+                        "method": "get"
+
+                    }
+                },
+                {
+                    "scope":"step4",
+                    "title": "适用机构配置",
+                    "icon": "el-icon-edit",
+                    "toRequest": {
+                        "url": "/views/ismt/ct/busiAuth/authp_rule/branch_main.json",
+                        "params": {
+                            "authp_system_code": "${{params.authp_system_code}}",
+                            "authp_rule_code": "${{params.authp_rule_code}}",
+                            "appId":"${{params.appId}}"
+                        },
+                        "method": "get"
+                    },
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "ct2430",
+                            "authp_system_code": "${{params.authp_system_code}}",
+                            "authp_rule_code": "${{params.authp_rule_code}}",
+                            "appId":"${{params.appId}}"
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

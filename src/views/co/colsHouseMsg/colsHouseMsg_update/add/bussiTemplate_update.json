@@ -1,0 +1,81 @@
+{
+  "module": "d-steps",
+  "layout": {
+    "steps": {
+      "scope": "formObj",
+      "direction": "vertical",
+      "alignCenter": true,
+      "finishStatus": "success",
+      "simpleType": false,
+      "nextStepType": "submit",
+      "list": [
+        {
+          "scope": "step1",
+          "title": "资产分类配置管理维护",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "url": "/views/pl/LevelFiveClasf/assetClassMenu/updAssetClassMenuList.json",
+            "method": "get",
+            "params": {
+              "matrix_number": "${{params.matrix_number}}",
+              "matrix_name": "${{params.matrix_name}}"
+            }
+          },
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "post",
+            "params":{
+              "servicecode":"pl0115"
+            },
+            "resultSet": {
+
+            }
+          }
+        },
+        {
+          "scope": "step2",
+          "forbidBack": true,
+          "title": "矩阵配置",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "url": "/views/pl/LevelFiveClasf/assetClassMenu/assetClassMenuProperties.json",
+            "method": "get",
+            "params": {
+              "matrix_number": "${{formObj.step1.matrix_number}}",
+              "matrix_name": "${{formObj.step1.matrix_name}}"
+              
+            }
+          },
+          "doRequest": {
+            "url": "/pte/json/layout/success.json",
+            "method": "post",
+            "eventAfter": {
+              "doParentCallback": true
+            }
+          }
+        },
+        {
+          "scope": "step3",
+          "forbidBack": true,
+          "title": "产品配置",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "url": "/views/pl/LevelFiveClasf/rule_result/rule_result_config.json",
+            "method": "get",
+            "params": {
+              "matrix_number": "${{formObj.step1.matrix_number}}",
+              "matrix_name": "${{formObj.step1.matrix_name}}"
+            }
+          },
+          "doRequest": {
+            "url": "/pte/json/layout/success.json",
+            "method": "post",
+            "eventAfter": {
+              "doParentCallback": true
+            }
+          }
+        }
+      ]
+    }
+  }
+}

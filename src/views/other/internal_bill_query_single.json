@@ -1,0 +1,65 @@
+{
+    "module": "v-realonlyForm-btn",
+    "layout": {
+        "form": {
+            "initRequest": "${{params}}",
+            "controls": [
+                {
+                    "acctno": {
+                        "control": "string",
+                        "label": "账号",
+                        "width": "160px",
+                        "rules": [
+                            {
+                                "max": 20,
+                                "message": "长度不能超过10个字符"
+                            }
+                        ]
+                    },
+                    "isrept": {
+                        "control": "hide",                       
+                        "value":"0"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "AS_ICM_CU_QRINAC",
+                    "page_id": "/views/other/internal_bill_query_single.json"
+                }
+            },
+            "thead": [               
+                {
+                    "label": "内部账账号",
+                    "prop": "acctno"
+                },
+                {
+                    "label": "内部账名称",
+                    "prop": "acctna"
+                },
+                {
+                    "label": "币种",
+                    "prop": "crcycd"
+                },
+                {
+                    "label": "余额方向",
+                    "prop": "onlndn"
+                },
+                {
+                    "label": "昨日余额",
+                    "prop": "lastbl"
+                },
+                {
+                    "label": "当前余额",
+                    "prop": "onlnbl"
+                }               
+            ]
+        }
+    }
+}

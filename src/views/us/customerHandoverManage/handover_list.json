@@ -1,0 +1,234 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "initRequest": "${{params}}",
+            "doRequest": {
+                "url": "",
+                "method": "POST",
+                "params": {}
+            },
+            "controls": [
+                {
+                    "user_id": {
+                        "control": "text",
+                        "label": "用户ID",
+                        "rules": [
+                            {
+                                "max": 32,
+                                "message": "长度不能超过32个字符"
+                            }
+                        ]
+                    },
+                    "user_name": {
+                        "control": "text",
+                        "label": "用户姓名",
+                        "rules": [
+                            {
+                                "max": 100,
+                                "message": "长度不能超过100个字符"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "org_flg": {
+                        "label": "移交内外机构标志",
+                        "control": "select",
+                        "width": "130px",
+                        "options": [
+                            {
+                                "label": "内部机构移交",
+                                "value": "1"
+                            },
+                            {
+                                "label": "外部机构移交",
+                                "value": "0"
+                            }
+                        ],
+                        "events": {
+                            "condition": {
+                                "0": {
+                                    "control": {
+                                        "branch_id": {
+                                            "value": "",
+                                            "disabled":false,
+                                            "rules": [
+                                                {
+                                                    "required": false
+                                                }
+                                            ]
+                                        }
+                                    }
+                                },
+                                "1": {
+                                  "control": {
+                                    "branch_id": {
+                                        "value": "${{params.branch_id}}",
+                                        "disabled":true,
+                                        "rules": [
+                                            {
+                                                
+                                            }
+                                        ]
+                                    }
+                                }
+                                }
+                            }
+                        }
+                    },
+                    "branch_id": {
+                        "control": "text",
+                        "label": "机构号",
+                        "rules": [
+                            {
+                                "max": 10,
+                                "message": "长度不能超过10个字符"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/rest/auth/userManager",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ct2002"
+                }
+            },
+            "pagination": {
+                "show": true,
+                "pageSize": 10
+            },
+            "thead": [
+                {
+                    "type": "index"
+                },
+                {
+                    "label": "用户ID",
+                    "prop": "user_id"
+                },
+                {
+                    "label": "用户姓名",
+                    "prop": "user_name"
+                },
+                {
+                    "label": "性别",
+                    "prop": "gender",
+                    "dict": {
+                        "dictType": "MS_E_GENDER",
+                        "dictKey": [
+                            "MS_E_GENDER"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "机构号",
+                    "prop": "branch_id"
+                },
+                {
+                    "label": "所属系统",
+                    "prop": "belong_system_id"
+                },
+                {
+                    "label": "用户状态",
+                    "prop": "user_status",
+                    "dict": {
+                        "dictType": "CT_E_TELLERSTAS",
+                        "dictKey": [
+                            "CT_E_TELLERSTAS"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "冻结标志",
+                    "prop": "freeze_ind",
+                    "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                            "MS_E_YESORNO"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "最近密码修改日期",
+                    "prop": "password_date",
+                    "type": "dateTimePicker"
+                },
+                {
+                    "label": "密码状态",
+                    "prop": "password_status",
+                    "dict": {
+                        "dictType": "CT_E_PASSWDSTAS",
+                        "dictKey": [
+                            "CT_E_PASSWDSTAS"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "指纹录入标志",
+                    "prop": "fprint_ind",
+                    "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                            "MS_E_YESORNO"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "登录状态",
+                    "prop": "login_status",
+                    "dict": {
+                        "dictType": "CT_E_LOGSTAS",
+                        "dictKey": [
+                            "CT_E_LOGSTAS"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "休假标志",
+                    "prop": "holiday_ind",
+                    "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                            "MS_E_YESORNO"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "最后登录日期",
+                    "prop": "last_login_time"
+                },
+                {
+                    "label": "最后登录IP",
+                    "prop": "ip_address"
+                },
+                {
+                    "label": "证件号",
+                    "prop": "certno"
+                },
+                {
+                    "label": "操作",
+                    "align": "center",
+                    "fixed": "right",
+                    "btns": [{
+                        "type": "bringback",
+                        "label": "选择"
+                        }]
+                }
+            ]
+        }
+    }
+}

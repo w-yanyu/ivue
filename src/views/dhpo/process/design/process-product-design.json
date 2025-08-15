@@ -1,0 +1,132 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "actnam": {
+            "control": "text",
+            "label": "流程名称",
+            "rules": [
+              {
+                "max": 50,
+                "message": "长度不能超过10个字符"
+              }
+            ]
+          },
+          "keyval": {
+            "control": "text",
+            "label": "流程关键字",
+            "width": 100,
+            "rules": [
+              {
+                "max": 100,
+                "message": "长度不能超过100个字符"
+              }
+            ]
+          },
+          "actver": {
+            "control": "text",
+            "label": "版本号",
+            "rules": [
+              {
+                "max": 100,
+                "message": "长度不能超过100个字符"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "部署流程",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/dhpo/process/design/product-design-deploy.json"
+          },
+          "props": {
+            "title": "部署流程"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "plms_qractm"
+        }
+      },
+      "thead": [
+        {
+          "label": "模板编号",
+          "align": "center",
+          "prop": "id_"
+        },
+        {
+          "label": "流程名称",
+          "align": "center",
+          "prop": "name_"
+        },
+        {
+          "label": "流程关键字",
+          "align": "center",
+          "prop": "key_"
+        },
+        {
+          "label":"版本号",
+          "align": "center",
+          "prop":"version_",
+          "width": 80
+        },
+        {
+          "label":"流程资源名称",
+          "align": "center",
+          "prop":"resource_name_"
+        },
+        {
+          "label":"流程图名称",
+          "align": "center",
+          "prop":"dgrm_resource_name_"
+        },{
+          "label": "操作",
+          "width": "220px",
+          "align": "center",
+          "btns": [{
+            "type": "edit",
+            "label": "查看流程图",
+            "toRequest": {
+              "url": "@DHProcessImgView",
+              "method": "GET",
+              "params": {
+                "from": "processDesign"
+              }
+            },
+            "props": {
+              "width": "1200px",
+              "title": "流程模板图片信息"
+            }
+          }, {
+            "type": "edit",
+            "label": "查看流程XML文件",
+            "toRequest": {
+              "url": "/views/dhpo/process/design/process-xml-file.json",
+              "method": "GET",
+              "target": "navTab"
+            },
+            "props": {
+              "title": "流程模板XML信息"
+            }
+          }]
+        }
+      ]
+    }
+  }
+}

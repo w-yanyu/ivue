@@ -1,0 +1,182 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "initRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "co1006",
+                    "colt_type": "${{params.tree_id}}"
+                }
+            },
+            "name": "detail",
+            "controls": [{
+                "colt_prod_cd": {
+                    "label": "抵质押品产品编号",
+                    "width": "160px",
+                    "control": "text",
+                    "rules": [{
+                        "required": true,
+                        "message": "请输入抵质押品产品编号"
+                    }]
+                },
+                "enable_flag": {
+                    "label": "是否可用",
+                    "width": "160px",
+                    "control": "select",
+                    "multiple": false,
+                    "value": "",
+                    "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                            "MS_E_YESORNO"
+                        ],
+                        "format": "label"
+                    },
+                    "rules": [{
+                        "required": true,
+                        "message": "请选择是否可用"
+                    }]
+                },
+                "colt_prod_name": {
+                    "label": "抵质押品产品名称",
+                    "width": "160px",
+                    "control": "text",
+                    "rules": [{
+                        "required": true,
+                        "message": "请输入抵质押品产品名称"
+                    }]
+                },
+                "colt_type": {
+                    "control": "remoteSelect",
+                    "label": "抵押品类型",
+                    "width": "160px",
+                    "filterable": true,
+                    "labelField": "colt_name",
+                    "searchField": "colt_type",
+                    "valueField": "colt_type",
+                    "disabled": true,
+                    "doRequest": {
+                        "url": "/SUMP/call/RPCCall",
+                        "method": "post",
+                        "params": {
+                            "servicecode": "co1012"
+                        }
+                    },
+                    "rules": [{
+                        "required": true,
+                        "message": "请选择抵押品类型"
+                    }]
+                },
+                "max_sec_rate": {
+                    "label": "允许最高抵质押率(%)",
+                    "width": "160px",
+                    "control": "currency",
+                    "rules": [{
+                            "required": true,
+                            "message": "请输入允许最高抵质押率"
+                        },
+                        {
+                            "expression": " ${{form.colt_coeff}} >=  0 ",
+                            "message": "折算系数不能小于零"
+                        },
+                        {
+                            "expression": " ${{form.colt_coeff}} <=  100 ",
+                            "message": "折算系数不能大于100"
+                        }
+                    ]
+                },
+                "colt_coeff": {
+                    "label": "折算系数(%)",
+                    "width": "160px",
+                    "control": "currency",
+                    "rules": [{
+                            "required": true,
+                            "message": "请输入折算系数"
+                        },
+                        {
+                            "expression": " ${{form.colt_coeff}} >=  0 ",
+                            "message": "折算系数不能小于零"
+                        },
+                        {
+                            "expression": " ${{form.colt_coeff}} <=  100 ",
+                            "message": "折算系数不能大于100"
+                        }
+                    ]
+                },
+                "low_risk_ratio": {
+                    "label": "低风险折算系数(%)",
+                    "width": "160px",
+                    "control": "currency",
+                    "rules": [{
+                            "required": true,
+                            "message": "请输入低风险折算系数"
+                        },
+                        {
+                            "expression": " ${{form.colt_coeff}} >=  0 ",
+                            "message": "折算系数不能小于零"
+                        },
+                        {
+                            "expression": " ${{form.colt_coeff}} <=  100 ",
+                            "message": "折算系数不能大于100"
+                        }
+                    ]
+                },
+
+                "colt_cat": {
+                    "control": "remoteSelect",
+                    "label": "抵质押品大类",
+                    "width": "160px",
+                    "filterable": true,
+                    "labelField": "colt_catg_desc",
+                    "searchField": "colt_catg",
+                    "valueField": "colt_catg",
+                    "doRequest": {
+                        "url": "/SUMP/call/RPCCall",
+                        "method": "post",
+                        "params": {
+                            "servicecode": "co1002"
+                        }
+                    },
+                    "rules": [{
+                        "required": true,
+                        "message": "请选择抵质押品大类"
+                    }]
+                },
+
+                "asset_type": {
+                    "label": "资产分类",
+                    "width": "160px",
+                    "control": "select",
+                    "multiple": false,
+                    "value": "",
+                    "dict": {
+                        "dictType": "CO_E_ASSETTYPE",
+                        "dictKey": [
+                            "CO_E_ASSETTYPE"
+                        ],
+                        "format": "label"
+                    },
+                    "rules": [{
+                        "required": true,
+                        "message": "请选择资产分类"
+                    }]
+                }
+
+            }],
+            "btns": [{
+                "type": "submit",
+                "label": "提交",
+                "doRequest": {
+                    "url": "/SUMP/call/RPCCall",
+                    "method": "POST",
+                    "params": {
+                        "servicecode": "co1007",
+                        "tran_type":"1"
+                    }
+                }
+            }]
+        }
+    }
+}

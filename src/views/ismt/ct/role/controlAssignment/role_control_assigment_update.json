@@ -1,0 +1,118 @@
+{
+  "module": "v-form-editableDataGrid-btn",
+  "layout": {
+      "btns": [],
+      "form": {
+          
+      },
+      "toolbar": {
+        "btns": [
+            
+        ]
+    },
+      "datagrid": {
+        "isInitSearch": false,
+          "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                  "servicecode": "ct3157",
+                  "menu_id": "${{params.menu_id}}",
+                  "role_id":"${{params.role_id}}"
+              }
+          },
+          "pagination": {
+              "show": true
+          },
+          "thead": [
+              {
+                  "type": "index",
+                  "label": "序号"
+              },
+              {
+                "prop": "role_id",
+                "type": "text",
+                "disabled":"true",
+                "value":"${{params.role_id}}",
+                "label": "角色编号"
+              },
+              {
+                  "prop": "control_id",
+                  "type": "text",
+                  "disabled":"true",
+                  "label": "控件编号"
+              },
+              {
+                  "prop": "control_name",
+                  "type": "text",
+                  "disabled":"true",
+                  "label": "控件名称"
+              },
+              {
+                  "prop": "control_type",
+                  "type": "select",
+                  "disabled":"true",
+                  "label": "控件类型",
+                  "dict": {
+                    "dictType": "CT_E_CONTROL_TYPE",
+                    "dictKey": [
+                        "CT_E_CONTROL_TYPE"
+                    ],
+                    "format": "value-label"
+                }
+              },
+              {
+                  "prop": "control_desc",
+                  "type": "text",
+                  "disabled":"true",
+                  "label": "控件描述"
+              },
+              {
+                  "prop": "control_auth",
+                  "type": "remoteSelect",
+                  "label": "控件权限",
+                  "value": "${{current.control_auth}}",
+                  "labelField": "label",
+                  "valueField": "value",
+                  "doRequest": {
+                      "url": "/SUMP/icmcall/icmRPCCall",
+                      "method": "POST",
+                      "params": {
+                          "servicecode": "ct3156",
+                          "control_auth": "${{current.parent_control_auth}}"
+                      }
+                  },
+                  "format": "value-label",
+                  "rules": [
+                      {
+                          "max": "5",
+                          "message": "长度不能超过5个字符"
+                      }
+                  ]
+              }
+          ]
+      },
+      "footer": {
+          "btns": [
+              {
+                  "type": "save",
+                  "label": "保存",
+                  "icon": "el-icon-tickets",
+                  "doRequest": {
+                    "url": "/SUMP/call/RPCCall",
+                    "method": "POST",
+                    "params": {
+                        "servicecode": "ct3155",
+                        "menu_id": "${{params.menu_id}}",
+                        "role_id": "${{params.role_id}}"
+
+                    }
+                  },
+                  "eventAfter": {
+                    "callback": "renderTree"
+                  }
+              }
+          ]
+      }
+  }
+}

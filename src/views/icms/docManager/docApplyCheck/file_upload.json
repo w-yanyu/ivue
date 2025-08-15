@@ -1,0 +1,83 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "ar0222",
+          "doc_no": "${{params.doc_no}}",
+          "apply_no": "${{params.apply_no}}"
+        }
+      },
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交"
+        }
+      ],
+      "controls": [
+        {
+          "file_path": {
+            "control": "hidden",
+            "label": "file_path"
+          },
+          "file_name": {
+            "control": "hidden",
+            "label": "file_name"
+          },
+          "file_size": {
+            "control": "hidden",
+            "label": "file_size"
+          },
+          "file_catalog": {
+            "label": "文件分类",
+            "control": "hidden",
+            "width": "140px",
+            "value": "wfdocfile"
+          },
+          "latitude": {
+            "label": "GPS信息：纬度",
+            "control": "hidden",
+            "width": "140px"
+          },
+          "longitude": {
+            "label": "GPS信息：经度",
+            "control": "hidden",
+            "width": "140px"
+          }
+        },
+        {
+          "file": {
+            "doRequest": {
+              "url": "/SUMP/minioCall/uploadAndCheck",
+              "method": "post",
+              "params": {
+                "checkGPSFlag": "${{params.is_access_info}}",
+                "checkPSFlag": "${{params.is_check_ps}}",
+                "checkCarInvoiceFlag": "${{params.is_check_car_invoice}}",
+                "filetype": "${{params.filetype}}",
+                "appId": "icmsOnl",
+                "servicecode": "ct2555"
+              },
+              "resultSet": {
+                "file_path": "path",
+                "file_name": "oldName",
+                "file_size": "size",
+                "latitude": "latitude",
+                "longitude": "longitude"
+              }
+            },
+            "width": "130px",
+            "control": "file",
+            "limit": 1,
+            "limitSize": 10,
+            "label": "上传文件",
+            "btnLable": "请选择文件"
+          }
+        }
+      ]
+    }
+  }
+}

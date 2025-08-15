@@ -1,0 +1,184 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "icon": "el-icon-circle-plus",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+              "method": "GET",
+              "url": "/views/cs/paramManage/template/lawTemplate/lawTemplate_add_item.json",
+              "params": {
+                "litigation_stage_code":"${{params.litigation_stage_code}}"
+              }
+          },
+          "props": {
+              "width": "85%",
+              "title": "字段类型"
+          }
+        }
+      ]
+    },
+      "datagrid": {
+          "isInitSearch": true,
+          "pagination":{"show" : false},
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "isInitSearch": true,
+            "params": {
+              "servicecode":"cb0077",
+              "appId": "cbOnl",
+              "coll_kind":"02",
+              "litigation_stage_code":"${{params.litigation_stage_code}}"
+            }
+          },
+          "thead": [
+              {
+                  "type":"string",
+                  "label": "字段名称",
+                  "align":"center",
+                  "prop": "field_name"
+              },
+              {
+                  "type":"string",
+                  "label": "字段类型",
+                  "align":"center",
+                  "prop": "field_type",
+                  "dict": {
+                    "dictType": "E_LAW_STAGE_FILED_TYPE",
+                    "dictKey": [
+                      "E_LAW_STAGE_FILED_TYPE"
+                    ],
+                    "format": "value-label"
+                  }
+              },{
+                "label": "操作",
+                "width": "200%",
+                "fixed": "right",
+                "align":"center",
+                "btns": [
+                    {
+                        "type": "delete",
+                        "label": "删除",
+                        "doRequest": {
+                            "url": "/SUMP/icmcall/icmRPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "cb0075",
+                                "appId": "cbOnl",
+                                "coll_kind": "02",
+                                "litigation_stage_code":"${{params.litigation_stage_code}}",
+                                "field_code":"${{current.field_code}}"
+                            }
+                        }
+                    },
+                    {
+                        "type": "edit",
+                        "label": "维护",
+                        "show": {
+                          "expression": "'${{current.field_type}}' == 'D'"
+                        },
+                        "toRequest": {
+                          "method": "GET",
+                          "url": "/views/cs/paramManage/template/lawTemplate/lawTemplate_edit_item_date.json",
+                          "params": {
+                            
+                          }
+                      }
+                    },
+                    {
+                        "type": "edit",
+                        "label": "维护",
+                        "show": {
+                          "expression": "'${{current.field_type}}' == 'S'"
+                        },
+                        "toRequest": {
+                          "method": "GET",
+                          "url": "/views/cs/paramManage/template/lawTemplate/lawTemplate_edit_item_select.json",
+                          "params": {
+                            
+                          }
+                      }
+                    },
+                    {
+                        "type": "edit",
+                        "label": "维护",
+                        "show": {
+                          "expression": "'${{current.field_type}}' == 'T'"
+                        },
+                        "toRequest": {
+                          "method": "GET",
+                          "url": "/views/cs/paramManage/template/lawTemplate/lawTemplate_edit_item_text.json",
+                          "params": {
+                            
+                          }
+                      }
+                    },
+                    {
+                        "type": "edit",
+                        "label": "维护",
+                        "show": {
+                          "expression": "'${{current.field_type}}' == 'N'"
+                        },
+                        "toRequest": {
+                          "method": "GET",
+                          "url": "/views/cs/paramManage/template/lawTemplate/lawTemplate_edit_item_number.json",
+                          "params": {
+                            
+                          }
+                      }
+                    },
+                    {
+                        "type": "edit",
+                        "label": "维护",
+                        "show": {
+                          "expression": "'${{current.field_type}}' == 'C'"
+                        },
+                        "toRequest": {
+                          "method": "GET",
+                          "url": "/views/cs/paramManage/template/lawTemplate/lawTemplate_edit_item_contact.json",
+                          "params": {
+                            
+                          }
+                      }
+                    },
+                    {
+                        "type": "edit",
+                        "label": "维护",
+                        "show": {
+                          "expression": "'${{current.field_type}}' == 'R'"
+                        },
+                        "toRequest": {
+                          "method": "GET",
+                          "url": "/views/cs/paramManage/template/lawTemplate/lawTemplate_edit_item_radio.json",
+                          "params": {
+                            
+                          }
+                      }
+                    },
+                    {
+                        "type": "edit",
+                        "label": "维护",
+                        "show": {
+                          "expression": "'${{current.field_type}}' == 'F'"
+                        },
+                        "toRequest": {
+                          "method": "GET",
+                          "url": "/views/cs/paramManage/template/lawTemplate/lawTemplate_edit_item_file.json",
+                          "params": {
+                            
+                          }
+                      }
+                    }
+                  ]
+           }
+        ]
+          
+      }
+  }
+}
+

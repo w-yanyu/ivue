@@ -1,0 +1,138 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [],
+      "btns": []
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "edit",
+          "label": "新增",
+          "icon": "el-icon-tickets",
+          "toRequest": {
+            "url": "/views/msap/bpm/processManagement/products/node/process-busiser-add.json",
+            "method": "POST",
+            "params": {
+              "bpm_version": "${{params.bpm_version}}",
+              "wf_prod_no": "${{params.wf_prod_no}}",
+              "task_define_id": "${{params.task_define_id}}",
+              "wf_task_no": "${{params.wf_task_no}}",
+              "appId": "${{params.appId}}",
+              "task_deal_type": "0"
+            }
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "bpm4030",
+          "appId": "${{params.appId}}",
+          "wf_task_no": "${{params.wf_task_no}}",
+          "task_define_id": "${{params.task_define_id}}",
+          "wf_prod_no": "${{params.wf_prod_no}}",
+          "bpm_version": "${{params.bpm_version}}",
+          "task_deal_type": "0"
+        }
+      },
+      "pagination": {
+        "show": false
+      },
+      "thead": [
+        {
+          "label": "节点处理编号",
+          "align": "center",
+          "prop": "task_deal_no"
+        },
+        {
+          "label": "流程产品编号",
+          "align": "center",
+          "prop": "wf_prod_no"
+        },
+        {
+          "label": "节点编号",
+          "align": "center",
+          "prop": "task_define_id"
+        },
+        {
+          "label": "节点序号",
+          "align": "center",
+          "prop": "wf_task_no"
+        },
+        {
+          "label": "业务方法编号",
+          "align": "center",
+          "prop": "busi_id"
+        },
+        {
+          "label": "业务方法名称",
+          "align": "center",
+          "prop": "service_name"
+        },
+        {
+          "label": "执行序号",
+          "align": "center",
+          "prop": "sort_no"
+        },
+        {
+          "label": "操作",
+          "width": "280px",
+          "align": "center",
+          "btns": [
+            {
+              "type": "custom",
+              "label": "查看",
+              "width": "70px",
+              "toRequest": {
+                "url": "/views/msap/bpm/processManagement/products/node/process-busiser-look.json",
+                "method": "POST",
+                "params": {
+                  "appId": "${{params.appId}}"
+                }
+              }
+            },
+            {
+              "type": "custom",
+              "label": "维护",
+              "width": "70px",
+              "toRequest": {
+                "url": "/views/msap/bpm/processManagement/products/node/process-busiser-edit.json",
+                "method": "POST",
+                "params": {
+                  "appId": "${{params.appId}}"
+                }
+              }
+            },
+            {
+              "type": "custom",
+              "label": "删除",
+              "width": "70px",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "bpm4033",
+                  "appId": "${{params.appId}}",
+                  "task_deal_no": "${{current.task_deal_no}}"
+                }
+              },
+              "confirm": {
+                "title": "提示信息",
+                "msg": "请确认是否删除？ ",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

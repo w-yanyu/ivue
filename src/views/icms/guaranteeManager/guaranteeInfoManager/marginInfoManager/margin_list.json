@@ -1,0 +1,142 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "新增",
+          "target": "dialog",
+          "toRequest": {
+            "method": "POST",
+            "url": "/views/icms/guaranteeManager/guaranteeInfoManager/marginInfoManager/margin_list_add.json",
+            "params": {
+              "apply_no": "${{params.apply_no}}"
+            },
+            "props": {
+              "width": "65%",
+              "title": "新增保证金信息"
+            }
+          },
+          "show": {
+            "expression": "'${{params.pageType}}' != 'detail'"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ar0404",
+          "apply_no": "${{params.apply_no}}"
+        }
+      },
+      "thead": [
+        {
+          "prop": "margin_no",
+          "label": {
+            "default": "保证金编号", 
+             "i18n": "K0001.Deposit-number"
+                            },
+          "align": "center"
+        },
+        {
+          "label": {
+            "default": "保证金主账号", 
+             "i18n": "K0001.Margin-Master-Account"
+                            },
+          "prop": "margin_acct",
+          "align": "center"
+        },
+        {
+          "label": {
+            "default": "保证金金额", 
+             "i18n": "K0001.Deposit-amount"
+                            },
+          "prop": "margin_amt",
+          "align": "center",
+          "format": {
+            "thousand": ",",
+            "decimal": "2"
+          }
+        },
+        {
+          "label": {
+            "default": "保证金币种", 
+             "i18n": "K0001.Guarantee-coin-type"
+                            },
+          "prop": "ccy_code",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_CURRENCY",
+            "dictKey": [
+              "MS_CURRENCY"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "账户名称",
+          "prop": "account_name",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "width": "200px",
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/icms/guaranteeManager/guaranteeInfoManager/marginInfoManager/margin_list_edit.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "65%",
+                "title": "维护保证金信息"
+              },
+              "show": {
+                "expression": "'${{params.pageType}}' != 'detail'"
+              }
+            },
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/icms/guaranteeManager/guaranteeInfoManager/marginInfoManager/margin_list_detail.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "65%",
+                "title": "保证金信息详情"
+              }
+            },
+            {
+              "old_data_flag": {
+                "control": "hidden",
+                "label": ""
+              },
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "ar0403"
+                }
+              },
+              "show": {
+                "expression": " '${{params.pageType}}' != 'detail' && '${{current.old_data_flag}}' !='1' "
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "initReqeust": "${{params}}",
+    "form": {
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "qrexit",
+          "belorg": "${{params.belorg}}"
+        }
+      },
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "belorg":"${{params.belorg}}",
+          "ofpacd":"${{params.ofpacd}}",
+          "seqnum":"${{params.seqnum}}",
+          "servicecode": "apbase"
+        }
+      },
+      "btns": [
+        {
+          "type": "submit",
+          "label": "确定",
+          "icon": ""
+        }
+      ],
+      "controls": [
+        {
+          "subtyp": {
+            "control": "select",
+            "label": "提交类型",
+            "value": "1",
+            "width": "160px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择提交类型"
+              }
+            ],
+            "options": [
+              {
+                "label": "审核通过",
+                "value": "1"
+              },
+              {
+                "label": "审核退回",
+                "value": "2"
+              }
+            ]
+          }
+        },
+        {
+          "remart": {
+            "control": "textarea",
+            "label": "处理意见",
+            "width": "160px",
+            "rules": [
+              {
+                "max": 200,
+                "message": "长度不能超过200个字符"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

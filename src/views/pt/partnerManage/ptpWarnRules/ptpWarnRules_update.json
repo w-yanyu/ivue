@@ -1,0 +1,112 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "initDataOnce": true,
+            "initRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "pt0189",
+                  "part_no": "${{params.part_no}}",
+                  "version": "${{params.version}}"
+                  
+                }
+            },   
+            "controls": [
+                {
+                    "part_no": {
+                        "control": "hidden",
+                        "label": "合作方编号",
+                        "width": "130px",
+                        "value": "${{params.part_no}}"
+                    },
+                    "version": {
+                        "control": "hidden",
+                        "label": "版本",
+                        "value": "${{params.version}}"
+                    }
+                },
+                {
+                    "loan_warn_type": {
+                        "control": "select",
+                        "label": "贷款预警类型",
+                        "dict": {
+                            "dictType": "PT_E_LOAN_WRAN_TYPE",
+                            "dictKey": [
+                                "PT_E_LOAN_WRAN_TYPE"
+                            ],
+                            "format": "label"
+                        },
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请选择贷款预警类型"
+                            }
+                        ]
+                    },
+                    "warn_value": {
+                        "control": "text",
+                        "label": "预警值",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入预警值"
+                            }
+                        ]
+                    }
+                },
+                {
+                        "teller_list": {
+                            "label": "选择用户编号",
+                            "control": "lookup",
+                            "multiple": true,
+                            "initShow": true,
+                            "keyField": {
+                                "teller_list": "user_id"
+                            },
+                            "toRequest": {
+                                "url": "/views/pt/partnerManage/ptpWarnRules/ptpWarnRules_tellerlist_query.json",
+                                "method": "post"
+                            },
+                            "props": {
+                                "width": "85%",
+                                "title": "用户编号查询"
+                            }
+                        }
+                    ,
+                    
+                        "role_list": {
+                            "control": "lookup",
+                            "label": "选择角色编号",
+                            "initShow": true,
+                            "multiple": true,
+                            "keyField": {
+                                "role_list": "role_id"
+                            },
+                            "toRequest": {
+                                "url": "/views/pt/partnerManage/ptpWarnRules/ptpWarnRules_rolelist_query.json",
+                                "method": "post"
+                            },
+                            "props": {
+                                "width": "85%",
+                                "title": "角色编号查询"
+                            }
+                        }
+                    },{
+                    "message_list": {
+                        "control": "text",
+                        "label": "预警短信手机",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请填写预警短信手机号码"
+                            }
+                        ]
+                    }
+                }
+                
+            ]
+        }
+    }
+}

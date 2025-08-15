@@ -1,0 +1,118 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+      "form": {
+        "initRequest": "${{params}}",
+        "btns": [
+          {
+            "type": "submit",
+            "label": "提交",
+            "icon": "",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2402",
+                "appId":"${{params.appId}}"
+              }
+            }
+          }
+        ],
+        "controls": [
+            {
+              "dimension_code": {
+                "control": "string",
+                "label": "业务指标编码",
+                "width": "100px"
+              },
+              "dimension_name": {
+                "control": "text",
+                "label": "业务指标名称",
+                "width": "100px",
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请输入业务指标名称"
+                  },
+                  {
+                    "max": 100,
+                    "message": "长度不能超过100个字符"
+                  }
+                ]
+              },              
+              "achive_type": {
+                "control": "select",
+                "label": "获取方式",
+                "width": "100px",
+                "dict": {
+                  "dictType": "CT_E_MANNER",
+                  "dictKey": [
+                    "CT_E_MANNER"
+                  ],
+                  "format": "label"
+                },
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请选择获取方式"
+                  }
+                ],
+                "events" : {
+                  "showItem": {
+                    "java" : ["service_path"],
+                    "sql" : ["belonging_table","query_condition"],
+                    "$default" : []
+                  }
+                }
+              },
+              "service_path": {
+                "control": "text",
+                "label": "服务路径",
+                "width": "100px",
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请输入服务路径"
+                  },
+                  {
+                    "max": 200,
+                    "message": "长度不能超过200个字符"
+                  }
+                ]
+              },
+              "belonging_table": {
+                "control": "text",
+                "label": "所属表",
+                "width": "100px",
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请输入所属表"
+                  },
+                  {
+                    "max": 32,
+                    "message": "长度不能超过32个字符"
+                  }
+                ]
+              },
+              "query_condition": {
+                  "control": "text",
+                  "label": "查询条件",
+                  "width": "100px",
+                  "rules": [
+                    {
+                      "required": true,
+                      "message": "请输入查询条件"
+                    },
+                    {
+                      "max": 100,
+                      "message": "长度不能超过100个字符"
+                    }
+                  ]
+              }
+            }
+        ]
+      }
+    }
+  }
+  

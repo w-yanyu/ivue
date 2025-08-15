@@ -1,0 +1,135 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "policy_id": {
+            "control": "text",
+            "label": "策略编号",
+            "rules": [
+              {
+                "max": 100,
+                "message": "长度不能超过100个字符"
+              }
+            ]
+          },
+          "policy_name": {
+            "control": "text",
+            "label": "策略名称",
+            "rules": [
+              {
+                "max": 50,
+                "message": "长度不能超过10个字符"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "POST",
+            "url": "/views/tm/tactics_management/strategic_management_add.json"
+          },
+          "props": {
+            "title": "新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "bpm0024"
+        }
+      },
+      "thead": [
+        {
+          "type": "index"
+        },
+        {
+          "label": "策略编号",
+          "prop": "policy_id",
+          "align": "center"
+        },
+        {
+          "label": "策略名称",
+          "prop": "policy_name",
+          "align": "center"
+        },
+        {
+          "label": "策略描述",
+          "prop": "policy_desc",
+          "align": "center"
+        },
+        {
+          "label": "有效标志",
+          "prop": "valid_flag",
+          "type": "select",
+          "align": "center",
+          "dict": {
+              "dictType": "BPM_E_ISFLAG",
+              "dictKey": [
+                  "BPM_E_ISFLAG"
+              ],
+              "format": "value-label"
+          }
+      },
+
+        {
+          "label": "最近修改人",
+          "prop": "data_update_user",
+          "align": "center"
+        },
+        {
+          "label": "最近修改时间",
+          "prop": "data_update_time",
+          "align": "center"
+        },{
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align":"center",
+          "btns": [
+              {
+                  "type": "edit",
+                  "label": "维护",
+                  "toRequest": {
+                      "url": "/views/tm/tactics_management/strategic_management_edit.json",
+                      "method": "post"
+                  },
+                  "props": {
+                      "width": "65%",
+                      "title": "维护"
+                  }
+              },
+              {
+                  "type": "delete",
+                  "label": "删除",
+                  "doRequest": {
+                      "url": "/SUMP/icmcall/icmRPCCall",
+                      "method": "post",
+                      "params": {
+                          "servicecode": "bpm0022"
+                      }
+                  }
+              }
+          ],
+          "pagination": {
+            "show": true
+        }
+      }
+      ]
+    }
+  }
+}

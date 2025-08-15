@@ -1,0 +1,83 @@
+{
+  "module": "v-inputDataForm-btn",
+  "layout": {
+    "form": {
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "createUser": "$g{{user_info.userCode}}",
+          "updateUser": "$g{{user_info.userCode}}",
+          "servicecode": "deci090201"
+        }
+      },
+      "controls": [
+        {
+          "systemName": {
+            "label": "系统名称",
+            "width": "auto",
+            "control": "text",
+            "span": 24,
+            "rules": [
+              {
+                "required": true,
+                "message":"请输入系统名称"
+              }
+            ]
+          }
+        },
+        {
+          "systemId": {
+            "label": "系统编号标识",
+            "width": "auto",
+            "control": "text",
+            "span": 24,
+            "rules": [
+              {
+                "required": true,
+                "message":"请输入系统编号标识"
+              }
+            ]
+          }
+        },
+        {
+          "systemBranchId": {
+            "label": "系统所属机构",
+            "control": "remoteSelect",
+            "labelField": "branch_name",
+            "valueField": "branch_id",
+            "searchField":"branch_name",
+            "value": "$g{{user_info.branch_id}}",
+            "width": "auto",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "post",
+              "params": {
+                "is_authorize":"true",
+                "servicecode": "ct2191"
+              }
+            },
+            "span": 24
+          }
+        },
+        {
+          "remark": {
+            "label": "备注",
+            "width": "auto",
+            "control": "textarea",
+            "span": 24,
+            "maxlength": 200,
+            "showWordLimit": 200,
+            "rows": 5,
+            "rules": [
+              {
+                "message": "请正确输入",
+                "max": 200
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

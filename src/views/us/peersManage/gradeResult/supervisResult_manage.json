@@ -1,0 +1,111 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+      "form": {
+        "controls": [
+          {
+            "input_date":{
+              "control": "dateTimePicker",
+              "label": "录入日期",
+              "format": "yyyyMMdd"
+            }
+          }
+        ]
+      },
+      "toolbar": {
+        "btns": [
+          {
+            "type": "add",
+            "target": "dialog",
+            "label": "新增",
+            "toRequest": {
+              "method": "GET",
+              "url": "/views/us/peersManage/gradeResult/supervisResult_add.json",
+              "params": {
+                "cust_no": "${{params.cust_no}}"
+              }
+            },
+            "props": {
+              "width": "80%",
+              "title": "监管评级新增"
+            }
+          }
+        ]
+      },
+      "datagrid": {
+        "scope": "searchTable",
+        "isInitSearch": true,
+        "doRequest": {
+          "url": "/SUMP/icmcall/icmRPCCall",
+          "method": "POST",
+          "params": {
+            "servicecode": "us1003",
+            "cust_no": "${{params.cust_no}}"
+          }
+        },
+        "thead": [
+          {
+            "type": "index",
+            "label": "序号"
+          },
+          {
+            "label": "录入日期",
+            "prop": "input_date",
+            "align": "center"
+          },
+          {
+            "label": "录入人",
+            "prop": "input_person",
+            "align": "center"
+          },
+          {
+            "label": "录入机构",
+            "prop": "input_org",
+            "align": "center"
+          },{
+            "label": "监管认证机构",
+            "prop": "supervis_approve_org",
+            "align": "center"
+          },{
+            "label": "监管评级结果",
+            "prop": "supervis_grade_result",
+            "align": "center"
+          },
+          {
+            "label": "操作",
+            "width": "180px",
+            "align": "center",
+            "btns": [
+              {
+                "type": "custom",
+                "label": "详请",
+                "toRequest": {
+                  "url": "/views/us/peersManage/gradeResult/supervisResult_info.json",
+                  "params": {
+                    "cust_no": "${{params.cust_no}}"
+                  },
+                  "props": {
+                    "width": "80%",
+                    "title": "监管评级信息详情"
+                  }
+                }
+              },
+              {
+                "type": "custom",
+                "label": "删除",
+                "doRequest": {
+                  "url": "/SUMP/icmcall/icmRPCCall",
+                  "method": "POST",
+                  "params": {
+                    "servicecode": "us1005",
+                    "cust_no": "${{params.cust_no}}"
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+  

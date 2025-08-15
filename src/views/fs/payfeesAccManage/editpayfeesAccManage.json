@@ -1,0 +1,122 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "initRequest": "${{params}}",
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                    "branch": "${{params.branch}}",
+                    "accountType": "${{params.accountType}}"
+                }
+            },
+            "btns": [
+                {
+                    "type": "submit",
+                    "label": "提交",
+                    "icon": "",
+                    "doRequest": {
+                        "url": "/SUMP/call/RPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "RLMSPLTS1075",
+                            "branch": "${{params.branch}}",
+                            "accountType": "${{params.accountType}}"
+                        }
+                    }
+                },
+				{
+					"type":"Cancel",
+					"label":"取消"
+				}
+            ],
+            "controls": [
+                {
+                    "branch": {
+                        "control": "remoteSelect",
+                        "label": "区域中心",
+                        "labelField": "brachName",
+                        "valueField": "branchNo",
+                        "doRequest": {
+                            "url": "/SUMP/icmcall/icmRPCCall",
+                            "method": "Post",
+                            "params": {
+                                "servicecode": "RLMSPLTS1068",
+                                "branchNo": "${{params.branch}}"
+                            }
+                        },
+                        "format": "value-label"
+                    },
+                    "accountType": {
+                        "control": "select",
+                        "label": "账户类型",
+                        "dict": {
+                            "dictType": "E_ACCOUNT_TYPE",
+                            "dictKey": [
+                                "E_ACCOUNT_TYPE"
+                            ],
+                            "format": "value-label"
+                        }
+                    }
+                },
+                {
+                    "orgName": {
+                        "control": "text",
+                        "label": "机构名称",
+                        "rules": [
+                            {
+                                "max": 100,
+                                "message": "长度不能超过100个字符"
+                            }
+                        ]
+                    },
+                    "receAccName": {
+                        "control": "text",
+                        "label": "收款账户名称",
+                        "rules": [
+                            {
+                                "max": 100,
+                                "message": "长度不能超过100个字符"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "receAccNo": {
+                        "control": "text",
+                        "label": "收款账户账号",
+                        "rules": [
+                            {
+                                "max": 100,
+                                "message": "长度不能超过100个字符"
+                            }
+                        ]
+                    },
+                    "bank_name": {
+                        "control": "text",
+                        "label": "开户行",
+                        "rules": [
+                            {
+                                "max": 100,
+                                "message": "长度不能超过100个字符"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "bank_no": {
+                        "control": "text",
+                        "label": "开户行行号",
+                        "rules": [
+                            {
+                                "max": 100,
+                                "message": "长度不能超过100个字符"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    }
+}

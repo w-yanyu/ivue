@@ -1,0 +1,114 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": "${{params}}",
+      "scope": "form",
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "cb0318",
+              "id_": "${{params.id_}}"
+            }
+          }
+        },
+        {
+          "type": "close",
+          "label": "取消"
+        }
+      ],
+      "controls": [
+        {
+          "solution_no": {
+            "label": "方案",
+            "control": "remoteSelect",
+            "format": "value-label",
+            "labelField": "solution_name",
+            "valueField": "solution_no",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "cb0338"
+              }
+            }
+          },
+          "dimension_no": {
+            "control": "text",
+            "label": "维度编码",
+            "value": "${{form.dimension_no}}",
+            "disabled": true
+          }
+        },
+        {
+          "dimension_name": {
+            "control": "text",
+            "label": "维度名称",
+            "value": "${{form.dimension_name}}",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          },
+          "dimension_weight": {
+            "control": "inputNumber",
+            "min": 0,
+            "max": 100,
+            "label": "维度权重(%)",
+            "value": "${{form.dimension_weight}}",
+            "rules": [
+              {
+                "message": "权重不能为空",
+                "required": true
+              }
+            ]
+          }
+        },
+        {
+          "daterange": {
+            "control": "dateTimePicker",
+            "label": "生效时间",
+            "type": "daterange",
+            "unlinkPanels": true,
+            "valueFormat": "yyyyMMdd",
+            "startPlaceholder": "请选择开始时间",
+            "endPlaceholder": "请选择结束时间",
+            "startField": "start_effect_time",
+            "endField": "end_effect_time",
+            "disabledDate": "dateAfter"
+          },
+          "enable": {
+            "control": "select",
+            "label": "是否启用",
+            "value": "${{form.enable}}",
+            "dict": {
+              "dictType": "CS_E_YESORNO",
+              "dictKey": [
+                "CS_E_YESORNO"
+              ],
+              "format": "value-label"
+            }
+          }
+        },
+        {
+          "detail": {
+            "control": "textarea",
+            "label": "描述",
+            "value": "${{form.detail}}",
+            "align": "center",
+            "span": "24",
+            "rows": 3,
+            "placeholder": "请输入"
+          }
+        }
+      ]
+    }
+  }
+}

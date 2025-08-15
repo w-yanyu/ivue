@@ -1,0 +1,62 @@
+{
+    "module": "d-steps",
+    "layout": {
+        "steps": {
+            "scope":"formObj",
+            "direction": "horizontal",
+            "alignCenter": true,
+            "finishStatus": "success",
+            "simpleType": false,
+          
+            "nextStepType": "validate",
+            "list": [
+                {
+                    "scope":"step1",
+                    "title": "信息填写",
+                    "icon": "el-icon-edit",
+                    "toRequest": { 
+                        "method": "GET",
+                        "url": "/views/icms/certconf/certconf_add.json",
+                        "params": {
+                            
+                        }
+                    },
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                          "servicecode": "ar4001"
+                        },
+                        "resultSet": {
+                            "apply_no": "apply_no"
+                          }
+                      }
+                },
+                {
+                    "scope":"step2",
+                    "forbidBack": "true",
+                    "title": "合格证资料上传",
+                    "icon": "el-icon-edit",
+                    "toRequest": { 
+                        "url": "/views/icms/certconf/certconf_add_file.json",
+                        "params": {
+                            "apply_no":"${{formObj.step1.apply_no}}",
+                            "doc_no":"CERT_STORAGE_001"
+                        },
+                        "method": "get"
+                    },
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "ar4003",
+                            "apply_no":"${{formObj.step1.apply_no}}",
+                            "cert_status": "1",
+                            "appId":"icmsOnl"
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

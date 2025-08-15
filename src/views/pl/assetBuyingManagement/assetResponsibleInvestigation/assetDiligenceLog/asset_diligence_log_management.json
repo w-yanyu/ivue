@@ -1,0 +1,113 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "icon": "el-icon-circle-plus",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "POST",
+            "url": "/views/pl/assetBuyingManagement/assetResponsibleInvestigation/assetDiligenceLog/asset_diligence_log_add.json",
+            "params": {
+              "diligence_no": "${{params.diligence_no}}"
+            }
+          },
+          "props": {
+            "width": "65%",
+            "title": "新增资产尽调日志"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pl0431",
+          "diligence_no": "${{params.diligence_no}}"
+        }
+      },
+      "thead": [
+        {
+          "type": "string",
+          "align": "center",
+          "label": "尽调日志编号",
+          "prop": "diligence_log_no"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "开始日期",
+          "prop": "start_date"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "结束日期",
+          "prop": "end_date"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "工作概述",
+          "prop": "work_summarize"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "工作内容",
+          "prop": "work_content"
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "fixed": "right",
+          "width": "80",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/pl/assetBuyingManagement/assetResponsibleInvestigation/assetDiligenceLog/asset_diligence_log_info.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "65%",
+                "title": "尽调日志详情"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/pl/assetBuyingManagement/assetResponsibleInvestigation/assetDiligenceLog/asset_diligence_log_modify.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "65%",
+                "title": "尽调日志维护"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "pl0430"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

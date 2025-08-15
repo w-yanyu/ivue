@@ -1,0 +1,210 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "trxn_date": {
+            "control": "dateTimePicker",
+            "label": "交易日期",
+            "span": 12,
+            "format": "yyyyMMdd"
+          },
+          "revenue_data_type": {
+            "control": "select",
+            "label": "营业数据类型",
+            "span": 12,
+            "dict": {
+              "dictType": "US_E_REVENUE_DATA_TYPE",
+              "dictKey": [
+                "US_E_REVENUE_DATA_TYPE"
+              ],
+              "format": "label"
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "addlog",
+          "label": "新增",
+          "authId":"usb_revenue_data_manage_btn_add",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/us/entManager/revenueDataManage/usb_revenue_data_add.json",
+            "params": {
+              "cust_no": "${{params.cust_no}}"
+            }
+          },
+          "show": {
+            "expression": "'${{params.show_flash}}' == '1'"
+          },
+          "props": {
+            "width": "60%",
+            "title": "营业数据信息新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "us1160",
+          "cust_no": "${{params.cust_no}}"
+        }
+      },
+      "thead": [
+        {
+          "type": "string",
+          "label": "营业数据编号",
+          "prop": "revenue_data_no",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "交易日期",
+          "prop": "trxn_date",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "营业数据类型",
+          "prop": "revenue_data_type",
+          "align": "center",
+          "dict": {
+            "dictType": "US_E_REVENUE_DATA_TYPE",
+            "dictKey": [
+              "US_E_REVENUE_DATA_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "string",
+          "label": "营业数据名称",
+          "prop": "revenue_name",
+          "align": "center"
+        },
+        {
+          "type": "currency",
+          "label": "金额",
+          "prop": "acct_amt",
+          "align": "center",
+          "format":{
+            "thousand": ",",
+            "decimal": 2
+          }
+        },
+        {
+          "type": "string",
+          "label": "币种",
+          "prop": "ccy_code",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_CURRENCY",
+            "dictKey": [
+              "MS_CURRENCY"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "string",
+          "label": "行业分类",
+          "prop": "industry_type_name",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "产品名",
+          "prop": "prod_name",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "地区",
+          "prop": "area",
+          "align": "center",
+          "dict": {
+            "dictType": "US_E_AREA_TYPE",
+            "dictKey": [
+              "US_E_AREA_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "fixed": "right",
+          "width": "200px",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "authId":"usb_revenue_data_manage_btn_detail",
+              "toRequest": {
+                "url": "/views/us/entManager/revenueDataManage/usb_revenue_data_info.json",
+                "method": "GET",
+                "params": {
+                  "cust_no": "${{params.cust_no}}"
+                }
+              },
+              "props": {
+                "width": "60%",
+                "title": "营业数据详情"
+              }
+            },
+            {
+              "type": "look",
+              "label": "维护",
+              "authId":"usb_revenue_data_manage_btn_update",
+              "toRequest": {
+                "url": "/views/us/entManager/revenueDataManage/usb_revenue_data_update.json",
+                "method": "GET",
+                "params": {
+                  "cust_no": "${{params.cust_no}}"
+                }
+              },
+              "show": {
+                "expression": "'${{params.show_flash}}' == '1'"
+              },
+              "props": {
+                "width": "60%",
+                "title": "营业数据维护"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "删除",
+              "authId":"usb_revenue_data_manage_btn_delete",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "us1163"
+                }
+              },
+              "show": {
+                "expression": "'${{params.show_flash}}' == '1'"
+              },
+              "confirm": {
+                "title": "删除",
+                "msg": "确定删除吗？",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

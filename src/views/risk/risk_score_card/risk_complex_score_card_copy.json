@@ -1,0 +1,96 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "###initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "scoreCardType": "1",
+          "servicecode": "deci020127"
+        }
+      },
+      "btns": [
+        {
+          "type": "submit",
+          "target": "addlog",
+          "label": "复制",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "deci020207"
+            }
+          }
+        } ,
+        {
+          "type": "close",
+          "label": "取消",
+          "icon": ""
+      }
+      ],
+      "controls": [
+        {
+          "scoreCardCode": {
+            "control": "hidden",
+            "label": "评分卡代码",
+            "value": "${{params.scoreCardCode}}"
+          },
+          "scoreCardName": {
+            "control": "hidden",
+            "label": "评分卡名称",
+            "value": "${{params.scoreCardName}}"
+          },
+          "currVersion": {
+            "control": "hidden",
+            "label": "当前生效版本",
+            "value": "${{params.currVersion}}"
+          },
+          "newScoreCardCode": {
+            "control": "text",
+            "align": "center",
+            "span": 16,
+            "disabled":false,
+            "inputWidth": "250px",
+            "label": "复杂评分卡代码",
+            "rules": [
+              {
+                "required": true,
+                "pattern": "^[A-Za-z][A-Za-z\\d_]{0,39}$",
+                "message": "请输入字母、数字组合"
+              }
+            ]
+          },
+          "newScoreCardName": {
+            "control": "text",
+            "label": "复杂评分卡名称",
+            "align": "center",
+            "span": 16,
+            "inputWidth": "250px",
+            "rules": [
+              {
+                "required": true,
+                "pattern": "^[a-z0-9A-Z\u4e00-\u9fa5]+$",
+                "message": "仅可为字母、数字、文字及相关组合"
+            }
+            ]
+          } ,
+            "newDescription": {
+              "label": "备注",
+              "control": "textarea",
+              "span": 17,
+              "showWordLimit": 200,
+              "maxlength": 200,
+              "rows": 5,
+              "rules": [
+                {
+                  "message": "请正确输入",
+                  "max": 200
+                }
+              ]
+            }
+        }
+      ]
+    }
+  }
+}

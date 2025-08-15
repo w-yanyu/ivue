@@ -1,0 +1,64 @@
+{
+    "module": "d-steps",
+    "layout": {
+        "steps": {
+            "scope":"formObj",
+            "direction": "horizontal",
+            "alignCenter": true,
+            "finishStatus": "success",
+            "simpleType": false,
+            "nextStepType": "validate",
+            "condition":{
+                "conditionField":"",
+                "switch":{
+                    "0":1,
+                    "1":2
+                }
+            },
+            "list": [
+                {
+                    "scope":"step1",
+                    "title": "导出基本信息填写",
+                    "icon": "el-icon-edit",
+                    "toRequest": { 
+                        "method": "GET",
+                        "url": "/views/ismt/ct/export/export_appl_add1.json",
+                        "params":{
+                            "page_id":"${{params.page_id}}",
+                            "tran_code":"${{params.tran_code}}"
+                        }
+                    },
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                          "servicecode": "ct4112",
+                          "appl_user":"$g{{user_info.userCode}}",
+                          "page_id":"${{params.page_id}}",
+                           "tran_code":"${{params.tran_code}}"
+                        },
+                        "resultSet": {
+                            "record_no": "record_no"
+                        }
+                    }
+                },
+                {
+                    "scope":"step2",
+                    "forbidBack": true,
+                    "title": "导出范围配置信息填写",
+                    "icon": "el-icon-edit",
+                    "toRequest": { 
+                        "url": "/views/ismt/ct/export/export_appl_add2.json"
+                    },
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                          "servicecode": "ct4113"
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

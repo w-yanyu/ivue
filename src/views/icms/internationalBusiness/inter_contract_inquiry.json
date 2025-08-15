@@ -1,0 +1,129 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+      "form": {
+        "controls": [
+          {
+            "apply_no": {
+                "label": "申请号",
+                "control": "text",
+                "rules": [
+                  {
+                    "required": false,
+                    "message": "此项为必填项"
+                  }
+                ]
+              },
+            "credit_of_no": {
+              "control": "text",
+              "label": "信用证号",
+              "rules": [
+                {
+                  "required": false,
+                  "message": "此项为必填项"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "toolbar": {
+        "btns": []
+      },
+      "datagrid": {
+        "scope": "searchTable",
+        "isInitSearch": true,
+        "doRequest": {
+          "url": "/SUMP/icmcall/icmRPCCall",
+          "method": "POST",
+          "params": {
+            "servicecode": "ar1304",
+            "stage_type": "01"
+          }
+        },
+        "thead": [
+          {
+            "label": "申请号",
+            "prop": "apply_no",
+            "align": "center"
+          },
+          {
+            "label": "信用证号",
+            "prop": "contract_no",
+            "align": "center"
+          },
+          {
+            "label": "信用证金额",
+            "prop": "apply_amt",
+            "align": "center",
+            "format":{
+              "thousand": ","
+            }  
+          },
+          {
+            "label": "信用证币种",
+            "prop": "ccy_code",
+            "align": "center",
+            "dict": {
+              "dictType": "MS_CURRENCY",
+              "dictKey": [
+                "MS_CURRENCY"
+              ],
+              "format": "label"
+            }
+          },
+          {
+            "label": "基准币种",
+            "prop": "base_ccy",
+            "align": "center",
+            "dict": {
+              "dictType": "MS_CURRENCY",
+              "dictKey": [
+                "MS_CURRENCY"
+              ],
+              "format": "label"
+            }
+          },
+          {
+            "label": "汇率",
+            "prop": "exchange_rate",
+            "align": "center",
+            "format":{
+              "thousand": ","
+            }  
+          },
+          {
+            "label": "操作",
+            "fixed": "right",
+            "width": 100,
+            "align": "center",
+            "btns": [
+              {
+                "type": "edit",
+                "label": "详情",
+                "toRequest": {
+                  "url": "@CommAlreadyDoDetail",
+                  "method": "GET",
+                  "target": "navTab",
+                  "params": {
+                    "frame_cd": "internationContract2",
+                    "cust_name": "${{current.cust_name}}",
+                    "appl_state": "COMP",
+                    "appl_date": "${{current.apply_date}}",
+                    "task_inst_id":"${{current.task_inst_id}}",
+                    "appId":"icmsOnl",
+                    "appl_id": "${{current.apply_no}}",
+                    "wf_inst_id": "${{current.wf_inst_id}}",
+                    "cust_no": "${{current.cust_id}}"
+                  }
+                },
+                "props": {
+                  "title": "已办事项详情"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }

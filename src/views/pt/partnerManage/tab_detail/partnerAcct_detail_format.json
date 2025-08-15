@@ -1,0 +1,96 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "toolbar": {
+            "btns": []
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "pt0055",
+                    "part_no": "${{params.part_no}}"
+                }
+            },
+            "thead": [{
+                    "type": "index",
+                    "width": 50,
+                    "label": "序号"
+                },
+                {
+                    "label": "合作账户简称",
+                    "prop": "center_account_name",
+                    "align": "center"
+                },
+                {
+                    "label": "合作方账户账号",
+                    "prop": "part_center_no",
+                    "align": "center"
+                },
+                {
+                    "label": "合作方账户名称",
+                    "prop": "part_center_name",
+                    "align": "center"
+                },
+                {
+                    "label": "开户行号",
+                    "prop": "open_bank_no",
+                    "align": "center"
+                },
+                {
+                    "label": "开户行名",
+                    "prop": "open_bank_name",
+                    "align": "center"
+                },
+                {
+                    "label": "是否我行账户",
+                    "prop": "is_my_bank_no",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                            "MS_E_YESORNO"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "账户状态",
+                    "prop": "account_status",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "PT_E_ACCOUNT_STATUS",
+                        "dictKey": [
+                            "PT_E_ACCOUNT_STATUS"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 160,
+                    "align": "center",
+                    "btns": [{
+                            "type": "look",
+                            "label": "详情",
+                            "toRequest": {
+                                "url": "/views/pt/partnerManage/partnerAcct_info.json",
+                                "method": "POST"
+                            },
+                            "props": {
+                                "width": "75%",
+                                "title": "合作方结算账户详情"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

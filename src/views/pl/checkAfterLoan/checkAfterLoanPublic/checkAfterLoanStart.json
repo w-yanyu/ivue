@@ -1,0 +1,141 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "cust_name": {
+            "label": "客户名称",
+            "control": "text",
+            "rules": [
+              {
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pl0168"
+        }
+      },
+      "thead": [
+        {
+          "type": "index"
+        },
+        {
+          "prop": "cust_name",
+          "label": "客户名称",
+          "align": "center"
+        },
+        {
+          "prop": "busi_type",
+          "label": "业务类型",
+          "align": "center"
+        },
+        {
+          "label": "客户类型",
+          "width": 120,
+          "prop": "cust_type",
+          "dict": {
+            "dictType": "US_E_APPL_CUST_TYPE",
+            "dictKey": [
+              "US_E_APPL_CUST_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "prop": "contract_no",
+          "label": "合同编号",
+          "align": "center"
+        },
+        {
+          "label": "证件类型",
+          "width": 120,
+          "prop": "cert_type",
+          "dict": {
+            "dictType": "MS_E_CRET_TYPE",
+            "dictKey": [
+              "MS_E_CRET_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "prop": "cert_no",
+          "label": "证件号码",
+          "align": "center"
+        },
+        {
+          "label": "是否首次检查",
+          "width": 120,
+          "prop": "is_first_check",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align":"center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/pl/checkAfterLoan/checkAfterLoanPerson/checkAterLoanProgressTrackDetail.json",
+                "method": "GET",
+                "params": {
+                  "change_num": "${{current.change_num}}",
+                  "busi_type":"贷款"
+
+                }
+              },
+              "props": {
+                "width": "65%",
+                "title": "还款账户变更启动详情"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "流程启动",
+              "show": {
+                "expression": "'${{current.change_ste}}' === '1'"
+              },
+              "toRequest": {
+                "url": "/views/pl/checkAfterLoan/checkAfterLoanPerson/checkAterLoanProgressTrackDetailCom.json",
+                "method": "GET",
+                "params": {
+                  "change_num": "${{current.check_no}}",
+                  "cust_name": "${{current.cust_name}}",
+                  "cust_no": "${{current.cust_no}}",
+                  "busi_type": "${{current.busi_type}}",
+                  "contract_no": "${{current.contract_no}}",
+                  "cert_type": "${{current.cert_type}}",
+                  "cert_no": "${{current.cert_no}}",
+                  "appr_status": "${{current.appr_status}}"
+                }
+              },
+              "props": {
+                "width": "65%",
+                "title": "对公贷后检查流程启动"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

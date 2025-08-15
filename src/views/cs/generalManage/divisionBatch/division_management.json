@@ -1,0 +1,202 @@
+{
+  "module": "v_search_btn_datagrid",
+  "pageId": "page001",
+  "layout": {
+    "form": {
+      "foldLineNumber": 3,
+      "scope": "formData",
+      "controls": [
+        {
+          "outsourcing_org_id": {
+            "hidden": true,
+            "label": "委外公司",
+            "control": "remoteSelect",
+            "labelField": "outsourcing_org_name",
+            "valueField": "outsourcing_org_id",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "cb0052",
+                "org_id": "$g{{user_info.org_id}}"
+              }
+            },
+            "events": {
+              "emit": [
+                "operation"
+              ]
+            },
+            "format": "value-label"
+          },
+          "batch_no": {
+            "control": "text",
+            "label": "分案批次号"
+          }
+        },
+        {
+          "daterange": {
+            "control": "dateTimePicker",
+            "label": "委托时间",
+            "type": "daterange",
+            "unlinkPanels": true,
+            "valueFormat": "yyyyMMdd",
+            "startPlaceholder": "请选择开始时间",
+            "endPlaceholder": "请选择结束时间",
+            "startField": "start_date",
+            "endField": "end_date"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "appId": "cbOnl",
+          "servicecode": "cb0275"
+        }
+      },
+      "thead": [
+        {
+          "type": "string",
+          "align": "center",
+          "label": "案件批次号",
+          "prop": "batch_no"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "案件总数",
+          "prop": "total_outsourcing_case"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "委托金额（元）",
+          "prop": "outsourcing_amount",
+          "format": {
+            "thousand": ","
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "委外公司",
+          "prop": "outsourcing_org_id",
+          "dict": {
+            "dictKey": [
+              "outsourcing_org_id"
+            ],
+            "format": "value-label",
+            "labelField": "outsourcing_org_name",
+            "valueField": "outsourcing_org_id",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "cb0052"
+              }
+            }
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "分案条件",
+          "prop": "cert_no"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "委托开始时间",
+          "prop": "outsourcing_start_date"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "委托结束时间",
+          "prop": "outsourcing_end_date"
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "fixed": "right",
+          "width": "330px",
+          "btns": [
+            {
+              "type": "custom",
+              "label": "佣金方案",
+              "toRequest": {
+                "url": "/views/cs/generalManage/divisionBatch/commission_plan_info.json",
+                "method": "POST",
+                "params": {
+                  "case_id": "${{current.case_id}}",
+                  "case_no": "${{params.case_no}}",
+                  "cust_id": "${{params.cust_id}}",
+                  "org_id": "${{params.org_id}}",
+                  "oa_org_id": "${{params.oa_org_id}}"
+                }
+              },
+              "props": {
+                "width": "60%",
+                "title": "佣金方案"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "批次报表",
+              "toRequest": {
+                "url": "/views/cs/generalManage/divisionBatch/batch_report_list.json",
+                "method": "POST",
+                "params": {
+                  "case_id": "${{current.case_id}}",
+                  "case_no": "${{params.case_no}}",
+                  "cust_id": "${{params.cust_id}}",
+                  "org_id": "${{params.org_id}}",
+                  "oa_org_id": "${{params.oa_org_id}}"
+                }
+              },
+              "props": {
+                "width": "60%",
+                "title": "批次报表"
+              }
+            },
+
+            {
+              "type": "export",
+              "icon": "iconfont icon-daochu",
+              "label": "导出案件",
+              "doRequest": {
+                "method": "POST",
+                "url": "/SUMP/rest/file/commExport",
+                "params": {
+                  "length": 999,
+                  "servicecode": "cb0136",
+                  "batch_no": "${{current.batch_no}}"
+                }
+              },
+              "confirm": {
+                "title": "提示信息",
+                "msg": "确认导出案件吗？",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            },
+            {
+              "type": "custom",
+              "icon": "el-icon-upload",
+              "target": "dialog",
+              "label": "导入催记",
+              "toRequest": {
+                "method": "GET",
+                "url": "/views/cs/generalManage/divisionBatch/manualAssign_Import.json"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

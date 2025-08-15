@@ -1,0 +1,71 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "foldLineNumber":2,
+      "btns": [
+
+      ],
+      "controls": []
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "syln0001",
+          "outlistid":"lstLnOvdInfo",
+          "cust_num": "${{params.cust_no}}",
+          "outlistid":"lstLnOvdInfo",
+          "wthr_ever_ovdue":"0"
+        }
+      },
+      "thead": [
+        {
+          "label": "借据号",
+          "prop": "loan_due_bill_num",
+          "btns": [
+            {
+              "type": "look",
+              "toRequest": {
+                "url": "/views/integrated/loanInfo/loan_info_tabs.json",
+                "params": {
+                  "loan_due_bill_num": "${{current.loan_due_bill_num}}"
+                }
+              },
+              "props": {
+                "width": "80%",
+                "title": "借据信息详情"
+              }
+            }
+          ]
+        },
+        {
+          "label": "可售产品名称",
+          "prop": "prod_nm"
+        },
+        {
+          "label": "逾期日期",
+          "prop": "first_ovdue_dt"
+        },
+        {
+          "label": "逾期期数",
+          "prop": "over_count_num"
+        },
+        {
+          "label": "逾期金额(元)",
+          "prop": "over_sum_amt",
+          "type": "string",
+          "align": "center",
+          "format": {
+            "thousand": ",",
+            "decimal": "2",
+            "type": "currency"
+          }
+        }
+      ]
+    }
+  }
+}

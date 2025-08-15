@@ -1,0 +1,132 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "controls": [
+        {
+          "classify_code": {
+            "control": "text",
+            "label": "案件分类代码"
+          },
+          "classify_name": {
+            "control": "text",
+            "label": "案件分类名称"
+          }
+        },
+        {
+          "classify_desc": {
+            "control": "text",
+            "label": "案件分类描述"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "icon": "el-icon-circle-plus",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/cs/paramManage/product/location/location_add.json"
+          },
+          "props": {
+            "width": "65%",
+            "title": "新增案件分类定义"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "cb0005",
+          "appId": "cbOnl"
+        }
+      },
+      "thead": [
+        {
+          "type": "string",
+          "label": "案件分类代码",
+          "align": "center",
+          "prop": "classify_code"
+        },
+        {
+          "type": "string",
+          "label": "案件分类名称",
+          "align": "center",
+          "prop": "classify_name"
+        },
+        {
+          "type": "string",
+          "label": "案件分类描述",
+          "align": "center",
+          "prop": "classify_desc"
+        },
+        {
+          "type": "string",
+          "label": "是否默认",
+          "align": "center",
+          "prop": "is_default",
+          "dict": {
+            "dictType": "CS_E_YESORNO",
+            "dictKey": [
+              "CS_E_YESORNO"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "align": "center",
+          "width": "150%",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/cs/paramManage/product/location/location_info.json",
+                "method": "POST"
+              },
+              "props": {
+                "title": "案件分类定义详情"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/cs/paramManage/product/location/location_modify.json",
+                "method": "POST",
+                "####target": "navTab",
+                "####注释": "navTab表示不会弹出框，而在导航页签打开。dialog表示弹出框"
+              },
+              "props": {
+                "title": "案件分类定义维护"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "cb0002",
+                  "appId": "cbOnl"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

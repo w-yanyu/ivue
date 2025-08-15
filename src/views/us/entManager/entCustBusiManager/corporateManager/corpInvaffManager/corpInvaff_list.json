@@ -1,0 +1,142 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "toolbar": {
+            "btns": [{
+                "type": "add",
+                "target": "dialog",
+                "label": "新增",
+                "toRequest": {
+                    "method": "POST",
+                    "url": "/views/us/entManager/entCustBusiManager/corporateManager/corpInvaffManager/corpInvaff_add.json",
+                    "params": {
+                        "cust_no": "${{params.cust_no}}"
+                    }
+                },
+                "show": {
+                    "expression": "'${{params.show_flash}}' == '1'"
+                },
+                "props": {
+                    "width": "80%",
+                    "title": "企业投资及联营信息新增"
+                }
+            }]
+        },
+        "datagrid": {
+            "isInitSearch": true,
+            "scope": "searchTable",
+            "initRequest": "${{params}}",
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "us0300",
+                    "cust_no": "${{params.cust_no}}"
+                }
+            },
+            "thead": [{
+                    "label": "序号",
+                    "type": "index",
+                    "align": "center"
+                },
+                {
+                    "label": "被投资单位客户ID",
+                    "prop": "in_cust_no",
+                    "align": "center"
+                },
+                {
+                    "label": "被投资单位客户名称",
+                    "prop": "cust_name",
+                    "align": "center"
+                },
+                {
+                    "label": "关联企业性质",
+                    "prop": "nature_type",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "US_E_NATURE_TYPE",
+                        "dictKey": [
+                            "US_E_NATURE_TYPE"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "关联类型",
+                    "prop": "relate_type",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "US_E_RELATION_TYPE",
+                        "dictKey": [
+                            "US_E_RELATION_TYPE"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "经营地址",
+                    "prop": "busi_addr",
+                    "align": "center"
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 160,
+                    "align": "center",
+                    "btns": [{
+                            "type": "look",
+                            "label": "详情",
+                            "toRequest": {
+                                "url": "/views/us/entManager/entCustBusiManager/corporateManager/corpInvaffManager/corpInvaff_info.json",
+                                "method": "GET"
+                            },
+                            "props": {
+                                "width": "80%",
+                                "title": "企业投资及联营信息详情"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/us/entManager/entCustBusiManager/corporateManager/corpInvaffManager/corpInvaff_update.json",
+                                "method": "GET"
+                            },
+                            "show": {
+                                "expression": "'${{params.show_flash}}' == '1'"
+                            },
+                            "props": {
+                                "width": "80%",
+                                "title": "企业投资及联营信息维护"
+                            }
+                        },
+                        {
+                            "type": "custom",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "us0303"
+                                }
+                            },
+                            "show": {
+                                "expression": "'${{params.show_flash}}' == '1'"
+                            },
+                            "confirm": {
+                                "title": "确定删除",
+                                "confirmButtonText": "确定",
+                                "cancelButtonText": "取消"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "pagination": {
+                "show": true
+            }
+        }
+    }
+}

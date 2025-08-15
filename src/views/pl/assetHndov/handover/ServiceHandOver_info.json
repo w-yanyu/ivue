@@ -1,0 +1,176 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "hand_prod_code": {
+            "control": "text",
+            "label": "移交产品类型"
+          },
+          "hndov_code": {
+            "control": "text",
+            "label": "移交编码"
+          },
+          "hndov_ste": {
+            "control": "select",
+            "label": "移交状态",
+            "dict": {
+              "dictType": "PL_E_ALTER_STATUS",
+              "dictKey": [
+                "PL_E_ALTER_STATUS"
+              ]
+            },
+            "format": "label"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/pl/assetHndov/handover/ServiceHandOver_add.json"
+          },
+          "props": {
+            "width": "65%",
+            "title": "业务移交启动新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pl0016"
+        }
+      },
+      "thead": [
+        {
+          "type": "selection",
+          "align": "center"
+        },
+        {
+          "label": "移交产品编号",
+          "prop": "hndov_code",
+          "align": "center"
+        },
+        {
+          "label": "移交产品类型",
+          "prop": "hand_prod_code",
+          "align": "center"
+        },
+        {
+          "label": "最新修改时间",
+          "prop": "data_update_time",
+          "align": "center"
+        },
+           {
+          "label": "移交状态",
+          "prop": "hndov_ste",
+          "align": "center",
+          "dict": {
+            "dictType": "PL_E_ALTER_STATUS",
+            "dictKey": [
+              "PL_E_ALTER_STATUS"
+            ]
+          },
+          "format": "label"
+        },
+        {
+          "label": "启动操作员",
+          "prop": "start_oprtr",
+          "align": "center"
+        },
+        {
+          "label": "启动机构",
+          "prop": "actvn_org",
+          "align": "center"
+        },
+        {
+          "label": "当前处理人",
+          "prop": "cur_agnt",
+          "align": "center"
+        },        {
+          "label": "当前处理步骤",
+          "prop": "cur_deal_step",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "align":"center",
+          "fixed": "right",
+          "width": 200,
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/pl/assetHndov/handover/ServiceHandOver_details.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "65%",
+                "title": "业务移交启动详情"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "show": {
+                "expression": "'${{current.hndov_ste}}' === '1'"
+              },
+              "toRequest": {
+                "url": "/views/pl/assetHndov/handover/ServiceHandOver_modify.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "65%",
+                "title": "业务移交明细"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "show": {
+                "expression": "'${{current.hndov_ste}}' === '1'"
+              },
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "pl0012"
+          
+                }
+              }
+            },
+            {
+              "type": "edit",
+              "label":  "流程启动",
+              "show": {
+                "expression": "'${{current.hndov_ste}}' === '1'"
+              },
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "pl0023",
+                  "hndov_code": "${{current.hndov_code}}",
+                  "hand_prod_code": "${{current.hand_prod_code}}"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

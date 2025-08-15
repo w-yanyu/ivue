@@ -1,0 +1,123 @@
+{
+  "module": "dynamicTabs",
+  "layout":
+  {
+    "tabs":
+    {
+      "initDataOnce": true,
+      "doRequest": {
+        "url":"/aaa"
+      },
+      "scope": "templateScope",
+      "tabHeader": [
+        {
+          "id": "baseInfo",
+          "scope": "baseInfo",
+          "label": "基本新息",
+          "closable": false,
+          "disabled": false,
+          "icon": "el-icon-date",
+          "toRequest":
+          {
+            "url": "/views/pl/repayWayChange/baseinfo.json",
+            "method": "get"
+          }
+        },
+        {
+          "id": "sublimitinfo",
+          "label": "放款信息",
+          "icon": "el-icon-date",
+          "closable": false,
+          "disabled": false,
+          "toRequest":
+          {
+            "url": "/views/pl/repayWayChange/sublimitinfo.json",
+            "method": "post",
+            "params":
+            {
+              "limit_code": "${{templateScope.baseInfo.limit_code}}"
+            }
+          }
+        },
+        {
+          "id": "reptinfo",
+          "label": "还款信息",
+          "icon": "el-icon-date",
+          "closable": false,
+          "disabled": false,
+          "toRequest":
+          {
+            "url": "/views/pl/repayWayChange/rpymt.json",
+            "method": "post",
+            "params":
+            {
+              "limit_code": "${{templateScope.baseInfo.limit_code}}"
+            }
+          }
+        },
+        {
+          "id": "matueinfo",
+          "label": "到期信息",
+          "icon": "el-icon-date",
+          "closable": false,
+          "disabled": false,
+          "toRequest":
+          {
+            "url": "/views/pl/repayWayChange/matu.json",
+            "method": "post",
+            "params":
+            {
+              "limit_code": "${{templateScope.baseInfo.limit_code}}"
+            }
+          }
+        },
+        {
+          "id": "priceinfo",
+          "label": "定价信息",
+          "icon": "el-icon-date",
+          "closable": false,
+          "disabled": false,
+          "toRequest":
+          {
+            "url": "/views/pl/repayWayChange/prcg.json",
+            "method": "post",
+            "params":
+            {
+              "limit_code": "${{templateScope.baseInfo.limit_code}}"
+            }
+          }
+        },
+        {
+          "id": "feeinfo",
+          "label": "罚金费用信息",
+          "icon": "el-icon-date",
+          "closable": false,
+          "disabled": false,
+          "toRequest":
+          {
+            "url": "/views/pl/repayWayChange/fee.json",
+            "method": "post",
+            "params":
+            {
+              "limit_code": "${{templateScope.baseInfo.limit_code}}"
+            }
+          }
+        }],
+      "defaultActiveKey": {
+        "condition": {
+          "conditionField": "${{params.id}}",
+          "switch": {
+            "110": "baseInfo",
+            "120": "sublimitinfo",
+            "130": "reptinfo",
+            "140": "matueinfo",
+            "150": "priceinfo",
+            "160": "feeinfo"
+          }
+        }
+      },
+      "position": "top",
+      "styleClass": "card"
+    }
+  }
+}

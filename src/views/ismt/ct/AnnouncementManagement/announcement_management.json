@@ -1,0 +1,150 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "opridd": {
+                        "label": "操作员编号",
+                        "control": "text",
+                        "rules": [
+                            {
+                                "max": 20,
+                                "message": "长度不能超过20个字符"
+                            }
+                        ]
+                    },
+                    "acrlid": {
+                        "label": "操作角色编号",
+                        "control": "text",
+                        "rules": [
+                            {
+                                "max": 64,
+                                "message": "长度不能超过64个字符"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "foldLineNumber": 3
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "target": "dialog",
+                    "label": "新增",
+                    "toRequest": {
+                        "method": "POST",
+                        "url": "/views/ismt/ct/AnnouncementManagement/announcement_management_add.json"
+                    },
+                    "props": {
+                        "width": "65%",
+                        "title": "公告信息新增"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "isInitSearch": false,
+            "scope": "searchTable",
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "AS_ICMS_CU_NOTIPZ",
+                    "trantp": "SELECT"
+                }
+            },
+            "thead": [
+                {
+                    "label": "序号",
+                    "type": "index"
+                },
+                {
+                    "label": "公告编号",
+                    "prop": "noticd"
+                },
+                {
+                    "label": "公告内容",
+                    "prop": "notina"
+                },
+                {
+                    "label": "公告类型",
+                    "prop": "notitp"
+                },
+                {
+                    "label": "操作员编号",
+                    "prop": "opridd"
+                },
+                {
+                    "label": "操作员名称",
+                    "prop": "userna"
+                },
+                {
+                    "label": "操作角色编号",
+                    "prop": "acrlid"
+                },
+                {
+                    "label": "操作角色名称",
+                    "prop": "acrlnm"
+                },
+                {
+                    "label": "通知时间",
+                    "prop": "ctratm",
+                    "type": "dateTimePicker"
+                },
+               
+                {
+                    "label": "处理状态",
+                    "prop": "infost",
+                    "type": "select",
+                    "dict": {
+                        "dictType": "E_DEALST",
+                        "dictKey": [
+                            "E_DEALST"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 200,
+                    "align":"center",
+                    "btns": [
+                     
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/ismt/ct/AnnouncementManagement/announcement_management_edit.json",
+                                "method": "post"
+                            },
+                            "props": {
+                                "width": "65%",
+                                "title": "公告信息维护"
+                            }
+                        },
+                       
+                        {
+                            "type": "delete",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "post",
+                                "params": {
+                                    "servicecode": "AS_ICMS_CU_NOTIPZ",
+                                    "trantp":"DELETE"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ],
+            "pagination": {
+                "show": true
+            }
+        }
+    }
+}

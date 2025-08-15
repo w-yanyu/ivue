@@ -1,0 +1,181 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "initRequest": "${{params}}",
+            "doRequest": {
+                "url": "",
+                "method": "POST",
+                "params": {}
+            },
+            "controls": [
+                {
+                    "appId": {
+                        "control": "string",
+                        "label": "业务模块",
+                        "selectFirstValue":true,
+                        "dict": {
+                            "dictType": "MS_APPID",
+                            "dictKey": [
+                                "MS_APPID"
+                            ],
+                            "format": "value-label"
+                        }
+                    },
+                    "busi_seq": {
+                        "control": "string",
+                          "label": "业务流水"
+                    }
+                },
+                {
+                    "authp_system_code": {
+                        "control": "text",
+                        "label": "授权体系编号",
+                        "rules": [
+                            {
+                                "max": 500,
+                                "message": "长度不能超过500个字符"
+                            }
+                        ]
+                    },
+                    "system_date": {
+                        "control": "dateTimePicker",
+                          "label": "交易日期"
+                    },
+                    "authp_type": {
+                        "control": "select",
+                          "label": "授权类型",
+                          "selectFirstValue":false,
+                          "dict": {
+                            "dictType": "CT_E_APPL_TYPE",
+                            "dictKey": [
+                                "CT_E_APPL_TYPE"
+                            ],
+                            "format": "label"
+                            }
+                    },
+                    "auth_check_result": {
+                        "control": "select",
+                        "label": "授权校验结果",
+                        "dict": {
+                            "dictType": "CT_E_AUTH_CHEK_RESULT",
+                            "dictKey": [
+                                "CT_E_AUTH_CHEK_RESULT"
+                            ],
+                            "format": "label"
+                        }
+                   },
+                    "role_id": {
+                       "control": "text",
+                       "label": "关联审批角色编号"
+                    },
+                    "branch_id": {
+                       "control": "text",
+                       "label": "机构号"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ct2423",
+                    "appId":"${{form.appId}}"
+                }
+            },
+            "pagination": {
+                "show": true,
+                "pageSize": 10
+            },
+            "thead": [
+                {
+                    "type": "index"
+                },
+                {
+                    "label": "业务授权日志编号",
+                    "prop": "authp_system_log_id"
+                },
+                {
+                    "label": "业务流水",
+                    "prop": "busi_seq"
+                },
+                {
+                    "label": "授权体系编号",
+                    "prop": "authp_system_code"
+                },
+                {
+                  "label": "授权体系名称",
+                  "prop": "authp_system_name"
+                },
+                {
+                    "prop": "authp_type",
+                    "label": "授权类型",
+                    "dict": {
+                        "dictType": "CT_E_APPL_TYPE",
+                        "dictKey": [
+                            "CT_E_APPL_TYPE"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "关联审批角色编号",
+                    "prop": "role_id"
+                },
+                {
+                    "label": "关联审批角色名称",
+                    "prop": "role_name"
+                },
+                {
+                  "label": "机构号",
+                  "prop": "branch_id"
+                },
+                {
+                  "label": "交易日期",
+                  "prop": "system_date"
+                },
+                {
+                  "label": "错误信息",
+                  "prop": "error_text"
+                },
+                {
+                    "label": "授权校验结果",
+                    "prop": "auth_check_result",
+                    "dict": {
+                        "dictType": "CT_E_AUTH_CHEK_RESULT",
+                        "dictKey": [
+                            "CT_E_AUTH_CHEK_RESULT"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "align": "center",
+                    "btns": [
+                      {
+                        "type": "look",
+                        "label": "详情",
+                        "toRequest": {
+                          "url": "/views/ismt/ct/busiAuth/authOperaLog/authb_rule_dimension_log_manager.json",
+                          "method": "POST",
+                          "params": {
+                            "appId":"${{params.appId}}"
+                          }
+                        },
+                        "props": {
+                          "width": "65%",
+                          "title": "详情"
+                        }
+                      }
+                    ]
+                }
+            ]
+        }
+    }
+  }

@@ -1,0 +1,207 @@
+{
+    "module": "d-steps",
+    "layout": {
+        "steps": {
+            "scope":"formObj",
+            "direction": "horizontal",
+            "alignCenter": true,
+            "finishStatus": "success",
+            "simpleType": false,
+            "skip": true,
+            "nextStepType": "validate",
+            "list": [
+                {
+                    "scope":"step1",
+                    "title": "合作方证件信息检查",
+                    "icon": "el-icon-edit",
+                    "toRequest": {
+                        "url": "/views/pm/pm_information_uphold/pm_information_uphold_addcheck.json",
+                        "method": "get"
+                    },
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "post",
+                        "params": {
+                            "servicecode":"qrbshn"
+                        },
+                        "resultSet": {
+                            "opcred": "opcred",
+                            "cmcrno": "cmcrno",
+                            "channel": "channel"
+                            
+                        }
+                    }
+                },
+                {
+                    "scope":"step2",
+                    "title": "基本信息",
+                    "icon": "el-icon-edit",
+                    "toRequest": {
+                        "url": "/views/pm/pm_information_uphold/pm_information_uphold_addbasicinfo.json",
+                        "method": "get"
+                    },
+                    "doRequest":{
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "post",
+                        "params":{
+                           
+                            "servicecode": "svbase"
+                        },
+                        "resultSet": {
+                            
+                            "seqnum": "seqnum"
+                        }
+                    }
+                   
+                },
+                {
+                    "scope":"step3",
+                    "title": "联系信息",
+                    "icon": "el-icon-edit",
+                    "toRequest": {
+                        "url": "/views/pm/pm_information_uphold/pm_information_uphold_addcontactinfo.json",
+                        "method": "get","params": {
+                            "belorg":"${{formObj.step2.belorg}}",
+                            "ofpacd":"${{formObj.step2.ofpacd}}"
+                        }
+                    },
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "post",
+                        "params": {
+                            "servicecode": "svconn"
+                        },
+                        "resultSet": {
+                            "seqnum": "seqnum"
+                            
+                        }
+                    }
+                },
+                {
+                    "scope":"step4",
+                    "title": "地址信息",
+                    "icon": "el-icon-edit",
+                    "toRequest": {
+                        "url": "/views/pm/pm_information_uphold/pm_information_uphold_addaddressinfo.json",
+                        "method": "get",
+                        "params": {
+                            "belorg":"${{formObj.step3.belorg}}",
+                            "ofpacd":"${{formObj.step3.ofpacd}}",
+                            "seqnum":"${{formObj.step3.seqnum}}"
+                            
+                        }
+                    },
+                    "doRequest": {
+                      "url": "/SUMP/icmcall/icmRPCCall",
+                      "method": "POST",
+                      "params": {
+                        "servicecode": "svaddr"
+                      }
+                    }
+                },
+                {
+                    "scope":"step5",
+                    "title": "扩展信息",
+                    "icon": "el-icon-edit",
+                    "toRequest": {
+                        "url": "/views/pm/pm_information_uphold/pm_information_uphold_addextensioninfo.json",
+                        "method": "get",
+                        "params": {
+                            "belorg":"${{formObj.step4.belorg}}",
+                            "ofpacd":"${{formObj.step4.ofpacd}}",
+                            "seqnum":"${{formObj.step4.seqnum}}"
+                        }
+                    },
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                          "servicecode": "svtend"
+                        }
+                    }
+                },
+                {
+                    "scope":"step8",
+                    "title": "合作方体系信息",
+                    "icon": "el-icon-edit",
+                    "toRequest": {
+                        "url": "/views/pm/pm_information_uphold/pm_information_uphold_partstr.json",
+                        "method": "get",
+                        "params": {
+                            "ofpacd":"${{formObj.step5.ofpacd}}",
+                            "seqnum":"${{formObj.step5.seqnum}}"
+                        }
+                    },
+                    "#doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                          "servicecode": "svothe"
+                        }
+                    }
+                },
+                {
+                    "scope":"step9",
+                    "title": "合作方敞口信息",
+                    "icon": "el-icon-edit",
+                    "toRequest": {
+                        "url": "/views/pm/pm_information_uphold/pm_information_uphold_expinfo.json",
+                        "method": "get",
+                        "params": {
+                            "ofpacd":"${{formObj.step5.ofpacd}}",
+                            "seqnum":"${{formObj.step5.seqnum}}"
+                        }
+                    },
+                    "#doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                          "servicecode": "svothe"
+                        }
+                    }
+                },
+                {
+                    "scope":"step10",
+                    "title": "合作方账户信息",
+                    "icon": "el-icon-edit",
+                    "toRequest": {
+                        "url": "/views/pm/pm_information_uphold/pm_information_uphold_addoffacc.json",
+                        "method": "get",
+                        "params": {
+                            "ofpacd":"${{formObj.step5.ofpacd}}"
+                        }
+                    },
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                          "servicecode": "accupt",
+                          "ofpacd":"${{formObj.step5.ofpacd}}"
+                        }
+                    }
+                },
+                {
+                    "scope":"step7",
+                    "title": "提交审核",
+                    "icon": "el-icon-edit",
+                    "toRequest": {
+                        "url": "/views/pm/pm_information_uphold/pm_information_uphold_addsubauditinfo.json",
+                        "method": "get",
+                        "params": {
+                             "belorg":"${{formObj.step4.belorg}}",
+                             "ofpacd":"${{formObj.step5.ofpacd}}",
+                             "seqnum":"${{formObj.step4.seqnum}}"
+                        }
+                    },
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                          "servicecode": "apbase"
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

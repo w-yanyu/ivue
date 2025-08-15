@@ -1,0 +1,166 @@
+{
+  "module": "v_form_btn_dynamic",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "us1226",
+          "famliy_cd": "${{params.famliy_cd}}"
+        }
+      },
+      "controls": [
+        {
+          "famliy_cd": {
+            "control": "text",
+            "label": "户口号",
+            "span": 8,
+            "width": "25px",
+            "disabled": true
+          },
+          "cust_name": {
+            "control": "text",
+            "label": "户主名",
+            "span": 8,
+            "width": "25px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入户主名"
+              },
+              {
+                "max": 30,
+                "message": "长度不能超过30个字符"
+              }
+            ]
+          },
+          "famliy_num": {
+            "control": "text",
+            "label": "家庭人口（人）",
+            "span": 8,
+            "width": "25px",
+            "rules": [
+              {
+                "type": "number",
+                "message": "请输入整数"
+              }
+            ]
+          }
+        },
+        {
+          "sex_tp": {
+            "control": "select",
+            "label": "性别",
+            "span": 8,
+            "width": "25px",
+            "dict": {
+              "dictType": "MS_E_GENDER",
+              "dictKey": [
+                "MS_E_GENDER"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入性别"
+              }
+            ]
+          },
+          "cert_type": {
+            "control": "select",
+            "label": "证件类型",
+            "span": 8,
+            "width": "25px",
+            "dict": {
+              "dictType": "MS_E_CRET_TYPE",
+              "dictKey": [
+                "MS_E_CRET_TYPE"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入证件类型"
+              }
+            ]
+          },
+          "cert_no": {
+            "control": "text",
+            "label": "证件号码",
+            "span": 8,
+            "width": "25px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入证件号码"
+              },
+              {
+                "max": 25,
+                "message": "长度不能超过18个字符"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "submit",
+          "label": "保存",
+          "unplain": true,
+          "icon": "",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "us1227",
+              "is_head_of_famliy": "1",
+              "famliy_relation": "1"
+            }
+          },
+          "toRequest": {
+            "url": "/views/us/creditGroup/famliy/famliy_manage.json",
+            "method": "POST",
+            "params": {
+              "famliy_cd": "${{formData.famliy_cd}}",
+              "show_flash": "${{params.show_flash}}"
+            }
+          }
+        },
+        {
+          "type": "submit",
+          "label": "跳过",
+          "unplain": true,
+          "icon": "",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "us1225",
+              "famliy_cd": "${{formData.famliy_cd}}"
+            }
+          },
+          "toRequest": {
+            "url": "/views/us/creditGroup/famliy/famliy_manage.json",
+            "method": "POST",
+            "params": {
+              "famliy_cd": "${{formData.famliy_cd}}",
+              "show_flash": "${{params.show_flash}}"
+            }
+          }
+        },
+        {
+          "type": "reset",
+          "btnStyle": "success",
+          "icon": "",
+          "label": "重置"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,182 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "modu_code": {
+            "control": "text",
+            "label": "模块代码",
+            "rules": [
+              {
+                "max": 18,
+                "message": "长度不能超过18个字符"
+              }
+            ]
+          },
+          "data_class_code": {
+            "control": "text",
+            "label": "数据类代码",
+            "rules": [
+              {
+                "max": 80,
+                "message": "长度不能超过80个字符"
+              }
+            ]
+          }
+        },
+        {
+          "data_code": {
+            "control": "text",
+            "label": "数据代码",
+            "rules": [
+              {
+                "max": 18,
+                "message": "长度不能超过18个字符"
+              }
+            ]
+          },
+          "data_nm": {
+            "control": "text",
+            "label": "数据名称",
+            "rules": [
+              {
+                "max": 80,
+                "message": "长度不能超过80个字符"
+              }
+            ]
+          }
+        },
+        {
+          "data_comt": {
+            "control": "text",
+            "label": "数据说明",
+            "rules": [
+              {
+                "max": 18,
+                "message": "长度不能超过18个字符"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/paramManage/loanDataDef/loan_data_def_add.json"
+          },
+          "props": {
+            "title": "新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ap0000",
+          "parm_tab_nm": "klnp_data_defn",
+          "dtbs_oprn_flg": "3",
+          "data_pkg": "${{current}}"
+        }
+      },
+      "thead": [
+        {
+          "label": "模块代码",
+          "prop": "modu_code",
+          "align": "center"
+        },
+        {
+          "label": "数据类代码",
+          "prop": "data_class_code",
+          "align": "center"
+        },
+        {
+          "label": "数据代码",
+          "prop": "data_code",
+          "align": "center"
+        },
+        {
+          "label": "数据名称",
+          "prop": "data_nm",
+          "align": "center"
+        },
+        {
+          "label": "序号",
+          "prop": "serl_num_long",
+          "align": "center"
+        },
+        {
+          "label": "数据说明",
+          "prop": "data_comt",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align": "center",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/paramManage/loanDataDef/loan_data_def_info.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "50%",
+                "title": "基础产品信息详情"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "views/paramManage/loanDataDef/loan_data_def_update.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "50%",
+                "title": "基础产品信息维护"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "ap0000",
+                  "parm_tab_nm": "klnp_data_defn",
+                  "dtbs_oprn_flg": "2",
+                  "data_pkg": {
+                    "data_class_code":"${{current.data_class_code}}",
+                    "modu_code": "${{current.modu_code}}",
+                    "data_code": "${{current.data_code}}"
+                  }
+                }
+              },
+              "confirm": {
+                "title": "确定删除",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

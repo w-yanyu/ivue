@@ -1,0 +1,474 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "name": "detail",
+      "initRequest": "${{params}}",
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "wa1102",
+              "check_numbers": "${{detail.check_numbers}}",
+              "trantp": "UPDATE"
+            }
+          }
+        }
+      ],
+      "controlsGroup": [
+        {
+          "title": "筛选策略基本信息",
+          "tooltip": "",
+          "titleIcon": "",
+          "showHint": "",
+          "accordion": false,
+          "expand": true,
+          "controls": [
+            {
+              "strategy_name": {
+                "label": "策略名称",
+                "control": "text",
+                "span": "8",
+                "width": "25px",
+                "format": "label",
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请输入策略名称"
+                  }
+                ]
+              },
+              "validity": {
+                "label": "是否启用",
+                "control": "select",
+                "span": "8",
+                "width": "25px",
+                "multiple": false,
+                "dict": {
+                  "dictType": "MS_E_YESORNO",
+                  "dictKey": [
+                    "MS_E_YESORNO"
+                  ],
+                  "format": "label"
+                },
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请选择是否启用"
+                  }
+                ]
+              },
+              "check_style": {
+                "label": "抽取方式",
+                "control": "select",
+                "span": "8",
+                "width": "25px",
+                "multiple": false,
+                "dict": {
+                  "dictType": "E_CHOOSE_TYPE",
+                  "dictKey": [
+                    "E_CHOOSE_TYPE"
+                  ],
+                  "format": "label"
+                },
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请选择抽取方式"
+                  }
+                ],
+                "events": {
+                  "condition": {
+                      "C": {
+                          "control": {
+                              "check_number": {
+                                "label": "抽取数量"
+                              }
+                          }
+                      },
+                      "R": {
+                          "control": {
+                              "check_number": {
+                               
+                                    "label": "抽取比例(%)"
+                                  
+                              }
+                          }
+                      }
+                  }
+                }
+              }
+            },
+            {
+              "check_number": {
+                "label": "抽取数量",
+                "span": "8",
+                "width": "25px",
+                "control": "text",
+                "format": "label",
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请选择抽取数量"
+                  },
+                  {
+                    "expression": " ${{form.check_number}} >=  0 ",
+                    "message": "不能小于零"
+                  }
+                ]
+              },
+              "product_code": {
+                "label": "产品编码",
+                "span": "8",
+                "width": "25px",
+                "control": "lookup",
+                "edit": true,
+                "disable": "true",
+                "keyField": {
+                  "product_code": "product_code"
+                },
+                "toRequest": {
+                  "url": "/views/dh/warn/param/filter/tranferProduct.json",
+                  "method": "post"
+                },
+                "props": {
+                  "title": "选择产品编码"
+                },
+                "format": "label"
+              },
+              "cooperation_org": {
+                "label": "合作机构",
+                "control": "text",
+                "width": "25px",
+                "format": "label",
+                "span": "8"
+              },
+              "cooperation_shop": {
+                "label": "合作门店",
+                "control": "text",
+                "format": "label",
+                "span": "8",
+                "width": "25px"
+              }
+            }
+          ]
+        },
+        {
+          "title": "筛选策略借据信息",
+          "tooltip": "",
+          "titleIcon": "",
+          "showHint": "",
+          "expand": true,
+          "controls": [
+            {
+              "credit_granting_start": {
+                "label": "授信区间(元)",
+                "control": "currency",
+                "width": "25px",
+                "suffix": "元",
+                "span": "5",
+                "thousand": ",",
+                "rules": [
+                  {
+                    "expression": " ${{form.credit_granting_start}} >=  0 ",
+                    "message": "授信区间初值不能小于零"
+                  }
+                ]
+                
+              },
+              "credit_granting_end": {
+                "label": "至",
+                "width": "25px",
+                "control": "currency",
+                "suffix": "元",
+                "span": "7",
+                "thousand": ",",
+                "rules": [
+                  {
+                    "expression": " ${{form.credit_granting_end}} >=  ${{form.credit_granting_start}} ",
+                    "message": "授信区间末值不能小于初值"
+                  },
+                  {
+                    "expression": " ${{form.credit_granting_end}} >=  0 ",
+                    "message": "授信区间末值不能小于零"
+                  }
+                ]
+              },
+              "loan_amount_start": {
+                "label": "贷款金额(元)",
+                "width": "25px",
+                "control": "currency",
+                "span": "5",
+                "thousand": ",",
+                "rules": [
+                  {
+                    "expression": " ${{form.loan_amount_start}} >=  0 ",
+                    "message": "贷款金额初值不能小于零"
+                  }
+                ]
+              },
+              "loan_amount_end": {
+                "label": "至",
+                "width": "25px",
+                "span": "3",
+                "control": "currency",
+                "thousand": ",",
+                "rules": [
+                  {
+                    "expression": " ${{form.loan_amount_end}} >=  ${{form.loan_amount_start}} ",
+                    "message": "贷款金额末值不能小于初值"
+                  },
+                  {
+                    "expression": " ${{form.loan_amount_end}} >=  0 ",
+                    "message": "贷款金额末值不能小于零"
+                  }
+                ]
+              },
+              "loan_balance_start": {
+                "label": "贷款余额(元)",
+                "width": "25px",
+                "control": "currency",
+                "span": "5",
+                "thousand": ",",
+                "rules": [
+                  {
+                    "expression": " ${{form.loan_balance_start}} >=  0 ",
+                    "message": "贷款余额初值不能小于零"
+                  }
+                ]
+              },
+              "loan_balance_end": {
+                "label": "至",
+                "width": "25px",
+                "control": "currency",
+                "span": "7",
+                "thousand": ",",
+                "rules": [
+                  {
+                    "expression": " ${{form.loan_balance_end}} >=  ${{form.loan_balance_start}} ",
+                    "message": "贷款余额末值不能小于初值"
+                  },
+                  {
+                    "expression": " ${{form.loan_balance_end}} >=  0 ",
+                    "message": "贷款余额末值不能小于零"
+                  }
+                ]
+              },
+              "loan_period_start": {
+                "label": "贷款期数(天)",
+                "control": "text",
+                "width": "25px",
+                "span": "5",
+                "format": "label",
+                "rules": [
+                  {
+                    "expression": " ${{form.loan_period_start}} >=  0 ",
+                    "message": "贷款期数初值不能小于零"
+                  },
+                  {
+                    "pattern": "^[1-9]+[0-9]*$",
+                    "message": "请输入整数"
+                  }
+                ]
+              },
+              "loan_period_end": {
+                "label": "至",
+                "control": "text",
+                "width": "25px",
+                "span": "3",
+                "format": "label",
+                "rules": [
+                  {
+                    "expression": " ${{form.loan_period_end}} >=  ${{form.loan_period_start}} ",
+                    "message": "贷款期数末值不能小于初值"
+                  },
+                  {
+                    "expression": " ${{form.loan_period_end}} > 0 ",
+                    "message": "贷款期数末值不能小于零"
+                  },
+                  {
+                    "pattern": "^[1-9]+[0-9]*$",
+                    "message": "请输入整数"
+                  }
+                ]
+              },
+              "overdue_amount_start": {
+                "label": "逾期金额(元)",
+                "span": "5",
+                "control": "currency",
+                "suffix": "元",
+                "width": "25px",
+                "thousand": ",",
+                "rules": [
+                  {
+                    "expression": " ${{form.overdue_amount_start}} >=  0 ",
+                    "message": "逾期金额初值不能小于零"
+                  }
+                ]
+              },
+              "overdue_amount_end": {
+                "label": "至",
+                "span": "7",
+                "control": "currency",
+                "suffix": "元",
+                "width": "25px",
+                "thousand": ",",
+                "rules": [
+                  {
+                    "expression": " ${{form.overdue_amount_end}} >=  ${{form.overdue_amount_start}} ",
+                    "message": "逾期金额末值不能小于初值"
+                  },
+                  {
+                    "expression": " ${{form.overdue_amount_end}} >=  0 ",
+                    "message": "逾期金额末值不能小于零"
+                  }
+                ]
+              },
+              "overdue_period_start": {
+                "label": "逾期期数(天)",
+                "control": "text",
+                "span": "5",
+                "width": "25px",
+                "format": "label",
+                "rules": [
+                  {
+                    "expression": " ${{form.overdue_period_start}} >=  0 ",
+                    "message": "逾期期数初值不能小于零"
+                  },
+                  {
+                    "pattern": "^[1-9]+[0-9]*$",
+                    "message": "请输入整数"
+                  }
+                ]
+              },
+              "overdue_period_end": {
+                "label": "至",
+                "control": "text",
+                "span": "3",
+                "width": "25px",
+                "format": "label",
+                "rules": [
+                  {
+                    "expression": " ${{form.overdue_period_end}} >=  ${{form.overdue_period_start}} ",
+                    "message": "逾期期数末值不能小于初值"
+                  },
+                  {
+                    "expression": " ${{form.overdue_period_end}} >=  0 ",
+                    "message": "逾期期数末值不能小于零"
+                  },
+                  {
+                    "pattern": "^[1-9]+[0-9]*$",
+                    "message": "请输入整数"
+                  }
+                ]
+              }
+            },
+            {
+              "termfm_type": {
+                "label": "贷款期数类型",
+                "control": "select",
+                "multiple": false,
+                "span": "8",
+                "width": "25px",
+                "dict": {
+                  "dictType": "E_TERMFM_TYPE",
+                  "dictKey": [
+                    "E_TERMFM_TYPE"
+                  ],
+                  "format": "label"
+                }
+              },
+              "dataRange": {
+                "control": "dateTimePicker",
+                "label": "贷款放款日期",
+                "span": "8",
+                "width": "25px",
+                "type": "daterange",
+                "startPlaceholder": "起始日期",
+                "endPlaceholder": "到期日期",
+                "startField": "loan_grant_date_start",
+                "endField": "loan_grant_date_end",
+                "valueFormat": "yyyMMdd"
+              },
+           
+              "asset_classify": {
+                "label": "资产分类",
+                "control": "select",
+                "multiple": false,
+                "span": "8",
+                "width": "25px",
+                "dict": {
+                  "dictType": "E_CLASSIFY",
+                  "dictKey": [
+                    "E_CLASSIFY"
+                  ],
+                  "format": "label"
+                }
+              },
+              "excl_freezing_ind": {
+                "label": "是否排除冻结",
+                "control": "select",
+                "multiple": false,
+                "span": "8",
+                "width": "25px",
+                "dict": {
+                  "dictType": "MS_E_YESORNO",
+                  "dictKey": [
+                    "MS_E_YESORNO"
+                  ],
+                  "format": "label"
+                }
+              },
+              "strategy_id": {
+                "label": "策略id",
+                "control": "hidden",
+                "format": "label",
+                "value": "1"
+              },
+              "register_province": {
+                "label": "户籍地址(省)",
+                "control": "hidden",
+                "span": "10",
+                "edit": true,
+                "disable": "true",
+                "keyField": {
+                  "register_province": "product_code"
+                },
+                "toRequest": {
+                  "url": "/pte/json/v_search_btn_datagrid/add.json",
+                  "method": "get",
+                  "params": {
+                    "btnDdd": "${{form.province}}",
+                    "btnname": "静态"
+                  }
+                },
+                "props": {
+                  "title": "选择产品编码"
+                },
+                "format": "label"
+              },
+              "register_city": {
+                "label": "户籍地址",
+                "control": "hidden",
+                "format": "label",
+                "doRequest": {
+                  "url": "/pte/json/v_search_btn_datagrid/add.json",
+                  "method": "get",
+                  "params": {
+                    "register_province": "${{form.province}}",
+                    "register_city": "${{form.city}}",
+                    "btnname": "静态"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

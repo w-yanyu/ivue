@@ -1,0 +1,125 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "ar0128"
+        }
+      },
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交"
+        }
+      ],
+      "controls": [
+        {
+          "prod_name": {
+            "control": "lookup",
+            "label": "产品名称",
+            "width": "130px",
+            "edit": true,
+            "rules": [
+              {
+                "required": true,
+                "message": "产品名称不能为空!"
+              }
+            ],
+            "keyField": {
+              "prod_name": "sale_prod_name",
+              "prod_cd": "sale_prod_cd"
+            },
+            "toRequest": {
+              "url": "/views/icms/flowStart/credit_sell_product_lookup.json",
+              "method": "get",
+              "params": {
+                "cust_class_list":""
+              }
+            },
+            "props": {
+              "title": "选择授信产品",
+              "width": "75%"
+            },
+            "events": {
+              "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "ar0834"
+                },
+                "resultSet": {
+
+                }
+              }
+            }
+          },
+          "prod_cd": {
+            "control": "text",
+            "label": "产品编号",
+            "disabled": true,
+            "width": "130px",
+            "rules": [
+              {
+                "required": false,
+                "message": "证件号码不能为空!"
+              }
+            ]
+          },"apply_type": {
+            "control": "text",
+            "label": "申请类型",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择申请类型"
+              }
+            ]
+        },
+          "frame_cd": {
+            "label": "框架编号",
+            "control": "text",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入框架编号"
+              }
+            ]
+          },
+          "frame_desc": {
+            "label": "框架名称",
+            "control": "text",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入框架描述"
+              }
+            ]
+          },
+          "is_enabled": {
+            "control": "select",
+            "label": "是否生效",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            },
+            "width": "130px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择是否生效"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

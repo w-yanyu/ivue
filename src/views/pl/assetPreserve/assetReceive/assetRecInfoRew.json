@@ -1,0 +1,159 @@
+{
+  "module": "v-inputDataForm-btn",
+  "layout": {
+    "form": {
+      "scope": "form",
+      "initRequest": {
+        "method": "POST",
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "params": {
+          "servicecode": "pl0263"
+        }
+      },
+      "doRequest": {
+        "method": "POST",
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "params": {
+          "servicecode": "pl0264",
+          "apply_no":"${{params.apply_no}}"
+        }
+      },
+      "btns": [
+
+      ],
+      "controls": [
+        {
+          "cust_nm": {
+            "control": "text",
+            "label": "抵债人名称",
+            "value": "${{params.cust_name}}",
+            "disabled": true
+          },
+          "cust_no": {
+            "control": "hidden",
+            "label": "客户序号",
+            "value": "${{params.cust_id}}",
+            "disabled": true
+          },
+          "debt_asset_num": {
+            "control": "lookup",
+            "label": "抵债资产编号",
+            "format": "label",
+            "disabled": true
+          }
+        },
+        {
+          "asset_cust_nm": {
+            "control": "text",
+            "label": "资产归属客户",
+            "disabled": true
+          },
+          "hypth_debt_goods_mterls_class": {
+            "control": "select",
+            "label": "抵债资产类别",
+            "disabled": true,
+            "dict": {
+              "dictType": "Pl_E_HYPTH_DEBT_GOODS_MTERLS_CLASS",
+              "dictKey": [
+                "Pl_E_HYPTH_DEBT_GOODS_MTERLS_CLASS"
+              ],
+              "format": "value-label"
+            }
+
+          },
+          "asset_cust_num": {
+            "control": "hidden",
+            "label": "资产归属客户编号",
+            "disabled": true
+          }
+        },
+        {
+          "debt_asset_qty": {
+            "control": "text",
+            "disabled": true,
+            "label": "抵债资产数量"
+          },
+          "wait_trfr_debt_asset": {
+            "control": "text",
+            "label": "代保管抵债资产金额",
+            "disabled": true,
+            "format":{
+              "thousand": ",",
+              "decimal": 3
+            }
+          }
+        },
+        {
+
+          "wait_deal_debt_asset_amt": {
+            "disabled": true,
+            "control": "text",
+            "label": "待处理抵债资产金额",
+            "format":{
+              "thousand": ",",
+              "decimal": 3
+            }
+          },
+          "fee_rpymt_amt": {
+            "control": "text",
+            "label": "还费金额",
+            "disabled": true,
+            "format":{
+              "thousand": ",",
+              "decimal": 3
+            }
+          }
+        },
+        {
+
+          "prcpl_rpymt_amt": {
+            "disabled": true,
+            "control": "text",
+            "label": "还本金额",
+            "format":{
+              "thousand": ",",
+              "decimal": 3
+            }
+          },
+          "int_rpymt_amt": {
+            "control": "text",
+            "label": "还息金额",
+            "disabled": true,
+            "format":{
+              "thousand": ",",
+              "decimal": 3
+            }
+          }
+        },
+        {
+          "atchmt_file": {
+            "control": "hidden"
+          },
+          "btn1": {
+            "control": "button",
+            "text": "点击下载",
+            "label": "附件下载",
+            "type": "export",
+            "doRequest": {
+              "url": "/SUMP/minioCall/download",
+              "method": "GET",
+              "params": {
+                "path": "${{form.atchmt_file}}",
+                "fileName": "文件"
+              }
+            }
+          }
+
+        },
+        {
+          "remark": {
+            "control": "textarea",
+            "disabled": true,
+            "span": "24",
+            "label": "备注"
+          }
+        }
+      ]
+    }
+  }
+}

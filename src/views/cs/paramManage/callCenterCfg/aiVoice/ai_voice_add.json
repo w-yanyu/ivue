@@ -1,0 +1,274 @@
+{
+  "module": "v-inputDataForm-btn",
+  "layout": {
+    "form": {
+      "name": "list01",
+      "initRequest": "${{params}}",
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "doRequest": {
+            "url": "/SUMP/call/RPCCall",
+            "method": "post",
+            "params": {
+              "servicecode": "cb0055",
+              "appId": "cbOnl",
+              "service_type": "A"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "service_code": {
+            "label": "主API服务",
+            "control": "remoteSelect",
+            "labelField": "api_desc",
+            "valueField": "api_name",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2550",
+                "server_range": "csOnl"
+
+              }
+            },
+            "events": {
+              "emit": [
+                "service_name",
+                "request_url"
+
+              ]
+            },
+            "format": "value",
+            "rules": [
+              {
+                "message": "主API服务不能为空",
+                "required": true
+              }
+            ]
+          },
+          "service_name": {
+            "label": "API服务描述",
+            "allowCreate": true,
+            "control": "remoteSelect",
+            "labelField": "api_name",
+            "valueField": "api_desc",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2550",
+                "server_range": "csOnl",
+                "api_name": "${{form.service_code}}"
+              }
+            },
+            "format": "value",
+            "rules": [
+              {
+                "message": "API服务描述不能为空",
+                "required": true
+              }
+            ]
+          }
+        },
+        {
+          "account_name": {
+            "control": "text",
+            "label": "账号",
+            "rules": [
+              {
+                "max": 20,
+                "message": "长度不能超过20个字符"
+              },
+              {
+                "message": "账号不能为空",
+                "required": false
+              }
+            ]
+          },
+          "account_password": {
+            "control": "text",
+            "label": "密码",
+            "rules": [
+              {
+                "max": 100,
+                "message": "长度不能超过100个字符"
+              },
+              {
+                "message": "密码不能为空",
+                "required": false
+              }
+            ]
+          }
+        },
+        {
+          "request_url": {
+            "label": "请求地址",
+            "allowCreate": true,
+            "control": "remoteSelect",
+            "labelField": "api_desc",
+            "valueField": "api_path",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2550",
+                "server_range": "csOnl",
+                "api_name": "${{form.service_code}}"
+              }
+            },
+            "format": "value",
+            "rules": [
+              {
+                "message": "请求地址不能为空",
+                "required": true
+              }
+            ]
+          },
+          "return_url1": {
+            "control": "text",
+            "label": "回推地址1",
+            "rules": [
+              {
+                "max": 120,
+                "message": "长度不能超过120个字符"
+              },
+              {
+                "message": "回推地址1不能为空",
+                "required": false
+              }
+            ]
+          }
+        },
+        {
+          "return_url2": {
+            "control": "text",
+            "label": "回推地址2",
+            "rules": [
+              {
+                "max": 120,
+                "message": "长度不能超过120个字符"
+              },
+              {
+                "message": "回推地址2不能为空",
+                "required": false
+              }
+            ]
+          },
+          "remarks": {
+            "control": "text",
+            "label": "备注",
+            "rules": [
+              {
+                "max": 120,
+                "message": "长度不能超过120个字符"
+              },
+              {
+                "message": "备注名称不能为空",
+                "required": false
+              }
+            ]
+          }
+        },
+        {
+          "weight": {
+            "control": "inputNumber",
+            "min": 0,
+            "max": 100,
+            "label": "权重",
+            "rules": [
+              {
+                "message": "权重不能为空",
+                "required": true
+              }
+            ]
+          },
+          "status": {
+            "control": "select",
+            "label": "状态",
+            "dict": {
+              "dictType": "CS_CALLSER_STATUS",
+              "dictKey": [
+                "CS_CALLSER_STATUS"
+              ],
+              "format": "value-label"
+            },
+            "rules": [
+              {
+                "message": "状态不能为空",
+                "required": true
+              }
+            ]
+          }
+        },
+        {
+          "defer_time": {
+            "control": "inputNumber",
+            "min": 0,
+            "max": 1000000,
+            "label": "延迟时间(ms)",
+            "rules": [
+              {
+                "message": "延迟时间不能为空",
+                "required": false
+              }
+            ]
+          },
+          "max_erial_num": {
+            "control": "inputNumber",
+            "min": 0,
+            "max": 1000,
+            "label": "最大串行数",
+            "rules": [
+              {
+                "message": "最大串行数不能为空",
+                "required": false
+              }
+            ]
+          }
+        },
+        {
+          "service_type": {
+            "control": "select",
+            "label": "服务类型",
+            "align": "center",
+            "dict": {
+              "dictType": "CS_CALLSER_TYPE",
+              "dictKey": [
+                "CS_CALLSER_TYPE"
+              ],
+              "format": "value-label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择服务类型"
+              }
+            ]
+          },
+          "channel_type": {
+            "control": "select",
+            "label": "通道类型",
+            "align": "center",
+            "dict": {
+              "dictType": "CS_CALLSER_CHANNEL",
+              "dictKey": [
+                "CS_CALLSER_CHANNEL"
+              ],
+              "format": "value-label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择通道类型"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

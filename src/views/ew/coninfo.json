@@ -1,0 +1,155 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "datagrid": {
+      "isInitSearch": true,
+      "scope": "searchTable",
+      "doRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ew3163",
+          "case_id": "${{params.case_id}}",
+          "method": "queryAll"
+        }
+      },
+      "thead": [
+        {
+          "label": "合同编号",
+          "align": "center",
+          "width": "180px",
+          "prop": "contno"
+        },
+        {
+          "label": "产品名称",
+          "align": "center",
+          "width": "150px",
+          "prop": "prodname"
+        },
+        {
+          "label": "合同金额(元)",
+          "align": "center",
+          "prop": "conttotalamt"
+        },
+        {
+          "label": "合同可用余额(元)",
+          "align": "center",
+          "prop": "conttouseamt"
+        },
+        {
+          "label": "合同类型",
+          "align": "center",
+          "prop": "conttype",
+          "dict": {
+            "dictType": "PL_CONT_TYPE",
+            "dictKey": [
+              "PL_CONT_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "用款方式",
+          "align": "center",
+          "prop": "useamtkind",
+          "dict": {
+            "dictType": "PL_USERSAMT_KIND",
+            "dictKey": [
+              "PL_USERSAMT_KIND"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "担保方式",
+          "prop": "assukind",
+          "dict": {
+            "dictType": "EW_E_GUAR_TYPE",
+            "dictKey": [
+              "EW_E_GUAR_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "起始日期",
+          "align": "center",
+          "width": "120px",
+          "prop": "begindate"
+        },
+        {
+          "label": "到期日期",
+          "align": "center",
+          "width": "120px",
+          "prop": "enddate"
+        },
+        {
+          "label": "贷款用途",
+          "align": "center",
+          "prop": "loanuseremark",
+          "dict": {
+            "dictType": "PL_LOAN_USE",
+            "dictKey": [
+              "PL_LOAN_USE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width": "180px",
+          "label": "还款方式",
+          "prop": "retukind",
+          "dict": {
+            "dictType": "AR_E_RETUKIND",
+            "dictKey": [
+              "AR_E_RETUKIND"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "客户经理",
+          "align": "center",
+          "prop": "bkuse1"
+        },
+        {
+          "label": "机构名称",
+          "align": "center",
+          "width": "220px",
+          "prop": "bkuse2"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 120,
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/ew/coninfoTab.json",
+                "method": "post",
+                "params": {
+                  "contno": "${{current.contno}}",
+                  "case_id": "${{params.case_id}}"
+                }
+              },
+              "props": {
+                "width": "85%",
+                "title": "详情"
+              }
+            }
+          ]
+        }
+      ],
+      "pagination": {
+        "show": false
+      }
+    }
+  }
+}

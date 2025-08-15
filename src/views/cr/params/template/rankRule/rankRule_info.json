@@ -1,0 +1,135 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "toolbar": {
+            "btns": [{
+                "type": "add",
+                "target": "dialog",
+                "label": "新增",
+                "toRequest": {
+                    "method": "GET",
+                    "url": "/views/cr/params/template/rankRule/rankRule_add.json",
+                    "params": {
+                        "temp_id": "${{params.temp_id}}"
+                    }
+                },
+                "show": {
+                    "expression": "'${{params.is_valid}}' == '0'"
+                },
+                "props": {
+                    "width": "65%",
+                    "title": "等级规则新增"
+                }
+            }]
+        },
+        "datagrid": {
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "cr0045",
+                    "temp_id": "${{params.temp_id}}"
+                }
+            },
+            "pagination": {
+                "pageSizes": [
+                    10,
+                    15,
+                    20,
+                    50,
+                    100
+                ],
+                "pageSize": 10
+            },
+            "thead": [{
+                    "type": "selection",
+                    "align": "center",
+                    "width": "55"
+                },
+                {
+                    "type": "index",
+                    "align": "center",
+                    "label": "序号"
+                },
+                {
+                    "label": "级别",
+                    "prop": "level_rule_rank",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "CR_E_ADJ_LEVEL",
+                        "dictKey": [
+                            "CR_E_ADJ_LEVEL"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "分数下限",
+                    "align": "center",
+                    "prop": "sc_low"
+                },
+                {
+                    "label": "分数上限",
+                    "align": "center",
+                    "prop": "sc_high"
+                },
+                {
+                    "label": "可授信额度",
+                    "align": "center",
+                    "prop": "credit_limit"
+                },
+                {
+                    "label": "操作",
+                    "width": "260px",
+                    "align": "center",
+                    "btns": [{
+                            "type": "edit",
+                            "label": "详情",
+                            "icon": "el-icon-view",
+                            "toRequest": {
+                                "url": "/views/cr/params/template/rankRule/rankRule_detail.json",
+                                "method": "GET"
+                            },
+                            "props": {
+                                "width": "65%",
+                                "title": "等级规则详情"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "icon": "el-icon-edit",
+                            "toRequest": {
+                                "url": "/views/cr/params/template/rankRule/rankRule_modify.json",
+                                "method": "GET"
+                            },
+                            "show": {
+                                "expression": "'${{params.is_valid}}' == '0'"
+                            },
+                            "props": {
+                                "width": "65%",
+                                "title": "等级规则维护"
+                            }
+                        },
+                        {
+                            "type": "delete",
+                            "label": "删除",
+                            "icon": "el-icon-close",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "delete",
+                                "params": {
+                                    "servicecode": "cr0044",
+                                    "level_rule_id": "${{current.level_rule_id}}"
+                                }
+                            },
+                            "show": {
+                                "expression": "'${{params.is_valid}}' == '0'"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

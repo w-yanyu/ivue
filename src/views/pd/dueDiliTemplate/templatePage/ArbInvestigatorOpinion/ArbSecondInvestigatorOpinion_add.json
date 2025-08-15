@@ -1,0 +1,207 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "ar1720",
+          "due_item_no": "${{params.due_item_no}}",
+          "apply_no": "${{params.apply_no}}",
+          "cust_no": "${{params.cust_no}}"
+        }
+      },
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "ar1721",
+          "due_item_no": "${{params.due_item_no}}",
+          "apply_no": "${{params.apply_no}}",
+          "cust_no": "${{params.cust_no}}"
+        }
+      },
+      "controlsGroup": [
+        {
+          "title": "调查人意见",
+          "tooltip": "",
+          "titleIcon": "",
+          "showHint": "",
+          "accordion": false,
+          "expand": true,
+          "controls": [
+            {
+              "apply_no": {
+                "control": "hidden",
+                "label": "申请号",
+                "span": 8
+              },
+              "cust_no": {
+                "control": "hidden",
+                "label": "客户编号",
+                "span": 8
+              },
+              "due_item_no": {
+                "control": "hidden",
+                "label": "调查项编号",
+                "span": 8
+              },
+              "for_frist_inve_opinion": {
+                "control": "select",
+                "label": "对于第一调查人的看法",
+                "span": 8,
+                "dict": {
+                  "dictType": "AR_E_OPINION",
+                  "dictKey": [
+                    "AR_E_OPINION"
+                  ],
+                  "format": "label"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "title": "调查人建议信息",
+          "tooltip": "",
+          "titleIcon": "",
+          "showHint": "",
+          "expand": true,
+          "controls": [
+            {
+              "ccy_code": {
+                "control": "select",
+                "label": "币种",
+            "disabled": true,
+                "span": 8,
+                "value": "$g{{user_info.ccy_code}}",
+                "dict": {
+                  "dictType": "MS_CURRENCY",
+                  "dictKey": [
+                    "MS_CURRENCY"
+                  ],
+                  "format": "label"
+                }
+              },
+              "loan_amt": {
+                "control": "currency",
+                "label": "贷款金额",
+                "decimal": "2",
+                "align": "left",
+                "format": {
+                  "thousand": ","
+                },
+                "span": 8
+              },
+              "loan_percentage": {
+                "control": "text",
+                "label": "贷款成数",
+                "span": 8
+              },
+              "loan_term": {
+                "control": "text",
+                "label": "贷款期限(月)",
+                "span": 8
+              },
+              "base_intr": {
+                "control": "currency",
+                "label": "基准利率(%)",
+                "align": "left",
+                "span": 8
+              },
+              "base_intr_percentage": {
+                "control": "currency",
+                "label": "基准利率浮动百分比(%)",
+                "align": "left",
+                "span": 8,
+                "showItem": {
+                  "$default": [
+                    "base_intr_float_way"
+                  ]
+                }
+              },
+              "base_intr_float_way": {
+                "control": "select",
+                "label": "基准利率浮动方式",
+                "span": 8,
+                "dict": {
+                  "dictType": "AR_E_BASE_INTR_FLOAT_WAY",
+                  "dictKey": [
+                    "AR_E_BASE_INTR_FLOAT_WAY"
+                  ],
+                  "format": "label"
+                },
+                "events": {
+                  "condition": {
+                    "1": {
+                      "control": {
+                        "execution_inst_rate": {
+                          "compute": "${{formData.base_intr}}+${{formData.base_intr}}*${{formData.base_intr_percentage}}/100"
+                        }
+                      }
+                    },
+                    "2": {
+                      "control": {
+                        "execution_inst_rate": {
+                          "compute": "${{formData.base_intr}}-${{formData.base_intr}}*${{formData.base_intr_percentage}}/100"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "execution_inst_rate": {
+                "control": "currency",
+                "label": "执行利率/费率(%)",
+                "disabled": true,
+                "align": "left",
+                "span": 8
+              },
+              "repay_type": {
+                "control": "select",
+                "label": "还款方式",
+                "span": 8,
+                "dict": {
+                  "dictType": "MS_E_REPAY_WAY",
+                  "dictKey": [
+                    "MS_E_REPAY_WAY"
+                  ],
+                  "format": "label"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "title": "调查人其他信息",
+          "tooltip": "",
+          "titleIcon": "",
+          "showHint": "",
+          "expand": true,
+          "controls": [
+            {
+              "mobile_no": {
+                "control": "text",
+                "label": "联系电话(手机)",
+                "span": 8
+              },
+              "inve_sign": {
+                "control": "text",
+                "label": "第二调查人签字",
+                "span": 8
+              },
+              "sign_date": {
+                "label": "签字日期",
+                "control": "dateTimePicker",
+                "format": "yyyyMMdd",
+                "span": 8
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

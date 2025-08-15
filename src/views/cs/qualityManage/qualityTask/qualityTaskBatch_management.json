@@ -1,0 +1,124 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "scope": "formData",
+            "initRequest": "${{params}}",
+            "controls": [
+                {
+                    "quality_task_no": {
+                        "control": "string",
+                        "disabled": true,
+                        "label": "质检任务编号",
+                        "value": "${{params.quality_task_no}}"
+                    },
+                    "quality_task_name": {
+                        "control": "string",
+                        "disabled": true,
+                        "label": "质检任务名称",
+                        "value": "${{params.quality_task_name}}"
+                    }
+                },
+                {
+                    "quality_plan_no": {
+                        "control": "string",
+                        "disabled": true,
+                        "label": "质检方案编号",
+                        "value": "${{params.quality_plan_no}}"
+                    },
+                    "quality_batch_no": {
+                        "control": "text",
+                        "label": "质检任务批次号"
+                    }
+                },
+                {
+                    "quality_start_time": {
+                        "label": "质检开始时间",
+                        "control": "dateTimePicker",
+                        "span": 12,
+                        "format": "yyyy-MM-dd HH:mm:ss"
+                    },
+                    "quality_end_time": {
+                        "label": "质检结束时间",
+                        "control": "dateTimePicker",
+                        "span": 12,
+                        "format": "yyyy-MM-dd HH:mm:ss"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "qc1008",
+                    "appId": "qcOnl"
+                }
+            },
+            "thead": [
+                {
+                    "type": "string",
+                    "label": "质检批次号",
+                    "align": "center",
+                    "prop": "quality_batch_no"
+                },
+                {
+                    "type": "string",
+                    "label": "质检任务编号",
+                    "align": "center",
+                    "prop": "quality_task_no"
+                },
+                {
+                    "type": "string",
+                    "label": "质检任务名称",
+                    "align": "center",
+                    "prop": "quality_task_name"
+                },
+                {
+                    "type": "string",
+                    "label": "质检方案编号",
+                    "align": "center",
+                    "prop": "quality_plan_no"
+                },
+                {
+                    "align": "center",
+                    "label": "质检开始时间",
+                    "format": "yyyy-MM-dd HH:mm:ss",
+                    "prop": "quality_start_time"
+                },
+                {
+                    "align": "center",
+                    "label": "质检结束时间",
+                    "format": "yyyy-MM-dd HH:mm:ss",
+                    "prop": "quality_end_time"
+                },
+                {
+                    "label": "操作",
+                    "width": "150%",
+                    "fixed": "right",
+                    "align": "center",
+                    "btns": [
+                        {
+                            "type": "look",
+                            "label": "任务批次详情",
+                            "toRequest": {
+                                "url": "/views/cs/qualityManage/qualityTask/qualityTaskBatchDetail_management.json",
+                                "method": "POST",
+                                "params":{
+                                    "quality_batch_no":"${{current.quality_batch_no}}",
+                                    "quality_plan_no":"${{current.quality_plan_no}}"
+                                  }
+                            },
+                            "props": {
+                                "width":"70%",
+                                "title": "质检任务批次详情"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

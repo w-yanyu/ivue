@@ -1,0 +1,133 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "icon": "",
+          "doRequest": {
+            "url": "/SUMP/call/RPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "syln3258",
+              "tplt_protp_code": "${{current.tplt_protp_code}}",
+              "tplt_protp_nm": "${{current.tplt_protp_nm}}",
+              "tplt_protp_dsc": "${{current.tplt_protp_dsc}}",
+              "core_busi_dman": "${{current.core_busi_dman}}"
+            }
+          }
+        }
+      ],
+      "controlsGroup": [
+        {
+          "title": "模版原型基本信息",
+          "tooltip": "模版原型基本信息",
+          "titleIcon": "el-icon-info",
+          "expand": true,
+          "accordion": false,
+          "controls": [
+            {
+              "tplt_protp_code": {
+                "control": "text",
+                "label": "模板原型代码",
+                "width": "130px",
+                "value": "${{params.tplt_protp_code}}",
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请输入模板原型代码"
+                  },
+                  {
+                    "max": 10,
+                    "message": "长度不能超过10个字符"
+                  }
+                ]
+              },
+              "tplt_protp_nm": {
+                "control": "text",
+                "label": "模版原型名称",
+                "width": "130px",
+                "value": "${{params.tplt_protp_nm}}",
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "模版原型名称"
+                  },
+                  {
+                    "max": 100,
+                    "message": "长度不能超过100个字符"
+                  }
+                ]
+              }
+            },
+            {
+              "core_busi_dman": {
+                "control": "hidden",
+                "label": "业务领域",
+                "width": "130px",
+                "value": "${{params.core_busi_dman}}",
+                "dict": {
+                  "dictType": "LN_E_BUSI_DMAN",
+                  "dictKey": [
+                    "LN_E_BUSI_DMAN"
+                  ],
+                  "format": "label"
+                },
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请选择业务领域"
+                  }
+                ]
+              }
+            },
+            {
+              "tplt_protp_dsc": {
+                "label": "模板描述",
+                "control": "textarea",
+                "width": "130px",
+                "value": "${{params.tplt_protp_dsc}}",
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请输入模板描述"
+                  }
+                ],
+                "span": 12,
+                "autosize": {
+                  "minRows": 3,
+                  "maxRows": 5
+                },
+                "maxlength": 300,
+                "showWordLimit": true
+              }
+            }
+          ]
+        },
+        {
+          "title": "关联部件信息",
+          "tooltip": "关联部件信息",
+          "titleIcon": "el-icon-info",
+          "expand": true,
+          "accordion": false,
+          "controls": [
+            {
+              "lstKlnf_cmpt_rgstn": {
+                "span": 24,
+                "control": "dynamic",
+                "toRequest": {
+                  "url": "/views/product/productModel/productTemPrototype/pro_temprototype_addparrts.json",
+                  "params": {
+                    "tplt_protp_code": "${{params.tplt_protp_code}}"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

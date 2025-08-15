@@ -1,0 +1,124 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "codeid": {
+                        "label": "五级分类编号",
+                        "control": "text",
+                        "rules": [
+                            {
+                                "max": 5,
+                                "message": "长度不能超过5个字符"
+                            }
+                        ]
+                    },
+                    "codesc": {
+                        "label": "五级分类描述",
+                        "control": "text",
+                        "rules": [
+                            {
+                                "max": 200,
+                                "message": "长度不能超过200个字符"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "foldLineNumber": 3
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "target": "dialog",
+                    "label": "新增",
+                    "toRequest": {
+                        "method": "POST",
+                        "url": "/views/ac/assetClassifyParam/base_assetClassify_param_add.json"
+                    },
+                    "props": {
+                        "width": "65%",
+                        "title": "新增分类"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "isInitSearch": false,
+            "scope": "searchTable",
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "AS_PLMS_KG_COCURD",
+                    "method": "queryAll"
+                }
+            },
+            "thead": [
+                {
+                    "label": "序号",
+                    "type": "index"
+                },
+                {
+                    "label": "五级分类编号",
+                    "prop": "codeid"
+                },
+                {
+                    "label": "五级分类描述",
+                    "prop": "codesc"
+                },
+                {
+                    "label": "五级分类级别",
+                    "prop": "clevel",
+                    "type": "select",
+                    "dict": {
+                        "dictType": "E_CLEVEL1",
+                        "dictKey": [
+                            "E_CLEVEL1"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 200,
+                    "align":"center",
+                    "btns": [
+                     
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/ac/assetClassifyParam/base_assetClassify_param_edit.json",
+                                "method": "post"
+                            },
+                            "props": {
+                                "width": "65%",
+                                "title": "维护"
+                            }
+                        },
+                       
+                        {
+                            "type": "delete",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "post",
+                                "params": {
+                                    "servicecode": "AS_PLMS_KG_COCURD",
+                                    "method":"del"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ],
+            "pagination": {
+                "show": true
+            }
+        }
+    }
+}

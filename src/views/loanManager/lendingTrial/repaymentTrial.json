@@ -1,0 +1,317 @@
+{
+  "module": "v-form-btn-dynamic",
+  "layout": {
+    "form": {
+      "formSetTitle": "试算条件",
+      "formResultTitle": "试算结果",
+      "controls": [
+        {
+          "loan_due_bill_num": {
+            "control": "lookup",
+            "width": "130px",
+            "label": "贷款借据号",
+            "edit": true,
+            "toRequest": {
+              "url": "/views/loanManager/lendingTrial/repaymentTrial_lookup.json",
+              "method": "post"
+            },
+            "keyField": {
+              "loan_due_bill_num": "loan_due_bill_num",
+              "loan_acct_num": "loan_acct_num",
+              "prcpl_smtn": "prcpl_smtn",
+              "int_smtn": "int_smtn",
+              "ccy_code_num": "ccy_code_num",
+              "ctrct_num": "ctrct_num",
+              "cust_num": "cust_num"
+            },
+            "props": {
+              "width": "60%",
+              "title": "贷款借据号查询"
+            },
+            "format": "label",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入贷款借据号"
+              }
+            ],
+            "events": {
+              "condition": {
+                "keyVals": {
+                  "001": "'${{form.loan_due_bill_num}}' === ''",
+                  "002": "'${{form.loan_due_bill_num}}' !== ''"
+                },
+                "switch": {
+                  "001": {
+                    "control": {
+                      "rpymt_catg": {
+                        "disabled": true
+                      }
+                    }
+                  },
+                  "002": {
+                    "control": {
+                      "rpymt_catg": {
+                        "disabled": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "ccy_code_num": {
+            "control": "hidden",
+            "label": "币种"
+          },
+          "loan_acct_num": {
+            "control": "hidden",
+            "label": "贷款账户"
+          },
+          "ctrct_num": {
+            "control": "hidden",
+            "label": "合同编号"
+          },
+          "cust_num": {
+            "control": "hidden",
+            "label": "客户编号"
+          },
+          "ret_totl_amt": {
+            "control": "currency",
+            "width": "130px",
+            "label": "待还总额",
+            "compute": "${{form.prcpl_smtn}} + ${{form.int_smtn}}",
+            "disabled": true,
+            "align": "left",
+            "initShow": false
+          },
+          "prcpl_smtn": {
+            "control": "currency",
+            "width": "130px",
+            "label": "待还本金",
+            "disabled": true,
+            "align": "left",
+            "initShow": false
+          },
+          "int_smtn": {
+            "control": "currency",
+            "width": "130px",
+            "label": "待还利息",
+            "disabled": true,
+            "align": "left",
+            "initShow": false
+          },
+          "rpymt_catg": {
+            "control": "select",
+            "label": "还款种类",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入还款种类"
+              }
+            ],
+            "width": "130px",
+            "edit": true,
+            "dict": {
+              "dictType": "LN_E_RPYMT_CATG",
+              "dictKey": [
+                "LN_E_RPYMT_CATG"
+              ],
+              "format": "label"
+            },
+            "showItem": {
+              "$default": [],
+              "1": [
+                "ret_totl_amt",
+                "prcpl_smtn",
+                "int_smtn"
+              ],
+              "2": [
+                "ret_totl_amt",
+                "prcpl_smtn",
+                "int_smtn"
+              ],
+              "3": [
+                "adv_rpymt_catg",
+                "ret_totl_amt",
+                "prcpl_smtn",
+                "int_smtn",
+                "nrl_int_rate",
+                "rpymt_amt",
+                "aptmt_rpymt_dt",
+                "adv_rpymt_adjust_plan_way"
+              ]
+            },
+            "events": {
+              "condition": {
+                "1": {
+                  "control": {
+                    "adv_rpymt_catg": {
+                      "value": ""
+                    },
+                    "rpymt_amt": {
+                      "value": ""
+                    }
+                  }
+                },
+                "2": {
+                  "control": {
+                    "adv_rpymt_catg": {
+                      "value": ""
+                    },
+                    "rpymt_amt": {
+                      "value": ""
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "adv_rpymt_adjust_plan_way": {
+            "control": "select",
+            "label": "提前还款调整计划方式",
+            "initShow": false,
+            "width": "130px",
+            "value": "1",
+            "edit": true,
+            "dict": {
+              "dictType": "LN_E_MODE_REPAYMENT",
+              "dictKey": [
+                "LN_E_MODE_REPAYMENT"
+              ],
+              "format": "label"
+            }
+          },
+          "adv_rpymt_catg": {
+            "control": "select",
+            "label": "提前还款种类",
+            "initShow": false,
+            "width": "130px",
+            "edit": true,
+            "dict": {
+              "dictType": "LN_E_LOAN_ADV_RPYMT_CATG",
+              "dictKey": [
+                "LN_E_LOAN_ADV_RPYMT_CATG"
+              ],
+              "format": "label",
+              "exclude": [
+                "3","4"
+              ]
+            },
+            "showItem": {
+              "1": [
+                "adv_rpymt_int_rpymt_way"
+              ],
+              "2": [
+                "adv_rpymt_int_rpymt_way"
+              ],
+              "4": []
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入提前还款种类"
+              }
+            ]
+          },
+          "adv_rpymt_int_rpymt_way": {
+            "control": "select",
+            "label": "提前还款还息方式",
+            "initShow": false,
+            "width": "130px",
+            "edit": true,
+            "dict": {
+              "dictType": "LN_E_ADV_RPYMT_INT_RPYMT_WAY",
+              "dictKey": [
+                "LN_E_ADV_RPYMT_INT_RPYMT_WAY"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "提前还款还息方式"
+              }
+            ]
+          },
+          "rpymt_amt": {
+            "control": "currency",
+            "label": "还款金额",
+            "initShow": false,
+            "width": "130px",
+            "align": "left",
+            "edit": true,
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入还款金额"
+              },
+              {
+                "expression": "${{form.rpymt_amt}} < ${{form.ret_totl_amt}}",
+                "message": "还款金额必须小于待还总额"
+              }
+            ]
+          },
+          "aptmt_rpymt_dt": {
+            "control": "dateTimePicker",
+            "label": "预约还款日期",
+            "value": "today",
+            "format": "yyyyMMdd",
+            "width": "130px",
+            "disabled": false,
+            "initShow": false,
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入预约还款日期"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "show": {
+            "expression": "'${{form.rpymt_catg}}' === '3'"
+          },
+          "type": "submit",
+          "label": "还款试算",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "post",
+            "params": {
+              "servicecode": "ln3114"
+            }
+          },
+          "toRequest": {
+            "url": "/views/loanManager/lendingTrial/lendingTrial_repayment_result.json",
+            "method": "get",
+            "params": {
+              "adv_rpymt_adjust_plan_way": "${{form.adv_rpymt_adjust_plan_way}}",
+              "adv_rpymt_catg":  "${{form.adv_rpymt_catg}}",
+              "adv_rpymt_int_rpymt_way":  "${{form.adv_rpymt_int_rpymt_way}}",
+              "aptmt_rpymt_dt":  "${{form.aptmt_rpymt_dt}}",
+              "ccy_code_num":  "${{form.ccy_code_num}}",
+              "ctrct_num":  "${{form.ctrct_num}}",
+              "cust_num":  "${{form.cust_num}}",
+              "int_smtn":  "${{form.int_smtn}}",
+              "loan_acct_num":  "${{form.loan_acct_num}}",
+              "loan_due_bill_num":  "${{form.loan_due_bill_num}}",
+              "prcpl_smtn":  "${{form.prcpl_smtn}}",
+              "ret_totl_amt":  "${{form.ret_totl_amt}}",
+              "rpymt_amt":  "${{form.rpymt_amt}}",
+              "rpymt_catg":  "${{form.rpymt_catg}}"
+            }
+          }
+        },
+        {
+          "type": "reset",
+          "btnStyle": "success",
+          "label": "重置"
+        }
+      ]
+    }
+  }
+}

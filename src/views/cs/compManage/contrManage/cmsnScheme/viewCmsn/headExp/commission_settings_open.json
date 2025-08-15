@@ -1,0 +1,60 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+          "btns": [],
+          "initRequest": "${{params}}",
+          "controls": [
+              {
+                "percentage_calculation_plan":{
+                  "disabled":true,
+                  "control": "select",
+                  "label": "提成计算方案",
+                  "options": [
+                    {
+                      "value": "assmt_score",
+                      "label": "按绩效考核评分计算"
+                    },
+                    {
+                      "value": "ind_results",
+                      "label": "按指标结果"
+                    }
+                  ],
+                  "events": {
+                    "showItem":{
+                      "assmt_score":["percentage_calculation_plan_assmt_score"],
+                      "ind_results":["percentage_calculation_plan_ind_results"]
+                    }
+                  }
+                },
+                "percentage_calculation_plan_assmt_score": {
+                  "span": 24,
+                  "allowCreate": true,
+                  "control": "dynamic",
+                  "toRequest":{
+                    "url":"/views/cs/compManage/contrManage/cmsnScheme/viewCmsn/headExp/percentage_calculation_plan_assmt_score.json",
+                    "params": {
+                      "servicecode": "xxxxx",
+                      "appId": "cbOnl"
+                    }
+                  }
+                },
+                "percentage_calculation_plan_ind_results": {
+                  "span": 24,
+                  "allowCreate": true,
+                  "control": "dynamic",
+                  "toRequest":{
+                    "url":"/views/cs/compManage/contrManage/cmsnScheme/viewCmsn/headExp/percentage_calculation_plan_ind_results.json",
+                    "params": {
+                      "servicecode": "xxxxx",
+                      "appId": "cbOnl",
+                      "indicator_results": "${{params.indicator_results}}",
+                      "default_or_custom": "${{params.default_or_custom}}"
+                    }
+                  }
+                }
+              }
+            ]
+        }
+    }
+}

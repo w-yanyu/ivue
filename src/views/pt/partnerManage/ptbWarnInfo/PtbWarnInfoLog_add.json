@@ -1,0 +1,152 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "scope": "formData",
+            "btns": [{
+                    "type": "submit",
+                    "label": "保存",
+                    "doRequest": {
+                        "method": "POST",
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "params": {
+                            "servicecode": "pt0184"
+                        }
+                    }
+                },
+                {
+                    "type": "reset",
+                    "icon": "el-icon-close",
+                    "label": "重置"
+                }
+            ],
+            "controls": [
+                {
+                    "warn_busi_type": {
+                        "control": "select",
+                        "label": "预警业务类型",
+                        "placeholder": "请选择",
+                        "dict": {
+                            "dictType": "PT_E_WARN_BUSI_TYPE",
+                            "dictKey": [
+                                "PT_E_WARN_BUSI_TYPE"
+                            ],
+                            "format": "label"
+                        },
+                        "rules": [{
+                            "required": true,
+                            "message": "请选择"
+                        }]
+                    },
+                    "warn_code": {
+                        "control": "text",
+                        "label": "预警码",
+                        "width":"130px",
+                        "placeholder": "请输入",
+                        "rules": [{
+                            "required": true,
+                            "message": "请输入"
+                        }]
+                    }
+                },
+                {
+                    "warn_describe": {
+                        "control": "text",
+                        "label": "预警描述",
+                        "value": "${{params.part_no}}",
+                        "placeholder": "请输入"
+                    },
+                    "warn_check_serv": {
+                        "control": "text",
+                        "label": "预警检查服务",
+                        "width":"130px",
+                        "placeholder": "请输入",
+                        "rules": [{
+                            "required": true,
+                            "message": "请输入"
+                        }]
+                    }
+                },
+                {
+                    "part_project_no": {
+                        "control": "text",
+                        "label": "合作项目编号",
+                        "placeholder": "请输入",
+                        "rules": [{
+                            "required": true,
+                            "message": "请输入"
+                        }]
+                    },
+                    "part_protocol_no": {
+                        "control": "text",
+                        "label": "合作方协议编号",
+                        "width":"130px",
+                        "placeholder": "请输入",
+                        "rules": [{
+                            "required": true,
+                            "message": "请输入"
+                        }]
+                    }
+                },
+                {
+                    "part_no": {
+                        "control": "lookup",
+                        "edit": true,
+                        "label": "合作方编号",
+                        "span": "12",
+                        "initshow":false,
+                        "keyField": {
+                            "part_no":"part_no"
+                        },
+                        "events": {
+                            "set": {
+                                "temp_name": ""
+                            }
+                        },
+                        "toRequest": {
+                            "url": "/views/pt/partnerManage/ptbWarnInfo/ptPartner_list_lookup.json",
+                            "method": "GET",
+                            "params": {
+                                "indvfg": "N",
+                                "statss": "Y"
+                            }
+                        },
+                        "props": {
+                            "width": "80%",
+                            "title": "查询合作方信息名称"
+                        },
+                        "format": "label",
+                        "rules": [{
+                            "required": true,
+                            "message": "请选择"
+                        }]
+                    },
+                    "warn_time": {
+                        "label": "预警时间",
+                        "width": "130px",
+                        "control": "dateTimePicker",
+                        "editable": true,
+                        "format": "yyyyMMdd",
+                        "rules": [{
+                            "required": true,
+                            "message": "请输入登记日期"
+                        }]
+                    }
+                },
+                {
+                    "warn_action": {
+                        "control": "text",
+                        "label": "预警动作",
+                        "placeholder": "请输入",
+                        "rules": [{
+                            "required": true,
+                            "message": "请输入"
+                        }]
+                    }
+                }
+
+
+            ]
+        }
+    }
+}

@@ -1,0 +1,162 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "trxn_date": {
+                        "control": "dateTimePicker",
+                        "label": "交易日期",
+                        "prop": "trxn_date"
+                    },
+                    "trxn_seq": {
+                        "control": "text",
+                        "label": "交易流水",
+                        "prop": "trxn_seq",
+                        "rules": [
+                            {
+                                "max": 32,
+                                "message": "长度不能超过32个字符"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "trxn_code": {
+                        "control": "text",
+                        "label": "交易码",
+                        "prop": "trxn_code",
+                        "rules": [
+                            {
+                                "max": 10,
+                                "message": "长度不能超过10个字符"
+                            }
+                        ]
+                    },
+                    "app_id": {
+                        "control": "remoteSelect",
+                        "label": "子系统编号",
+                        "labelField": "drop_list_desc",
+                        "valueField": "drop_list_value",
+                        "rules": [
+                            {
+                                "required": "true",
+                                "message": "请输入子系统编号"
+                            }
+                        ],
+                        "doRequest": {
+                            "url": "/SUMP/call/RPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "ms1053",
+                                "dynamic_drop_list_type": "AP0015",
+                                "parm_value":{
+                                    "drop_list_type":"SUB_SYSTEM_CODE"
+                                }
+                            }
+                        },
+                        "format": "label"
+                    }
+                },
+                {
+                    "table_name": {
+                    "control": "text",
+                    "label": "数据库表名",
+                    "prop": "table_name",
+                    "rules": [
+                        {
+                            "max": 25,
+                            "message": "长度不能超过25个字符"
+                        }
+                    ]
+                }
+
+                }
+            ]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ms1140",
+                    "audit_type": "P"
+                }
+            },
+            "pagination": {
+                "show": true,
+                "pageSize": 10
+            },
+            "thead": [
+                {
+                    "type": "index"
+                },
+                {
+                    "label": "参数审计序号",
+                    "prop": "audit_seq"
+                },
+                {
+                    "label": "交易日期",
+                    "prop": "trxn_date",
+                    "type": "dateTimePicker"
+                },
+                {
+                    "label": "交易流水",
+                    "prop": "trxn_seq"
+                },
+                {
+                    "label": "业务流水",
+                    "prop": "busi_seq"
+                },
+                {
+                    "label": "交易码",
+                    "prop": "trxn_code"
+                },
+                {
+                    "label": "交易描述",
+                    "prop": "trxn_desc"
+                },
+                {
+                    "label": "数据库表名",
+                    "prop": "table_name"
+                },
+                {
+                    "label": "数据库表描述",
+                    "prop": "table_desc"
+                },
+                {
+                    "label": "主键值",
+                    "prop": "pm_key_value"
+                },
+                {
+                    "label": "数据创建用户",
+                    "prop": "data_create_user"
+                },
+                {
+                    "label": "数据创建时间",
+                    "prop": "data_create_time"
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "btns": [
+                        {
+                            "type": "look",
+                            "label": "详情",
+                            "toRequest": {
+                                "url": "views/ismt/ct/ParameterManagement/parameter_data_log_audit_detail.json",
+                                "method": "POST"
+                            },
+                            "props": {
+                                "width": "85%",
+                                "title": "参数数据审计日志详情"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

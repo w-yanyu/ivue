@@ -1,0 +1,118 @@
+{
+	"module":"v_search_btn_datagrid",
+	"layout":{
+		"form":{
+			"controls":[
+				{
+					"acctno":{
+						"label":"贷款账号",
+						"control":"text",
+						"name":"acctno",
+						"rules":[
+							{
+								"required":false
+							},
+							{
+								"max":40,
+								"message":"长度不能超过40个字符"
+							}
+						]
+					},
+					"transq":{
+						"label":"交易流水",
+						"control":"text",
+						"name":"transq",
+						"rules":[
+							{
+								"required":false
+							},
+							{
+								"max":32,
+								"message":"长度不能超过32个字符"
+							}
+						]
+					}
+				}
+
+			]
+		},
+		"datagrid":{
+			"isInitSearch":false,
+			"scope":"searchTable",
+			"doRequest":{
+				"url":"/SUMP/icmcall/icmRPCCall",
+				"method":"POST",
+				"params":{
+					"servicecode":"PLMSKGSS0004"
+				}
+			},
+			"pagination":{
+				"show":true
+			},
+			"thead":[
+
+				{
+					"label":"交易流水",
+					"prop":"transq"
+				},
+				{
+					"label":"交易日期",
+					"prop":"trandt",
+					"type":"dateTimePicker"
+				},
+				{
+					"label":"贷款借据号",
+					"prop":"lncfno"
+				},
+				{
+					"label":"贷款账号",
+					"prop":"acctno"
+				},
+				{
+					"label":"事件编号",
+					"prop":"evetna"
+				},
+				{
+                    "label": "减免方式",
+                    "prop": "remthd",
+                    "type": "select",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "E_REMTHD",
+                        "dictKey": [
+                            "E_REMTHD"
+                        ],
+                        "format": "label"
+                    }
+                },
+				{
+					"label":"备注信息",
+					"prop":"remark"
+				},
+				{
+					"label":"减免金额",
+					"prop":"dtsfam"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/other/loanPostManager/allocation_relief_detail.json",
+                "method": "POST"
+              },
+              "props": {
+				"width": "80%",
+				"title": "减免记录详情"
+			}
+            }
+          ]
+        }
+			]
+		}
+	}
+}

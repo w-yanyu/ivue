@@ -1,0 +1,106 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [{
+        "cust_no": {
+          "control": "text",
+          "label": "客户编号",
+          "rules": [{
+            "max": 30,
+            "message": "长度不能超过30个字符"
+          }]
+        },
+        "cust_name": {
+          "control": "text",
+          "label": "客户名称",
+          "rules": [{
+            "max": 80,
+            "message": "长度不能超过80个字符"
+          }]
+        }
+      }]
+    },
+    "toolbar": {
+      "btns": [{
+        "type": "custom",
+        "icon": "el-icon-edit",
+        "label": "转移到资产保全部",
+        "toRequest": {
+          "url": "/views/pl/assetHndov/handover/tranferManager.json",
+          "method": "GET",
+          "params": {
+            "apply_no": "${{params.apply_no}}"
+          }
+        }
+      }]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "us0203"
+        }
+      },
+      "thead": [{
+        "type": "selection",
+        "width": "55"
+      },
+        {
+          "type": "index",
+          "label": "序号"
+        },
+        {
+          "label": "客户编号",
+          "prop": "cust_no",
+          "align": "center"
+        },
+        {
+          "label": "客户名称",
+          "prop": "cust_name",
+          "align": "center"
+        },
+        {
+          "label": "组织机构代码",
+          "prop": "org_code",
+          "align": "center"
+        },
+        {
+          "label": "客户性质",
+          "prop": "cust_nature",
+          "align": "center",
+          "dict": {
+            "dictType": "US_E_LEGAL_CUST_PROPERTY",
+            "dictKey": [
+              "US_E_LEGAL_CUST_PROPERTY"
+            ],
+            "labelField": "dictName",
+            "valueField": "dictId"
+          }
+        },
+        {
+          "label": "证件类型",
+          "prop": "cert_type",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_CRET_TYPE",
+            "dictKey": [
+              "MS_E_CRET_TYPE"
+            ],
+            "labelField": "dictName",
+            "valueField": "dictId"
+          }
+        },
+        {
+          "label": "证件号码",
+          "prop": "cert_no",
+          "align": "center"
+        }
+
+      ]
+    }
+  }
+}

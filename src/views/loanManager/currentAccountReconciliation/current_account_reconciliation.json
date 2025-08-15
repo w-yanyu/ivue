@@ -1,0 +1,187 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "scope": "formData",
+            "foldLineNumber":3,
+            "controls": [
+                {
+                    "trandt": {
+                        "control": "dateTimePicker",
+                        "label": "开始日期",
+                        "value":"$g{{user_info.format_date}}"
+                    },
+                    "edndt": {
+                        "control": "dateTimePicker",
+                        "label": "结束日期",
+                        "value":"$g{{user_info.format_date}}"
+                    }
+                },
+                {
+                    "acctno": {
+                        "control": "lookup",
+                        "edit": true,
+                        "label": "往来户账号",
+                        "keyField": {
+                            "acctno": "inacct"
+                        },
+                        "toRequest": {
+                            "url": "/views/loanManager/currentAccountReconciliation/current_account_inquiry.json",
+                            "method": "post"
+                        },
+                        "multiple": false,
+                        "props": {
+                            "title": "请选择"
+                        },
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请选择往来户账号"
+                            }
+                        ]
+                    },
+                    "ishedu": {
+                        "control": "select",
+                        "label": "是否核对",
+                        "dict": {
+                            "dictType": "E_YES___",
+                            "dictKey": [
+                                "E_YES___"
+                            ],
+                            "format": "label"
+                        }
+                    }
+                },
+                {
+                    "chckst": {
+                        "control": "select",
+                        "label": "对账结果",
+                        "dict": {
+                            "dictType": "E_CHKACCTRESULT",
+                            "dictKey": [
+                                "E_CHKACCTRESULT"
+                            ],
+                            "format": "label"
+                        }
+                    }
+                }
+            ]
+        },
+        "toolbar": {},
+        "datagrid": {
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "CORELNTS9074"
+                }
+            },
+            "thead": [
+                {
+                    "type":"string",
+                    "label": "账号",
+                    "prop": "acctno",
+                    "align": "center"
+                },
+                {
+                    "type":"string",
+                    "label": "外部交易日期",
+                    "prop": "trandt",
+                    "align": "center"
+                },
+                {
+                    "type":"string",
+                    "label": "外部流水号",
+                    "prop": "sequno",
+                    "align": "center"
+                },
+                {
+                    "type":"string",
+                    "label": "主机交易日期",
+                    "prop": "systdt",
+                    "align": "center"
+                },
+                {
+                    "type":"string",
+                    "label": "主机流水号",
+                    "prop": "sysuno",
+                    "align": "center"
+                },
+                {
+                    "type":"string",
+                    "label": "对方账号",
+                    "prop": "toacct",
+                    "align": "center"
+                },
+                {
+                    "type":"string",
+                    "label": "交易金额",
+                    "prop": "tranam",
+                    "align": "center"
+                },
+                {
+                    "type":"string",
+                    "label": "借贷标志",
+                    "prop": "eractg",
+                    "align": "center"
+                },
+                {
+                    "type":"string",
+                    "label": "交易码",
+                    "prop": "prcscd",
+                    "align": "center"
+                },
+                {
+                    "type":"string",
+                    "label": "对账结果",
+                    "prop": "chckst",
+                    "align": "center"
+                },
+                {
+                    "type":"string",
+                    "label": "交易流水",
+                    "prop": "transq",
+                    "align": "center"
+                },
+                {
+                    "type":"string",
+                    "label": "是否已核对",
+                    "prop": "ishedu",
+                    "align": "center"
+                },
+                {
+                    "type":"string",
+                    "label": "借贷标志",
+                    "prop": "eractg",
+                    "align": "center"
+                },
+                {
+                    "type":"string",
+                    "label": "借贷标志",
+                    "prop": "eractg",
+                    "align": "center"
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "align": "center",
+                    "btns": [
+                        {
+                            "type": "look",
+                            "label": "详情",
+                            "toRequest": {
+                                "url": "/views/aplt/sysManager/ruleEngine/simple_rule_detail_page.json",
+                                "method": "POST",
+                                "params": {}
+                            },
+                            "props": {
+                                "title": "对账明细"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

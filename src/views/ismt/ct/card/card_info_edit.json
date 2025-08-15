@@ -1,0 +1,116 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": "${{params}}",
+      "btns": [],
+      "controls": [
+        {
+          "card_id": {
+            "control": "string",
+            "label": "卡片编号",
+            "width": "240px"
+          },
+          "card_name": {
+            "control": "string",
+            "label": "卡片名称",
+            "width": "240px"
+          },
+          "card_type": {
+            "control": "string",
+            "label": "卡片类型",
+            "width": "240px",
+            "dict": {
+              "dictType": "CT_E_CARD_TYPE",
+              "dictKey": ["CT_E_CARD_TYPE"],
+              "format": "label"
+            },
+            "showItem": {
+              "2": ["scope_range_str"]
+            }
+          },
+          "scope_range_str": {
+            "initShow": false,
+            "control": "string",
+            "label": "适用角色名称",
+            "width": "240px",
+            "multiple": true,
+            "valueDataType": "string",
+            "value": "",
+            "toRequest": {
+              "url": "/views/ismt/ct/card/role-manager_lookup.json",
+              "method": "post",
+              "params": {
+                "appId": "${{params.appId}}"
+              }
+            },
+            "#keyField": {
+              "wf_role_no": "role_id",
+              "role_name": "role_name"
+            },
+            "edit": false,
+            "events": {
+              "set": {
+                "scope_range": "role_id",
+                "scope_range_str": "role_name"
+              }
+            }
+          },
+          "url": {
+            "control": "string",
+            "label": "卡片界面地址",
+            "width": "240px"
+          },
+          "card_portrait": {
+            "disabled": true,
+            "control": "inputNumber",
+            "label": "卡片横向值",
+            "max": "24"
+          },
+          "card_transver": {
+            "control": "inputNumber",
+            "disabled": true,
+            "label": "卡片纵向值",
+            "precision": 0
+          },
+          "card_status": {
+            "control": "string",
+            "label": "卡片状态",
+            "width": "240px",
+            "dict": {
+              "dictType": "CT_E_CARD_STATUS",
+              "dictKey": ["CT_E_CARD_STATUS"],
+              "format": "label"
+            }
+          }
+        },
+        {
+          "params": {
+            "control": "textarea",
+            "disabled": true,
+            "label": "参数",
+            "span": 20,
+            "align": "left"
+          }
+        },
+        {
+          "remark": {
+            "control": "textarea",
+            "disabled": true,
+            "label": "备注信息",
+            "span": 20,
+            "align": "left"
+          }
+        },
+        {}
+      ]
+    },
+    "alert": {
+      "title": "参数列表样例",
+      "description": [
+        "单值传参：{ param1: 123, param2: 456 }",
+        "多值传参：{ param1: [ 123, 456, 789 ], param2: abc }"
+      ]
+    }
+  }
+}

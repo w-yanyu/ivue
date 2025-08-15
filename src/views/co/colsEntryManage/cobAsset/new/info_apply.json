@@ -1,0 +1,217 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "btns": [],
+            "name": "list02",
+            "initRequest": "${{params}}",
+            "controls": [{
+                    "cust_no": {
+                        "label": "客户编号",
+                        "control": "hidden"
+                    },
+                    "obligee_name": {
+                        "control": "hidden",
+                        "label": "抵质押人姓名",
+                        "value":"${{params.cust_name}}"
+                    },
+                    "asset_list_id": {
+                        "label": "资产清单序号",
+                        "control": "hidden"
+                    },
+                    "colt_no": {
+                        "label": "抵质押品编号",
+                        "control": "hidden"
+              },
+              "colt_type": {
+                "label": "资产类型",
+                "control": "remoteSelect",
+                "disabled": true,
+                "valueField": "colt_type",
+                "labelField": "colt_name",
+                "doRequest": {
+                  "url": "/SUMP/call/RPCCall",
+                  "method": "post",
+                  "params": {
+                    "guar_type": "${{params.guar_type}}",
+                    "servicecode": "co1012"
+                  }
+                }
+              },
+              "colt_prod_cd": {
+                "label": "抵质押品产品",
+                "control": "remoteSelect",
+                "disabled": true,
+                "valueField": "colt_prod_cd",
+                "labelField": "colt_prod_name",
+                "doRequest": {
+                  "url": "/SUMP/call/RPCCall",
+                  "method": "post",
+                  "params": {
+                    "servicecode": "co1013",
+                    "colt_type": "${{params.colt_type}}"
+                  }
+                }
+              },
+              "guar_type": {
+                "label": "担保方式",
+                "control": "select",
+                "disabled": true,
+                "dict": {
+                  "dictType": "MS_E_GUAR_TYPE",
+                  "dictKey": [
+                    "MS_E_GUAR_TYPE"
+                  ],
+                  "format": "label"
+                },
+                "showItem": {
+                  "2": [
+                    "own_cert_type",
+                    "own_cert_type2",
+                    "own_cert_type3",
+                    "own_cert_type4",
+                    "own_cert_no",
+                    "own_cert_no2",
+                    "own_cert_no3",
+                    "own_cert_no4"
+                  ]
+                },
+                "rules": [{
+                  "required": true,
+                  "message": "请选择担保方式"
+                }]
+              },
+              "count": {
+                "label": "数量",
+                "control": "text",
+                "rules": [{
+                  "max": 19,
+                  "required": true,
+                  "message": "请输入数量并且长度不超过19"
+                }]
+              },
+              "matu_date": {
+                "label": "到期日",
+                "control": "dateTimePicker",
+                "format": "yyyyMMdd"
+              },
+              "store_addr": {
+                "label": "存放地址",
+                "control": "text",
+                "rules": [{
+                  "required": true,
+                  "message": "请输入存放地址"
+                }]
+              },
+              "is_master": {
+                "label": "是否主担保物",
+                "control": "select",
+                "dict": {
+                  "dictType": "MS_E_YESORNO",
+                  "dictKey": [
+                    "MS_E_YESORNO"
+                  ]
+                },
+                "rules": [{
+                  "required": true,
+                  "message": "请选择是否为主担保物"
+                }]
+              },
+              "sec_val": {
+                "label": "抵质押额(元)",
+                "control": "currency",
+                "rules": [{
+                  "required": true,
+                  "message": "请输入抵质押额"
+                }]
+              },
+              "sec_rate": {
+                "label": "抵质押率(%)",
+                "control": "currency",
+                "rules": [{
+                  "required": true,
+                  "message": "请输入抵质押率"
+                }]
+              },
+              "own_cert_type": {
+                "label": "他项权证类型",
+                "control": "select",
+                "initShow": false,
+                "dict": {
+                  "dictType": "CO_E_OWNCERTP",
+                  "dictKey": [
+                    "CO_E_OWNCERTP"
+                  ]
+                }
+              },
+              "own_cert_no": {
+                "label": "他项权证号码",
+                "control": "text",
+                "initShow": false
+              },
+              "own_cert_type2": {
+                "label": "他项权证类型2",
+                "initShow": false,
+                "control": "select",
+                "dict": {
+                  "dictType": "CO_E_OWNCERTP",
+                  "dictKey": [
+                    "CO_E_OWNCERTP"
+                  ]
+                }
+              },
+              "own_cert_no2": {
+                "label": "他项权证号码2",
+                "initShow": false,
+                "control": "text"
+              },
+              "own_cert_type3": {
+                "label": "他项权证类型3",
+                "initShow": false,
+                "control": "select",
+                "dict": {
+                  "dictType": "CO_E_OWNCERTP",
+                  "dictKey": [
+                    "CO_E_OWNCERTP"
+                  ]
+                }
+              },
+              "own_cert_no3": {
+                "label": "他项权证号码3",
+                "control": "text",
+                "initShow": false
+              },
+              "own_cert_type4": {
+                "label": "他项权证类型4",
+                "initShow": false,
+                "control": "select",
+                "dict": {
+                  "dictType": "CO_E_OWNCERTP",
+                  "dictKey": [
+                    "CO_E_OWNCERTP"
+                  ]
+                }
+              },
+              "own_cert_no4": {
+                "label": "他项权证号码4",
+                "control": "text",
+                "initShow": false
+              }
+            },
+              {
+                "remark": {
+                  "label": "备注",
+                  "control": "textarea",
+                  "span": 24,
+                  "autosize": {
+                    "minRows": 3,
+                    "maxRows": 5
+                  },
+                  "maxlength": 100,
+                  "showWordLimit": true
+                }
+              }
+            ]
+        }
+    }
+}

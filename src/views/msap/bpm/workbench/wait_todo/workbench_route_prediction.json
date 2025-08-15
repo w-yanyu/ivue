@@ -1,0 +1,109 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "bpm1035",
+                    "wf_inst_id": "${{params.wf_inst_id}}",
+                    "appId": "${{params.appId}}"
+                }
+            },
+            "pagination": {
+                "show": false
+            },
+            "thead": [
+                
+                {
+                    "label": "终审节点名称",
+                    "prop": "task_define_name"
+                },
+                {
+                    "label": "终审角色",
+                    "prop": "role_name"
+                },
+                {
+                    "label": "是否有权限结束终审流程",
+                    "prop": "can_end_flag",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                            "MS_E_YESORNO"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                   
+                    "align": "center",
+                    "btns": [
+                        {
+                            "type": "edit",
+                            "label": "路线图预测",
+                            "toRequest": {
+                                "url": "@ProcessImgView",
+                                "method": "GET",
+                                "params": {
+                                    "from": "prediction",
+                                    "appId": "${{params.appId}}",
+                                    "wf_prod_no": "${{current.wf_prod_no}}",
+                                    "bpm_version": "${{current.bpm_version}}",
+                                    "task_define_id": "${{current.task_define_id}}",
+                                    "wf_inst_id": "${{params.wf_inst_id}}"
+                                }
+                            },
+                            "props": {
+                                "width": "1200px",
+                                "title": "路线图预测"
+                            },
+                            "show": {
+                                "prop": "can_end_flag",
+                                "is": [
+                                    "1"
+                                ]
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "最优路线",
+                            "toRequest": {
+                                "url": "@ProcessImgView",
+                                "method": "GET",
+                                "params": {
+                                    "from": "shortest",
+                                    "appId": "${{params.appId}}",
+                                    "wf_prod_no": "${{current.wf_prod_no}}",
+                                    "bpm_version": "${{current.bpm_version}}",
+                                    "task_define_id": "${{current.task_define_id}}",
+                                    "wf_inst_id": "${{params.wf_inst_id}}"
+                                }
+                            },
+                            "props": {
+                                "width": "1200px",
+                                "title": "最优路线"
+                            },
+                            "show": {
+                                "prop": "can_end_flag",
+                                "is": [
+                                    "1"
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "label": "无法终审原因",
+                    "prop": "error_msg_string",
+                    "width": 200
+                }
+            ]
+        }
+    }
+}

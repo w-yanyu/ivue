@@ -1,0 +1,106 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "controls": [
+        {
+          "table_name": {
+            "control": "text",
+            "label": "表名"
+          },
+          "table_desc": {
+            "control": "text",
+            "label": "表描述"
+          }
+        },
+        {
+          "system_id": {
+            "control": "text",
+            "label": "子系统号",
+            "disabled": true,
+            "value": "${{params.system_id}}"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": []
+    },
+    "datagrid": {
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "ct2341"
+        }
+      },
+      "thead": [
+        {
+          "type": "string",
+          "label": "表名",
+          "align": "center",
+          "prop": "table_name"
+        },
+        {
+          "type": "string",
+          "label": "表描述",
+          "align": "center",
+          "prop": "table_desc"
+        },
+        {
+          "type": "string",
+          "label": "替换字段信息",
+          "align": "center",
+          "prop": "column_list"
+        },
+        {
+          "align": "center",
+          "prop": "org_field_name",
+          "type": "text",
+          "label": "法人字段名称",
+          "nowrap": true,
+          "dict": {
+            "dictType": "domain_code",
+            "dictKey": ["section"],
+            "format": "[value]label",
+            "valueField": "domain_code",
+            "labelField": "domain_name",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct3302"
+              }
+            }
+          }
+        },
+        {
+          "align": "center",
+          "prop": "system_id",
+          "type": "text",
+          "nowrap": true,
+          "label": "系统列表",
+          "dict": {
+            "dictType": "system_list",
+            "dictKey": [
+              "section"
+            ],
+            "format": "label",
+            "valueField": "system_id",
+            "labelField": "system_name",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2321",
+                "length": 50
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,129 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "toolbar": {
+            "btns": [{
+                "type": "add",
+                "target": "dialog",
+                "label": "新增",
+                "toRequest": {
+                    "method": "GET",
+                    "url": "/views/us/entManager/custfinanceManager/custCapstManager/custCapst_add.json",
+                    "params": {
+                        "cust_no": "${{params.cust_no}}"
+                    }
+                },
+                "show": {
+                    "expression": "'${{params.show_flash}}' == '1'"
+                },
+                "props": {
+                    "width": "80%",
+                    "title": "股本信息新增"
+                }
+            }]
+        },
+        "datagrid": {
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "us0320",
+                    "cust_no": "${{params.cust_no}}"
+                }
+            },
+            "thead": [{
+                    "type": "index",
+                    "label": "序号",
+                    "align": "center"
+                },
+                {
+                    "label": "验资类别",
+                    "prop": "verify_type",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "US_E_VERIFY_TYPE",
+                        "dictKey": [
+                            "US_E_VERIFY_TYPE"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "会计验资机构名称",
+                    "prop": "verify_report_name",
+                    "align": "center"
+                },
+                {
+                    "label": "注册资本金额",
+                    "prop": "register_princi",
+                    "align": "center"
+                },
+                {
+                    "label": "总股本",
+                    "prop": "total_stock",
+                    "align": "center"
+                },
+                {
+                    "label": "会计验资时间",
+                    "prop": "verify_date",
+                    "align": "center"
+                },
+                {
+                    "label": "发布时间",
+                    "prop": "release_date",
+                    "align": "center"
+                },
+                {
+                    "label": "操作",
+                    "width": "160px",
+                    "btns": [{
+                            "type": "look",
+                            "label": "详情",
+                            "toRequest": {
+                                "url": "/views/us/entManager/custfinanceManager/custCapstManager/custCapst_info.json",
+                                "method": "post",
+                                "props": {
+                                    "width": "80%",
+                                    "title": "企业股本信息详情"
+                                }
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/us/entManager/custfinanceManager/custCapstManager/custCapst_update.json",
+                                "method": "GET",
+                                "params": {
+                                    "custid": "${{params.custid}}"
+                                }
+                            },               
+                             "show": {
+                                "expression": "'${{params.show_flash}}' == '1'"
+                            },
+                            "props": {
+                                "width": "80%",
+                                "title": "股本信息维护"
+                            }
+                        },
+                        {
+                            "type": "delete",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "us0323"
+                                }
+                            },
+                            "show": {
+                                "expression": "'${{params.show_flash}}' == '1'"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

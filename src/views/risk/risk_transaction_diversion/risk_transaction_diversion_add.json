@@ -1,0 +1,182 @@
+{
+  "module": "v-inputDataForm-btn",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "trxnClass": {
+            "label": "交易类型",
+            "control": "select",
+            "span": 12,
+            "dict": {
+              "dictType": "trxnClass",
+              "dictKey": [],
+              "format": "value-label",
+              "doRequest": {
+                "url": "/views/risk/dictdata/trxnClass.json",
+                "method": "get"
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "该控件必填",
+                "max": 2
+              }
+            ]
+          },
+          "networkType": {
+            "label": "网络类型",
+            "control": "select",
+            "span": 12,
+            "dict": {
+              "dictType": "networkType",
+              "dictKey": [],
+              "format": "value-label",
+              "doRequest": {
+                "url": "/views/risk/dictdata/networkType.json",
+                "method": "get"
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "该控件必填",
+                "max": 3
+              }
+            ]
+          }
+        },
+        {
+          "posEntryMode": {
+            "label": "输入方式",
+            "control": "select",
+            "span": 12,
+            "dict": {
+              "dictType": "posEntryMode",
+              "dictKey": [],
+              "format": "value-label",
+              "doRequest": {
+                "url": "/views/risk/dictdata/posEntryMode.json",
+                "method": "get"
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "该控件必填",
+                "max": 2
+              }
+            ]
+          },
+          "countryCode": {
+            "label": "国家代码",
+            "control": "text",
+            "span": 12,
+            "rules": [
+              {
+                "required": true,
+                "message": "请正确输入",
+                "type":"string",
+                "pattern":"^\\d{3}$"
+              }
+            ]
+          }
+        },
+        {
+          "policyGroupList": {
+            "label": "政策性规则组ID",
+            "control": "lookup",
+            "span": 24,
+            "multiple": true,
+            "value": [],
+            "keyField": {
+              "policyGroupList":"groupId"
+            },
+            "toRequest":{
+              "url": "/views/risk/risk_transaction_diversion/rule_group_query.json",
+              "method": "get",
+              "params": {
+              }
+            },
+            "props": {
+              "width": "55%",
+              "title": "规则组查询",
+              "close": "",
+              "target": ""
+            }
+          }
+        },
+        {
+          "defaultGroupList": {
+            "label": "默认规则组ID",
+            "control": "lookup",
+            "multiple": true,
+            "value": [],
+            "span": 24,
+            "keyField": {
+              "defaultGroupList":"groupId"
+            },
+            "toRequest":{
+              "url": "/views/risk/risk_transaction_diversion/rule_group_query.json",
+              "method": "get",
+              "params": {
+              }
+            },
+            "props": {
+              "width": "55%",
+              "title": "规则组查询",
+              "close": "",
+              "target": ""
+            }
+          }
+        },
+        {
+          "businessGroupList": {
+            "label": "业务规则组ID",
+            "control": "lookup",
+            "multiple": true,
+            "value": [],
+            "span": 24,
+            "keyField": {
+              "businessGroupList":"groupId"
+            },
+            "toRequest":{
+              "url": "/views/risk/risk_transaction_diversion/rule_group_query.json",
+              "method": "get",
+              "params": {
+              }
+            },
+            "props": {
+              "width": "55%",
+              "title": "规则组查询",
+              "close": "",
+              "target": ""
+            }
+          }
+        },
+        {
+          "description": {
+            "label": "描述",
+            "control": "textarea",
+            "span": 24,
+            "rules": [
+              {
+                "message": "请正确输入",
+                "max": 500
+              }
+            ]
+          }
+        }
+      ],
+      "doRequest": {
+        "url": "/API/risk-management-service/risk-transaction-diversion/add",
+        "method": "post",
+        "params":{
+          "createUser": "$g{{user_info.userCode}}",
+          "updateUser": "$g{{user_info.userCode}}"
+        }
+      }
+    }
+  }
+}

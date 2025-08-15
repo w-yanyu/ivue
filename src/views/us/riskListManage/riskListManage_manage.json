@@ -1,0 +1,304 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "cust_name": {
+                        "label": "客户名称",
+                        "control": "text",
+                        "width": "130px"
+                    },
+                    "cert_type": {
+                        "label": "证件类型",
+                        "control": "select",
+                        "width": "130px",
+                        "dict": {
+                            "dictType": "MS_E_CRET_TYPE",
+                            "dictKey": [
+                                "MS_E_CRET_TYPE"
+                            ],
+                            "format": "label"
+                        }
+                    }
+                },
+                {
+                    "cert_no": {
+                        "label": "证件号码",
+                        "control": "text",
+                        "width": "130px"
+                    },
+                    "risk_list_type": {
+                        "label": "名单类型",
+                        "control": "select",
+                        "width": "130px",
+                        "dict": {
+                            "dictType": "US_E_RISK_LIST_TYPE",
+                            "dictKey": [
+                                "US_E_RISK_LIST_TYPE"
+                            ],
+                            "format": "label"
+                        }
+                    }
+                },
+                {
+                    "risk_list_status": {
+                        "label": "名单状态",
+                        "control": "select",
+                        "width": "130px",
+                        "dict": {
+                            "dictType": "US_E_STATE",
+                            "dictKey": [
+                                "US_E_STATE"
+                            ],
+                            "format": "label"
+                        }
+                    },
+                    "risk_list_name": {
+                        "label": "名单名称",
+                        "control": "select",
+                        "width": "130px",
+                        "options": [
+                            {
+                                "label": "黑名单",
+                                "value": "黑名单"
+                            },
+                            {
+                                "label": "白名单",
+                                "value": "白名单"
+                            },
+                            {
+                                "label": "灰名单",
+                                "value": "灰名单"
+                            }
+                        ]
+                    },
+                    "risk_list_from": {
+                        "label": "来源系统",
+                        "control": "select",
+                        "width": "130px",
+                        "dict": {
+                            "dictType": "US_E_RISK_LIST_FROM",
+                            "dictKey": [
+                                "US_E_RISK_LIST_FROM"
+                            ],
+                            "format": "label"
+                        }
+                    }
+                }
+            ]
+        },
+      "toolbar": {
+        "btns": [
+          {
+            "type": "add",
+            "target": "dialog",
+            "label": "新增",
+            "toRequest": {
+              "method": "POST",
+              "url": "/views/us/riskListManage/riskListManage_add.json"
+            },
+            "props": {
+              "width": "65%",
+              "title": "风险名单新增"
+            }
+          },
+          {
+            "type": "add",
+            "label": "导入数据",
+            "toRequest": {
+              "url": "/views/icms/poc/changyinGuarantee/arbPremium/import_excel.json",
+              "method": "get",
+              "params": {
+                "servicecode": "us0826",
+                "appId": "usOnl"
+              }
+            },
+            "props": {
+              "title": "导入风险名单信息",
+              "width": "80%"
+            }
+          },
+          {
+            "type": "export",
+            "label": "下载模板",
+            "icon": "iconfont icon-daochu",
+            "doRequest": {
+              "url": "/SUMP/rest/file/exportNullExcel",
+              "method": "get",
+              "params": {
+                "header": "客户姓名,客户编号,证件类型,证件号码,证件生效日,证件到期日,手机号码,风险名单类型,上传风险名单原因,风险名单名称,电子账号,风险名单渠道,风险名单来源系统,风险名单归属机构,风险名单状态,生效日期,失效日期",
+                "fileName": "风险名单信息表.xls"
+              }
+            }
+          },{
+            "type": "export",
+            "icon": "iconfont icon-daochu",
+            "label": "导出",
+            "doRequest": {
+              "method": "POST",
+              "url": "/SUMP/rest/file/commExport",
+              "params": {
+                "length": 999,
+                "servicecode": "us0827"
+              }
+            },
+            "confirm": {
+              "title": "提示信息",
+              "msg": "确认导出吗？",
+              "confirmButtonText": "确定",
+              "cancelButtonText": "取消"
+            }
+          }
+        ]
+      },
+        "datagrid": {
+            "isInitSearch": true,
+            "scope": "searchTable",
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "us0827"
+                }
+            },
+            "thead": [
+                {
+                    "label": "序号",
+                    "type": "index"
+                },
+                {
+                    "label": "风险名单序号",
+                    "prop": "risk_list_no",
+                    "width": "100px"
+
+                },
+                {
+                    "label": "客户名称",
+                    "prop": "cust_name",
+                    "width": "100px"
+
+                },
+                {
+                    "label": "证件类型",
+                    "prop": "cert_type",
+                    "dict": {
+                        "dictType": "MS_E_CRET_TYPE",
+                        "dictKey": [
+                            "MS_E_CRET_TYPE"
+                        ]
+                    }
+                },
+                {
+                    "label": "证件号码",
+                    "prop": "cert_no",
+                    "width": "160px"
+
+                },
+                {
+                    "label": "手机号码",
+                    "prop": "mobile_no",
+                    "width": "130px"
+
+                },
+                {
+                    "label": "名单类型",
+                    "prop": "risk_list_type",
+                    "dict": {
+                        "dictType": "US_E_RISK_LIST_TYPE",
+                        "dictKey": [
+                            "US_E_RISK_LIST_TYPE"
+                        ]
+                    }
+                },
+                {
+                    "label": "名单名称",
+                    "prop": "risk_list_name"
+                },
+                {
+                    "label": "名单状态",
+                    "prop": "risk_list_status",
+                    "dict": {
+                        "dictType": "US_E_STATE",
+                        "dictKey": [
+                            "US_E_STATE"
+                        ]
+                    }
+                },
+                {
+                    "label": "上传名单原因",
+                    "prop": "risk_list_reason"
+                },
+                {
+                    "label": "来源系统",
+                    "prop": "risk_list_from",
+                    "dict": {
+                        "dictType": "US_E_RISK_LIST_FROM",
+                        "dictKey": [
+                            "US_E_RISK_LIST_FROM"
+                        ]
+                    }
+                },
+                {
+                    "label": "入库日期",
+                    "prop": "effect_date"
+                },
+                {
+                    "label": "失效日期",
+                    "prop": "expiry_date"
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 150,
+                    "align":"center",
+                    "btns": [
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/us/riskListManage/riskListManage_modify.json",
+                                "method": "POST"
+                            },
+                            "props": {
+                                "width": "70%",
+                                "title": "风险名单维护"
+                            }
+                        },
+                        {
+                            "type": "look",
+                            "label": "详情",
+                            "toRequest": {
+                                "url": "/views/us/riskListManage/riskListManage_info.json",
+                                "method": "POST"
+                            },
+                            "props": {
+                                "width": "65%",
+                                "title": "风险名单详情"
+                            }
+                        },
+                        {
+                            "type": "delete",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "us0830"
+                                }
+                            },
+                            "confirm": {
+                                "title": "确定删除",
+                                "confirmButtonText": "确定",
+                                "cancelButtonText": "取消"
+                              }
+                        }
+                    ]
+                }
+            ],
+            "pagination": {
+                "show": true
+            }
+        }
+    }
+}

@@ -1,0 +1,180 @@
+{
+  "module": "v-inputDataForm-btn",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "btns": [],
+      "controls": [
+        {
+          "cust_no": {
+            "control": "hidden",
+            "label": "cust_no"
+          },
+          "apply_no": {
+            "control": "hidden",
+            "label": "apply_no"
+          },
+          "cust_type": {
+            "control": "hidden",
+            "value": "20",
+            "label": "cust_type"
+          },
+          "limit_no": {
+            "control": "hidden",
+            "label": "limit_no"
+          },
+          "apply_type": {
+            "control": "hidden",
+            "value": "K",
+            "label": "apply_type"
+          },
+          "cust_name": {
+            "control": "lookup",
+            "label": "客户名称",
+            "width": "10px",
+            "keyField": {
+              "cust_no": "cust_no",
+              "cust_name": "cust_name",
+              "cert_type": "cert_type",
+              "cert_no": "cert_no"
+            },
+            "events": {
+              "set": {
+                "contract_no": ""
+              }
+            },
+            "toRequest": {
+              "url": "/views/us/entManager/ent_cust_lookup.json",
+              "method": "get"
+            },
+            "props": {
+              "title": "选择客户",
+              "width": "75%"
+            },
+            "format": "label",
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择客户名称"
+              }
+            ]
+          },
+          "contract_no": {
+            "control": "lookup",
+            "#span": 12,
+            "label": "合同编号",
+            "width": "10px",
+            "keyField": {
+              "sale_prod_cd": "sale_prod_cd",
+              "sale_prod_name": "sale_prod_name",
+              "apply_no": "apply_no",
+              "limit_no": "limit_no",
+              "contract_no": "loan_contract_no"
+            },
+            "toRequest": {
+              "url": "/views/icms/flowStart/lend/creditBusinessStart/credit_contract_lookup.json",
+              "method": "get",
+              "params": {
+                "cust_no": "${{formData.cust_no}}"
+              }
+            },
+            "props": {
+              "title": "请选择合同编号"
+            },
+            "format": "label",
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择合同编号"
+              }
+            ]
+          },
+          "cert_type": {
+            "control": "select",
+            "label": "证件类型",
+            "#span": 12,
+            "width": "10px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择客户名称"
+              }
+            ],
+            "disabled": true,
+            "dict": {
+              "dictType": "MS_E_CRET_TYPE",
+              "dictKey": [
+                "MS_E_CRET_TYPE"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId"
+            }
+          },
+          "cert_no": {
+            "control": "text",
+            "#span": 12,
+            "width": "10px",
+            "label": "证件号码",
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择客户名称"
+              }
+            ],
+            "disabled": true
+          },
+          "busi_type": {
+            "control": "hidden",
+            "width": "10px",
+            "value": "INTR",
+            "label": "业务类型",
+            "hidden": true
+          },
+          "prod_type_name": {
+            "control": "string",
+            "width": "10px",
+            "value": "国际业务",
+            "label": "业务类型名称",
+            "hidden": true
+          },
+          "sale_prod_cd": {
+            "control": "text",
+            "label": "产品编号",
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择客户名称"
+              }
+            ],
+            "#span": 12,
+            "width": "10px",
+            "disabled": true
+          },
+          "sale_prod_name": {
+            "control": "text",
+            "label": "产品名称",
+            "#span": 12,
+            "width": "10px",
+            "disabled": true
+          },
+          "toDbsx": {
+            "span": 24,
+            "control": "dynamic",
+            "unFieldList": [
+              "busi_type"
+            ],
+            "toRequest": {
+              "method": "GET",
+              "url": "@FlowSubmitBtn",
+              "params": {
+                "appId": "icmsOnl",
+                "servicecode": "ar0013",
+                "finalUrl": "@CommWaitToDoDeal"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

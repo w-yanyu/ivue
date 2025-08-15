@@ -1,0 +1,363 @@
+{
+  "module": "v-inputDataForm-btn",
+  "layout": {
+    "form": {
+      "scope": "myForm",
+      "initRequest": "${{params}}",
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "us0113"
+        }
+      },
+      "controls": [
+        {
+          "cust_no": {
+            "control": "hidden",
+            "label": "客户编号",
+            "width": "130px",
+            "disabled": true
+          },
+          "guar_person": {
+            "control": "text",
+            "label": "被担保人",
+            "width": "130px",
+            "rules": [
+              {
+                "max": 80,
+                "message": "长度不能超过80个字符"
+              },
+              {
+                "required": true,
+                "message": "请输入被担保人"
+              }
+            ]
+          },
+          "guar_type": {
+            "control": "select",
+            "label": "担保方式:",
+            "width": "130px",
+            "align": "center",
+            "dict": {
+              "dictType": "MS_E_GUAR_TYPE",
+              "dictKey": [
+                "MS_E_GUAR_TYPE"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择担保方式"
+              }
+            ]
+          },
+          "cert_type": {
+            "control": "select",
+            "label": "证件类型(征)",
+            "width": "130px",
+            "align": "center",
+            "dict": {
+              "dictType": "MS_E_CRET_TYPE",
+              "dictKey": [
+                "MS_E_CRET_TYPE"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择证件类型(征)"
+              }
+            ]
+          },
+          "cert_no": {
+            "control": "text",
+            "label": "证件号码(征)",
+            "width": "130px",
+            "rules": [
+              {
+                "max": 20,
+                "message": "长度不能超过20个字符"
+              },
+              {
+                "required": true,
+                "message": "请输入证件号码"
+              }
+            ]
+          },
+          "guar_amt": {
+            "control": "currency",
+            "thousand": ",",
+            "label": "担保金额(元)",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true,
+                "pattern": "^[0-9]+(\\.[0-9]{1,2})?$",
+                "message": "请输入担保金额"
+              }
+            ]
+          },
+          "guaranty_deadline": {
+            "control": "text",
+            "label": "担保期限(月)",
+            "width": "130px",
+            "rules": [
+              {
+                "max": 3,
+                "message": "长度不能超过3个字符"
+              },
+              {
+                "required": true,
+                "message": "请输入担保期限"
+              }
+            ]
+          },
+          "effect_date": {
+            "control": "dateTimePicker",
+            "width": "130px",
+            "label": "担保起始日期",
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择担保起始日期"
+              }
+            ]
+          },
+          "expiry_date": {
+            "control": "dateTimePicker",
+            "label": "担保到期日期",
+            "width": "130px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择担保到期日期"
+              }
+            ],
+            "disabledDate": {
+              "startRange": "${{myForm.effect_date}}",
+              "endRange": "2999-01-01"
+            }
+          },
+          "guar_person_bank": {
+            "control": "text",
+            "label": "被担保人开户行",
+            "width": "130px",
+            "rules": [
+              {
+                "max": 6,
+                "message": "长度不能超过6个字符"
+              },
+              {
+                "required": true,
+                "message": "请输入被担保人开户行"
+              }
+            ]
+          },
+          "guar_person_acct": {
+            "control": "text",
+            "label": "被担保人开户帐号",
+            "width": "130px",
+            "rules": [
+              {
+                "max": 30,
+                "message": "长度不能超过30个字符"
+              },
+              {
+                "required": true,
+                "message": "请输入被担保人开户帐号"
+              }
+            ]
+          },
+          "relationship": {
+            "control": "select",
+            "label": "和被担保人关系",
+            "width": "130px",
+            "align": "center",
+            "dict": {
+              "dictType": "US_E_RELATIONSHIP",
+              "dictKey": [
+                "US_E_RELATIONSHIP"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择和被担保人关系"
+              }
+            ]
+          },
+          "contract_no": {
+            "control": "text",
+            "label": "保证合同号",
+            "width": "130px",
+            "rules": [
+              {
+                "max": 20,
+                "message": "长度不能超过20个字符"
+              },
+              {
+                "required": false,
+                "message": "请输入保证合同号"
+              }
+            ]
+          },
+          "guaranty_right": {
+            "control": "text",
+            "label": "担保债权",
+            "width": "130px",
+            "rules": [
+              {
+                "max": 40,
+                "message": "长度不能超过40个字符"
+              },
+              {
+                "required": false,
+                "message": "请输入担保债权"
+              }
+            ]
+          },
+          "reason": {
+            "control": "textarea",
+            "label": "担保理由",
+            "width": "130px",
+            "rules": [
+              {
+                "max": 200,
+                "message": "长度不能超过200个字符"
+              }
+            ]
+          },
+          "is_guaranty_duty": {
+            "control": "select",
+            "label": "是否已履行担保责任",
+            "width": "130px",
+            "align": "center",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择是否已履行担保责任"
+              }
+            ]
+          },
+          "perform_amt": {
+            "control": "currency",
+            "width": "130px",
+            "label": "履行金额(元)",
+            "rules": [
+              {
+                "required": true,
+                "pattern": "^[0-9]+(\\.[0-9]{1,2})?$",
+                "message": "请输入履行金额"
+              }
+            ]
+          },
+          "is_risk": {
+            "control": "select",
+            "width": "130px",
+            "label": "是否有潜在风险",
+            "align": "center",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": false,
+                "message": "请选择有无潜在风险"
+              }
+            ]
+          },
+          "risk_desc": {
+            "control": "textarea",
+            "width": "130px",
+            "label": "风险情况分析",
+            "rules": [
+              {
+                "max": 100,
+                "message": "长度不能超过100个字符"
+              }
+            ]
+          },
+          "is_litigation": {
+            "control": "select",
+            "label": "是否发生诉讼",
+            "width": "130px",
+            "align": "center",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择是否发生诉讼"
+              }
+            ]
+          },
+          "litigation_status": {
+            "control": "textarea",
+            "label": "诉讼情况",
+            "width": "130px",
+            "rules": [
+              {
+                "max": 100,
+                "message": "长度不能超过100个字符"
+              }
+            ]
+          },
+          "status": {
+            "control": "select",
+            "label": "是否有效",
+            "align": "center",
+            "width": "130px",
+            "dict": {
+              "dictType": "US_E_STATE",
+              "dictKey": [
+                "US_E_STATE"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择是否有效"
+              }
+            ]
+          },
+          "remark": {
+            "label": "备注",
+            "control": "textarea",
+            "width": "130px",
+            "span": "24",
+            "autosize": {
+              "minRows": 4
+            },
+            "rules": [
+              {
+                "max": 100,
+                "message": "100字以内"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

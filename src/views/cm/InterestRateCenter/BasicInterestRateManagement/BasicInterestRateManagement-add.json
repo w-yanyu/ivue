@@ -1,0 +1,226 @@
+{
+    "module": "v-form-editableDataGrid-btn",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "rfirtp": {
+                        "control": "select",
+                        "label": "基础利率类型",
+                        "width": "150px",
+                        "rules": [
+                            {
+                               "required": true,
+                               "message": "请选择基础利率类型"
+                            }
+                        ],
+                        "dict": {
+                            "dictType": "E_RFIRTP",
+                            "dictKey": [
+                                "E_RFIRTP"
+                            ],
+                            "format": "label"
+                        }
+                    },
+                    "intrkd": {
+                        "control": "select",
+                        "label": "利率种类",
+                        "width": "150px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请选择利率种类"
+                            }
+                        ],
+                        "dict": {
+                            "dictType": "E_INTRTY",
+                            "dictKey": [
+                                "E_INTRTY"
+                            ],
+                            "format": "label"
+                        }
+                    }
+                },
+                {
+                   
+                    "crcycd": {
+                        "control": "select",
+                        "label": "币种",
+                        "width": "150px",
+                        "dict": {
+                            "dictType": "MS_CURRENCY",
+                            "dictKey": [
+                                "MS_CURRENCY"
+                            ],
+                            "format": "label"
+                        },
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请选择币种"
+                            }
+                        ]
+                    },
+                    "intrna": {
+                        "label": "利率名称",
+                        "width": "150px",
+                        "control": "text",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入利率名称"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "label": "新增",
+                    "target": "dialog",
+                    "toRequest": {
+                        "url": "/views/cm/InterestRateCenter/BasicInterestRateManagement/BasicInterestRateManagement-add-add.json",
+                        "method": "get",
+                        "params": {}
+                    },
+                    "props": {
+                        "title": "基础利率输出新增",
+                        "width": "1000px"
+                    }
+                }       
+            ]
+        },
+        "datagrid": {
+            "allData":true,
+            "pagination": {
+                "show":false
+            },
+            "thead": [
+                { 
+                    "type": "select",
+                    "label": "期限",
+                    "dict": {
+                        "dictType": "E_TERMCD",
+                        "dictKey": [
+                          "E_TERMCD"
+                        ],
+                        "format": "label"
+                    },
+                    "prop": "rfirtm",
+                    "rules": [
+                        {
+                            "required": true,
+                            "message": "请选择期限"
+                        }
+                    ]
+                },
+                { 
+                    "prop": "intrfg",
+                    "type": "select",
+                    "label": "利率性质",
+                    "dict": {
+                        "dictType": "E_INRATE",
+                        "dictKey": [
+                          "E_INRATE"
+                        ],
+                        "format": "label"
+                    },
+                    "rules": [
+                        {
+                            "required": true,
+                            "message": "请选择利率性质" 
+                        }
+                    ]
+                },
+                { 
+                    "type": "text",
+                    "label": "基础利率",
+                    "prop": "baseir",
+                    "rules": [
+                        {
+                            "required": true,
+                            "message": "请输入基础利率"
+                        }
+                    ]
+                },
+                { 
+                    "type": "text",
+                    "label": "浮动点数上限",
+                    "prop": "flmxsc",
+                    "rules": [
+                        {
+                            "required": true,
+                            "message": "请输入浮动点数上限"
+                        }
+                    ]
+                },
+                { 
+                    "type": "text",
+                    "label": "浮动点数下限",
+                    "prop": "flmnsc",
+                    "rules": [
+                        {
+                            "required": true,
+                            "message": "请输入浮动点数下限"
+                        }
+                    ]
+                },
+                { 
+                    "type": "dateTimePicker",
+                    "label": "生效日期",
+                    "prop": "efctdt",
+                    "rules": [
+                        {
+                            "required": true,
+                            "message": "请选择生效日期"
+                        }
+                    ]
+                },
+                { 
+                    "type": "timePicker",
+                    "label": "生效时间",
+                    "prop": "efcttm",
+                    "valueFormat":"HHmmss",
+                    "rules": [
+                        {
+                            "required": true,
+                            "message": "请选择生效时间"
+                        }
+                    ]
+                },
+                {
+                    "label": "操作",
+                    "width": "80px",
+                    "btns": [
+                        {
+                            "type": "delete",
+                            "label": "删除",
+                            "icon": "el-icon-close"
+                        }
+                    ]
+                }
+            ]
+        },
+        "footer": {
+            "position": "center",
+            "btns": [
+                {
+                    "type": "submit",
+                    "label": "提交",
+                    "icon": "",
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "insrfi",
+                            "rfirInfo": "${{current.allData}}"
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

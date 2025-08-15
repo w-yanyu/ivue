@@ -1,0 +1,195 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "plan_amt": {
+                        "control": "text",
+                        "label": "金额",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入"
+                            }
+                        ]
+                    },
+                    "plan_rate": {
+                        "control": "text",
+                        "label": "执行利率",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入"
+                            }
+                        ]
+                    },
+                    "settlement_type": {
+                        "control": "remoteSelect",
+                        "label": "结息方式",
+                        "labelField": "drop_list_desc",
+                        "valueField": "drop_list_value",
+                        "format": "value-label",
+                        "doRequest": {
+                            "url": "/SUMP/iccsCall/iccsEurekaCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "ap1071",
+                                "drop_list_type": "settlement_type"
+                            }
+                        },
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入"
+                            }
+                        ]
+                    },
+                    "start_date": {
+                        "control": "dateTimePicker",
+                        "label": "起始日期",
+                        "valueFormat": "yyyyMMdd",
+                      "disabledDate":{
+                        "endRange": "today"
+                      },
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入"
+                            }
+                        ]
+                    },
+                    "end_date": {
+                        "control": "dateTimePicker",
+                        "label": "终止日期",
+                        "valueFormat": "yyyyMMdd",
+                      "disabledDate":{
+                        "endRange": "today"
+                      },
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入"
+                            }
+                        ]
+                    },
+                    "specified_date": {
+                        "control": "inputNumber",
+                        "label": "指定还款日期",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入"
+                            },
+                            {
+                                "type": "integer",
+                                "message": "请输入整数"
+                            }
+                        ]
+                    },
+                    "pay_type": {
+                        "control": "select",
+                        "label": "还款方式",
+                        "dict": {
+                          "dictType": "E_PAYTYPE",
+                          "dictKey": [
+                            "E_PAYTYPE"
+                          ],
+                          "format": "value-label"
+                        },
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "target": "dialog",
+                    "label": "申请",
+                    "toRequest": {
+                      "url": "/views/cs/collManage/tcManage/collWorkbench/functionMenu/adjustApply/adjustApply_add.json",
+                      "method": "POST",
+                      "params": {
+                        "plan_amt": "${{form.plan_amt}}",
+                        "plan_rate":"${{form.plan_rate}}",
+                        "settlement_type":"${{form.settlement_type}}",
+                        "start_date": "${{form.start_date}}",
+                        "end_date":"${{form.end_date}}",
+                        "specified_date":"${{form.specified_date}}",
+                        "pay_type":"${{form.pay_type}}",
+                        "case_id": "${{params.case_id}}"
+                      }
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+          "isInitSearch": false,
+            "doRequest": {
+              "url": "/SUMP/iccsCall/iccsEurekaCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "pl2737"
+              }
+            },
+            "thead": [
+              {
+                "type": "currency",
+                "label": "计划总金额",
+                "align": "center",
+                "prop": "plan_total_amt"
+              },
+              {
+                "type": "currency",
+                "label": "计划总利息",
+                "align": "center",
+                "prop": "plan_total_interest"
+              },
+
+                {
+                    "type": "string",
+                    "label": "期次",
+                    "align": "center",
+                    "prop": "term_no"
+                },
+                {
+                    "type": "string",
+                    "label": "本期起始日期",
+                    "align": "center",
+                    "prop": "start_date"
+                },
+                {
+                    "type": "string",
+                    "label": "本期终止日期",
+                    "align": "center",
+                    "prop": "end_date"
+                },
+                {
+                    "type": "currency",
+                    "label": "本期本金金额",
+                    "align": "center",
+                    "prop": "plan_principal"
+                },
+                {
+                    "type": "currency",
+                    "label": "本期利息金额",
+                    "align": "center",
+                    "prop": "plan_interest"
+                },
+                {
+                    "type": "currency",
+                    "label": "本期本息合计金额",
+                    "align": "center",
+                    "prop": "plan_amt"
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,289 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "foldLineNumber": 3,
+            "controls": [
+                {
+                    "cust_name": {
+                        "control": "text",
+                        "label": "客户姓名"
+                    },
+                    "daterange": {
+                        "control": "dateTimePicker",
+                        "label": "申请时间",
+                        "type": "daterange",
+                        "unlinkPanels": true,
+                        "valueFormat": "yyyyMMdd",
+                        "startPlaceholder": "选择开始时间",
+                        "endPlaceholder": "选择结束时间",
+                        "startField": "start_time",
+                        "endField": "expir_time",
+                        "disabledDate": "dateAfter"
+                    }
+                },
+                {
+                    "cert_no": {
+                        "control": "text",
+                        "label": "证件号码"
+                    },
+                    "appr_state": {
+                        "control": "select",
+                        "label": "审核状态",
+                        "default": "NC",
+                        "dict": {
+                          "dictType": "CE_APPR_STATE",
+                          "dictKey": [
+                            "CE_APPR_STATE"
+                          ],
+                          "format": "value-label"
+                        }
+                    }
+                },
+                {
+                    "start_amt": {
+                        "control": "inputNumber",
+                        "label": "逾期本金区间开始值"
+                    },
+                    "end_amt": {
+                        "control": "inputNumber",
+                        "label": "逾期本金区间结束值"
+                    }
+                },
+                {
+                    "cust_no": {
+                        "control": "text",
+                        "label": "客户号"
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "custom",
+                    "icon": "el-icon-edit",
+                    "target": "dialog",
+                    "checkCountMin": 1,
+                    "label": "批量审核",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/ce/assistManage/callOn/callOnCheck/callOnCheck_auditing.json"
+                    }
+                },
+                {
+                    "type": "custom",
+                    "icon": "el-icon-circle-check",
+                    "target": "dialog",
+                    "label": "全部核准",
+                    "disabled": "'${{current.appr_state}}' === 'P' || '${{current.appr_state}}' === 'R' || '${{current.appr_state}}' === ''",
+                    "doRequest": {
+                        "method": "POST",
+                        "url": "/SUMP/call/RPCCall",
+                        "params": {
+                            "servicecode":"ce1558",
+                            "submit_type": "P",
+                            "appr_comment":"批量审核-同意",
+                            "appr_state": "NC",
+                            "cust_name": "${{form.cust_name}}",
+                            "start_time": "${{form.start_time}}",
+                            "expir_time": "${{form.expir_time}}",
+                            "cert_no": "${{form.cert_no}}",
+                            "start_amt": "${{form.start_amt}}",
+                            "end_amt": "${{form.end_amt}}",
+                            "cust_no": "${{form.cust_no}}"
+                        }
+                    }
+                },
+                {
+                    "type": "custom",
+                    "icon": "el-icon-circle-close",
+                    "target": "dialog",
+                    "label": "全部拒绝",
+                    "disabled": "'${{current.appr_state}}' === 'P' || '${{current.appr_state}}' === 'R' || '${{current.appr_state}}' === ''",
+                    "doRequest": {
+                        "method": "POST",
+                        "url": "/SUMP/call/RPCCall",
+                        "params": {
+                            "servicecode":"ce1558",
+                            "submit_type": "R",
+                            "appr_comment":"批量审核-拒绝",
+                            "appr_state": "NC",
+                            "cust_name": "${{form.cust_name}}",
+                            "start_time": "${{form.start_time}}",
+                            "expir_time": "${{form.expir_time}}",
+                            "cert_no": "${{form.cert_no}}",
+                            "start_amt": "${{form.start_amt}}",
+                            "end_amt": "${{form.end_amt}}",
+                            "cust_no": "${{form.cust_no}}"
+                        }
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ce1551"
+                }
+            },
+            "thead": [
+                {
+                    "type": "selection",
+                    "align": "center",
+                    "width": "55",
+                    "fixed": "left"
+                },
+                {
+                    "type": "string",
+                    "align": "center",
+                    "width": "180px",
+                    "label": "客户姓名",
+                    "prop": "cust_name"
+                },
+                {
+                    "type": "string",
+                    "align": "center",
+                    "width": "180px",
+                    "label": "证件号码",
+                    "prop": "cert_no"
+                },
+                {
+                    "type": "string",
+                    "align": "center",
+                    "width": "180px",
+                    "label": "借据号",
+                    "prop": "loan_no"
+                },
+                {
+                    "type": "string",
+                    "align": "center",
+                    "width": "180px",
+                    "label": "合同号",
+                    "prop": "contract_no"
+                },
+                {
+                    "type": "string",
+                    "align": "center",
+                    "width": "180px",
+                    "label": "客户号",
+                    "prop": "cust_no"
+                },
+                {
+                    "type": "currency",
+                    "align": "center",
+                    "width": "180px",
+                    "label": "逾期本金",
+                    "prop": "overdue_amt",
+                    "format": {
+                        "decimal": "2"
+                    }
+                },
+                {
+                    "type": "string",
+                    "align": "center",
+                    "width": "180px",
+                    "label": "申请人",
+                    "prop": "appt",
+                    "dict": {
+                        "dictKey": [
+                            "appt"
+                        ],
+                        "format": "label",
+                        "labelField": "user_name",
+                        "valueField": "user_id",
+                        "doRequest": {
+                            "url": "/SUMP/call/RPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "ce0403"
+                            }
+                        }
+                    }
+                },
+                {
+                    "type": "string",
+                    "align": "center",
+                    "width": "180px",
+                    "label": "申请时间",
+                    "prop": "apply_date"
+                },
+                {
+                    "type": "string",
+                    "align": "center",
+                    "width": "180px",
+                    "label": "申请原因",
+                    "prop": "apply_reason"
+                },
+                {
+                    "type": "string",
+                    "align": "center",
+                    "width": "180px",
+                    "label": "审核状态",
+                    "prop": "appr_state",
+                    "dict": {
+                      "dictType": "CE_APPR_STATE",
+                      "dictKey": [
+                        "CE_APPR_STATE"
+                      ],
+                      "format": "value-label"
+                    }
+                },
+                {
+                    "type": "string",
+                    "align": "center",
+                    "width": "180px",
+                    "label": "被访人姓名",
+                    "prop": "callon_name"
+                },
+                {
+                    "type": "string",
+                    "align": "center",
+                    "width": "180px",
+                    "label": "与持卡人关系",
+                    "prop": "relationship",
+                    "dict": {
+                      "dictType": "CE_E_RELATIONSHIP",
+                      "dictKey": [
+                        "CE_E_RELATIONSHIP"
+                      ],
+                      "format": "value-label"
+                    }
+                },
+                {
+                    "type": "string",
+                    "align": "center",
+                    "width": "180px",
+                    "label": "地址",
+                    "prop": "address"
+                },
+                {
+                    "label": "操作",
+                    "align": "center",
+                    "fixed": "right",
+                    "width": "130px",
+                    "btns": [
+                        {
+                            "type": "custom",
+                            "label": "案件详情",
+                            "toRequest": {
+                                "url": "/views/ce/assistManage/caseDetail/caseDetail_2/case_detail_main.json",
+                                "method": "POST",
+                                "params": {
+                                    "case_no": "${{current.case_no}}"
+                                }
+                            },
+                            "props": {
+                                "width": "80%",
+                                "title": "案件详情"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

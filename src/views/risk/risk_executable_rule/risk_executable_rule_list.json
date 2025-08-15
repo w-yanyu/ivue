@@ -1,0 +1,138 @@
+{
+  "module": "v-search-btn-datagrid",
+  "pageId": "risk_executable_rule",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "eruleId": {
+            "label": "规则id",
+            "control": "text",
+            "span": 8,
+            "rules": [
+              {
+                "message": "字段长度超限",
+                "max": 8
+              }
+            ]
+          },
+          "eruleName": {
+            "label": "规则名称",
+            "control": "text",
+            "span": 8,
+            "rules": [
+              {
+                "message": "字段长度超限",
+                "max": 100
+              }
+            ]
+          },
+          "cruleId": {
+            "label": "组合规则ID",
+            "control": "text",
+            "span": 8,
+            "rules": [
+              {
+                "message": "字段长度超限",
+                "max": 8
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "authId": "executable_rule_add_btn",
+          "label": "新增",
+          "toRequest": {
+            "url": "/views/risk/risk_executable_rule/risk_executable_rule_add.json",
+            "method": "get",
+            "params": {}
+          },
+          "props": {
+            "width": "70%",
+            "title": "新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/API/risk-management-service/risk-executable-rule/page-select",
+        "method": "post"
+      },
+      "thead": [
+        {
+          "label": "规则id",
+          "prop": "eruleId"
+        },
+        {
+          "label": "规则名称",
+          "prop": "eruleName"
+        },
+        {
+          "label": "组合规则ID",
+          "prop": "cruleId"
+        },
+        {
+          "label": "规则匹配处置措施",
+          "prop": "resultHandlers"
+        },
+        {
+          "label": "生效日期",
+          "prop": "effectDate",
+          "type": "dateTimePicker",
+          "format": "yyyy-MM-dd HH:mm:ss"
+        },
+        {
+          "label": "失效日期",
+          "prop": "expiryDate",
+          "type": "dateTimePicker",
+          "format": "yyyy-MM-dd HH:mm:ss"
+        },
+        {
+          "label": "操作",
+          "width": "150px",
+          "btns": [
+            {
+              "type": "edit",
+              "authId": "executable_rule_upd_btn",
+              "label": "编缉",
+              "toRequest": {
+                "url": "/views/risk/risk_executable_rule/risk_executable_rule_edit.json",
+                "method": "get"
+              },
+              "props": {
+                "width": "70%"
+              }
+            },
+            {
+              "type": "look",
+              "label": "查看",
+              "toRequest": {
+                "url": "/views/risk/risk_executable_rule/risk_executable_rule_view.json",
+                "method": "get"
+              },
+              "props": {
+                "width": "70%"
+              }
+            },
+            {
+              "type": "delete",
+              "authId": "executable_rule_del_btn",
+              "label": "删除",
+              "doRequest": {
+                "url": "/API/risk-management-service/risk-executable-rule/delete",
+                "method": "post"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

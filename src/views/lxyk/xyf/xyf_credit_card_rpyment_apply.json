@@ -1,0 +1,141 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "ln3999",
+          "smilr_cr_card_loan_acct_num": "${{params.smilr_cr_card_loan_acct_num}}"
+        }
+      },
+      "btns": [
+        {
+          "type": "submit",
+          "label": "确认还款",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "post",
+            "params": {
+              "servicecode": "ar0049",
+              "smilr_cr_card_loan_acct_num": "${{params.smilr_cr_card_loan_acct_num}}",
+              "min_rpymt_amt_flg": "${{form.min_rpymt_amt_flg}}",
+              "rpymt_amt": "${{form.rpymt_amt}}",
+              "rpymt_acct_num": "${{params.rpymt_acct_num}}",
+              "cust_num": "${{params.cust_num}}",
+              "cust_nm": "${{params.cust_nm}}",
+              "ccy_code_num": "${{params.ccy_code_num}}"
+            }
+          }
+        },
+        {
+          "type": "close",
+          "label": "取消"
+        }
+      ],
+      "controls": [
+        {
+          "currnet_amt_total": {
+            "control": "currency",
+            "decimal": "2",
+            "compute": "${{form.bill_amt}}+${{form.acmld_ovdue_prcpl}}+${{form.acmld_ovdue_db_int}}",
+            "label": "已出待还总额(元) ",
+            "disabled": true,
+            "span": 12,
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ],
+            "format": {
+              "thousand": ","
+            }
+          },
+          "bill_amt": {
+            "control": "currency",
+            "decimal": "2",
+            "value":"${{params.bill_amt}}",
+            "label": "当前账期累计(元) ",
+            "disabled": true,
+            "span": 12,
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ],
+            "format": {
+              "thousand": ","
+            }
+          }
+        },
+        {
+          "acmld_ovdue_prcpl": {
+            "control": "currency",
+            "label": "累计逾期本金",
+            "disabled": true,
+            "span": 12,
+            "format": {
+              "thousand": ","
+            }
+          },
+          "acmld_ovdue_db_int": {
+            "control": "currency",
+            "label": "累计逾期利息",
+            "disabled": true,
+            "span": 12,
+            "format": {
+              "thousand": ","
+            }
+          }
+        },
+        {
+          "min_rpymt_amt_flg": {
+            "control": "select",
+            "label": "最低额还款标志",
+            "span": 12,
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            },
+            "events": {
+              "condition": {
+                "1": {
+                  "control": {
+                    "rpymt_amt": {
+                      "compute": "${{params.min_rpymt_amt}}",
+                      "disabled": true
+                    }
+                  }
+                },
+                "0": {
+                  "control": {
+                    "rpymt_amt": {
+                      "compute": false,
+                      "value":"${{form.currnet_amt_total}}",
+                      "disabled": false
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "rpymt_amt": {
+            "control": "currency",
+            "label": "还款金额",
+            "format": {
+              "thousand": ","
+            },
+            "span": 12
+          }
+        }
+      ]
+    },
+    "toolbar": {}
+  }
+}

@@ -1,0 +1,173 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [{
+        "doc_no": {
+          "label": "档案编号",
+          "control": "text"
+        },
+        "colt_no": {
+          "label": "抵质押品编号",
+          "control": "text"
+        },
+        "data_state": {
+          "label": "数据状态",
+          "control": "select",
+          "dict": {
+            "dictType": "CO_E_COLT_EVALUTION_STATE",
+            "dictKey": [
+              "CO_E_COLT_EVALUTION_STATE"
+            ],
+            "format": "label"
+          }
+        }
+      }]
+    },
+    "toolbar": {
+      "btns": [{
+        "type": "add",
+        "label": "押品入库启动",
+        "toRequest": {
+          "url": "views/co/colsWarehous/colsWareIo_add.json",
+          "method": "get",
+          "params": {}
+        },
+        "props": {
+          "title": "押品入库新增",
+          "width": "80%"
+        }
+      }]
+    },
+    "datagrid": {
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "co3012",
+          "deal_type": "in"
+
+        }
+      },
+      "pagination": {
+        "pageSizes": [10, 15, 20],
+        "pageSize": 10
+      },
+      "thead": [{
+        "type": "index",
+        "align": "center"
+      },
+        {
+          "type": "leaf",
+          "label": "客户名称",
+          "align": "center",
+          "prop": "cust_name"
+        },
+        {
+          "label": "档案交易号",
+          "prop": "doc_tx_no",
+          "align": "center",
+          "type": "hidden"
+        },
+        {
+          "label": "抵质押品编号",
+          "prop": "colt_no",
+          "align": "center",
+          "type": "leaf"
+        },
+        {
+          "label": "档案编号",
+          "prop": "doc_no",
+          "align": "center",
+          "type": "leaf"
+        },
+        {
+          "label": "权证号",
+          "prop": "othr_cert_no",
+          "align": "center",
+          "type": "leaf"
+        },
+        {
+          "label": "状态",
+          "prop": "state",
+          "align": "center",
+          "type": "leaf",
+          "dict": {
+            "dictType": "CO_E_STATUS",
+            "dictKey": [
+              "CO_E_STATUS"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "入库日期",
+          "prop": "input_date",
+          "align": "center",
+          "type": "leaf"
+        },
+
+        {
+          "label": "数据状态",
+          "prop": "data_state",
+          "align": "center",
+          "type": "leaf",
+          "dict": {
+            "dictType": "CO_E_COLT_EVALUTION_STATE",
+            "dictKey": [
+              "CO_E_COLT_EVALUTION_STATE"
+            ],
+            "format": "label"
+          }
+        },{
+          "label": "交易流水(分录)",
+          "prop": "txn_rung_num_32",
+          "align": "center",
+          "width": 120,
+          "btns": [
+            {
+              "type": "look",
+              "toRequest": {
+                "url": "/views/co/colsWarehous/co_accounting_entry_single.json",
+                "method": "POST",
+                "params": {
+                  "txn_rung_num_32": "${{current.txn_rung_num_32}}",
+                  "txn_dt_8": "${{current.txn_dt_8}}"
+                }
+              },
+              "props": {
+                "width": "80%",
+                "title": "单笔交易会计分录明细"
+              }
+            }
+          ]
+        },
+        {
+          "label": "操作",
+          "width": "220px",
+          "align": "center",
+          "fixed": "right",
+          "btns": [
+
+            {
+              "label": "抵质押品详情",
+              "type": "look",
+              "toRequest": {
+                "url": "${{current.url_query}}",
+                "method": "get",
+                "params": {
+                  "asset_list_id": "${{current.asset_list_id}}"
+                }
+              },
+              "props": {
+                "title": "抵质押品信息详情",
+                "width": "80%"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

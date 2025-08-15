@@ -1,0 +1,165 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [{
+                "doc_no": {
+                    "label": "档案编号",
+                    "control": "text"
+                }
+            }]
+        },
+        "toolbar": {
+            "btns": [{
+                "type": "add",
+                "label": "押品出库新增",
+                "toRequest": {
+                    "url": "/views/co/colsDelivery/start/startAdd.json",
+                    "method": "get",
+                    "params": {}
+                },
+                "props": {
+                    "title": "押品出库新增",
+                    "width": "80%"
+                }
+            }]
+        },
+        "datagrid": {
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "co3012",
+                    "deal_type": "out",
+                    "appv_state": "NR"
+                }
+            },
+            "pagination": {
+                "pageSizes": [10, 15, 20],
+                "pageSize": 10
+            },
+            "thead": [{
+                    "type": "index",
+                    "align": "center"
+                },
+                {
+                    "type": "leaf",
+                    "label": "客户名称",
+                    "align": "center",
+                    "prop": "cust_name"
+                },
+                {
+                    "label": "抵质押品号",
+                    "prop": "colt_no",
+                    "align": "center",
+                    "type": "leaf"
+                },
+                {
+                    "label": "档案编号",
+                    "prop": "doc_no",
+                    "align": "center",
+                    "type": "leaf"
+                },
+                {
+                    "label": "状态",
+                    "prop": "state",
+                    "align": "center",
+                    "type": "leaf",
+                    "dict": {
+                        "dictType": "CO_E_STATUS",
+                        "dictKey": [
+                            "CO_E_STATUS"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "出库日期",
+                    "prop": "out_date",
+                    "align": "center",
+                    "type": "leaf"
+                },
+                {
+                    "label": "出库原因",
+                    "prop": "out_reason",
+                    "align": "center",
+                    "type": "leaf",
+                    "dict": {
+                        "dictType": "CO_E_OUTPUTRN",
+                        "dictKey": [
+                            "CO_E_OUTPUTRN"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "审批状态",
+                    "prop": "appv_state",
+                    "align": "center",
+                    "type": "leaf",
+                    "dict": {
+                        "dictType": "CO_E_APPVSTUS",
+                        "dictKey": [
+                            "CO_E_APPVSTUS"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "操作",
+                    "width": "220px",
+                    "align": "center",
+                    "fixed": "right",
+                    "btns": [{
+                            "type": "edit",
+                            "label": "抵质押品维护",
+                            "toRequest": {
+                                "url": "/views/co/colsDelivery/start/startUpdate.json",
+                                "method": "get"
+                            },
+                            "props": {
+                                "title": "抵质押品维护",
+                                "width": "80%"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "业务提交",
+                            "doRequest": {
+                                "url": "/SUMP/call/RPCCall",
+                                "method": "post",
+                                "params": {
+                                    "servicecode": "co3002",
+                                    "doc_tx_no": "${{current.doc_tx_no}}",
+                                    "appv_state": "PA"
+                                }
+                            },
+                            "confirm": {
+                                "title": "提示信息",
+                                "msg": "确定业务提交吗？",
+                                "confirmButtonText": "确定",
+                                "cancelButtonText": "取消"
+                            }
+                        },
+                        {
+                            "label": "抵质押品详情",
+                            "type": "look",
+                            "toRequest": {
+                                "url": "${{current.url_query}}",
+                                "method": "get",
+                                "params": {
+                                    "asset_list_id": "${{current.asset_list_id}}"
+                                }
+                            },
+                            "props": {
+                                "title": "抵质押品信息详情",
+                                "width": "80%"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

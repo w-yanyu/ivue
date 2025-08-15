@@ -1,0 +1,131 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "template_id": {
+            "label": "模板编号",
+            "control": "text"
+          },
+          "template_name": {
+            "label": "模板名称",
+            "control": "text"
+          }
+        },
+        {
+          "prod_type": {
+            "label": "产品类型",
+            "control": "remoteSelect",
+            "labelField": "title",
+            "valueField": "id",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "pd0144",
+                "grupno": "0006",
+                "pid": "KSCP"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+    },
+    "datagrid": {
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "pd0150",
+          "appr_status": "02",
+          "cust_class_list": "${{params.cust_class_list}}"
+        }
+      },
+      "thead": [
+        {
+          "label": "模板编号",
+          "prop": "template_id",
+          "align": "center"
+        },
+        {
+          "label": "模板名称",
+          "prop": "template_name",
+          "align": "center"
+        },
+        {
+          "label": "模板版本",
+          "prop": "prod_version",
+          "align": "center"
+        },
+        {
+          "label": "产品类型",
+          "prop": "prod_type_name",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "适用客户类型",
+          "prop": "cust_class",
+          "align": "center",
+          "dict": {
+            "dictType": "PD_E_CUST_CLASS",
+            "dictKey": [
+              "PD_E_CUST_CLASS"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "width": 180,
+          "btns": [
+            {
+              "type": "edit",
+              "label": "详情",
+              "toRequest": {
+                "url": "@ProdTemplateView",
+                "method": "get",
+                "params": {
+                  "childUrl": "/views/pd/prodTemplate/view/prodTemplate_examine_view.json"
+                },
+                "props": {
+                  "width": "75%",
+                  "title": "详情"
+                }
+              }
+            },
+            {
+              "type": "look",
+              "label": "审核记录",
+              "toRequest": {
+                "url": "/views/pd/prodTmpApprovalRecord/prod_tmp_approval_record_list.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "65%",
+                "title": "审核记录"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "审核",
+              "toRequest": {
+                "url": "/views/pd/prodTemplate/proTmpProductReview.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "35%",
+                "title": "产品模板审核"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

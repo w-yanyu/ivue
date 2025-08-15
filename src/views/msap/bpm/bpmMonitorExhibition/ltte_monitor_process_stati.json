@@ -1,0 +1,53 @@
+{
+  "module": "v-charts",
+  "layout": {
+      "rows":[
+        [
+          {
+            "span": 24,
+            "type": "ve-line",
+            "props": {
+              "settings" : {
+                "#axisSite": { "right": ["OrderRate"] },
+                "#yAxisType": ["KMB", "percent"],
+                "yAxisName": ["时长"],
+                "labelMap": {
+                  "min_cost": "最小处理时长",
+                  "max_cost": "最大处理时长",
+                  "average_cost": "平均处理时长",
+                  "total_cost": "耗时"
+                }
+              },
+              "extend":{
+                "xAxis.0.axisLabel.rotate": 45,
+                "series": {
+                  "label": {
+                    "normal": {
+                      "show": true
+                    }
+                  }
+                }
+              },
+              "data": {
+                "columns": ["system_date", "min_cost", "max_cost", "average_cost", "total_cost"],
+                "rows": {
+                  "initRequest":{
+                    "url": "/SUMP/icmcall/icmRPCCall",
+                    "method": "post",
+                    "params": {
+                        "servicecode": "bpm1023",
+                        "busi_type": "LTTE",
+                        "date_from":"19770101",
+                        "date_end":"",
+                        "appId":"icmsOnl",
+                        "time_type":""
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      ]
+  }
+}

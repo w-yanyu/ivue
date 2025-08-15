@@ -1,0 +1,229 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "foldLineNumber": 3,
+            "scope": "formData",
+            "controls": [
+                {
+                    "cust_name": {
+                        "control": "text",
+                        "label": "客户姓名"
+                    },
+                    "id_no": {
+                        "control": "text",
+                        "label": "证件号码"
+                    }
+                },
+                {
+                    "legal_status": {
+                        "control": "remoteSelect",
+                        "label": "法诉状态",
+                        "labelField": "drop_list_desc",
+                        "valueField": "drop_list_value",
+                        "doRequest": {
+                            "url": "/SUMP/icmcall/icmRPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "ap1071",
+                                "drop_list_type": "lg_status_loan"
+                            }
+                        },
+                        "format": "label"
+                    },
+                    "legal_org_id": {
+                        "control": "remoteSelect",
+                        "label": "诉讼机构",
+                        "labelField": "coll_org_id",
+                        "valueField": "coll_org_name",
+                        "doRequest": {
+                            "url": "/SUMP/icmcall/icmRPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "pl0416",
+                                "coll_kind":"02",
+                                "is_valid":"Y"
+                            }
+                        },
+                        "format": "label"
+                    }
+                },
+                {
+                    "daterange": {
+                        "control": "dateTimePicker",
+                        "label": "诉讼日期",
+                        "type": "daterange",
+                        "unlinkPanels": true,
+                        "valueFormat": "yyyyMMdd",
+                        "startPlaceholder": "选择开始时间",
+                        "endPlaceholder": "选择结束时间",
+                        "startField":"legal_begin_date",
+                        "endField":"legal_end_date",
+                        "disabledDate":"dateAfter"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "pl4690"
+                }
+            },
+            "thead": [
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "机构",
+                    "prop": "branch_id"
+
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "客户姓名",
+                    "prop": "cust_name"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "证件号码",
+                    "prop": "id_no"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "批次",
+                    "prop": "series_num"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "法诉金额",
+                    "prop": "oa_amt"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "派案日期",
+                    "prop": "legal_begin_date"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "回收日期",
+                    "prop": "legal_end_date"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "实际结束时间",
+                    "prop": "real_end_date"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "法诉状态",
+                    "prop": "legal_status",
+                    "dict":{
+                        "dictKey": [
+                            "legal_status"
+                        ],
+                        "format": "label",
+                        "labelField": "drop_list_desc",
+                        "valueField": "drop_list_value",
+                        "doRequest": {
+                            "url": "/SUMP/icmcall/icmRPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "ap1071",
+                                "drop_list_type": "lg_status_loan"
+                            }
+                        }
+                    }
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "法诉类型",
+                    "prop": "legal_type",
+                    "dict":{
+                        "dictKey": [
+                            "legal_type"
+                        ],
+                        "format": "label",
+                        "labelField": "drop_list_desc",
+                        "valueField": "drop_list_value",
+                        "doRequest": {
+                            "url": "/SUMP/icmcall/icmRPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "ap1071",
+                                "drop_list_type": "legalType"
+                            }
+                        }
+                    }
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "案件状态",
+                    "prop": "status_cd",
+                    "dict":{
+                        "dictKey": [
+                            "status_cd"
+                        ],
+                        "format": "label",
+                        "labelField": "status_name",
+                        "valueField": "status_cd",
+                        "doRequest": {
+                            "url": "/SUMP/icmcall/icmRPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "pl0411"
+                            }
+                        }
+                    }
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "上次法诉公司名称",
+                    "prop": "last_legal_org_id"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "是否完成",
+                    "prop": "is_call_end"
+                },
+                {
+                    "label": "操作",
+                    "align":"center",
+                    "fixed": "right",
+                    "width": "130px",
+                    "btns": [
+                      {
+                        "type": "custom",
+                        "label": "案件详情",
+                        "toRequest": {
+                          "url": "/views/pl/assistManage/caseDetail/caseDetail_1/case_detail_main.json",
+                          "method": "POST",
+                          "params": {
+                            "case_id": "${{current.case_id}}"
+                          }
+                        },
+                        "props": {
+                          "width": "80%",
+                          "title": "案件详情"
+                        }
+                      }
+                    ]
+                }
+            ]
+        }
+    }
+}

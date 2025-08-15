@@ -1,0 +1,82 @@
+{
+  "module": "d-steps",
+  "layout": {
+    "steps": {
+      "scope": "formObj",
+      "direction": "horizontal",
+      "alignCenter": true,
+      "finishStatus": "success",
+      "simpleType": false,
+      "nextStepType": "validate",
+      "list": [
+        {
+          "scope": "step1",
+          "title": "流程定义",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/msap/bpm/processManagement/products/product-manage-view.json",
+            "params": {
+              "appId": "${{params.appId}}",
+              "wf_prod_no": "${{params.wf_prod_no}}",
+              "wf_prod_name": "${{params.wf_prod_name}}",
+              "wf_define_name": "${{params.wf_define_name}}",
+              "wf_prod_tp": "${{params.wf_prod_tp}}",
+              "bpm_version": "${{params.bpm_version}}",
+              "wf_prod_st": "${{params.wf_prod_st}}",
+              "data_update_user": "${{params.data_update_user}}",
+              "data_update_time": "${{params.data_update_time}}",
+              "wf_define_id": "${{params.wf_define_id}}",
+              "start_mode":"${{params.start_mode}}"
+            }
+          }
+        },
+        {
+          "scope": "step2",
+          "title": "配置管理",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "url": "@flowDesigner",
+            "params": {
+              "appId": "${{params.appId}}",
+              "wf_prod_no": "${{params.wf_prod_no}}",
+              "bpm_version": "${{params.bpm_version}}",
+              "isEdit": false,
+              "onlyRead": true,
+              "isFormal":"1"
+            },
+            "method": "get"
+          }
+        },
+        {
+          "scope": "step3",
+          "title": "适用机构",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "url": "/views/msap/bpm/processManagement/products/process-product-branch_view_new.json",
+            "params": {
+              "appId": "${{params.appId}}",
+              "wf_prod_no": "${{params.wf_prod_no}}",
+              "bpm_version": "${{params.bpm_version}}"
+            },
+            "method": "get"
+          }
+        },
+        {
+          "scope": "step4",
+          "title": "流程检测",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "url": "@checkWfProduct",
+            "params": {
+              "appId": "${{params.appId}}",
+              "wf_prod_no": "${{params.wf_prod_no}}",
+              "bpm_version": "${{params.bpm_version}}"
+            },
+            "method": "get"
+          }
+        }
+      ]
+    }
+  }
+}

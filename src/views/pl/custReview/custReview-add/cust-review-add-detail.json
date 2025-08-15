@@ -1,0 +1,113 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "initReqeust": "${{params}}",
+        "toolbar": {
+            "btns": [{
+                "type": "add",
+                "label": "新增附件",
+                "icon": "el-icon-plus",
+                "target": "dialog",
+                "refresh": true,
+                "toRequest": {
+                    "url": "/views/pl/custReview/custReview-add/cust-review-add-detail-info.json",
+                    "method": "post",
+                    "params": {
+                        "task_no": "${{params.task_no}}"
+                    }
+                },
+                "props": {
+                    "title": "附件新增"
+                }
+            }]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "pl0411",
+                    "task_no": "${{params.task_no}}"
+                }
+            },
+            "pagination": {
+                "pageSizes": [
+                    10,
+                    15,
+                    20,
+                    50,
+                    100
+                ],
+                "pageSize": 10
+            },
+            "thead": [{
+                    "label": "主键",
+                    "type": "label",
+                    "align": "center",
+                    "prop": "prim_key",
+                    "isShow": "false"
+                },
+                {
+                    "label": "序号",
+                    "type": "index",
+                    "align": "center"
+                },
+                {
+                    "label": "文件名",
+                    "prop": "file_name",
+                    "align": "center"
+                },
+                {
+                    "label": "文件大小(Byte)",
+                    "prop": "file_size",
+                    "align": "center"
+                },
+                {
+                    "label": "文件上传时间",
+                    "prop": "data_create_time",
+                    "align": "center"
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 200,
+                    "align": "center",
+                    "btns": [{
+                            "type": "delete",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "pl0412",
+                                    "task_no": "${{params.task_no}}",
+                                    "prim_key": "${{current.prim_key}}"
+
+                                }
+                            },
+                            "show": {
+                                "expression": "'${{params.pageType}}' != 'detail'"
+                            }
+                        },
+                        {
+                            "type": "export",
+                            "label": "下载",
+                            "doRequest": {
+                                "url": "/SUMP/minioCall/download",
+                                "method": "GET",
+                                "params": {
+                                    "path": "${{current.file_path}}",
+                                    "filename": "${{current.file_name}}"
+                                }
+                            },
+                            "eventAfter": {
+                                "doParentCallback": true
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,152 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "scope": "templateScope",
+            "initRequest":"${{params}}",
+            "initDataOnce":true,
+            
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "post",
+              "params":{
+                "servicecode": "AS_ICMS_CU_NOTIPZ",
+                "trantp": "UPDATE"
+              }
+            },
+            "btns":[
+				{
+					"type":"submit",
+					"label":"提交"
+				}
+			],
+            "controls": [
+                {
+                    "notitp": {
+                    "control": "select",
+                    "width": "130px",
+                    "label": "通知类型",
+                    "multiple": false,
+                    "collapseTags": true,
+                    "options": [
+                        {
+                            "label": "通知操作员",
+                            "value": "1"
+                        },
+                        {
+                            "label": "通知角色下所有操作员",
+                            "value": "2"
+                        }
+                      ],
+                      "showItem": {
+                        "1": [
+                            "opridd"
+                        ],
+                        "2": [
+                            "acrlid"
+                        ]
+                    },
+                    "events": {
+                            "condition": {
+                                "1": {
+                                    "control": {
+                                        "opridd": {
+                                            "rules": [
+                                                {
+                                                    "required": true,
+                                                    "message": "请选择操作员"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                },
+                                "2": {
+                                    "control": {
+                                        "acrlid": {
+                                            "rules": [
+                                                {
+                                                    "required": true,
+                                                    "message": "请选择角色编号"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "infost": {
+                        "control": "select",
+                        "width": "130px",
+                        "label": "处理状态",
+                        "multiple": false,
+                        "collapseTags": true,
+                        "options": [
+                            {
+                                "label": "未处理",
+                                "value": "1"
+                            },
+                            {
+                                "label": "已处理",
+                                "value": "2"
+                            }
+                          ]
+                    },
+                    "opridd": {
+                        "label": "操作员编号",
+                        "control": "lookup",
+                        "edit": true,
+                        "initShow": false,
+                        "width": "130px",
+                        "keyField": {
+                            "opridd": "opridd"
+                        },
+                        "toRequest": {
+                            "url": "/views/ismt/ct/AnnouncementManagement/operator_query.json",
+                            "method": "post",
+                            "params": {
+                                "opridd": "${{form.opridd}}"
+                            }
+                        },
+                        "props": {
+                            "width": "85%",
+                            "title": "操作员编号查询"
+                        }
+                    },
+                
+                    "acrlid": {
+                        "control": "lookup",
+                        "label": "角色编号",
+                        "initShow": false,
+                        "width": "130px",
+                        "keyField": {
+                            "acrlid": "acrlid"
+                        },
+                        "toRequest": {
+                            "url": "/views/ismt/ct/AnnouncementManagement/role_query.json",
+                            "method": "post",
+                            "params": {
+                                "acrlid": "${{form.acrlid}}"
+                            }
+                        },
+                        "props": {
+                            "width": "85%",
+                            "title": "操作员编号查询"
+                        }
+                    },
+                    "notina": {
+                        "label": "公告内容",
+                        "control": "text",
+                        "width": "130px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入公告内容"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    }
+}

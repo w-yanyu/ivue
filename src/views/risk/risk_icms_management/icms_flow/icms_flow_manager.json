@@ -1,0 +1,237 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "icms_queue_code": {
+            "control": "text",
+            "label": "进件队列代码",
+            "rules": [
+              {
+                "max": 40,
+                "message": "长度不能超过40个字符"
+              }
+            ]
+          },
+          "icms_queue_name": {
+            "control": "text",
+            "label": "进件队列名称",
+            "rules": [
+              {
+                "max": 125,
+                "message": "长度不能超过115个字符"
+              }
+            ]
+          }
+        },
+        {
+          "branch_function_class": {
+            "control": "select",
+            "label": "启停状态",
+            "rules": [
+              {
+                "max": 8,
+                "message": "长度不能超过8个字符"
+              }
+            ],
+            "options": [
+              {
+                "label": "启用",
+                "value": "1"
+              },
+              {
+                "label": "停用",
+                "value": "2"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/risk/risk_icms_management/icms_flow/icms_flow_add.json"
+          },
+          "props": {
+            "title": "进件队列新增",
+            "width": "70%"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "deci050115"
+        }
+      },
+      "thead": [
+        {
+          "type": "index",
+          "align": "center"
+        },
+        {
+          "label": "进件队列代码",
+          "prop": "icms_queue_code",
+          "align": "center"
+        },
+        {
+          "label": "进件队列名称",
+          "prop": "icms_queue_name",
+          "align": "center"
+        },
+        {
+          "label": "队列描述",
+          "align": "center",
+          "prop": "description"
+        },
+        {
+          "label": "队列规则",
+          "align": "center",
+          "prop": "model_id"
+        },
+        {
+          "label": "版本",
+          "align": "center",
+          "prop": "data_version"
+        },
+        {
+          "label": "创建人",
+          "align": "center",
+          "prop": "data_create_user"
+        },
+        {
+          "label": "创建时间",
+          "align": "center",
+          "prop": "data_create_time"
+        },
+        {
+          "label": "最近更新人",
+          "align": "center",
+          "prop": "data_update_user"
+        },
+        {
+          "label": "最近更新时间",
+          "align": "center",
+          "prop": "data_update_time"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 150,
+          "align": "center",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/risk/risk_icms_management/icms_flow/icms_flow_detail.json",
+                "method": "POST"
+              },
+              "props": {
+                "title": "进件队列详情",
+                "width": "70%"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/risk/risk_icms_management/icms_flow/icms_flow_update.json",
+                "method": "GET"
+              },
+              "props": {
+                "title": "进件队列维护",
+                "width": "70%"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "DELETE",
+                "params": {
+                  "servicecode": "deci050113"
+                }
+              },
+              "confirm": {
+                "title": "提示信息",
+                "msg": "确认删除吗？",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "启用",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "deci050114",
+                  "start_status": "0"
+                }
+              },
+              "show": {
+                "expression": "'${{current.start_status}}' == '1'"
+              },
+              "confirm": {
+                "title": "提示信息",
+                "msg": "确认启用吗？",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "停用",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "deci050114",
+                  "start_status": "1"
+                }
+              },
+              "show": {
+                "expression": "'${{current.start_status}}' == '0'"
+              },
+              "confirm": {
+                "title": "提示信息",
+                "msg": "确认停用吗？",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "流量监控",
+              "toRequest": {
+                "url": "/views/risk/risk_monitor_management/risk_traffic_info/risk_traffic_info.json",
+                "method": "GET"
+              },
+              "props": {
+                "title": "流量监控",
+                "top": "4vh",
+                "width": "90%",
+                "height": "90%"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

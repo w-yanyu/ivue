@@ -1,0 +1,95 @@
+{
+  "module": "v-search-editableDataGrid",
+  "init": {
+    "initRequest": "${{params}}"
+  },
+  "layout": {
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "新增",
+          "icon": "el-icon-plus",
+          "disabled": "'${{params.pageType}}' == 'look'"
+        },
+        {
+          "type": "batchDelete",
+          "label": "批量删除",
+          "icon": "el-icon-close",
+          "disabled": "'${{params.pageType}}' == 'look'"
+        }
+      ]
+    },
+    "datagrid": {
+      "name": "interfaceAcct",
+      "###initRequest": "${{params.interfaceAcct}}",
+      "###isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "deci050043",
+          "data_source_code": "${{params.data_source_code}}"
+        }
+      },
+      "pagination": {
+        "pageSizes": [
+          10,
+          15,
+          20
+        ],
+        "show": false,
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "type": "selection",
+          "width": "55"
+        },
+        {
+          "prop": "parm_code",
+          "type": "text",
+          "label": "参数代码",
+          "validate": "required"
+        },
+        {
+          "prop": "parm_name",
+          "type": "text",
+          "label": "参数名称",
+          "validate": "required"
+        },
+        {
+          "prop": "default_value",
+          "type": "text",
+          "label": "默认值",
+          "validate": "required"
+        },
+        {
+          "type": "select",
+          "label": "加密方式",
+          "prop": "encrypt_mode",
+          "dict": {
+            "dictType": "DECI_E_ENCRYPT_MODE",
+            "dictKey": [
+              "DECI_E_ENCRYPT_MODE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align": "center",
+          "btns": [
+            {
+              "type": "delete",
+              "label": "删除",
+              "disabled": "'${{params.pageType}}' == 'look'"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

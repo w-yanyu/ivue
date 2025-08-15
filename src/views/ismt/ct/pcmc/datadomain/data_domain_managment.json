@@ -1,0 +1,125 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "scope": "formData",
+            "controls": [
+
+                {
+                    "domain_code": {
+                        "control": "text",
+                        "label": "字段列"
+                    },
+                    "domain_name": {
+                        "control": "text",
+                        "label": "字段名称"
+                    }
+                }
+
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "target": "dialog",
+                    "label": "新增",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/ismt/ct/pcmc/datadomain/data_domain_add.json",
+                        "params": {}
+                    },
+                    "props": {
+                        "title": "新增字段域"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ct3302"
+                }
+            },
+            "thead": [
+                {
+                    "type":"string",
+                    "label": "字段列",
+                    "prop": "domain_code",
+                    "align": "center"
+                },
+
+                {
+                    "type":"string",
+                    "label": "字段名称",
+                    "prop": "domain_name",
+                    "align": "center"
+                },  
+                {
+                    "type":"string",
+                    "label": "数据类型",
+                    "prop": "data_type",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "CT_E_DATA_TYPE",
+                        "dictKey": [
+                            "CT_E_DATA_TYPE"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "type":"integer",
+                    "label": "数据长度",
+                    "prop": "data_size",
+                    "align": "center"
+                },  
+                {
+                    "type":"integer",
+                    "label": "数据精度",
+                    "prop": "data_precision",
+                    "align": "center"
+                },  
+                {
+                    "type":"string",
+                    "label": "说明信息",
+                    "prop": "interest_rate_desc",
+                    "align": "center"
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "align": "center",
+                    "btns": [
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/ismt/ct/pcmc/datadomain/data_domain_edit.json",
+                                "method": "POST",
+                                "params": {}
+                            },
+                            "props": {
+                                "title": "字典字段域"
+                            }
+                        },
+                        {
+                          "type": "delete",
+                          "label": "删除",
+                          "doRequest": {
+                            "url": "/SUMP/icmcall/icmRPCCall",
+                            "method": "POST",
+                            "params": {
+                              "servicecode": "ct3304"
+                            }
+                          }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,58 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "###"
+        }
+      },
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "icon": "el-icon-tickets"
+        }
+      ],
+      "controls": [
+        {
+          "file_name": {
+            "control": "dynamic",
+            "isShowChildForm": true,
+            "span": 12,
+            "toRequest": {
+              "url": "@SingleUpload",
+              "method": "get",
+              "params": {
+                "path": "collRec",
+                "uploadType": "sftp",
+                "formKey": "file_name",
+                "formLabel": "催记信息",
+                "accept": ".xlsx,.xls",
+                "required": "true",
+                "tipText": "只能上传xls/xlsx，且不超过10MB"
+              }
+            }
+          },
+          "xxx": {
+            "control": "button",
+            "icon": "el-icon-circle-check",
+            "label": "没有模板 ? 点击下载",
+            "type": "custom",
+            "toRequest": {
+              "url": "/views/cs/collManage/oaManage/oaWork/oaWork_downloads.json",
+              "method": "get"
+            },
+            "props": {
+              "width": "80%",
+              "title": "催记下载"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

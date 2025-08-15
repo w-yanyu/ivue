@@ -1,0 +1,157 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "scope": "flowCom",
+      "name": "flowCom",
+      "btns": [],
+      "controls": [
+        {
+          "sale_prod_name": {
+            "control": "lookup",
+            "label": "可售产品",
+            "width": "40px",
+            "span": 7,
+            "edit": true,
+            "rules": [
+              {
+                "required": true,
+                "message": "可售产品不能为空!"
+              }
+            ],
+            "keyField": {
+              "sale_prod_name": "sale_prod_name",
+              "sale_prod_cd": "sale_prod_cd",
+              "busi_type": "prod_type"
+            },
+            "toRequest": {
+              "url": "/views/icms/flowStart/credit_sell_product_lookup.json",
+              "method": "get",
+              "params": {
+                "cust_class_list": "${{params.cust_class_list}}"
+              }
+            },
+            "props": {
+              "title": "选择产品",
+              "width": "75%"
+            }
+          },
+          "sale_prod_cd": {
+            "value": "${{params.sale_prod_cd}}",
+            "control": "text",
+            "label": "授信产品编号",
+            "disabled": true,
+            "width": "40px",
+            "span": 7,
+            "rules": [
+              {
+                "required": false,
+                "message": "证件号码不能为空!"
+              }
+            ]
+          },
+          "busi_type": {
+            "width": "40px",
+            "span": 7,
+            "disabled": true,
+            "label": "业务类型",
+            "control": "remoteSelect",
+            "labelField": "title",
+            "valueField": "id",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "pd0144",
+                "grupno": "0006",
+                "pid": "KSCP"
+              }
+            },
+            "events": {
+              "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "pd0143",
+                  "grupno": "0006",
+                  "id": "${{templateScope.busi_type}}"
+                },
+                "resultSet": {
+                  "prod_type_name": "title"
+                }
+              }
+            }
+          },
+          "prod_type_name": {
+            "control": "hidden",
+            "label": "业务类型名称"
+          },
+          "apply_type": {
+            "span": 7,
+            "label": "申请类型",
+            "width": "40px",
+            "hidden": true,
+            "value": "S"
+          },
+          "apply_type_name": {
+            "span": 7,
+            "label": "申请类型名称",
+            "width": "40px",
+            "hidden": true,
+            "value": "授信新申请"
+          },
+          "loan_amt": {
+            "control": "currency",
+            "label": "申请金额",
+            "width": "40px",
+            "disabled": false,
+            "span": 7,
+            "rules": [
+              {
+                "required": true,
+                "message": "申请金额不能为空!"
+              }
+            ]
+          },
+          "loan_term": {
+            "control": "text",
+            "label": "贷款期限",
+            "width": "40px",
+            "disabled": false,
+            "span": 7,
+            "suffix": "M",
+            "rules": [
+              {
+                "required": true,
+                "message": "贷款期限不能为空!"
+              }
+            ]
+          },
+          "loan_purpose_desc": {
+            "control": "lookup",
+            "label": "授信资金用途",
+            "span": 7,
+            "width": "40px",
+            "edit": false,
+            "rows": 4,
+            "keyField": {
+              "loan_purpose_desc": "amt_purpose_name"
+            },
+            "toRequest": {
+              "url": "/views/icms/docManager/loanPurpose/loanPurpose_lookup.json",
+              "method": "get",
+              "params": {
+                "sale_prod_cd": "${{templateScope.sale_prod_cd}}",
+                "prod_version": "${{templateScope.prod_version}}"
+              }
+            },
+            "multiple": false,
+            "props": {
+              "title": "选择贷款用途"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

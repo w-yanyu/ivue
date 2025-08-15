@@ -1,0 +1,170 @@
+{
+  "module": "lr_transferTable",
+  "layout": {
+    "transfer": {
+      "height":"500px",
+      "left": {
+        "filterable":false,
+        "title": "未关联尽职调查模板",
+        "btn":{
+          "label": "选择",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "pd0147",
+              "sale_prod_cd": "${{params.sale_prod_cd}}",
+              "prod_version": "${{params.prod_version}}",
+              "apply_type": "${{params.apply_type}}",
+              "busi_seq": "${{params.busi_seq}}"
+            }
+          },
+          "eventAfter": {
+            "callback": "restCallBack"
+          }
+        },
+        "datagrid": {
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "pd1100",
+              "sale_prod_cd": "${{params.sale_prod_cd}}",
+              "prod_version": "${{params.prod_version}}",
+              "cust_class": "${{params.cust_class}}",
+              "apply_type": "${{params.apply_type}}"
+            }
+          },
+          "pagination": {
+            "show":false
+          },
+          "checked":"checked",
+          "thead": [
+            {
+              "label": "序号",
+              "type": "index",
+              "align": "center"
+            },
+            {
+              "label": "尽职调查模板编号",
+              "prop": "due_dili_template_no",
+              "align": "center"
+            },
+            {
+              "label": "尽职调查模板名称",
+              "prop": "due_dili_template_name",
+              "align": "center",
+              "btns": [
+                {
+                  "type": "look",
+                  "toRequest": {
+                    "url": "@DueTemplateReportView",
+                    "method": "get",
+                    "params": {
+                      "group_num": "0002",
+                      "node_cd": "${{current.due_dili_template_no}}"
+                    }
+                  },
+                  "props": {
+                    "width": "75%",
+                    "title": "预览"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "right": {
+        "filterable":false,
+        "title":"已关联尽职调查模板",
+        "btn":{
+          "label":"取消关联",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "pd0148"
+            }
+          },
+          "eventAfter": {
+            "callback": "restCallBack"
+          }
+        },
+        "datagrid": {
+          "scope": "left",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "pd0146",
+              "sale_prod_cd": "${{params.sale_prod_cd}}",
+              "prod_version": "${{params.prod_version}}",
+              "apply_type": "${{params.apply_type}}"
+            }
+          },
+          "pagination": {
+            "show":false
+          },
+          "thead": [
+            {
+              "label": "序号",
+              "type": "index",
+              "align": "center"
+            },
+            {
+              "label": "尽职调查模板编号",
+              "prop": "due_dili_template_no",
+              "align": "center"
+            },
+            {
+              "label": "尽职调查模板名称",
+              "prop": "due_dili_template_name",
+              "align": "center",
+              "btns": [
+                {
+                  "type": "look",
+                  "toRequest": {
+                    "url": "@DueTemplateReportView",
+                    "method": "get",
+                    "params": {
+                      "group_num": "0002",
+                      "node_cd": "${{current.due_dili_template_no}}"
+                    }
+                  },
+                  "props": {
+                    "width": "75%",
+                    "title": "预览"
+                  }
+                }
+              ]
+            },
+            {
+              "label": "操作",
+              "fixed": "right",
+              "width": 100,
+              "align": "center",
+              "btns": [
+                {
+                  "type": "custom",
+                  "label": "详情",
+                  "toRequest": {
+                    "url": "/views/pd/prod/templatePage/prodDuedill/info/infomationCollect_tree.json",
+                    "method": "GET",
+                    "params": {
+                      "prod_cd": "${{params.sale_prod_cd}}",
+                      "apply_type": "${{params.apply_type}}"
+                    }
+                  },
+                  "props": {
+                    "width": "40%"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

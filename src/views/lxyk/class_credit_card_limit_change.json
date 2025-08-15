@@ -1,0 +1,72 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "scope": "form",
+      "###initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "bsquvi",
+          "smilr_cr_card_loan_acct_num": "${{params.smilr_cr_card_loan_acct_num}}"
+        }
+      },
+      "btns": [
+        {
+          "type": "submit",
+          "label": "确认调整",
+          "icon": "",
+          "doRequest": {
+            "url": "/SUMP/call/RPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "ar0070"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "smilr_cr_card_loan_acct_num": {
+            "control": "hidden",
+            "label": "类信用卡贷款账号",
+            "width": "100px",
+            "value": "${{params.smilr_cr_card_loan_acct_num}}"
+          },
+          "temp_lmt_change": {
+            "control": "currency",
+            "label": "调整临时额度",
+            "span": 12,
+            "format": "label",
+            "rules": [
+              {
+                "required": true,
+                "message": "调整临时额度不能为空"
+              }
+            ]
+          },
+          "genl_lmt_change": {
+            "control": "currency",
+            "label": "调整基础额度",
+            "span": 12,
+            "format": "label",
+            "rules": [
+              {
+                "required": true,
+                "message": "调整基础额度不能为空"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "alert": {
+      "title": "说明",
+      "description": [
+        "基础额度可调整区间为:${{params.alrdy_use_basic_lmt}}-${{params.basic_lmt}}；",
+        "临时额度可调整区间为:${{params.alrdy_use_temp_lmt}}-${{params.temp_lmt}}。"
+      ],
+      "listStyle": "disc"
+    }
+  }
+}

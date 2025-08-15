@@ -1,0 +1,233 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "name": "list01",
+      "scope": "formData",
+      "controls": [
+        {
+          "outsourcing_org_id": {
+            "control": "text",
+            "label": "委外公司法人"
+          },
+          "outsourcing_org_name": {
+            "control": "text",
+            "label": "委外公司名称"
+          }
+        },
+        {
+          "outsourcing_org_type": {
+            "control": "select",
+            "label": "委外公司类型",
+            "selectFirstValue": false,
+            "dict": {
+              "dictType": "CS_ORGAN_TYPE",
+              "dictKey": [
+                "CS_ORGAN_TYPE"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId",
+              "format": "value-label"
+            }
+          },
+          "org_id": {
+            "control": "remoteSelect",
+            "label": "创建法人",
+            "labelField": "org_name",
+            "valueField": "org_id",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2311",
+                "org_id": "$g{{user_info.org_id}}"
+              }
+            },
+            "format": "value-label"
+          }
+        },
+        {
+          "branch_id": {
+            "control": "remoteSelect",
+            "label": "创建机构",
+            "labelField": "branch_name",
+            "valueField": "branch_id",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2142",
+                "brch_relation_code": "01",
+                "user_id": "$g{{user_info.userCode}}"
+              }
+            },
+            "format": "value-label"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "icon": "el-icon-circle-plus",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/cs/paramManage/assign/collOrg/collOrg_add.json"
+          },
+          "props": {
+            "width": "80%",
+            "title": "新增委外公司定义"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "cb0052",
+          "server_range": "cbOnl",
+          "org_id": "$g{{user_info.org_id}}"
+        }
+      },
+      "thead": [
+        {
+          "type": "string",
+          "align": "center",
+          "label": "委外公司法人",
+          "prop": "outsourcing_org_id"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "委外公司机构号",
+          "prop": "outsourcing_branch_id"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "委外公司名称",
+          "prop": "outsourcing_org_name"
+        },
+        {
+          "label": "委外公司类型",
+          "prop": "outsourcing_org_type",
+          "align": "center",
+          "dict": {
+            "dictType": "CS_ORGAN_TYPE",
+            "dictKey": [
+              "CS_ORGAN_TYPE"
+            ],
+            "labelField": "dictName",
+            "valueField": "dictId"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "邮编",
+          "prop": "postal_code"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "地址",
+          "prop": "address"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "电话号码",
+          "prop": "phone_no"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "传真",
+          "prop": "fox"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "联系人",
+          "prop": "relation_cust_name"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "联系电话",
+          "prop": "relation_phone_no"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "label": "是否启用",
+          "prop": "is_valid",
+          "dict": {
+            "dictType": "CS_E_YESORNO",
+            "dictKey": [
+              "CS_E_YESORNO"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "fixed": "right",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/cs/paramManage/assign/collOrg/collOrg_info.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "80%",
+                "title": "委外公司定义详情"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/cs/paramManage/assign/collOrg/collOrg_modify.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "80%",
+                "title": "委外公司维护"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "cb0050",
+                  "appId": "cbOnl",
+                  "outsourcing_org_id": "${{current.outsourcing_org_id}}",
+                  "outsourcing_branch_id": "${{current.outsourcing_branch_id}}"
+                }
+              },
+              "confirm": {
+                "title": "提示信息",
+                "msg": "确认删除委外公司？",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

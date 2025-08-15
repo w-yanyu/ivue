@@ -1,0 +1,130 @@
+{
+  "module": "v-form-btn-dynamic",
+  "layout": {
+    "form": {
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ar0741",
+          "apply_no": "${{params.apply_no}}"
+        }
+      },
+      "controls": [
+        {
+          "credit_apply_id": {
+            "control": "hidden",
+            "span": 8
+          },
+          "contract_no": {
+            "control": "text",
+            "label": "业务编号",
+            "disabled": true,
+            "span": 10
+          },
+          "base_ccy": {
+            "control": "select",
+            "label": "基准币种",
+            "disabled": true,
+ "selectFirstValue": "true",
+            "span": 10,
+            "dict": {
+              "dictType": "MS_CURRENCY",
+              "dictKey": [
+                "MS_CURRENCY"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId",
+              "format": "label"
+            }
+          }
+        },
+        {
+          "apply_amt": {
+            "control": "currency",
+            "disabled": true,
+            "label": "担保总金额",
+            "align": "left",
+            "span": 10,
+            "format":{
+              "thousand": ","
+            }  
+          },
+          "ccy_code": {
+            "control": "select",
+            
+            "label": "主担保币种",
+            "span": 10,
+            "dict": {
+              "dictType": "MS_CURRENCY",
+              "dictKey": [
+                "MS_CURRENCY"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId",
+              "format": "label"
+            } 
+          }
+        },
+        {
+          "exchange_rate": {
+            "control": "text",
+            "label": "汇率",
+            "disabled": true,
+            "span": 10,
+            "value": "1.0"
+            
+          },
+          "base_busi_amt": {
+            "control": "currency",
+            "align": "left",
+            "label": "担保金额(折基准币种)",
+            "span": 10,
+            "compute": "${{form.apply_amt}}*${{form.exchange_rate}}",
+            "disabled": true,
+            "format":{
+              "thousand": ","
+            }  
+          }
+        },
+        {
+          "effective_date": {
+            "control": "dateTimePicker",
+            "label": "生效日期",
+            "span": 10,
+            "disabled": true
+          },
+          "appr_term": {
+            "control": "text",
+            "label": "期限(月)",
+            "span": 10,
+            "disabled": true
+          }
+        },
+        {
+          "loan_purpose_desc": {
+            "control": "text",
+            "label": "资金用途",
+            "span": 10,
+            "edit": false,
+            "disabled": true
+          },
+          "busi_tran_bank_no": {
+            "control": "text",
+            "label": "合作银行",
+            "span": 10,
+            "edit": false,
+            
+            "disabled": true
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+        }
+      ]
+    }
+  }
+}

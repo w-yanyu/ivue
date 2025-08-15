@@ -1,0 +1,111 @@
+{
+  "module": "lr_transferTable",
+  "layout": { 
+    "transfer": {
+      "height":"500px",
+      "left": {
+        "filterable":true,
+        "title": "可选策略",
+        "placeholder": "请输入策略名称",
+        "query":["policy_name"],
+        "btn":{
+          "label": "",
+          "doRequest": {
+            "url":"/SUMP/call/playStrategy",
+            "method":"post",
+            "params":{
+              "bpm_version": "${{params.bpm_version}}",
+              "wf_task_no": "${{params.wf_task_no}}",
+              "trans_type": "INSERT",
+              "servicecode": "bpm4010",
+              "task_define_id": "${{params.task_define_id}}",
+              "wf_prod_no": "${{params.wf_prod_no}}",
+              "appId":"${{params.appId}}"
+            }
+          }
+        },
+        "datagrid": {
+          "doRequest": {
+            "url":"/SUMP/icmcall/icmRPCCall",
+            "method":"POST",
+            "params": {
+              "bpm_version": "${{params.bpm_version}}",
+              "wf_task_no": "${{params.wf_task_no}}",
+              "wf_prod_no": "${{params.wf_prod_no}}",
+              "task_define_id": "${{params.task_define_id}}",
+              "servicecode": "bpm4008",
+              "appId":"${{params.appId}}"
+            }
+          },
+          "checked":"checked",
+          "pagination": {
+            "show":true,
+            "pageSizes": [5, 10, 15, 20],
+            "pageSize": 5
+          },
+          "thead": [
+            {
+              "prop": "policy_name",
+              "label":"策略名称",
+              "align": "center"
+            },
+            {
+              "prop": "policy_id",
+              "label": "策略编号",
+              "align": "center"
+
+            }
+          ]
+        }
+      },
+      "right": {
+        "filterable":true,
+        "title":"已选策略",
+        "placeholder": "请输入策略名称",
+        "query":["policy_name"],
+        "btn":{
+          "label":"",
+          "doRequest": {
+            "url":"/SUMP/icmcall/icmRPCCall",
+            "method":"post",
+            "params":{
+              "bpm_version": "${{params.bpm_version}}",
+              "wf_task_no": "${{params.wf_task_no}}",
+              "task_define_id": "${{params.task_define_id}}",
+              "wf_prod_no": "${{params.wf_prod_no}}",
+              "trans_type": "DELETE",
+              "servicecode": "bpm4010",
+              "appId":"${{params.appId}}"
+            }
+          }
+        },
+        "datagrid": {
+          "doRequest": {
+            "url":"/SUMP/icmcall/icmRPCCall",
+            "method":"post",
+            "params": {
+              "bpm_version": "${{params.bpm_version}}",
+              "wf_task_no": "${{params.wf_task_no}}",
+              "wf_prod_no": "${{params.wf_prod_no}}",
+              "task_define_id": "${{params.task_define_id}}",
+              "servicecode": "bpm4009",
+              "appId":"${{params.appId}}"
+            }
+          },
+          "thead": [
+            {
+              "prop": "policy_name",
+              "label":"策略名称",
+              "align": "center"
+            },
+            {
+              "prop": "policy_id",
+              "label": "策略编号",
+              "align": "center"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

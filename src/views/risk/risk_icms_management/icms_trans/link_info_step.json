@@ -1,0 +1,156 @@
+{
+    "module": "d-steps",
+    "layout": {
+      "steps": {
+        "scope": "formObj",
+        "direction": "horizontal",
+        "alignCenter": true,
+        "finishStatus": "success",
+        "simpleType": false,
+        "nextStepType": "submit",
+        "skip": true,
+        "list": [
+          {
+            "title": "评分卡信息",
+            "scope": "sp1",
+            "icon": "el-icon-document",
+            "skip": true,
+            "toRequest": {
+              "url": "@riskScoreDetail",
+              "method": "get",
+              "params": {
+                "branch_id":"${{params.branch_id}}",
+                "branch_name":"${{params.branch_name}}",
+                "branch_stus":"${{params.branch_stus}}"
+              }
+            }
+          },
+          {
+            "title": "规则信息",
+            "scope": "sp2",
+            "forbidBack":false,
+            "icon": "el-icon-document",
+            "toRequest": {
+              "url": "@normalRuleTestResult",
+              "method": "get",
+              "params": {
+                "branch_id":"${{params.branch_id}}"
+              }
+            },
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2194",
+                "branch_id":"${{params.branch_id}}"
+              },
+              "resultSet": {
+                "revoke_no": "revoke_no"
+              }
+            }
+          },
+          {
+            "title": "规则集信息",
+            "scope": "sp3",
+            "forbidBack":false,
+            "icon": "el-icon-document",
+            "toRequest": {
+              "url": "@normalRuleGroupTestResult",
+              "method": "get",
+              "params": {
+                "branch_id":"${{params.branch_id}}",
+                "branch_name":"${{params.branch_name}}"
+              },
+              "eventAfter": {
+                "doParentCallback": true
+              }
+            },
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2194",
+                "branch_id":"${{params.branch_id}}"
+              }
+            }
+          },
+          {
+            "title": "决策树信息",
+            "scope": "sp4",
+            "forbidBack":false,
+            "icon": "el-icon-document",
+            "toRequest": {
+              "url": "@decisionTreeResultTest",
+              "method": "get",
+              "params": {
+                "branch_id":"${{params.branch_id}}",
+                "branch_name":"${{params.branch_name}}"
+              },
+              "eventAfter": {
+                "doParentCallback": true
+              }
+            },
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2194",
+                "branch_id":"${{params.branch_id}}"
+              }
+            }
+          },
+          {
+            "title": "决策表信息",
+            "scope": "sp5",
+            "forbidBack":false,
+            "icon": "el-icon-document",
+            "toRequest": {
+              "url": "@normalRuleTestResult",
+              "method": "get",
+              "params": {
+                "branch_id":"${{params.branch_id}}",
+                "branch_name":"${{params.branch_name}}"
+              },
+              "eventAfter": {
+                "doParentCallback": true
+              }
+            },
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2194",
+                "branch_id":"${{params.branch_id}}"
+              }
+            }
+          },
+          {
+            "title": "决策流信息",
+            "scope": "sp6",
+            "forbidBack":false,
+            "icon": "el-icon-document",
+            "toRequest": {
+              "url": "@FlowCodeTest",
+              "method": "get",
+              "params": {
+                "branch_id":"${{params.branch_id}}",
+                "branch_name":"${{params.branch_name}}"
+              },
+              "eventAfter": {
+                "doParentCallback": true
+              }
+            },
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2194",
+                "branch_id":"${{params.branch_id}}"
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+  

@@ -1,0 +1,512 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+
+      "initDataOnce":true,
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pt0120",
+          "part_protocol_no": "${{params.part_protocol_no}}"
+        }
+      },
+
+      "btns": [
+        {
+          "type": "submit",
+          "label": "保存",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "pt0212",
+              "compensate_rule_no": "${{params.compensate_rule_no}}"
+            }
+          }
+        }
+      ],
+      "controls": [
+          {
+            "part_protocol_no": {
+              "control": "text",
+              "label": "合作方协议编号",
+              "width": "50%",
+              "disabled": true,
+              "value": "${{params.part_protocol_no}}",
+              "rules": [
+                {
+                  "required": true,
+                  "message": "合作方协议编号不得为空"
+                }
+              ]
+            },
+            "compensate_method": {
+              "control": "select",
+              "label": "代偿方式",
+              "width": "50%",
+              "dict": {
+                "dictType": "PT_E_REPAYMENT_METHOD",
+                "dictKey": [
+                  "PT_E_REPAYMENT_METHOD"
+                ],
+                "format": "label"
+              }
+            }
+          },
+          {
+            "compensate_condition": {
+              "control": "select",
+              "label": "代偿条件",
+              "width": "50%",
+              "dict": {
+                "dictType": "PT_E_REPAYMENT_CONDITION",
+                "dictKey": [
+                  "PT_E_REPAYMENT_CONDITION"
+                ],
+                "format": "label"
+              }
+            },
+            "compensate_trigger_value": {
+              "control": "text",
+              "label": "代偿触发数值",
+              "width": "50%"
+            }
+          },
+          {
+            "full_payment_recovery_mode": {
+              "control": "select",
+              "label": "全额代偿追索模式",
+              "width": "50%",
+              "dict": {
+                "dictType": "PT_E_FULL_PAYMENT_RECOVERY_MODE",
+                "dictKey": [
+                  "PT_E_FULL_PAYMENT_RECOVERY_MODE"
+                ],
+                "format": "label"
+              }
+            },
+            "compensate_account_no": {
+              "control": "lookup",
+              "edit": true,
+              "label": "代偿户编号",
+              "width": "50%",
+              "keyField": {
+                "compensate_account_no": "acct_no",
+                "part_no": "cust_no",
+                "cert_no": "cert_no",
+                "cert_type": "cert_type",
+                "cust_type": "cust_type",
+                "corp_size": "corp_size",
+                "ind_credit": "ind_credit"
+              },
+
+              "toRequest": {
+                "url": "/views/us/entManager/custfinanceManager/partAcctManager/partAcct_lookup.json",
+                "method": "GET",
+                "params": {
+                  "cust_no": "${{params.part_no}}"
+                }
+              },
+              "props": {
+                "width": "50%",
+                "title": "查询账户"
+              },
+              "rules": [{
+                "required": true,
+                "message": "请选择"
+              }]
+            },
+            "compensate_bond_no": {
+              "control": "lookup",
+              "edit": true,
+              "label": "代偿保证金户编号",
+              "width": "50%",
+              "keyField": {
+                "compensate_bond_no": "acct_no",
+                "part_no": "cust_no",
+                "cert_no": "cert_no",
+                "cert_type": "cert_type",
+                "cust_type": "cust_type",
+                "corp_size": "corp_size",
+                "ind_credit": "ind_credit"
+              },
+
+              "toRequest": {
+                "url": "/views/us/entManager/custfinanceManager/partAcctManager/partAcct_lookup.json",
+                "method": "GET",
+                "params": {
+                  "cust_no": "${{params.part_no}}"
+                }
+              },
+              "props": {
+                "width": "50%",
+                "title": "查询账户"
+              },
+              "rules": [{
+                "required": true,
+                "message": "请选择"
+              }]
+            },
+            "compensate_repayment_no": {
+              "control": "lookup",
+              "edit": true,
+              "label": "代偿还款结算户编号",
+              "width": "50%",
+              "keyField": {
+                "compensate_repayment_no": "acct_no",
+                "part_no": "cust_no",
+                "cert_no": "cert_no",
+                "cert_type": "cert_type",
+                "cust_type": "cust_type",
+                "corp_size": "corp_size",
+                "ind_credit": "ind_credit"
+              },
+
+              "toRequest": {
+                "url": "/views/us/entManager/custfinanceManager/partAcctManager/partAcct_lookup.json",
+                "method": "GET",
+                "params": {
+                  "cust_no": "${{params.part_no}}"
+                }
+              },
+              "props": {
+                "width": "50%",
+                "title": "查询账户"
+              },
+              "rules": [{
+                "required": true,
+                "message": "请选择"
+              }]
+            },
+            "is_pre_compensate": {
+              "control": "select",
+              "label": "是否预代偿",
+              "width": "50%",
+              "dict": {
+                "dictType": "MS_E_YESORNO",
+                "dictKey": [
+                  "MS_E_YESORNO"
+                ],
+                "format": "label"
+              },
+              "showItem": {
+
+
+                "1": [
+                  "pre_compensate_condition",
+                  "pre_compensate_trigger_value",
+                  "pre_compensate_budget"
+                ],
+                "0": []
+              },
+              "events": {
+                "condition": {
+                  "1": {
+                    "control": {
+                        "pre_compensate_condition": {
+                          "control": "select",
+                          "label": "预代偿条件",
+                          "width": "50%",
+                          "dict": {
+                            "dictType": "PT_E_REPAYMENT_CONDITION",
+                            "dictKey": [
+                              "PT_E_REPAYMENT_CONDITION"
+                            ],
+                            "format": "label"
+                          }
+                        },
+                        "pre_compensate_trigger_value": {
+                          "control": "text",
+                          "label": "预代偿触发数值",
+                          "width": "50%"
+                        },
+
+                        "pre_compensate_budget": {
+                          "control": "select",
+                          "label": "预代偿是否预算",
+                          "width": "50%",
+                          "dict": {
+                            "dictType": "MS_E_YESORNO",
+                            "dictKey": [
+                              "MS_E_YESORNO"
+                            ],
+                            "format": "label"
+                          }
+                        },
+                      "compensate_account_no": {
+                        "control": "lookup",
+                        "edit": true,
+                        "label": "代偿户编号",
+                        "width": "50%",
+                        "keyField": {
+                          "compensate_account_no": "acct_no",
+                          "part_no": "cust_no",
+                          "cert_no": "cert_no",
+                          "cert_type": "cert_type",
+                          "cust_type": "cust_type",
+                          "corp_size": "corp_size",
+                          "ind_credit": "ind_credit"
+                        },
+
+                        "toRequest": {
+                          "url": "/views/us/entManager/custfinanceManager/partAcctManager/partAcct_lookup.json",
+                          "method": "GET",
+                          "params": {
+                            "cust_no": "${{params.part_no}}"
+                          }
+                        },
+                        "props": {
+                          "width": "50%",
+                          "title": "查询账户"
+                        },
+                        "rules": [{
+                          "required": true,
+                          "message": "请选择"
+                        }]
+                      },
+                      "compensate_bond_no": {
+                        "control": "lookup",
+                        "edit": true,
+                        "label": "代偿保证金户编号",
+                        "width": "50%",
+                        "keyField": {
+                          "compensate_bond_no": "acct_no",
+                          "part_no": "cust_no",
+                          "cert_no": "cert_no",
+                          "cert_type": "cert_type",
+                          "cust_type": "cust_type",
+                          "corp_size": "corp_size",
+                          "ind_credit": "ind_credit"
+                        },
+
+                        "toRequest": {
+                          "url": "/views/us/entManager/custfinanceManager/partAcctManager/partAcct_lookup.json",
+                          "method": "GET",
+                          "params": {
+                            "cust_no": "${{params.part_no}}"
+                          }
+                        },
+                        "props": {
+                          "width": "50%",
+                          "title": "查询账户"
+                        },
+                        "rules": [{
+                          "required": true,
+                          "message": "请选择"
+                        }]
+                      },
+                      "compensate_repayment_no": {
+                        "control": "lookup",
+                        "edit": true,
+                        "label": "代偿还款结算户编号",
+                        "width": "50%",
+                        "keyField": {
+                          "compensate_repayment_no": "acct_no",
+                          "part_no": "cust_no",
+                          "cert_no": "cert_no",
+                          "cert_type": "cert_type",
+                          "cust_type": "cust_type",
+                          "corp_size": "corp_size",
+                          "ind_credit": "ind_credit"
+                        },
+
+                        "toRequest": {
+                          "url": "/views/us/entManager/custfinanceManager/partAcctManager/partAcct_lookup.json",
+                          "method": "GET",
+                          "params": {
+                            "cust_no": "${{params.part_no}}"
+                          }
+                        },
+                        "props": {
+                          "width": "50%",
+                          "title": "查询账户"
+                        },
+                        "rules": [{
+                          "required": true,
+                          "message": "请选择"
+                        }]
+                      }
+
+                    }
+                  },
+                  "0": {
+                    "control": {
+                        "pre_compensate_condition": {
+                          "control": "select",
+                          "label": "预代偿条件",
+                          "width": "50%",
+                          "dict": {
+                            "dictType": "PT_E_REPAYMENT_CONDITION",
+                            "dictKey": [
+                              "PT_E_REPAYMENT_CONDITION"
+                            ],
+                            "format": "label"
+                          },
+                          "value" :""
+                        },
+                        "pre_compensate_trigger_value": {
+                          "control": "text",
+                          "label": "预代偿触发数值",
+                          "width": "50%",
+                          "value" :""
+                        },
+
+                        "pre_compensate_budget": {
+                          "control": "select",
+                          "label": "预代偿是否预算",
+                          "width": "50%",
+                          "dict": {
+                            "dictType": "MS_E_YESORNO",
+                            "dictKey": [
+                              "MS_E_YESORNO"
+                            ],
+                            "format": "label"
+                          },
+                          "value" :""
+                        },
+                      "compensate_account_no": {
+                        "control": "lookup",
+                        "edit": true,
+                        "label": "代偿户编号",
+                        "width": "50%",
+                        "keyField": {
+                          "compensate_account_no": "acct_no",
+                          "part_no": "cust_no",
+                          "cert_no": "cert_no",
+                          "cert_type": "cert_type",
+                          "cust_type": "cust_type",
+                          "corp_size": "corp_size",
+                          "ind_credit": "ind_credit"
+                        },
+
+                        "toRequest": {
+                          "url": "/views/us/entManager/custfinanceManager/partAcctManager/partAcct_lookup.json",
+                          "method": "GET",
+                          "params": {
+                            "cust_no": "${{params.part_no}}"
+                          }
+                        },
+                        "props": {
+                          "width": "50%",
+                          "title": "查询账户"
+                        },
+                        "rules": [{
+                          "required": true,
+                          "message": "请选择"
+                        }]
+                      },
+                      "compensate_bond_no": {
+                        "control": "lookup",
+                        "edit": true,
+                        "label": "代偿保证金户编号",
+                        "width": "50%",
+                        "keyField": {
+                          "compensate_bond_no": "acct_no",
+                          "part_no": "cust_no",
+                          "cert_no": "cert_no",
+                          "cert_type": "cert_type",
+                          "cust_type": "cust_type",
+                          "corp_size": "corp_size",
+                          "ind_credit": "ind_credit"
+                        },
+
+                        "toRequest": {
+                          "url": "/views/us/entManager/custfinanceManager/partAcctManager/partAcct_lookup.json",
+                          "method": "GET",
+                          "params": {
+                            "cust_no": "${{params.part_no}}"
+                          }
+                        },
+                        "props": {
+                          "width": "50%",
+                          "title": "查询账户"
+                        },
+                        "rules": [{
+                          "required": true,
+                          "message": "请选择"
+                        }]
+                      },
+                      "compensate_repayment_no": {
+                        "control": "lookup",
+                        "edit": true,
+                        "label": "代偿还款结算户编号",
+                        "width": "50%",
+                        "keyField": {
+                          "compensate_repayment_no": "acct_no",
+                          "part_no": "cust_no",
+                          "cert_no": "cert_no",
+                          "cert_type": "cert_type",
+                          "cust_type": "cust_type",
+                          "corp_size": "corp_size",
+                          "ind_credit": "ind_credit"
+                        },
+
+                        "toRequest": {
+                          "url": "/views/us/entManager/custfinanceManager/partAcctManager/partAcct_lookup.json",
+                          "method": "GET",
+                          "params": {
+                            "cust_no": "${{params.part_no}}"
+                          }
+                        },
+                        "props": {
+                          "width": "50%",
+                          "title": "查询账户"
+                        },
+                        "rules": [{
+                          "required": true,
+                          "message": "请选择"
+                        }]
+                      }
+
+                    }
+                  }
+
+
+
+                }
+              }
+
+
+            },
+
+            "pre_compensate_condition": {
+              "control": "select",
+              "label": "预代偿条件",
+              "width": "50%",
+              "dict": {
+                "dictType": "PT_E_REPAYMENT_CONDITION",
+                "dictKey": [
+                  "PT_E_REPAYMENT_CONDITION"
+                ],
+                "format": "label"
+              }
+            },
+            "pre_compensate_trigger_value": {
+              "control": "text",
+              "label": "预代偿触发数值",
+              "width": "50%"
+            },
+
+            "pre_compensate_budget": {
+              "control": "select",
+              "label": "预代偿是否预算",
+              "width": "50%",
+              "dict": {
+                "dictType": "MS_E_YESORNO",
+                "dictKey": [
+                  "MS_E_YESORNO"
+                ],
+                "format": "label"
+              }
+            }
+
+
+        }
+
+
+        ]
+      }
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "btns": [
+        {
+          "type": "submit",
+          "icon": "el-icon-check",
+          "label": "确认分配",
+          "doRequest": {
+            "url": "/SUMP/call/RPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "ce2531",
+              "case_no": "${{params.selectedData}}"
+            }
+          }
+        },
+        {
+          "type": "close",
+          "label": "取消"
+        }
+      ],
+      "controls": [
+        {
+          "coll_group": {
+            "control": "inputTree",
+            "label": "催收组",
+            "idField": "coll_group",
+            "nodeTypeField": "type",
+            "pIdField": "parent_coll_team",
+            "labelField": "coll_team_name",
+            "events": {
+              "emit": [
+                "collector"
+              ]
+            },
+            "root": {
+              "rootNode": {
+                "name": "BYB-BRANCH",
+                "value": "9999",
+                "disabled": true
+              }
+            },
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ce0180"
+              }
+            },
+            "format": "label"
+          }
+        },
+        {
+          "collector": {
+            "control": "remoteSelect",
+            "label": "催收员",
+            "placeholder": "请选择",
+            "width": "180px",
+            "align": "center",
+            "span": "16",
+            "labelField": "collector_name",
+            "valueField": "collector",
+            "lazy": true,
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ce0184",
+                "coll_team": "${{form.coll_group}}"
+              }
+            },
+            "format": "label",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

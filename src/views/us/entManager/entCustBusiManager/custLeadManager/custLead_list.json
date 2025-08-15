@@ -1,0 +1,160 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "toolbar": {
+            "btns": [{
+                "type": "add",
+                "target": "dialog",
+                "label": "新增",
+                "toRequest": {
+                    "method": "GET",
+                    "url": "/views/us/entManager/entCustBusiManager/custLeadManager/custLead_add.json",
+                    "params": {
+                        "cust_no": "${{params.cust_no}}"
+                    }
+                },
+                "show": {
+                    "expression": "'${{params.show_flash}}' == '1'"
+                },
+                "props": {
+                    "width": "75%",
+                    "title": "新增实际控制人"
+                }
+            }]
+        },
+        "datagrid": {
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "us0270",
+                    "cust_no": "${{params.cust_no}}"
+                }
+            },
+            "thead": [{
+                    "type": "string",
+                    "label": "实际控制人",
+                    "prop": "actual_controller_id",
+                    "align": "center"
+                },
+                {
+                    "type": "select",
+                    "label": "实际控制人类型",
+                    "prop": "let_type",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "US_E_LET_TYPE",
+                        "dictKey": [
+                            "US_E_LET_TYPE"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "type": "string",
+                    "label": "客户名称",
+                    "prop": "cust_name",
+                    "align": "center"
+                },
+                {
+                    "type": "select",
+                    "label": "证件类型",
+                    "prop": "cert_type",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "MS_E_CRET_TYPE",
+                        "dictKey": [
+                            "MS_E_CRET_TYPE "
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "type": "string",
+                    "label": "证件号码",
+                    "prop": "cert_no",
+                    "align": "center"
+                },
+                {
+                    "type": "string",
+                    "label": "组织机构号代码",
+                    "prop": "org_code",
+                    "align": "center"
+                },
+                {
+                    "type": "string",
+                    "label": "有效状态",
+                    "prop": "status",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "US_E_STATE",
+                        "dictKey": [
+                            "US_E_STATE"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "type": "string",
+                    "label": "流水号",
+                    "prop": "serial_no",
+                    "align": "center"
+                },
+                {
+                    "label": "操作",
+                    "align": "center",
+                    "fixed": "right",
+                    "width": 160,
+                    "btns": [{
+                            "type": "look",
+                            "label": "详情",
+                            "toRequest": {
+                                "url": "/views/us/entManager/entCustBusiManager/custLeadManager/custLead_info.json",
+                                "method": "POST"
+                            },
+                            "props": {
+                                "width": "75%",
+                                "title": "实际控制人信息详情"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/us/entManager/entCustBusiManager/custLeadManager/custLead_update.json",
+                                "method": "GET"
+                            },
+                            "show": {
+                                "expression": "'${{params.show_flash}}' == '1'"
+                            },
+                            "props": {
+                                "width": "75%",
+                                "title": "实际控制人信息维护"
+                            }
+                        },
+                        {
+                            "type": "delete",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "us0273"
+                                }
+                            },
+                            "show": {
+                                "expression": "'${{params.show_flash}}' == '1'"
+                            },
+                            "confirm": {
+                                "title": "确定删除",
+                                "confirmButtonText": "确定",
+                                "cancelButtonText": "取消"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

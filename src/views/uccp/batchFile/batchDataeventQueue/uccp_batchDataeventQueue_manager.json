@@ -1,0 +1,195 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "prim_key": {
+                        "control": "text",
+                        "label": "主键"
+                    },
+                    "event_generation_date": {
+                        "label": "事件生成日期",
+                        "control": "dateTimePicker"
+                    },
+                    "event_type": {
+                        "control": "select",
+                        "label": "事件类型",
+                        "align": "center",
+                        "dict": {
+                            "dictType": "UCCP_E_EVENT_TYPE",
+                            "dictKey": [
+                                "UCCP_E_EVENT_TYPE"
+                            ],
+                            "format": "label"
+                        }
+                    },
+                    "cust_no": {
+                        "control": "text",
+                        "label": "客户编号"
+                    }
+                }
+            ]
+          },
+        "toolbar": {
+            "btns": [{
+                "type": "add",
+                "label": "新增",
+                "target": "dialog",
+                "toRequest": {
+                    "method": "GET",
+                    "url": "/views/uccp/batchFile/batchDataeventQueue/uccp_batchDataeventQueue_add.json",
+                    "params": {
+                        
+                    }
+                },
+                "props": {
+                    "width": "80%",
+                    "title": "数据归集处理事件队列信息新增"
+                }
+            }]
+        },
+        "datagrid": {
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "uccp2021",
+                    "appId":"uccpOnl"
+                }
+            },
+            "thead": [
+                {
+                    "label": "主键",
+                    "prop": "prim_key",
+                    "align": "center"
+                },
+                {
+                    "label": "事件生成日期",
+                    "prop": "event_generation_date",
+                    "align": "center"
+                },
+                {
+                    "label": "事件类型",
+                    "prop": "event_type",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "UCCP_E_EVENT_TYPE",
+                        "dictKey": [
+                            "UCCP_E_EVENT_TYPE"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "客户编号",
+                    "prop": "cust_no",
+                    "align": "center"
+                },
+                
+                {
+                    "label": "事件生成原因",
+                    "prop": "event_generation_reason",
+                    "align": "center"
+                },
+                {
+                    "label": "事件生成业务流水",
+                    "prop": "event_generation_busiseq",
+                    "align": "center"
+                },
+                {
+                    "label": "处理状态",
+                    "prop": "processing_status",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "UCCP_E_PROCESSING_STATUS",
+                        "dictKey": [
+                            "UCCP_E_PROCESSING_STATUS"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "备注1",
+                    "prop": "remark1",
+                    "align": "center"
+                },
+                {
+                    "label": "备注2",
+                    "prop": "remark2",
+                    "align": "center"
+                },
+                {
+                    "label": "处理开始时间",
+                    "prop": "processing_start",
+                    "align": "center"
+                },
+                {
+                    "label": "处理结束时间",
+                    "prop": "processing_end",
+                    "align": "center"
+                },
+                {
+                    "label": "当前处理批量流水",
+                    "prop": "current_task_num",
+                    "align": "center"
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 230,
+                    "align": "center",
+                    "btns": [
+                        {
+                            "type": "edit",
+                            "label": "详情",
+                            "toRequest": {
+                                "url": "/views/uccp/batchFile/batchDataeventQueue/uccp_batchDataeventQueue_detail.json",
+                                "method": "GET",
+                                "params": {
+                                    
+                                }
+                            },
+                            "props": {
+                                "width": "80%",
+                                "title": "数据归集处理事件队列信息详情"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/uccp/batchFile/batchDataeventQueue/uccp_batchDataeventQueue_upd.json",
+                                "method": "GET",
+                                "params": {
+                                    
+                                }
+                            },
+
+                            "props": {
+                                "width": "80%",
+                                "title": "数据归集处理事件队列信息维护"
+                            }
+                        },
+                        {
+                            "type": "custom",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/call/RPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "uccp2019"
+                                }
+                            },
+                            "confirm": {
+                                "title": "确定删除",
+                                "confirmButtonText": "确定",
+                                "cancelButtonText": "取消"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

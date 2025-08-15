@@ -1,0 +1,117 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "parentpostidid": {
+            "label": "岗位",
+            "control": "remoteSelect",
+            "valueField": "postid",
+            "labelField": "postspecies",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "post",
+              "params": {
+                "servicecode": "selmateriaicf",
+                "typeofdate": "GW",
+                "isparentnode": "Y",
+                "length": 100
+              }
+            }
+          },
+          "postid": {
+            "label": "附件",
+            "control": "remoteSelect",
+            "valueField": "postid",
+            "labelField": "postspecies",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "post",
+              "params": {
+                "servicecode": "selmateriaicf",
+                "typeofdate": "FJ",
+                "isparentnode": "Y",
+                "length": 100
+              }
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "岗位附件配置",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/mc/materialcf/materialcf_add.json"
+          },
+          "props": {
+            "title": "岗位附件配置"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "selmateriaicf",
+          "typeofdate": "FJ",
+          "isparentnode": "N"
+        }
+      },
+      "thead": [
+        {
+          "label": "序号",
+          "type": "index",
+          "align": "center"
+        },
+        {
+          "label": "岗位id",
+          "prop": "parentpostidid",
+          "align": "center"
+        },
+        {
+          "label": "岗位名称",
+          "prop": "parentpostidname",
+          "align": "center"
+        },
+        {
+          "label": "附件名称",
+          "prop": "postspecies",
+          "align": "center"
+        },
+        {
+          "label": "附件id",
+          "prop": "postid",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "align": "center",
+          "btns": [
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "delmateriaicf"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

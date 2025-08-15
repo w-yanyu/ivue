@@ -1,0 +1,186 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "doc_check_list_no": {
+            "label": "资料检查列表编号",
+            "control": "text"
+          },
+          "doc_check_list_desc": {
+            "label": "资料检查列表描述",
+            "control": "text"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "新增",
+          "toRequest": {
+            "url": "/views/icms/docManager/docCheckManager/docCheck_add.json",
+            "method": "get",
+            "params": {}
+          },
+          "props": {
+            "title": "资料检查新增",
+            "width": "80%"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "ar0141",
+          "cust_class_list": "${{params.cust_class_list}}"
+        }
+      },
+      "pagination": {
+        "pageSizes": [
+          10,
+          15,
+          20
+        ],
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "type": "index",
+          "align": "center"
+        },
+        {
+          "type": "leaf",
+          "label": "资料检查列表编号",
+          "align": "center",
+          "width": "300px",
+          "prop": "doc_check_list_no"
+        },
+        {
+          "label": "资料检查列表描述",
+          "prop": "doc_check_list_desc",
+          "align": "center",
+          "type": "leaf"
+        },
+        {
+          "label": "资料列表类型",
+          "prop": "doc_list_type",
+          "align": "center",
+          "width": "150px",
+          "type": "leaf",
+          "dict": {
+            "dictType": "icmsOnl",
+            "dictKey": [],
+            "labelField": "title",
+            "valueField": "id",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "post",
+              "params": {
+                "servicecode": "pd0144",
+                "grupno": "0006",
+                "pid": "KSCP"
+              }
+            },
+            "format": "label"
+          }
+        },
+        {
+          "label": "是否需求确认",
+          "prop": "is_identify_requirement",
+          "align": "center",
+          "type": "leaf",
+          "width": "150px",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "确认等级收到文档需要几个人确认",
+          "prop": "doc_identify_cnt_type",
+          "align": "center",
+          "type": "leaf",
+          "width": "300px",
+          "dict": {
+            "dictType": "AR_E_VFY_LEVEL_NUM",
+            "dictKey": [
+              "AR_E_VFY_LEVEL_NUM"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "string",
+          "label": "适用客户类型",
+          "prop": "cust_class",
+          "align": "center",
+          "dict": {
+            "dictType": "AR_E_CUST_CLASS",
+            "dictKey": [
+              "AR_E_CUST_CLASS"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作",
+          "width": "150px",
+          "align": "center",
+          "fixed": "right",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/icms/docManager/docCheckManager/docCheck_update.json",
+                "method": "get",
+                "params": {}
+              },
+              "props": {
+                "title": "资料检查维护",
+                "width": "80%"
+              }
+            },
+            {
+              "label": "明细",
+              "type": "look",
+              "toRequest": {
+                "url": "/views/icms/docManager/docCheckManager/docCheckDetailManager/docCheckDetl_manager.json",
+                "method": "get",
+                "params": {
+                  "doc_check_list_no": "${{current.doc_check_list_no}}",
+                  "doc_list_type": "${{current.doc_list_type}}"
+                }
+              },
+              "props": {
+                "title": "资料检查详情",
+                "width": "80%"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "DELETE",
+                "params": {
+                  "servicecode": "ar0144"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

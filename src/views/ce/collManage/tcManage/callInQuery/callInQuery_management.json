@@ -1,0 +1,301 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "controls": [
+        {
+          "cust_name": {
+            "control": "text",
+            "label": "客户姓名",
+            "rules": [{
+              "required": true,
+              "message": "客户姓名和证件号码必填"
+            }]
+          },
+          "cert_no": {
+            "control": "text",
+            "label": "证件号码",
+            "rules": [{
+              "required": true,
+              "message": "客户姓名和证件号码必填"
+            }]
+          }
+        },
+        {
+          "contact_info": {
+            "control": "text",
+            "label": "手机号码"
+          },
+          "tel_no": {
+            "control": "text",
+            "label": "关联手机号码"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ce3503"
+        }
+      },
+      "thead": [
+        {
+          "label": "操作",
+          "align": "center",
+          "width":"130px",
+          "fixed": "left",
+          "btns": [
+            {
+              "type": "openVerify",
+              "label": "进入电催",
+              "doRequest":{
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "ce3504"
+                }
+              },
+              "toRequest": {
+                "target": "navTab",
+                "url": "/views/ce/collManage/tcManage/collWorkbench/collWorkbench.json",
+                "method": "POST",
+                "params": {
+                  "case_no": "${{current.case_no}}",
+                  "queue_code": "${{current.queue_code}}"
+                }
+              },
+              "props": {
+                "title": "电催工作台"
+              }
+            }
+          ]
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width":"180px",
+          "label": "客户编号",
+          "prop": "cust_no"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width":"180px",
+          "label": "客户姓名",
+          "prop": "cust_name"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width":"180px",
+          "label": "手机号码",
+          "prop": "contact_info"
+        },
+        {
+          "type":"string",
+          "label": "证件类型",
+          "align":"center",
+          "width":"180px",
+          "prop": "cert_type",
+          "dict": {
+            "dictType": "MS_E_CRET_TYPE",
+            "dictKey": [
+              "MS_E_CRET_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width":"180px",
+          "label": "证件号码",
+          "prop": "cert_no"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width":"180px",
+          "label": "借据号",
+          "prop": "loan_no"
+        },
+        {
+          "type":"string",
+          "label": "处理状态",
+          "align":"center",
+          "width":"180px",
+          "prop": "deal_state",
+          "dict": {
+            "dictType": "CE_E_DEALSTATUS",
+            "dictKey": [
+              "CE_E_DEALSTATUS"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width":"180px",
+          "label": "案件类型",
+          "prop": "case_cls_code",
+          "dict": {
+            "dictKey": [
+              "case_cls_code"
+            ],
+            "format": "label",
+            "labelField": "location_name",
+            "valueField": "case_cls_code",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ce0410"
+              }
+            }
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width":"180px",
+          "label": "催收组",
+          "prop": "coll_group",
+          "dict": {
+            "dictKey": [
+              "coll_group"
+            ],
+            "format": "label",
+            "labelField": "coll_team_name",
+            "valueField": "coll_group",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ce0180"
+              }
+            }
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width":"180px",
+          "label": "催收员",
+          "prop": "collector",
+          "dict": {
+            "dictKey": [
+              "collector"
+            ],
+            "format": "label",
+            "labelField": "user_name",
+            "valueField": "user_id",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ce0403"
+              }
+            }
+          }
+        },
+        {
+          "type": "currency",
+          "align": "center",
+          "width":"180px",
+          "label": "当前余额",
+          "prop": "current_bal",
+          "format": {
+            "decimal": "2"
+          }
+        },
+        {
+          "type": "currency",
+          "align": "center",
+          "width":"180px",
+          "label": "逾期金额",
+          "prop": "overdue_amt",
+          "format": {
+            "decimal": "2"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width":"180px",
+          "label": "逾期天数",
+          "prop": "overdue_days"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width":"180px",
+          "label": "到期日",
+          "prop": "executiondue_date"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width":"180px",
+          "label": "跟催日期",
+          "prop": "hold_date"
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width":"180px",
+          "label": "业务品种",
+          "prop": "busi_type_name"
+        },
+        {
+          "type":"string",
+          "label": "本期五级分类",
+          "align":"center",
+          "width":"180px",
+          "prop": "classify_result",
+          "dict": {
+            "dictType": "MS_E_LEVEL5_TYPE",
+            "dictKey": [
+              "MS_E_LEVEL5_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width":"180px",
+          "label": "更新人",
+          "prop": "data_update_user",
+          "dict": {
+            "dictKey": [
+              "data_update_user"
+            ],
+            "format": "label",
+            "labelField": "user_name",
+            "valueField": "user_id",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ce0403"
+              }
+            }
+          }
+        },
+        {
+          "type": "string",
+          "align": "center",
+          "width":"180px",
+          "label": "更新日期",
+          "prop": "data_update_time"
+        }
+      ]
+    }
+  }
+}

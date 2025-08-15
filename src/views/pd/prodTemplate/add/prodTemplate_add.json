@@ -1,0 +1,88 @@
+{
+  "module": "d-steps",
+  "layout": {
+    "steps": {
+      "scope": "formObj",
+      "direction": "vertical",
+      "alignCenter": true,
+      "finishStatus": "success",
+      "simpleType": false,
+      "nextStepType": "submit",
+      "list": [
+        {
+          "scope": "step1",
+          "title": "产品模板选择",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "url": "/views/pd/prodTemplate/add/prodTemplate_step1.json",
+            "method": "get",
+            "params": {
+              "template_id": "${{params.template_id}}"
+            }
+          },
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "post",
+            "params":{
+              "servicecode":"pd0110"
+            },
+            "resultSet": {
+              "template_id":"template_id"
+            }
+          }
+        },
+        {
+          "scope": "step2",
+          "forbidBack": true,
+          "title": "产品模板配置",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "url": "@ProdTemplate",
+            "method": "get",
+            "params": {
+              "template_id": "${{formObj.step1.template_id}}",
+              "prod_type": "${{formObj.step1.prod_type}}",
+              "apply_type_list": "${{formObj.step1.apply_type_list}}",
+              "childUrl": "/views/pd/prodTemplate/prod_template_transfer.json"
+            }
+          },
+          "doRequest": {
+            "url": "/SUMP/icmcall/outputAsInput",
+            "method": "post",
+            "params": {
+              "name": "template_id"
+            },
+            "resultSet": {
+              "template_id":"template_id"
+            },
+            "eventAfter": {
+              "doParentCallback": true
+            }
+          }
+        },
+        {
+          "scope": "step3",
+          "title": "产品模板顺序配置",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "url": "@ProdTemplate",
+            "method": "get",
+            "params": {
+              "template_id": "${{formObj.step1.template_id}}",
+              "prod_type": "${{formObj.step1.prod_type}}",
+              "apply_type_list": "${{formObj.step1.apply_type_list}}",
+              "childUrl": "@templatePageSort"
+            }
+          },
+          "doRequest": {
+            "url": "/pte/json/layout/success.json",
+            "method": "post",
+            "eventAfter": {
+              "doParentCallback": true
+            }
+          }
+        }
+      ]
+    }
+  }
+}

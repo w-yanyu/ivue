@@ -1,0 +1,137 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "scope": "formData",
+            "controls": [
+                {
+                    "skill_id": {
+                        "control": "text",
+                        "label": "话术代码"
+                    },
+                    "skill_name": {
+                        "control": "text",
+                        "label": "话术名称"
+                    }
+                },
+                {
+                    "skill_desc": {
+                        "control": "text",
+                        "label": "话术描述"
+                    }
+                }
+            ]
+        },
+
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "icon": "el-icon-circle-plus",
+                    "target": "dialog",
+                    "label": "新增",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/ce/paramManage/template/skillTemplate/skillTemplate_add.json"
+                    },
+                    "props": {
+                        "title": "新增话术模板定义"
+                    }
+                }
+            ]
+        },
+
+        "datagrid": {
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ce0124"
+                }
+            },
+
+            "thead": [
+                {
+                    "type":"string",
+                    "label": "话术代码",
+                    "align":"center",
+                    "prop": "skill_id"
+                },
+                {
+                    "type":"string",
+                    "label": "话术名称",
+                    "align":"center",
+                    "prop": "skill_name"
+                },
+                {
+                    "type":"string",
+                    "label": "话术描述",
+                    "align":"center",
+                    "prop": "skill_desc"
+                },
+                {
+                    "type":"string",
+                    "label": "话术排序",
+                    "align":"center",
+                    "prop": "skill_no"
+                },
+                {
+                    "type":"string",
+                    "label": "是否启用",
+                    "align":"center",
+                    "prop": "is_valid",
+                    "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                            "MS_E_YESORNO"
+                        ],
+                        "format": "value-label"
+                    }
+                },
+                {
+                    "label": "操作",
+                    "width": "150%",
+                    "fixed": "right",
+                    "align":"center",
+                    "btns": [
+                        {
+                            "type":"look",
+                            "label":"详情",
+                            "toRequest":{
+                                "url":"/views/ce/paramManage/template/skillTemplate/skillTemplate_info.json",
+                                "method":"POST"
+                            },
+                            "props":{
+                                "title":"话术模板定义详情"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/ce/paramManage/template/skillTemplate/skillTemplate_modify.json",
+                                "method": "POST"
+                            },
+                            "props": {
+                                "title": "话术模板定义维护"
+                            }
+                        },
+                        {
+                            "type": "delete",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/call/RPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "ce0121",
+                                    "coll_kind":"02"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

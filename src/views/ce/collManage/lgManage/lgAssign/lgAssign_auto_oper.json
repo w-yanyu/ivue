@@ -1,0 +1,64 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "btns": [
+                {
+                    "type": "submit",
+                    "icon": "el-icon-check",
+                    "label": "确认分配",
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "pl4676",
+                            "case_id": "${{params.selectedData}}"
+                        }
+                    }
+                },
+                {
+                    "type": "close",
+                    "label": "取消"
+                }
+            ],
+            "controls": [
+                {
+                    "scheme_cd": {
+                        "control": "remoteSelect",
+                        "label": "请选择分配方案",
+                        "width": "180px",
+                        "align": "center",
+                        "span": "16",
+                        "labelField": "scheme_name",
+                        "valueField": "scheme_cd",
+                        "doRequest":{
+                            "url": "/SUMP/icmcall/icmRPCCall",
+                            "method": "POST",
+                            "params":{
+                                "servicecode":"pl0415",
+                                "scheme_type":"LG01",
+                                "is_valid":"Y"
+                            }
+                        },
+                        "format":"label",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "legal_end_date": {
+                        "control": "dateTimePicker",
+                        "width": "180px",
+                        "align": "center",
+                        "span": "16",
+                        "label": "法诉到期日"
+                    }
+                }
+            ]
+        }
+    }
+}

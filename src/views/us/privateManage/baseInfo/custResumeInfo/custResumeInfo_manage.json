@@ -1,0 +1,169 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "新增",
+          "target": "dialog",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/us/privateManage/baseInfo/custResumeInfo/custResumeInfo_add.json",
+            "params": {
+              "cust_no": "${{params.cust_no}}",
+              "resume_no": "${{params.resume_no}}"
+            }
+          },
+          "show": {
+            "expression": "'${{params.show_flash}}' == '1'"
+          },
+          "props": {
+            "title": "个人简历信息新增",
+            "width": "75%"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "us0034",
+          "cust_no": "${{params.cust_no}}"
+        }
+      },
+      "thead": [
+        {
+          "type": "index",
+          "width": 50,
+          "label": "序号"
+        },
+        {
+          "label": "客户序号",
+          "prop": "cust_no",
+          "align": "center",
+          "disabled": true
+        },
+        {
+          "label": "起始日期",
+          "prop": "start_date",
+          "align": "center",
+          "disabled": true
+        },
+        {
+          "label": "到期日类型",
+          "prop": "end_date_type",
+          "align": "center",
+          "dict": {
+            "dictType": "US_E_END_DATA_TYPE",
+            "dictKey": [
+              "US_E_END_DATA_TYPE"
+            ],
+            "labelField": "dictName",
+            "valueField": "dictId"
+          }
+        },
+        {
+          "label": "终止日期",
+          "prop": "end_date",
+          "align": "center"
+        },
+        {
+          "label": "单位",
+          "prop": "employer",
+          "align": "center"
+        },
+        {
+          "label": "简历状态",
+          "prop": "resume_status",
+          "align": "center",
+          "dict": {
+            "dictType": "US_E_STATE",
+            "dictKey": [
+              "US_E_STATE"
+            ],
+            "labelField": "dictName",
+            "valueField": "dictId"
+          }
+        },
+        {
+          "label": "职务",
+          "prop": "duty_type",
+          "align": "center",
+          "dict": {
+            "dictType": "US_E_DUTY_TYPE",
+            "dictKey": [
+              "US_E_DUTY_TYPE"
+            ],
+            "labelField": "dictName",
+            "valueField": "dictId"
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 160,
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/us/privateManage/baseInfo/custResumeInfo/custResumeInfo_info.json",
+                "method": "GET",
+                "cust_no": "${{params.cust_no}}",
+                "resume_no": "${{params.resume_no}}"
+              },
+              "props": {
+                "width": "75%",
+                "title": "个人简历信息详情"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/us/privateManage/baseInfo/custResumeInfo/custResumeInfo_modify.json",
+                "method": "GET",
+                "cust_no": "${{params.cust_no}}",
+                "resume_no": "${{params.resume_no}}",
+                "show": {
+                  "expression": "'${{params.show_flash}}' == '1'"
+                }
+              },
+              "props": {
+                "width": "75%",
+                "title": "个人简历信息维护"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "us0037",
+                  "resume_no": "${{current.resume_no}}"
+                }
+              },
+              "show": {
+                "expression": "'${{params.show_flash}}' == '1'"
+              },
+              "confirm": {
+                "title": "确定删除",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

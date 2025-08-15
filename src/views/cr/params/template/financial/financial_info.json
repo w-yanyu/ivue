@@ -1,0 +1,149 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "toolbar": {
+            "btns": [{
+                "type": "add",
+                "target": "dialog",
+                "label": "新增",
+                "toRequest": {
+                    "method": "GET",
+                    "url": "/views/cr/params/template/financial/financial_add.json",
+                    "params": {
+                        "temp_id": "${{params.temp_id}}"
+                    }
+                },
+                "show": {
+                    "expression": "'${{params.is_valid}}' == '0'"
+                },
+                "props": {
+                    "width": "80%",
+                    "title": "财务因素新增"
+                }
+            }]
+        },
+        "datagrid": {
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "cr0071",
+                    "temp_id": "${{params.temp_id}}",
+                    "metric_kind": "1"
+                }
+            },
+            "pagination": {
+                "pageSizes": [
+                    10,
+                    15,
+                    20,
+                    50,
+                    100
+                ],
+                "pageSize": 10
+            },
+            "thead": [{
+                    "type": "selection",
+                    "align": "center",
+                    "width": "55"
+                },
+                {
+                    "type": "index",
+                    "align": "center",
+                    "label": "序号"
+                },
+                {
+                    "label": "评级指标编码",
+                    "align": "center",
+                    "prop": "metric_id"
+                },
+                {
+                    "label": "指标类型",
+                    "align": "center",
+                    "prop": "metric_type",
+                    "dict": {
+                        "dictType": "CR_E_FINCL_METRIC_TYPE",
+                        "dictKey": [
+                            "CR_E_FINCL_METRIC_TYPE"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "指标名称",
+                    "align": "center",
+                    "prop": "metric_name"
+                },
+                {
+                    "label": "权重(%)",
+                    "align": "center",
+                    "prop": "weight"
+                },
+                {
+                    "label": "状态",
+                    "align": "center",
+                    "prop": "is_valid",
+                    "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                            "MS_E_YESORNO"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "操作",
+                    "width": "260px",
+                    "align": "center",
+                    "btns": [{
+                            "type": "edit",
+                            "label": "详情",
+                            "icon": "el-icon-view",
+                            "toRequest": {
+                                "url": "/views/cr/params/template/financial/financial_detail.json",
+                                "method": "GET"
+                            },
+                            "props": {
+                                "width": "65%",
+                                "title": "财务因素详情"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "icon": "el-icon-edit",
+                            "toRequest": {
+                                "url": "/views/cr/params/template/financial/financial_modify.json",
+                                "method": "GET"
+                            },
+                            "show": {
+                                "expression": "'${{params.is_valid}}' == '0'"
+                            },
+                            "props": {
+                                "width": "80%",
+                                "title": "财务因素维护"
+                            }
+                        },
+                        {
+                            "type": "delete",
+                            "label": "删除",
+                            "icon": "el-icon-close",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "delete",
+                                "params": {
+                                    "servicecode": "cr0074",
+                                    "metric_id": "${{current.metric_id}}",
+                                    "temp_id": "${{params.temp_id}}"
+                                }
+                            },
+                            "show": {
+                                "expression": "'${{params.is_valid}}' == '0'"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

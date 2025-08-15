@@ -1,0 +1,162 @@
+{
+  "module": "lr-tree-dynamic",
+  "layout": {
+    "tree": {
+      "title": "选择车型",
+      "lazy": false,
+      "idField": "tree_id",
+      "pIdField": "tree_pid",
+      "labelField": "tree_title",
+      "isLeafField": "tree_is_left",
+      "nodeTypeField": "tree_type",
+      "expandId": ["-1"],
+      "initRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "co0010"
+        }
+      },
+      "search": {
+        "enabled": "true",
+        "displayType": "tree",
+        "showChildren": true
+      },
+      "root": {
+        "rootNode": {
+          "name": "车辆信息",
+          "value": "-1"
+        },
+        "contextMenu": [
+          {
+            "type": "custom",
+            "label": "同步品牌库",
+            "icon": "el-icon-circle-plus-outline",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "co0025"
+              }
+            },
+            "eventAfter": {
+              "callback": "renderTree"
+            }
+          }
+        ]
+      },
+      "nodeTypes": {
+        "carBrand": {
+          "icon": "el-icon-collection",
+          "children": [
+            "carBrand"
+          ],
+          "toRequest": {
+            "url": "/views/icms/flowStart/jhBusi/car/carBrand_detail.json",
+            "params": {
+              "brand_no": "${{current.tree_id}}",
+              "brand_name": "${{current.tree_title}}",
+              "method": "post"
+            }
+          },
+          "eventAfter": {
+            "callback": "renderTree"
+          },
+          "contextMenu": [
+            {
+              "type": "custom",
+              "label": "同步车系库",
+              "icon": "el-icon-circle-plus-outline",
+              "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "co0037",
+                  "brand_no": "${{current.tree_id}}",
+                  "brand_name": "${{current.tree_title}}"
+                }
+              },
+              "eventAfter": {
+                "callback": "renderTree"
+              }
+            }
+          ]
+        },
+        "carKind": {
+          "children": [
+            "carKind"
+          ],
+          "toRequest": {
+            "url": "/views/icms/flowStart/jhBusi/car/carKind_detail.json",
+            "params": {
+              "car_kind_no": "${{current.tree_id}}",
+              "car_kind_name": "${{current.tree_title}}",
+              "method": "post"
+            }
+          },
+          "eventAfter": {
+            "callback": "renderTree"
+          },
+          "contextMenu": [
+            {
+              "type": "custom",
+              "label": "同步车型库",
+              "icon": "el-icon-circle-plus-outline",
+              "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "co0047",
+                  "car_kind_no": "${{current.tree_id}}",
+                  "car_kind_name": "${{current.tree_title}}"
+                }
+              },
+              "eventAfter": {
+                "callback": "renderTree"
+              }
+            }
+          ]
+        },
+        "carModel": {
+          "children": [
+            "carModel"
+          ],
+          "toRequest": {
+            "url": "@CarModelDetail",
+            "method": "post",
+            "params": {
+              "car_model_no": "${{current.tree_id}}",
+              "car_model_name": "${{current.tree_title}}"
+            }
+          },
+          "eventAfter": {
+            "doParentCallback": true
+          },
+          "contextMenu": [
+            {
+              "type": "custom",
+              "label": "同步车型详情",
+              "icon": "el-icon-circle-plus-outline",
+              "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "co0048",
+                  "car_model_no": "${{current.tree_id}}",
+                  "car_model_name": "${{current.tree_title}}"
+                }
+              },
+              "eventAfter": {
+                "callback": "renderTree"
+              }
+            },
+            {
+              "type": "bringback",
+              "label": "选择"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

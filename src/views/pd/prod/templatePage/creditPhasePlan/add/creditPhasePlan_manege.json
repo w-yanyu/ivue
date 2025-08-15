@@ -1,0 +1,109 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "sale_prod_cd": {
+            "control": "text",
+            "label": "可售产品编号",
+            "rules": [
+              {
+                "max": 32,
+                "message": "长度不能超过32个字符"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/pd/prod/templatePage/creditPhasePlan/add/creditPhasePlan_add.json",
+            "params": {
+              "credit_prod_cd": "${{params.sale_prod_cd}}",
+              "prod_version": "${{params.prod_version}}"
+            }
+          },
+          "props": {
+            "title": "适用产品新增",
+            "width": "87%",
+            "height": "20%"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pd0601",
+          "credit_prod_cd": "${{params.sale_prod_cd}}",
+          "prod_version": "${{params.prod_version}}"
+        }
+      },
+      "pagination": {
+        "pageSizes": [
+          10,
+          15,
+          20,
+          50,
+          100
+        ],
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "label": "产品编号",
+          "prop": "credit_prod_cd",
+          "width": "300px",
+          "align": "center"
+        },
+        {
+          "label": "阶段描述",
+          "prop": "stage_desc",
+          "align": "center"
+        },
+        {
+          "label": "阶段序号",
+          "prop": "stage_no",
+          "width": "150px",
+          "align": "center"
+        },
+        {
+          "label": "阶段比例(%)",
+          "prop": "stage_ratio",
+          "width": "150px",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align": "center",
+          "btns": [
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "pd0602"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

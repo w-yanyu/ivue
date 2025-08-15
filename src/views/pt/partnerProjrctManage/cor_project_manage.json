@@ -1,0 +1,201 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "scope": "strForm",
+      "controls":
+      [
+        {
+          "part_project_no": {
+            "control": "text",
+            "label":  "合作项目编号",
+            "span": 8
+          },
+          "part_project_name": {
+            "control": "text",
+            "label": "合作项目名称",
+            "span": 8
+          },
+          "part_project_type": {
+            "control": "select",
+            "span": 8,
+            "label": "合作项目类型",
+            "dict": {
+              "dictType": "PT_E_PART_PROJECT_TYPE",
+              "dictKey": [
+                "PT_E_PART_PROJECT_TYPE"
+              ],
+              "format": "label"
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "@corProjectAddFirst",
+            "params": {
+              "tranType": "add",
+              "version": 1
+            }
+          },
+          "props": {
+            "width": "65%",
+            "title":  "新增合作项目"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "pt0303",
+          "###approve_status": "00"
+        }
+      },
+      "thead": [
+        {
+          "type": "index",
+          "label": "序号"
+        },
+        {
+          "label": "合作项目编号",
+          "prop": "part_project_no"
+        },
+        {
+          "label": "合作项目名称",
+          "prop": "part_project_name"
+        },
+        {
+          "label":  "合作项目描述",
+          "prop": "part_project_describe"
+        },
+        {
+          "label": "合作项目类型",
+          "prop": "part_project_type",
+          "dict": {
+            "dictType": "PT_E_PART_PROJECT_TYPE",
+            "dictKey": ["PT_E_PART_PROJECT_TYPE"],
+            "format": "label"
+          }
+
+        },
+        {
+          "label":  "项目生效日期",
+          "prop": "effect_date"
+        },
+        {
+          "label":  "项目失效日期",
+          "prop": "expiry_date"
+        },
+        {
+          "label": "审批状态",
+          "prop": "approve_status",
+          "dict": {
+            "dictType": "PT_E_APPROVE_STATUS",
+            "dictKey": [
+              "PT_E_APPROVE_STATUS"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "项目版本",
+          "prop": "version"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": "250px",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "@projectAddLayout",
+                "method": "GET",
+                "params": {
+                  "tranType": "detail",
+                  "part_project_no": "${{current.part_project_no}}",
+                  "project_template_no":"${{current.project_template_no}}",
+                  "version": "${{current.version}}"
+                }
+              },
+              "props": {
+                "width": "65%",
+                "title":  "查看详情"
+              }
+            },
+            {
+              "###type": "edit",
+              "label": "维护",
+              "fixed": "right",
+              "toRequest": {
+                "url": "@projectAddLayout",
+                "method": "GET",
+                "params": {
+                  "tranType": "modify",
+                  "part_project_no": "${{current.part_project_no}}",
+                  "project_template_no":"${{current.project_template_no}}",
+                  "version": "${{current.version}}"
+                }
+              },
+              "show": {
+                "expression": "'${{current.approve_status}}'== '00'"
+              },
+              "props": {
+                "width": "65%",
+                "title":  "合作项目维护"
+              }
+            },
+            {
+              "###type": "look",
+              "label": "审核记录",
+              "toRequest": {
+                "url": "/views/pt/partnertemplateManage/apprRecordManage/apprRecord_list.json",
+                "method": "GET",
+                "params": {
+                  "sale_prod_cd": "${{current.part_project_no}}",
+                  "mould_code": "3"
+                }
+              },
+              "props": {
+                "width": "65%",
+                "title":  "查看详情"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "icon": "el-icon-remove-outline",
+              "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "pt0302"
+                }
+              },
+              "confirm": {
+                "title": "提示信息",
+                "msg": "该操作将删除当前合作项目，确认删除吗？",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              },
+              "show": {
+                "expression": "'${{current.approve_status}}'== '03'"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

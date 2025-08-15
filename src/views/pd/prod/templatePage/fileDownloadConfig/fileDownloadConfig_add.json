@@ -1,0 +1,206 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "pd1543",
+          "apply_type": "${{params.apply_type}}",
+          "sale_prod_cd": "${{params.sale_prod_cd}}",
+          "prod_version": "${{params.prod_version}}",
+          "download_link": "${{params.download_link}}"
+        }
+      },
+      "controls": [
+        {
+          "source_file_name": {
+            "control": "text",
+            "label": "贴源文件名",
+            "width": "120px",
+            "span": 24,
+            "rules": [
+              {
+                "required": true
+              }
+            ]
+          },
+          "post_source_file_desc": {
+            "control": "text",
+            "label": "贴源文件描述",
+            "width": "120px",
+            "span": 8
+          },
+          "source_file_type": {
+            "control": "select",
+            "label": "源文件类型",
+            "width": "120px",
+            "span": 8,
+            "dict": {
+              "dictType": "PD_E_SOURCE_FILE_TYPE",
+              "dictKey": [
+                "PD_E_SOURCE_FILE_TYPE"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true
+              }
+            ]
+          },
+          "download_protocol_type": {
+            "control": "select",
+            "label": "下载协议类型",
+            "width": "120px",
+            "span": 8,
+            "dict": {
+              "dictType": "PD_E_FILE_TRANS_PROTOCOL_TYPE",
+              "dictKey": [
+                "PD_E_FILE_TRANS_PROTOCOL_TYPE"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true
+              }
+            ]
+          },
+          "serv_connect_mode": {
+            "control": "select",
+            "label": "服务器连接模式",
+            "width": "120px",
+            "span": 8,
+            "dict": {
+              "dictType": "PD_E_SERVER_CONNECT_MODE",
+              "dictKey": [
+                "PD_E_SERVER_CONNECT_MODE"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true
+              }
+            ],
+            "events": {
+              "condition": {
+                "01": {
+                  "control": {
+                    "sys_user": {
+                      "value": "",
+                      "initShow": false,
+                      "rules": [
+                        {
+                          "required": false
+                        }
+                      ]
+                    },
+                    "sys_password": {
+                      "label": "文件服务器密钥",
+                      "value": "",
+                      "initShow": true
+                    }
+                  }
+                },
+                "02": {
+                  "control": {
+                    "sys_user": {
+                      "value": "",
+                      "initShow": true,
+                      "rules": [
+                        {
+                          "required": true
+                        }
+                      ]
+                    },
+                    "sys_password": {
+                      "label": "文件服务器密码",
+                      "value": "",
+                      "initShow": true
+                    }
+                  }
+                },
+                "$default": {
+                }
+              }
+            }
+          },
+          "sys_user": {
+            "control": "text",
+            "label": "文件服务器用户名",
+            "width": "120px",
+            "span": 8,
+            "initShow": false,
+            "rules": [
+              {
+                "required": true
+              }
+            ]
+          },
+          "sys_password": {
+            "control": "text",
+            "label": "文件服务器密码",
+            "width": "120px",
+            "span": 8,
+            "initShow": false,
+            "rules": [
+              {
+                "required": true
+              }
+            ]
+          },
+          "file_sys_ip": {
+            "control": "text",
+            "label": "文件服务器IP地址",
+            "width": "120px",
+            "span": 24,
+            "rules": [
+              {
+                "required": true
+              }
+            ]
+          },
+          "source_file_remote_path": {
+            "control": "text",
+            "label": "贴源文件远程路径",
+            "width": "120px",
+            "span": 24,
+            "rules": [
+              {
+                "required": true
+              }
+            ]
+          },
+          "source_file_local_path": {
+            "control": "text",
+            "label": "贴源本地存放路径",
+            "width": "120px",
+            "span": 24,
+            "rules": [
+              {
+                "required": true
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "alert": {
+      "span": 8,
+      "listStyle": "none",
+      "description": [
+        "<p style='color:red; text-align: left'>贴源文件命名规则：一个或多个常量与变量混合拼接+文件格式后缀</p>",
+        "<p style='text-align: left'>变量： </p>",
+        "<p style='text-align: left'>&emsp; 日期： {yyyyMMdd}</p>",
+        "<p style='text-align: left'>&emsp; 通配符（任意值）： {*}</p>",
+        "<p style='text-align: left'>命名样例如下：</p>",
+        "<p style='text-align: left'>&emsp; XW00001ZY02_acct_{yyyyMMdd}_001_{*}.txt</p>",
+        "<p style='text-align: left'>&emsp;  0137N02_acct_{yyyyMMdd}_001.txt</p>",
+        "<p style='text-align: left'>&emsp;  loan_rate.csv</p>"
+      ]
+    }
+  }
+}

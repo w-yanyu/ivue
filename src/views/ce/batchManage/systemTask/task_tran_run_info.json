@@ -1,0 +1,140 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "scope": "formData",
+            "initRequest": "${{params}}",
+            "btns":[{
+                
+            }],
+            "controls": [
+                {
+                    "task_num": {
+                        "control": "string",
+                        "label": "批次号",
+                        "span": 8,
+                        "width": "130px"
+                    },
+                    "tran_flow_id": {
+                        "control": "string",
+                        "label": "流程ID",
+                        "span": 8,
+                        "width": "130px"
+                    },
+                    "current_flow_step_num": {
+                        "control": "string",
+                        "label": "当前步骤",
+                        "span": 8,
+                        "width": "130px"
+                    }
+                },
+                {
+                    "total_cost": {
+                        "control": "string",
+                        "label": "累计耗时",
+                        "span": 8,
+                        "width": "130px"
+                    },
+                    "tran_start_time": {
+                        "control": "string",
+                        "label": "开始时间",
+                        "span": 8,
+                        "width": "130px"
+                    },
+                    "tran_end_time": {
+                        "control": "string",
+                        "label": "结束时间",
+                        "span": 8,
+                        "width": "130px"
+                    }
+                },
+                {
+                    "error_stack": {
+                        "control": "textarea",
+                        "rows": 6,
+                        "span": 24,
+                        "disabled": true,
+                        "label": "错误堆栈",
+                        "width": "130px"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ap1313",
+                    "task_num": "${{params.task_num}}",
+                    "task_exe_num": "${{params.task_exe_num}}",
+                    "task_commit_date": "${{params.task_commit_date}}"
+                }
+            },
+            "thead": [
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "交易执行批次号",
+                    "prop": "tran_exe_num"
+                    
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "步骤号",
+                    "prop": "step_id"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "交易ID",
+                    "prop": "tran_id"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "开始时间",
+                    "prop": "tran_start_time"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "结束时间",
+                    "prop": "tran_end_time"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "耗时",
+                    "prop": "total_cost"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "成功记录数",
+                    "prop": "success_count"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "失败记录数",
+                    "prop": "failure_count"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "作业状态",
+                    "prop": "job_excution_status"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "运行信息",
+                    "prop": "error_message"
+                }
+            ]
+        }
+    }
+}

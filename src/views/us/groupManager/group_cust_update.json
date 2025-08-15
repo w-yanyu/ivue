@@ -1,0 +1,252 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "initRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "us0606",
+                  "qutaid": "${{params.cust_no}}"
+                }
+              },
+            "scope": "formData",
+            "btns": [{
+                "type": "submit",
+                "label": "提交",
+                "icon": "",
+                "doRequest": {
+                    "url": "/SUMP/icmcall/icmRPCCall",
+                    "method": "POST",
+                    "params": {
+                        "servicecode": "us0602"
+                    }
+                }
+            }],
+            "controls": [
+                {
+                    "cust_name": {
+                        "control": "lookup",
+                        "width": "130px",
+                        "disabled" : true,
+                        "rules": [{
+                            "required": true,
+                            "message": "客户名称不能为空"
+                        }],
+                        "label": "客户名称",
+                        "keyField": {
+                            "cust_name": "cust_name",
+                            "cust_no": "cust_no"
+                        },
+                        "toRequest": {
+                            "url": "/views/us/groupManager/cust_lookup.json",
+                            "method": "post",
+                            "params": {
+                                "cust_type": "30"
+                            }
+                        },
+                        "props": {
+                            "title": "查询客户名称"
+                        },
+                        "format": "label"
+                    },
+                    "cust_no": {
+                        "control": "text",
+                        "label": "客戶编号",
+                        "disabled" : true,
+                        "width": "130px",
+                        "rules": [{
+                                "required": false,
+                                "message": "请输入客戶编号"
+                            },
+                            {
+                                "max": 80,
+                                "message": "长度不能超过80个字符"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "cust_up_name": {
+                        "control": "lookup",
+                        "width": "130px",
+                        "disabled" : true,
+                        "rules": [{
+                            "required": true,
+                            "message": "上级客户名称不能为空"
+                        }],
+                        "label": "上级客户名称",
+                        "keyField": {
+                            "cust_up_name": "cust_name",
+                            "group_no": "cust_no"
+                        },
+                        "toRequest": {
+                            "url": "/views/us/groupManager/cust_lookup.json",
+                            "method": "post",
+                            "params": {
+                                "cust_type": "30"
+                            }
+                        },
+                        "props": {
+                            "title": "查询上级客户名称"
+                        },
+                        "format": "label"
+                    },
+                    "cust_up_no": {
+                        "control": "text",
+                        "label": "上级客戶编号",
+                        "disabled" : true,
+                        "width": "130px",
+                        "rules": [{
+                                "required": false,
+                                "message": "请输入客戶编号"
+                            },
+                            {
+                                "max": 80,
+                                "message": "长度不能超过80个字符"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "group_name": {
+                        "control": "lookup",
+                        "width": "130px",
+                        "disabled":true,
+                        "rules": [{
+                            "required": true,
+                            "message": "集团客户名称不能为空"
+                        }],
+                        "label": "集团客户名称",
+                        "keyField": {
+                            "group_name": "cust_name",
+                            "group_no": "cust_no"
+                        },
+                        "toRequest": {
+                            "url": "/views/us/groupManager/group_from_cust_lookup.json",
+                            "method": "post",
+                            "params": {
+                                
+                            }
+                        },
+                        "props": {
+                            "title": "查询集团客户名称"
+                        },
+                        "format": "label"
+                    },
+                    "group_no": {
+                        "control": "text",
+                        "label": "集团客户编号",
+                        "disabled":true,
+                        "width": "130px",
+                        "rules": [{
+                                "required": false,
+                                "message": "请输入集团客户编号"
+                            },  
+                            {
+                                "max": 80,
+                                "message": "长度不能超过80个字符"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "is_group_credit_amt": {
+                        "control": "select",
+                        "label": "是否占用集团授信额度",
+                        "width": "130px",
+                        "dict": {
+                            "dictType": "MS_E_YESORNO",
+                            "dictKey": [
+                                "MS_E_YESORNO"
+                            ],
+                            "format": "label"
+                        },
+                        "rules": [{
+                            "required": true,
+                            "message": "请选择是否占用集团授信额度"
+                        }]
+                    },
+                    "shareholding_ratio": {
+                        "label": "持股比例",
+                        "control": "currency",
+                        "width": "130px",
+                        "suffix": "%",
+                        "rules": [
+                            {
+                                "required": true,
+                                "max": 250,
+                                "pattern": "^(((\\d|[1-9]\\d)(\\.\\d{1,3})?)|100|100.00|100.000)$",
+                                "message": "请输入(0-100)之间的比例"
+                            }
+                            ]
+                    }
+                },
+                {
+                    "is_core_subcompany": {
+                        "control": "select",
+                        "label": "是否核心子公司",
+                        "width": "130px",
+                        "dict": {
+                            "dictType": "MS_E_YESORNO",
+                            "dictKey": [
+                                "MS_E_YESORNO"
+                            ],
+                            "format": "label"
+                        },
+                        "rules": [{
+                            "required": true,
+                            "message": "是否核心子公司"
+                        }]
+                    },
+                    "group_relation": {
+                        "control": "select",
+                        "label": "关联关系",
+                        "width": "130px",
+                        "dict": {
+                            "dictType": "US_E_GROUP_RELATION",
+                            "dictKey": [
+                                "US_E_GROUP_RELATION"
+                            ],
+                            "format": "label"
+                        },
+                        "rules": [{
+                            "required": true,
+                            "message": "关联关系"
+                        }]
+                    }
+
+                },
+                {
+                    "is_controller": {
+                        "control": "select",
+                        "label": "是否集团实际控制人",
+                        "width": "130px",
+                        "dict": {
+                            "dictType": "MS_E_YESORNO",
+                            "dictKey": [
+                                "MS_E_YESORNO"
+                            ],
+                            "format": "label"
+                        },
+                        "rules": [{
+                            "required": true,
+                            "message": "是否集团实际控制人"
+                        }]
+                    },
+                    "remark": {
+                        "control": "text",
+                        "label": "备注",
+                        "width": "130px",
+                        "rules": [
+                            {
+                                "max": 200,
+                                "message": "长度不能超过200个字符"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    }
+}

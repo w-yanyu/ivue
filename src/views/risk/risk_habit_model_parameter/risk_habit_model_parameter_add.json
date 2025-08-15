@@ -1,0 +1,93 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "habitModelId": {
+            "label": "行为模型ID",
+            "control": "text",
+            "span": 11,
+            "rules": [
+              {
+                "required": true,
+                "pattern": "^[A-Za-z][A-Za-z\\d_]{0,19}$",
+                "message": "请正确输入",
+                "max": 20
+              }
+            ]
+          },
+          "segmentId": {
+            "label": "行为模型分段ID",
+            "control": "text",
+            "span": 11,
+            "rules": [
+              {
+                "required": true,
+                "message": "请正确输入",
+                "max": 2
+              }
+            ]
+          }
+        },
+        {
+          "dataType": {
+            "label": "数据类型",
+            "control": "select",
+            "span": 11,
+            "disabledOptions":["Boolean"],
+            "dict": {
+              "dictType": "dataType",
+              "dictKey": [],
+              "format": "value - label",
+              "doRequest": {
+                "url": "/views/risk/dictdata/dataType.json",
+                "method": "get"
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "该控件必填"
+              }
+            ]
+          },
+          "segmentValue1": {
+            "label": "分段值1",
+            "control": "text",
+            "span": 11,
+            "rules": [
+              {
+                "required": true,
+                "message": "请正确输入",
+                "max": 20
+              }
+            ]
+          }
+        },
+        {
+          "segmentValue2": {
+            "label": "分段值2",
+            "control": "text",
+            "span": 11,
+            "rules": [
+              {
+                "required": true,
+                "message": "请正确输入",
+                "max": 20
+              }
+            ]
+          }
+        }
+      ],
+      "doRequest": {
+        "url": "/API/risk-management-service/risk-habit-model-parameter/add",
+        "method": "POST",
+        "params":{
+          "createUser": "$g{{user_info.userCode}}",
+          "updateUser": "$g{{user_info.userCode}}"
+        }
+      }
+    }
+  }
+}

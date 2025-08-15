@@ -1,0 +1,89 @@
+{
+  "module": "v-charts",
+  "layout": {
+    "rows": [
+      [
+        {
+          "span": 12,
+          "type": "ve-histogram",
+          "props": {
+            "settings": {
+              "labelMap": {
+                "notDeal": "未处理",
+                "dealing": "处理中",
+                "dealOver": "处理完成",
+                "dealBack": "已退回"
+              }
+            },
+            "data": {
+              "columns": [
+                "alertDate",
+                "notDeal",
+                "dealing",
+                "dealOver",
+                "dealBack"
+              ],
+              "rows": {
+                "initRequest": {
+                  "url": "/API/risk-management-service/risk-alert-information/alertDealChartByHistogram",
+                  "method": "post",
+                  "params": {
+                    "startAlertDate": "${{parent.form.startAlertDate}}",
+                    "endAlertDate": "${{parent.form.endAlertDate}}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "span": 12,
+          "type": "ve-line",
+          "props": {
+            "settings": {
+              "labelMap": {
+                "notDeal": "未处理",
+                "dealing": "处理中",
+                "dealOver": "处理完成",
+                "dealBack": "已退回"
+              },
+              "axisSite": {
+                "left": [
+                  "notDeal",
+                  "dealing",
+                  "dealOver",
+                  "dealBack"
+                ]
+              },
+              "yAxisType": [
+                "percent"
+              ],
+              "yAxisName": [
+                "rate"
+              ]
+            },
+            "data": {
+              "columns": [
+                "alertDate",
+                "notDeal",
+                "dealing",
+                "dealOver",
+                "dealBack"
+              ],
+              "rows": {
+                "initRequest": {
+                  "url": "/API/risk-management-service/risk-alert-information/alertDealChartByLine",
+                  "method": "post",
+                  "params": {
+                    "startAlertDate": "${{parent.form.startAlertDate}}",
+                    "endAlertDate": "${{parent.form.endAlertDate}}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    ]
+  }
+}

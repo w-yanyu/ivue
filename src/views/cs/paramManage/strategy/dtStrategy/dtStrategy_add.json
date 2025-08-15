@@ -1,0 +1,147 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "pagination": {
+        "show": false
+      },
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "py0001",
+              "page_id": "/views/cs/paramManage/strategy/dtStrategy/dtStrategy_add.json",
+              "appId": "pyOnl",
+              "strategy_type": "DT"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "strategy_code": {
+            "control": "text",
+            "label": "策略代码",
+            "width": "130",
+            "rules": [
+              {
+                "required": true,
+                "pattern": "^[A-Za-z0-9]+$",
+                "message": "请输入数字或者字母,长度 32 个字节以内"
+              },
+              {
+                "max": 32,
+                "message": "最多可以输入 32 个字节"
+              }
+            ]
+          },
+          "strategy_name": {
+            "control": "text",
+            "label": "策略名称",
+            "width": "130",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              },
+              {
+                "max": 48,
+                "message": "最多可以输入 48 个字节"
+              }
+            ]
+          }
+        },
+        {
+          "strategy_desc": {
+            "control": "text",
+            "label": "策略描述",
+            "width": "130",
+            "rules": [
+              {
+                "max": 128,
+                "message": "最多可以输入 128 个字节"
+              }
+            ]
+          },
+          "priority": {
+            "control": "inputNumber",
+            "label": "优先级",
+            "width": "130",
+            "min": 1,
+            "max": 10,
+            "rules": [
+              {
+                "required": true,
+                "pattern": "^[0-9]",
+                "message": "请输入 0 到 11 之间的数字"
+              },
+              {
+                "expression": "'${{form.priority}}'.length < 3",
+                "message": "最多可以输入 3 个字节"
+              }
+            ]
+          }
+        },
+        {
+          "start_time": {
+            "label": "起始时间",
+            "control": "dateTimePicker",
+            "type": "dateTimePicker",
+            "span": 12,
+            "format": "yyyy-MM-dd HH:mm:ss",
+            "disabledDate": {
+              "endRange": "today"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "起始时间不能为空"
+              }
+            ]
+          },
+          "end_time": {
+            "label": "结束时间",
+            "control": "dateTimePicker",
+            "type": "dateTimePicker",
+            "span": 12,
+            "format": "yyyy-MM-dd HH:mm:ss",
+            "disabledDate": {
+              "endRange": "today"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "结束时间不能为空"
+              }
+            ]
+          }
+        },
+        {
+          "is_valid": {
+            "control": "select",
+            "label": "是否启用",
+            "width": "130",
+            "default": "Y",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ],
+            "dict": {
+              "dictType": "CS_E_YESORNO",
+              "dictKey": [
+                "CS_E_YESORNO"
+              ],
+              "format": "value-label"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

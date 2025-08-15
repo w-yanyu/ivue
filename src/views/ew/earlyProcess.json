@@ -1,0 +1,272 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "height": "80%",
+      "scope": "formData",
+      "btns": [
+        {
+          "###type": "add",
+          "target": "上传影像",
+          "###label": "上传影像",
+          "###icon": "iconfont icon-daochu",
+          "toRequest": {
+            "method": "GET",
+            "url": "@UploadComm",
+            "params": {
+              "apply_no": "${{params.case_id}}",
+              "channel_no": "JNED"
+            }
+          },
+          "props": {
+            "width": "60%",
+            "height": "65%",
+            "title": "上传影像"
+          }
+        },
+        {
+          "type": "edit",
+          "label": "提交",
+          "doRequest": {
+            "url": "/SUMP/call/RPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "ew3171",
+              "case_id": "${{params.case_id}}",
+              "handle_results": "${{formData.handle_results}}",
+              "risk_point": "${{formData.risk_point}}",
+              "remark": "${{formData.remark}}"
+            }
+          },
+          "confirm": {
+            "title": "提示信息",
+            "msg": "请确认是否执行处理操作？",
+            "confirmButtonText": "确定",
+            "cancelButtonText": "取消"
+          }
+        }
+      ],
+      "initRequest": {
+        "isInitSearch": true,
+        "url": "/SUMP/call/RPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ew3161",
+          "case_id": "${{params.case_id}}"
+        }
+      },
+      "controlsGroup": [
+        {
+          "title": "预警信息",
+          "tooltip": "",
+          "titleIcon": "",
+          "showHint": "",
+          "accordion": false,
+          "expand": true,
+          "controls": [
+            {
+              "case_id": {
+                "control": "text",
+                "disabled": true,
+                "span": 8,
+                "label": "预警任务编号"
+              },
+              "cust_id": {
+                "control": "text",
+                "disabled": true,
+                "span": 8,
+                "label": "客户编号"
+              },
+              "custna": {
+                "control": "text",
+                "disabled": true,
+                "span": 8,
+                "label": "客户名称"
+              },
+              "idtfno": {
+                "control": "text",
+                "disabled": true,
+                "span": 8,
+                "label": "证件号码"
+              },
+              "guarantee": {
+                "control": "select",
+                "label": "担保方式",
+                "disabled": true,
+                "span": 8,
+                "default": "",
+                "dict": {
+                  "dictType": "PL_E_GUARANTEE_WAY",
+                  "dictKey": [
+                    "PL_E_GUARANTEE_WAY"
+                  ],
+                  "format": "label"
+                }
+              },
+              "contentx": {
+                "control": "text",
+                "disabled": true,
+                "span": 8,
+                "label": "预警内容"
+              },
+              "yjdate": {
+                "control": "text",
+                "disabled": true,
+                "span": 8,
+                "label": "预警时间"
+              },
+              "level": {
+                "control": "select",
+                "label": "预警级别",
+                "disabled": true,
+                "span": 8,
+                "default": "",
+                "dict": {
+                  "dictType": "css_level",
+                  "dictKey": [
+                    "css_level"
+                  ],
+                  "format": "label"
+                }
+              },
+              "category": {
+                "control": "select",
+                "label": "预警分类",
+                "disabled": true,
+                "span": 8,
+                "default": "",
+                "format": "value",
+                "options":[
+                  {
+                    "label": "信用状况异常",
+                    "value": "信用状况异常"
+                  },
+                  {
+                    "label": "资金流向异常",
+                    "value": "资金流向异常"
+                  },
+                  {
+                    "label": "触发法律风险",
+                    "value": "触发法律风险"
+                  },
+                  {
+                    "label": "当事人信息变化",
+                    "value": "当事人信息变化"
+                  },
+                  {
+                    "label": "家庭状况变化",
+                    "value": "家庭状况变化"
+                  },
+                  {
+                    "label": "我行预警名单",
+                    "value": "我行预警名单"
+                  },
+                  {
+                    "label": "经营状况变化",
+                    "value": "经营状况变化"
+                  }
+                ]
+               }
+            }
+          ]
+        },
+        {
+          "title": "预警处理",
+          "tooltip": "",
+          "titleIcon": "",
+          "showHint": "",
+          "accordion": false,
+          "expand": true,
+          "controls": [
+            {
+              "handle_results": {
+                "control": "select",
+                "label": "处理",
+                "default": "${{params.handle_results}}",
+                "span": 12,
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请选择处理状态"
+                  }
+                ],
+                "dict": {
+                  "dictType": "result_code",
+                  "dictKey": [
+                    "result_code"
+                  ],
+                  "format": "label"
+                },
+                "events": {
+                    "emit": [
+                        "risk_point"
+                    ],
+                    "condition": {
+                        "0": {
+                            "control": {
+                                "risk_point": {
+                                    "disabled": true,
+                                    "rules": [
+                                      {
+                                        "required": false
+                                      }
+                                    ],
+                                    "value":""
+                                }
+                            }
+                        },
+                        "1": {
+                            "control": {
+                                "risk_point": {
+                                    "disabled": false,
+                                    "rules": [
+                                      {
+                                        "required": true,
+                                        "message": "请选择风险点"
+                                      }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+              },
+              "risk_point": {
+                "control": "select",
+                "label": "风险点",
+                "default": "${{params.risk_point}}",
+                "span": 12,
+                "dict": {
+                  "dictType": "risk_point",
+                  "dictKey": [
+                    "risk_point"
+                  ],
+                  "format": "label"
+                },
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请选择风险点"
+                  }
+                ]
+              },
+              "remark": {
+                "span": 24,
+                "control": "textarea",
+                "label": "备注",
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请输入备注"
+                  }
+                ],
+                "maxlength": 200,
+                "showWordLimit": true    
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

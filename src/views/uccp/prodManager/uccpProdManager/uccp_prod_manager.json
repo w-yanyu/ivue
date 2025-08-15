@@ -1,0 +1,190 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "prod_code": {
+                        "control": "text",
+                        "label": "产品编号"
+                    },
+                    "prod_name": {
+                        "control": "text",
+                        "label": "产品名称"
+                    },
+                    "prod_type": {
+                        "control": "select",
+                        "label": "产品类型",
+                        "align": "center",
+                        "dict": {
+                            "dictType": "UCCP_E_BUSI_TYPE",
+                            "dictKey": [
+                                "UCCP_E_BUSI_TYPE"
+                            ],
+                            "format": "label"
+                        }
+                    },
+                    "valid_flag": {
+                        "control": "select",
+                        "label": "有效标识",
+                        "align": "center",
+                        "dict": {
+                            "dictType": "UCCP_E_VALID_FLAG",
+                            "dictKey": [
+                                "UCCP_E_VALID_FLAG"
+                            ],
+                            "format": "label"
+                        }
+                    }
+                }
+            ]
+          },
+        "toolbar": {
+            "btns": [{
+                "type": "add",
+                "label": "新增",
+                "target": "dialog",
+                "toRequest": {
+                    "method": "GET",
+                    "url": "/views/uccp/prodManager/uccpProdManager/uccp_prod_add.json",
+                    "params": {
+                        
+                    }
+                },
+                "props": {
+                    "width": "80%",
+                    "title": "管控产品信息新增"
+                }
+            }]
+        },
+        "datagrid": {
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "uccp0004",
+                    "appId":"uccpOnl"
+                }
+            },
+            "thead": [
+                {
+                    "label": "产品编号",
+                    "prop": "prod_code",
+                    "align": "center"
+                },
+                {
+                    "label": "产品名称",
+                    "prop": "prod_name",
+                    "align": "center"
+                },
+                {
+                    "label": "来源系统",
+                    "prop": "source_system",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "UCCP_E_SOURCE_SYSTEM",
+                        "dictKey": [
+                            "UCCP_E_SOURCE_SYSTEM"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "产品类型",
+                    "prop": "prod_type",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "UCCP_E_BUSI_TYPE",
+                        "dictKey": [
+                            "UCCP_E_BUSI_TYPE"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "授用信一体标志",
+                    "prop": "grant_letter_sign",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                            "MS_E_YESORNO"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "有效标识",
+                    "prop": "valid_flag",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "UCCP_E_VALID_FLAG",
+                        "dictKey": [
+                            "UCCP_E_VALID_FLAG"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 230,
+                    "align": "center",
+                    "btns": [
+                        {
+                            "type": "edit",
+                            "label": "详情",
+                            "toRequest": {
+                                "url": "/views/uccp/prodManager/uccpProdManager/uccp_prod_detail.json",
+                                "method": "GET",
+                                "params": {
+                                    
+                                }
+                            },
+
+                            "props": {
+                                "width": "80%",
+                                "title": "管控产品信息详情"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/uccp/prodManager/uccpProdManager/uccp_prod_upd.json",
+                                "method": "GET",
+                                "params": {
+                                    
+                                }
+                            },
+
+                            "props": {
+                                "width": "80%",
+                                "title": "管控产品信息维护"
+                            }
+                        },
+                        {
+                            "type": "custom",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/call/RPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "uccp0002"
+                                }
+                            },
+                            "confirm": {
+                                "title": "确定删除",
+                                "confirmButtonText": "确定",
+                                "cancelButtonText": "取消"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

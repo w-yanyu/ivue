@@ -1,0 +1,195 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": "${{params}}",
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "cb0092",
+          "case_id": "${{params.case_id}}",
+          "relation_cust_id": "${{params.relation_cust_id}}"
+        }
+      },
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "icon": "el-icon-tickets"
+        },
+        {
+          "type": "close",
+          "label": "取消"
+        }
+      ],
+      "controls": [
+        {
+          "relationship": {
+            "control": "select",
+            "span": "6",
+            "clearable": false,
+            "label": "客户关系",
+            "inputWidth": "200px",
+            "dict": {
+              "dictType": "CS_E_RELATIONSHIP",
+              "dictKey": [
+                "CS_E_RELATIONSHIP"
+              ],
+              "format": "value-label"
+            },
+            "####": "客户关系为本人时，姓名只能为本人信息,并不可设置姓名",
+            "events": {
+              "condition": {
+                "keyVals": {
+                  "001": "'${{form.relationship}}' === '9999' && '${{form.register_type}}' === 'M'",
+                  "002": "'${{form.relationship}}' !== '9999' && '${{form.register_type}}' === 'M'"
+                },
+                "switch": {
+                  "001": {
+                    "control": {
+                      "relation_cust_name": {
+                        "disabled": true
+                      }
+                    },
+                    "doRequest": {
+                      "url": "/SUMP/icmcall/icmRPCCall",
+                      "method": "POST",
+                      "params": {
+                        "servicecode": "cb0090",
+                        "case_id": "${{params.case_id}}"
+                      },
+                      "resultSet": {
+                        "relation_cust_name": "cust_name"
+                      }
+                    }
+                  },
+                  "002": {
+                    "control": {
+                      "relation_cust_name": {
+                        "disabled": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "relation_cust_name": {
+            "control": "text",
+            "span": "8",
+            "label": "联系人姓名",
+            "inputWidth": "200px"
+          },
+          "phone_type": {
+            "control": "select",
+            "span": "8",
+            "label": "电话类型",
+            "inputWidth": "200px",
+            "dict": {
+              "dictType": "CS_E_PHONE_TYPE",
+              "dictKey": [
+                "CS_E_PHONE_TYPE"
+              ],
+              "format": "value-label"
+            }
+          }
+        },
+        {
+          "phone_no": {
+            "control": "text",
+            "span": "6",
+            "label": "电话号码",
+            "inputWidth": "200px",
+            "rules": [
+              {
+                "pattern": "^(1\\d{10})+$|^0\\d{2,3}-?\\d{7,8}$",
+                "message": "电话号码格式错误"
+              }
+            ]
+          },
+          "register_type": {
+            "control": "hidden",
+            "span": "8",
+            "label": "系统类型",
+            "disabled": true,
+            "inputWidth": "200px",
+            "dict": {
+              "dictType": "CS_E_REGISTER_TYPE",
+              "dictKey": [
+                "CS_E_REGISTER_TYPE"
+              ],
+              "format": "value-label"
+            },
+            "events": {
+              "condition": {
+                "keyVals": {
+                  "001": "'${{form.relationship}}' === '9999' && '${{form.register_type}}' === 'M'",
+                  "002": "'${{form.register_type}}' === 'B'"
+                },
+                "switch": {
+                  "001": {
+                    "control": {
+                      "relationship": {
+                        "disabled": true
+                      }
+                    },
+                    "doRequest": {
+                      "url": "/SUMP/icmcall/icmRPCCall",
+                      "method": "POST",
+                      "params": {
+                        "servicecode": "cb0090",
+                        "case_id": "${{params.case_id}}"
+                      },
+                      "resultSet": {
+                        "relation_cust_name": "cust_name"
+                      }
+                    }
+                  },
+                  "002": {
+                    "control": {
+                      "relationship": {
+                        "disabled": false
+                      },
+                      "relation_cust_name": {
+                        "disabled": false
+                      },
+                      "phone_type": {
+                        "disabled": false
+                      },
+                      "phone_no": {
+                        "disabled": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "is_valid": {
+            "control": "select",
+            "span": "8",
+            "label": "是否有效",
+            "inputWidth": "200px",
+            "dict": {
+              "dictType": "CS_E_YESORNO",
+              "dictKey": [
+                "CS_E_YESORNO"
+              ],
+              "format": "value-label"
+            }
+          }
+        },
+        {
+          "remark": {
+            "control": "textarea",
+            "span": "6",
+            "rows": "12",
+            "label": "备注",
+            "inputWidth": "1000px"
+          }
+        }
+      ]
+    }
+  }
+}

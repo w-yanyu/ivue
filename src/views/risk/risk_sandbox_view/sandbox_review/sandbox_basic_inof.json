@@ -1,0 +1,216 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "sandbox_code": {
+            "control": "text",
+            "label": "沙箱代码",
+            "width": "auto"
+          },
+          "sandbox_name": {
+            "control": "text",
+            "label": "沙箱名称",
+            "width": "auto"
+          },
+          "sandbox_type": {
+            "control": "select",
+            "label": "沙箱类型",
+            "width": "auto",
+            "dict": {
+              "dictType": "DECI_E_SANDBOX_TYPE",
+              "dictKey": [
+                "DECI_E_SANDBOX_TYPE"
+              ],
+              "format": "value - label"
+            }
+          },
+          "sandbox_status": {
+            "control": "select",
+            "label": "沙箱状态",
+            "width": "auto",
+            "dict": {
+              "dictType": "DECI_E_SANDBOX_STATUS",
+              "dictKey": [
+                "DECI_E_SANDBOX_STATUS"
+              ],
+              "format": "value - label"
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/risk/risk_sandbox_view/sandbox_review/add_sandbox.json",
+            "params": {
+              "list01": []
+            }
+          },
+          "props": {
+            "title": "新增沙箱"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "deci050070"
+        }
+      },
+      "thead": [
+        {
+          "type": "string",
+          "label": "沙箱编号",
+          "prop": "sandbox_id",
+          "isShow": false,
+          "width": "auto",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "沙箱代码",
+          "prop": "sandbox_code",
+          "width": "auto",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "沙箱名称",
+          "prop": "sandbox_name",
+          "width": "auto",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "沙箱描述",
+          "prop": "sandbox_desc",
+          "width": "auto",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "沙箱类型",
+          "prop": "sandbox_type",
+          "width": "auto",
+          "align": "center",
+          "dict": {
+            "dictType": "DECI_E_SANDBOX_TYPE",
+            "dictKey": [
+              "DECI_E_SANDBOX_TYPE"
+            ],
+            "format": "value - label"
+          }
+        },
+        {
+          "type": "string",
+          "label": "沙箱状态",
+          "prop": "sandbox_status",
+          "width": "auto",
+          "align": "center",
+          "dict": {
+            "dictType": "DECI_E_SANDBOX_STATUS",
+            "dictKey": [
+              "DECI_E_SANDBOX_STATUS"
+            ],
+            "format": "value - label"
+          }
+        },
+        {
+          "type": "string",
+          "label": "版本",
+          "prop": "data_version",
+          "width": "auto",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "创建人",
+          "prop": "data_create_user",
+          "width": "auto",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "创建时间",
+          "prop": "data_create_time",
+          "width": "auto",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "最近更新人",
+          "prop": "data_update_user",
+          "width": "auto",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "最近更新时间",
+          "prop": "data_update_time",
+          "width": "auto",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": "150px",
+          "btns": [
+            {
+              "type": "look",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/risk/risk_sandbox_view/sandbox_review/maintain_sandbox.json",
+                "method": "POST"
+              },
+              "props": {
+                "title": "沙箱维护"
+              }
+            },
+            {
+              "type": "look",
+              "label": "查看",
+              "toRequest": {
+                "url": "/views/risk/risk_sandbox_view/sandbox_review/sandbox_details_view.json",
+                "method": "POST"
+              },
+              "props": {
+                "title": "查看沙箱详情"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/riskController/riskCall",
+                "method": "POST",
+                "params": {
+                  "createUser": "$g{{user_info.userCode}}",
+                  "updateUser": "$g{{user_info.userCode}}",
+                  "servicecode": "deci050073"
+                }
+              },
+              "confirm": {
+                "title": "确定删除",
+                "cancelButtonText": "取消",
+                "confirmButtonText": "确定"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

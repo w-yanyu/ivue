@@ -1,0 +1,200 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "part_no": {
+            "label": "合作方编号",
+            "control": "text"
+          },
+          "part_project_no": {
+            "label": "合作项目编号",
+            "control": "text"
+          },
+          "project_version": {
+            "label": "合作项目版本",
+            "control": "text"
+          },
+          "margin_protocol_no": {
+            "label": "保证金协议编号",
+            "control": "text"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "addlog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/pt/partnerProjrctManage/marginManage/margin_manage_add.json",
+            "params": {
+              "apply_no": "${{params.apply_no}}",
+              "cust_no": "${{params.cust_no}}",
+              "due_item_no": "${{params.due_item_no}}"
+            }
+          },
+          "props": {
+            "width": "60%",
+            "title": "新增保证金记录"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pt0331"
+        }
+      },
+      "thead": [
+        {
+          "type": "string",
+          "label": "合作方编号",
+          "prop": "part_no",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "合作方名称",
+          "prop": "center_name",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "可售产品编号",
+          "prop": "sale_prod_cd",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "可售产品名称",
+          "prop": "sale_prod_name",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "合作项目编号",
+          "prop": "part_project_no",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "合作项目名称",
+          "prop": "part_project_name",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "合作项目版本",
+          "prop": "project_version",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "保证金协议编号",
+          "prop": "margin_protocol_no",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "保证金账号",
+          "prop": "guaranty_no",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "保证金账户余额",
+          "prop": "margin_acct_balance",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "登记时间",
+          "prop": "register_time",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "保证金状态",
+          "prop": "margin_status",
+          "align": "center",
+          "dict": {
+            "dictType": "PT_E_MARGIN_STATUS",
+            "dictKey": [
+              "PT_E_MARGIN_STATUS"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "align": "center",
+          "width": "200px",
+          "btns": [
+            {
+              "type": "look",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/pt/partnerProjrctManage/marginManage/margin_manage_edit.json",
+                "method": "GET",
+                "params": {
+                  "apply_no": "${{params.apply_no}}",
+                  "cust_no": "${{params.cust_no}}",
+                  "due_item_no": "${{params.due_item_no}}"
+                }
+              },
+              "props": {
+                "width": "60%",
+                "title": "保证金维护"
+              }
+            },
+            {
+              "type": "look",
+              "label": "调整",
+              "toRequest": {
+                "url": "/views/pt/partnerProjrctManage/marginManage/marginTrackManage/margin_track_add.json",
+                "method": "GET",
+                "params": {
+                  "apply_no": "${{params.apply_no}}",
+                  "cust_no": "${{params.cust_no}}",
+                  "due_item_no": "${{params.due_item_no}}"
+                }
+              },
+              "props": {
+                "width": "60%",
+                "title": "新增轨迹调整"
+              }
+            },
+            {
+              "type": "look",
+              "label": "轨迹查看",
+              "toRequest": {
+                "url": "/views/pt/partnerProjrctManage/marginManage/marginTrackManage/margin_track_manage.json",
+                "method": "GET",
+                "params": {
+                  "apply_no": "${{params.apply_no}}",
+                  "cust_no": "${{params.cust_no}}",
+                  "due_item_no": "${{params.due_item_no}}"
+                }
+              },
+              "props": {
+                "width": "60%",
+                "title": "轨迹调整"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "module": "d-steps",
+  "layout": {
+    "steps": {
+      "scope": "formObj",
+      "direction": "vertical",
+      "alignCenter": true,
+      "finishStatus": "success",
+      "simpleType": false,
+      "nextStepType": "submit",
+      "list": [
+        {
+          "scope": "step1",
+          "title": "合作方信息",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "url": "/views/pt/partnerManage/ptPartner_info.json",
+            "method": "get",
+            "params": {
+
+            }
+          },
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "post",
+            "params":{
+              "servicecode":"pt0041"
+             
+            },
+            "resultSet": {
+
+            }
+          }
+        },
+        {
+          "scope": "step2",
+          "forbidBack": true,
+          "title": "合作方账户",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "url": "/views/pt/partnerManage/partnerAcct_list.json",
+            "method": "get",
+            "params": {
+              "part_no": "${{formObj.step1.part_no}}"
+
+            }
+          },
+          "doRequest": {
+            "url": "/pte/json/layout/success.json",
+            "method": "post",
+            "eventAfter": {
+              "doParentCallback": true
+            }
+          }
+        },
+        {
+          "scope": "step3",
+          "forbidBack": true,
+          "title": "合作方伙伴体系管理",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "url": "/views/pt/partnerManage/ptb_part_system_tmp/ptb_part_system_tmp_partstr.json",
+            "method": "get",
+            "params": {
+              "part_no": "${{formObj.step1.part_no}}"
+            }
+          },
+          "doRequest": {
+            "url": "/pte/json/layout/success.json",
+            "method": "post",
+            "eventAfter": {
+              "doParentCallback": true
+            }
+          }
+        }
+      ]
+    }
+  }
+}

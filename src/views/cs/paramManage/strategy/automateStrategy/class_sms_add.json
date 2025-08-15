@@ -1,0 +1,213 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "pagination": {
+        "show": false
+      },
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "py0017",
+              "page_id": "/views/cs/paramManage/strategy/automateStrategy/class_sms_add.json",
+              "appId": "pyOnl",
+              "strategy_group_code": "${{params.strategy_group_code}}"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "strategy_group_code": {
+            "control": "hidden",
+            "label": "策略组编号",
+            "width": "130px",
+            "value": "${{params.strategy_group_code}}"
+          },
+          "coll_result_code": {
+            "hidden": true,
+            "label": "最新沟通结果（语义理解标签）",
+            "control": "remoteSelect",
+            "labelField": "coll_result_name",
+            "valueField": "coll_result_code",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "cb0087",
+                "appId": "cbOnl"
+              }
+            },
+            "events": {
+              "emit": [
+                "operation"
+              ]
+            },
+            "format": "value-label"
+          },
+          "mobile_status": {
+            "control": "select",
+            "label": "最新沟通电话状态",
+            "width": "130",
+            "dict": {
+              "dictType": "CS_E_PHONE_STATUS",
+              "dictKey": [
+                "CS_E_PHONE_STATUS"
+              ],
+              "format": "value-label"
+            }
+          },
+          "reply_person": {
+            "control": "select",
+            "label": "回复对象",
+            "width": "130",
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择"
+              }
+            ],
+            "dict": {
+              "dictType": "CS_E_RELATIONSHIP",
+              "dictKey": [
+                "CS_E_RELATIONSHIP"
+              ],
+              "format": "value-label"
+            }
+          },
+          "cust_label": {
+            "control": "text",
+            "label": "客户标签",
+            "width": "130",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              },
+              {
+                "max": 30,
+                "message": "最多可以输入 30 个字节"
+              }
+            ]
+          },
+          "work_type": {
+            "control": "select",
+            "label": "作业类型",
+            "width": "130",
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择"
+              }
+            ],
+            "dict": {
+              "dictType": "CS_WORK_TYPE",
+              "dictKey": [
+                "CS_WORK_TYPE"
+              ],
+              "format": "value-label"
+            }
+          },
+          "work_template_id": {
+            "control": "lookup",
+            "label": "作业模板编号",
+            "width": "130",
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择作业模板编号"
+              }
+            ],
+            "keyField": {
+              "work_template_id": "template_id",
+              "template_name": "template_name"
+            },
+            "toRequest": {
+              "url": "/views/cs/paramManage/strategy/template_management.json",
+              "method": "post",
+              "params":{
+                "template_type":"${{form.work_type}}"
+              }
+            },
+            "props": {
+              "title": "选择作业模板编号",
+              "width": "65%"
+            },
+            "format": "value-label"
+          },
+          "send_person": {
+            "control": "select",
+            "label": "发送对象",
+            "width": "130",
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择"
+              }
+            ],
+            "dict": {
+              "dictType": "CS_E_RELATIONSHIP",
+              "dictKey": [
+                "CS_E_RELATIONSHIP"
+              ],
+              "format": "value-label"
+            }
+          },
+          "work_interval_day": {
+            "control": "text",
+            "label": "作业间隔天数",
+            "width": "130",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              },
+              {
+                "max": 30,
+                "message": "最多可以输入 30 个字节"
+              }
+            ]
+          },
+          "work_interval_hour": {
+            "control": "text",
+            "label": "作业间隔小时",
+            "width": "130",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              },
+              {
+                "max": 30,
+                "message": "最多可以输入 30 个字节"
+              }
+            ]
+          },
+          "channel": {
+            "control": "select",
+            "label": "呼叫中心通道",
+            "width": "130",
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择"
+              }
+            ],
+            "dict": {
+              "dictType": "CS_CHANNEL",
+              "dictKey": [
+                "CS_CHANNEL"
+              ],
+              "format": "value-label"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

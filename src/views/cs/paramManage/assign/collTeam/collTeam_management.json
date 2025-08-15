@@ -1,0 +1,124 @@
+{
+  "module": "lr_tree_dynamic",
+  "layout": {
+    "tree": {
+      "scope": "treeTemplateParams",
+      "title": "催收组定义",
+      "lazy": false,
+      "width": "300px",
+      "hideDynamicArea": false,
+      "draggable": true,
+      "showToolbar": false,
+      "stopAddNodeField": "stopAddNode",
+      "stopDeleteNodeField": "isStopDeleteNode",
+      "draggableField": "isStopDraggable",
+      "isSupportHandleNode": false,
+      "idField": "coll_team",
+      "nodeTypeField": "type",
+      "pIdField": "parent_coll_team",
+      "labelField": "coll_team_name",
+      "isLeafField": "isLeaf",
+      "rootField": "coll_team",
+      "stopClickNodeField": "stopNodeClick",
+      "disabledField": "disabled",
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "cb0041",
+          "appId": "cbOnl"
+        }
+      },
+      "nodeTypes": {
+        "branchTeam": {
+          "icon": "el-icon-news",
+          "children": [
+            "branchTeam"
+          ],
+          "toRequest": {
+            "url": "/views/cs/paramManage/assign/collTeam/collTeam_rightTable.json",
+            "method": "get",
+            "params": {
+              "props": "${{current}}"
+            }
+          },
+          "contextMenu": [
+            {
+              "type": "add",
+              "label": "新增",
+              "icon": "el-icon-circle-plus-outline",
+              "target": "dialog",
+              "toRequest": {
+                "url": "/views/cs/paramManage/assign/collTeam/collTeam_add.json",
+                "method": "get",
+                "params": {
+                  "tree": "${{treeTemplateParams}}",
+                  "props": "${{current}}"
+                }
+              },
+              "props": {
+                "width": "65%",
+                "title": "新增催收组定义"
+              }
+            }
+          ]
+        },
+        "collTeam": {
+          "icon": "el-icon-news",
+          "children": [
+            "collTeam"
+          ],
+          "toRequest": {
+            "url": "/views/cs/paramManage/assign/collTeam/collTeam_rightTable.json",
+            "method": "get",
+            "params": {
+              "props": "${{current}}"
+            }
+          },
+          "contextMenu": [
+            {
+              "type": "add",
+              "label": "新增",
+              "icon": "el-icon-circle-plus-outline",
+              "target": "dialog",
+              "toRequest": {
+                "url": "/views/cs/paramManage/assign/collTeam/collTeam_add.json",
+                "method": "get",
+                "params": {
+                  "tree": "${{treeTemplateParams}}",
+                  "props": "${{current}}"
+                }
+              },
+              "props": {
+                "width": "65%",
+                "title": "新增催收组定义"
+              }
+            },
+            {
+              "type": "divider"
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "icon": "el-icon-remove-outline",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "cb0025",
+                  "appId": "cbOnl"
+                }
+              },
+              "confirm": {
+                "title": "提示信息",
+                "msg": "该操作将删除当前催收组及其所有子催收组。确认删除吗？",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

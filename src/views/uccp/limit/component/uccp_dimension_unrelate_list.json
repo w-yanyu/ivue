@@ -1,0 +1,83 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "limit_dimension_name": {
+                        "label": "限额维度名称",
+                        "control": "text"
+                    },
+                    "valid_flag": {
+                        "label": "有效标识",
+                        "control": "select",                
+                        "align": "center",
+                        "dict": {
+                            "dictType": "UCCP_E_VALID_FLAG",
+                            "dictKey": [
+                                "UCCP_E_VALID_FLAG"
+                            ],
+                            "format": "label"
+                        }
+                    }
+                }
+            ]
+          },
+          "toolbar": {
+            "btns": []
+        },
+        "datagrid": {
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "uccp5009",
+                    "limit_component_code":"${{params.limit_component_code}}"
+
+                }
+            },
+            "thead": [
+                {
+                    "label": "限额维度编号",
+                    "prop": "limit_dimension_code",
+                    "align": "center"
+                },
+                {
+                    "label": "限额维度名称",
+                    "prop": "limit_dimension_name",
+                    "align": "center"
+                },
+                {
+                    "label": "限额维度可选值获取方法",
+                    "prop": "limit_achieve_method",
+                    "align": "center"
+                },
+                {
+                    "label": "有效标识",
+                    "prop": "valid_flag",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "UCCP_E_VALID_FLAG",
+                        "dictKey": [
+                            "UCCP_E_VALID_FLAG"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "操作",
+                    "align": "center",
+                    "width": "180",
+                    "btns": [{
+                        "type": "bringback",
+                        "label": "选择",
+                        "show":{
+                            "expression":"'${{current.valid_flag}}' === '1'"
+                          }
+                    }]
+                }
+            ]
+        }
+    }
+}

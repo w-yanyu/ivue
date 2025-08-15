@@ -1,0 +1,248 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "scope": "myForm",
+            "controls": [
+                {
+                    "applyNo": {
+                        "control": "text",
+                        "label": "渠道方申请单号",
+                        "rules": [
+                            {
+                                "max": 28,
+                                "message": "长度不能超过18个字符"
+                            }
+                        ]
+                    },
+                    "ownChannelCode": {
+                        "label": "渠道类型",
+                        "control": "select",
+                        "dict": {
+                            "format": "label",
+                            "dictKey": [
+                                "E_OWN_CHANNEL_CODE5_STATUS"
+                            ],
+                            "dictType": "E_OWN_CHANNEL_CODE5_STATUS"
+                        }
+                    },
+                    "orderNo": {
+                        "control": "text",
+                        "label": "订单号",
+                        "rules": [
+                            {
+                                "max": 28,
+                                "message": "长度不能超过18个字符"
+                            }
+                        ]
+                    },
+                    "certNo": {
+                        "control": "text",
+                        "label": "身份证号",
+                        "rules": [
+                            {
+                                "max": 28,
+                                "message": "长度不能超过18个字符"
+                            }
+                        ]
+                    },
+                    "userName": {
+                        "control": "text",
+                        "label": "姓名",
+                        "rules": [
+                            {
+                                "max": 28,
+                                "message": "长度不能超过18个字符"
+                            }
+                        ]
+                    },
+                    "userTel": {
+                        "control": "text",
+                        "label": "手机号",
+                        "rules": [
+                            {
+                                "max": 28,
+                                "message": "长度不能超过18个字符"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "custom",
+                    "target": "dialog",
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "PATSPOIM2002",
+                            "istgal": "0",
+                            "selectName": "fileOperateList",
+                            "applyNo": "${{myForm.applyNo}}",
+                            "ownChannelCode": "${{myForm.ownChannelCode}}",
+                            "operateFlag": "R"
+                        }
+                    },
+                    "label": "触发影像件下载",
+                    "confirm": {
+                        "title": "提示信息",
+                        "msg": "确认要触发影像件下载吗？",
+                        "confirmButtonText": "确定",
+                        "cancelButtonText": "取消"
+                    }
+                },
+                {
+                    "type": "custom",
+                    "target": "dialog",
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "PATSPOIM2002",
+                            "istgal": "1",
+                            "selectName": "fileOperateList",
+                            "applyNo": "${{myForm.applyNo}}",
+                            "ownChannelCode": "${{myForm.ownChannelCode}}",
+                            "operateFlag": "F"
+                        }
+                    },
+                    "label": "置为失败交易",
+                    "confirm": {
+                        "title": "提示信息",
+                        "msg": "确认要置为失败交易吗？",
+                        "confirmButtonText": "确定",
+                        "cancelButtonText": "取消"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "PATSPOIM2001"
+                }
+            },
+            "thead": [
+                {
+                    "type": "selection",
+                    "width": "55"
+                },
+                {
+                    "label": "授信申请单号",
+                    "prop": "applyNo",
+                    "align": "center"
+                },
+                {
+                    "label": "渠道",
+                    "prop": "ownChannelCode",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "E_OWN_CHANNEL_CODE5_STATUS",
+                        "dictKey": [
+                            "E_OWN_CHANNEL_CODE5_STATUS"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "授信审核状态",
+                    "prop": "clapplStatus",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "E_CLAPPL_STATUS",
+                        "dictKey": [
+                            "E_CLAPPL_STATUS"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "订单号",
+                    "prop": "orderNo",
+                    "align": "center"
+                },
+                {
+                    "label": "错误码",
+                    "prop": "retCode",
+                    "align": "center"
+                },
+                {
+                    "label": "错误信息",
+                    "prop": "retText",
+                    "align": "center"
+                },
+                {
+                    "label": "文件通知状态",
+                    "prop": "fileStatus",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "E_FILE_STATUS",
+                        "dictKey": [
+                            "E_FILE_STATUS"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "渠道方通知状态",
+                    "prop": "notifyStatus",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "E_NOTIFY_STATUS",
+                        "dictKey": [
+                            "E_NOTIFY_STATUS"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "文件下载目录",
+                    "prop": "filePath",
+                    "align": "center"
+                },
+                {
+                    "label": "操作次数",
+                    "prop": "operateNum",
+                    "align": "center"
+                },
+                {
+                    "label": "手机号",
+                    "prop": "userTel",
+                    "align": "center"
+                },
+                {
+                    "label": "姓名",
+                    "prop": "userName",
+                    "align": "center"
+                },
+                {
+                    "label": "身份证号",
+                    "prop": "certNo",
+                    "align": "center"
+                },
+                {
+                    "label": "申请时间",
+                    "prop": "applyTime",
+                    "align": "center"
+                },
+                {
+                    "label": "创建时间",
+                    "prop": "createTime",
+                    "align": "center"
+                },
+                {
+                    "label": "更新时间",
+                    "prop": "updateTime",
+                    "align": "center"
+                }
+            ]
+        }
+    }
+}

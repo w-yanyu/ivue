@@ -1,0 +1,216 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "pageId": "K1403",
+    "form": {
+      "controls": [
+        {
+          "smilr_cr_card_loan_acct_num": {
+            "control": "text",
+            "label": "类信用卡贷款账号"
+          },
+          "cust_num": {
+            "control": "text",
+            "label": "客户号"
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "类信用卡开户",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/lxyk/xyf/xyf_credit_card_create_account.json"
+          },
+          "props": {
+            "height": "80%",
+            "title": "类信用卡开户"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "syln0008",
+          "outlistid": "lstLxykdkzhzb"
+        }
+      },
+      "thead": [
+        {
+          "label": "类信用卡贷款账号",
+          "prop": "smilr_cr_card_loan_acct_num",
+          "align": "center"
+        },
+        {
+          "label": "类信用卡账户状态",
+          "prop": "smilr_cr_card_acct_ste",
+          "align": "center",
+          "dict": {
+            "dictType": "E_SMILR_CR_CARD_ACCT_STE",
+            "dictKey": [
+              "E_SMILR_CR_CARD_ACCT_STE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "客户号",
+          "prop": "cust_num",
+          "align": "center"
+        },
+        {
+          "label": "客户名称",
+          "prop": "cust_nm",
+          "align": "center"
+        },
+        {
+          "label": "贷款入账账号",
+          "prop": "loan_pstg_acct_num",
+          "align": "center"
+        },
+
+        {
+          "label": "可售产品代码",
+          "prop": "slbl_prod_code",
+          "align": "center"
+        },
+        {
+          "label": "可售产品名称",
+          "prop": "slbl_prod_nm",
+          "align": "center"
+        },
+        {
+          "label": "开户日期",
+          "prop": "open_acct_dt",
+          "align": "center"
+        },
+        {
+          "label": "到期日期",
+          "prop": "matu_dt",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 350,
+          "align": "center",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/lxyk/class_credit_card_info.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "70%",
+                "title": "信息详情"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "额度管理",
+              "authId": "K140301",
+              "toRequest": {
+                "url": "/views/lxyk/class_credit_card_limit_info.json",
+                "method": "GET"
+              },"show": {
+                "expression": "'${{current.smilr_cr_card_acct_ste}}' === '0'"
+              },
+              "props": {
+                "width": "70%",
+                "title": "类信用卡信息维护"
+              }
+            },
+            {
+              "type": "look",
+              "label": "消费申请",
+              "authId": "K140302",
+              "toRequest": {
+                "url": "/views/lxyk/xyf/xyf_credit_card_loan_consumption.json",
+                "method": "POST"
+              },"show": {
+                "expression": "'${{current.smilr_cr_card_acct_ste}}' === '0'"
+              },
+              "props": {
+                "width": "70%",
+                "title": "模拟消费"
+              }
+            },
+            {
+              "type": "look",
+              "label": "账单详情",
+              "authId": "K140303",
+              "toRequest": {
+                "url": "/views/lxyk/xyf/xyf_credit_card_bill_info.json",
+                "method": "POST"
+              },"show": {
+                "expression": "'${{current.smilr_cr_card_acct_ste}}' === '0'"
+              },
+              "props": {
+                "width": "70%",
+                "title": "账单详情"
+              }
+            },
+            {
+              "type": "look",
+              "label": "交易记录",
+              "authId": "K140307",
+              "toRequest": {
+                "url": "/views/lxyk/xyf/xyf_credit_card_dealing_slip.json",
+                "method": "POST",
+                "params":{
+                  "cust_no":"${{current.cust_num}}",
+                  "cust_name":"${{current.cust_nm}}"
+                }
+              },"show": {
+                "expression": "'${{current.smilr_cr_card_acct_ste}}' === '0'"
+              },
+              "props": {
+                "width": "70%",
+                "title": "交易记录"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "申请销户",
+              "authId": "K140103",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ar0047",
+                    "cust_no":"${{current.cust_num}}",
+                    "cust_name":"${{current.cust_nm}}",
+                    "busi_type":"LXYKDK",
+                    "apply_type":"XH",
+                    "smilr_cr_card_loan_acct_num":"${{current.smilr_cr_card_loan_acct_num}}",
+                    "open_acct_date":"${{current.open_acct_dt}}",
+                    "sale_prod_cd":"${{current.slbl_prod_code}}",
+                    "sale_prod_name":"${{current.slbl_prod_nm}}"
+                }
+              },
+              "show": {
+                "expression": "'${{current.smilr_cr_card_acct_ste}}' === '0'"
+              },
+              "confirm": {
+                "title": "确定销户",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

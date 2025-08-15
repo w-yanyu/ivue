@@ -1,0 +1,87 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "initRequest":"${{params}}",
+            "btns": [
+                {
+                    "type": "submit",
+                    "label": "提交",
+                    "icon": "",
+                    "doRequest": {
+                        "url": "/SUMP/call/RPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "ct2062",
+                            "operater_ind": "D"
+                        }
+                    }
+                }
+            ],
+            "controls": [
+                {
+                    "role_id": {
+                        "control": "text",
+                        "label": "角色ID",
+                        "width": "150px",
+                        "disabled":true,
+                        "rules": [
+                            {
+                                "max": 64,
+                                "message": "长度不能超过64个字符"
+                            }
+                        ],
+                        "labelField": "drop_list_desc",
+                        "valueField": "drop_list_value",
+                        "doRequest": {
+                            "url": "/SUMP/call/RPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "ms9999",
+                                "dynamic_drop_list_type": "CT0001"
+                            }
+                        },
+                        "format": "label"
+                    },
+                    "resource_type": {
+                        "control": "select",
+                        "label": "资源类型",
+                        "width": "150px",
+                        "disabled":true,
+                        "dict": {
+                            "dictType": "CT_E_ROLESYL",
+                            "dictKey": [
+                                "CT_E_ROLESYL"
+                            ],
+                            "format": "label"
+                        },
+                        "events": {
+                            "emit": [
+                                "resource_value"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "resource_value": {
+                        "control": "remoteSelect",
+                        "label": "资源数值",
+                        "width": "150px",
+                        "disabled":true,
+                        "labelField": "drop_list_desc",
+                        "valueField": "drop_list_value",
+                        "doRequest": {
+                            "url": "/SUMP/RoleResource/ResourceValue",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "ct2049",
+                                "resource_type": "${{form.resource_type}}"
+                            }
+                        },
+                        "format": "label"
+                    }
+                }
+            ]
+        }
+    }
+}

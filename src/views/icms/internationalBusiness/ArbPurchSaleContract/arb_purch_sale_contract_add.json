@@ -1,0 +1,241 @@
+{
+  "module": "v-inputDataForm-btn",
+  "layout": {
+    "form": {
+      "initRequest": "${{params}}",
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "icon": "",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "ar1311"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "apply_no": {
+            "control": "hidden",
+            "disabled": true,
+            "label": "申请号",
+            "width": "200px",
+            "span": 7
+          },
+          "counter_name": {
+            "control": "lookup",
+            "edit": false,
+            "width": "200px",
+            "span": 7,
+            "rules": [
+              {
+                "required": true,
+                "message": "收款人名称"
+              }
+            ],
+            "label": "收款人名称",
+            "keyField": {
+              "payee_pk": "payee_pk",
+              "counter_name": "payee_name"
+            },
+            "toRequest": {
+              "url": "/views/icms/accept/araPayeeInfo/info/ara_payee_info_lookup.json",
+              "method": "post",
+              "params": {
+                "apply_no": "${{params.apply_no}}"
+              }
+            },
+            "props": {
+              "width": "80%",
+              "title": "查询收款人"
+            },
+            "format": "label"
+          },
+          "contract_amt": {
+            "control": "currency",
+            "label": "购销合同金额",
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择购销合同金额"
+              }
+            ],
+            "width": "200px",
+            "span": 7,
+            "align": "left",
+            "format": {
+              "thousand": ","
+            }
+          },
+          "contract_base_amt": {
+            "control": "currency",
+            "disabled": true,
+            "label": "购销合同金额(折基基准币种)",
+            "compute": "${{form.contract_amt}}*${{form.exchange_rate}}",
+            "width": "200px",
+            "span": 7,
+            "align": "left",
+            "format": {
+              "thousand": ","
+            }
+          },
+          "ccy_code": {
+            "control": "select",
+            "label": "申请币种",
+            "span": 7,
+            "width": "200px",
+            "dict": {
+              "dictType": "MS_CURRENCY",
+              "dictKey": [
+                "MS_CURRENCY"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "此项为必填项"
+              }
+            ]
+          },
+          "base_ccy": {
+            "control": "select",
+            "span": 7,
+            "width": "200px",
+            "label": "基准币种",
+            "disabled": true,
+            "dict": {
+              "dictType": "MS_CURRENCY",
+              "dictKey": [
+                "MS_CURRENCY"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": false,
+                "message": "请选择基准币种"
+              }
+            ],
+            "value": "156"
+          },
+          "exchange_rate": {
+            "disabled": true,
+            "control": "currency",
+            "label": "汇率",
+            "align": "left",
+            "width": "200px",
+            "span": 7,
+            "value": 1
+          },
+          "loan_contract_sign_date": {
+            "control": "dateTimePicker",
+            "editable": false,
+            "format": "yyyyMMdd",
+            "label": "购销合同签订日期",
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择购销合同签订日期"
+              }
+            ],
+            "width": "200px",
+            "span": 7
+          },
+          "start_date": {
+            "control": "dateTimePicker",
+            "editable": false,
+            "format": "yyyyMMdd",
+            "label": "购销起始日期",
+            "rules": [
+              {
+                "required": true,
+                "message": "请填写购销起始日期"
+              }
+            ],
+            "width": "200px",
+            "span": 7
+          },
+          "matu_date": {
+            "control": "dateTimePicker",
+            "editable": false,
+            "format": "yyyyMMdd",
+            "label": "购销到期日期",
+            "rules": [
+              {
+                "required": true,
+                "message": "请填写购销到期日期"
+              }
+            ],
+            "width": "200px",
+            "span": 7
+          },
+          "payee_pk": {
+            "control": "hidden",
+            "edit": true,
+            "width": "200px",
+            "span": 7
+          },
+          "check_total_amt": {
+            "control": "currency",
+            "label": "签票总额",
+            "compute": "${{form.contract_amt}}",
+            "disabled": true,
+            "width": "200px",
+            "span": 7,
+            "align": "left",
+            "format": {
+              "thousand": ","
+            }
+          },
+          "check_total_base_amt": {
+            "control": "currency",
+            "label": "签票总额（折基准币种）",
+            "compute": "${{form.check_total_amt}}*${{form.exchange_rate}}",
+            "disabled": true,
+            "width": "200px",
+            "span": 7,
+            "align": "left",
+            "format": {
+              "thousand": ","
+            }
+          },
+          "merch_bill": {
+            "control": "textarea",
+            "label": "商品清单",
+            "rules": [
+              {
+                "required": false,
+                "message": "请填写商品清单"
+              }
+            ],
+            "width": "200px",
+            "span": 21
+          },
+          "purch_sale_contract_desc": {
+            "control": "textarea",
+            "label": "购销合同内容",
+            "rules": [
+              {
+                "required": false,
+                "message": "请填写购销合同内容"
+              }
+            ],
+            "width": "200px",
+            "span": 21
+          },
+          "other_covenants": {
+            "control": "textarea",
+            "label": "其他约定事项",
+            "width": "200px",
+            "span": 21
+          }
+        }
+      ]
+    }
+  }
+}

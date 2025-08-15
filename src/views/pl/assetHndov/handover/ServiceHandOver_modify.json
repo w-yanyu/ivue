@@ -1,0 +1,144 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest":"${{params}}",
+      "scope": "formData",
+      "btns": [
+        {
+          "type": "submit",
+          "label": "保存",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "pl0020",
+              "hndov_code":"${{params.hndov_code}}"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "hndov_prod_nm": {
+            "label": "移交产品",
+            "control": "lookup",
+            "width": "130px",
+            "span": "10",
+            "edit": true,
+            "keyField": {
+              "hndov_prod_nm": "hndov_prod_nm",
+              "hand_prod_code": "hand_prod_code",
+              "wthr_hndov_cust": "wthr_hndov_cust",
+              "wthr_hndov_acctg": "wthr_hndov_acctg",
+              "wthr_hndov_busi": "wthr_hndov_busi",
+              "wthr_cross_org_hndov": "wthr_cross_org_hndov"
+            },
+            "toRequest": {
+              "url": "/views/pl/assetHndov/handover/tranferProduct.json",
+              "method": "post"
+            },
+            "props": {
+              "title": "选择移交产品"
+            },
+            "format": "label",
+            "rules": [
+              {
+                "required": true,
+                "message": "选择移交产品"
+              }
+            ]
+          }
+        },
+        {
+          "hand_prod_code": {
+            "control": "hidden",
+            "label": "移交产品编码",
+            "width": "130px",
+            "span":"10"
+          },
+          "wthr_hndov_acctg": {
+            "control": "select",
+            "label": "是否移交账务",
+            "width": "130px",
+            "disabled": true,
+            "span":"10",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            }
+          }
+        },
+        {
+          "wthr_hndov_cust": {
+            "control": "select",
+            "label": "是否移交客户",
+            "width": "130px",
+            "disabled": true,
+            "span":"10",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            }
+          }
+        },
+        {
+          "wthr_hndov_busi": {
+            "control": "select",
+            "label": "是否移交业务",
+            "width": "130px",
+            "span": "10",
+            "disabled": true,
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            }
+          }
+        },
+        {
+          "wthr_cross_org_hndov": {
+            "control": "select",
+            "label": "是否跨机构移交",
+            "width": "130px",
+            "span":"10",
+            "disabled": true,
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            }
+          }
+        },
+        {
+          "remark": {
+            "label": "备注",
+            "control": "textarea",
+            "width": "130px",
+            "span":"10",
+            "autosize":{
+              "minRows": 2
+            },
+            "rules": [
+              {
+                "max": "200",
+                "message": "长度不能超过200个字符"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}
+

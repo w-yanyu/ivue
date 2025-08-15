@@ -1,0 +1,161 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/icms/lend/lendIOU/repayAcct/repayAcctList_add.json",
+            "params": {
+              "apply_no": "${{params.apply_no}}",
+              "lend_no": "${{params.lend_no}}"
+            }
+          },
+          "show": {
+           "expression": "'${{params.pageType}}' != 'info'"
+          },
+          "props": {
+            "width": "50%",
+            "title":  "新增多还款账户列表"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params":{
+          "servicecode":"ar0613",
+          "apply_no": "${{params.apply_no}}"
+        }
+      },
+      "pagination": {
+        "pageSizes": [
+          10,
+          15,
+          20,
+          50,
+          100
+        ],
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "label":  "申请号",
+          "width":"200px",
+          "prop": "apply_no",
+          "align": "center"
+        },
+        {
+          "label":  "还款账号",
+          "prop": "rpymt_acct_num",
+          "align": "center"
+        },{
+          "label":  "还款账户名称",
+          "prop": "rpymt_acct_nm",
+          "align": "center"
+        },{
+          "label":  "优先级别",
+          "prop": "prty",
+          "dict": {
+            "dictType": "AR_E_PAYMENT_PRIORITY",
+            "dictKey": [
+              "AR_E_PAYMENT_PRIORITY"
+            ],
+            "format": "label"
+          },
+          "align": "center"
+        },{
+          "label":  "还款基数种类",
+          "prop": "rpymt_base_num_catg",
+          "dict": {
+            "dictType": "LN_E_RPYMT_BASE_NUM_CATG",
+            "dictKey": [
+              "LN_E_RPYMT_BASE_NUM_CATG"
+            ],
+            "format": "label"
+          },
+          "align": "center"
+        },{
+          "label":  "还款账户规则",
+          "prop": "rpymt_acct_rule",
+          "dict": {
+            "dictType": "LN_E_RPYMT_ACCT_RULE",
+            "dictKey": [
+              "LN_E_RPYMT_ACCT_RULE"
+            ],
+            "format": "label"
+          },
+          "align": "center"
+        },{
+          "label":  "还款账户种类",
+          "prop": "rpymt_acct_catg",
+          "dict": {
+            "dictType": "LN_E_RPYMT_ACCT_CATG",
+            "dictKey": [
+              "LN_E_RPYMT_ACCT_CATG"
+            ],
+            "format": "label"
+          },
+          "align": "center"
+        },{
+          "label":  "还款比例",
+          "prop": "rpymt_pcnt",
+          "align": "center"
+        },{
+          "label":  "不足额扣款方式",
+          "prop": "defcy_ddc_mny_way",
+          "dict": {
+            "dictType": "LN_E_DEFCY_DDC_MNY_WAY",
+            "dictKey": [
+              "LN_E_DEFCY_DDC_MNY_WAY"
+            ],
+            "format": "label"
+          },
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "width":150,
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/icms/lend/lendIOU/repayAcct/repayAcctList_modify.json",
+                "method": "get",
+                "props":{
+                  "title":"维护多还款列表账户"
+                }
+              },
+              "show": {
+               "expression": "'${{params.pageType}}' != 'info'"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params":{
+                  "servicecode":"ar0612"
+                }
+              },
+              "show": {
+               "expression": "'${{params.pageType}}' != 'info'"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

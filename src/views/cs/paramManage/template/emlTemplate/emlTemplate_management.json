@@ -1,0 +1,150 @@
+{
+    "module": "v_search_btn_datagrid",
+
+    "layout": {
+        "form": {
+            "scope": "formData",
+            "controls": [
+                {
+                    "template_cd": {
+                        "control": "text",
+                        "label": "信邮模板编号"
+                    },
+                    "template_name": {
+                        "control": "text",
+                        "label": "模板名称"
+                    }
+                },
+                {
+                    "template_desc": {
+                        "control": "text",
+                        "label": "模板描述"
+                    }
+                }
+            ]
+        },
+
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "icon": "el-icon-circle-plus",
+                    "target": "dialog",
+                    "label": "新增",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/pl/paramManage/template/emlTemplate/emlTemplate_add.json"
+                    },
+                    "props": {
+                        "width": "80%",
+                        "title": "新增信邮模板"
+                    }
+                }
+            ]
+        },
+
+        "datagrid": {
+
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/iccsCall/iccsEurekaCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "cs0094",
+                    "template_type":"EML"
+                }
+            },
+
+            "thead": [
+
+                {
+                    "type":"string",
+                    "label": "信邮模板编号",
+                    "align":"center",
+                    "prop": "template_cd"
+                },
+                {
+                    "type":"string",
+                    "label": "模板名称",
+                    "align":"center",
+                    "prop": "template_name"
+                },
+                {
+                    "type":"string",
+                    "label": "模板描述",
+                    "align":"center",
+                    "prop": "template_desc"
+                },
+                {
+                    "type":"string",
+                    "label": "发送方式",
+                    "align":"center",
+                    "prop": "send_type",
+                    "dict":{
+                        "dictType": "MS_E_SEND_TYPE",
+                        "dictKey": [
+                          "MS_E_SEND_TYPE"
+                        ],
+                        "format": "value-label"
+            
+                      }
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width":"200%",
+                    "align":"center",
+                    "btns": [
+                        {
+                            "type":"look",
+                            "label":"详情",
+                            "toRequest":{
+                                "url":"/views/pl/paramManage/template/emlTemplate/emlTemplate_info.json",
+                                "method":"POST"
+                            },
+                            "props":{
+                                "title":"信邮模板详情",
+                                "width": "80%"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/pl/paramManage/template/emlTemplate/emlTemplate_modify.json",
+                                "method": "POST"
+                            },
+                            "props": {
+                                "title": "信邮模板维护",
+                                "width": "80%"
+                            }
+                        },
+                        {
+                            "type": "",
+                            "label": "打印预览",
+                            "doRequest": {
+                                "url": "/SUMP/iccsCall/iccsEurekaCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": ""
+                                }
+                            }
+                        },
+                        {
+                            "type": "delete",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/iccsCall/iccsEurekaCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "cs0091",
+                                    "template_type": "EML"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

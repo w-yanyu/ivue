@@ -1,0 +1,63 @@
+{
+  "module": "v-realonlyForm-btn",
+  "layout": {
+    "form": {
+      "initRequest": "${{params}}",
+      "controls": [
+        {
+          "coll_team": {
+            "hidden": true,
+            "width": "130px",
+            "disabled": true,
+            "label": "催收组",
+            "control": "remoteSelect",
+            "labelField": "coll_team_name",
+            "valueField": "coll_team",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode":"cb0041",
+                "query_type": "branchTeam"
+              }
+            },
+            "events": {
+              "emit": [
+                "operation"
+              ]
+            },
+            "format": "value-label"
+          },
+          "collector": {
+            "hidden": true,
+            "width": "130px",
+            "disabled": true,
+            "label": "催收员姓名",
+            "control": "remoteSelect",
+            "labelField": "collector_name",
+            "valueField": "collector",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode":"cb0043",
+                "coll_team":"${{current.coll_team}}"
+              }
+            },
+            "events": {
+              "emit": [
+                "operation"
+              ]
+            },
+            "format": "value-label"
+          },
+          "detail_assign_ratio": {
+            "control": "string",
+            "label": "明细分配比重",
+            "width": "130px"
+          }
+        }
+      ]
+    }
+  }
+}

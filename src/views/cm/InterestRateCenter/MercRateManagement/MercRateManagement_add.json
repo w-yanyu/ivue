@@ -1,0 +1,100 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "insertmerc"
+                }
+            },
+            "btns": [
+                {
+                    "type": "submit",
+                    "label": "提交",
+                    "icon": ""
+                }
+            ],
+            "controls": [
+                {
+                   
+                    "merchant_id": {
+                        "control": "lookup",
+                        "label": "商户号",
+                        "edit": false,
+                        "keyField": {
+                            "merchant_id": "ofpacd",
+                            "merchant_name":"ofpana"
+                        },
+                        "toRequest": {
+                            "url": "/views/cm/InterestRateCenter/MercRateManagement/customermanager_mercNo.json",
+                            "method": "post"
+                        },
+                        "rules": [
+                            {
+                              "required": true,
+                              "message": "请选择商户号"
+                            }
+                        ]
+                    },
+                    "merchant_name": {
+                        "control":  "text",
+                        "label": "商户名称"
+                    }
+
+                },
+                {
+                   
+                    "category": {
+                        "control": "text",
+                        "label": "品类",
+                        "rules": [
+                            {
+                                "required":true,
+                                "max": 5,
+                                "message": "请输入品类,长度不能超过5个字符"
+                            }
+                        ]
+                    },
+                    "rate_code": {
+                        "control": "lookup",
+                        "label": "定价方案编号",
+                        "multiple": true,
+                        "#valueDataType": "string",
+                        "toRequest": {
+                          "url": "/views/cm/InterestRateCenter/MercRateManagement/customermanager.json",
+                          "method": "get",
+                          "params": {},
+                          "props": {
+                            "width": "85%",
+                            "title": "请选择定价方案信息",
+                            "height": "450px"
+                          }
+                        },
+                        "events":{
+                          "set":{
+                            "rete_code":"rete_code",
+                            "rate_name":"rate_name"
+                          }
+                        },
+                        "#keyField":  {
+                          "rete_code":"rete_code",
+                          "rate_name":"rate_name"
+                        },
+                        "rules": [
+                          {
+                            "required": true,
+                            "message": "请选择定价方案信息"
+                          }
+                        ]
+                      },
+                    "rate_name": {
+                        "control": "string",
+                        "label": "定价方案名称"
+                    }
+                }
+            ]
+        }
+    }
+}

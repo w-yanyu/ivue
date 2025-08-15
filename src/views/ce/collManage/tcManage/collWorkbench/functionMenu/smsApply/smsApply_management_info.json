@@ -1,0 +1,166 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+
+    "toolbar": {
+      "btns": []
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ce3547",
+          "case_no":"${{params.case_no}}"
+        }
+      },
+      "thead": [
+        {
+          "type":"string",
+          "label": "短信模版",
+          "align":"center",
+          "width":"180px",
+          "prop": "template_code",
+          "dict":{
+            "dictKey": [
+              "cc"
+            ],
+            "format": "label",
+            "labelField": "template_name",
+            "valueField": "template_code",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ce0414",
+                "coll_kind": "02",
+                "template_type": "SMS",
+                "send_type": "AUTO"
+              }
+            }
+          }
+        },
+        {
+          "type":"string",
+          "label": "手机号码",
+          "align":"center",
+          "width":"180px",
+          "prop": "tel_no"
+        },
+        {
+          "type":"string",
+          "label": "短信内容",
+          "align":"center",
+          "width":"180px",
+          "prop": "sms_content"
+        },
+        {
+          "type":"string",
+          "label": "申请人",
+          "align":"center",
+          "width":"180px",
+          "prop": "appt",
+          "dict":{
+            "dictKey": [
+              "appt"
+            ],
+            "format": "label",
+            "labelField": "user_name",
+            "valueField": "user_id",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ce0403"
+              }
+            }
+          }
+        },
+        {
+          "type":"string",
+          "label": "申请时间",
+          "align":"center",
+          "width":"180px",
+          "prop": "apply_date"
+        },
+        {
+          "type":"string",
+          "label": "审核状态",
+          "align":"center",
+          "width":"180px",
+          "prop": "appr_state",
+          "dict": {
+            "dictType": "CE_APPR_STATE",
+            "dictKey": [
+              "CE_APPR_STATE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type":"string",
+          "label": "审核人",
+          "align":"center",
+          "width":"180px",
+          "prop": "approver",
+          "dict":{
+            "dictKey": [
+              "approver"
+            ],
+            "format": "label",
+            "labelField": "user_name",
+            "valueField": "user_id",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ce0403"
+              }
+            }
+          }
+        },
+        {
+          "type":"string",
+          "label": "审核时间",
+          "align":"center",
+          "width":"180px",
+          "prop": "appr_date"
+        },
+        {
+          "type":"string",
+          "label": "审核说明",
+          "align":"center",
+          "width":"180px",
+          "prop": "appr_comment"
+        },
+        {
+          "label": "操作",
+          "fixed": "left",
+          "align":"center",
+          "width":"180px",
+          "btns": [
+            {
+              "type": "delete",
+              "label": "撤回",
+              "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "ce1503",
+                  "apply_journal_no": "${{current.apply_journal_no}}"
+                }
+              },
+              "show":{
+                "prop":"appr_state",
+                "is":[
+                  "NC"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,81 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "datagrid": {
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "cb0285",
+                    "appId": "cbOnl",
+                    "task_id": "${{params.task_id}}"
+                }
+            },
+            "thead": [
+                {
+                    "type": "string",
+                    "label": "流水号",
+                    "align": "center",
+                    "prop": "serial_no"
+                },
+                {
+                    "type": "string",
+                    "label": "案件编号",
+                    "align": "center",
+                    "prop": "case_id"
+                },
+                {
+                    "type": "string",
+                    "label": "文件类型",
+                    "align": "center",
+                    "prop": "file_type"
+                },
+                {
+                    "type": "string",
+                    "label": "文件类型",
+                    "align": "center",
+                    "prop": "file_type"
+                },
+                {
+                    "type": "string",
+                    "label": "文件路径",
+                    "align": "center",
+                    "prop": "file_path"
+                },
+                {
+                    "type": "string",
+                    "label": "创建时间",
+                    "align": "center",
+                    "prop": "data_create_time"
+                },
+                {
+                    "label": "操作",
+                    "align": "center",
+                    "fixed": "right",
+                    "width": "100%",
+                    "btns": [
+                        {
+                            "type": "custom",
+                            "label": "打印",
+                            "disabled": "'${{current.file_path}}' === ''",
+                            "toRequest": {
+                                "url": "@litigationFilePrinter",
+                                "params": {
+                                    "serial_no": "${{current.serial_no}}",
+                                    "case_id": "${{current.case_id}}",
+                                    "file_path": "${{current.file_path}}"
+                                }
+                            },
+                            "props": {
+                                "width": "95%",
+                                "height": "800px",
+                                "title": "打印详情"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

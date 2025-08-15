@@ -1,0 +1,153 @@
+{
+  "module": "v_realonlyForm_btn",
+  "layout": {
+    "form": {
+      "scope": "form",
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pl0281",
+          "apply_no":"${{params.apply_no}}"
+        }
+      },
+      "btns": [],
+      "controls": [
+        {
+          "start_oprtr": {
+            "label": "申请人",
+            "control": "string",
+            "value": "$g{{user_info.userCode}}",
+            "rules": [
+              {
+                "required": true,
+                "message": "申请人不能为空"
+              }
+            ]
+          },
+          "actvn_org": {
+            "label": "申请机构",
+            "control": "string",
+            "value": "$g{{user_info.branch_id}}",
+            "rules": [
+              {
+                "required": true,
+                "message": "申请机构不能为空"
+              }
+            ]
+          }
+        },
+        {
+          "debt_asset_num": {
+            "control": "string",
+            "label": "抵债资产编号"
+          },
+          "cust_nm": {
+            "control": "text",
+            "label": "资产归属客户",
+            "disabled": true
+          }
+        },
+        {
+          "cust_num": {
+            "control": "string",
+            "label": "资产归属客户编号",
+            "disabled": true
+          },
+          "wait_trfr_debt_asset": {
+            "control": "text",
+            "label": "代保管抵债资产金额",
+            "disabled": true,
+            "format":{
+              "thousand": ",",
+              "decimal": 3
+            }
+          }
+        },
+        {
+          "debt_asset_displ_catg": {
+            "control": "string",
+            "label": "抵债资产处置种类",
+            "dict": {
+              "dictType": "PL_E_DISPL_CATG",
+              "dictKey": [
+                "PL_E_DISPL_CATG"
+              ],
+              "format": "value-label"
+            }
+
+          },
+          "wait_deal_debt_asset_amt": {
+            "control": "string",
+            "label": "本次处置抵债资产金额",
+            "format":{
+              "thousand": ",",
+              "decimal": 3
+            }
+          }
+        },
+        {
+
+
+          "wait_rlzn_debt_asset_amt": {
+            "control": "string",
+            "label": "待变现金额",
+            "format":{
+              "thousand": ",",
+              "decimal": 3
+            }
+          },
+          "debt_asset_rlzn_acct_num": {
+            "control": "string",
+            "label": "抵债资产变现账号"
+          }
+        },
+        {
+
+          "da_rlzn_sub_acct_serl_num": {
+            "control": "string",
+            "label": "抵债资产变现子账户序号"
+          },
+          "debt_asset_displ_cmplty_flg": {
+            "control": "string",
+            "label": "抵债资产处置完毕标志",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "value-label"
+            }
+          }
+        },
+        {
+
+          "file": {
+            "control": "hidden"
+          },
+          "atchmt_file": {
+            "control": "button",
+            "text": "点击下载",
+            "label": "附件下载",
+            "type": "export",
+            "doRequest": {
+              "url": "/SUMP/minioCall/download",
+              "method": "GET",
+              "params": {
+                "path": "${{form.atchmt_file}}",
+                "fileName": "文件"
+              }
+            }
+          }
+        },
+        {
+          "remark": {
+            "control": "string",
+            "span": "24",
+            "label": "备注"
+          }
+        }
+      ]
+    }
+  }
+}

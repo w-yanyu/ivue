@@ -1,0 +1,90 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "scope": "templateScope",
+            "initRequest":"${{params}}",
+            "initDataOnce":true,
+
+
+          "btns": [
+              {
+                  "type": "submit",
+                  "label": "保存",
+                  "icon": "",
+                  "doRequest": {
+                      "url": "/SUMP/icmcall/icmRPCCall",
+                      "method": "POST",
+                      "params": {
+                          "servicecode": "pl0110",
+                          "matrix_number":"${{params.matrix_number}}",
+                          "matrix_name": "${{params.matrix_name}}"
+                      }
+                  }
+              }
+          ],
+          "controls": [
+            {
+                "prim_key": {
+                    "label": "主键",
+                    "control": "hidden",
+                    "rules": [
+                        {
+                            "required": true
+                        },
+                        {
+                            "pattern": "^[0-9]*$",
+                            "message": "请输入整数"
+                        }
+                    ]
+                },
+                "ovdue_dys_down_lmt": {
+                    "label": "逾期天数下限",
+                    "control": "text",
+                    "rules": [
+                        {
+                            "required": true
+                        },
+                        {
+                            "pattern": "^[0-9]*$",
+                            "message": "请输入整数"
+                        }
+                    ]
+                },
+                "ovdue_dys_upr_lmt": {
+                    "label": "逾期天数上限",
+                    "control": "text",
+                    "rules": [
+                        {
+                            "required": true
+                        },
+                        {
+                            "pattern": "^[0-9]*$",
+                            "message": "请输入整数"
+                        }
+                        
+                    ]
+                },
+                "classify_code":  {
+                    "label": "五级分类级别",
+                    "control": "select",
+                    "multiple": false,
+                    "dict": {
+                      "dictKey": [
+                        "PL_E_CLEVEL"
+                      ],
+                      "dictType": "PL_E_CLEVEL",
+                      "format": "label"
+                    },
+                    "rules": [
+                      {
+                        "required": true,
+                        "message":"请选择五级分类级别"  
+                      }
+                    ]
+                  }
+            }
+        ]
+    }
+}
+}

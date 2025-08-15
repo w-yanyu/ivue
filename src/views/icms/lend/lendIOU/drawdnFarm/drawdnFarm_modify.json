@@ -1,0 +1,235 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "ar0501",
+          "lend_no":"${{params.lend_no}}"
+        }
+      },
+      "doRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "post",
+        "params": {
+          "caozuolx": "1",
+          "servicecode": "ar0502",
+          "lend_no": "${{params.lend_no}}",
+          "loan_farm_class": "${{form.loan_farm_class}}",
+          "firm_scale": "${{form.firm_scale}}",
+          "loan_farm_purpose": "${{form.loan_farm_purpose}}",
+          "loan_farm_credit": "${{form.loan_farm_credit}}",
+          "main_form": "${{form.main_form}}",
+          "is_farm_corp_size": "${{form.is_farm_corp_size}}",
+          "is_farm_corp_deve": "${{form.is_farm_corp_deve}}",
+          "is_is_support_poor": "${{form.is_is_support_poor}}",
+          "is_city_corp_deve": "${{form.is_city_corp_deve}}"
+        }
+      },
+      "controls": [
+        {
+          "lend_no": {
+            "control": "hidden",
+            "value": "${{params.lend_no}}"
+          },
+          "loan_farm_class": {
+            "control": "select",
+            "label": "涉农贷款信息登记",
+            "span": 12,
+            "dict": {
+              "dictType": "AR_E_LOAN_FARM_CLASS",
+              "dictKey": [
+                "AR_E_LOAN_FARM_CLASS"
+              ],
+              "format": "value-label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择按法律性质"
+              }
+            ],
+            "showItem": {
+              "01": [
+                "loan_farm_purpose",
+                "loan_farm_credit"
+              ],
+              "02": [
+                "main_form",
+                "loan_farm_purpose",
+                "is_farm_corp_size",
+                "is_farm_corp_deve",
+                "is_support_poor"
+              ],
+              "03": [
+                "main_form",
+                "loan_farm_purpose",
+                "is_city_corp_deve"
+              ],
+              "04": []
+            }
+          },
+          "firm_scale": {
+            "control": "select",
+            "label": "企业规模",
+            "span": 12,
+            "dict": {
+              "dictType": "AR_E_ENT_SCALE",
+              "dictKey": [
+                "AR_E_ENT_SCALE"
+              ],
+              "format": "value-label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择企业规模"
+              }
+            ]
+          }
+        },
+        {
+          "loan_farm_purpose": {
+            "control": "select",
+            "label": "农户贷款用途",
+            "span": 12,
+            "dict": {
+              "dictType": "AR_E_LOAN_FARM_PURPOSE",
+              "dictKey": [
+                "AR_E_LOAN_FARM_PURPOSE"
+              ],
+              "format": "value-label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择农户贷款用途"
+              }
+            ]
+          },
+          "loan_farm_credit": {
+            "initShow": false,
+            "control": "select",
+            "label": "农户贷款分类",
+            "dict": {
+              "dictType": "AR_E_LOAN_FARM_CREDIT",
+              "dictKey": [
+                "AR_E_LOAN_FARM_CREDIT"
+              ],
+              "format": "value-label"
+            },
+            "span": 12,
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择按贷款品种"
+              }
+            ]
+          },
+          "main_form": {
+            "initShow": false,
+            "control": "select",
+            "label": "主体形式",
+            "span": 12,
+            "dict": {
+              "dictType": "AR_E_MAIN_FORM",
+              "dictKey": [
+                "AR_E_MAIN_FORM"
+              ],
+              "format": "value-label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择按偿还资金来源"
+              }
+            ]
+          }
+        },
+        {
+          "is_farm_corp_size": {
+            "initShow": false,
+            "control": "select",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "value-label"
+            },
+            "label": "是否农村中小企业贷款",
+            "span": 12,
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择按偿还资金来源"
+              }
+            ]
+          },
+          "is_farm_corp_deve": {
+            "initShow": false,
+            "control": "select",
+            "label": "是否农村企业及各类组织农业综合开发贷款",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "value-label"
+            },
+            "span": 12,
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择按贷款投向"
+              }
+            ]
+          }
+        },
+        {
+          "is_support_poor": {
+            "initShow": false,
+            "control": "select",
+            "label": "是否扶贫贴息",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "value-label"
+            },
+            "span": 12,
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择按偿还资金来源"
+              }
+            ]
+          },
+          "is_city_corp_deve": {
+            "initShow": false,
+            "control": "select",
+            "label": "是否城市企业农业综合开发",
+            "span": 12,
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "value-label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择按偿还资金来源"
+              }
+            ]
+          }
+        },
+        {}
+      ]
+    }
+  }
+}

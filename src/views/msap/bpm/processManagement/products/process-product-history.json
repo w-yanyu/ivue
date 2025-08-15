@@ -1,0 +1,194 @@
+
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "wf_prod_no": {
+            "control": "text",
+            "label": "流程产品编号",
+            "span": 8,
+            "rules": [
+              {
+                "max": 100,
+                "message": "长度不能超过100个字符"
+              }
+            ]
+          },
+          "wf_prod_name": {
+            "control": "text",
+            "label": "流程产品名称",
+            "span": 8,
+            "rules": [
+              {
+                "max": 50,
+                "message": "长度不能超过10个字符"
+              }
+            ]
+          },
+          "branch_id": {
+            "label": "适用机构",
+            "span": 8,
+            "control": "lookup",
+            "keyField": {
+               "branch_id": "branch_id",
+               "branch_name":"branch_name"
+            },
+            "toRequest": {
+                "url": "/views/ismt/ct/busiAuth/authOperaLog/branch-info-manager_lookup.json",
+                "method": "post"
+            },
+            "multiple": false,
+            "props": {
+                "title": "适用机构选择"
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "bpm5002",
+          "appId":"${{params.appId}}",
+          "wf_prod_no":"${{params.wf_prod_no}}"
+        }
+      },
+      "thead": [
+        {
+          "label": "流程产品编号",
+          "prop": "wf_prod_no"
+        },
+        {
+          "label": "流程产品名称",
+          "prop": "wf_prod_name"
+        },
+        {
+          "label": "流程名称",
+          "prop": "wf_define_name"
+        },
+        {
+          "label": "流程产品类型",
+          "width": 120,
+          "prop": "wf_prod_tp",
+          "dict": {
+            "dictType": "BPM_E_WFPDTP",
+            "dictKey": [
+              "BPM_E_WFPDTP"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "label":"版本号",
+          "prop":"bpm_version"
+        },
+        {
+          "label":"审核状态",
+          "prop":"wf_prod_st",
+          "dict": {
+            "dictType": "BPM_E_WFPDST",
+            "dictKey": [
+              "BPM_E_WFPDST"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "label":"适用机构",
+          "prop":"branch_value",
+          "value":"查看",
+          "btns": [
+            {
+              "type": "look",
+              "toRequest": {
+                "url": "/views/msap/bpm/processManagement/products/process-product-branch_view.json",
+                "params": {
+                  "appId":"${{params.appId}}",
+                  "wf_prod_no": "${{current.wf_prod_no}}",
+                  "bpm_version": "${{current.bpm_version}}"
+                }
+              },
+              "props": {
+                "width": "75%",
+                "title": "查看适用机构"
+              }
+            }
+          ]
+        },
+        {
+          "label":"维护人",
+          "prop":"data_update_user"
+        },
+        {
+          "label":"维护日期",
+          "prop":"data_update_time"
+        },
+        {
+          "label": "操作",
+          "width": "230px",
+          "align":"center",
+          "btns": [
+            {
+              "type": "edit",
+              "target": "dialog",
+              "label": "切换版本",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                  "appId":"${{params.appId}}",
+                  "servicecode": "bpm5013"
+                }
+              }
+            },
+            {
+              "type": "add",
+              "target": "dialog",
+              "label": "查看流程图",
+              "toRequest": {
+                "url": "@ProcessImgView",
+                "method": "GET",
+                "params": {
+                  "from": "processDesign",
+                  "appId":"${{params.appId}}",
+                  "id_": "${{current.wf_define_id}}"
+                }
+              },
+              "props": {
+                "width": "1200px",
+                "title": "查看流程图"
+              }
+            },
+            {
+              "type": "add",
+              "target": "dialog",
+              "width": "140px",
+              "label": "查看流程业务配置",
+              "toRequest": {
+                "method": "GET",
+                "url": "@WfProductSett",
+                "params":{
+                  "appId":"${{params.appId}}",
+                  "wfprod_cd":"${{current.wf_prod_no}}",
+                  "servicecode":"bpm0069"
+                }
+              },
+              "props": {
+                "width": "1200px",
+                "title": "查看流程业务配置"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

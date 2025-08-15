@@ -1,0 +1,109 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "ar0069",
+          "smilr_cr_card_loan_acct_num": "${{params.smilr_cr_card_loan_acct_num}}"
+        }
+      },
+      "btns": [
+        {
+          "type": "submit",
+          "label": "确认延期",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "post",
+            "params": {
+              "servicecode": "ar0051",
+              "smilr_cr_card_loan_acct_num": "${{params.smilr_cr_card_loan_acct_num}}",
+              "busi_type":"LXYKDK",
+              "apply_type":"ZDYQ",
+              "remks":"${{form.remks}}",
+              "smilr_cr_card_acct_ste": "${{form.smilr_cr_card_acct_ste}}",
+              "before_bill_prds":"${{form.before_bill_prds}}",
+              "pstp_amt": "${{form.pstp_amt}}",
+              "cust_no": "${{form.cust_num}}",
+              "cust_name": "${{form.cust_nm}}",
+              "ccy_code_num": "${{form.ccy_code_num}}"
+            }
+          }
+        },
+        {
+          "type": "close",
+          "label": "取消"
+        }
+      ],
+      "controls": [
+        {
+          "cust_num": {
+            "control": "string",
+            "label": "客户号",
+            "span": 12
+          },"cust_nm": {
+            "control": "string",
+            "label": "客户名称",
+            "span": 12
+          }
+        },{
+          "before_bill_prds": {
+            "control": "dateTimePicker",
+            "format": "yyyy-MM",
+            "valueFormat": "yyyyMM",
+            "disabled": true,
+            "label": "出账账期",
+            "span": 12
+          },"pstp_rpymt_chrg_code": {
+            "control": "string",
+            "label": "延期还款收费代码",
+            "span": 12
+          }
+        },
+        {
+          "pstp_amt_total": {
+            "control": "currency",
+            "decimal": "2",
+            "label": "可延期总额(元) ",
+            "compute": "${{form.bill_amt}}-${{form.min_rpymt_amt}}",
+            "disabled": true,
+            "span": 12,
+            "format": {
+              "thousand": ","
+            }
+          },"pstp_amt": {
+            "control": "currency",
+            "label": "延期金额",
+            "format": {
+              "thousand": ","
+            },
+            "span": 12
+          }
+        },{
+          "smilr_cr_card_acct_ste": {
+            "control": "hidden",
+            "label": "类信用卡账户状态",
+            "span": 12
+          },"remks":{
+              "label": "延期原因",
+              "width": "140px",
+              "rows": 4,
+              "span": 24,
+              "control": "textarea"
+          },"bill_amt":{
+            "control": "hidden",
+            "label": "账单金额",
+            "span": 12
+          },"min_rpymt_amt":{
+            "control": "hidden",
+            "label": "最低还款额",
+            "span": 12
+          }
+        }
+      ]
+    },
+    "toolbar": {}
+  }
+}

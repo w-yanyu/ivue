@@ -1,0 +1,198 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "ar1902",
+          "apply_no": "${{params.apply_no}}"
+        }
+      },
+      "btns": [
+      ],
+      "controls": [
+        {
+          "apply_no": {
+            "label": "申请号",
+            "control": "hidden",
+            "value": "${{params.apply_no}}"
+          },
+          "contract_no": {
+            "control": "text",
+            "label": "贴现协议合同号",
+            "span": 8,
+            "disabled": true
+          },
+          "apply_amt": {
+            "disabled": true,
+            "control": "currency",
+            "decimal": "2",
+            "label": "申请金额(元) ",
+            "span": 8,
+            "align": "left",
+            "format": {
+              "thousand": ","
+            }
+          },
+          "apply_ccy": {
+            "control": "select",
+            "label": "申请币种",
+            "span": 8,
+            "disabled": true,
+            "selectFirstValue": "true",  
+            "dict": {
+              "dictType": "MS_CURRENCY",
+              "dictKey": [
+                "MS_CURRENCY"
+              ],
+              "format": "label"
+            }
+          },
+          "conver_base_ccy": {
+            "control": "select",
+            "label": "折算基准币种",
+            "disabled": true,
+            "span": 8,
+            "dict": {
+              "dictType": "MS_CURRENCY",
+              "dictKey": [
+                "MS_CURRENCY"
+              ],
+              "format": "label"
+            }
+          },
+          "exch_rate": {
+            "control": "currency",
+            "label": "汇率",
+            "span": 8,
+            "disabled": true,
+            "align": "left",
+            "format": {
+              "thousand": ","
+            },
+            "value": "1.00"
+          },
+          
+          "apply_amt_conver_baseccy": {
+            "control": "currency",
+            "decimal": "2",
+            "disabled": true,
+            "label": "申请金额(折基准币种)",
+            "compute": "${{form.apply_amt}}*${{form.exch_rate}}",
+            "span": 8,
+            "align": "left",
+            "format": {
+              "thousand": ","
+            }
+          },
+          "base_inst_rate": {
+            "control": "currency",
+            "label": "利率(%)",
+            "span": 8,
+            "align": "left",
+            "disabled": true
+          },
+          "apply_date": {
+            "control": "dateTimePicker",
+            "format": "yyyy-MM-dd",
+            "valueFormat": "yyyyMMdd",
+            "label": "申请日期",
+            "disabled": true,
+            "span": 8
+          },
+          "matu_date": {
+            "control": "dateTimePicker",
+            "format": "yyyy-MM-dd",
+            "valueFormat": "yyyyMMdd",
+            "label": "到期日期",
+            "span": 8,
+            "disabled": true
+          },
+          "bill_date": {
+            "control": "dateTimePicker",
+            "format": "yyyy-MM-dd",
+            "valueFormat": "yyyyMMdd",
+            "label": "出账日期",
+            "disabledDate":{
+              "startRange": "${{form.apply_date}}",
+              "endRange": "${{form.matu_date}}"
+            },
+            "span": 8,
+            "disabled": true
+          },
+          
+          "apply_term": {
+            "control": "text",
+            "label": "申请期限(天)",
+            "span": 8,
+            "compute": {
+              "type":"date",
+              "expression":"${{form.matu_date}} - ${{form.bill_date}}"
+            },
+            "disabled": true
+          },
+          "low_risk_sec_ratio": {
+            "control": "text",
+            "decimal": "2",
+            "label": "低风险担保比例(%) ",
+            "span": 8,
+            "disabled": true,
+            "align": "left"
+          },
+          "low_risk_guar_amt": {
+            "control": "currency",
+            "decimal": "2",
+            "label": "低风险担保金额(元) ",
+            "compute": "${{form.apply_amt}}*${{form.low_risk_sec_ratio}}/100",
+            "span": 8,
+            "disabled": true,
+            "align": "left",
+            "format": {
+              "thousand": ","
+            }
+          },
+          "exposure_amt": {
+            "control": "currency",
+            "decimal": "2",
+            "label": "敞口金额(元)",
+            "disabled": true,
+            "compute": "${{form.apply_amt}}-${{form.low_risk_guar_amt}}",
+            "span": 8,
+            "align": "left",
+            "format": {
+              "thousand": ","
+            }
+          },
+
+        "trxn_teller": {
+          "disabled": true,
+          "control": "text",
+          "label": "办理用户",
+          "span": 8
+        },
+          "acct_branch": {
+            "control": "text",
+            "label": "办理网点",
+            "span": 8, 
+            "disabled": true
+          },
+          
+          "remark": {
+            "label": "备注",
+            "control": "textarea",
+            "disabled": true,
+            "span": 24,
+            "autosize": {
+              "minRows": 3,
+              "maxRows": 5
+            },
+            "maxlength": 40,
+            "showWordLimit": true
+          }
+        }
+      ]
+    }
+  }
+}

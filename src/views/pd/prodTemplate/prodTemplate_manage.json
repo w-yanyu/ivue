@@ -1,0 +1,214 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "template_id": {
+            "label": "模板编号",
+            "control": "text"
+          },
+          "template_name": {
+            "label": "模板名称",
+            "control": "text"
+          }
+        },
+        {
+          "prod_type": {
+            "label": "产品类型",
+            "control": "remoteSelect",
+            "labelField": "title",
+            "valueField": "id",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "pd0144",
+                "grupno": "0006",
+                "pid": "KSCP"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "pd0111",
+          "cust_class_list": "${{params.cust_class_list}}"
+        }
+      },
+      "thead": [
+        {
+          "label": "模板编号",
+          "prop": "template_id",
+          "align": "center"
+        },
+        {
+          "label": "模板名称",
+          "prop": "template_name",
+          "align": "center"
+        },
+        {
+          "label": "模板版本",
+          "prop": "prod_version",
+          "align": "center"
+        },
+        {
+          "label": "产品类型",
+          "prop": "prod_type_name",
+          "align": "center"
+        },
+        {
+          "label": "是否有效",
+          "prop": "valid_flag",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "type": "string",
+          "label": "适用客户类型",
+          "prop": "cust_class",
+          "align": "center",
+          "dict": {
+            "dictType": "PD_E_CUST_CLASS",
+            "dictKey": [
+              "PD_E_CUST_CLASS"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "是否被引用",
+          "prop": "is_stop_use",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "label"
+          },
+          "btns": [
+            {
+              "type": "look",
+              "toRequest": {
+                "url": "/views/pd/prodTemplate/view/cont_product_mange.json",
+                "params": {
+
+                }
+              },
+              "props": {
+                "width": "65%",
+                "title": "被引用产品查看"
+              }
+            }
+          ]
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "width": 180,
+          "btns": [
+            {
+              "type": "look",
+              "label": "审核记录",
+              "toRequest": {
+                "url": "/views/pd/prodTmpApprovalRecord/prod_tmp_approval_record_list.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "65%",
+                "title": "审核记录"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "详情",
+              "toRequest": {
+                "url": "@ProdTemplateView",
+                "method": "get",
+                "params": {
+                  "childUrl": "/views/pd/prodTemplate/view/prodTemplate_view.json"
+                },
+                "props": {
+                  "width": "75%",
+                  "title": "详情"
+                }
+              }
+            },
+            {
+              "type": "custom",
+              "label": "变更",
+              "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "pd0157"
+                }
+              },
+              "confirm": {
+                "title": "提示信息",
+                "msg": "请确认是否变更？  确定后请前往“产品模版管理”继续处理！",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              },
+              "eventAfter": {
+                "callback": "renderTree"
+              }
+            },
+            {
+              "type": "look",
+              "label": "复制",
+              "toRequest": {
+                "url": "/views/pd/prod/detail/prodCopy/prodTmpBaseAttribute.json",
+                "method": "GET",
+                "params": {
+                }
+              },
+              "props": {
+                "width": "35%",
+                "title": "复制"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "pd0113"
+                }
+              },
+              "confirm": {
+                "title": "删除产品",
+                "msg": "确定删除产品吗？",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              },
+              "show": {
+                "expression": "'${{current.is_stop_use}}' == '0'"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

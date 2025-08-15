@@ -1,0 +1,91 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "doRequest": {
+        "url": "/SUMP/call/uploadContractTemplate",
+        "method": "post",
+        "params": {
+          "servicecode": "ms0100",
+          "appId":"${{params.appId}}"
+        }
+      },
+      "btns":[
+        {
+          "type":"submit",
+          "label":"提交"
+        }
+      ],
+      "controls": [
+        {
+          "appId": {
+            "label": "业务模块",
+            "control": "hidden",
+            "value":"${{params.appId}}"
+          },
+          
+          "template_type": {
+            "label": "模板类型",
+            "control": "select",
+            "dict": {
+                "dictType": "E_FILE_TYPE",
+                "dictKey": [
+                    "E_FILE_TYPE"
+                ],
+                "format": "value-label"
+            },
+            "rules": [
+                {
+                    "required": true,
+                    "message": "请选择模板类型"
+                }]
+          },
+         
+          "file_type": {
+            "label": "合同文件类型",
+            "control": "select",
+            "dict": {
+                "dictType": "E_FILE_TYPE",
+                "dictKey": [
+                    "E_FILE_TYPE"
+                ],
+                "format": "value-label"
+            },
+            "rules": [
+                {
+                    "required": true,
+                    "message": "请选择合同文件类型"
+                }]
+          }
+        },
+        {
+          "template_desc": {
+            "label": "模板描述",
+            "control": "text",
+            "rules": [
+                {
+                    "max": 32,
+                    "message": "长度不能超过32个字符"
+                }
+            ]
+          }
+        },{
+          "file": {
+            "initShow": true,
+            "control": "file",
+            "label": "合同模板文件",
+            "type": "*.docx",
+            "btnLable": "请选择合同模板文件",
+            "multiple": false,
+            "rules": [
+              {
+                "required": true,
+                "message": "请上传合同模板文件"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

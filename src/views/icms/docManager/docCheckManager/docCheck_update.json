@@ -1,0 +1,134 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": "${{params}}",
+      "controls": [
+        {
+          "doc_check_list_no": {
+            "label": "资料检查列表编号",
+            "control": "text",
+            "width": "140px",
+            "disabled": true
+          },
+          "doc_list_type": {
+            "label": "资料列表类型",
+            "width": "140px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择资料列表类型"
+              }
+            ],
+            "control": "remoteSelect",
+            "labelField": "title",
+            "valueField": "id",
+            "doRequest": {
+              "url": "/SUMP/call/RPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "pd0144",
+                "grupno": "0006",
+                "pid": "KSCP"
+              }
+            },
+            "events": {
+              "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "pd0143",
+                  "grupno": "0006",
+                  "id": "${{form.doc_list_type}}"
+                },
+                "resultSet": {
+                  "prod_type_name": "title"
+                }
+              }
+            }
+          },
+          "prod_type_name": {
+            "control": "hidden",
+            "label": "资料类型名称",
+            "width": "140px"
+          },
+          "doc_check_list_desc": {
+            "label": "资料检查列表描述",
+            "control": "text",
+            "width": "140px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入资料检查列表描述"
+              }
+            ]
+          },
+          "is_identify_requirement": {
+            "label": "是否需求确认",
+            "control": "select",
+            "width": "140px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择是否需求确认"
+              }
+            ],
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ]
+            }
+          },
+          "doc_identify_cnt_type": {
+            "label": "确认等级收到文档需要几个人确认",
+            "control": "select",
+            "width": "140px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择确认等级收到文档需要几个人确认"
+              }
+            ],
+            "dict": {
+              "dictType": "AR_E_VFY_LEVEL_NUM",
+              "dictKey": [
+                "AR_E_VFY_LEVEL_NUM"
+              ]
+            }
+          },
+          "cust_class": {
+            "label": "适用客户类型",
+            "control": "select",
+            "width": "140px",
+            "dict": {
+              "dictType": "AR_E_CUST_CLASS",
+              "dictKey": [
+                "AR_E_CUST_CLASS"
+              ]
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择适用客户类型"
+              }
+            ]
+          }
+        }
+      ],
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "ar0143"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

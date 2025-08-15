@@ -1,0 +1,124 @@
+{
+    "module": "v_realonlyForm_btn",
+    "layout": {
+        "form": {
+            "initRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "post",
+                "params": {
+                    "servicecode": "co4034",
+                    "apply_no": "${{params.apply_no}}"
+                }
+            },
+            "controlsGroup": [
+                {
+                    "title": "估值信息",
+                    "tooltip": "",
+                    "titleIcon": "",
+                    "showHint": "",
+                    "accordion": false,
+                    "expand": true,
+                    "controls": [
+                        {
+                            "eval_type": {
+                                "control": "select",
+                                "label": "评估类型",
+                                "span": 12,
+                                "aligin": "center",
+                                "disabled": true,
+                                "dict": {
+                                    "dictType": "CO_E_EVALTP",
+                                    "dictKey": [
+                                        "CO_E_EVALTP"
+                                    ],
+                                    "format": "label"
+                                }
+                            },
+                            "colt_eval_meth": {
+                                "control": "select",
+                                "label": "评估方法",
+                                "span": 12,
+                                "aligin": "center",
+                                "disabled": true,
+                                "dict": {
+                                    "dictType": "CO_E_COLT_EVALUTION_METH",
+                                    "dictKey": [
+                                        "CO_E_COLT_EVALUTION_METH"
+                                    ],
+                                    "format": "label"
+                                }
+                            },
+                            "eval_val": {
+                                "control": "currency",
+                                "label": "评估价值",
+                                "span": 12,
+                                "aligin": "center",
+                                "disabled": true
+                            },
+                            "colt_no": {
+                                "control": "hidden",
+                                "disabled": true,
+                                "span": 12
+                            },
+                            "last_colt_eval_val": {
+                                "control": "currency",
+                                "label": "最近一年押品评估价值(元)",
+                                "span": 12,
+                                "disabled": true
+                            },
+                            "cur_review_point": {
+                                "control": "currency",
+                                "label": "当前评估对应点数",
+                                "span": 12,
+                                "disabled": true
+                            },
+                            "last_review_point": {
+                                "control": "currency",
+                                "label": "最近一次评估对应点数",
+                                "span": 12,
+                                "disabled": true
+                            },
+                            "last_eval_date": {
+                                "control": "dateTimePicker",
+                                "format": "yyyyMMdd",
+                                "label": "最近一次评估对应年月",
+                                "span": 12,
+                                "disabled": true
+                            },
+                            "year_phy_loss_rate": {
+                                "control": "currency",
+                                "label": "年度物理折损率(%)",
+                                "span": 12,
+                                "disabled": true
+                            }
+                        }
+                    ]
+                },
+                {
+                    "title": "押品信息",
+                    "tooltip": "",
+                    "titleIcon": "",
+                    "showHint": "",
+                    "accordion": false,
+                    "expand": true,
+                    "controls": [
+                        {
+                            "id2": {
+                                "control": "dynamic",
+                                "isShowChildForm": false,
+                                "span": 24,
+                                "toRequest": {
+                                    "url": "/views/co/colsAppraisement/cobColt.json",
+                                    "method": "get",
+                                    "params": {
+                                        "colt_no": "${{form.colt_no}}"
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

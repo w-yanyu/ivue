@@ -1,0 +1,105 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "scope": "templateScope",
+            "initDataOnce": true,
+            "initRequest": "${{params}}",
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "us0075"
+                }
+            },
+            "btns": [{
+                "type": "submit",
+                "label": "提交"
+            }],
+            "controls": [{
+                "cust_no": {
+                    "control": "hidden",
+                    "label": "客户编号",
+                    "width": "130px",
+                    "disabled": true
+                },
+                "event_no": {
+                    "label": "重大事件流信息水号",
+                    "control": "hidden"
+                },
+                "event_type": {
+                    "label": "事件类型",
+                    "control": "select",
+                    "width": "130px",
+                    "rules": [{
+                        "required": true,
+                        "message": "请选择事件类型"
+                    }],
+                    "dict": {
+                        "dictType": "US_E_EVENT_TYPE",
+                        "dictKey": [
+                            "US_E_EVENT_TYPE"
+                        ],
+                        "format": "label"
+                    }
+                },
+                "event_name": {
+                    "label": "事件名称",
+                    "control": "text",
+                    "width": "130px",
+                    "rules": [{
+                        "required": true,
+                        "message": "请输入事件名称"
+                    }]
+                },
+                "start_date": {
+                    "control": "dateTimePicker",
+                    "label": "发生日期",
+                    "format": "yyyyMMdd",
+                    "width": "130px",
+                    "rules": [{
+                        "required": true,
+                        "message": "请选择发生日期"
+                    }]
+                },
+                "end_date": {
+                    "control": "dateTimePicker",
+                    "label": "结束日期",
+                    "format": "yyyyMMdd",
+                    "width": "130px",
+                    "rules": [{
+                        "required": true,
+                        "message": "请选择结束日期"
+                    }],
+                    "disabledDate": {
+                        "startRange": "${{templateScope.start_date}}",
+                        "endRange": "3000-12-30"
+                    }
+                },
+                "event_content": {
+                    "label": "事件内容",
+                    "control": "textarea",
+                    "width": "130px",
+                    "rules": [{
+                        "required": true,
+                        "max": 250,
+                        "message": "250字以内"
+                    }]
+                },
+                "remark": {
+                    "label": "备注",
+                    "control": "textarea",
+                    "width": "130px",
+                    "span": "24",
+                    "autosize": {
+                        "minRows": 4
+                    },
+                    "rules": [{
+                        "max": 100,
+                        "message": "100字以内"
+                    }]
+                }
+            }]
+        }
+    }
+}

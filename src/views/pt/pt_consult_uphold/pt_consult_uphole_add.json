@@ -1,0 +1,155 @@
+{
+    "module": "d-steps",
+    "layout": {
+        "steps": {
+            "scope": "newPart",
+            "direction": "horizontal",
+            "alignCenter": true,
+            "finishStatus": "success",
+            "simpleType": false,
+            "nextStepType": "validate",
+            "skip": false,
+            "list": [
+                {
+                    "title": "基本信息展示",
+                    "scope": "baseInfo",
+                    "icon": "el-icon-edit",
+                  "toRequest": {
+                    "url": "/views/pt/pt_consult_uphold/pt_consult_uphole_addtab1.json",
+                    "method": "post",
+                    "params": {
+                    }
+                  },
+                  "doRequest": {
+                    "url": "/SUMP/icmcall/icmRPCCall",
+                    "method": "POST",
+                    "params": {
+                      "servicecode": "pt0002"
+                    },
+                    "resultSet": {
+                      "part_protocol_no": "part_protocol_no"
+                    }
+                  }
+                },
+
+                {
+                    "title": "敞口配置",
+                    "forbidBack": true,
+                     "scope": "baseInfo1",
+                    "icon": "el-icon-edit",
+                  "toRequest": {
+                    "url": "/views/pt/pt_consult_uphold/pt_consult_uphole_addopenconfig.json",
+                    "params": {
+                      "part_protocol_no": "part_protocol_no"
+
+                    }
+                  },
+                  "doRequest": {
+                    "url": "/SUMP/icmcall/icmRPCCall",
+                    "method": "POST",
+                    "params": {
+                      "servicecode": "pt0009"
+                    }
+                  }
+
+                },
+                {
+                    "title": "分佣分润协议",
+                    "forbidBack": true,
+                  "scope": "baseInfo3",
+                    "icon": "el-icon-edit",
+                  "toRequest": {
+                    "url": "/views/pt/pt_consult_uphold/pt_consult_uphole_addfenrun.json",
+                    "params": {
+                      "part_protocol_no": "${{newPart.baseInfo1.part_protocol_no}}",
+                      "part_no": "${{newPart.baseInfo.part_no}}"
+                    }
+                  },
+                  "doRequest": {
+                    "url": "/SUMP/icmcall/icmRPCCall",
+                    "method": "POST",
+                    "params": {
+                      "servicecode": "pt0006"
+                    }
+                  }
+                },
+                {
+                    "title": "引流协议",
+                    "forbidBack": true,
+                  "scope": "baseInfo4",
+                    "icon": "el-icon-edit",
+                  "toRequest": {
+                    "url": "/views/pt/pt_consult_uphold/pt_consult_uphole_adddrainage.json",
+                    "params": {
+                      "part_protocol_no": "${{newPart.baseInfo3.part_protocol_no}}"
+                    }
+                  },
+                  "doRequest": {
+                    "url": "/SUMP/icmcall/icmRPCCall",
+                    "method": "POST",
+                    "params": {
+                      "servicecode": "pt0101"
+                    }
+                  }
+                },
+                {
+                    "title": "代偿协议",
+                    "forbidBack": true,
+                  "scope": "baseInfo5",
+                    "icon": "el-icon-edit",
+                  "toRequest": {
+                    "url": "/views/pt/pt_consult_uphold/pt_consult_uphole_addcompensatory.json",
+                    "params": {
+                      "part_protocol_no": "${{newPart.baseInfo4.part_protocol_no}}",
+                      "part_no": "${{newPart.baseInfo.part_no}}"
+
+                    }
+                  },
+                  "doRequest": {
+                    "url": "/SUMP/icmcall/icmRPCCall",
+                    "method": "POST",
+                    "params": {
+                      "servicecode": "pt0121"
+                    }
+                  }
+                },
+
+                {
+                    "title": "贴息协议",
+                    "forbidBack": true,
+                  "scope": "baseInfo6",
+                    "icon": "el-icon-edit",
+                  "toRequest": {
+                    "url": "/views/pt/pt_consult_uphold/pt_consult_uphole_addinst.json",
+                    "params": {
+                      "part_protocol_no": "${{newPart.baseInfo5.part_protocol_no}}",
+                      "part_no": "${{newPart.baseInfo.part_no}}"
+
+                    }
+                  },
+                  "doRequest": {
+                    "url": "/SUMP/icmcall/icmRPCCall",
+                    "method": "POST",
+                    "params": {
+                      "servicecode": "pt0111"
+                    }
+                  }
+                }, {
+                "title": "协议文件",
+                "forbidBack": true,
+                "scope": "baseInfo2",
+                "icon": "el-icon-edit",
+                "toRequest": {
+                  "url": "@DocumentAgreement",
+                  "params": {
+                    "part_protocol_no": "${{newPart.baseInfo1.part_protocol_no}}",
+                    "part_no": "${{newPart.baseInfo.part_no}}",
+                    "partner_name": "${{newPart.baseInfo.partner_name}}"
+
+                  }
+                }
+              }
+            ]
+        }
+    }
+}

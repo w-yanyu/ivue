@@ -1,0 +1,61 @@
+{
+  "module": "d-steps",
+  "layout": {
+    "steps": {
+      "scope": "formObj",
+      "alignCenter": true,
+      "finishStatus": "success",
+      "simpleType": false,
+      "nextStepType": "validate",
+      "skip": false,
+      "list": [
+        {
+          "scope": "step1",
+          "title": "授权基本信息",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "url": "/views/risk/risk_authorize_manage/baseInfo/risk_authorize_manage_base_info.json",
+            "method": "get",
+            "params": {
+              "systemName": "${{params.systemName}}",
+              "systemId": "${{params.systemId}}",
+              "systemBranchId": "${{params.systemBranchId}}",
+              "remark": "${{params.remark}}"
+            }
+          },
+          "props": {},
+          "###doRequest": {
+            "url": "/pte/json/layout/success.json",
+            "method": "post",
+            "eventAfter": {
+              "doParentCallback": true
+            }
+          }
+        },
+        {
+          "scope": "step2",
+          "forbidBack": false,
+          "title": "服务授权详情",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "url": "@AuthorizeRelation",
+            "method": "get",
+            "params": {
+              "systemId": "${{formObj.step1.systemId}}",
+              "systemBranchId": "${{formObj.step1.systemBranchId}}",
+              "isOnlyRead": "${{params.isOnlyRead}}"
+            }
+          },
+          "props": {},
+          "####doRequest": {
+            "url": "/pte/json/layout/success.json",
+            "method": "post",
+            "eventAfter": {
+              "doParentCallback": true
+            }
+          }
+        }
+      ]
+    }
+  }
+}

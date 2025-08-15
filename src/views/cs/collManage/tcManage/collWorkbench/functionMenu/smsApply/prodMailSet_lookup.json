@@ -1,0 +1,110 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "controls": [
+        {
+          "template_desc": {
+            "control": "text",
+            "label": "模板描述",
+            "span":8
+          }
+          ,"template_id": {
+            "control": "text",
+            "label": "模板编号",
+            "span":8
+          },
+          "template_name": {
+            "control": "text",
+            "label": "模板名称",
+            "span":8
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "cb0145",
+          "appId": "cbOnl",
+          "org_id": "${{params.org_id}}",
+          "template_type":"SMS"
+        }
+      },
+      "thead": [
+        {
+          "type": "string",
+          "label": "模板编号",
+          "align": "center",
+          "prop": "template_id"
+        },
+        {
+          "type": "string",
+          "label": "模板名称",
+          "align": "center",
+          "prop": "template_name"
+        },
+        {
+          "type": "string",
+          "label": "模板描述",
+          "align": "center",
+          "prop": "template_desc"
+        },
+        {
+          "type": "string",
+          "label": "发送方式",
+          "align": "center",
+          "prop": "send_type",
+          "dict": {
+            "dictType": "MS_E_SEND_TYPE",
+            "dictKey": [
+              "MS_E_SEND_TYPE"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type": "string",
+          "label": "模板类型",
+          "align": "center",
+          "prop": "template_type",
+          "dict": {
+            "dictType": "MS_E_TEMPLATE_TYPE",
+            "dictKey": [
+              "MS_E_TEMPLATE_TYPE"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": "200%",
+          "align": "center",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/msap/emlTemplate/emlTemplate_info.json",
+                "method": "POST"
+              },
+              "props": {
+                "title": "信邮模板详情",
+                "width": "80%"
+              }
+            },
+            {
+              "type": "bringback",
+              "label": "选择"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

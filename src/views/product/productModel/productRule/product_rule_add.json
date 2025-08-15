@@ -1,0 +1,327 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "scope": "formData",
+            "btns": [
+                {
+                    "type": "submit",
+                    "label": "提交",
+                    "icon": "",
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "ln3284"
+                        }
+                    }
+                }
+            ],
+            "controls": [
+                {
+                    "prod_code": {
+                        "control": "lookup",
+                        "label": "产品代码",
+                        "keyField": {
+                            "prod_code": "prod_code"
+                          },
+                          "toRequest": {
+                            "url": "/views/product/productModel/prod_list_qry.json",
+                            "method": "post"
+                          },
+                          "props": {
+                            "title": "产品列表查询"
+                          },
+                        "width": "130px"
+                    },
+                    "ccy_code_num": {
+                        "control": "select",
+                        "label": "货币代号",
+                        "width": "130px",
+                        "dict": {
+                            "dictType": "MS_CURRENCY",
+                            "dictKey": [
+                                "MS_CURRENCY"
+                            ],
+                            "format": "label"
+                        }
+                    }
+                },
+                {
+                    "main_cond_cmpt_id": {
+                        "control": "lookup",
+                        "label": "主条件部件ID",
+                        "keyField": {
+                            "main_cond_cmpt_id": "cmpt_id"
+                          },
+                          "toRequest": {
+                            "url": "/views/product/productModel/prod_cmpt_qry.json",
+                            "params": {
+                                "prod_code": "${{formData.prod_code}}"
+                            },
+                            "method": "post"
+                          },
+                          "props": {
+                            "title": "产品部件列表查询"
+                          },
+                        "width": "130px"
+                    },
+                    "main_cond_attr": {
+                        "control": "lookup",
+                        "label": "主条件属性",
+                        "keyField": {
+                            "main_cond_attr": "fld",
+                            "main_cond_attr_nm": "fld_dsc"
+                          },
+                          "toRequest": {
+                            "url": "/views/product/productModel/prod_cmpt_id_qry.json",
+                            "method": "post",
+                            "params": {
+                                "cmpt_id": "${{formData.main_cond_cmpt_id}}"
+                            }
+                          },
+                          "props": {
+                            "title": "产品部件属性列表查询"
+                          },
+                        "width": "130px"
+                    }
+                },{
+                    "main_cond_attr_nm": {
+                        "control": "string",
+                        "label": "主条件属性名称",
+                        "width": "130px"
+                    },
+                    "main_cond_oprtr_target": {
+                        "control": "select",
+                        "label": "主条件操作符目标",
+                        "width": "130px",
+                        "dict": {
+                            "dictType": "LN_E_OPRTR_TARGET",
+                            "dictKey": [
+                                "LN_E_OPRTR_TARGET"
+                            ],
+                            "format": "label"
+                        }
+                    }
+                },{
+                    "main_cond_oprtr": {
+                        "control": "select",
+                        "label": "主条件操作符",
+                        "width": "130px",
+                        "dict": {
+                            "dictType": "LN_E_RLTNP_OPRTR",
+                            "dictKey": [
+                                "LN_E_RLTNP_OPRTR"
+                            ],
+                            "format": "label"
+                        }
+                    },
+                    "main_cond_attr_val": {
+                        "control": "text",
+                        "label": "主条件属性值",
+                        "width": "130px"
+                    }
+                },{
+                    "astat_cond_cmpt_id": {
+                        "control": "lookup",
+                        "label": "副条件部件ID",
+                        "keyField": {
+                            "astat_cond_cmpt_id": "cmpt_id"
+                          },
+                          "toRequest": {
+                            "url": "/views/product/productModel/prod_cmpt_qry.json",
+                            "params": {
+                                "prod_code": "${{formData.prod_code}}"
+                            },
+                            "method": "post"
+                          },
+                          "props": {
+                            "title": "产品部件列表查询"
+                          },
+                        "width": "130px"
+                    },
+                    "astat_cond_attr": {
+                        "control": "lookup",
+                        "label": "副条件属性",
+                        "keyField": {
+                            "astat_cond_attr": "fld",
+                            "astat_cond_attr_nm": "fld_dsc"
+                          },
+                          "toRequest": {
+                            "url": "/views/product/productModel/prod_cmpt_id_qry.json",
+                            "method": "post",
+                            "params": {
+                                "cmpt_id": "${{formData.astat_cond_cmpt_id}}"
+                            }
+                          },
+                          "props": {
+                            "title": "产品部件属性列表查询"
+                          },
+                        "width": "130px"
+                    }
+                },{
+                    "astat_cond_attr_nm": {
+                        "control": "string",
+                        "label": "副条件属性名称",
+                        "width": "130px"
+                    },
+                    "astat_cond_oprtr": {
+                        "control": "select",
+                        "label": "副条件操作符",
+                        "width": "130px",
+                        "dict": {
+                            "dictType": "LN_E_RLTNP_OPRTR",
+                            "dictKey": [
+                                "LN_E_RLTNP_OPRTR"
+                            ],
+                            "format": "label"
+                        }
+                    }
+                },{
+                    "astat_cond_oprtg_val": {
+                        "control": "text",
+                        "label": "副条件操作值",
+                        "width": "130px"
+                    }
+                },{
+                    "main_cnstrn_cmpt_id": {
+                        "control": "lookup",
+                        "label": "主约束部件ID",
+                        "keyField": {
+                            "main_cnstrn_cmpt_id": "cmpt_id"
+                          },
+                          "toRequest": {
+                            "url": "/views/product/productModel/prod_cmpt_qry.json",
+                            "params": {
+                                "prod_code": "${{formData.prod_code}}"
+                            },
+                            "method": "post"
+                          },
+                          "props": {
+                            "title": "产品部件列表查询"
+                          },
+                        "width": "130px"
+                    },
+                    "main_cnstrn_attr": {
+                        "control": "lookup",
+                        "label": "主约束属性",
+                        "keyField": {
+                            "main_cnstrn_attr": "fld",
+                            "main_cnstrn_attr_nm": "fld_dsc"
+                          },
+                          "toRequest": {
+                            "url": "/views/product/productModel/prod_cmpt_id_qry.json",
+                            "method": "post",
+                            "params": {
+                                "cmpt_id": "${{formData.main_cnstrn_cmpt_id}}"
+                            }
+                          },
+                          "props": {
+                            "title": "产品部件属性列表查询"
+                          },
+                        "width": "130px"
+                    }
+                },{
+                    "main_cnstrn_attr_nm": {
+                        "control": "string",
+                        "label": "主约束属性名称",
+                        "width": "130px"
+                    },
+                    "main_cnstrn_oprtr_target": {
+                        "control": "select",
+                        "label": "主约束操作符目标",
+                        "width": "130px",
+                        "dict": {
+                            "dictType": "LN_E_OPRTR_TARGET",
+                            "dictKey": [
+                                "LN_E_OPRTR_TARGET"
+                            ],
+                            "format": "label"
+                        }
+                    }
+                },{
+                    "main_cnstrn_oprtg_val": {
+                        "control": "text",
+                        "label": "主约束操作值",
+                        "width": "130px"
+                    },
+                    "main_cnstrn_oprtr": {
+                        "control": "select",
+                        "label": "主约束操作符",
+                        "width": "130px",
+                        "dict": {
+                            "dictType": "LN_E_RLTNP_OPRTR",
+                            "dictKey": [
+                                "LN_E_RLTNP_OPRTR"
+                            ],
+                            "format": "label"
+                        }
+                    }
+                },{
+                    "astat_cnstrn_cmpt_id": {
+                        "control": "lookup",
+                        "label": "副约束部件ID",
+                        "keyField": {
+                            "astat_cnstrn_cmpt_id": "cmpt_id"
+                          },
+                          "toRequest": {
+                            "url": "/views/product/productModel/prod_cmpt_qry.json",
+                            "params": {
+                                "prod_code": "${{formData.prod_code}}"
+                            },
+                            "method": "post"
+                          },
+                          "props": {
+                            "title": "产品部件列表查询"
+                          },
+                        "width": "130px"
+                    },
+                    "astat_cnstrn_attr": {
+                        "control": "lookup",
+                        "label": "副约束属性",
+                        "keyField": {
+                            "astat_cnstrn_attr": "fld",
+                            "astat_cnstrn_attr_nm": "fld_dsc"
+                          },
+                          "toRequest": {
+                            "url": "/views/product/productModel/prod_cmpt_id_qry.json",
+                            "method": "post",
+                            "params": {
+                                "cmpt_id": "${{formData.astat_cnstrn_cmpt_id}}"
+                            }
+                          },
+                          "props": {
+                            "title": "产品部件属性列表查询"
+                          },
+                        "width": "130px"
+                    }
+                },{
+                    "astat_cnstrn_attr_nm": {
+                        "control": "string",
+                        "label": "副约束属性名称",
+                        "width": "130px"
+                    },
+                    "astat_cnstrn_oprtg_val": {
+                        "control": "text",
+                        "label": "副约束操作值",
+                        "width": "130px"
+                    }
+                },{
+                    "astat_cnstrn_oprtr": {
+                        "control": "select",
+                        "label": "副约束操作符",
+                        "width": "130px",
+                        "dict": {
+                            "dictType": "LN_E_RLTNP_OPRTR",
+                            "dictKey": [
+                                "LN_E_RLTNP_OPRTR"
+                            ],
+                            "format": "label"
+                        }
+                    }
+                }
+                
+            ]
+        }
+    }
+}

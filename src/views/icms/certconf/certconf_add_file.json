@@ -1,0 +1,176 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ar0201",
+          "apply_no": "${{params.apply_no}}",
+          "doc_no":"${{params.doc_no}}"
+        }
+      },
+      "pagination": {
+        "pageSizes": [
+          10,
+          15,
+          20,
+          50,
+          100
+        ],
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "label": "资料编号",
+          "prop": "doc_no",
+          "width": "150px",
+          "align": "center"
+        },
+        {
+          "label": "资料描述",
+          "prop": "doc_name",
+          "width": "300px",
+          "align": "center"
+        },
+        {
+          "label": "是否必需",
+          "prop": "is_must",
+          "align": "center",
+          "width": "100px",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "是否需要补录",
+          "prop": "is_need_backup",
+          "align": "center",
+          "width": "100px",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "补录原因",
+          "prop": "remark",
+          "width": "300px",
+          "align": "center"
+        },
+        {
+          "type": "select",
+          "disabled": true,
+          "label": "补录状态",
+          "prop": "doc_add_status",
+          "align": "center",
+          "dict": {
+            "dictType": "AR_E_DOC_ADD_STATUS",
+            "dictKey": [
+              "AR_E_DOC_ADD_STATUS"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "上传标志",
+          "prop": "upload_flag",
+          "align": "center",
+          "width": "100px",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "附件类型",
+          "prop": "filetype",
+          "align": "center",
+          "type": "leaf",
+          "dict": {
+            "dictType": "AR_E_FILETYPE",
+            "dictKey": [
+              "AR_E_FILETYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "是否获取GPS信息",
+          "prop": "is_access_info",
+          "align": "center",
+          "type": "leaf",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "是否对图片进行原图检查",
+          "prop": "is_check_ps",
+          "align": "center",
+          "type": "leaf",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "是否购车发票验真",
+          "prop": "is_check_car_invoice",
+          "align": "center",
+          "type": "leaf",
+          "dict": {
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "资料管理",
+              "toRequest": {
+                "url": "/views/icms/docManager/docApplyCheck/file_manage.json",
+                "method": "POST",
+                "params": {
+                  "doc_no": "${{current.doc_no}}",
+                  "apply_no": "${{params.apply_no}}",
+                  "pageType": ""
+                }
+              },
+              "props": {
+                "title": "资料管理"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

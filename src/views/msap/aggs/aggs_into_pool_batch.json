@@ -1,0 +1,99 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "icon": "",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "bpm1015",
+              "task_count": "${{form.task_count}}",
+              "user_id": "$g{{user_info.userCode}}",
+              "appId": "${{form.appId}}"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "busi_type": {
+            "control": "select",
+            "label": "业务类型",
+            "dict": {
+              "dictType": "AGGS_BUSI_TYPE",
+              "dictKey": [
+                "AGGS_BUSI_TYPE"
+              ],
+              "format": "label"
+            },
+            "value": "${{params.busi_type}}",
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择需要认领的业务类型"
+              }
+            ],
+            "events": {
+              "condition": {
+                "keyVals": {
+                  "001": "'${{form.busi_type}}' === '' ",
+                  "002": "1==1"
+                },
+                "switch": {
+                  "001": {
+                    "doRequest": {
+                      "url": "/SUMP/icmcall/icmRPCCall",
+                      "method": "POST",
+                      "params": {
+                        "servicecode": "aggs0106",
+                        "dict_type": "AGGS_BUSI_TYPE",
+                        "dict_id": "CL",
+                        "appId": "aggsOnl"
+                      },
+                      "resultSet": {
+                        "appId": "mapp_dict_id"
+                      }
+                    }
+                  },
+                  "002": {
+                    "doRequest": {
+                      "url": "/SUMP/icmcall/icmRPCCall",
+                      "method": "POST",
+                      "params": {
+                        "servicecode": "aggs0106",
+                        "dict_type": "AGGS_BUSI_TYPE",
+                        "dict_id": "${{form.busi_type}}",
+                        "appId": "aggsOnl"
+                      },
+                      "resultSet": {
+                        "appId": "mapp_dict_id"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "task_count": {
+            "control": "inputNumber",
+            "label": "自动认领笔数",
+            "width": "160px",
+            "min": 1,
+            "value": 1
+          },
+          "appId": {
+            
+            "control": "hidden"
+          
+           
+          }
+        }
+      ]
+    }
+  }
+}

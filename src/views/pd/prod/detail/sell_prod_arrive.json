@@ -1,0 +1,63 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "btns": [
+        {
+          "type": "submit",
+          "target": "addlog",
+          "label": "确认",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "pd0217",
+              "sale_prod_cd": "${{params.prod_info.sale_prod_cd}}",
+              "prod_version": "${{params.prod_info.prod_version}}",
+              "template_version": "${{params.prod_info.template_version}}"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "prod_status":{
+            "control": "radio",
+            "value":"${{params.prod_info.prod_status}}",
+            "label": "上架类型",
+            "span": 24,
+            "options": [
+              {
+                "value": "00",
+                "label": "实时上架"
+              },
+              {
+                "value": "04",
+                "label": "延迟上架"
+              }
+            ],
+            "events": {
+              "showItem":{
+                "04":["arrive_date"]
+              }
+            }
+          },
+          "arrive_date": {
+            "control": "dateTimePicker",
+            "format": "yyyy-MM-dd",
+            "valueFormat": "yyyyMMdd",
+            "value":"${{params.prod_info.arrive_date}}",
+            "label": "上架日期",
+            "span": 24,
+            "inputWidth": "200px",
+            "rules": [
+              {
+                "required": true,
+                "message": "上架日期不得为空"
+              }]
+          }
+        }
+      ]
+    }
+  }
+}

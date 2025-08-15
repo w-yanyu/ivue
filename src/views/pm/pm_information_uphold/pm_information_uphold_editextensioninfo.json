@@ -1,0 +1,130 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "btns": [
+        {
+            "type": "submit",
+            "label": "保存",
+            "size": "",
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                  "belorg":"${{params.belorg}}",
+                  "ofpacd":"${{params.ofpacd}}",
+                  "seqnum":"${{params.seqnum}}",
+                  "servicecode": "svtend",
+                 
+                    "page_id":"/views/pm/pm_information_uphold/pm_information_uphold_addbasicinfo.json"
+                }
+            }
+        }
+    ],
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "qrtend"
+        }
+      },
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "belorg":"${{params.belorg}}",
+          "ofpacd":"${{params.ofpacd}}",
+          "seqnum":"${{params.seqnum}}",
+          "servicecode": "svtend"
+        }
+      },
+      "controls": [
+        {
+          "regamt": {
+            "control": "text",
+            "label": "注册资金(元)",
+            "width": "160px",
+            "rules": [
+              {
+                "max": 17,
+                "message": "长度不能超过17个字符"
+              }
+            ]
+          },
+          "regidt": {
+            "control": "dateTimePicker",
+            "label": "注册日期",
+            "width": "160px",
+            "rules": [
+              {
+                "max": 8,
+                "message": "长度不能超过8个字符"
+              }
+            ]
+          }
+        },
+        {
+          "estadt": {
+            "control": "dateTimePicker",
+            "label": "成立日期",
+            "width": "160px",
+            "rules": [
+              {
+                "max": 8,
+                "message": "长度不能超过8个字符"
+              }
+            ]
+          },
+          "stfnum": {
+            "control": "text",
+            "label": "员工人数",
+            "width": "160px",
+            "rules": [
+              {
+                "max": 8,
+                "message": "长度不能超过8个字符"
+              }
+            ]
+          }
+        },
+        {
+          "cooptp": {
+            "control": "select",
+            "label": "合作类型",
+            "width": "160px",
+            "rules": [
+              {
+                "required": true,
+                "message": "合作类型不得为空"
+              },
+              {
+                "max": 2,
+                "message": "长度不能超过2个字符"
+              }
+            ],
+            "dict": {
+              "dictType": "E_COOPTP",
+              "dictKey": [
+                "E_COOPTP"
+              ],
+              "format": "label"
+            }
+          }
+        },
+        {
+          "busscp": {
+            "control": "textarea",
+            "label": "经营范围",
+            "width": "160px",
+            "rules": [
+              {
+                "max": 200,
+                "message": "长度不能超过200个字符"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

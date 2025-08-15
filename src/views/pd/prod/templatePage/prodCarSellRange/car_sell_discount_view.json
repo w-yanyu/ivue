@@ -1,0 +1,338 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "initRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "detail,format=pd0626,temp=pd0624",
+          "pageTranType": "${{params.pageTranType}}",
+          "car_sell_no": "${{params.tree_id}}"
+        }
+      },
+      "controls": [
+        {
+          "line1": {
+            "control": "divider",
+            "lineColor": "#1890ff",
+            "span": 24,
+            "width": "40px",
+            "contentPosition": "center",
+            "content": "车型基本信息"
+          },
+          "car_sell_no": {
+            "label": "汽车销售范围编号",
+            "width": "140px",
+            "control": "hidden",
+            "disabled": true
+          },
+          "car_model_no": {
+            "label": "车型编号",
+            "width": "140px",
+            "control": "text",
+            "disabled": true
+          },
+          "car_info_name": {
+            "label": "车型名称",
+            "width": "140px",
+            "control": "text",
+            "disabled": true
+          },
+          "remark": {
+            "label": "备注",
+            "control": "textarea",
+            "width": "140px",
+            "span": 24,
+            "disabled": true,
+            "autosize": {
+              "minRows": 4
+            },
+            "resize": "none",
+            "rules": [
+              {
+                "max": "200",
+                "message": "长度不能超过200个字符"
+              }
+            ]
+          },
+          "line": {
+            "control": "divider",
+            "lineColor": "#1890ff",
+            "span": 24,
+            "width": "40px",
+            "contentPosition": "center",
+            "content": "购车优惠信息"
+          },
+          "is_discount": {
+            "label": "是否优惠",
+            "width": "140px",
+            "control": "select",
+            "disabled": true,
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": false,
+                "message": "请选择是否优惠"
+              }
+            ],
+            "showItem": {
+              "1": [
+                "discount_type"
+              ]
+            },
+            "events": {
+              "condition": {
+                "0": {
+                  "control": {
+                    "discount_type": {
+                      "value": null
+                    },
+                    "rate_measure": {
+                      "value": null
+                    },
+                    "discount_or_rate": {
+                      "value": null
+                    },
+                    "discount_measure": {
+                      "value": null
+                    },
+                    "discount_amt": {
+                      "value": null
+                    },
+                    "discount_ratio": {
+                      "value": null
+                    },
+                    "discount_periods": {
+                      "value": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "discount_type": {
+            "label": "优惠方式",
+            "width": "140px",
+            "control": "select",
+            "disabled": true,
+            "initShow": false,
+            "dict": {
+              "dictType": "PD_E_DISCOUNT_TYPE",
+              "dictKey": [
+                "PD_E_DISCOUNT_TYPE"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": false,
+                "message": "请选择优惠方式"
+              }
+            ],
+            "showItem": {
+              "0": [
+                "rate_measure",
+                "discount_or_rate"
+              ],
+              "1": [
+                "discount_measure"
+              ]
+            },
+            "events": {
+              "condition": {
+                "0": {
+                  "control": {
+                    "discount_measure": {
+                      "value": null
+                    },
+                    "discount_amt": {
+                      "value": null
+                    },
+                    "discount_ratio": {
+                      "value": null
+                    },
+                    "discount_periods": {
+                      "value": null
+                    }
+                  }
+                },
+                "1": {
+                  "control": {
+                    "rate_measure": {
+                      "value": null
+                    },
+                    "discount_or_rate": {
+                      "value": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "rate_measure": {
+            "label": "利率优惠措施",
+            "width": "140px",
+            "control": "select",
+            "disabled": true,
+            "initShow": false,
+            "dict": {
+              "dictType": "PD_E_RATE_MEASURE",
+              "dictKey": [
+                "PD_E_RATE_MEASURE"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": false,
+                "message": "请选择利率优惠措施"
+              }
+            ]
+          },
+          "discount_or_rate": {
+            "label": "优惠折扣或优惠利率(年)",
+            "width": "140px",
+            "control": "text",
+            "initShow": false,
+            "disabled": true,
+            "suffix": "%",
+            "rules": [
+              {
+                "required": false,
+                "message": "请输入优惠折扣或优惠利率"
+              },
+              {
+                "type": "string",
+                "pattern": "^[1-9]\\d{0,2}(\\.\\d{0,3})?$",
+                "message": "输入范围在0-100之间"
+              }
+            ]
+          },
+          "discount_measure": {
+            "label": "贴息优惠措施",
+            "width": "140px",
+            "control": "select",
+            "disabled": true,
+            "initShow": false,
+            "dict": {
+              "dictType": "PD_E_DISCOUNT_MEASURE",
+              "dictKey": [
+                "PD_E_DISCOUNT_MEASURE"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": false,
+                "message": "请选择贴息优惠措施"
+              }
+            ],
+            "showItem": {
+              "0": [
+                "discount_amt"
+              ],
+              "1": [
+                "discount_ratio"
+              ],
+              "2": [
+                "discount_periods"
+              ]
+            },
+            "events": {
+              "condition": {
+                "0": {
+                  "control": {
+                    "discount_ratio": {
+                      "value": null
+                    },
+                    "discount_periods": {
+                      "value": null
+                    }
+                  }
+                },
+                "1": {
+                  "control": {
+                    "discount_amt": {
+                      "value": null
+                    },
+                    "discount_periods": {
+                      "value": null
+                    }
+                  }
+                },
+                "2": {
+                  "control": {
+                    "discount_amt": {
+                      "value": null
+                    },
+                    "discount_ratio": {
+                      "value": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "discount_amt": {
+            "label": "贴息金额（元）",
+            "width": "140px",
+            "control": "currency",
+            "initShow": false,
+            "disabled": true,
+            "rules": [
+              {
+                "required": false,
+                "message": "请输入贴息金额"
+              }
+            ],
+            "align": "left",
+            "format": {
+              "thousand": ","
+            }
+          },
+          "discount_ratio": {
+            "label": "贴息比例",
+            "width": "140px",
+            "control": "text",
+            "initShow": false,
+            "disabled": true,
+            "suffix": "%",
+            "rules": [
+              {
+                "required": false,
+                "message": "请输入贴息比例"
+              },
+              {
+                "type": "string",
+                "pattern": "^(?:[1-9]?\\d|100)$",
+                "message": "输入范围在0-100之间"
+              }
+            ]
+          },
+          "discount_periods": {
+            "label": "贴息期数",
+            "width": "140px",
+            "control": "text",
+            "initShow": false,
+            "disabled": true,
+            "rules": [
+              {
+                "required": false,
+                "message": "请输入贴息期数"
+              }
+            ]
+          }
+        }
+      ],
+      "btns": [
+      ]
+    }
+  }
+}

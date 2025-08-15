@@ -1,0 +1,73 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "btns": [
+        {
+          "type": "submit",
+          "icon": "el-icon-check",
+          "label": "申请",
+          "doRequest": {
+            "method": "POST",
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "params": {
+              "servicecode": "cb0282",
+              "assist_type": "01",
+              "coll_type": "TC",
+              "case_id": "${{params.selectedData}}"
+            }
+          }
+        },
+        {
+          "type": "close",
+          "label": "取消"
+        }
+      ],
+      "controls": [
+        {
+          "queue_code": {
+            "control": "remoteSelect",
+            "label": "可转队列",
+            "width": "180px",
+            "align": "center",
+            "span": "20",
+            "rows": 6,
+            "labelField": "queue_name",
+            "valueField": "queue_code",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "cb0082",
+                "queue_type": "C",
+                "is_valid": "Y"
+              }
+            },
+            "format": "value-label",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          },
+          "apply_reason": {
+            "control": "textarea",
+            "label": "转出原因",
+            "width": "180px",
+            "align": "center",
+            "span": "20",
+            "rows": 12,
+            "placeholder": "请输入",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

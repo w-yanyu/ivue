@@ -1,0 +1,205 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "initRequest": "${{params}}",
+            "btns": [
+                {
+                    "type": "submit",
+                    "label": "提交",
+                    "doRequest": {
+                        "url": "/SUMP/rest/auth/userManager",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "ct2333"
+                        }
+                    }
+                }
+            ],
+            "controls": [
+                {
+                    "announce_id": {
+                        "control": "hidden",
+                        "align": "center",
+                        "label": "公告ID"
+                    },
+                    "announce_title": {
+                        "control": "text",
+                        "disabled": true,
+                        "align": "center",
+                        "label": "公告标题",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入公告标题"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "announce_type": {
+                        "control": "select",
+                        "align": "center",
+                        "label": "公告类型",
+                        "dict": {
+                            "dictType": "CT_E_ANNOUNCETYPE",
+                            "dictKey": [
+                                "CT_E_ANNOUNCETYPE"
+                            ],
+                            "format": "label"
+                        },
+                        "rules": [
+                            {
+                                "required": true
+                            }
+                        ]
+                    },
+                    "publish_status": {
+                        "control": "select",
+                        "label": "发布状态",
+                        "dict": {
+                            "dictType": "MS_E_YESORNO",
+                            "dictKey": [
+                                "MS_E_YESORNO"
+                            ],
+                            "format": "value-label"
+                        },
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入生效日期"
+                            }
+                        ]
+                    },
+                    "effect_date": {
+                        "control": "dateTimePicker",
+                        "align": "center",
+                        "label": "生效日期",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入生效日期"
+                            }
+                        ]
+                    },
+                    "expiry_date": {
+                        "control": "dateTimePicker",
+                        "label": "失效日期",
+                        "align": "center",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入失效日期"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "announce_content": {
+                        "control": "textarea",
+                        "width": "190px",
+                        "align": "center",
+                        "span": "22",
+                        "label": "公告内容",
+                        "rows": 10,
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "公告内容"
+                            }
+                        ]
+                    },
+                    "announce_file_path": {
+                        "control": "text",
+                        "align": "center",
+                        "initShow": false,
+                        "label": "附件路径"
+                    },
+                    "file": {
+                        "doRequest": {
+                            "url": "/SUMP/minioCall/uploadAndCheck",
+                            "method": "post",
+                            "params": {
+                                "checkGPSFlag": "0",
+                                "checkPSFlag": "0",
+                                "checkCarInvoiceFlag": "0",
+                                "filetype": "",
+                                "appId": "icmsOnl",
+                                "servicecode": "ct2555"
+                            },
+                            "resultSet": {
+                                "announce_file_path": "path",
+                                "file_name": "oldName",
+                                "file_size": "size"
+                            }
+                        },
+                        "control": "file",
+                        "limit": 1,
+                        "align": "center",
+                        "span": 8,
+                        "limitSize": 10,
+                        "listType": "text",
+                        "label": "公告附件",
+                        "preview": true,
+                        "value": "${{params.announce_file_path}}"
+                    }
+                },
+                {
+                    "user_name": {
+                        "label": "选择操作员",
+                        "control": "lookup",
+                        "width": "190px",
+                        "span": "22",
+                        "multiple": true,
+                        "initShow": true,
+                        "format": "value-label",
+                        "keyField": {
+                            "user_id": "user_id",
+                            "user_name": "user_name"
+                        },
+                        "toRequest": {
+                            "url": "/views/ismt/ct/announceManage/operator_query.json",
+                            "method": "post"
+                        },
+                        "props": {
+                            "width": "85%",
+                            "title": "操作员编号查询"
+                        }
+                    },
+                    "user_id": {
+                        "label": "选择操作员编号",
+                        "control": "hidden",
+                        "multiple": true
+                    }
+                },
+                {
+                    "role_name": {
+                        "control": "lookup",
+                        "label": "选择角色",
+                        "width": "190px",
+                        "span": "22",
+                        "initShow": true,
+                        "multiple": true,
+                        "keyField": {
+                            "role_id": "role_id",
+                            "role_name": "role_name"
+                        },
+                        "toRequest": {
+                            "url": "/views/ismt/ct/announceManage/role_query.json",
+                            "method": "post"
+                        },
+                        "props": {
+                            "width": "85%",
+                            "title": "角色编号查询"
+                        }
+                    },
+                    "role_id": {
+                        "label": "角色编号",
+                        "control": "hidden",
+                        "multiple": true
+                    }
+                }
+            ]
+        }
+    }
+}

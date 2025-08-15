@@ -1,0 +1,55 @@
+{
+  "module": "v-inputDataForm-btn",
+  "layout": {
+    "scope": "templateScope",
+    "form": {
+      "btns":[
+        {
+          "type": "submit",
+          "label": "保存",
+          "doRequest": {
+            "url": "/SUMP/call/RPCCall",
+            "method": "POST",
+            "params": {
+              "bpm_version": "${{params.bpm_version}}",
+              "wf_task_no": "${{params.wf_task_no}}",
+              "wf_prod_no": "${{params.wf_prod_no}}",
+              "task_define_id": "${{params.task_define_id}}",
+              "servicecode": "bpm4008",
+              "appId":"${{params.appId}}"
+            }
+          },
+          "eventAfter": { 
+              "doParentCallback": true,
+              "doLastCallback": true,
+              "callback": "customCallback"
+            }
+        }
+
+      ],
+      "controls": [
+          {
+            "top": {
+              "control":"dynamic",
+              "span":24,
+              "toRequest":{
+                "url":"/views/msap/bpm/processManagement/products/node/config/temp-strategy-config.json",
+                "method": "post",
+                "params": {
+                  "wf_task_no": "${{params.wf_task_no}}",
+                  "bpm_version": "${{params.bpm_version}}",
+                  "wf_prod_no": "${{params.wf_prod_no}}",
+                  "task_define_id": "${{params.task_define_id}}",
+                  "appId":"${{params.appId}}"
+                }
+              },
+              "eventAfter": { 
+                  "doParentCallback": true,
+                  "doLastCallback": true
+                }
+            }
+          }
+      ]
+    }
+  }
+}

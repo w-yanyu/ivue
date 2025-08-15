@@ -1,0 +1,110 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "prod_name": {
+            "control": "text",
+            "label": "节点名称"
+          },
+          "prod_cd": {
+            "control": "text",
+            "label": "节点编码"
+          },
+          "parent_prod": {
+            "control": "text",
+            "label": "上级节点编码"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode":"FindData00"
+        }
+      },
+      "thead": [
+        {
+          "type":"string",
+          "label": "节点编码",
+          "prop": "prod_cd",
+          "align": "center"
+        },
+        {
+          "type":"string",
+          "label": "节点名称",
+          "prop": "prod_name",
+          "align": "center"
+        },
+        {
+          "type":"string",
+          "label": "上级节点编码",
+          "prop": "parent_prod",
+          "align": "center"
+        },
+        {
+          "label": "层级类型",
+          "prop": "level_type",
+          "align":"center",
+          "dict": {
+            "dictType": "LEVEL_STATUS",
+            "dictKey": [
+              "LEVEL_STATUS"
+            ],
+            "labelField":"dictName",
+            "valueField":"dictId"
+          }
+        },
+        {
+          "label": "审核状态",
+          "prop": "audit_status",
+          "align":"center",
+          "dict": {
+            "dictType": "E_SKILL_STATUS",
+            "dictKey": [
+              "E_SKILL_STATUS"
+            ],
+            "labelField":"dictName",
+            "valueField":"dictId"
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width":"200px",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "节点详情",
+              "toRequest": {
+                "method": "GET",
+                "url": "/views/skillcloud/add/addskill01.json"
+              },
+              "props": {
+                "width": "80%",
+                "title":  "节点信息详情"
+              }
+            },
+            {
+              "type": "look",
+              "label": "发起变更",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "UP_SKILL_STATUS"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

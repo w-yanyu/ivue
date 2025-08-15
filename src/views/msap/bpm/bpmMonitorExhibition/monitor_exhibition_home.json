@@ -1,0 +1,141 @@
+{
+  "module": "v-charts",
+  "layout": {
+      "rows":[
+        [
+          {
+            "span": 12,
+            "type": "ve-histogram",
+            "props": {
+              "settings" : {
+                "#axisSite": { "right": ["OrderRate"] },
+                "#yAxisType": ["KMB", "percent"],
+                "yAxisName": ["单位：笔数"],
+                "labelMap": {
+                  "add_count": "新增业务数量",
+                  "appv_count": "审批通过数量",
+                  "rejt_count": "拒绝数据量",
+                  "deal_count": "审批中数据量",
+                  "cancel_count": "取消数量"
+                }
+              },
+              "extend":{
+                "xAxis.0.axisLabel.rotate": 45,
+                "series": {
+                  "label": {
+                    "normal": {
+                      "show": true
+                    }
+                  }
+                }
+              },
+              "data": {
+                "columns": ["system_date", "add_count", "appv_count", "rejt_count", "deal_count", "cancel_count"],
+                "rows": {
+                  "initRequest":{
+                    "url": "/SUMP/icmcall/icmRPCCall",
+                    "method": "post",
+                    "params": {
+                      "appIda":"${{form.appIda}}",
+                        "servicecode": "bpm1022",
+                        "busi_type": "${{params.busi_type}}",
+                        "date_from":"${{params.date_from}}",
+                        "date_end":"${{params.date_end}}",
+                        "appId":"${{params.appId}}"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "span": 12,
+            "type": "ve-histogram",
+            "props": {
+              "settings" : {
+                "#axisSite": { "right": ["OrderRate"] },
+                "#yAxisType": ["KMB", "percent"],
+                "yAxisName": ["数量（单位：笔数）"],
+                "labelMap": {
+                  "to_do_count": "待处理数量",
+                  "done_count": "已处理数量"
+                }
+              },
+              "extend":{
+                "xAxis.0.axisLabel.rotate": 45,
+                "series": {
+                  "label": {
+                    "normal": {
+                      "show": true
+                    }
+                  }
+                }
+              },
+              "data": {
+                "columns": ["system_date", "to_do_count", "done_count"],
+                "rows": {
+                  "initRequest":{
+                    "url": "/SUMP/icmcall/icmRPCCall",
+                    "method": "post",
+                    "params": {
+                        "servicecode": "bpm1023",
+                        "busi_type": "${{params.busi_type}}",
+                        "date_from":"${{params.date_from}}",
+                        "date_end":"${{params.date_end}}",
+                        "appId":"${{params.appId}}"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        [
+          {
+            "span": 12,
+            "type": "ve-line",
+            "props": {
+              "settings" : {
+                "#axisSite": { "right": ["OrderRate"] },
+                "#yAxisType": ["KMB", "percent"],
+                "yAxisName": ["时长"],
+                "labelMap": {
+                  "min_cost": "最小处理时长",
+                  "max_cost": "最大处理时长",
+                  "average_cost": "平均处理时长",
+                  "total_cost": "总耗时"
+                }
+              },
+              "extend":{
+                "xAxis.0.axisLabel.rotate": 45,
+                "series": {
+                  "label": {
+                    "normal": {
+                      "show": true
+                    }
+                  }
+                }
+              },
+              "data": {
+                "columns": ["system_date", "min_cost", "max_cost", "average_cost", "total_cost"],
+                "rows": {
+                  "initRequest":{
+                    "url": "/SUMP/icmcall/icmRPCCall",
+                    "method": "post",
+                    "params": {
+                        "servicecode": "bpm1023",
+                        "busi_type": "${{params.busi_type}}",
+                        "date_from":"${{params.date_from}}",
+                        "date_end":"${{params.date_end}}",
+                        "appId":"${{params.appId}}",
+                        "time_type":"${{params.time_type}}"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      ]
+  }
+}

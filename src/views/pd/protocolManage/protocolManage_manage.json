@@ -1,0 +1,204 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "protocol_no": {
+            "control": "text",
+            "label": "协议编码",
+            "rules": [
+              {
+                "max": 32,
+                "message": "长度不能超过32个字符"
+              }
+            ]
+          },
+          "protocol_name": {
+            "control": "text",
+            "label": "协议名称",
+            "rules": [
+              {
+                "max": 20,
+                "message": "长度不能超过20个字符"
+              }
+            ]
+          },
+          "business_type": {
+            "control": "select",
+            "label": "业务类型",
+            "dict": {
+              "dictType": "PD_E_BUSI_TYPE",
+              "dictKey": [
+                "PD_E_BUSI_TYPE"
+              ],
+              "format": "label-value"
+            },
+            "rules": [
+              {
+                "max": 10,
+                "message": "长度不能超过10个字符"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/pd/protocolManage/protocolManage_add.json"
+          },
+          "props": {
+            "title": "协议新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pd0280"
+        }
+      },
+      "pagination": {
+        "pageSizes": [
+          10,
+          15,
+          20,
+          50,
+          100
+        ],
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "label": "序号",
+          "type": "index",
+          "align": "center"
+        },
+        {
+          "label": "协议编号",
+          "prop": "protocol_no",
+          "align": "center"
+        },
+        {
+          "label": "业务类型",
+          "prop": "business_type",
+          "align": "center",
+          "dict": {
+            "dictType": "PD_E_BUSI_TYPE",
+            "dictKey": [
+              "PD_E_BUSI_TYPE"
+            ],
+            "format": "label-value"
+          }
+        },
+        {
+          "type": "string",
+          "label": "适用客户类型",
+          "prop": "suit_cust_type",
+          "align": "center",
+          "dict": {
+            "dictType": "PD_E_CUST_CLASS",
+            "dictKey": [
+              "PD_E_CUST_CLASS"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "协议名称",
+          "prop": "protocol_name",
+          "align": "center",
+          "btns": [
+            {
+              "type": "look",
+              "toRequest": {
+                "url": "@lookAgreementBtn",
+                "params": {
+                  "path": "${{current.protocol_path}}"
+                }
+              },
+              "props": {
+                "width": "75%",
+                "title": "预览"
+              }
+            }
+          ]
+        },
+        {
+          "label": "协议模板路径",
+          "prop": "protocol_path",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align": "center",
+          "btns": [
+            {
+              "type": "custom",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/pd/protocolManage/protocolManage_detail.json",
+                "method": "GET",
+                "params": {
+                  "path": "${{current.protocol_no}}"
+                }
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/pd/protocolManage/protocolManage_modify.json",
+                "method": "GET",
+                "params": {
+                  "protocol_no": "${{current.protocol_no}}"
+                }
+              },
+              "props": {
+                "width": "65%",
+                "title": "协议维护"
+              }
+            },
+            {
+              "type": "export",
+              "label": "下载",
+              "doRequest": {
+                "url": "/SUMP/minioCall/download",
+                "method": "get",
+                "params": {
+                  "path": "${{current.protocol_path}}",
+                  "fileName": "${{current.protocol_name}}"
+                }
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "pd0283",
+                  "protocol_no": "${{current.protocol_no}}"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,174 @@
+{
+  "module": "v-search-btn-datagrid",
+  "pageId": "risk_rule_constant",
+  "layout": {
+    "form": {
+      "controls": [{
+        "parm_code": {
+          "label": "模板编号",
+          "control": "text",
+          "span": 8,
+          "rules": [{
+            "message": "长度不能超过40个字符",
+            "max": 40
+          }]
+        },
+        "parm_name": {
+          "label": "模板名称",
+          "control": "text",
+          "span": 8,
+          "rules": [{
+            "message": "长度不能超过100个字符",
+            "max": 100
+          }]
+        }
+      }]
+    },
+    "toolbar": {
+      "btns": [{
+        "type": "add",
+        "label": "新增",
+        "toRequest": {
+          "url": "/views/risk/test_center/batch_test/testReport/template_add.json",
+          "method": "get"
+        },
+        "props": {
+          "width": "70%",
+          "title": "新增"
+        }
+      },
+      {
+        "type": "custom",
+        "label": "新增组件",
+        "toRequest": {
+          "url": "/views/risk/test_center/batch_test/testReport/template_component_add.json",
+          "method": "get"
+        },
+        "props": {
+          "width": "70%",
+          "title": "新增组件"
+        }
+      }]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+            "servicecode": "deci050009"
+        }
+      },
+      "thead": [
+        {
+        "label": "序号",
+        "type": "index"
+        },
+        {
+          "label": "模板编号",
+          "prop": "parm_codeA",
+          "value": "template"
+        },
+        {
+          "label": "模板名称",
+          "prop": "parm_name",
+          "value": "报告模板一"
+        },
+        {
+          "label": "模板信息",
+          "prop": "data_type",
+          "options": [
+            {
+              "label": "基本信息",
+              "value": "1"
+            },
+            {
+              "label": "执行日志",
+              "value": "2"
+            },
+            {
+              "label": "数据源调用情况",
+              "value": "3"
+            },
+            {
+              "label": "变量调用情况",
+              "value": "4"
+            },
+            {
+              "label": "测试结果明细",
+              "value": "5"
+            },
+            {
+              "label": "结果分布统计",
+              "value": "6"
+            }
+          ]
+        },
+        {
+          "label": "状态",
+          "prop": "description"
+        },
+        {
+          "label": "创建人",
+          "prop": "description"
+        },
+        {
+          "label": "创建时间",
+          "prop": "description"
+        },
+        {
+          "label": "操作",
+          "width": "250px",
+          "btns": [{
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "@TemplateEdit",
+                "method": "get",
+                "params": {
+                  "isEdit": false
+                }
+              },
+              "props": {
+                "width": "70%"
+              }
+            },
+            {
+              "type": "look",
+              "label": "查看",
+              "toRequest": {
+                "url": "@TemplateEdit",
+                "method": "get",
+                "params": {
+                  "isEdit": true
+                }
+              },
+              "props": {
+                "width": "70%"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "disabled": "'${{current.is_delete}}' === '0'",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "post",
+                "params": {
+                  "servicecode": "",
+                  "parm_code": "${{current.parm_code}}"
+                }
+              },
+              "confirm": {
+                  "title": "提示信息",
+                  "msg": "确认删除当前数据？",
+                  "confirmButtonText": "确定",
+                  "cancelButtonText": "取消"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

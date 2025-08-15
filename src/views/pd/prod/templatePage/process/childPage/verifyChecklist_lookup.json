@@ -1,0 +1,68 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ar1141",
+          "cust_class_list": "${{params.cust_class_list}}"
+        }
+      },
+      "thead": [
+        {
+          "label": "核实项列表代码",
+          "prop": "verify_list_cd",
+          "align": "center"
+        },
+        {
+          "type": "string",
+          "label": "适用客户类型",
+          "prop": "cust_class",
+          "align": "center",
+          "dict": {
+            "dictType": "PD_E_CUST_CLASS",
+            "dictKey": [
+              "PD_E_CUST_CLASS"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "描述",
+          "prop": "verify_list_desc",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "align": "center",
+          "width": "120px",
+          "btns": [
+            {
+              "type": "bringback",
+              "label": "选择"
+            },
+            {
+              "label": "明细",
+              "type": "look",
+              "toRequest": {
+                "url": "/views/icms/verifyManager/verifyListManager/verfyLisMangedtl.json",
+                "method": "get",
+                "params": {
+                  "verify_list_cd": "${{current.verify_list_cd}}"
+                }
+              },
+              "props": {
+                "title": "资料检查详情",
+                "width": "80%"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

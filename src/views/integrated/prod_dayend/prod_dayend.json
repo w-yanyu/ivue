@@ -1,0 +1,130 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "foldLineNumber":2,
+      "controls": [
+        {
+          "sprdid": {
+            "span": 8,
+            "label": "可售产品ID",
+            "control": "text",
+            "rules": [
+              {
+                "max": 18,
+                "message": "长度不能超过18个字符"
+              }
+            ]
+          },
+          "prodcd": {
+            "span": 8,
+            "control": "text",
+            "label": "产品代码",
+            "rules": [
+              {
+                "max": 18,
+                "message": "长度不能超过18个字符"
+              }
+            ]
+          }
+        },
+        {
+          "prodna": {
+            "span": 8,
+            "control": "text",
+            "label": "产品名称",
+            "rules": [
+              {
+                "max": 80,
+                "message": "长度不能超过80个字符"
+              }
+            ]
+          },
+          "prod_date": {
+            "span": 8,
+            "control": "dateTimePicker",
+            "label": "产品日期",
+            "format": "yyyyMMdd"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "qrproddayend"
+        }
+      },
+      "thead": [
+        {
+          "label": "序号",
+          "type" :  "index"
+        },
+        {
+          "label": "可售产品ID",
+          "prop": "sprdid"
+        },
+        {
+          "label": "产品代码",
+          "prop": "prodcd"
+        },
+        {
+          "label": "产品名称",
+          "prop": "prodna"
+        },
+        {
+          "label": "产品日期",
+          "prop": "prod_date"
+        },
+        {
+          "label": "批量交易流程ID",
+          "prop": "tran_flow_id"
+        },
+        {
+          "label": "批量交易组ID",
+          "prop": "tran_group_id"
+        },
+        {
+          "label": "批量交易ID",
+          "prop": "tran_id"
+        },
+        {
+          "label": "批量任务执行模式",
+          "prop": "task_exe_mode"
+        },
+        {
+          "label": "轮询开始时间",
+          "prop": "start_time"
+        },
+        {
+          "label": "轮询结束时间",
+          "prop": "end_time"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align":"center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "查看",
+              "toRequest": {
+                "url": "/views/integrated/prod_dayend/prod_dayend_detail_edit.json",
+                "method": "post"
+              },
+              "props": {
+                "width": "65%",
+                "title": "查看"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,409 @@
+<template>
+  <div>
+    <div class="container-content">
+      <div class="container-content--search">
+        <el-form :model="selectForm" :rules="selectFormRules" ref="selectForm" label-width="150px" class="custom-common--form">
+          <el-row>
+             <el-col :span="6">
+                <el-form-item  label="区域中心" prop="areaCenter">
+                  <el-select v-model="selectForm.areaCenter" @change="saveTypeChange" placeholder=" " clearable>
+                    <el-option v-for="(item, index) in orgList"
+                     :default="isdefault" 
+                    :key="index" :label="item.brachName"
+                               :value="item.branchNo">
+                    </el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+            <el-col :span="6">
+              <el-form-item label="借据号" prop="lncfno">
+                <el-input v-model="selectForm.lncfno" class="input" clearable></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="6">
+              <el-form-item label="客户名称" prop="acctna">
+                <el-input v-model="selectForm.acctna" class="input" clearable></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="6">
+              <el-form-item label="证件号码" prop="idtfno">
+                <el-input v-model="selectForm.idtfno" class="input" clearable></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="6">
+              <el-form-item label="委案机构" prop="nowvorg">
+                <el-select v-model="selectForm.nowvorg" placeholder=" " clearable>
+                  <el-option
+                    v-for="(item, index) in nowvorgList"
+                    :key="index"
+                    :label="item.entrorgnm"
+                    :value="item.entrorg"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+            <el-col :span="6">
+              <el-form-item label="费用模式" prop="clenmode">
+                <el-select v-model="selectForm.clenmode" placeholder=" " clearable>
+                  <el-option
+                    v-for="(item, index) in clenmodeList"
+                    :key="index"
+                    :label="item.dictName"
+                    :value="item.dictId"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row class="button-footer">
+            <el-col :span="24">
+              <el-button type="primary" @click="searchTeller" icon="el-icon-search">查询</el-button>
+              <el-button @click="reset">{{$i18ns('重置')}}</el-button>
+              <el-button size="small" type="success" @click="downloadFile">导出</el-button>
+            </el-col>
+          </el-row>
+        </el-form>
+      </div>
+      <div class="container-centent--table">
+        <el-table ref="multipleTable" :data="tableData" :border="true" style="width: 100%" stripe>
+          <el-table-column label="借据号" prop="lncfno" align="center" show-overflow-tooltip></el-table-column>
+          <el-table-column label="区域中心" prop="areaCenterName" align="center" show-overflow-tooltip></el-table-column>
+          <el-table-column label="客户名称" prop="acctna" align="center" show-overflow-tooltip></el-table-column>
+          <el-table-column label="证件号码" prop="idtfno" align="center" show-overflow-tooltip></el-table-column>
+          <el-table-column label="委案时间" prop="entrtime" align="center" show-overflow-tooltip></el-table-column>
+          <el-table-column label="委案机构" prop="entrorgnm" align="center" show-overflow-tooltip></el-table-column>
+          <el-table-column label="费用模式" prop="clenmode" align="center" show-overflow-tooltip  :formatter="formatclenmodeDatass"></el-table-column>
+          <el-table-column label="收案时间" prop="backtime" align="center" show-overflow-tooltip></el-table-column>
+        </el-table>
+      </div>
+      <div class="container-content--pagination">
+        <el-pagination
+          v-if="tableData.length>0"
+          @size-change="sizeChange"
+          @current-change="currentChange"
+          :current-page="currentPage"
+          :page-sizes="[10,15,20]"
+          :page-size="tableSize"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="tableTotal"
+        ></el-pagination>
+      </div>
+    </div>
+  </div>
+</template>
+
+
+<script>
+import MyAxios from "pte-ui/utils/MyAxios";
+import _ from "lodash";
+ export const selectFormRules = {};
+export default {
+  name: "CaseStateInquiry",
+  data() {
+    return {
+      nowvorgList: [],
+      city_noList: [], //网点列表
+      tableData: [], //表格数据
+      selectForm: {
+        areaCenter: "",
+        areaCenterName: "",
+        applid: "",
+        lncfno: "",
+        nowvorg:"",
+        branchNo:"",
+        acctna: "",
+        idtfno: "",
+        entrorg: "",
+        gmt_create: "",
+        clenmode: "",
+      },
+      currentPage: 1,
+      tableTotal: -1,
+      tempselectForm: [], //查询
+      tableSize: 10,
+       selectFormRules,
+      resultShow: false, //是否展示详情
+      //----------------下拉框字典---------//
+      area_noLocal: "",
+      orgList: [], //区域中心
+      caseResultList: [], //诉讼结果字典
+      areaCenterList: [],
+      entruststusList: [],
+      suit_statusList: [],
+      entrorgtypeList: [],
+      paystatuList: [],
+      paystatuLists: [],
+      entrorgList: [],
+      entrorgcity: [],
+      clenmodeList: [], //费用模式
+      isdefault: "",
+      temarea: "" //临时区域中心
+    };
+  },
+  created(){
+    this.getDictList("E_SUITRESULT", "caseResultList"); //诉讼结果字典
+    this.getDictList("E_ENTRUSTSTUS", "entruststusList"); //委案状态字典
+    this.getDictList("E_SUITSTUS", "suit_statusList"); //案件诉讼状态字典
+    this.getDictList("E_ORGTYPES", "entrorgtypeList"); //机构类型
+    this.getDictList("E_CLENMODE", "clenmodeList"); //费用模式
+    this.getOrgList();
+    this.saveTypeChange();
+    this.getTableData();
+  },
+  methods: {
+  
+      //选择区域中心触发承办机构查询
+          saveTypeChange(val) {
+            // this.$refs.selectForm.resetFields();
+          if (this.selectForm.nowvorg !== "" && val !== "") {
+            this.selectForm.nowvorg = "";
+            this.nowvorgList = [];
+          }
+          if(!val) {
+             if (this.selectForm.areaCenter == "" || this.selectForm.areaCenter == null) {
+             this.temarea = JSON.parse(localStorage.getItem("user_info")).branch_id;
+            }
+            else{
+              this.temarea = this.selectForm.areaCenter;
+            }
+          }else {
+            this.selectForm.areaCenter = val;
+            this.temarea = this.selectForm.areaCenter;
+          }
+          this.getEntrorgList();
+         },
+     /**
+       * 查询列表
+       */
+      getTableData() {
+       let params2 = {
+                servicecode: "RLMSPLTS1195",
+                areaCenter:this.selectForm.areaCenter,
+                 lncfno : this.selectForm.lncfno,
+                 acctna : this.selectForm.acctna,
+                 idtfno : this.selectForm.idtfno,
+                 nowvorg:this.selectForm.nowvorg,
+                 clenmode:this.selectForm.clenmode,
+                 start: this.currentPage,
+                 length: this.tableSize,
+            }
+             MyAxios.invokeAPI("/SUMP/icmcall/icmRPCCall", "post", params2).then(response => {
+                if (response && response.code === "200" && response.data ) {
+                   this.tableData=response.data;
+                   this.tableTotal = response.pageParam ? response.pageParam.total : 0;
+
+                }
+            }).catch(err1 => {
+                console.error(err1);
+            })
+
+        },
+      
+        downloadFile(){
+            let reqMap = {
+                servicecode: "RLMSPLTS1196",
+                areaCenter:this.selectForm.areaCenter,
+                 lncfno : this.selectForm.lncfno,
+                 acctna : this.selectForm.acctna,
+                 idtfno : this.selectForm.idtfno,
+                 nowvorg:this.selectForm.nowvorg,
+                 clenmode:this.selectForm.clenmode,
+            }
+            MyAxios.invokeAPI("/SUMP/icmcall/icmRPCCall", "post", reqMap).then(res => {
+                let URL = this.dataUrlToBlob(res.data.downloadUrl);
+                var reader = new FileReader();
+                reader.readAsDataURL(URL);
+                reader.onload = function (e) {
+                    const a = document.createElement('a');
+                    a.download = '诉讼案件委案统计查询.xlsx';
+                    a.href = e.target.result;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a)
+                }
+                reader.onloadend=function(e){
+                    this.$dialog.close();
+                }
+                
+            });
+        },
+        dataUrlToBlob(data){
+            var bstr = atob(data);
+            var n = bstr.length;
+            var u8arr = new Uint8Array(n);
+            while (n--) {
+            u8arr[n] = bstr.charCodeAt(n);
+            }
+            return new Blob([u8arr], { type: 'xlsx' });
+        },
+
+    /**
+     *获取委案机构字典列表
+     *
+     */
+    getEntrorgList() {
+        let params = {
+          servicecode: "RLMSPLTS1121", 
+           areaCenter: this.temarea,        
+        }
+        MyAxios.invokeAPI("/SUMP/icmcall/icmRPCCall", "post", params)
+          .then(res => {
+            if (res && res.code === "200" && res.data) {
+              console.log(res.data,"data")
+              this.nowvorgList = res.data;
+            }
+          })
+          .catch(err => {
+            console.error(err);
+          });
+      },
+     
+
+    /**
+     *
+     * 列表值转换
+     */
+    transformValue(list, val) {
+      for (let index = 0; index < list.length; index++) {
+        const item = list[index];
+        if (val === item.dictId) return item.dictName;
+      }
+    },
+    /**
+     * 获取字典
+     */
+    getDictList(dictType, listKey) {
+      let params = {
+        dictType: dictType,
+        dictKey: [dictType]
+      };
+      MyAxios.invokeAPI("/SUMP/rest/dict", "post", params)
+        .then(res => {
+          if (res && res.code === "200") {
+            this[listKey] = res.data;
+          }
+        })
+        .catch(err => {
+          console.error(err);
+        });
+    },
+    formatclenmodeDatass(row, column) {
+      let name = row[column.property];
+      let data = row[column.property];
+      this.clenmodeList.forEach(function(item, index) {
+        if (data == item.dictId) {
+          name = item.dictName;
+        }
+      });
+      return name;
+    },
+    /**
+     * 分页sizeChange 回调
+     */
+    sizeChange(val) {
+      this.tableSize = val;
+      this.getTableData();
+    },
+    /**
+     * 分页currentChange回调
+     */
+    currentChange(val) {
+      this.currentPage = val;
+      this.getTableData();
+    },
+    /**
+     * 查询
+     */
+    searchTeller() {
+      this.$refs.selectForm.validate(valid => {
+        if (valid) {
+          this.tempselectForm = _.cloneDeep(this.selectForm);
+          this.currentPage = 1;
+          this.getTableData();
+        } else {
+          this.$message({
+            type: "warning",
+            message: "校验不通过"
+          });
+        }
+      });
+    },
+ reset(){
+   this.selectForm.areaCenter = "";
+   this.selectForm.lncfno = "";
+   this.selectForm.acctna = "";
+   this.selectForm.idtfno = "";
+   this.selectForm.nowvorg = "";
+   this.selectForm.clenmode = "";
+   this.saveTypeChange();
+  },
+ getOrgList() {
+        let params = {
+          servicecode: "RLMSPLTS1068", 
+        }
+        MyAxios.invokeAPI("/SUMP/icmcall/icmRPCCall", "post", params)
+          .then(res => {
+            if (res && res.code === "200" && res.data) {
+              this.orgList = res.data;
+              // let  branchNo = "001700";
+              // this.orgList.forEach(item => {
+              //   let a = item.branchNo.indexOf("001700");
+                
+              //   this.orgList.splice(,1);
+              // })
+              // this.orgList;
+            }
+          })
+          .catch(err => {
+            console.error(err);
+          });
+      },
+   
+    /**
+     * 导出本页数据到表格
+     */
+    exportToExcel() {
+      this.outToExcel(this.tableData);
+    }
+  }
+};
+</script>
+
+
+<style lang="less" scoped>
+.container-content {
+  .container-content--search {
+    padding: 16px 40px 0 12px;
+    border-bottom: 1px solid #e3e8f5;
+  }
+  .container-content--toolbar {
+    padding: 10px;
+  }
+  .container-content--pagination {
+    float: right;
+    padding: 10px;
+  }
+  .container-centent--table {
+    margin-top: 10px;
+  }
+}
+.container-footer {
+  width: 50px;
+  margin: 0 auto;
+  padding: 10px;
+}
+.button-footer {
+  text-align: right;
+  padding: 0 0 10px 0;
+}
+.el-dialog-dev {
+  max-height: 70vh;
+  overflow: auto;
+}
+.export-button-style {
+  background: #6ac044 !important;
+  border-color: #6ac044 !important;
+}
+</style>

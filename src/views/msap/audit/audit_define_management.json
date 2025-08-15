@@ -1,0 +1,224 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "controls": [
+        {
+          "appId": {
+              "control": "select",
+              "label": "业务模块",
+              "selectFirstValue":true,
+              "dict": {
+                  "dictType": "MS_APPID",
+                  "dictKey": [
+                      "MS_APPID"
+                  ],
+                  "format": "value-label"
+              },
+              "rules": [
+                  {
+                      "required": true,
+                      "message": "请选择业务模块"
+                  }]
+          }
+        },{
+          "table_name": {
+            "control": "text",
+            "label": "数据库表名"
+          },
+          "table_desc": {
+            "control": "text",
+            "label": "数据库表描述"
+          },
+          
+          "is_registered_changed_log": {
+              "control": "select",
+                "label": "登记变更日志标志",
+                "selectFirstValue":false,
+                "dict": {
+                    "dictType": "MS_E_YESORNO",
+                    "dictKey": [
+                        "MS_E_YESORNO"
+                    ],
+                    "format": "value-label"
+                }
+          },
+          "audit_type": {
+            "control": "select",
+              "label": "审计类型",
+              "selectFirstValue":false,
+              "dict": {
+                  "dictType": "MS_E_TABLETYPE",
+                  "dictKey": [
+                      "MS_E_TABLETYPE"
+                  ],
+                  "format": "value-label"
+              }
+        }
+        }
+      ]
+    },
+
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "icon": "el-icon-circle-plus",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/msap/audit/audit_define_add.json",
+            "params": {
+              "appId":"${{formData.appId}}"
+            }
+          },
+          "props": {
+            "title": "新增审计表定义"
+          }
+        }
+      ]
+    },
+
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "ms0072"
+        }
+      },
+      "thead": [
+        {
+          "type":"string",
+          "label": "数据库表名",
+          "align":"center",
+          "prop": "table_name"
+        },
+        {
+          "type":"string",
+          "label": "数据库表描述",
+          "align":"center",
+          "prop": "table_desc"
+        },
+        {
+          "type":"string",
+          "label": "登记变更日志标志",
+          "align":"center",
+          "prop": "is_registered_changed_log",
+          "dict":{
+            "dictType": "MS_E_YESORNO",
+            "dictKey": [
+              "MS_E_YESORNO"
+            ],
+            "format": "value-label"
+
+          }
+        },
+        {
+          "type":"string",
+          "label": "审计类型",
+          "align":"center",
+          "prop": "audit_type",
+          "dict":{
+            "dictType": "MS_E_TABLETYPE",
+            "dictKey": [
+              "MS_E_TABLETYPE"
+            ],
+            "format": "value-label"
+          }
+        },
+        {
+          "type":"string",
+          "label": "法人代码",
+          "align":"center",
+          "prop": "org_id"
+        },
+        {
+          "type":"string",
+          "label": "数据创建时间",
+          "align":"center",
+          "prop": "data_create_time"
+        },
+        {
+          "type":"string",
+          "label": "数据更新时间",
+          "align":"center",
+          "prop": "data_update_time"
+        },
+        {
+          "type":"string",
+          "label": "数据创建用户",
+          "align":"center",
+          "prop": "data_create_user"
+        },
+        {
+          "type":"string",
+          "label": "数据更新用户",
+          "align":"center",
+          "prop": "data_update_user"
+        },
+        {
+          "type":"string",
+          "label": "数据版本号",
+          "align":"center",
+          "prop": "data_version"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width":"200%",
+          "align":"center",
+          "btns": [
+            {
+              "type":"look",
+              "label":"详情",
+              "toRequest":{
+                "url":"/views/msap/audit/audit_define_info.json",
+                "method":"POST"
+              },
+              "props":{
+                "width": "70%",
+                "title":"审计表定义详情"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/msap/audit/audit_define_modify.json",
+                "method": "POST",
+                "params": {
+                  "width": "70%",
+                  "appId":"${{formData.appId}}"
+                }
+              },
+              "props": {
+                "title": "审计表定义维护"
+              }
+            },
+            {
+                "type": "look",
+                "label": "删除",
+                "doRequest": {
+                    "url": "/SUMP/icmcall/icmRPCCall",
+                    "method": "POST",
+                    "params": {
+                        "servicecode": "ms0075",
+                        "appId":"${{formData.appId}}"
+                    }
+                },
+                "confirm": {
+                    "title": "确定删除",
+                    "confirmButtonText": "确定",
+                    "cancelButtonText": "取消"
+                }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

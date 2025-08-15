@@ -1,0 +1,192 @@
+{
+  "module": "v-form-editableDataGrid-btn",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "eruleName": {
+            "label": "规则名称",
+            "control": "text",
+            "span": 12,
+            "rules": [
+              {
+                "required": true,
+                "message": "请正确输入",
+                "max": 100
+              }
+            ]
+          },
+          "cruleId": {
+            "label": "组合规则ID",
+            "control": "lookup",
+            "span": 12,
+            "keyField": [
+              "cruleId", "cruleCode","cruleVersion","executableExpression"
+            ],
+            "toRequest":{
+              "url": "/views/risk/risk_executable_rule/combine_rule_info.json",
+              "method": "get",
+              "params": {
+              }
+            },
+            "props": {
+              "width": "55%",
+              "title": "组合规则查询",
+              "close": "",
+              "target": ""
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请正确输入",
+                "max": 8
+              }
+            ]
+          }
+        },
+        {
+          "cruleCode": {
+            "label": "组合规则代码",
+            "control": "string",
+            "span": 12
+          },
+          "cruleVersion": {
+            "label": "规则版本",
+            "control": "string",
+            "span": 12
+          }
+        },
+        {
+          "executableExpression": {
+            "label": "规则可执行表达式",
+            "control": "textarea",
+            "disabled": true,
+            "span": 24
+          }
+        },
+        {
+          "dateTime":{
+            "label": "有效期",
+            "control": "dateTimePicker",
+            "type": "datetimerange",
+            "valueFormat": "timestamp",
+            "format": "yyyy-MM-dd HH:mm:ss",
+            "#disabledDate": {
+              "startRange": "$g{{user_info.tradeDate}}",
+              "endRange": "2099-01-01 00:00:00"
+            },
+            "startField":"effectDate",
+            "endField":"expiryDate",
+            "span": 12
+          }
+        },
+        {
+          "description": {
+            "label": "备注",
+            "control": "textarea",
+            "span": 24,
+            "rules": [
+              {
+                "message": "请正确输入",
+                "max": 500
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "label": "新增",
+          "icon": "el-icon-plus",
+          "keyField": {
+            "handlerCode":"handlerCode",
+            "controlUnit":"controlUnit",
+            "controlNumber":"controlNumber"
+          },
+          "toRequest":{
+            "url": "/views/risk/risk_executable_rule/rule_handler_query.json",
+            "method": "get",
+            "params": {
+            }
+          },
+          "props": {
+            "width": "55%",
+            "title": "处置措施查询",
+            "close": "",
+            "target": ""
+          }
+        },
+        {
+          "type": "batchDelete",
+          "label": "批量删除",
+          "icon": "el-icon-close"
+        },
+        {
+          "type": "submit",
+          "label": "保存",
+          "icon": "el-icon-tickets",
+          "doRequest": {
+            "url": "/API/risk-management-service/risk-executable-rule/add",
+            "method": "post",
+            "params":{
+              "createUser": "$g{{user_info.userCode}}",
+              "updateUser": "$g{{user_info.userCode}}"
+            }
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "pagination": {
+        "show": false
+      },
+      "allData": true,
+      "thead": [
+        {
+          "type": "selection",
+          "width": "50",
+          "prop": {
+            "matchKey": "string",
+            "selectVal": "2a"
+          }
+        },
+        {
+          "prop": "handlerCode",
+          "label": "处置措施代码",
+          "type": "string"
+        },
+        {
+          "label": "管控时间单位",
+          "prop": "controlUnit",
+          "value":"",
+          "type": "select",
+          "dict": {
+            "dictType": "controlUnit",
+            "dictKey": [],
+            "format": "value-label",
+            "doRequest": {
+              "url": "/views/risk/dictdata/controlUnit.json",
+              "method": "get"
+            }
+          }
+        },
+        {
+          "label": "管控时间数值",
+          "prop": "controlNumber",
+          "type": "inputNumber",
+          "rules": [
+            {
+              "required": false,
+              "message": "请输入大于等于0的整数",
+              "type":"integer",
+              "min": 0
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

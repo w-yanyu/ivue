@@ -1,0 +1,117 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [{
+                "custna": {
+                    "control": "text",
+                    "label": "客户名称",
+                    "rules": [{
+                        "max": 80,
+                        "message": "长度不能超过80个字符"
+                    }]
+                },
+                "custid": {
+                    "control": "text",
+                    "label": "客户编号",
+                    "rules": [{
+                        "max": 80,
+                        "message": "长度不能超过80个字符"
+                    }]
+                },
+                "certtp": {
+                    "control": "select",
+                    "label": "证件类型",
+                    "dict": {
+                        "dictType": "E_IDTFTP",
+                        "dictKey": [
+                            "E_IDTFTP"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                "certno": {
+                    "control": "text",
+                    "label": "证件号码"
+                },
+                "statss": {
+                    "control": "hidden",
+                    "value": "Y"
+                }
+            }]
+        },
+        "toolbar": {
+            "btns": []
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "IUMSCUTS0004",
+                    "indvfg": "${{params.indvfg}}",
+                    "statss":"Y",
+                    "page_id": "/views/ci/InformationManager/customer_info_manager.json"
+                }
+            },
+            "thead": [{
+                    "type": "index",
+                    "label": "序号"
+                },
+                {
+                    "label": "客户号",
+                    "prop": "custid",
+                    "align": "center"
+                },
+                {
+                    "label": "客户名称",
+                    "prop": "custna",
+                    "align": "center"
+                },
+                {
+                    "label": "客户性质",
+                    "prop": "cuprop",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "E_CUPROP",
+                        "dictKey": [
+                            "E_CUPROP"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "证件类型",
+                    "prop": "certtp",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "E_IDTFTP",
+                        "dictKey": [
+                            "E_IDTFTP"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "证件号码",
+                    "prop": "certno",
+                    "align": "center"
+                },
+                {
+                    "label": "操作",
+                    "align": "center",
+                    "fixed": "right",
+                    "btns": [{
+                        "type": "bringback",
+                        "label": "选择"
+                    }]
+                }
+            ]
+        }
+    }
+}

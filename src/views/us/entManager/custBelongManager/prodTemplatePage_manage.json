@@ -1,0 +1,130 @@
+{
+  "module": "lr-tree-dynamic",
+  "layout": {
+    "tree": {
+     
+      "lazy": false,
+      "idField": "id",
+      "pIdField": "pId",
+      "labelField": "title",
+      "isLeafField": "isLeaf",
+      "nodeTypeField": "type",
+      "initRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ct2105",
+          "grupno": "0007"
+        }
+      },
+      "root": {
+        "rootNode": {
+          "name":  "${{params.cust_name}}",
+          "value": "-1"
+        }
+      },
+      "rootTypes": [
+        "dept","qy01"
+      ],
+      "nodeTypes": {
+        "dept": {
+          "children": [
+            "dept"
+          ],
+          "contextMenu": [
+            {
+              "type": "add",
+              "label": "新增",
+              "childNodeType": "dept",
+              "icon": "el-icon-circle-plus-outline",
+              "toRequest": {
+                "url": "/views/us/entManager/custBelongManager/kscp_cplx_add.json",
+                "method": "get",
+                "params": {
+                  "id": "${{current.id}}",
+                  "grupno": "0007",
+                  "grupnm":  "客户权限",
+                  "type": "qy01"
+                }
+              },
+              "props": {
+                "width": "80%",
+                "title": "新增管户人"
+              },
+              "eventAfter": {
+                "callback": "renderTree"
+              }
+            },
+            {
+              "type": "divider"
+            }
+          ]
+        },
+        "qy01": {
+          "children": [
+            "qy01"
+          ],
+          "toRequest": {
+            "url": "/views/us/entManager/custBelongManager/custBlong_list.json",
+            "params": {
+              "page_template_no": "${{current.id}}",
+              "method": "post",
+              "page_template_name": "${{current.title}}",
+              "apply_type": "${{current.pId}}",
+              "apply_type_name": "${{current.title}}"
+            }
+          },
+          "contextMenu": [
+            {
+              "type": "add",
+              "label": "新增",
+              "childNodeType": "KSCP",
+              "icon": "el-icon-circle-plus-outline",
+              "toRequest": {
+                "url": "/views/pd/prodTemplatePage/kscp_cplx_add.json",
+                "method": "get",
+                "params": {
+                  "id": "${{current.id}}",
+                  "grupno": "0006",
+                  "grupnm": "申请类型",
+                  "type": "KSCP01"
+                }
+              },
+              "props": {
+                "width": "80%",
+                "title": "新增申请类型"
+              },
+              "eventAfter": {
+                "callback": "renderTree"
+              }
+            },
+            {
+              "type": "divider"
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "childNodeType": "KSCP",
+              "icon": "el-icon-remove-outline",
+              "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "DELETE",
+                "params": {
+                  "servicecode": "ct2116",
+                  "id": "${{current.id}}",
+                  "grupno": "0007",
+                  "pid": "${{current.pId}}",
+                  "type": "KSCP"
+                }
+              },
+              "eventAfter": {
+                "callback": "renderTree"
+              }
+            }
+          ]
+        } 
+
+      }
+    }
+  }
+}

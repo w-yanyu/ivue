@@ -1,0 +1,204 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "icon": "",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "mk0002",
+              "#mobile_no": "${{formData.mobile_no}}"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "label_name": {
+            "control": "text",
+            "label": "标签名称",
+            "width": "25px",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入标签名称"
+              },
+              {
+                "max": 500,
+                "message": "长度不能超过500个字符"
+              }
+            ]
+          },
+          "label_type": {
+            "control": "select",
+            "label": "标签类型",
+            "width": "25px",
+            "dict": {
+              "dictType": "E_LABELTYPE",
+              "dictKey": [
+                "E_LABELTYPE"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择"
+              }
+            ],
+            "events": {
+              "condition": {
+                "0": {
+                  "control": {
+                    "invalid_date": {
+                      "disabled": true,
+                      "rules": [
+                        {
+                          "required": true
+                        }
+                      ],
+                      "value": "99991231"
+                    },
+                    "label_state": {
+                      "disabled": true,
+                      "rules": [
+                        {
+                          "required": true
+                        }
+                      ],
+                      "value": "0",
+                      "dict": {
+                        "dictType": "E_LABELSTATE",
+                        "dictKey": [
+                          "E_LABELSTATE"
+                        ]
+                      }
+                    }
+                  }
+                },
+                "1": {
+                  "control": {
+                    "invalid_date": {
+                      "disabled": false,
+                      "value": ""
+                    },
+                    "label_state": {
+                      "disabled": false,
+                      "value": ""
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "label_flg": {
+            "control": "text",
+            "label": "标签图标",
+            "width": "25px",
+            "rules": [
+              {
+                "required": false,
+                "message": "请选择标签图标"
+              },
+              {
+                "max": 80,
+                "message": "长度不能超过80个字符"
+              }
+            ]
+          },
+          "label_state": {
+            "control": "select",
+            "label": "标签状态",
+            "width": "25px",
+            "dict": {
+              "dictType": "E_LABELSTATE",
+              "dictKey": [
+                "E_LABELSTATE"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择"
+              }
+            ]
+          }
+        },
+        {
+          "effect_date": {
+            "label": "生效日期",
+            "width": "25px",
+            "control": "dateTimePicker",
+            "editable": true,
+            "format": "yyyyMMdd",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入生效日期"
+              }
+            ]
+          },
+          "invalid_date": {
+            "editable": true,
+            "control": "dateTimePicker2",
+            "rules": [
+              {
+                "required": "true",
+                "message": "请输入失效日期"
+              }
+            ],
+            "label": "失效日期",
+            "type": "date",
+            "width": "25px",
+            "endPlaceholder": "选择失效日期",
+            "unlinkPanels": true,
+            "format": "yyyyMMdd",
+            "disabledDate": {
+              "#startRange": "${{formData.issuing_addr}}",
+              "startRange": "19000101",
+              "endRange": "99991231"
+            }
+          }
+        },
+        {
+          "label_comment": {
+            "control": "textarea",
+            "label": "标签说明",
+            "width": "25px",
+            "rules": [
+              {
+                "required": false,
+                "message": "请输入标签说明"
+              },
+              {
+                "max": 200,
+                "message": "长度不能超过200个字符"
+              }
+            ],
+            "maxlength": 200,
+            "showWordLimit": true,
+            "rows": 2,
+            "#span": 20
+          },
+          "remarks": {
+            "control": "textarea",
+            "label": "备注",
+            "width": "25px",
+            "#placeholder": "请输入",
+            "rows": 2,
+            "#span": 20
+          }
+        }
+      ]
+    }
+  }
+}

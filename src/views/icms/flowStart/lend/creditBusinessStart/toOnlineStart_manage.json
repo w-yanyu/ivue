@@ -1,0 +1,1197 @@
+{
+  "module": "v-inputDataForm-btn",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "btns": [
+        {
+          "type": "submit",
+          "label": "流程启动",
+          "icon": "",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "appId": "icmsOnl",
+              "servicecode": "ar1001"
+            }
+          }
+        }
+      ],
+      "controlsGroup": [
+        {
+          "title": "基本信息",
+          "tooltip": "",
+          "titleIcon": "",
+          "showHint": "",
+          "accordion": false,
+          "name": "flowCommon",
+          "expand": true,
+          "controls": [
+            {
+              "cust_no": {
+                "control": "hidden",
+                "label": "cust_no"
+              },
+              "apply_no": {
+                "control": "hidden",
+                "label": "apply_no"
+              },
+              "cust_type": {
+                "control": "hidden",
+                "label": "cust_type"
+              },
+              "prod_type_name": {
+                "control": "hidden",
+                "label": "产品类型名称"
+              },
+              "apply_type": {
+                "control": "hidden",
+                "label": "申请类型",
+                "value": "O"
+              },
+              "is_credit": {
+                "control": "hidden",
+                "label": "是否授信",
+                "value": "1"
+              },
+              "cust_name": {
+                "control": "lookup",
+                "label": "客户名称",
+                "span": 8,
+                "width": "130px",
+                "keyField": {
+                  "cust_no": "cust_no",
+                  "cust_name": "cust_name",
+                  "cert_type": "cert_type",
+                  "cert_no": "cert_no",
+                  "mobile_no": "mobile_no",
+                  "cust_type": "cust_type"
+                },
+                "events": {
+                  "set": {
+                    "limit_no": ""
+                  }
+                },
+                "toRequest": {
+                  "url": "/views/icms/flowStart/lookup/customer_lookup.json",
+                  "method": "get"
+                },
+                "props": {
+                  "title": "选择客户",
+                  "width": "75%"
+                },
+                "format": "label",
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请选择客户名称"
+                  }
+                ]
+              },
+              "limit_no": {
+                "control": "lookup",
+                "span": 8,
+                "width": "130px",
+                "label": "额度编号",
+                "keyField": {
+                  "limit_no": "prod_credit_seq",
+                  "apply_no": "apply_no",
+                  "cl_amt": "prod_total_credit",
+                  "reality_avail_amt": "available_use_limit",
+                  "apply_term": "apply_term",
+                  "sale_prod_cd": "prod_code",
+                  "sale_prod_name": "prod_name"
+
+                },
+                "toRequest": {
+                  "url": "/views/icms/flowStart/lend/creditBusinessStart/credit_limit_lookup2.json",
+                  "method": "get",
+                  "params": {
+                    "cust_no": "${{formData.cust_no}}",
+                    "source_system": "001",
+                    "cl_level": "P",
+                    "status": "Y",
+                    "###cust_no": ""
+                  }
+                },
+                "props": {
+                  "title": "请选择额度编号"
+                },
+                "format": "label",
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "请选择额度编号"
+                  }
+                ]
+              },
+              "busi_type": {
+                "span": 8,
+                "width": "130px",
+                "label": "业务类型",
+                "value": "LOAN",
+                "control": "remoteSelect",
+                "labelField": "title",
+                "valueField": "id",
+                "disabled": true,
+                "doRequest": {
+                  "url": "/SUMP/call/RPCCall",
+                  "method": "POST",
+                  "params": {
+                    "servicecode": "pd0144",
+                    "grupno": "0006",
+                    "pid": "KSCP"
+                  }
+                }
+              },
+              "cl_amt": {
+                "control": "currency",
+                "decimal": "2",
+                "label": "额度金额(元) ",
+                "align": "left",
+                "span": 8,
+                "disabled": true,
+                "width": "130px",
+                "rules": [
+                  {
+                    "required": false,
+                    "message": "此项为必填项"
+                  }
+                ]
+              },
+              "reality_avail_amt": {
+                "control": "currency",
+                "decimal": "2",
+                "label": "可用余额(元) ",
+                "align": "left",
+                "disabled": true,
+                "span": 8,
+                "width": "130px",
+                "rules": [
+                  {
+                    "required": false,
+                    "message": "此项为必填项"
+                  }
+                ]
+              },
+              "mobile_no": {
+                "control": "hidden",
+                "span": 8,
+                "width": "130px",
+                "disabled": true,
+                "label": "手机号码"
+              },
+              "cert_type": {
+                "control": "select",
+                "label": "证件类型",
+                "span": 8,
+                "width": "130px",
+                "disabled": true,
+                "dict": {
+                  "dictType": "MS_E_CRET_TYPE",
+                  "dictKey": [
+                    "MS_E_CRET_TYPE"
+                  ],
+                  "labelField": "dictName",
+                  "valueField": "dictId"
+                }
+              },
+              "cert_no": {
+                "control": "text",
+                "span": 8,
+                "width": "130px",
+                "label": "证件号码",
+                "disabled": true
+              },
+              "sale_prod_cd": {
+                "control": "text",
+                "label": "可售产品",
+                "span": 8,
+                "width": "130px",
+                "disabled": true
+              },
+              "sale_prod_name": {
+                "control": "text",
+                "label": "产品名称",
+                "span": 8,
+                "width": "130px",
+                "disabled": true
+              },
+              "ccy_code": {
+                "control": "select",
+                "span": 8,
+                "width": "130px",
+                "label": "币种",
+                "value": "156",
+                "disabled": true,
+                "dict": {
+                  "dictType": "MS_CURRENCY",
+                  "dictKey": [
+                    "MS_CURRENCY"
+                  ],
+                  "format": "label"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "title": "贷款合同信息",
+          "tooltip": "",
+          "titleIcon": "",
+          "showHint": "",
+          "name": "lendIssueInfo",
+          "accordion": false,
+          "expand": true,
+          "controls": [
+            {
+              "apply_amt": {
+                "control": "currency",
+                "decimal": "2",
+                "label": "申请金额(元) ",
+                "align": "left",
+                "span": 8,
+                "width": "130px",
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "此项为必填项"
+                  }
+                ]
+              },
+              "apply_term": {
+                "control": "text",
+                "decimal": "2",
+                "label": "申请期限",
+                "span": 8,
+                "width": "130px",
+                "disabled": false,
+                "rules": [
+                  {
+                    "required": false,
+                    "message": "此项为必填项"
+                  }
+                ],
+                "###suffix": "M"
+              },
+              "apply_repay_way": {
+                "control": "select",
+                "label": "申请还款方式",
+                "dict": {
+                  "dictType": "AR_E_REPAY_WAY",
+                  "dictKey": [
+                    "AR_E_REPAY_WAY"
+                  ],
+                  "labelField": "dictName",
+                  "valueField": "dictId",
+                  "format": "label"
+                },
+                "####events": {
+                  "condition": {
+                    "1": {
+                      "control": {
+                        "apply_repay_freq": {
+                          "disabled": true,
+                          "value": null,
+                          "rules": [
+                            {
+                              "required": true
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "2": {
+                      "control": {
+                        "apply_repay_freq": {
+                          "disabled": false,
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "此项为必填项"
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "3": {
+                      "control": {
+                        "apply_repay_freq": {
+                          "disabled": false,
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "此项为必填项"
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "4": {
+                      "control": {
+                        "apply_repay_freq": {
+                          "disabled": false,
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "此项为必填项"
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "5": {
+                      "control": {
+                        "apply_repay_freq": {
+                          "disabled": false,
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "此项为必填项"
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "6": {
+                      "control": {
+                        "apply_repay_freq": {
+                          "disabled": false,
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "此项为必填项"
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "7": {
+                      "control": {
+                        "apply_repay_freq": {
+                          "disabled": false,
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "此项为必填项"
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "8": {
+                      "control": {
+                        "apply_repay_freq": {
+                          "disabled": false,
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "此项为必填项"
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "9": {
+                      "control": {
+                        "apply_repay_freq": {
+                          "disabled": false,
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "此项为必填项"
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "10": {
+                      "control": {
+                        "apply_repay_freq": {
+                          "disabled": false,
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "此项为必填项"
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "11": {
+                      "control": {
+                        "apply_repay_freq": {
+                          "disabled": false,
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "此项为必填项"
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "12": {
+                      "control": {
+                        "apply_repay_freq": {
+                          "disabled": false,
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "此项为必填项"
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "13": {
+                      "control": {
+                        "apply_repay_freq": {
+                          "disabled": false,
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "此项为必填项"
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "14": {
+                      "control": {
+                        "apply_repay_freq": {
+                          "disabled": false,
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "此项为必填项"
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "15": {
+                      "control": {
+                        "apply_repay_freq": {
+                          "disabled": false,
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "此项为必填项"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                },
+                "span": 8,
+                "width": "130px",
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "此项为必填项"
+                  }
+                ]
+              },
+              "apply_repay_freq": {
+                "control": "hidden",
+                "disabled": true,
+                "label": "申请还款间隔",
+                "dict": {
+                  "dictType": "AR_APPLY_REPAY_FREQ",
+                  "dictKey": [
+                    "AR_APPLY_REPAY_FREQ"
+                  ],
+                  "labelField": "dictName",
+                  "valueField": "dictId",
+                  "format": "label"
+                },
+                "span": 8,
+                "width": "130px",
+                "rules": [
+                  {
+                    "required": false,
+                    "message": "此项为必填项"
+                  }
+                ]
+              },
+              "loan_contract_start_date": {
+                "control": "dateTimePicker",
+                "format": "yyyy-MM-dd",
+                "valueFormat": "yyyyMMdd",
+                "label": "合同起始日期",
+                "span": 8,
+                "width": "130px",
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "此项为必填项"
+                  }
+                ]
+              },
+              "trust_pay_limit_flag": {
+                "control": "select",
+                "label": "是否受托支付",
+                "span": 8,
+                "width": "130px",
+                "dict": {
+                  "dictType": "MS_E_YESORNO",
+                  "dictKey": [
+                    "MS_E_YESORNO"
+                  ],
+                  "labelField": "dictName",
+                  "valueField": "dictId",
+                  "format": "label"
+                },
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "此项为必填项"
+                  }
+                ],
+                "events": {
+                  "condition": {
+                    "0": {
+                      "control": {
+                        "trust_pay_amt": {
+                          "disabled": true,
+                          "value": null,
+                          "rules": [
+                            {
+                              "required": false
+                            }
+                          ]
+                        },
+                        "is_acct_other_bank": {
+                          "rules": [
+                            {
+                              "required": false,
+                              "message": "此项为必填项"
+                            }
+                          ]
+                        },
+                        "open_acct_bank": {
+                          "rules": [
+                            {
+                              "required": false,
+                              "message": "此项为必填项"
+                            }
+                          ]
+                        },
+                        "tr_branch_org": {
+                          "rules": [
+                            {
+                              "required": false,
+                              "message": "此项为必填项"
+                            }
+                          ]
+                        },
+                        "tr_lend_acct_no": {
+                          "rules": [
+                            {
+                              "required": false,
+                              "message": "此项为必填项"
+                            }
+                          ]
+                        },
+                        "tr_loan_acct_name": {
+                          "rules": [
+                            {
+                              "required": false,
+                              "message": "此项为必填项"
+                            }
+                          ]
+                        },
+                        "tr_acct_type": {
+                          "rules": [
+                            {
+                              "required": false,
+                              "message": "此项为必填项"
+                            }
+                          ]
+                        },
+                        "tr_money_exchange_flag": {
+                          "rules": [
+                            {
+                              "required": false,
+                              "message": "此项为必填项"
+                            }
+                          ]
+                        },
+                        "transfer_acct_amt": {
+                          "value": "",
+                          "disabled": false,
+                          "rules": [
+                            {
+                              "required": false,
+                              "message": "此项为必填项"
+                            }
+                          ]
+                        },
+                        "is_xfer": {
+                          "value": "",
+                          "disabled": false,
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "此项为必填项"
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "1": {
+                      "control": {
+                        "trust_pay_amt": {
+                          "value": "${{formData.apply_amt}}",
+                          "disabled": false,
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "此项为必填项"
+                            }
+                          ]
+                        },
+                        "is_acct_other_bank": {
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "此项为必填项"
+                            }
+                          ]
+                        },
+                        "open_acct_bank": {
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "此项为必填项"
+                            }
+                          ]
+                        },
+                        "tr_branch_org": {
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "此项为必填项"
+                            }
+                          ]
+                        },
+                        "tr_lend_acct_no": {
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "此项为必填项"
+                            }
+                          ]
+                        },
+                        "tr_loan_acct_name": {
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "此项为必填项"
+                            }
+                          ]
+                        },
+                        "tr_acct_type": {
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "此项为必填项"
+                            }
+                          ]
+                        },
+                        "tr_money_exchange_flag": {
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "此项为必填项"
+                            }
+                          ]
+                        },
+                        "transfer_acct_amt": {
+                          "value": "${{formData.apply_amt}}",
+                          "disabled": true,
+                          "rules": [
+                            {
+                              "required": false,
+                              "message": "此项为必填项"
+                            }
+                          ]
+                        },
+                        "is_xfer": {
+                          "value": "1",
+                          "disabled": true,
+                          "rules": [
+                            {
+                              "required": false,
+                              "message": "此项为必填项"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "trust_pay_amt": {
+                "control": "hidden",
+                "decimal": "2",
+                "label": "受托支付限额",
+                "span": 8,
+                "width": "130px",
+                "rules": [
+                  {
+                    "required": false,
+                    "message": "此项为必填项"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "title": "放款账户信息",
+          "tooltip": "",
+          "titleIcon": "",
+          "name": "transferAcctInfo",
+          "showHint": "",
+          "accordion": false,
+          "expand": true,
+          "controls": [
+            {
+              "is_xfer": {
+                "control": "select",
+                "label": "是否转第三方",
+                "span": 8,
+                "width": "130px",
+                "dict": {
+                  "dictType": "MS_E_YESORNO",
+                  "dictKey": [
+                    "MS_E_YESORNO"
+                  ],
+                  "format": "label"
+                },
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "必填项"
+                  }
+                ],
+                "showItem": {
+                  "1": [
+                    "is_acct_other_bank",
+                    "transfer_acct_amt",
+                    "tr_lend_acct_no",
+                    "tr_loan_acct_name",
+                    "tr_branch_org",
+                    "open_acct_bank",
+                    "tr_acct_type",
+                    "tr_money_exchange_flag"
+                  ]
+
+                },
+                "events": {
+                  "condition": {
+                    "0": {
+                      "control": {
+                        "trust_pay_amt": {
+                          "disabled": true,
+                          "value": null,
+                          "rules": [
+                            {
+                              "required": false
+                            }
+                          ]
+                        },
+                        "is_acct_other_bank": {
+                          "rules": [
+                            {
+                              "required": false,
+                              "message": "此项为必填项"
+                            }
+                          ]
+                        },
+                        "open_acct_bank": {
+                          "rules": [
+                            {
+                              "required": false,
+                              "message": "此项为必填项"
+                            }
+                          ]
+                        },
+                        "tr_branch_org": {
+                          "rules": [
+                            {
+                              "required": false,
+                              "message": "此项为必填项"
+                            }
+                          ]
+                        },
+                        "tr_lend_acct_no": {
+                          "rules": [
+                            {
+                              "required": false,
+                              "message": "此项为必填项"
+                            }
+                          ]
+                        },
+                        "tr_loan_acct_name": {
+                          "rules": [
+                            {
+                              "required": false,
+                              "message": "此项为必填项"
+                            }
+                          ]
+                        },
+                        "tr_acct_type": {
+                          "rules": [
+                            {
+                              "required": false,
+                              "message": "此项为必填项"
+                            }
+                          ]
+                        },
+                        "tr_money_exchange_flag": {
+                          "rules": [
+                            {
+                              "required": false,
+                              "message": "此项为必填项"
+                            }
+                          ]
+                        },
+                        "transfer_acct_amt": {
+                          "value": "",
+                          "disabled": false,
+                          "rules": [
+                            {
+                              "required": false,
+                              "message": "此项为必填项"
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "1": {
+                      "control": {
+                        "trust_pay_amt": {
+                          "value": "${{formData.apply_amt}}",
+                          "disabled": false,
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "此项为必填项"
+                            }
+                          ]
+                        },
+                        "is_acct_other_bank": {
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "此项为必填项"
+                            }
+                          ]
+                        },
+                        "open_acct_bank": {
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "此项为必填项"
+                            }
+                          ]
+                        },
+                        "tr_branch_org": {
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "此项为必填项"
+                            }
+                          ]
+                        },
+                        "tr_lend_acct_no": {
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "此项为必填项"
+                            }
+                          ]
+                        },
+                        "tr_loan_acct_name": {
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "此项为必填项"
+                            }
+                          ]
+                        },
+                        "tr_acct_type": {
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "此项为必填项"
+                            }
+                          ]
+                        },
+                        "tr_money_exchange_flag": {
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "此项为必填项"
+                            }
+                          ]
+                        },
+                        "transfer_acct_amt": {
+                          "value": "",
+                          "disabled": false,
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "此项为必填项"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "lend_amt": {
+                "control": "currency",
+                "label": "放款金额",
+                "align": "left",
+                "span": 8,
+                "width": "130px",
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "必填项"
+                  }
+                ]
+              },
+              "lend_acct_no": {
+                "control": "text",
+                "span": 8,
+                "width": "130px",
+                "label": "放款账户",
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "必填项"
+                  }
+                ]
+              },
+              "loan_acct_name": {
+                "control": "text",
+                "label": "放款账户名",
+                "span": 8,
+                "width": "130px",
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "必填项"
+                  }
+                ]
+              },
+              "branch_org": {
+                "control": "text",
+                "label": "开户分支机构",
+                "span": 8,
+                "width": "130px",
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "必填项"
+                  }
+                ]
+              },
+              "acct_type": {
+                "control": "select",
+                "span": 8,
+                "width": "130px",
+                "label": "账号类型",
+                "dict": {
+                  "dictType": "AR_E_ACCT_TYPE",
+                  "dictKey": [
+                    "AR_E_ACCT_TYPE"
+                  ],
+                  "format": "label"
+                },
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "必填项"
+                  }
+                ],
+                "value": "1"
+              },
+              "money_exchange_flag": {
+                "control": "select",
+                "span": 8,
+                "width": "130px",
+                "label": "钞汇标志",
+                "dict": {
+                  "dictType": "AR_E_ACCT_NTTT_FLAG",
+                  "dictKey": [
+                    "AR_E_ACCT_NTTT_FLAG"
+                  ],
+                  "format": "label"
+                },
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "必填项"
+                  }
+                ],
+                "value": "1"
+              }
+            }
+          ]
+        },
+        {
+          "title": "转账账户信息",
+          "tooltip": "",
+          "titleIcon": "",
+          "name": "repayAcctInfo",
+          "showHint": "",
+          "accordion": false,
+          "expand": true,
+          "controls": [
+            {
+              "apply_no": {
+                "control": "hidden",
+                "label": "申请号"
+              },
+              "is_acct_other_bank": {
+                "control": "select",
+                "label": "是否他行帐户",
+                "initShow": false,
+                "span": 8,
+                "width": "130px",
+                "dict": {
+                  "dictType": "MS_E_YESORNO",
+                  "dictKey": [
+                    "MS_E_YESORNO"
+                  ],
+                  "format": "label"
+                },
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "必填项"
+                  }
+                ]
+              },
+              "transfer_acct_amt": {
+                "control": "currency",
+                "align": "left",
+                "initShow": false,
+                "span": 8,
+                "width": "130px",
+                "label": "转账金额",
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "必填项"
+                  }
+                ]
+              },
+              "tr_lend_acct_no": {
+                "control": "text",
+                "initShow": false,
+                "span": 8,
+                "width": "130px",
+                "label": "账户",
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "必填项"
+                  }
+                ]
+              },
+              "tr_loan_acct_name": {
+                "control": "text",
+                "label": "放款账户名",
+                "initShow": false,
+                "span": 8,
+                "width": "130px",
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "必填项"
+                  }
+                ]
+              },
+              "tr_branch_org": {
+                "control": "text",
+                "label": "开户分支机构",
+                "initShow": false,
+                "span": 8,
+                "width": "130px",
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "必填项"
+                  }
+                ]
+              },
+              "open_acct_bank": {
+                "control": "text",
+                "label": "开户行",
+                "initShow": false,
+                "span": 8,
+                "width": "130px",
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "必填项"
+                  }
+                ]
+              },
+              "tr_acct_type": {
+                "control": "select",
+                "initShow": false,
+                "span": 8,
+                "width": "130px",
+                "label": "账号类型",
+                "dict": {
+                  "dictType": "AR_E_ACCT_TYPE",
+                  "dictKey": [
+                    "AR_E_ACCT_TYPE"
+                  ],
+                  "format": "label"
+                },
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "必填项"
+                  }
+                ]
+              },
+              "tr_money_exchange_flag": {
+                "control": "select",
+                "initShow": false,
+                "span": 8,
+                "width": "130px",
+                "label": "钞汇标志",
+                "dict": {
+                  "dictType": "AR_E_ACCT_NTTT_FLAG",
+                  "dictKey": [
+                    "AR_E_ACCT_NTTT_FLAG"
+                  ],
+                  "format": "label"
+                },
+                "rules": [
+                  {
+                    "required": true,
+                    "message": "必填项"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

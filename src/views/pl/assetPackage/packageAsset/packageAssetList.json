@@ -1,0 +1,292 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "initRequest": "${{params}}",
+      "controls": [
+        {
+          "package_name": {
+            "label": "资产包名称",
+            "control": "text"
+          },
+          "package_dt": {
+            "label": "打包日期",
+            "control": "dateTimePicker",
+            "type": "date",
+            "format": "yyyyMMdd"
+          },
+          "loan_use": {
+            "label": "贷款用途",
+            "control": "text"
+          },
+          "loan_form": {
+            "label": "贷款形态",
+            "control": "select",
+            "multiple": false,
+            "dict": {
+              "dictKey": [
+                "LN_E_LOAN_FORM"
+              ],
+              "dictType": "LN_E_LOAN_FORM",
+              "format": "label"
+            }
+          },
+          "loan_acct_type": {
+            "label": "贷款账户状态",
+            "control": "select",
+            "multiple": false,
+            "dict": {
+              "dictKey": [
+                "LN_E_LOAN_ACCT_STE"
+              ],
+              "dictType": "LN_E_LOAN_ACCT_STE",
+              "format": "label"
+            }
+          },
+          "repay_type": {
+            "label": "还款方式",
+            "control": "select",
+            "multiple": false,
+            "dict": {
+              "dictKey": [
+                "LN_E_RPYMT_WAY"
+              ],
+              "dictType": "LN_E_RPYMT_WAY",
+              "format": "label"
+            }
+          },
+          "guar_type": {
+            "label": "担保方式",
+            "control": "select",
+            "multiple": false,
+            "dict": {
+              "dictKey": [
+                "MS_E_GUAR_TYPE"
+              ],
+              "dictType": "MS_E_GUAR_TYPE",
+              "format": "label"
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增打包资产",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/pl/assetPackage/packageAsset/packageAssetStep.json"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pl0715",
+          "package_status":"${{params.package_status}}"
+        }
+      },
+      "thead": [
+        {
+          "type": "index"
+        },
+        {
+          "prop": "package_no",
+          "label": "资产包编号",
+          "align": "center"
+        },
+        {
+          "prop": "package_name",
+          "label": "资产包名称",
+          "align": "center"
+        },
+        {
+          "label": "打包日期",
+          "align": "center",
+          "prop": "package_dt"
+        },
+        {
+          "prop": "channel_id",
+          "label": "渠道",
+          "align": "center",
+          "dict": {
+            "dictType": "PL_E_FUND_CHANNEL",
+            "dictKey": [
+              "PL_E_FUND_CHANNEL"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "贷款用途",
+          "align": "center",
+          "prop": "loan_use"
+        },
+        {
+          "prop": "loan_form",
+          "label": "贷款形态",
+          "align": "center",
+          "dict": {
+            "dictType": "LN_E_LOAN_FORM",
+            "dictKey": [
+              "LN_E_LOAN_FORM"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "prop": "repay_type",
+          "label": "还款方式",
+          "align": "center",
+          "dict": {
+            "dictType": "LN_E_RPYMT_WAY",
+            "dictKey": [
+              "LN_E_RPYMT_WAY"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "prop": "guar_type",
+          "label": "担保方式",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_GUAR_TYPE",
+            "dictKey": [
+              "MS_E_GUAR_TYPE"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "prop": "package_status",
+          "label": "资产包状态",
+          "align": "center",
+          "dict": {
+            "dictType": "PL_E_ASSET_PACKAGE_STATUS",
+            "dictKey": [
+              "PL_E_ASSET_PACKAGE_STATUS"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": "200",
+          "align": "center",
+          "btns": [
+            {
+              "toRequest": {
+                "method": "POST",
+                "url": "/views/pl/assetPackage/packageAsset/packageAssetUpdStep.json"
+              },
+              "label": "维护",
+              "type": "edit",
+              "props": {
+                "width": "80%",
+                "height": "80%",
+                "title": "维护资产包"
+              },
+              "show": {
+                "prop": "package_status",
+                "is": [
+                  "0"
+                ]
+              }
+            },
+            {
+              "doRequest": {
+                "method": "POST",
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "params": {
+                  "servicecode": "pl0716",
+                  "method": "del"
+                }
+              },
+              "label": "删除",
+              "type": "delete",
+              "show": {
+                "prop": "package_status",
+                "is": [
+                  "0"
+                ]
+              }
+            },
+            {
+              "doRequest": {
+                "method": "POST",
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "params": {
+                  "servicecode": "pl0725",
+                  "package_no": "${{current.package_no}}"
+                }
+              },
+              "label": "资产包生效",
+              "type": "edit",
+              "show": {
+                "prop": "package_status",
+                "is": [
+                  "0"
+                ]
+              }
+            },
+            {
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "pl0715",
+                  "package_status":"${{params.package_status}}"
+                }
+              },
+              "label": "核算处理",
+              "type": "edit",
+              "props": {
+                "width": "80%",
+                "height": "80%",
+                "title": "核算处理"
+              },
+              "show": {
+                "prop": "package_status",
+                "is": [
+                  "1"
+                ]
+              }
+            },
+            {
+              "toRequest": {
+                "method": "POST",
+                "url": "/views/pl/assetPackage/packageAsset/packageAssetMessage.json",
+                "params":{
+                  
+                }
+              },
+              "label": "短信公告",
+              "type": "edit",
+              "props": {
+                "width": "80%",
+                "height": "80%",
+                "title": "短信公告"
+              },
+              "show": {
+                "prop": "package_status",
+                "is": [
+                  "1"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

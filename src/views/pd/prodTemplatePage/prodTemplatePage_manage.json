@@ -1,0 +1,213 @@
+{
+  "module": "lr-tree-dynamic",
+  "layout": {
+    "tree": {
+      "title": "模板页面信息",
+      "lazy": false,
+      "idField": "id",
+      "pIdField": "pid",
+      "labelField": "title",
+      "isLeafField": "isleaf",
+      "nodeTypeField": "type",
+      "initRequest": {
+        "url": "/SUMP/call/RPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "pd0140",
+          "grupno": "0006"
+        }
+      },
+      "root": {
+        "rootNode": {
+          "name": "产品类型",
+          "value": "KSCP",
+          "id": "KSCP"
+        },
+        "contextMenu": [
+          {
+            "type": "add",
+            "label": "新增",
+            "childNodeType": "dept",
+            "icon": "el-icon-circle-plus-outline",
+            "toRequest": {
+              "url": "/views/pd/prodTemplatePage/kscp_cplx_frist_add.json.json",
+              "method": "get",
+              "params": {
+                "id": "${{current.id}}",
+                "grupno": "0006",
+                "grupnm": "可售产品类型",
+                "type": "KSCP"
+              }
+            },
+            "props": {
+              "width": "80%",
+              "title": "新增可售产品类型"
+            },
+            "eventAfter": {
+              "callback": "renderTree"
+            }
+          }
+        ]
+      },
+      "nodeTypes": {
+        "KSCP": {
+          "children": [
+            "KSCP"
+          ],
+          "toRequest": {
+            "url": "/views/pd/prodTemplatePage/kscp_cplx_info.json",
+            "params": {
+              "page_template_no": "${{current.id}}",
+              "method": "post",
+              "page_template_name": "${{current.title}}",
+              "apply_type": "${{current.pid}}",
+              "apply_type_name": "${{current.title}}"
+            }
+          },
+          "contextMenu": [
+            {
+              "type": "add",
+              "label": "新增",
+              "childNodeType": "KSCP",
+              "icon": "el-icon-circle-plus-outline",
+              "toRequest": {
+                "url": "/views/pd/prodTemplatePage/kscp_cplx_second_add.json",
+                "method": "get",
+                "params": {
+                  "id": "${{current.id}}",
+                  "grupno": "0006",
+                  "grupnm": "申请类型",
+                  "type": "KSCP01"
+                }
+              },
+              "props": {
+                "width": "80%",
+                "title": "新增申请类型"
+              },
+              "eventAfter": {
+                "callback": "renderTree"
+              }
+            },
+            {
+              "type": "divider"
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "childNodeType": "KSCP",
+              "icon": "el-icon-remove-outline",
+              "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "DELETE",
+                "params": {
+                  "servicecode": "pd0123",
+                  "page_template_no": "${{current.id}}"
+                }
+              },
+              "eventAfter": {
+                "callback": "renderTree"
+              }
+            }
+          ]
+        },
+        "KSCP01": {
+          "children": [
+            "KSCP01"
+          ],
+          "toRequest": {
+            "url": "/views/pd/prodTemplatePage/kscp_sqlx_info.json",
+            "params": {
+              "page_template_no": "${{current.id}}",
+              "method": "post",
+              "page_template_name": "${{current.title}}",
+              "apply_type": "${{current.pid}}",
+              "apply_type_name": "${{current.title}}"
+            }
+          },
+          "contextMenu": [
+            {
+              "type": "add",
+              "label": "新增",
+              "childNodeType": "KSCP",
+              "icon": "el-icon-circle-plus-outline",
+              "toRequest": {
+                "url": "/views/pd/prodTemplatePage/kscp_cplx_third_add.json",
+                "method": "get",
+                "params": {
+                  "id": "${{current.id}}",
+                  "prod_type": "${{current.pid}}",
+                  "grupno": "0006",
+                  "grupnm": "页面模板",
+                  "type": "KSCP02"
+                }
+              },
+              "props": {
+                "width": "80%",
+                "title": "新增页面模板"
+              },
+              "eventAfter": {
+                "callback": "renderTree"
+              }
+            },
+            {
+              "type": "divider"
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "childNodeType": "KSCP",
+              "icon": "el-icon-remove-outline",
+              "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "DELETE",
+                "params": {
+                  "servicecode": "pd0123",
+                  "page_template_no": "${{current.id}}"
+                }
+              },
+              "eventAfter": {
+                "callback": "renderTree"
+              }
+            }
+          ]
+        },
+        "KSCP02": {
+          "children": [
+            "KSCP02"
+          ],
+          "toRequest": {
+            "url": "/views/pd/prodTemplatePage/kscp_add.json",
+            "params": {
+              "page_template_no": "${{current.page_template_no}}",
+              "id": "${{current.id}}",
+              "method": "post",
+              "page_template_name": "${{current.title}}",
+              "apply_type": "${{current.pid}}"
+            }
+          },
+          "contextMenu": [
+            {
+              "type": "delete",
+              "label": "删除",
+              "childNodeType": "KSCP",
+              "icon": "el-icon-remove-outline",
+              "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "DELETE",
+                "params": {
+                  "servicecode": "pd0123",
+                  "page_template_no": "${{current.page_template_no}}",
+                  "id": "${{current.id}}",
+                  "pid": "${{current.pid}}"
+                }
+              },
+              "eventAfter": {
+                "callback": "renderTree"
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

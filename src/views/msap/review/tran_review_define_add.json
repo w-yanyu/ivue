@@ -1,0 +1,155 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "btns": [
+                {
+                    "type": "submit",
+                    "label": "提交",
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "ms0060",
+                            "appId":"${{params.appId}}"
+                        }
+                    }
+                }
+            ],
+
+            "controls": [
+                {
+                    "trxn_code": {
+                        "control": "lookup",
+                        "label": "交易码",
+                        "width": "130px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message":"请输入"
+                            }
+                        ],
+                        "keyField":{
+                            "trxn_code": "flow_tran_id",
+                            "trxn_desc":"flow_tran_name"
+
+                          },
+                          "toRequest": {
+                            "url": "/views/msap/adp/project_tran_lookup.json",
+                            "method": "post",
+                            "params": {
+                              "appId":"${{params.appId}}"
+                            }
+                          },
+                          "props": {
+                            "title": "项目交易选择"
+                          }
+                    },
+                    "trxn_desc": {
+                        "control": "text",
+                        "label": "交易描述",
+                        "width": "130px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message":"请输入"
+                            },
+                            {
+                                "max":30,
+                                "message":"最多可以输入 30 个字节"
+                            }
+                        ]
+                    }
+                },{
+                    "system_id": {
+                        "control": "text",
+                        "label": "系统ID",
+                        "width": "130px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message":"请输入"
+                            },
+                            {
+                                "max":30,
+                                "message":"最多可以输入 30 个字节"
+                            }
+                        ]
+                    },
+                    "sub_system_id": {
+                        "control": "text",
+                        "label": "子系统ID",
+                        "width": "130px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message":"请输入"
+                            },
+                            {
+                                "max":30,
+                                "message":"最多可以输入 30 个字节"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "review_flag": {
+                        "control": "select",
+                        "disabled":false,
+                        "label": "是否复核标志",
+                        "width": "130px",
+                        "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                          "MS_E_YESORNO"
+                        ],
+                        "format": "label"
+
+                        },
+                        "rules": [
+                            {
+                                "required": true
+                            }
+                        ]
+                    },
+                    "register_msg_flag": {
+                        "control": "select",
+                        "disabled":false,
+                        "label": "登记报文标志",
+                        "width": "130px",
+                        "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                          "MS_E_YESORNO"
+                        ],
+                        "format": "label"
+
+                        },
+                        "rules": [
+                            {
+                                "required": true
+                            }
+                        ]
+                    }
+                },{
+                    "role_id": {
+                        "control": "text",
+                        "label": "复核角色ID",
+                        "width": "130px",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message":"请输入"
+                            },
+                            {
+                                "max":30,
+                                "message":"最多可以输入 30 个字节"
+                            }
+                        ]
+                    }
+                }
+               
+            ]
+        }
+    }
+}

@@ -1,0 +1,87 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "btns": [],
+            "initRequest": "${{params}}",
+            "controls": [
+              {
+                "head_unitPrice": {
+                  "disabled":true,
+                  "control": "text",
+                  "label": "人头单价(元/人/月)"
+                },
+                "head_count": {
+                  "disabled":true,
+                  "control": "text",
+                  "label": "人头数量(个)"
+                }
+              },
+              {
+                "indicator_results":{
+                  "disabled":true,
+                  "control": "select",
+                  "label": "指标结果",
+                  "options": [
+                    {
+                      "value": "001",
+                      "label": "回款率"
+                    },
+                    {
+                      "value": "002",
+                      "label": "测试"
+                    }
+                  ]
+                }
+              },
+              {
+                "default_or_custom":{
+                  "disabled":true,
+                  "control": "radio",
+                  "label": "逾期阶段设置",
+                  "options": [
+                    {
+                      "value": "default",
+                      "label": "默认逾期阶段"
+                    },
+                    {
+                      "value": "custom",
+                      "label": "自定义逾期阶段"
+                    }
+                  ],
+                  "events": {
+                    "showItem":{
+                      "default":["default_or_custom_default"],
+                      "custom":["default_or_custom_custom"]
+                    }
+                  }
+                },
+                "default_or_custom_default": {
+                  "span": 24,
+                  "allowCreate": true,
+                  "control": "dynamic",
+                  "toRequest":{
+                    "url":"/views/cs/compManage/contrManage/cmsnScheme/viewCmsn/headExp/default_or_custom_default.json",
+                    "params": {
+                      "servicecode": "xxxxx",
+                      "appId": "cbOnl"
+                    }
+                  }
+                },
+                "default_or_custom_custom": {
+                  "span": 24,
+                  "allowCreate": true,
+                  "control": "dynamic",
+                  "toRequest":{
+                    "url":"/views/cs/compManage/contrManage/cmsnScheme/viewCmsn/headExp/default_or_custom_custom.json",
+                    "params": {
+                      "servicecode": "xxxxx",
+                      "appId": "cbOnl"
+                    }
+                  }
+                }
+              }
+            ]
+        }
+    }
+}

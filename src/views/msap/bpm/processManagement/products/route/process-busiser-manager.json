@@ -1,0 +1,83 @@
+
+{
+  "module": "v-form-editableDataGrid-btn",
+  "layout": {
+    "form": {
+      "controls": [],
+      "btns":[]
+    },
+    "toolbar": {},
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "bpm4015",
+          "appId":"${{params.appId}}",
+          "route_cd":"${{params.route_cd}}",
+          "wf_prod_no":"${{params.wf_prod_no}}",
+          "bpm_version":"${{params.bpm_version}}"
+        }
+      },
+      "pagination":{
+        "show":false
+      },
+      "thead": [
+        {
+          "label": "路线处理编号",
+          "align":"center",
+          "prop": "route_deal_no"
+        },
+        {
+          "label": "流程产品编号",
+          "align":"center",
+          "prop": "wf_prod_no"
+        },
+        {
+          "label": "线路编号",
+          "align":"center",
+          "prop": "route_id"
+        },
+        {
+          "label":"业务方法编号",
+          "align":"center",
+          "prop":"busi_id"
+        },
+        {
+          "label":"业务方法名称",
+          "align":"center",
+          "prop":"service_name"
+        },
+        {
+          "label":"参数序号",
+          "align":"center",
+          "prop":"sort_no"
+        }
+      ]
+    },
+    "footer": {
+      "btns": [
+        {
+          "type": "edit",
+          "label": "维护",
+          "icon": "el-icon-tickets",
+          "toRequest": {
+            "url": "/views/msap/bpm/processManagement/products/route/process-busiser-main.json",
+            "method": "POST",
+            "params": {
+              "wf_prod_no": "${{params.wf_prod_no}}",
+              "bpm_version": "${{params.bpm_version}}",
+              "route_cd":"${{params.route_cd}}",
+              "appId":"${{params.appId}}"
+            }
+          },
+          "show": {
+            "expression": "'${{params.isEdit}}' == 'true'"
+          }
+        }
+      ]
+    }
+  }
+}

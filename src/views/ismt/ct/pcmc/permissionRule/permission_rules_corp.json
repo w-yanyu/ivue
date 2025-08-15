@@ -1,0 +1,124 @@
+{
+  "module": "v-inputDataForm-btn",
+  "layout": {
+    "form": {
+      "btns": [],
+      "initRequest": "${{params}}",
+      "scope": "ruleTypeDept",
+      "controls": [
+        {
+          "relate_corp_type": {
+            "span": 18,
+            "control": "radio",
+            "label": "关联法人",
+            "value": "${{params.relate_corp_type}}",
+            "dict": {
+              "format": "label",
+              "dictKey": ["CT_RELATED_CORP"],
+              "dictType": "CT_RELATED_CORP"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择！",
+                "max": 80
+              }
+            ],
+            "events": {
+              "firstInit": false,
+              "condition": {
+                "0": {
+                  "control": {
+                    "column_operator": {
+                      "value": "1"
+                    }
+                  }
+                },
+                "1": {
+                  "control": {
+                    "column_operator": {
+                      "value": "7"
+                    }
+                  }
+                },
+                "2": {
+                  "control": {
+                    "column_operator": {
+                      "value": "7"
+                    }
+                  }
+                }
+              }
+            },
+            "showItem": {
+              "$default": [],
+              "2": ["rule_value"]
+            }
+          }
+        },
+        {
+          "column_operator": {
+            "control": "hidden",
+            "span": 18,
+            "label": "列连接符",
+            "value": "${{params.column_operator}}",
+            "format": "label",
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择！"
+              }
+            ],
+            "options": [
+              {
+                "label": "等于",
+                "value": "1"
+              },
+              {
+                "label": "包含",
+                "value": "7"
+              },
+              {
+                "label": "不包含",
+                "value": "8"
+              }
+            ]
+          }
+        },
+        {
+          "rule_value_name": {
+            "span": 18,
+            "control": "hidden",
+            "value": "${{params.rule_value_name}}"
+          }
+        },
+        {
+          "rule_value": {
+            "span": 18,
+            "control": "remoteSelect",
+            "value": "${{params.rule_value}}",
+            "label": "规则值",
+            "multiple": true,
+            "valueDataType": "string",
+            "valueField": "org_id",
+            "labelField": "org_name",
+            "format": "value[label]",
+            "doRequest": {
+              "url": "/SUMP/icmcall/icmRPCCall",
+              "method": "POST",
+              "params": {
+                "servicecode": "ct2311"
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择！"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

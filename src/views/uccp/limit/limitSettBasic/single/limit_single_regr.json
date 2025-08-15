@@ -1,0 +1,162 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "norm_no": {
+            "label": "限额编号",
+            "control": "text",
+            "rules": [
+              {
+              }
+            ]
+          },
+          "norm_name": {
+            "label": "限额名称",
+            "control": "text",
+            "rules": [
+              {
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+           
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/uccp/limit/limitSettBasic/single/limit_single_add_step.json"
+          },
+          "props": {
+            "width":"80%",
+            "title": "新增限额信息配置"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "uccp5014",
+          "limit_component_type": "1",
+          "limit_status":"0"
+        }
+      },
+      "thead": [
+        {
+          "type": "index"
+        },
+        {
+          "prop": "norm_no",
+          "label": "限额编号",
+          "align": "center"
+        },
+        {
+          "prop": "norm_name",
+          "label": "限额名称",
+          "align": "center"
+        },
+        {
+          "prop": "start_date",
+          "label": "开始日期",
+          "align": "center"
+        },
+        {
+          "prop": "limit_manage_way",
+          "label": "管控措施",
+          "align": "center",
+          "dict": {
+            "dictType": "UCCP_E_LIMIT_MANAGE_WAY",
+            "dictKey": [
+              "UCCP_E_LIMIT_MANAGE_WAY"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "prop": "limit_control_way",
+          "label": "控制方式",
+          "align": "center",
+          "dict": {
+            "dictType": "UCCP_E_LIMIT_CONTORL_WAY",
+            "dictKey": [
+              "UCCP_E_LIMIT_CONTORL_WAY"
+            ],
+            "format": "label"
+          }
+        },
+        {
+          "prop": "limit_total_amt",
+          "label": "限额总额",
+          "align": "center",
+          "format":{
+            "thousand":","
+          }
+        },
+        {
+          "prop": "limit_available_amt",
+          "label": "限额可用金额",
+          "align": "center",
+          "format":{
+            "thousand":","
+          }
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": "210",
+          "align": "center",
+          "btns": [
+            {
+              "toRequest": {
+                "method": "POST",
+                "url": "@limitComOptionUpd",
+                "params":{
+                "limit_component_type":"1"
+                }
+              },
+              "label": "维护",
+              "type": "edit"
+            },
+            {
+              "doRequest": {
+                "method": "POST",
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "params": {
+                  "servicecode": "uccp5018",
+                  "method": "del"
+                }
+              },
+              "label": "删除",
+              "type": "delete"
+            },
+            {
+              "toRequest": {
+                "method": "POST",
+                "target": "dialog",
+                "url": "/views/uccp/limit/limitSettBasic/limit_check_toreview.json"
+              },
+              "label": "提交到审核",
+              "type": "edit",
+              "props": {
+                "title": "提交到审核",
+                "width": "80%"
+              }
+            }                  
+          ]
+        }
+      ]
+    }
+  }
+}

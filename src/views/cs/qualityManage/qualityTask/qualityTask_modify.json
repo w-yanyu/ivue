@@ -1,0 +1,349 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "scope": "formData",
+            "initRequest": "${{params}}",
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "qc1002",
+                    "appId": "qcOnl"
+                }
+            },
+            "btns": [
+                {
+                    "type": "submit",
+                    "label": "提交",
+                    "icon": "el-icon-tickets"
+                }
+            ],
+            "controls": [
+                {
+                    "quality_task_no": {
+                        "control": "string",
+                        "disabled": true,
+                        "label": "质检任务编号",
+                        "width": "130px"
+                    },
+                    "quality_task_name": {
+                        "control": "string",
+                        "disabled": true,
+                        "label": "质检任务名称",
+                        "width": "130px"
+                    }
+                },
+                {
+                    "quality_plan_no": {
+                        "control": "string",
+                        "disabled": true,
+                        "label": "质检方案编号",
+                        "width": "130px"
+                    },
+                    "task_effective_mode": {
+                        "control": "select",
+                        "label": "任务生效方式",
+                        "width": "130px",
+                        "dict": {
+                            "dictType": "CS_TASK_EFFECTIVE_MODE",
+                            "dictKey": [
+                                "CS_TASK_EFFECTIVE_MODE"
+                            ],
+                            "format": "value-label"
+                        },
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请选择任务生效方式"
+                            }
+                        ],
+                        "events": {
+                            "condition": {
+                                "now": {
+                                    "control": {
+                                        "task_effective_time": {
+                                            "disabled": true,
+                                            "rules": [
+                                                {
+                                                    "required": false
+                                                }
+                                            ]
+                                        }
+                                    }
+                                },
+                                "reserve": {
+                                    "control": {
+                                        "task_effective_time": {
+                                            "disabled": false,
+                                            "rules": [
+                                                {
+                                                    "required": true,
+                                                    "message": "请选择任务生效时间"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    "task_effective_time": {
+                        "label": "任务生效时间",
+                        "control": "dateTimePicker",
+                        "disabledDate": "dateBefore",
+                        "type": "datetime",
+                        "span": 12,
+                        "width": "130px",
+                        "format": "yyyy-MM-dd HH:mm:ss",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请选择任务生效时间"
+                            }
+                        ]
+                    },
+                    "task_trigger_type": {
+                        "control": "select",
+                        "label": "任务触发类型",
+                        "selectFirstValue": false,
+                        "width": "130px",
+                        "dict": {
+                            "dictType": "CS_TASK_TRIGGER_TYPE",
+                            "dictKey": [
+                                "CS_TASK_TRIGGER_TYPE"
+                            ],
+                            "format": "value-label"
+                        },
+                        "events": {
+                            "condition": {
+                                "single": {
+                                    "control": {
+                                        "task_trigger_frequency_num": {
+                                            "disabled": true,
+                                            "rules": [
+                                                {
+                                                    "required": false
+                                                }
+                                            ]
+                                        },
+                                        "task_trigger_frequency": {
+                                            "disabled": true,
+                                            "rules": [
+                                                {
+                                                    "required": false
+                                                }
+                                            ]
+                                        }
+                                    }
+                                },
+                                "multi": {
+                                    "control": {
+                                        "task_trigger_frequency": {
+                                            "disabled": false,
+                                            "rules": [
+                                                {
+                                                    "required": true
+                                                }
+                                            ]
+                                        },
+                                        "task_trigger_frequency_num": {
+                                            "disabled": true,
+                                            "rules": [
+                                                {
+                                                    "required": false
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    "task_trigger_frequency": {
+                        "control": "select",
+                        "label": "任务触发频率",
+                        "selectFirstValue": false,
+                        "required": false,
+                        "width": "130px",
+                        "dict": {
+                            "dictType": "CS_TASK_TRIGGER_FREQUENCY",
+                            "dictKey": [
+                                "CS_TASK_TRIGGER_FREQUENCY"
+                            ],
+                            "format": "value-label"
+                        },
+                        "events": {
+                            "condition": {
+                                "seconds": {
+                                    "control": {
+                                        "task_trigger_frequency_num": {
+                                            "disabled": false,
+                                            "control": "inputNumber",
+                                            "controls": false,
+                                            "min": 0,
+                                            "max": 60,
+                                            "align": "left",
+                                            "rules": [
+                                                {
+                                                    "required": true,
+                                                    "message": "请输入[1-60]之间的整数"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                },
+                                "minutes": {
+                                    "control": {
+                                        "task_trigger_frequency_num": {
+                                            "disabled": false,
+                                            "control": "inputNumber",
+                                            "controls": false,
+                                            "min": 0,
+                                            "max": 60,
+                                            "align": "left",
+                                            "rules": [
+                                                {
+                                                    "required": true,
+                                                    "message": "请输入[1-60]之间的整数"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                },
+                                "hours": {
+                                    "control": {
+                                        "task_trigger_frequency_num": {
+                                            "disabled": false,
+                                            "control": "inputNumber",
+                                            "controls": false,
+                                            "min": 0,
+                                            "max": 24,
+                                            "align": "left",
+                                            "rules": [
+                                                {
+                                                    "required": true,
+                                                    "message": "请输入[1-24]之间的整数"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                },
+                                "days": {
+                                    "control": {
+                                        "task_trigger_frequency_num": {
+                                            "disabled": false,
+                                            "control": "inputNumber",
+                                            "controls": false,
+                                            "min": 0,
+                                            "max": 31,
+                                            "align": "left",
+                                            "rules": [
+                                                {
+                                                    "required": true,
+                                                    "message": "请输入[1-31]之间的整数"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                },
+                                "months": {
+                                    "control": {
+                                        "task_trigger_frequency_num": {
+                                            "disabled": false,
+                                            "control": "inputNumber",
+                                            "controls": false,
+                                            "min": 0,
+                                            "max": 12,
+                                            "align": "left",
+                                            "rules": [
+                                                {
+                                                    "required": true,
+                                                    "message": "请输入[1-12]之间的整数"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                },
+                                "years": {
+                                    "control": {
+                                        "task_trigger_frequency_num": {
+                                            "disabled": false,
+                                            "control": "inputNumber",
+                                            "controls": false,
+                                            "min": 0,
+                                            "max": 2,
+                                            "align": "left",
+                                            "rules": [
+                                                {
+                                                    "required": true,
+                                                    "message": "请输入[1-2]之间的整数"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                },
+                                "$default": {
+                                    "control": {
+                                        "task_trigger_frequency_num": {
+                                            "controls": false,
+                                            "disabled": true,
+                                            "min": 0,
+                                            "max": 60,
+                                            "align": "left",
+                                            "rules": [
+                                                {
+                                                    "required": false
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "task_trigger_frequency_num": {
+                        "control": "inputNumber",
+                        "label": "任务触发频率数值",
+                        "width": "130px",
+                        "min": 0,
+                        "max": 60,
+                        "controls": false,
+                        "disabled": true,
+                        "align": "left",
+                        "rules": [
+                            {
+                                "required": false
+                            }
+                        ]
+                    }
+                },
+                {
+                    "task_status": {
+                        "control": "select",
+                        "label": "任务状态",
+                        "selectFirstValue": false,
+                        "width": "130px",
+                        "dict": {
+                            "dictType": "CS_TASK_STATUS",
+                            "dictKey": [
+                                "CS_TASK_STATUS"
+                            ],
+                            "format": "value-label"
+                        }
+                    },
+                    "task_execution_time": {
+                        "control": "string",
+                        "disabled": true,
+                        "label": "预计执行时间",
+                        "width": "130px"
+                    }
+                }
+            ]
+        }
+    }
+}

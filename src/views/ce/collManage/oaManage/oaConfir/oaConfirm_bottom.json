@@ -1,0 +1,211 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "scope": "formData",
+            "controls": [
+                {
+                    "cust_name": {
+                        "control": "text",
+                        "label": "客户姓名"
+                    },
+                    "oa_org_code": {
+                      "control": "remoteSelect",
+                      "label": "委外公司",
+                      "align": "center",
+                      "labelField": "coll_org_name",
+                      "valueField": "coll_org_no",
+                      "doRequest": {
+                        "url": "/SUMP/call/RPCCall",
+                        "method": "POST",
+                        "params": {
+                          "servicecode": "ce0416",
+                          "coll_org_type":"OA01",
+                          "is_valid":"1",
+                          "coll_kind":"02"
+                        }
+                      },
+                      "format": "value-label"
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "custom",
+                    "icon": "el-icon-back",
+                    "checkCountMin":1,
+                    "label": "退件",
+                    "doRequest": {
+                        "url": "/SUMP/call/RPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "ce4718",
+                            "case_no": ""
+                        }
+                    },
+                    "confirm": {
+                        "title": "委外退件",
+                        "msg": "确定将案件进行退件，重新分配吗？",
+                        "confirmButtonText": "确定",
+                        "cancelButtonText": "取消"
+                    }
+                },
+                {
+                    "type": "custom",
+                    "icon": "el-icon-edit",
+                    "target": "dialog",
+                    "checkCountMin":1,
+                    "label": "修改",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/ce/collManage/oaManage/oaConfir/oaConfirm_modify.json"
+                    }
+                },
+                {
+                    "type": "custom",
+                    "icon": "el-icon-check",
+                    "label": "确认分配",
+                    "checkCountMin":1,
+                    "doRequest": {
+                        "url": "/SUMP/call/RPCCall",
+                        "method": "post",
+                        "params": {
+                            "servicecode": "ce4719",
+                            "case_no": ""
+                        }
+                    }
+                }
+            ]
+        },
+
+        "datagrid": {
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/call/RPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "ce4716"
+                }
+            },
+            "thead": [
+                {
+                    "type": "selection",
+                    "align":"center",
+                    "width": "55",
+                    "fixed": "left"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width": "100",
+                    "label": "客户姓名",
+                    "prop": "cust_name"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width": "180",
+                    "label": "客户编号",
+                    "prop": "cust_no"
+
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width": "180",
+                    "label": "证件号码",
+                    "prop": "cert_no"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width": "100",
+                    "label": "逾期天数",
+                    "prop": "over_due_day"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width": "100",
+                    "label": "逾期金额",
+                    "prop": "overdue_amt"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width": "180",
+                    "label": "委外公司",
+                    "prop": "oa_org_code",
+                    "dict": {
+                      "dictKey": [
+                        "coll_org_no"
+                      ],
+                      "format": "value-label",
+                      "labelField": "coll_org_name",
+                      "valueField": "coll_org_no",
+                      "doRequest": {
+                        "url": "/SUMP/call/RPCCall",
+                        "method": "POST",
+                        "params": {
+                          "servicecode": "ce0416",
+                          "coll_org_type": "OA01",
+                          "is_valid": "1",
+                          "coll_kind":"02"
+                        }
+                      }
+                    }
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width": "100",
+                    "label": "委外金额",
+                    "prop": "outsourcing_amt"
+
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width": "150",
+                    "label": "派案日期",
+                    "prop": "outsourcing_start_date"
+
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width": "150",
+                    "label": "回收日期",
+                    "prop": "outsourcing_end_date"
+
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width": "150",
+                    "label": "上一次公司名称",
+                    "prop": "last_oa_org_code"
+
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width": "150",
+                    "label": "上一次派案日期",
+                    "prop": "last_send_case_begin_date"
+
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width": "150",
+                    "label": "上一次回收日期",
+                    "prop": "last_real_end_date"
+
+                }
+            ]
+        }
+    }
+}

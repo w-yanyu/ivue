@@ -1,0 +1,84 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "scope": "formData",
+            "btns": [
+                {
+                    "type": "submit",
+                    "label": "提交",
+                    "icon": "",
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "addRegInsurance"
+                        
+                        }
+                    }
+                }
+            ],
+            "controls": [
+                {
+                  "regionalCenterCode": {
+                    "label": "区域中心",
+                    "control": "remoteSelect",
+                    "valueField": "regionalCenterCode",
+                    "labelField": "regionalCenterName",
+                    "doRequest": {
+                      "url": "/SUMP/icmcall/icmRPCCall",
+                      "method": "post",
+                      "params": {
+                        "servicecode": "selRegin",
+                    
+                        "length": 100
+                      }
+                    },
+                    "rules": [
+                      {
+                        "required": true,
+                        "message": "请选择区域中心"
+                      }
+                    ]
+                  },
+
+                  "insuranceCenterCode": {
+                    "control": "lookup",
+                    "label": "保险公司",
+                    "multiple": true,
+                    "#valueDataType": "string",
+                    "toRequest": {
+                      "url": "/views/qb/reginsurance/insurance.json",
+                      "method": "get",
+                      "params": {},
+                      "props": {
+                        "width": "85%",
+                        "title": "多选",
+                        "height": "300px"
+                      }
+                    },
+                    "events":{
+                      "set":{
+                        "insuranceCenterCode":"insuranceCode"
+                        
+                      }
+                    },
+                    "#keyField":  {
+                      "insuranceCenterCode":"insuranceCode"
+                    
+                    },
+                    "rules": [
+                      {
+                        "required": true,
+                        "message": "请选择保险公司"
+                      }
+                    ]
+                  }
+
+                }
+             
+
+            ]
+        }
+    }
+}

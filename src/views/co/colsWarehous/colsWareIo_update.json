@@ -1,0 +1,147 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+      "form": {
+        "initRequest": "${{params}}",
+        "name": "detail",
+        "btns": [],
+        "controls": [
+          {
+            "doc_tx_no": {
+              "label": "档案交易号",
+              "control": "hidden"
+            },
+            "state": {
+              "label": "出入库状态",
+              "control": "hidden"
+            },
+            "doc_no": {
+              "label": "档案编号",
+              "width": "140px",
+              "disabled": true,
+              "control": "text"
+            },
+            "input_date": {
+              "label": "入库日期",
+              "width": "140px",
+              "control": "dateTimePicker",
+              "rules": [
+                {
+                  "required": true,
+                  "message": "请选择入库日期"
+                }
+              ]
+            },
+            "cust_name": {
+              "label": "客户姓名",
+              "control": "hidden"
+            },
+            "cust_no":{
+              "label": "客户编号",
+              "control": "hidden"
+            }
+          },
+          {
+            "ware_house_code": {
+              "label": "库房",
+              "width": "140px",
+              "control": "lookup",
+              "edit": true,
+              "keyField": {
+                "ware_house_code": "ware_house_code"
+              },
+              "toRequest": {
+                "url": "/views/co/colsWarehous/start/warehouse_lookup.json",
+                "method": "get",
+                "params": {
+                }
+              }
+            },
+            "input_reason": {
+              "label": "入库原因",
+              "width": "140px",
+              "control": "select",
+              "multiple": false,
+              "dict": {
+                "dictType": "CO_E_INPUTRN",
+                "dictKey": [
+                  "CO_E_INPUTRN"
+                ],
+                "format": "label"
+              },
+              "rules": [
+                {
+                  "required": true,
+                  "message": "请选择入库原因"
+                }
+              ]
+            }
+          },
+          {
+            "branch_bank_no": {
+              "label": "放款网点",
+              "control": "text",
+              "disabled": false,
+              "width": "140px",
+              "rules": [
+                {
+                  "required": true,
+                  "message": "请输入放款网点"
+                }
+              ]
+            },
+            "othr_cert_no": {
+              "label": "权证号",
+              "width": "140px",
+              "control": "text",
+              "rules": [
+                {
+                  "required": true,
+                  "message": "请输入权证号"
+                }
+              ]
+            }
+          },
+          {
+            "remark": {
+              "label": "备注",
+              "width": "140px",
+              "rows": 4,
+              "span": 24,
+              "control": "textarea"
+            },
+            "deal_type": {
+              "label": "交易类型",
+              "width": "140px",
+              "value": "in",
+              "control": "hidden"
+            },
+            "colt_no": {
+              "label": "押品编号",
+              "width": "140px",
+              "value": "in",
+              "control": "hidden"
+            }
+          },
+          {
+            "toDbsx": {
+              "span": 24,
+              "control": "dynamic",
+              "#isShowChildrenForm": false,
+              "toRequest": {
+                "method": "GET",
+                "url": "@FlowSubmitBtn",
+                "params": {
+                  "appId": "coOnl",
+                  "servicecode": "co3003",
+                  "finalUrl": "@CommWaitToDoDeal"
+
+                }
+              }
+            }
+          }
+        ]
+
+      }
+    }
+  }

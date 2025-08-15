@@ -1,0 +1,100 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "btns": [
+                {
+                    "type": "submit",
+                    "label": "提交",
+                    "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                            "appId":"deciOnl",
+                            "servicecode": "ms2362"
+                        }
+                    }
+                }
+            ],
+
+            "controls": [
+                {
+                    "target_org_id": {
+                        "control": "text",
+                        "label": "新增法人号",
+                        "width": "130px",
+                        "value":"${{params.target_org_id}}",
+                        "disabled":true,
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入新增法人号"
+                            }
+                        ]
+                    },
+                    "is_inited": {
+                        "control": "select",
+                        "disabled": true,
+                        "label": "是否初始化",
+                        "width": "130px",
+                        "default": 0,
+                        "dict": {
+                        "dictType": "MS_E_YESORNO",
+                        "dictKey": [
+                          "MS_E_YESORNO"
+                        ],
+                        "format": "value-label"
+                        },
+                        "rules": [
+                            {
+                                "required": true
+                            }
+                        ]
+                    }
+                },
+                {
+                    "system_id": {
+                        "control": "select",
+                        "label": "子系统号",
+                        "width": "130px",
+                        "disabled":true,
+                        "value":"${{params.system_id}}",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "子系统号"
+                            }
+                        ],
+                        "dict": {
+                            "dictType": "MS_APPID",
+                            "dictKey": [
+                                "MS_APPID"
+                            ],
+                            "format": "value-label"
+                        }
+                    }
+                },
+                {
+                    "file_path": {
+                        "control": "dynamic",
+                        "isShowChildForm": true,
+                        "span": 12,
+                        "toRequest": {
+                        "url": "@SingleUpload",
+                        "method": "get",
+                        "params": {
+                            "path": "exchange",
+                            "uploadType": "sftp",
+                            "formKey": "file_path",
+                            "formLabel": "选择sql脚本文件",
+                            "accept": ".sql,.txt",
+                            "required": "true",
+                            "tipText": "只能上传sql/txt，且不超过10MB"
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

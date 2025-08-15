@@ -1,0 +1,148 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "toolbar": {
+            "btns": [{
+                "type": "add",
+                "target": "dialog",
+                "label": "新增",
+                "toRequest": {
+                    "method": "GET",
+                    "url": "/views/us/entManager/entCustBusiManager/corpAptiCertManager/corpAptiCert_add.json",
+                    "params": {
+                        "cust_no": "${{params.cust_no}}"
+                    }
+                },
+                "show": {
+                    "expression": "'${{params.show_flash}}' == '1'"
+                },
+                "props": {
+                    "title": "客户资质新增",
+                    "width": "75%"
+                }
+            }]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": true,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "us0240",
+                    "cust_no": "${{params.cust_no}}"
+                }
+            },
+            "thead": [{
+                    "type": "index",
+                    "width": 50,
+                    "label": "序号"
+                },
+                {
+                    "label": "客户编号",
+                    "prop": "cust_no",
+                    "align": "center",
+                    "disabled": true
+                },
+                {
+                    "label": "证书编号",
+                    "prop": "apcr_code",
+                    "align": "center"
+                },
+                {
+                    "label": "证书名称",
+                    "prop": "apcr_name",
+                    "align": "center"
+                },
+                {
+                    "label": "资质等级",
+                    "prop": "apcr_level",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "US_E_QUAL_LEVEL",
+                        "dictKey": [
+                            "US_E_QUAL_LEVEL"
+                        ],
+                        "labelField": "dictName",
+                        "valueField": "dictId"
+                    }
+                },
+                {
+                    "label": "证件生效日期",
+                    "prop": "base_start_date",
+                    "align": "center"
+                },
+                {
+                    "label": "证件失效日期",
+                    "prop": "end_date",
+                    "align": "center"
+                },
+                {
+                    "label": "颁发单位",
+                    "prop": "apcr_unit",
+                    "align": "center"
+                },
+                {
+                    "label": "证书内容",
+                    "prop": "apcr_content",
+                    "align": "center"
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": 160,
+                    "align": "center",
+                    "btns": [{
+                            "type": "look",
+                            "label": "详情",
+                            "toRequest": {
+                                "url": "/views/us/entManager/entCustBusiManager/corpAptiCertManager/corpAptiCert_info.json",
+                                "method": "POST",
+                                "params": {}
+                            },
+                            "props": {
+                                "width": "75%",
+                                "title": "客户资质信息详情"
+                            }
+                        },
+                        {
+                            "type": "edit",
+                            "label": "维护",
+                            "toRequest": {
+                                "url": "/views/us/entManager/entCustBusiManager/corpAptiCertManager/corpAptiCert_update.json",
+                                "method": "GET"
+                            },
+                            "show": {
+                                "expression": "'${{params.show_flash}}' == '1'"
+                            },
+                            "props": {
+                                "width": "75%",
+                                "title": "客户资质信息维护"
+                            }
+                        },
+                        {
+                            "type": "custom",
+                            "label": "删除",
+                            "doRequest": {
+                                "url": "/SUMP/icmcall/icmRPCCall",
+                                "method": "POST",
+                                "params": {
+                                    "servicecode": "us0243"
+                                   
+                                }
+                            },
+                            "confirm": {
+                                "title": "确定删除",
+                                "confirmButtonText": "确定",
+                                "cancelButtonText": "取消"
+                            },
+                            "show": {
+                                "expression": "'${{params.show_flash}}' == '1'"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,478 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "foldLineNumber": 3,
+            "scope": "formData",
+            "controls": [
+                {
+                    "branch_id": {
+                        "control": "remoteSelect",
+                        "label": "机构",
+                        "labelField": "branch_name",
+                        "valueField": "branch_id",
+                        "doRequest": {
+                            "url": "/SUMP/icmcall/icmRPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "pl0400"
+                            }
+                        },
+                        "format": "label"
+                    },
+                    "cust_name": {
+                        "control": "text",
+                        "label": "客户姓名"
+                    }
+                },
+                {
+                    "id_no": {
+                        "control": "text",
+                        "label": "证件号码"
+                    },
+                    "cust_id": {
+                        "control": "text",
+                        "label": "客户编号"
+                    }
+                },
+                {
+                    "duebill_no": {
+                        "control": "text",
+                        "label": "借据号"
+                    },
+                    "daterange": {
+                        "control": "dateTimePicker",
+                        "label": "申请时间",
+                        "type": "daterange",
+                        "unlinkPanels": true,
+                        "valueFormat": "yyyyMMdd",
+                        "startPlaceholder": "选择开始时间",
+                        "endPlaceholder": "选择结束时间",
+                        "startField":"start_date",
+                        "endField":"end_date",
+                        "disabledDate":"dateAfter"
+                    }
+                },
+                {
+                    "check_status": {
+                        "control": "remoteSelect",
+                        "label": "审核状态",
+                        "default": "NC",
+                        "labelField": "drop_list_desc",
+                        "valueField": "drop_list_value",
+                        "doRequest": {
+                            "url": "/SUMP/icmcall/icmRPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "ap1071",
+                                "drop_list_type": "check_status"
+                            }
+                        },
+                        "format": "label"
+                    },
+                    "legal_type": {
+                        "control": "remoteSelect",
+                        "label": "法诉类型",
+                        "labelField": "drop_list_desc",
+                        "valueField": "drop_list_value",
+                        "doRequest": {
+                            "url": "/SUMP/icmcall/icmRPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "ap1071",
+                                "drop_list_type": "legalType"
+                            }
+                        },
+                        "format": "label"
+                    }
+                },
+                {
+                    "queue_cd": {
+                        "control": "remoteSelect",
+                        "label": "队列名称",
+                        "labelField": "queue_name",
+                        "valueField": "queue_cd",
+                        "doRequest": {
+                            "url": "/SUMP/icmcall/icmRPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "pl0402"
+                            }
+                        },
+                        "format": "label"
+                    },
+                    "location_cd": {
+                        "control": "remoteSelect",
+                        "label": "案件类型",
+                        "labelField": "location_name",
+                        "valueField": "location_cd",
+                        "doRequest": {
+                            "url": "/SUMP/icmcall/icmRPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "pl0410"
+                            }
+                        },
+                        "format": "label"
+                    }
+                },
+                {
+                    "status_cd": {
+                        "control": "remoteSelect",
+                        "label": "案件状态",
+                        "labelField": "status_name",
+                        "valueField": "status_cd",
+                        "doRequest": {
+                            "url": "/SUMP/icmcall/icmRPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "pl0411"
+                            }
+                        },
+                        "format": "label"
+                    },
+                    "function_cd": {
+                        "control": "remoteSelect",
+                        "label": "逾期阶段",
+                        "labelField": "function_name",
+                        "valueField": "function_cd",
+                        "doRequest": {
+                            "url": "/SUMP/icmcall/icmRPCCall",
+                            "method": "POST",
+                            "params": {
+                                "servicecode": "pl0412"
+                            }
+                        },
+                        "format": "label"
+                    }
+                },
+                {
+                    "ovd_amt_total_1": {
+                        "control": "currency",
+                        "label": "欠款金额区间开始值"
+                    },
+                    "ovd_amt_total_2": {
+                        "control": "currency",
+                        "label": "欠款金额区间结束值"
+                    }
+                },
+                {
+                    "collect_date_1": {
+                        "control": "inputNumber",
+                        "label": "入催天数区间开始值"
+
+                    },
+
+                    "collect_date_2": {
+                        "control": "inputNumber",
+                        "label": "入催天数区间结束值"
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "icon": "el-icon-edit",
+                    "target": "dialog",
+                    "label": "批量审核",
+                    "checkCountMin": 1,
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "/views/pl/collManage/lgManage/lgCheck/lgCheck_auditing.json",
+                        "params": {
+
+                        }
+                    },
+                    "props": {
+                        "title": "法诉审核"
+                    }
+                },
+                {
+                  "type": "add",
+                  "icon": "el-icon-circle-check",
+                  "target": "dialog",
+                  "label": "全部核准",
+                  "toRequest": {
+                    "method": "GET",
+                    "url": "/views/pl/collManage/lgManage/lgCheck/lgCheck_all_through.json",
+                    "params": {
+                      "branch_id":"${{params.branch_id}}",
+                      "cust_name":"${{params.cust_name}}",
+                      "id_no":"${{params.id_no}}",
+                      "cust_id":"${{params.cust_id}}",
+                      "duebill_no":"${{params.duebill_no}}",
+                      "check_status":"NC",
+                      "daterange":"${{params.daterange}}",
+                      "legal_type":"${{params.legal_type}}",
+                      "queue_cd":"${{params.queue_cd}}",
+                      "location_cd":"${{params.location_cd}}",
+                      "status_cd":"${{params.status_cd}}",
+                      "function_cd":"${{params.function_cd}}",
+                      "ovd_amt_total_1":"${{params.ovd_amt_total_1}}",
+                      "ovd_amt_total_2":"${{params.ovd_amt_total_2}}",
+                      "collect_date_1":"${{params.collect_date_1}}",
+                      "collect_date_2":"${{params.collect_date_2}}"
+                    }
+                  },
+                  "props": {
+                    "title": "法诉审核"
+                  }
+                },
+                {
+                  "type": "add",
+                  "target": "dialog",
+                  "icon": "el-icon-circle-close",
+                  "label": "全部拒绝",
+                  "toRequest": {
+                    "method": "GET",
+                    "url": "/views/pl/collManage/lgManage/lgCheck/lgCheck_all_rejected.json",
+                    "params": {
+                      "branch_id":"${{params.branch_id}}",
+                      "cust_name":"${{params.cust_name}}",
+                      "id_no":"${{params.id_no}}",
+                      "cust_id":"${{params.cust_id}}",
+                      "duebill_no":"${{params.duebill_no}}",
+                      "check_status":"NC",
+                      "daterange":"${{params.daterange}}",
+                      "legal_type":"${{params.legal_type}}",
+                      "queue_cd":"${{params.queue_cd}}",
+                      "location_cd":"${{params.location_cd}}",
+                      "status_cd":"${{params.status_cd}}",
+                      "function_cd":"${{params.function_cd}}",
+                      "ovd_amt_total_1":"${{params.ovd_amt_total_1}}",
+                      "ovd_amt_total_2":"${{params.ovd_amt_total_2}}",
+                      "collect_date_1":"${{params.collect_date_1}}",
+                      "collect_date_2":"${{params.collect_date_2}}"
+                    }
+                  },
+                  "props": {
+                    "title": "法诉审核"
+                  }
+                }
+            ]
+        },
+        "datagrid": {
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "pl4604"
+                }
+            },
+            "thead": [
+                {
+                    "type": "selection",
+                    "align":"center",
+                    "width": "55",
+                    "fixed": "left",
+                    "show":{
+                      "expression":"'${{check_status}}' === 'NC'"
+                    }
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "机构",
+                    "prop": "branch_id"
+
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "案件编号",
+                    "prop": "case_id"
+
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "客户姓名",
+                    "prop": "cust_name"
+                },
+                {
+                  "type":"string",
+                  "align":"center",
+                  "label": "证件类型",
+                  "width": "150",
+                  "prop": "id_type",
+                  "dict":{
+                    "dictKey": [
+                      "id_type"
+                    ],
+                    "format": "label",
+                    "labelField": "drop_list_desc",
+                    "valueField": "drop_list_value",
+                    "doRequest": {
+                      "url": "/SUMP/icmcall/icmRPCCall",
+                      "method": "POST",
+                      "params": {
+                        "servicecode": "ap1071",
+                        "drop_list_type": "CertType"
+                      }
+                    }
+                  }
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "证件号码",
+                    "prop": "id_no"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "逾期天数",
+                    "prop": "over_due_day"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "法诉状态",
+                    "width": "120",
+                    "prop": "legal_status",
+                    "dict": {
+                      "dictKey": [
+                        "legal_status"
+                      ],
+                      "format": "label",
+                      "labelField": "drop_list_desc",
+                      "valueField": "drop_list_value",
+                      "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                          "servicecode": "ap1071",
+                          "drop_list_type": "lg_status"
+                        }
+                      }
+                    }
+                  },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "法诉类型",
+                    "width": "120",
+                    "prop": "legal_type",
+                    "dict": {
+                      "dictKey": [
+                        "legal_type"
+                      ],
+                      "format": "label",
+                      "labelField": "drop_list_desc",
+                      "valueField": "drop_list_value",
+                      "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                          "servicecode": "ap1071",
+                          "drop_list_type": "legalType"
+                        }
+                      }
+                    }
+                  },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "申请人",
+                    "prop": "apply_user"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "申请类型",
+                    "width": "120",
+                    "prop": "entry_type",
+                    "dict": {
+                      "dictKey": [
+                        "entry_type"
+                      ],
+                      "format": "label",
+                      "labelField": "drop_list_desc",
+                      "valueField": "drop_list_value",
+                      "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                          "servicecode": "ap1071",
+                          "drop_list_type": "entry_type"
+                        }
+                      }
+                    }
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "申请时间",
+                    "prop": "apply_time"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "申请说明",
+                    "prop": "apply_reason"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "width": "120",
+                    "label": "审核状态",
+                    "prop": "check_status",
+                    "dict": {
+                      "dictKey": [
+                        "check_status"
+                      ],
+                      "format": "label",
+                      "labelField": "drop_list_desc",
+                      "valueField": "drop_list_value",
+                      "doRequest": {
+                        "url": "/SUMP/icmcall/icmRPCCall",
+                        "method": "POST",
+                        "params": {
+                          "servicecode": "ap1071",
+                          "drop_list_type": "check_status"
+                        }
+                      }
+                    }
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "审核人",
+                    "prop": "check_user"
+                },
+                {
+                    "type":"string",
+                    "align":"center",
+                    "label": "审核时间",
+                    "prop": "check_time"
+                },
+                {
+                    "label": "操作",
+                    "align":"center",
+                    "fixed": "right",
+                    "width": "130px",
+                    "btns": [
+                      {
+                        "type": "custom",
+                        "label": "案件详情",
+                        "toRequest": {
+                          "url": "/views/pl/assistManage/caseDetail/caseDetail_1/case_detail_main.json",
+                          "method": "POST",
+                          "params": {
+                            "case_id": "${{current.case_id}}"
+                          }
+                        },
+                        "props": {
+                          "width": "80%",
+                          "title": "案件详情"
+                        }
+                      }
+                    ]
+                }
+            ]
+        }
+    }
+}

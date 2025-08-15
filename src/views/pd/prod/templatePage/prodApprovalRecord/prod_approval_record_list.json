@@ -1,0 +1,79 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+      "toolbar": {
+        "btns": [
+          {
+            "type": "add",
+            "label": "提交",
+            "toRequest": {
+              "url": "/views/pd/prod/templatePage/prodApprovalRecord/prod_approval_record_submit.json",
+              "method": "get",
+              "params": {
+                "sale_prod_cd": "${{params.sale_prod_cd}}",
+                "prod_version": "${{params.prod_version}}",
+                "busi_seq": "${{params.busi_seq}}"
+              }
+            },
+            "props": {
+              "title": "可售产品合规信息检查新增",
+              "width": "65%"
+            }
+          }
+        ]
+      },
+      "datagrid": {
+        "isInitSearch": true,
+        "doRequest": {
+          "url": "/SUMP/icmcall/icmRPCCall",
+          "method": "post",
+          "params": {
+            "servicecode": "pd0302",
+            "sale_prod_cd": "${{params.sale_prod_cd}}",
+            "prod_version": "${{params.prod_version}}"
+          }
+        },
+        "pagination": {
+          "pageSizes": [
+            10,
+            15,
+            20
+          ],
+          "pageSize": 10
+        },
+        "thead": [
+          {
+            "type": "index",
+            "align": "center"
+          },
+          {
+            "label": "处理人",
+            "prop": "data_create_user",
+            "align": "center"
+          },
+          {
+            "label": "环节",
+            "prop": "appro_process",
+            "align": "center",
+            "dict": {
+              "dictType": "PD_E_APPROVAL_PROCESS",
+              "dictKey": [
+                "PD_E_APPROVAL_PROCESS"
+              ]
+            }
+          },
+          {
+            "label": "处理时间",
+            "prop": "appro_deal_with_time",
+            "align": "center"
+          },
+          {
+            "label": "处理意见",
+            "prop": "appro_opinion",
+            "align": "center"
+
+          }
+        ]
+      }
+    }
+  }

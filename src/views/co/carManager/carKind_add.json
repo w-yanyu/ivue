@@ -1,0 +1,151 @@
+{
+  "module": "v_inputDataForm_btn",
+  "layout": {
+    "form": {
+      "scope": "formData",
+      "btns": [
+        {
+          "type": "submit",
+          "label": "提交",
+          "doRequest": {
+            "url": "/SUMP/call/RPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "co0032",
+              "brand_name": "${{params.brand_name}}",
+              "brand_no": "${{params.brand_no}}"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "car_kind_no": {
+            "label": "车系编号",
+            "width": "140px",
+            "span": 12,
+            "control": "text",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入车系编号"
+              }
+            ]
+          },
+          "car_kind_name": {
+            "label": "车系名称",
+            "width": "140px",
+            "span": 12,
+            "control": "text",
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入车系名称"
+              }
+            ]
+          },
+          "brand_state": {
+            "label": "使用状态",
+            "width": "140px",
+            "span": 12,
+            "control": "select",
+            "value": "1",
+            "dict": {
+              "dictType": "MS_E_YESORNO",
+              "dictKey": [
+                "MS_E_YESORNO"
+              ],
+              "format": "label"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择是否有效"
+              }
+            ]
+          },
+          "subsidiary_id": {
+            "label": "子公司编号",
+            "width": "140px",
+            "span": 12,
+            "control": "text"
+          },
+          "subsidiary": {
+            "label": "子公司名称",
+            "width": "140px",
+            "span": 12,
+            "control": "text"
+          },
+          "remark": {
+            "label": "备注",
+            "control": "textarea",
+            "width": "140px",
+            "span": 24,
+            "autosize": {
+              "minRows": 4
+            },
+            "resize": "none",
+            "rules": [
+              {
+                "max": "200",
+                "message": "长度不能超过200个字符"
+              }
+            ]
+          },
+          "logo": {
+            "label": "车系图标",
+            "width": "140px",
+            "span": 12,
+            "control": "text",
+            "events": {
+              "condition": {
+                "$default": {
+                  "control": {
+                    "img": {
+                      "value": "${{formData.logo}}"
+                    }
+                  }
+                },
+                "": {
+                  "control": {
+                    "img": {
+                      "value": "${{formData.logo}}"
+                    }
+                  }
+                }
+              }
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入车系图标"
+              }
+            ]
+          },
+          "fileList": {
+            "control": "dynamic",
+            "isShowChildForm": true,
+            "span": 4,
+            "toRequest": {
+              "url": "@logoUploadButton",
+              "method": "get",
+              "params": {
+                "file_path": "logo",
+                "formKey": "fileList",
+                "formLabel": "附件上传"
+              }
+            }
+          },
+          "img": {
+            "control": "img",
+            "value": "${{formData.logo}}",
+            "span": 12,
+            "width": "150",
+            "height": "150",
+            "fit": "fill"
+          }
+        }
+      ]
+    }
+  }
+}

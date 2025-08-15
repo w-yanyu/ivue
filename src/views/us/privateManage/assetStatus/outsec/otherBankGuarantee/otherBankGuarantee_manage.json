@@ -1,0 +1,244 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "guar_person": {
+            "control": "text",
+            "label": "被担保人",
+            "rules": [
+              {
+                "max": 80,
+                "message": "长度不能超过80个字符"
+              }
+            ]
+          },
+          "guar_type": {
+            "control": "select",
+            "label": "担保方式",
+            "dict": {
+              "dictType": "MS_E_GUAR_TYPE",
+              "dictKey": [
+                "MS_E_GUAR_TYPE"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId"
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "POST",
+            "url": "/views/us/privateManage/assetStatus/outsec/otherBankGuarantee/otherBankGuarantee_add.json",
+            "params": {
+              "cust_no": "${{params.cust_no}}"
+            }
+          },
+          "show": {
+            "expression": "'${{params.show_flash}}' == '1'"
+          },
+          "props": {
+            "width": "75%",
+            "title": "他行担保关系信息新增"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "us0112",
+          "cust_no": "${{params.cust_no}}"
+        }
+      },
+      "thead": [
+        {
+          "type": "index",
+          "align": "center",
+          "label": "序号"
+        },
+        {
+          "label": "被担保人",
+          "prop": "guar_person",
+          "align": "center"
+        },
+        {
+          "label": "担保方式",
+          "prop": "guar_type",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_GUAR_TYPE",
+            "dictKey": [
+              "MS_E_GUAR_TYPE"
+            ],
+            "labelField": "dictName",
+            "valueField": "dictId"
+          }
+        },
+        {
+          "label": "对外担保序号",
+          "prop": "outs_no",
+          "align": "center"
+        },
+        {
+          "label": "被担保人开户行",
+          "prop": "guar_person_bank",
+          "align": "center"
+        },
+        {
+          "label": "被担保人开户帐号",
+          "prop": "guar_person_acct",
+          "align": "center"
+        },
+        {
+          "label": "和被担保人关系",
+          "prop": "relationship",
+          "align": "center",
+          "dict": {
+            "dictType": "US_E_RELATIONSHIP",
+            "dictKey": [
+              "US_E_RELATIONSHIP"
+            ],
+            "labelField": "dictName",
+            "valueField": "dictId"
+          }
+        },
+        {
+          "label": "证件类型",
+          "prop": "cert_type",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_CRET_TYPE",
+            "dictKey": [
+              "MS_E_CRET_TYPE"
+            ],
+            "labelField": "dictName",
+            "valueField": "dictId"
+          }
+        },
+        {
+          "label": "证件号",
+          "prop": "cert_no",
+          "align": "center"
+        },
+        {
+          "label": "担保方式",
+          "prop": "guar_type",
+          "align": "center",
+          "dict": {
+            "dictType": "MS_E_GUAR_TYPE",
+            "dictKey": [
+              "MS_E_GUAR_TYPE"
+            ],
+            "labelField": "dictName",
+            "valueField": "dictId"
+          }
+        },
+        {
+          "label": "保证合同号",
+          "prop": "contract_no",
+          "align": "center"
+        },
+        {
+          "label": "担保理由",
+          "prop": "reason",
+          "align": "center"
+        },
+        {
+          "label": "担保金额（元）",
+          "prop": "guar_amt",
+          "type": "string",
+          "align": "center",
+          "format": {
+            "thousand": ",",
+            "decimal": "2",
+            "type": "currency"
+          }
+        },
+        {
+          "label": "担保期限(月)",
+          "prop": "guaranty_deadline",
+          "align": "center"
+        },
+        {
+          "label": "担保起始日期",
+          "prop": "effect_date",
+          "align": "center",
+          "format": "yyyy-MM-dd"
+        },
+        {
+          "label": "担保到期时间",
+          "prop": "expiry_date",
+          "align": "center",
+          "format": "yyyy-MM-dd"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 200,
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "详情",
+              "toRequest": {
+                "url": "/views/us/privateManage/assetStatus/outsec/otherBankGuarantee/otherBankGuarantee_info.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "75%",
+                "title": "担保关系信息详情"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/us/privateManage/assetStatus/outsec/otherBankGuarantee/otherBankGuarantee_modify.json",
+                "method": "GET"
+              },
+              "show": {
+                "expression": "'${{params.show_flash}}' == '1'"
+              },
+              "props": {
+                "width": "75%",
+                "title": "他行担保关系信息维护"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "us0115"
+                }
+              },
+              "show": {
+                "expression": "'${{params.show_flash}}' == '1'"
+              },
+              "confirm": {
+                "title": "确定删除",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

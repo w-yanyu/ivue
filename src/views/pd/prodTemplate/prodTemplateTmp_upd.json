@@ -1,0 +1,93 @@
+{
+  "module": "d-steps",
+  "layout": {
+    "steps": {
+      "scope": "formObj",
+      "alignCenter": true,
+      "finishStatus": "success",
+      "direction": "vertical",
+      "simpleType": false,
+      "nextStepType": "submit",
+      "skip": true,
+      "list": [
+        {
+          "scope": "step1",
+          "title": "产品模板选择",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "url": "/views/pd/prodTemplate/prodTmpTemplate_step.json",
+            "method": "get",
+            "params": {
+              "template_id": "${{params.template_id}}",
+              "template_name": "${{params.template_name}}",
+              "prod_version": "${{params.prod_version}}",
+              "prod_type_name": "${{params.prod_type_name}}",
+              "is_stop_use": "${{params.is_stop_use}}",
+              "valid_flag": "${{params.valid_flag}}"
+            }
+          },
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "post",
+            "params":{
+              "servicecode":"pd0151"
+            }
+          }
+        },
+        {
+          "scope": "step2",
+          "title": "产品模板配置",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "url": "@ProdTemplate",
+            "method": "get",
+            "params": {
+              "template_id": "${{formObj.step1.template_id}}",
+              "prod_version": "${{formObj.step1.prod_version}}",
+              "prod_type": "${{formObj.step1.prod_type}}",
+              "apply_type_list": "${{formObj.step1.apply_type_list}}",
+              "childUrl": "/views/pd/prodTemplate/prod_template_transfer.json"
+            }
+          },
+          "doRequest": {
+            "url": "/SUMP/icmcall/outputAsInput",
+            "method": "post",
+            "params": {
+              "name": "template_id"
+            },
+            "eventAfter": {
+              "doParentCallback": true
+            }
+          }
+        },
+        {
+          "scope": "step3",
+          "title": "产品模板顺序配置",
+          "icon": "el-icon-edit",
+          "toRequest": {
+            "url": "@ProdTemplate",
+            "method": "get",
+            "params": {
+              "template_id": "${{formObj.step1.template_id}}",
+              "prod_type": "${{formObj.step1.prod_type}}",
+              "prod_version": "${{formObj.step1.prod_version}}",
+              "apply_type_list": "${{formObj.step1.apply_type_list}}",
+              "childUrl": "@templatePageSort"
+            }
+          },
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "post",
+            "params":{
+              "servicecode":"pd0153",
+              "prod_version": "${{params.prod_version}}",
+              "template_id": "${{formObj.step1.template_id}}",
+              "appro_opinion": "同意",
+              "submit_type": "0"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

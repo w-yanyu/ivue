@@ -1,0 +1,199 @@
+{
+  "module": "v-form-btn-dynamic",
+  "layout": {
+    "form": {
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ar0741",
+          "apply_no": "${{params.apply_no}}"
+        }
+      },
+      "controls": [
+        {
+          "credit_apply_id": {
+            "control": "hidden",
+            "span": 8
+          },
+          "contract_no": {
+            "control": "text",
+            "label": "业务编号",
+            "disabled": true,
+            "span": 10
+          },
+          "base_ccy": {
+            "control": "select",
+            "label": "基准币种",
+ "selectFirstValue": "true",            
+            "span": 10,
+            "dict": {
+              "dictType": "MS_CURRENCY",
+              "dictKey": [
+                "MS_CURRENCY"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId",
+              "format": "label"
+            }
+          }
+        },
+        {
+          "apply_amt": {
+            "control": "currency",
+            "label": "担保总金额",
+            "align": "left",
+            "span": 10,
+            "rules": [
+              {
+                "required": true,
+                "message": "请输入担保金额"
+              }
+            ],
+            "format":{
+              "thousand": ","
+
+            }
+          },
+          "ccy_code": {
+            "control": "select",
+            "label": "主担保币种",
+            "span": 10,
+            "dict": {
+              "dictType": "MS_CURRENCY",
+              "dictKey": [
+                "MS_CURRENCY"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId",
+              "format": "label"
+            } 
+          }
+        },
+        {
+          "exchange_rate": {
+            "control": "currency",
+            "label": "汇率",
+            "span": 10,
+            "value": "1.0"
+          },
+          "base_busi_amt": {
+            "control": "currency",
+            "align": "left",
+            "label": "担保金额(折基准币种)",
+            "span": 10,
+            "compute": "${{form.apply_amt}}*${{form.exchange_rate}}",
+            "rules": [
+              {
+                "message": "请输入担保总金额(折基准币种)",
+                "required": true
+              }
+            ],
+            "format":{
+              "thousand": ","
+            }
+          }
+        },
+        {
+          "effective_date": {
+            "control": "dateTimePicker",
+            "label": "生效日期",
+            "span": 10,
+            "rules": [
+              {
+                "message": "生效日期不能为空",
+                "required": true
+              }
+            ]
+          },
+          "appr_term": {
+            "control": "text",
+            "label": "期限(月)",
+            "span": 10,
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择业务期限(月)"
+              },
+              {
+                "pattern": "^[0-9]*$",
+                "message": "格式错误，请输入数字！"
+              }
+            ]
+          }
+        },
+        {
+          "loan_purpose_desc": {
+            "control": "lookup",
+            "label": "资金用途",
+            "span": 10,
+            "edit": false,
+            "rows": 4,
+            "keyField": {
+              "loan_purpose_desc": "amt_purpose_name"
+            },
+            "toRequest": {
+              "url": "/views/icms/docManager/loanPurpose/loanPurpose_lookup.json",
+              "method": "get",
+              "params": {
+                "sale_prod_cd": "${{params.credit_prod_cd}}",
+                "prod_version": "${{params.prod_version}}"
+              }
+            },
+            "multiple": false,
+            "props": {
+              "title": "选择贷款用途"
+            },
+            "##rules": [
+              {
+                "required": true,
+                "message": "请选择贷款用途"
+              }
+            ]
+          },
+          "busi_tran_bank_no": {
+            "control": "lookup",
+            "label": "合作银行",
+            "span": 10,
+            "edit": false,
+            "rows": 4,
+            "keyField": {
+              "busi_tran_bank_no": "center_name"
+            },
+            "toRequest": {
+              "url": "/views/icms/agriculturalGuarantee/agriculturalApply/partnerRelation_lookup.json",
+              "method": "get",
+              "params": {
+                "sale_prod_cd": "${{params.credit_prod_cd}}"
+              }
+            },
+            "multiple": false,
+            "props": {
+              "title": "选择合作方"
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "submit",
+          "label": "保存",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "servicecode": "ar0742",
+              "apply_no": "${{params.apply_no}}",
+              "credit_prod_cd": "${{params.credit_prod_cd}}"
+            }
+          },
+          "show": {
+            "expression": "'${{params.pageType}}' != 'detail'"
+          }
+        }
+      ]
+    }
+  }
+}

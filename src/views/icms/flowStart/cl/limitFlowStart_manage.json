@@ -1,0 +1,273 @@
+{
+  "module": "v-inputDataForm-btn",
+  "layout": {
+    "form": {
+      "initRequest": "${{params}}",
+      "scope": "formData",
+      "name": "condition",
+      "btns": [
+      ],
+      "##btns": [
+        {
+          "type": "submit",
+          "label": "流程启动",
+          "icon": "",
+          "doRequest": {
+            "url": "/SUMP/icmcall/icmRPCCall",
+            "method": "POST",
+            "params": {
+              "appId": "icmsOnl",
+              "servicecode": "ar1300"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "cust_no": {
+            "control": "hidden",
+            "label": "cust_no"
+          },
+          "cust_type": {
+            "control": "hidden",
+            "label": "cust_type"
+          },
+          "cust_name": {
+            "control": "lookup",
+            "label": "客户名称",
+            "span": 12,
+            "width": "130px",
+            "keyField": {
+              "cust_no": "cust_no",
+              "cust_name": "cust_name",
+              "cert_type": "cert_type",
+              "cert_no": "cert_no",
+              "mobile_no": "phone_no",
+              "cust_type": "cust_type"
+         
+            },
+            "events": {
+              "set": {
+                "limit_no": ""
+              }
+            },
+            "toRequest": {
+              "url": "/views/us/cust_lookup.json",
+              "method": "get"
+            },
+            "props": {
+              "title": "选择客户",
+              "width": "75%"
+            },
+            "format": "label",
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择客户名称"
+              }
+            ]
+          },
+          "busi_type": {
+            "control": "string",
+            "span": 12,
+            "width": "130px",
+            "##value": "LOAN",
+            "label": "业务类型",
+            "dict": {
+              "dictType": "AR_E_LIMIT_BUSI_TYPE",
+              "dictKey": [
+                "AR_E_LIMIT_BUSI_TYPE"
+              ]
+            },
+            "value":"${{params.busi_type}}"
+          },
+          "effect_date": {
+            "control": "hidden",
+            "label": "effect_date"
+          },
+          "expiry_date": {
+            "control": "hidden",
+            "label": "expiry_date"
+          },
+          "cycle_flag": {
+            "control": "hidden",
+            "label": "cycle_flag"
+          },
+          "quota_type":{
+            "control": "select",
+            "label": "额度类型",
+            "span": 12,
+            "width": "130px",
+            "dict": {
+              "dictType": "UCCP_E_FREZE_QUOTA_TYPE",
+              "dictKey": [
+                "UCCP_E_FREZE_QUOTA_TYPE"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId"
+            },
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择额度类型"
+              }
+            ]
+          },
+          "source_credit_number": {
+            "control": "lookup",
+            "span": 12,
+            "width": "130px",
+            "label": "额度编号",
+            "keyField": {
+              "sale_prod_cd": "prod_code",
+              "cl_amt": "prod_total_credit",
+              "effect_date": "effect_date",
+              "expiry_date": "expiry_date",
+              "quota_status": "quota_status",
+              "sale_prod_name":"prod_name",
+              "avail_amt":"available_use_limit",
+              "source_credit_number":"cust_credit_seq"
+            },
+            "toRequest": {
+              "url": "/views/icms/flowStart/lend/creditBusinessStart/credit_limit_lookup.json",
+              "method": "get",
+              "params": {
+                "cust_no": "${{formData.cust_no}}",
+                "quota_type": "${{formData.quota_type}}" 
+              }
+            },
+            "props": {
+              "title": "请选择额度编号"
+            },
+            "format": "label",
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择额度编号"
+              }
+            ]
+          },
+         
+          "quota_status": {
+            "control": "select",
+            "label": "额度状态",
+            "span": 12,
+            "width": "130px",
+            "disabled": true,
+            "dict": {
+              "dictType": "UCCP_E_QUOTA_STATUS",
+              "dictKey": [
+                "UCCP_E_QUOTA_STATUS"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId"
+            }
+          },
+          "cl_amt": {
+            "control": "currency",
+            "decimal": "2",
+            "label": "额度金额(元)",
+            "span": 12,
+            "disabled": true,
+            "width": "130px",
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ],
+            "format":{
+              "thousand":","
+            }
+          },
+          "avail_amt": {
+            "control": "currency",
+            "decimal": "2",
+            "label": "可用余额(元)",
+            "span": 12,
+            "disabled": true,
+            "width": "130px",
+            "rules": [
+              {
+                "required": false,
+                "message": "此项为必填项"
+              }
+            ],
+            "format":{
+              "thousand":","
+            }
+          },
+          "mobile_no": {
+            "control": "hidden",
+            "span": 12,
+            "width": "130px",
+            "label": "手机号码",
+            "disabled": true,
+            "rules": [
+              {
+                "required": false,
+                "message": "请输入手机号码"
+              }
+            ]
+          },
+          "cert_type": {
+            "control": "select",
+            "label": "证件类型",
+            "span": 12,
+            "width": "130px",
+            "disabled": true,
+            "dict": {
+              "dictType": "MS_E_CRET_TYPE",
+              "dictKey": [
+                "MS_E_CRET_TYPE"
+              ],
+              "labelField": "dictName",
+              "valueField": "dictId"
+            }
+          },
+          "cert_no": {
+            "control": "text",
+            "span": 12,
+            "width": "130px",
+            "label": "证件号码",
+            "disabled": true
+          },
+           
+          "sale_prod_cd": {
+            "control": "text",
+            "label": "可售产品",
+            "span": 12,
+            "width": "130px",
+            "disabled": true
+          },
+          "sale_prod_name": {
+            "control": "text",
+            "label": "可售产品名称",
+            "span": 12,
+            "width": "130px",
+            "disabled": true
+          }
+        },
+        {
+          "toDbsx": {
+            "span": 24,
+            "control": "dynamic",
+            "unFieldList": [
+              "busi_type"
+            ],
+            "#isShowChildrenForm": false,
+            "toRequest": {
+              "method": "GET",
+              "url": "@FlowSubmitBtn",
+              "params": {
+                "appId": "icmsOnl",
+                "servicecode": "ar1300",
+                "finalUrl": "/views/icms/ar_workbench/wait_todo/workbench_wait_todo_view.json"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

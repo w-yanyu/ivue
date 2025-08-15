@@ -1,0 +1,84 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "scope": "strForm",
+      "controls":
+      [
+        {
+          "sale_prod_cd": {
+            "control": "text",
+            "label": "可售产品编号",
+            "span": 12
+          },
+          "sale_prod_name": {
+            "control": "text",
+            "label": "可售产品名称",
+            "span": 12
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "post",
+        "params": {
+          "servicecode": "pt0317",
+          "part_project_no": "${{params.part_project_no}}",
+          "version": "${{params.version}}"
+        }
+      },
+      "thead": [
+        {
+          "type": "index",
+          "label": "序号"
+        },
+        {
+          "label": "可售产品编号",
+          "prop": "sale_prod_cd"
+        },
+        {
+          "label": "可售产品名称",
+          "prop": "sale_prod_name"
+        },
+        {
+          "label":"可售产品类型",
+          "prop": "prod_type_name"
+        },
+        {
+          "label":  "产品版本",
+          "prop": "prod_version"
+        },
+        {
+          "label": "资料检查列表名称",
+          "prop": "check_filelist_nm"
+
+        },
+        {
+          "label":  "资料检查列表编号",
+          "prop": "data_list_no"
+        },
+        {
+          "label": "操作",
+          "width": "260px",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "fixed":"right",
+              "toRequest": {
+                "url": "/views/pt/partnerProjrctManage/patrs/sellProduct/sell_prod_part_detail.json",
+                "method": "GET"
+              },
+              "props": {
+                "width": "65%",
+                "title":  "查看详情"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,172 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "form": {
+      "controls": [
+        {
+          "epcgcd": {
+            "control": "text",
+            "label": "罚金编号",
+            "rules": [
+              {
+                "max": 18,
+                "message": "长度不能超过18个字符"
+              }
+            ]
+          },
+          "numbsq": {
+            "control": "text",
+            "label": "数值序号"
+          }
+        },
+        {
+          "baprpe": {
+            "control": "select",
+            "label": "罚金基数",
+            "dict": {
+              "dictType": "E_BAPRPE",
+              "dictKey": [
+                "E_BAPRPE"
+              ],
+              "format": "label",
+              "labelField": "dictName",
+              "valueField": "dictId"
+            }
+          },
+          "ficame": {
+            "control": "select",
+            "label": "计算方法",
+            "dict": {
+              "dictType": "E_FICAME",
+              "dictKey": [
+                "E_FICAME"
+              ],
+              "format": "label",
+              "labelField": "dictName",
+              "valueField": "dictId"
+            }
+          }
+        }
+      ]
+    },
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "toRequest": {
+            "method": "GET",
+            "url": "/views/loanManager/fineLayered/fineLayered_add.json"
+          },
+          "props": {
+            "width": "65%",
+            "title": "新增罚金分层参数"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "isInitSearch": false,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "caozuolx": "3",
+          "servicecode": "edlaye"
+        }
+      },
+      "pagination": {
+        "pageSizes": [
+          10,
+          15,
+          20
+        ],
+        "pageSize": 10
+      },
+      "thead": [
+        {
+          "label": "罚金编号",
+          "prop": "epcgcd",
+          "align": "center"
+        },
+        {
+          "label": "数值序号",
+          "prop": "numbsq",
+          "align": "center"
+        },
+        {
+          "label": "期限/百分比",
+          "prop": "termrt",
+          "align": "center"
+        },
+        {
+          "label": "罚金基数",
+          "prop": "baprpe",
+          "align": "center",
+          "dict": {
+            "dictType": "E_BAPRPE",
+            "dictKey": [
+              "E_BAPRPE"
+            ],
+            "format": "label",
+            "labelField": "dictName",
+            "valueField": "dictId"
+          }
+        },
+        {
+          "label": "罚金计算方法",
+          "prop": "ficame",
+          "align": "center",
+          "dict": {
+            "dictType": "E_FICAME",
+            "dictKey": [
+              "E_FICAME"
+            ],
+            "format": "label",
+            "labelField": "dictName",
+            "valueField": "dictId"
+          }
+        },
+        {
+          "label": "罚金金额/百分比",
+          "prop": "ficart",
+          "align": "center",
+          "value": "${{current.ficart}}${{current.danwei}}"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 100,
+          "align": "center",
+          "btns": [
+            {
+              "type": "edit",
+              "label": "维护",
+              "toRequest": {
+                "url": "/views/loanManager/fineLayered/fineLayered_update.json",
+                "method": "POST"
+              },
+              "props": {
+                "width": "75%",
+                "title": "罚金分层信息维护"
+              }
+            },
+            {
+              "type": "delete",
+              "label": "删除",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "edlaye",
+                  "caozuolx": "2"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

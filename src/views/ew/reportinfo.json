@@ -1,0 +1,76 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+      "datagrid": {
+        "isInitSearch": true,
+        "scope": "searchTable",
+        "doRequest": {
+          "url": "/SUMP/call/RPCCall",
+          "method": "POST",
+          "params": {
+            "servicecode": "ew3177",
+            "contno": "${{params.contno}}",
+            "case_id": "${{params.case_id}}",
+            "method": "queryAll"
+          }
+        },
+        "thead": [
+          {
+            "label": "报告日期",
+            "align": "center",
+            "prop": "data_create_time"
+          },
+          {
+            "label": "姓名",
+            "align": "center",
+            "prop": "custname"
+          },
+          {
+            "label": "类型",
+            "align": "center",
+            "prop": "applicant_type" ,
+            "dict": {
+              "dictType": "AR_E_APPLICANT_TYPE",
+              "dictKey": [
+                "AR_E_APPLICANT_TYPE"
+              ],
+              "format": "label"
+            }
+          },
+          {
+            "label": "操作",
+            "fixed": "right",
+            "width": 120,
+            "align": "center",
+            "btns": [
+              {
+                "type": "look",
+                "label": "征信报告",
+                "toRequest": {
+                  "url": "@zxbg2",
+                  "method": "GET",
+                  "params": {
+                    "serialNo": "${{current.serialno}}",
+                    "reportId": "${{current.reportid}}",
+                    "sysflg": "${{current.sysflg}}",
+                    "fileId": "${{current.fileId}}",
+                    "filepath": "${{current.filepath}}",
+                    "filename": "${{current.filename}}"
+                  }
+                },
+                "props": {
+                  "width": "80%",
+                  "height": "85%",
+                  "title": "征信报告"
+                }
+              }
+            ]
+          }
+        ],
+        "pagination": {
+          "show": false
+        }
+      }
+    }
+  }
+  

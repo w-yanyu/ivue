@@ -1,0 +1,121 @@
+{
+  "module": "v_search_btn_datagrid",
+  "layout": {
+    "toolbar": {
+      "btns": [
+        {
+          "type": "add",
+          "target": "dialog",
+          "label": "新增",
+          "authId":"tax_credit_rating_manage_add",
+          "toRequest": {
+            "method": "POST",
+            "url": "/views/us/entManager/ratingManager/tax_credit_rating_add.json",
+            "params": {
+              "cust_no": "${{params.cust_no}}"
+            }
+          },
+          "show": {
+            "expression": "'${{params.show_flash}}' == '1'"
+          },
+          "props": {
+            "width": "65%",
+            "title": "新增税务评级信息"
+          }
+        }
+      ]
+    },
+    "datagrid": {
+      "scope": "searchTable",
+      "isInitSearch": true,
+      "doRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "us1124",
+          "cust_no": "${{params.cust_no}}"
+        }
+      },
+      "thead": [
+        {
+          "label": "评级年度",
+          "prop": "years",
+          "align": "center"
+        },
+        {
+          "label": "纳税人识别号",
+          "prop": "taxpayer_identifier_no",
+          "align": "center"
+        },
+        {
+          "label": "纳税信用评级",
+          "prop": "credit_rating_level",
+          "align": "center"
+        },
+        {
+          "label": "评价单位",
+          "prop": "rating_unit",
+          "align": "center"
+        },
+        {
+          "label": "操作",
+          "fixed": "right",
+          "width": 160,
+          "align": "center",
+          "btns": [
+            {
+              "type": "look",
+              "label": "详情",
+              "authId":"tax_credit_rating_manage_view",
+              "toRequest": {
+                "url": "/views/us/entManager/ratingManager/tax_credit_rating_view.json",
+                "method": "POST",
+                "params": {}
+              },
+              "props": {
+                "width": "75%",
+                "title": "税务评级信息详情"
+              }
+            },
+            {
+              "type": "edit",
+              "label": "维护",
+              "authId":"tax_credit_rating_manage_update",
+              "toRequest": {
+                "url": "/views/us/entManager/ratingManager/tax_credit_rating_update.json",
+                "method": "GET"
+              },
+              "show": {
+                "expression": "'${{params.show_flash}}' == '1'"
+              },
+              "props": {
+                "width": "75%",
+                "title": "税务评级信息维护"
+              }
+            },
+            {
+              "type": "custom",
+              "label": "删除",
+              "authId":"tax_credit_rating_manage_delete",
+              "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                  "servicecode": "us1126"
+                }
+              },
+              "confirm": {
+                "title": "确定删除",
+                "confirmButtonText": "确定",
+                "cancelButtonText": "取消"
+              },
+              "show": {
+                "expression": "'${{params.show_flash}}' == '1'"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

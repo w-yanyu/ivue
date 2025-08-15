@@ -1,0 +1,169 @@
+{
+    "module": "v_inputDataForm_btn",
+    "layout": {
+        "form": {
+            "btns": [
+                {
+                    "type": "submit",
+                    "label": "提交",
+                    "icon": "",
+                    "doRequest": {
+                        "url": "/SUMP/workflow/addWorkflowRole",
+                        "method": "POST",
+                        "params": {
+                            "servicecode": "ct2090",
+                            "operater_ind": "A"
+                        }
+                    }
+                }
+            ],
+            "controls": [
+                {
+                    "workjob_id": {
+                        "control": "lookup",
+                        "edit": false,
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入工作任务ID"
+                            },
+                            {
+                                "max": 32,
+                                "message": "长度不能超过32个字符"
+                            }
+                        ],
+                        "label": "工作任务ID",
+                        "width": "214px",
+                        "keyField": {
+                            "workjob_id": "workjob_id"
+                        },
+                        "toRequest": {
+                            "url": "/views/ismt/ct/ParameterManagement/WorkTasksInformation/WorkTasksManager_lookup.json",
+                            "method": "post",
+                            "params": "${{form.workjob_id}}"
+                        },
+                        "props": {
+                            "title": "工作任务ID查询"
+                        }
+                    },
+                    "role_id": {
+                        "control": "lookup",
+                        "label": "角色ID",
+                        "edit": true,
+                        "width": "214px",
+                        "prop": "prod_id",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入角色ID"
+                            },
+                            {
+                                "max": 64,
+                                "message": "长度不能超过64个字符"
+                            }
+                        ],
+                        "toRequest": {
+                            "url": "/views/ismt/ct/ParameterManagement/WorkflowRoleMaintenance/role-info-query.json",
+                            "method": "post",
+                            "params": {}
+                        },
+                        "props": {
+                            "title": "角色信息查询"
+                        }
+                    }
+                },
+                {
+                    "serial_no": {
+                        "control": "text",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入序号"
+                            },
+                            {
+                                "max": 32,
+                                "message": "长度不能超过32个字符"
+                            }
+                        ],
+                        "label": "序号",
+                        "width": "214px"
+                    },
+                    "scope_of_role": {
+                        "control": "select",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入角色所在机构"
+                            },
+                            {
+                                "max": 32,
+                                "message": "长度不能超过32个字符"
+                            }
+                        ],
+                        "label": "角色所在机构",
+                        "width": "214px",
+                        "dict": {
+                            "dictType": "E_BRCONFINE",
+                            "dictKey": [
+                                "E_BRCONFINE"
+                            ],
+                            "format": "label"
+                        }
+                    }
+                },
+                {
+                    "min_limit_value": {
+                        "control": "text",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入审批金额下限"
+                            },
+                            {
+                                "max": 32,
+                                "message": "长度不能超过32个字符"
+                            }
+                        ],
+                        "label": "审批金额下限",
+                        "width": "214px"
+                    },
+                    "max_limit_value": {
+                        "control": "text",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入审批金额上限"
+                            },
+                            {
+                                "max": 32,
+                                "message": "长度不能超过32个字符"
+                            }
+                        ],
+                        "label": "审批金额上限",
+                        "width": "214px"
+                    }
+                },
+                {
+                    "trxn_ccy": {
+                        "control": "select",
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入交易币种"
+                            }
+                        ],
+                        "label": "交易币种",
+                        "width": "214px",
+                        "dict": {
+                            "dictType": "MS_CURRENCY",
+                            "dictKey": [
+                                "MS_CURRENCY"
+                            ],
+                            "format": "label"
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,180 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+      "form": {
+        "controls": [
+          {
+            "nodeCode": {
+              "control": "select",
+              "label": "节点",
+              "dict": {
+                "dictKey": [
+                  "E_NODECODE"
+                ],
+                "dictType": "E_NODECODE",
+                "format": "label"
+              }
+             
+            },
+            "fileTypeCode": {
+                "control": "select",
+                "label": "附件类型",
+                "dict": {
+                  "dictKey": [
+                    "E_FILETYPECODE"
+                  ],
+                  "dictType": "E_FILETYPECODE",
+                  "format": "label"
+                }
+              },
+              "custGroupType": {
+                "control": "select",
+                "label": "客群级别",
+                "dict": {
+                  "dictKey": [
+                    "E_CUSTGROUPCODE"
+                  ],
+                  "dictType": "E_CUSTGROUPCODE",
+                  "format": "label"
+                }
+               
+              },
+                "fileCode": {
+                    "label": "附件",
+                    "control": "remoteSelect",
+                    "valueField": "postid",
+                    "labelField": "postspecies",
+                    "doRequest": {
+                      "url": "/SUMP/icmcall/icmRPCCall",
+                      "method": "post",
+                      "params": {
+                        "servicecode": "selmateriaicf",
+                        "isparentnode": "Y",
+                        "typeofdate":"FJ",
+                        "length": 100
+                        
+                      }
+                    }
+    
+                  }
+              }
+          
+        ]
+      },
+      "toolbar": {
+        "btns": [
+          {
+            "type": "add",
+            "target": "dialog",
+            "label": "新增基础数据配置",
+            "toRequest": {
+              "method": "GET",
+              "url": "/views/qb/waitUploadDelopy/addWaitUp.json"
+            },
+            "props": {
+              "title": "新增基础数据配置"
+            }
+          }
+  
+        ]
+      },
+      "datagrid": {
+        "scope": "searchTable",
+        "isInitSearch": false,
+        "doRequest": {
+          "url": "/SUMP/icmcall/icmRPCCall",
+          "method": "post",
+          "params": {
+            "servicecode": "waitUploadDeploy"
+           
+          }
+        },
+        "thead": [
+          {
+            "label": "序号",
+            "type": "index",
+            "align": "center"
+          },
+          
+          {
+            "label": "节点",
+            "prop": "nodeCode",
+            "dict": {
+              "dictType": "E_NODECODE",
+              "dictKey": [
+                "E_NODECODE"
+              ],
+              "format": "label"
+            }
+          },
+         
+          {
+            "label": "客群级别",
+            "prop": "custGroupType",
+            "dict": {
+              "dictType": "E_CUSTGROUPCODE",
+              "dictKey": [
+                "E_CUSTGROUPCODE"
+              ],
+              "format": "label"
+            }
+          },
+         
+          {
+            "label": "附件类型",
+            "prop": "fileTypeCode",
+            "dict": {
+              "dictType": "E_FILETYPECODE",
+              "dictKey": [
+                "E_FILETYPECODE"
+              ],
+              "format": "label"
+            }
+          },
+          {
+            "label": "附件编码",
+            "prop": "fileCode",
+            "align": "center"
+           
+          },
+          {
+            "label": "附件名称",
+            "prop": "fileName",
+            "align": "center"
+          },
+
+          {
+            "label": "操作",
+            "fixed": "right",
+            "align": "center",
+            "btns": [
+              {
+                "type": "delete",
+                "label": "删除",
+                "doRequest": {
+                  "url": "/SUMP/icmcall/icmRPCCall",
+                  "method": "POST",
+                  "params": {
+                    "servicecode": "delWaitUp"
+                  }
+                }
+              },
+              {
+                "type": "edit",
+                "label": "修改",
+                "toRequest": {
+                  "url": "/views/qb/waitUploadDelopy/updateWaitUp.json",
+                  "method": "post"
+                },
+                "props": {
+                  "width": "65%",
+                  "title": "修改"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+  

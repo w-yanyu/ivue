@@ -1,0 +1,134 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+        "form": {
+            "controls": [
+                {
+                    "chanid": {
+                        "control": "text",
+                        "label": "渠道编号",
+                        "rules": [
+                            {
+                                "max": 40,
+                                "message": "长度不能超过40个字符"
+                            }
+                        ]
+                    },
+                    "channa": {
+                        "control": "text",
+                        "label": "渠道名称",
+                        "rules": [
+                            {
+                                "max": 200,
+                                "message": "长度不能超过200个字符"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "toolbar": {
+            "btns": [
+                {
+                    "type": "add",
+                    "target": "dialog",
+                    "label": "新增",
+                    "toRequest": {
+                        "method": "GET",
+                        "url": "@ChannelManagementAdd"
+                    },
+                    "props": {
+                        "title": "机构信息新增"
+                    }
+                }
+            ]
+        },
+        "datagrid": {
+            "scope": "searchTable",
+            "isInitSearch": false,
+            "doRequest": {
+                "url": "/SUMP/icmcall/icmRPCCall",
+                "method": "POST",
+                "params": {
+                    "servicecode": "chanqr"
+                }
+            },
+            "thead": [
+                {
+                    "type": "selection",
+                    "width": "55"
+                }, 
+                {
+                    "type": "index"
+                },
+                {
+                    "prop": "chanid",
+                    "label": "授权渠道号"
+                },
+                {
+                    "prop": "channa",
+                    "label": "渠道名称"
+                },
+                {
+                    "label": "控制类型",
+                    "prop": "conttp",
+                    "dict": {
+                        "dictType": "E_CHATTP",
+                        "dictKey": [
+                            "E_CHATTP"
+                        ],
+                        "format": "label"
+                    }
+                },
+                 {
+                    "label": "状态",
+                    "prop": "chanst",
+                    "align": "center",
+                    "dict": {
+                        "dictType": "E_CHSTAT",
+                        "dictKey": [
+                            "E_CHSTAT"
+                        ],
+                        "format": "label"
+                    }
+                },
+                {
+                    "label": "操作",
+                    "fixed": "right",
+                    "width": "200",
+                    "align": "center",
+                    "btns": [
+                        {
+                            "toRequest": {
+                                "method": "POST",
+                                "url": ""
+                            },
+                            "label": "详情",
+                            "type": "look",
+                            "props": {
+                                "width": "85%",
+                                "title": "删除"
+                            }
+                        },
+                        {
+                            "toRequest": {
+                                "method": "POST",
+                                "url": ""
+                            },
+                            "label": "修改",
+                            "type": "edit"
+                        },
+                        {
+                            "toRequest": {
+                                "method": "POST",
+                                "url": ""
+                            },
+                            "label": "删除",
+                            "type": "edit"
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

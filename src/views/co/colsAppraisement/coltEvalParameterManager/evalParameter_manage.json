@@ -1,0 +1,174 @@
+{
+    "module": "v_search_btn_datagrid",
+    "layout": {
+      "form": {
+        "controls": [
+          {
+            "col_eval_no": {
+              "label": "押品评估编号",
+              "control": "text"
+            }
+           
+          }
+        ]
+      },
+      "toolbar": {
+        "btns": [
+          {
+            "type": "add",
+            "label": "新增",
+            "toRequest": {
+              "url": "/views/cols/colsAppraisement/coltEvalParameterManager/evalParameter_add.json",
+              "method": "get",
+              "params": {}
+            },
+            "props": {
+              "title": "押品估值参数新增",
+              "width": "80%"
+            }
+          }
+        ]
+      },
+      "datagrid": {
+        "isInitSearch": true,
+        "name":"detail",
+        "doRequest": {
+          "url": "/SUMP/call/RPCCall",
+          "method": "post",
+          "params": {
+            "servicecode": "co1016",
+            "params": {
+            }
+          }
+        },
+        "pagination": {
+          "pageSizes": [
+            10,
+            15,
+            20
+          ],
+          "pageSize": 10
+        },
+        "thead": [
+          {
+            "type": "index",
+            "align": "center"
+          },
+          {
+            "label": "押品评估编号",
+            "prop": "col_eval_no",
+            "align": "center",
+            "type": "leaf"
+          },
+          {
+            "label": "是否需价值重估",
+            "prop": "re_eval_flag",
+            "dict": {
+                "dictType": "E_SHIFOUBZ",
+                "dictKey": [
+                  "E_SHIFOUBZ"
+                ],
+                "format": "label"
+              },
+            "align": "center",
+            "type": "leaf"
+          },
+          {
+            "label": "评估方式",
+            "prop": "eval_type",
+            "dict": {
+              "dictType": "E_PTYPE",
+              "dictKey": [
+                "E_PTYPE"
+              ],
+              "format": "label"
+            },
+            "align": "center",
+            "type": "leaf"
+          },
+          {
+            "label": "内部评估方式",
+            "prop": "in_eval_type",
+            "align": "center",
+            "type": "leaf",
+            "dict": {
+              "dictType": "E_INPTYPE",
+              "dictKey": [
+                "E_INPTYPE"
+              ],
+              "format": "label"
+            }
+          },
+          {
+            "label": "评估方法类型",
+            "prop": "func_name",
+            "align": "center",
+            "type": "leaf"
+          },
+          {
+            "label": "自动评估频率",
+            "prop": "auto_eval_cyc",
+            "dict": {
+                "dictType": "E_PCYCLE",
+                "dictKey": [
+                  "E_PCYCLE"
+                ],
+                "format": "label"
+              },
+            "align": "center",
+            "type": "leaf"
+          },
+          {
+            "label": "操作",
+            "width": "150px",
+            "align": "center",
+            "fixed": "right",
+            "btns": [
+              {
+                "type": "edit",
+                "label": "维护",
+                "toRequest": {
+                  "url": "/views/cols/colsAppraisement/coltEvalParameterManager/evalParameter_update.json",
+                  "method": "get",
+                  "params": {}
+                },
+                "props": {
+                  "title": "押品估值参数维护",
+                  "width": "80%"
+                }
+              },
+              {
+                "type": "look",
+                "label": "详情",
+                "toRequest": {
+                  "url": "/views/cols/colsAppraisement/coltEvalParameterManager/evalParameter_detail.json",
+                  "method": "get",
+                  "params": {}
+                },
+                "props": {
+                  "title": "押品估值参数详情",
+                  "width": "80%"
+                }
+              },
+              {
+                "type": "delete",
+                "label": "删除",
+                "doRequest": {
+                  "url": "/SUMP/call/RPCCall",
+                  "method": "DELETE",
+                  "params": {
+                    "servicecode": "co1015",
+                    "caozuolx": "2",
+                    "detail": {
+                      "col_eval_no": "${{current.col_eval_no}}"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+  

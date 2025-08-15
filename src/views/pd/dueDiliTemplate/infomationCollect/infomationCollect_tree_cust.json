@@ -1,0 +1,61 @@
+{
+  "module": "lr-tree-dynamic",
+  "layout": {
+    "tree": {
+      "title": "尽职调查报告",
+      "lazy": false,
+      "idField": "node_cd",
+      "pIdField": "parent_node_cd",
+      "labelField": "node_name",
+      "isLeafField": "is_leaf",
+      "nodeTypeField": "node_type",
+      "initRequest": {
+        "url": "/SUMP/icmcall/icmRPCCall",
+        "method": "POST",
+        "params": {
+          "servicecode": "ar1865",
+          "apply_no": "${{params.apply_no}}",
+          "sale_prod_cd": "${{params.sale_prod_cd}}",
+          "apply_type": "${{params.apply_type}}"
+        }
+      },
+      "root": {
+        "rootNode": {
+          "name": "调查项（单击预览模板报告）",
+          "value": "BASE",
+          "disabled": true
+        },
+        "toRequest": {
+          "url": "@DueTemplateReportCust",
+          "method": "get",
+          "params": {
+            "apply_no": "${{params.apply_no}}",
+            "cust_no": "${{params.cust_no}}",
+            "sale_prod_cd" : "${{params.sale_prod_cd}}",
+            "apply_type" : "${{params.apply_type}}"
+          }
+        }
+      },
+      "nodeTypes": {
+        "3": {
+          "children": [
+            "3"
+          ],
+          "toRequest": {
+            "url": "@infoDueSpringboard",
+            "method": "get",
+            "params": {
+              "node_cd": "${{current.node_cd}}",
+              "node_name": "${{current.node_name}}",
+              "node_type": "${{current.node_type}}",
+              "is_leaf": "${{current.is_leaf}}",
+              "apply_no": "${{params.apply_no}}",
+              "cust_no": "${{params.cust_no}}",
+              "pageType": "detail"
+            }
+          }
+        }
+      }
+    }
+  }
+}
