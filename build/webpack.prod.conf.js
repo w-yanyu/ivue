@@ -234,7 +234,10 @@ const webpackConfig = merge(baseWebpackConfig, {
       patterns: [
         {
           from: path.resolve(__dirname, "../public"),
-          to: config.build.assetsSubDirectory
+          to: config.build.assetsSubDirectory,
+          globOptions: {
+            ignore: ['**/index.html']
+          }
         },
         {
           from: config.dll.output,
@@ -250,7 +253,7 @@ if (config.build.productionGzip) {
 
   webpackConfig.plugins.push(
     new CompressionWebpackPlugin({
-      filename: "[path].gz[query]",
+      filename: "[path][base].gz",
       algorithm: "gzip",
       test: new RegExp(
         "\\.(" + config.build.productionGzipExtensions.join("|") + ")$"
