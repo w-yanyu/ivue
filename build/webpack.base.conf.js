@@ -78,6 +78,7 @@ module.exports = {
       "os": false,
       "vm": require.resolve("vm-browserify"),  // 添加这一行
       "http": require.resolve("stream-http"),
+      "events": require.resolve("events")
     },
   },
   optimization: {
@@ -90,7 +91,7 @@ module.exports = {
     sourceType: 'var' // 明确指定全局变量模式
   },
   plugins: [new VueLoaderPlugin(), new ProgressBarPlugin(),
-  new webpack.ProvidePlugin({ process: 'process/browser', Buffer: ['buffer', 'Buffer'], libs: 'libs' })],
+  new webpack.ProvidePlugin({ process: 'process/browser', Buffer: ['buffer', 'Buffer'], libs: 'libs',EventEmitter: ['events', 'EventEmitter'] })],
   module: {
     rules: [
       {

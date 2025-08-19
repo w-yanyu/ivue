@@ -78,7 +78,7 @@ import myGridItemPreview from "./itemPreview.vue";
 
 import drawer from "./drawer";
 
-import uuid from "uuid";
+import { v4 as uuidv4 } from "uuid";
 
 // 一定使用深度克隆！数组是引用对象，会导致数据混乱
 //   import { cloneDeep } from "lodash-es";
@@ -225,7 +225,7 @@ export default {
             y: j,
             w: 1,
             h: 1,
-            i: uuid // 防止 key 重复
+            i: uuidv4() // 防止 key 重复
           });
         }
       }
