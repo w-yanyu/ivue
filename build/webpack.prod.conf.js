@@ -7,7 +7,6 @@ const { merge } = require("webpack-merge");
 const baseWebpackConfig = require("./webpack.base.conf");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin')
 const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 // const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
@@ -183,25 +182,8 @@ const webpackConfig = merge(baseWebpackConfig, {
     new webpack.ProvidePlugin({
       libs: 'libs' // 将全局 libs 变量注入所有模块
     }),
-    // extract css into its own file
     new MiniCssExtractPlugin({
       filename: utils.assetsPath("css/[name].css")
-    }),
-    // Compress extracted CSS. We are using this plugin so that possible
-    // duplicated CSS from different components can be deduped.
-    // new OptimizeCSSPlugin({
-    //   cssProcessorOptions: config.build.productionSourceMap
-    //     ? { safe: true, map: { inline: false } }
-    //     : { safe: true }
-    // }),
-    // generate dist index.html with correct asset hash for caching.
-    // you can customize output by editing /index.html
-    // see https://github.com/ampedandwired/html-webpack-plugin
-    new HtmlWebpackTagsPlugin({
-      tags: ["js/libs.js"],
-      append: false,
-      hash: true,
-      publicPath: false // 使用绝对路径
     }),
     new HtmlWebpackPlugin({
       filename: config.build.index,
@@ -209,25 +191,26 @@ const webpackConfig = merge(baseWebpackConfig, {
       inject: true,
       hash: true,
       favicon: resolve("public/favicon.ico"),
-      // title: 'admin-sunline',
       path: config.build.assetsPublicPath + config.build.assetsSubDirectory,
       minify: {
         removeComments: true,
         collapseWhitespace: true,
         removeAttributeQuotes: true
-        // more options:
-        // https://github.com/kangax/html-minifier#options-quick-reference
       },
-      // necessary to consistently work with multiple chunks via CommonsChunkPlugin
-      // chunksSortMode: "none",
       chunks: ['libs', 'app'], // 确保包含你的libs chunk
       chunksSortMode: 'manual'
     }),
-    new HtmlWebpackIncludeAssetsPlugin({
-      assets: ['js/libs.js'],
-      append: false,
-      hash: true
-    }),
+    // new HtmlWebpackTagsPlugin({
+    //   tags: ["js/libs.js"],
+    //   append: false,
+    //   hash: true,
+    //   publicPath: false // 使用绝对路径
+    // }),
+    // new HtmlWebpackIncludeAssetsPlugin({
+    //   assets: ['js/libs.js'],
+    //   append: false,
+    //   hash: true
+    // }),
 
     // copy custom public assets
     new CopyWebpackPlugin({

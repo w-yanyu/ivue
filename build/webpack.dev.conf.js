@@ -7,7 +7,6 @@ const { merge } = require('webpack-merge')
 const baseWebpackConfig = require('./webpack.base.conf')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-// const HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin')
 const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
 
 const FriendlyErrorsPlugin = require('@soda/friendly-errors-webpack-plugin')
